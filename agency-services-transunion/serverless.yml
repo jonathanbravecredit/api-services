@@ -1,0 +1,120 @@
+# NOTE: update this with your service name
+service: agency-services-transunion
+
+# Create an optimized package for our functions
+package:
+  individually: true
+
+plugins:
+  - serverless-bundle # Package our functions with Webpack
+  - serverless-offline
+  - serverless-dotenv-plugin # Load .env as environment variables
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-2'}
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 'sns:Publish'
+      Resource: '*'
+  environment:
+    SMS_NUMBER: '+15555555555'
+  endpointType: PRIVATE
+  vpcEndpointIds:
+    - !Ref VpcEndpoint
+  vpc:
+    securityGroupIds:
+      - !GetAtt VpcEndpointLambdaSecurityGroup.GroupId
+    subnetIds:
+      - !Ref SubnetAPrivate
+      - !Ref SubnetBPrivate
+      - !Ref SubnetCPrivate
+  resourcePolicy:
+    - Effect: Allow
+      Principal: '*'
+      Action: execute-api:Invoke
+      Resource:
+        - !Sub 'arn:aws:execute-api:${AWS:AccountId}:*'
+      Condition:
+        StringEquals:
+          aws:sourceVpc:
+            - !Ref VPC
+
+functions:
+  test:
+    handler: src/handlers/test.main
+    events:
+      - http:
+          path: /test
+          method: get
+          cors: true
+          caching:
+            enabled: true
+
+resources:
+  Resources:
+    VPC:
+      Type: 'AWS::EC2::VPC'
+      Properties:
+        CidrBlock: !Sub '10.0.0.0/16'
+        EnableDnsSupport: true
+        EnableDnsHostnames: true
+        InstanceTenancy: default
+    SubnetAPrivate:
+      Type: 'AWS::EC2::Subnet'
+      Properties:
+        AvailabilityZone: !Select [0, !GetAZs '']
+        CidrBlock: !Sub '10.0.128.0/20'
+        VpcId: !Ref VPC
+    SubnetBPrivate:
+      Type: 'AWS::EC2::Subnet'
+      Properties:
+        AvailabilityZone: !Select [1, !GetAZs '']
+        CidrBlock: !Sub '10.0.144.0/20'
+        VpcId: !Ref VPC
+    SubnetCPrivate:
+      Type: 'AWS::EC2::Subnet'
+      Properties:
+        AvailabilityZone: !Select [2, !GetAZs '']
+        CidrBlock: !Sub '10.0.160.0/20'
+        VpcId: !Ref VPC
+    VpcEndpointSecurityGroup:
+      Type: 'AWS::EC2::SecurityGroup'
+      Properties:
+        VpcId: !Ref VPC
+        GroupDescription: 'Security group for VPC Endpoint'
+        SecurityGroupIngress:
+          - IpProtocol: tcp
+            FromPort: 443
+            ToPort: 443
+            SourceSecurityGroupId: !GetAtt VpcEndpointLambdaSecurityGroup.GroupId
+    ApiVpcEndpoint:
+      Type: AWS::EC2::VPCEndpoint
+      Properties:
+        PrivateDnsEnabled: True
+        SecurityGroupIds:
+          - !GetAtt VpcEndpointSecurityGroup.GroupId
+        ServiceName: !Sub 'com.amazonaws.${AWS::Region}.execute-api'
+        SubnetIds:
+          - !Ref SubnetAPrivate
+          - !Ref SubnetBPrivate
+          - !Ref SubnetCPrivate
+        VpcEndpointType: Interface
+        VpcId: !Ref VPC
+    VpcEndpointLambdaSecurityGroup:
+      Type: 'AWS::EC2::SecurityGroup'
+      Properties:
+        VpcId: !Ref VPC
+        GroupDescription: 'Security group for VPC Endpoint Lambda'
+
+  # 'com.amazonaws.us-east-1.sns'
+
+  Outputs:
+    VPC:
+      Description: 'VPC'
+      Value: !Ref VPC
+    SubnetsPrivate:
+      Description: 'Subnets private'
+      Value: !Join [',', [!Ref SubnetAPrivate, !Ref SubnetBPrivate, !Ref SubnetCPrivate]]
