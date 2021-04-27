@@ -36,7 +36,7 @@ provider:
       Principal: '*'
       Action: execute-api:Invoke
       Resource:
-        - !Sub 'arn:aws:execute-api:${AWS:AccountId}:*'
+        - !Sub 'arn:aws:execute-api:${AWS::AccountId}:*'
       Condition:
         StringEquals:
           aws:sourceVpc:
