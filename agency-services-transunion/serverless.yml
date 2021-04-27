@@ -27,7 +27,7 @@ provider:
     SMS_NUMBER: '+15555555555'
   endpointType: PRIVATE
   vpcEndpointIds:
-    - !Ref VpcEndpoint
+    - !Ref ApiVpcEndpoint
   vpc:
     securityGroupIds:
       - !GetAtt VpcEndpointLambdaSecurityGroup.GroupId
