@@ -19,12 +19,6 @@ provider:
   runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-2'}
-  iamRoleStatements:
-    - Effect: Allow
-      Action: 'sns:Publish'
-      Resource: '*'
-  environment:
-    SMS_NUMBER: '+15555555555'
   endpointType: PRIVATE
   vpcEndpointIds:
     - !Ref ApiVpcEndpoint
@@ -119,6 +113,10 @@ resources:
     VPC:
       Description: 'VPC'
       Value: !Ref VPC
+      Export:
+        Name: !Sub '${self:service}-vpc'
     SubnetsPrivate:
       Description: 'Subnets private'
       Value: !Join [',', [!Ref SubnetAPrivate, !Ref SubnetBPrivate, !Ref SubnetCPrivate]]
+      Export:
+        Name: !Sub '${self:service}-subnets-private'
