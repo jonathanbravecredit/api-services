@@ -83,18 +83,6 @@ resources:
         AvailabilityZone: !Select [2, !GetAZs '']
         CidrBlock: !Sub '10.0.160.0/20'
         VpcId: !Ref VPC
-    SubnetAPublic:
-      Type: AWS::EC2::Subnet
-      Properties:
-        AvailabilityZone: !Select [0, !GetAZs '']
-        CidrBlock: !Sub '10.0.228.0/20'
-        VpcId: !Ref VPC
-    SubnetBPublic:
-      Type: AWS::EC2::Subnet
-      Properties:
-        AvailabilityZone: !Select [0, !GetAZs '']
-        CidrBlock: !Sub '10.0.228.0/20'
-        VpcId: !Ref VPC
     VpcEndpointSecurityGroup:
       Type: 'AWS::EC2::SecurityGroup'
       Properties:
