@@ -45,16 +45,17 @@ provider:
   #         aws:sourceVpce:
   #           - !Ref ApiVpcEndpoint
 
-# functions:
-#   test:
-#     handler: src/handlers/test.main
-#     events:
-#       - http:
-#           path: /test
-#           method: get
-#           cors: true
-#           caching:
-#             enabled: true
+functions:
+  test:
+    handler: src/handlers/test.main
+    reservedConcurrency: 10 <-- Concurrency control
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - TransunionQueue
+              - Arn
+          batchSize: 1
 
 resources:
   Resources:
@@ -284,6 +285,11 @@ resources:
         VpcId: !Ref VPC
         GroupDescription: 'Security group for VPC Endpoint Lambda'
 
+    TransunionQueue:
+      Type: 'AWS::SQS::Queue'
+      Properties:
+        QueueName: 'TransunionQueue'
+
   # 'com.amazonaws.us-east-1.sns'
 
   Outputs:
@@ -310,3 +316,8 @@ resources:
       Value: !Join [',', [!Ref VpcEndpointLambdaSecurityGroup]]
       Export:
         Name: !Sub '${self:service}-vpc-securitygroup'
+    TransunionQueue:
+      Description: 'Transunion SQS'
+      Value: !Ref TransunionQueue
+      Export:
+        Name: !Sub '${self:service}-sqs'
