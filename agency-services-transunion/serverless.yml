@@ -122,6 +122,6 @@ resources:
         Name: !Sub '${self:service}-subnets-private'
     SecurityGroup:
       Description: 'VPC Endpoint Security Group'
-      Value: !Ref VpcEndpointSecurityGroup
+      Value: !GetAtt VpcEndpointLambdaSecurityGroup.GroupId
       Export:
         Name: !Sub '${self:service}-vpc-securitygroup'
