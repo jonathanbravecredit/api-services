@@ -300,14 +300,13 @@ resources:
       Value: !Join [',', [!Ref SubnetAPrivate, !Ref SubnetBPrivate, !Ref SubnetCPrivate]]
       Export:
         Name: !Sub '${self:service}-subnets-private'
-    SecurityGroup:
+    NatSecurityGroup:
       Description: 'Nat Gateway Security Group'
       Value: !Join [',', [!Ref NatGatewayLambdaSecurityGroup]]
       Export:
         Name: !Sub '${self:service}-vpc-natsecuritygroup'
-
-    # SecurityGroup:
-    #   Description: 'VPC Endpoint Security Group'
-    #   Value: !Join [',', [!Ref VpcEndpointLambdaSecurityGroup]]
-    #   Export:
-    #     Name: !Sub '${self:service}-vpc-securitygroup'
+    SecurityGroup:
+      Description: 'VPC Endpoint Security Group'
+      Value: !Join [',', [!Ref VpcEndpointLambdaSecurityGroup]]
+      Export:
+        Name: !Sub '${self:service}-vpc-securitygroup'
