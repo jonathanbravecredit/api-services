@@ -255,29 +255,29 @@ resources:
         VpcId: !Ref VPC
         GroupDescription: 'Security group for NAT Gateway Lambda'
 
-    # VpcEndpointSecurityGroup:
-    #   Type: 'AWS::EC2::SecurityGroup'
-    #   Properties:
-    #     VpcId: !Ref VPC
-    #     GroupDescription: 'Security group for VPC Endpoint'
-    #     SecurityGroupIngress:
-    #       - IpProtocol: tcp
-    #         FromPort: 443
-    #         ToPort: 443
-    #         SourceSecurityGroupId: !GetAtt VpcEndpointLambdaSecurityGroup.GroupId
-    # ApiVpcEndpoint:
-    #   Type: AWS::EC2::VPCEndpoint
-    #   Properties:
-    #     PrivateDnsEnabled: True
-    #     SecurityGroupIds:
-    #       - !GetAtt VpcEndpointSecurityGroup.GroupId
-    #     ServiceName: !Sub 'com.amazonaws.${AWS::Region}.execute-api'
-    #     SubnetIds:
-    #       - !Ref SubnetAPrivate
-    #       - !Ref SubnetBPrivate
-    #       - !Ref SubnetCPrivate
-    #     VpcEndpointType: Interface
-    #     VpcId: !Ref VPC
+    VpcEndpointSecurityGroup:
+      Type: 'AWS::EC2::SecurityGroup'
+      Properties:
+        VpcId: !Ref VPC
+        GroupDescription: 'Security group for VPC Endpoint'
+        SecurityGroupIngress:
+          - IpProtocol: tcp
+            FromPort: 443
+            ToPort: 443
+            SourceSecurityGroupId: !GetAtt VpcEndpointLambdaSecurityGroup.GroupId
+    ApiVpcEndpoint:
+      Type: AWS::EC2::VPCEndpoint
+      Properties:
+        PrivateDnsEnabled: True
+        SecurityGroupIds:
+          - !GetAtt VpcEndpointSecurityGroup.GroupId
+        ServiceName: !Sub 'com.amazonaws.${AWS::Region}.execute-api'
+        SubnetIds:
+          - !Ref SubnetAPrivate
+          - !Ref SubnetBPrivate
+          - !Ref SubnetCPrivate
+        VpcEndpointType: Interface
+        VpcId: !Ref VPC
     VpcEndpointLambdaSecurityGroup:
       Type: 'AWS::EC2::SecurityGroup'
       Properties:
