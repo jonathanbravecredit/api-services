@@ -48,7 +48,7 @@ provider:
 functions:
   test:
     handler: src/handlers/test.main
-    reservedConcurrency: 10 <-- Concurrency control
+    reservedConcurrency: 10
     events:
       - sqs:
           arn:
