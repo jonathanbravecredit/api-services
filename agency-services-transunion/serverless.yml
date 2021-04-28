@@ -304,7 +304,7 @@ resources:
       Description: 'Nat Gateway Security Group'
       Value: !Join [',', [!Ref NatGatewayLambdaSecurityGroup]]
       Export:
-        Name: !Sub '${self:service}-vpc-securitygroup'
+        Name: !Sub '${self:service}-vpc-natsecuritygroup'
 
     # SecurityGroup:
     #   Description: 'VPC Endpoint Security Group'
