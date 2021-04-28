@@ -42,7 +42,7 @@ provider:
         - !Sub 'arn:aws:execute-api:${AWS::AccountId}:*'
       Condition:
         StringNotEquals:
-          aws:SourceVpce:
+          aws:sourceVpce:
             - !Ref ApiVpcEndpoint
 
 functions:
