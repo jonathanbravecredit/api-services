@@ -35,10 +35,15 @@ provider:
       Action: execute-api:Invoke
       Resource:
         - !Sub 'arn:aws:execute-api:${AWS::AccountId}:*'
+    - Effect: Deny
+      Principal: '*'
+      Action: execute-api:Invoke
+      Resource:
+        - !Sub 'arn:aws:execute-api:${AWS::AccountId}:*'
       Condition:
-        StringEquals:
-          aws:sourceVpc:
-            - !Ref VPC
+        StringNotEquals:
+          aws:SourceVpce:
+            - !Ref ApiVpcEndpoint
 
 functions:
   test:
