@@ -278,11 +278,11 @@ resources:
     #       - !Ref SubnetCPrivate
     #     VpcEndpointType: Interface
     #     VpcId: !Ref VPC
-    # VpcEndpointLambdaSecurityGroup:
-    #   Type: 'AWS::EC2::SecurityGroup'
-    #   Properties:
-    #     VpcId: !Ref VPC
-    #     GroupDescription: 'Security group for VPC Endpoint Lambda'
+    VpcEndpointLambdaSecurityGroup:
+      Type: 'AWS::EC2::SecurityGroup'
+      Properties:
+        VpcId: !Ref VPC
+        GroupDescription: 'Security group for VPC Endpoint Lambda'
 
   # 'com.amazonaws.us-east-1.sns'
 
