@@ -2,5 +2,5 @@ import { Context, APIGatewayEvent, APIGatewayProxyResult, Handler } from 'aws-la
 import { response } from 'lib/utils/response';
 
 export const main: Handler = async (event: Event): Promise<APIGatewayProxyResult> => {
-  return response(200, 'I do not do anything yet');
+  return response(200, 'Speaking to you from the VPC');
 };
