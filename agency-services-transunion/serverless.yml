@@ -46,8 +46,18 @@ provider:
   #           - !Ref ApiVpcEndpoint
 
 functions:
-  test:
-    handler: src/handlers/test.main
+  getReport:
+    handler: src/handlers/getReport.main
+    events:
+      - sns:
+          arn:
+            Fn::GetAtt:
+              - TransunionTopic
+              - Arn
+          topicName: TransunionTopic
+          integration: lambda-proxy
+  getReports:
+    handler: src/handlers/getReports.main
     reservedConcurrency: 10
     events:
       - sqs:
@@ -56,6 +66,7 @@ functions:
               - TransunionQueue
               - Arn
           batchSize: 1
+          integration: lambda-proxy
 
 resources:
   Resources:
@@ -290,6 +301,11 @@ resources:
       Properties:
         QueueName: 'TransunionQueue'
 
+    TransunionTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: 'TransunionTopic'
+
   # 'com.amazonaws.us-east-1.sns'
 
   Outputs:
@@ -321,3 +337,8 @@ resources:
       Value: !Ref TransunionQueue
       Export:
         Name: !Sub '${self:service}-sqs'
+    TransunionTopic:
+      Description: 'Transunion SNS'
+      Value: !Ref TransunionTopic
+      Export:
+        Name: !Sub '${self:service}-sns'
