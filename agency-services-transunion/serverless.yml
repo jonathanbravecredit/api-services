@@ -50,10 +50,7 @@ functions:
     handler: src/handlers/getReport.main
     events:
       - sns:
-          arn:
-            Fn::GetAtt:
-              - TransunionTopic
-              - Arn
+          arn: !Ref TransunionTopic
           topicName: TransunionTopic
           integration: lambda-proxy
   getReports:
