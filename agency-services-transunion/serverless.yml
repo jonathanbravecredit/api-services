@@ -120,3 +120,8 @@ resources:
       Value: !Join [',', [!Ref SubnetAPrivate, !Ref SubnetBPrivate, !Ref SubnetCPrivate]]
       Export:
         Name: !Sub '${self:service}-subnets-private'
+    SecurityGroup:
+      Description: 'VPC Endpoint Security Group'
+      Value: !Ref VpcEndpointSecurityGroup
+      Export:
+        Name: !Sub '${self:service}-vpc-securitygroup'
