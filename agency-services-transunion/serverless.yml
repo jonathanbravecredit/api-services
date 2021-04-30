@@ -19,9 +19,8 @@ provider:
   runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-2'}
-  # endpointType: PRIVATE
-  # vpcEndpointIds:
-  #   - !Ref ApiVpcEndpoint
+  environment:
+    TABLENAME: TransunionData
   vpc:
     securityGroupIds:
       - !GetAtt NatGatewayLambdaSecurityGroup.GroupId
@@ -29,21 +28,6 @@ provider:
       - !Ref SubnetAPrivate
       - !Ref SubnetBPrivate
       - !Ref SubnetCPrivate
-  # resourcePolicy:
-  #   - Effect: Allow
-  #     Principal: '*'
-  #     Action: execute-api:Invoke
-  #     Resource:
-  #       - !Sub 'arn:aws:execute-api:${AWS::AccountId}:*'
-  #   - Effect: Deny
-  #     Principal: '*'
-  #     Action: execute-api:Invoke
-  #     Resource:
-  #       - !Sub 'arn:aws:execute-api:${AWS::AccountId}:*'
-  #     Condition:
-  #       StringNotEquals:
-  #         aws:sourceVpce:
-  #           - !Ref ApiVpcEndpoint
 
 functions:
   getReport:
@@ -67,6 +51,20 @@ functions:
 
 resources:
   Resources:
+    TransunionData:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: 'id'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'id'
+            KeyType: 'HASH'
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:provider.environment.TABLENAME}
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+
     VPC:
       Type: 'AWS::EC2::VPC'
       Properties:
