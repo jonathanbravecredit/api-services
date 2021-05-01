@@ -10,51 +10,61 @@ plugins:
   - serverless-offline
   - serverless-dotenv-plugin # Load .env as environment variables
 
+custom:
+  bundle:
+    linting: false
+
 provider:
   name: aws
   runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-2'}
-  iamRoleStatements:
-    - Effect: Allow
-      Action: 'sns:Publish'
-      Resource: '*'
   environment:
-    SMS_NUMBER: '+15555555555'
-  endpointType: PRIVATE
-  vpcEndpointIds:
-    - !Ref VpcEndpoint
+    TABLENAME: TransunionData
   vpc:
     securityGroupIds:
-      - !GetAtt VpcEndpointLambdaSecurityGroup.GroupId
+      - !GetAtt NatGatewayLambdaSecurityGroup.GroupId
     subnetIds:
       - !Ref SubnetAPrivate
       - !Ref SubnetBPrivate
       - !Ref SubnetCPrivate
-  resourcePolicy:
-    - Effect: Allow
-      Principal: '*'
-      Action: execute-api:Invoke
-      Resource:
-        - !Sub 'arn:aws:execute-api:${AWS:AccountId}:*'
-      Condition:
-        StringEquals:
-          aws:sourceVpc:
-            - !Ref VPC
 
 functions:
-  test:
-    handler: src/handlers/test.main
+  getReport:
+    handler: src/handlers/getReport.main
     events:
-      - http:
-          path: /test
-          method: get
-          cors: true
-          caching:
-            enabled: true
+      - sns:
+          arn: !Ref TransunionTopic
+          topicName: TransunionTopic
+          integration: lambda-proxy
+  getReports:
+    handler: src/handlers/getReports.main
+    reservedConcurrency: 10
+    events:
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - TransunionQueue
+              - Arn
+          batchSize: 1
+          integration: lambda-proxy
 
 resources:
   Resources:
+    TransunionData:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: 'id'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'id'
+            KeyType: 'HASH'
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:provider.environment.TABLENAME}
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+
     VPC:
       Type: 'AWS::EC2::VPC'
       Properties:
@@ -62,11 +72,38 @@ resources:
         EnableDnsSupport: true
         EnableDnsHostnames: true
         InstanceTenancy: default
+    InternetGateway:
+      Type: 'AWS::EC2::InternetGateway'
+      Properties:
+        Tags:
+          - Key: Name
+            Value: !Sub '10.0.0.0/16'
+    VPCGatewayAttachment:
+      Type: 'AWS::EC2::VPCGatewayAttachment'
+      Properties:
+        VpcId: !Ref VPC
+        InternetGatewayId: !Ref InternetGateway
+
+    # public and private subnets
+    SubnetAPublic:
+      Type: 'AWS::EC2::Subnet'
+      Properties:
+        AvailabilityZone: !Select [0, !GetAZs '']
+        CidrBlock: !Sub '10.0.0.0/20'
+        MapPublicIpOnLaunch: true
+        VpcId: !Ref VPC
     SubnetAPrivate:
       Type: 'AWS::EC2::Subnet'
       Properties:
         AvailabilityZone: !Select [0, !GetAZs '']
         CidrBlock: !Sub '10.0.128.0/20'
+        VpcId: !Ref VPC
+    SubnetBPublic:
+      Type: 'AWS::EC2::Subnet'
+      Properties:
+        AvailabilityZone: !Select [1, !GetAZs '']
+        CidrBlock: !Sub '10.0.16.0/20'
+        MapPublicIpOnLaunch: true
         VpcId: !Ref VPC
     SubnetBPrivate:
       Type: 'AWS::EC2::Subnet'
@@ -74,12 +111,157 @@ resources:
         AvailabilityZone: !Select [1, !GetAZs '']
         CidrBlock: !Sub '10.0.144.0/20'
         VpcId: !Ref VPC
+    SubnetCPublic:
+      Type: 'AWS::EC2::Subnet'
+      Properties:
+        AvailabilityZone: !Select [1, !GetAZs '']
+        CidrBlock: !Sub '10.0.32.0/20'
+        MapPublicIpOnLaunch: true
+        VpcId: !Ref VPC
     SubnetCPrivate:
       Type: 'AWS::EC2::Subnet'
       Properties:
         AvailabilityZone: !Select [2, !GetAZs '']
         CidrBlock: !Sub '10.0.160.0/20'
         VpcId: !Ref VPC
+
+    # public and private route tables
+    RouteTableAPublic:
+      Type: 'AWS::EC2::RouteTable'
+      Properties:
+        VpcId: !Ref VPC
+    RouteTableAPrivate:
+      Type: 'AWS::EC2::RouteTable'
+      Properties:
+        VpcId: !Ref VPC
+    RouteTableBPublic:
+      Type: 'AWS::EC2::RouteTable'
+      Properties:
+        VpcId: !Ref VPC
+    RouteTableBPrivate:
+      Type: 'AWS::EC2::RouteTable'
+      Properties:
+        VpcId: !Ref VPC
+    RouteTableCPublic:
+      Type: 'AWS::EC2::RouteTable'
+      Properties:
+        VpcId: !Ref VPC
+    RouteTableCPrivate:
+      Type: 'AWS::EC2::RouteTable'
+      Properties:
+        VpcId: !Ref VPC
+
+    # public and private table associations
+    RouteTableAssociationAPublic:
+      Type: 'AWS::EC2::SubnetRouteTableAssociation'
+      Properties:
+        SubnetId: !Ref SubnetAPublic
+        RouteTableId: !Ref RouteTableAPublic
+    RouteTableAssociationAPrivate:
+      Type: 'AWS::EC2::SubnetRouteTableAssociation'
+      Properties:
+        SubnetId: !Ref SubnetAPrivate
+        RouteTableId: !Ref RouteTableAPrivate
+    RouteTableAssociationBPublic:
+      Type: 'AWS::EC2::SubnetRouteTableAssociation'
+      Properties:
+        SubnetId: !Ref SubnetBPublic
+        RouteTableId: !Ref RouteTableBPublic
+    RouteTableAssociationBPrivate:
+      Type: 'AWS::EC2::SubnetRouteTableAssociation'
+      Properties:
+        SubnetId: !Ref SubnetBPrivate
+        RouteTableId: !Ref RouteTableBPrivate
+    RouteTableAssociationCPublic:
+      Type: 'AWS::EC2::SubnetRouteTableAssociation'
+      Properties:
+        SubnetId: !Ref SubnetCPublic
+        RouteTableId: !Ref RouteTableCPublic
+    RouteTableAssociationCPrivate:
+      Type: 'AWS::EC2::SubnetRouteTableAssociation'
+      Properties:
+        SubnetId: !Ref SubnetCPrivate
+        RouteTableId: !Ref RouteTableCPrivate
+
+    # public internet routes
+    RouteTablePublicAInternetRoute:
+      Type: 'AWS::EC2::Route'
+      DependsOn: VPCGatewayAttachment
+      Properties:
+        RouteTableId: !Ref RouteTableAPublic
+        DestinationCidrBlock: '0.0.0.0/0'
+        GatewayId: !Ref InternetGateway
+    RouteTablePublicBInternetRoute:
+      Type: 'AWS::EC2::Route'
+      DependsOn: VPCGatewayAttachment
+      Properties:
+        RouteTableId: !Ref RouteTableBPublic
+        DestinationCidrBlock: '0.0.0.0/0'
+        GatewayId: !Ref InternetGateway
+    RouteTablePublicCInternetRoute:
+      Type: 'AWS::EC2::Route'
+      DependsOn: VPCGatewayAttachment
+      Properties:
+        RouteTableId: !Ref RouteTableCPublic
+        DestinationCidrBlock: '0.0.0.0/0'
+        GatewayId: !Ref InternetGateway
+
+    # elastic IPs
+    EIPA:
+      Type: 'AWS::EC2::EIP'
+      Properties:
+        Domain: vpc
+    EIPB:
+      Type: 'AWS::EC2::EIP'
+      Properties:
+        Domain: vpc
+    EIPC:
+      Type: 'AWS::EC2::EIP'
+      Properties:
+        Domain: vpc
+
+    # nat gateways and private routes
+    NatGatewayA:
+      Type: 'AWS::EC2::NatGateway'
+      Properties:
+        AllocationId: !GetAtt 'EIPA.AllocationId'
+        SubnetId: !Ref SubnetAPublic
+    RouteA:
+      Type: 'AWS::EC2::Route'
+      Properties:
+        RouteTableId: !Ref RouteTableAPrivate
+        DestinationCidrBlock: '0.0.0.0/0'
+        NatGatewayId: !Ref NatGatewayA
+    NatGatewayB:
+      Type: 'AWS::EC2::NatGateway'
+      Properties:
+        AllocationId: !GetAtt 'EIPB.AllocationId'
+        SubnetId: !Ref SubnetBPublic
+    RouteB:
+      Type: 'AWS::EC2::Route'
+      Properties:
+        RouteTableId: !Ref RouteTableBPrivate
+        DestinationCidrBlock: '0.0.0.0/0'
+        NatGatewayId: !Ref NatGatewayB
+    NatGatewayC:
+      Type: 'AWS::EC2::NatGateway'
+      Properties:
+        AllocationId: !GetAtt 'EIPC.AllocationId'
+        SubnetId: !Ref SubnetCPublic
+    RouteC:
+      Type: 'AWS::EC2::Route'
+      Properties:
+        RouteTableId: !Ref RouteTableCPrivate
+        DestinationCidrBlock: '0.0.0.0/0'
+        NatGatewayId: !Ref NatGatewayC
+
+    # security group
+    NatGatewayLambdaSecurityGroup:
+      Type: 'AWS::EC2::SecurityGroup'
+      Properties:
+        VpcId: !Ref VPC
+        GroupDescription: 'Security group for NAT Gateway Lambda'
+
     VpcEndpointSecurityGroup:
       Type: 'AWS::EC2::SecurityGroup'
       Properties:
@@ -109,12 +291,49 @@ resources:
         VpcId: !Ref VPC
         GroupDescription: 'Security group for VPC Endpoint Lambda'
 
+    TransunionQueue:
+      Type: 'AWS::SQS::Queue'
+      Properties:
+        QueueName: 'TransunionQueue'
+
+    TransunionTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: 'TransunionTopic'
+
   # 'com.amazonaws.us-east-1.sns'
 
   Outputs:
     VPC:
       Description: 'VPC'
       Value: !Ref VPC
+      Export:
+        Name: !Sub '${self:service}-vpc'
+    SubnetsPublic:
+      Description: 'Subnets public'
+      Value: !Join [',', [!Ref SubnetAPublic, !Ref SubnetBPublic, !Ref SubnetCPublic]]
     SubnetsPrivate:
       Description: 'Subnets private'
       Value: !Join [',', [!Ref SubnetAPrivate, !Ref SubnetBPrivate, !Ref SubnetCPrivate]]
+      Export:
+        Name: !Sub '${self:service}-subnets-private'
+    NatSecurityGroup:
+      Description: 'Nat Gateway Security Group'
+      Value: !Join [',', [!Ref NatGatewayLambdaSecurityGroup]]
+      Export:
+        Name: !Sub '${self:service}-vpc-natsecuritygroup'
+    SecurityGroup:
+      Description: 'VPC Endpoint Security Group'
+      Value: !Join [',', [!Ref VpcEndpointLambdaSecurityGroup]]
+      Export:
+        Name: !Sub '${self:service}-vpc-securitygroup'
+    TransunionQueue:
+      Description: 'Transunion SQS'
+      Value: !Ref TransunionQueue
+      Export:
+        Name: !Sub '${self:service}-sqs'
+    TransunionTopic:
+      Description: 'Transunion SNS'
+      Value: !Ref TransunionTopic
+      Export:
+        Name: !Sub '${self:service}-sns'
