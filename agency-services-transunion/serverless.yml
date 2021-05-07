@@ -264,10 +264,10 @@ resources:
         Name: !Sub '${self:service}-vpc'
     SubnetsPublic:
       Description: 'Subnets public'
-      Value: !Join [',', [!Ref SubnetAPublic, !Ref SubnetBPublic, !Ref SubnetCPublic]]
+      Value: !Join [',', [!Ref SubnetAPublic, !Ref SubnetBPublic]]
     SubnetsPrivate:
       Description: 'Subnets private'
-      Value: !Join [',', [!Ref SubnetAPrivate, !Ref SubnetBPrivate, !Ref SubnetCPrivate]]
+      Value: !Join [',', [!Ref SubnetAPrivate, !Ref SubnetBPrivate]]
       Export:
         Name: !Sub '${self:service}-subnets-private'
     NatSecurityGroup:
