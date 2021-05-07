@@ -254,8 +254,6 @@ resources:
             - 'transunion'
         RawMessageDelivery: 'true'
 
-  # 'com.amazonaws.us-east-1.sns'
-
   Outputs:
     VPC:
       Description: 'VPC'
