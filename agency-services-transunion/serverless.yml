@@ -11,6 +11,7 @@ plugins:
   - serverless-dotenv-plugin # Load .env as environment variables
 
 custom:
+  snsProxy: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
   bundle:
     linting: false
 
@@ -20,7 +21,7 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-2'}
   environment:
-    TABLENAME: TransunionData
+    SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
   vpc:
     securityGroupIds:
       - !GetAtt NatGatewayLambdaSecurityGroup.GroupId
@@ -33,21 +34,11 @@ functions:
   getReport:
     handler: src/handlers/getReport.main
     events:
-      - sns:
-          arn: !Ref TransunionTopic
-          topicName: TransunionTopic
-          integration: lambda-proxy
-  getReports:
-    handler: src/handlers/getReports.main
-    reservedConcurrency: 10
-    events:
       - sqs:
-          arn:
-            Fn::GetAtt:
-              - TransunionQueue
-              - Arn
+          arn: !GetAtt
+            - TransunionQueue
+            - Arn
           batchSize: 1
-          integration: lambda-proxy
 
 resources:
   Resources:
@@ -291,15 +282,56 @@ resources:
         VpcId: !Ref VPC
         GroupDescription: 'Security group for VPC Endpoint Lambda'
 
+    # Create our 'TransunionQueue' SQS queue
     TransunionQueue:
       Type: 'AWS::SQS::Queue'
       Properties:
-        QueueName: 'TransunionQueue'
+        QueueName: ${self:provider.stage}-${self:service}-sqs
+        RedrivePolicy:
+          deadLetterTargetArn: !GetAtt
+            - TransunionQueueDLQ
+            - Arn
+          maxReceiveCount: 3
 
-    TransunionTopic:
-      Type: AWS::SNS::Topic
+    # Create our 'TransunionQueue' Dead Letter Queue SQS queue
+    TransunionQueueDLQ:
+      Type: AWS::SQS::Queue
       Properties:
-        TopicName: 'TransunionTopic'
+        QueueName: ${self:provider.stage}-${self:service}-dlq
+
+    # Create our queue policy for the 'MailchimpQueue'
+    SnsToTransunionQueueSqsPolicy:
+      Type: AWS::SQS::QueuePolicy
+      Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: 'allow-sns-messages'
+              Effect: Allow
+              Principal: '*'
+              Resource: !GetAtt
+                - TransunionQueue
+                - Arn
+              Action: 'SQS:SendMessage'
+              Condition:
+                ArnEquals:
+                  'aws:SourceArn': ${self:provider.environment.SNS_PROXY_ARN}
+        Queues:
+          - Ref: TransunionQueue
+
+    # Create the subscription to the 'secondQueue'
+    TransunionQueueSubscription:
+      Type: 'AWS::SNS::Subscription'
+      Properties:
+        TopicArn: ${self:provider.environment.SNS_PROXY_ARN}
+        Endpoint: !GetAtt
+          - TransunionQueue
+          - Arn
+        Protocol: sqs
+        FilterPolicy:
+          service:
+            - 'transunion'
+        RawMessageDelivery: 'true'
 
   # 'com.amazonaws.us-east-1.sns'
 
@@ -327,13 +359,3 @@ resources:
       Value: !Join [',', [!Ref VpcEndpointLambdaSecurityGroup]]
       Export:
         Name: !Sub '${self:service}-vpc-securitygroup'
-    TransunionQueue:
-      Description: 'Transunion SQS'
-      Value: !Ref TransunionQueue
-      Export:
-        Name: !Sub '${self:service}-sqs'
-    TransunionTopic:
-      Description: 'Transunion SNS'
-      Value: !Ref TransunionTopic
-      Export:
-        Name: !Sub '${self:service}-sns'
