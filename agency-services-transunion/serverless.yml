@@ -252,6 +252,10 @@ resources:
       Properties:
         VpcId: !Ref VPC
         GroupDescription: 'Security group for NAT Gateway Lambda'
+        SecurityGroupIngress:
+          - IpProtocol: tcp
+            FromPort: 443
+            ToPort: 443
 
     # Create our 'TransunionQueue' SQS queue
     TransunionQueue:
