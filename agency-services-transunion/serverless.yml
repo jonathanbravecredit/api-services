@@ -28,7 +28,6 @@ provider:
     subnetIds:
       - !Ref SubnetAPrivate
       - !Ref SubnetBPrivate
-      - !Ref SubnetCPrivate
 
 functions:
   getReport:
@@ -102,19 +101,6 @@ resources:
         AvailabilityZone: !Select [1, !GetAZs '']
         CidrBlock: !Sub '10.0.144.0/20'
         VpcId: !Ref VPC
-    SubnetCPublic:
-      Type: 'AWS::EC2::Subnet'
-      Properties:
-        AvailabilityZone: !Select [2, !GetAZs '']
-        CidrBlock: !Sub '10.0.48.0/20'
-        MapPublicIpOnLaunch: true
-        VpcId: !Ref VPC
-    SubnetCPrivate:
-      Type: 'AWS::EC2::Subnet'
-      Properties:
-        AvailabilityZone: !Select [2, !GetAZs '']
-        CidrBlock: !Sub '10.0.160.0/20'
-        VpcId: !Ref VPC
 
     # public and private route tables
     RouteTableAPublic:
@@ -130,14 +116,6 @@ resources:
       Properties:
         VpcId: !Ref VPC
     RouteTableBPrivate:
-      Type: 'AWS::EC2::RouteTable'
-      Properties:
-        VpcId: !Ref VPC
-    RouteTableCPublic:
-      Type: 'AWS::EC2::RouteTable'
-      Properties:
-        VpcId: !Ref VPC
-    RouteTableCPrivate:
       Type: 'AWS::EC2::RouteTable'
       Properties:
         VpcId: !Ref VPC
@@ -163,16 +141,6 @@ resources:
       Properties:
         SubnetId: !Ref SubnetBPrivate
         RouteTableId: !Ref RouteTableBPrivate
-    RouteTableAssociationCPublic:
-      Type: 'AWS::EC2::SubnetRouteTableAssociation'
-      Properties:
-        SubnetId: !Ref SubnetCPublic
-        RouteTableId: !Ref RouteTableCPublic
-    RouteTableAssociationCPrivate:
-      Type: 'AWS::EC2::SubnetRouteTableAssociation'
-      Properties:
-        SubnetId: !Ref SubnetCPrivate
-        RouteTableId: !Ref RouteTableCPrivate
 
     # public internet routes
     RouteTablePublicAInternetRoute:
@@ -189,13 +157,6 @@ resources:
         RouteTableId: !Ref RouteTableBPublic
         DestinationCidrBlock: '0.0.0.0/0'
         GatewayId: !Ref InternetGateway
-    RouteTablePublicCInternetRoute:
-      Type: 'AWS::EC2::Route'
-      DependsOn: VPCGatewayAttachment
-      Properties:
-        RouteTableId: !Ref RouteTableCPublic
-        DestinationCidrBlock: '0.0.0.0/0'
-        GatewayId: !Ref InternetGateway
 
     # elastic IPs
     EIPA:
@@ -203,10 +164,6 @@ resources:
       Properties:
         Domain: vpc
     EIPB:
-      Type: 'AWS::EC2::EIP'
-      Properties:
-        Domain: vpc
-    EIPC:
       Type: 'AWS::EC2::EIP'
       Properties:
         Domain: vpc
@@ -234,17 +191,6 @@ resources:
         RouteTableId: !Ref RouteTableBPrivate
         DestinationCidrBlock: '0.0.0.0/0'
         NatGatewayId: !Ref NatGatewayB
-    NatGatewayC:
-      Type: 'AWS::EC2::NatGateway'
-      Properties:
-        AllocationId: !GetAtt 'EIPC.AllocationId'
-        SubnetId: !Ref SubnetCPublic
-    RouteC:
-      Type: 'AWS::EC2::Route'
-      Properties:
-        RouteTableId: !Ref RouteTableCPrivate
-        DestinationCidrBlock: '0.0.0.0/0'
-        NatGatewayId: !Ref NatGatewayC
 
     # security group
     NatGatewayLambdaSecurityGroup:
