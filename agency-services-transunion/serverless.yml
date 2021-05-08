@@ -79,27 +79,27 @@ resources:
       Type: 'AWS::EC2::Subnet'
       Properties:
         AvailabilityZone: !Select [0, !GetAZs '']
-        CidrBlock: !Sub '10.0.0.0/20'
+        CidrBlock: !Sub '10.0.0.0/24'
         MapPublicIpOnLaunch: true
         VpcId: !Ref VPC
     SubnetAPrivate:
       Type: 'AWS::EC2::Subnet'
       Properties:
         AvailabilityZone: !Select [0, !GetAZs '']
-        CidrBlock: !Sub '10.0.128.0/20'
+        CidrBlock: !Sub '10.0.128.0/24'
         VpcId: !Ref VPC
     SubnetBPublic:
       Type: 'AWS::EC2::Subnet'
       Properties:
         AvailabilityZone: !Select [1, !GetAZs '']
-        CidrBlock: !Sub '10.0.16.0/20'
+        CidrBlock: !Sub '10.0.16.0/24'
         MapPublicIpOnLaunch: true
         VpcId: !Ref VPC
     SubnetBPrivate:
       Type: 'AWS::EC2::Subnet'
       Properties:
         AvailabilityZone: !Select [1, !GetAZs '']
-        CidrBlock: !Sub '10.0.144.0/20'
+        CidrBlock: !Sub '10.0.144.0/24'
         VpcId: !Ref VPC
 
     # public and private route tables
@@ -202,6 +202,12 @@ resources:
           - IpProtocol: tcp
             FromPort: 443
             ToPort: 443
+            CidrIp: 0.0.0.0/0
+        SecurityGroupEgress:
+          - IpProtocol: tcp
+            FromPort: 443
+            ToPort: 443
+            CidrIp: 0.0.0.0/0
 
     # Create our 'TransunionQueue' SQS queue
     TransunionQueue:
