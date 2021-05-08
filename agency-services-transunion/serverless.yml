@@ -79,27 +79,27 @@ resources:
       Type: 'AWS::EC2::Subnet'
       Properties:
         AvailabilityZone: !Select [0, !GetAZs '']
-        CidrBlock: !Sub '10.0.0.16/24'
+        CidrBlock: !Sub '10.0.16.0/24'
         MapPublicIpOnLaunch: true
         VpcId: !Ref VPC
     SubnetAPrivate:
       Type: 'AWS::EC2::Subnet'
       Properties:
         AvailabilityZone: !Select [0, !GetAZs '']
-        CidrBlock: !Sub '10.0.0.1/24'
+        CidrBlock: !Sub '10.0.1.0/24'
         VpcId: !Ref VPC
     SubnetBPublic:
       Type: 'AWS::EC2::Subnet'
       Properties:
         AvailabilityZone: !Select [1, !GetAZs '']
-        CidrBlock: !Sub '10.0.0.32/24'
+        CidrBlock: !Sub '10.0.32.0/24'
         MapPublicIpOnLaunch: true
         VpcId: !Ref VPC
     SubnetBPrivate:
       Type: 'AWS::EC2::Subnet'
       Properties:
         AvailabilityZone: !Select [1, !GetAZs '']
-        CidrBlock: !Sub '10.0.0.2/24'
+        CidrBlock: !Sub '10.0.2.0/24'
         VpcId: !Ref VPC
 
     # public and private route tables
