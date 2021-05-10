@@ -11,8 +11,11 @@ plugins:
   - serverless-dotenv-plugin # Load .env as environment variables
 
 custom:
+  snsProxy: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
   bundle:
     linting: false
+    rawFileExtensions:
+      - crt
 
 provider:
   name: aws
@@ -20,34 +23,23 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-2'}
   environment:
-    TABLENAME: TransunionData
+    SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
   vpc:
     securityGroupIds:
       - !GetAtt NatGatewayLambdaSecurityGroup.GroupId
     subnetIds:
       - !Ref SubnetAPrivate
       - !Ref SubnetBPrivate
-      - !Ref SubnetCPrivate
 
 functions:
   getReport:
     handler: src/handlers/getReport.main
     events:
-      - sns:
-          arn: !Ref TransunionTopic
-          topicName: TransunionTopic
-          integration: lambda-proxy
-  getReports:
-    handler: src/handlers/getReports.main
-    reservedConcurrency: 10
-    events:
       - sqs:
-          arn:
-            Fn::GetAtt:
-              - TransunionQueue
-              - Arn
+          arn: !GetAtt
+            - TransunionQueue
+            - Arn
           batchSize: 1
-          integration: lambda-proxy
 
 resources:
   Resources:
@@ -111,19 +103,6 @@ resources:
         AvailabilityZone: !Select [1, !GetAZs '']
         CidrBlock: !Sub '10.0.144.0/20'
         VpcId: !Ref VPC
-    SubnetCPublic:
-      Type: 'AWS::EC2::Subnet'
-      Properties:
-        AvailabilityZone: !Select [1, !GetAZs '']
-        CidrBlock: !Sub '10.0.32.0/20'
-        MapPublicIpOnLaunch: true
-        VpcId: !Ref VPC
-    SubnetCPrivate:
-      Type: 'AWS::EC2::Subnet'
-      Properties:
-        AvailabilityZone: !Select [2, !GetAZs '']
-        CidrBlock: !Sub '10.0.160.0/20'
-        VpcId: !Ref VPC
 
     # public and private route tables
     RouteTableAPublic:
@@ -139,14 +118,6 @@ resources:
       Properties:
         VpcId: !Ref VPC
     RouteTableBPrivate:
-      Type: 'AWS::EC2::RouteTable'
-      Properties:
-        VpcId: !Ref VPC
-    RouteTableCPublic:
-      Type: 'AWS::EC2::RouteTable'
-      Properties:
-        VpcId: !Ref VPC
-    RouteTableCPrivate:
       Type: 'AWS::EC2::RouteTable'
       Properties:
         VpcId: !Ref VPC
@@ -172,16 +143,6 @@ resources:
       Properties:
         SubnetId: !Ref SubnetBPrivate
         RouteTableId: !Ref RouteTableBPrivate
-    RouteTableAssociationCPublic:
-      Type: 'AWS::EC2::SubnetRouteTableAssociation'
-      Properties:
-        SubnetId: !Ref SubnetCPublic
-        RouteTableId: !Ref RouteTableCPublic
-    RouteTableAssociationCPrivate:
-      Type: 'AWS::EC2::SubnetRouteTableAssociation'
-      Properties:
-        SubnetId: !Ref SubnetCPrivate
-        RouteTableId: !Ref RouteTableCPrivate
 
     # public internet routes
     RouteTablePublicAInternetRoute:
@@ -198,13 +159,6 @@ resources:
         RouteTableId: !Ref RouteTableBPublic
         DestinationCidrBlock: '0.0.0.0/0'
         GatewayId: !Ref InternetGateway
-    RouteTablePublicCInternetRoute:
-      Type: 'AWS::EC2::Route'
-      DependsOn: VPCGatewayAttachment
-      Properties:
-        RouteTableId: !Ref RouteTableCPublic
-        DestinationCidrBlock: '0.0.0.0/0'
-        GatewayId: !Ref InternetGateway
 
     # elastic IPs
     EIPA:
@@ -212,10 +166,6 @@ resources:
       Properties:
         Domain: vpc
     EIPB:
-      Type: 'AWS::EC2::EIP'
-      Properties:
-        Domain: vpc
-    EIPC:
       Type: 'AWS::EC2::EIP'
       Properties:
         Domain: vpc
@@ -243,17 +193,6 @@ resources:
         RouteTableId: !Ref RouteTableBPrivate
         DestinationCidrBlock: '0.0.0.0/0'
         NatGatewayId: !Ref NatGatewayB
-    NatGatewayC:
-      Type: 'AWS::EC2::NatGateway'
-      Properties:
-        AllocationId: !GetAtt 'EIPC.AllocationId'
-        SubnetId: !Ref SubnetCPublic
-    RouteC:
-      Type: 'AWS::EC2::Route'
-      Properties:
-        RouteTableId: !Ref RouteTableCPrivate
-        DestinationCidrBlock: '0.0.0.0/0'
-        NatGatewayId: !Ref NatGatewayC
 
     # security group
     NatGatewayLambdaSecurityGroup:
@@ -261,47 +200,67 @@ resources:
       Properties:
         VpcId: !Ref VPC
         GroupDescription: 'Security group for NAT Gateway Lambda'
-
-    VpcEndpointSecurityGroup:
-      Type: 'AWS::EC2::SecurityGroup'
-      Properties:
-        VpcId: !Ref VPC
-        GroupDescription: 'Security group for VPC Endpoint'
         SecurityGroupIngress:
           - IpProtocol: tcp
             FromPort: 443
             ToPort: 443
-            SourceSecurityGroupId: !GetAtt VpcEndpointLambdaSecurityGroup.GroupId
-    ApiVpcEndpoint:
-      Type: AWS::EC2::VPCEndpoint
-      Properties:
-        PrivateDnsEnabled: True
-        SecurityGroupIds:
-          - !GetAtt VpcEndpointSecurityGroup.GroupId
-        ServiceName: !Sub 'com.amazonaws.${AWS::Region}.execute-api'
-        SubnetIds:
-          - !Ref SubnetAPrivate
-          - !Ref SubnetBPrivate
-          - !Ref SubnetCPrivate
-        VpcEndpointType: Interface
-        VpcId: !Ref VPC
-    VpcEndpointLambdaSecurityGroup:
-      Type: 'AWS::EC2::SecurityGroup'
-      Properties:
-        VpcId: !Ref VPC
-        GroupDescription: 'Security group for VPC Endpoint Lambda'
+            CidrIp: 0.0.0.0/0
+        SecurityGroupEgress:
+          - IpProtocol: tcp
+            FromPort: 443
+            ToPort: 443
+            CidrIp: 0.0.0.0/0
 
+    # Create our 'TransunionQueue' SQS queue
     TransunionQueue:
       Type: 'AWS::SQS::Queue'
       Properties:
-        QueueName: 'TransunionQueue'
+        QueueName: ${self:provider.stage}-${self:service}-sqs
+        RedrivePolicy:
+          deadLetterTargetArn: !GetAtt
+            - TransunionQueueDLQ
+            - Arn
+          maxReceiveCount: 3
 
-    TransunionTopic:
-      Type: AWS::SNS::Topic
+    # Create our 'TransunionQueue' Dead Letter Queue SQS queue
+    TransunionQueueDLQ:
+      Type: AWS::SQS::Queue
       Properties:
-        TopicName: 'TransunionTopic'
+        QueueName: ${self:provider.stage}-${self:service}-dlq
 
-  # 'com.amazonaws.us-east-1.sns'
+    # Create our queue policy for the 'MailchimpQueue'
+    SnsToTransunionQueueSqsPolicy:
+      Type: AWS::SQS::QueuePolicy
+      Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: 'allow-sns-messages'
+              Effect: Allow
+              Principal: '*'
+              Resource: !GetAtt
+                - TransunionQueue
+                - Arn
+              Action: 'SQS:SendMessage'
+              Condition:
+                ArnEquals:
+                  'aws:SourceArn': ${self:provider.environment.SNS_PROXY_ARN}
+        Queues:
+          - Ref: TransunionQueue
+
+    # Create the subscription to the 'secondQueue'
+    TransunionQueueSubscription:
+      Type: 'AWS::SNS::Subscription'
+      Properties:
+        TopicArn: ${self:provider.environment.SNS_PROXY_ARN}
+        Endpoint: !GetAtt
+          - TransunionQueue
+          - Arn
+        Protocol: sqs
+        FilterPolicy:
+          service:
+            - 'transunion'
+        RawMessageDelivery: 'true'
 
   Outputs:
     VPC:
@@ -311,10 +270,10 @@ resources:
         Name: !Sub '${self:service}-vpc'
     SubnetsPublic:
       Description: 'Subnets public'
-      Value: !Join [',', [!Ref SubnetAPublic, !Ref SubnetBPublic, !Ref SubnetCPublic]]
+      Value: !Join [',', [!Ref SubnetAPublic, !Ref SubnetBPublic]]
     SubnetsPrivate:
       Description: 'Subnets private'
-      Value: !Join [',', [!Ref SubnetAPrivate, !Ref SubnetBPrivate, !Ref SubnetCPrivate]]
+      Value: !Join [',', [!Ref SubnetAPrivate, !Ref SubnetBPrivate]]
       Export:
         Name: !Sub '${self:service}-subnets-private'
     NatSecurityGroup:
@@ -322,18 +281,3 @@ resources:
       Value: !Join [',', [!Ref NatGatewayLambdaSecurityGroup]]
       Export:
         Name: !Sub '${self:service}-vpc-natsecuritygroup'
-    SecurityGroup:
-      Description: 'VPC Endpoint Security Group'
-      Value: !Join [',', [!Ref VpcEndpointLambdaSecurityGroup]]
-      Export:
-        Name: !Sub '${self:service}-vpc-securitygroup'
-    TransunionQueue:
-      Description: 'Transunion SQS'
-      Value: !Ref TransunionQueue
-      Export:
-        Name: !Sub '${self:service}-sqs'
-    TransunionTopic:
-      Description: 'Transunion SNS'
-      Value: !Ref TransunionTopic
-      Export:
-        Name: !Sub '${self:service}-sns'
