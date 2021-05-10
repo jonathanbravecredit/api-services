@@ -5,6 +5,7 @@ import * as https from 'https';
 import * as fs from 'fs';
 
 let caCert: Buffer;
+let altCert: Buffer;
 
 export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
   console.log('I received message --->', event);
@@ -13,7 +14,8 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
   // return response(200, 'Speaking to you from the VPC');
 
   try {
-    caCert = fs.readFileSync('lib/data/brave.credit.crt');
+    caCert = fs.readFileSync('/opt/certs/brave.credit.crt');
+    altCert = fs.readFileSync('/opt/certs/Root-CA-Bundle.crt');
   } catch (err) {
     console.log('Make sure that the CA cert file is named brave.credit.crt', err);
     return response(500, { error: `Error gathering reading cert=${err}` });
