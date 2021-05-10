@@ -1,9 +1,11 @@
 service: agency-layers
+
 provider:
   name: aws
-layers:
-  Certs:
-    path: certs
+  layers:
+    Certs:
+      path: certs
+
 resources:
   Outputs:
     CertLayerExport:
