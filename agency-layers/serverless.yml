@@ -2,12 +2,12 @@ service: agency-layers
 provider:
   name: aws
 layers:
-  cert:
+  Certs:
     path: certs
 resources:
   Outputs:
     CertLayerExport:
       Value:
-        Ref: CertLambdaLayer
+        Ref: CertsLambdaLayer
       Export:
-        Name: CertLambdaLayer
+        Name: CertsLambdaLayer
