@@ -23,7 +23,7 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-2'}
   layers:
-    - !ImportValue CertLambdaLayer
+    - !ImportValue CertsLambdaLayer
   environment:
     SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
   vpc:
