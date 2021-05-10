@@ -28,7 +28,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
       // console.log('Message Attributtes -->  ', messageAttributes.AttributeNameHere.stringValue);
       // console.log('Message Body -->  ', record.body);
       // // Do something
-      let res = await axios.get('https://jsonplaceholder.typicode.com/todos/1', {
+      let res = await axios.get('https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc?singleWsdl', {
         httpsAgent: httpsAgent,
       });
       console.log('my response from the external api', res);

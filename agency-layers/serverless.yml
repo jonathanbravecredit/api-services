@@ -1,0 +1,13 @@
+service: agency-layers
+provider:
+  name: aws
+layers:
+  cert:
+    path: certs
+resources:
+  Outputs:
+    CertLayerExport:
+      Value:
+        Ref: CertLambdaLayer
+      Export:
+        Name: CertLambdaLayer
