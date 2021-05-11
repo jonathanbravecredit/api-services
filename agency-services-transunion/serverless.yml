@@ -53,6 +53,8 @@ functions:
     events:
       - sns:
           arn: ${self::provider.environment.SNS_PROXY_ARN}
+          topicName: SnsProxyTopic
+          integration: lambda-proxy
 
 resources:
   Resources:
