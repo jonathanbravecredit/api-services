@@ -3,7 +3,6 @@ import { response } from 'lib/utils/response';
 import * as fs from 'fs';
 import * as request from 'request';
 import * as soap from 'soap';
-import axios from 'axios';
 
 request.debug = true;
 
@@ -12,47 +11,41 @@ let cert: Buffer;
 let cacert: Buffer;
 let user = 'CC2BraveCredit:CCltkdA8mGxpi';
 let url = 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc?singleWsdl';
+let auth = 'Basic ' + Buffer.from('CC2BraveCredit' + ':' + 'CCltkdA8mGxpi').toString('base64');
 
 export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
-  console.log('I received message --->', event);
-  const dte = new Date();
-  console.log(`I was called at: ${dte.toLocaleString()}`);
-  // return response(200, 'Speaking to you from the VPC');
+  // CONFIRMED WORKING WITH THIS SERVER
+  // url = 'https://www.dataaccess.com/webservicesserver/NumberConversion.wso?wsdl';
+  // let client = yield soap["createClientAsync"](url);
+  // console.log(client)
+
+  //   return response(200, {
+  //     response: 'sucessfully processed all messages'
+  //   });
 
   try {
+    // CONFIRMED IMPORTED CORRECTLY
     key = fs.readFileSync('/opt/tubravecredit.key');
     cert = fs.readFileSync('/opt/brave.credit.crt');
     cacert = fs.readFileSync('/opt/Root-CA-Bundle.crt');
   } catch (err) {
-    console.log('Make sure that the CA cert file is named brave.credit.crt', err);
     return response(500, { error: `Error gathering reading cert=${err}` });
   }
 
   try {
     for (const record of event.Records) {
-      console.log('record=', record);
-      // const messageAttributes: SQSMessageAttributes = record.messageAttributes;
-      // console.log('Message Attributtes -->  ', messageAttributes.AttributeNameHere.stringValue);
-      // console.log('Message Body -->  ', record.body);
-      // // Do something
-      let requestDefaults = request.defaults({ ciphers: 'ALL' });
       let client = await soap.createClientAsync(url, {
-        request: requestDefaults,
         wsdl_options: {
           key,
           cert,
           cacert,
           user,
         },
+        wsdl_headers: {
+          Authorization: auth,
+        },
       });
-      console.log('client', client);
-      // let security = new soap.ClientSSLSecurity(key, cert, ca);
-      // client.setSecurity(security);
-
-      // let res = await axios.get('https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc?singleWsdl', {
-      //   httpsAgent: httpsAgent,
-      // });
-      // console.log('my response from the external api', res);
+      console.log('last request', client.lastRequest);
     }
     return response(200, { response: 'sucessfully processed all messages' });
   } catch (err) {
