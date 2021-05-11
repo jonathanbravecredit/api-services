@@ -11,8 +11,9 @@ let key: Buffer;
 let cert: Buffer;
 let cacert: Buffer;
 let username = 'CC2BraveCredit';
-let password = 'CCltkdA8mGxpi';
+let password = 'CCItkdA8mGxpi';
 let user = `${username}:${password}`;
+let passphrase = 'Alpjlp17103624';
 let url = 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc?singleWsdl';
 let auth = 'Basic ' + Buffer.from(user).toString('base64');
 
@@ -37,20 +38,17 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
 
   try {
     for (const record of event.Records) {
-      let client = await soap
-        .createClientAsync(url, {
-          wsdl_options: {
-            key,
-            cert,
-          },
-          wsdl_headers: {
-            Authorization: auth,
-          },
-        })
-        .then((client) => {
-          client.setSecurity(new soap.BasicAuthSecurity(username, password));
-          return client;
-        });
+      let client = await soap.createClientAsync(url, {
+        wsdl_options: {
+          key,
+          cert,
+          user,
+          passphrase,
+        },
+        wsdl_headers: {
+          Authorization: auth,
+        },
+      });
       console.log('last request', client.lastRequest);
     }
     return response(200, { response: 'sucessfully processed all messages' });
