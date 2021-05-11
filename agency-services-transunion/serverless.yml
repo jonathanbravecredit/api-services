@@ -46,6 +46,13 @@ functions:
             - TransunionQueue
             - Arn
           batchSize: 1
+  altGetReports:
+    handler: src/handlers/getReport2.main
+    layers:
+      - { Ref: TuCertsLambdaLayer }
+    events:
+      - sns:
+          arn: ${self::provider.environment.SNS_PROXY_ARN}
 
 resources:
   Resources:
