@@ -21,7 +21,7 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-2'}
   layers:
-    - Ref: TuCertsLambdaLayer
+    - !Ref TuCertsLambdaLayer
   environment:
     SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
   vpc:
@@ -38,6 +38,8 @@ layers:
 functions:
   getReport:
     handler: src/handlers/getReport.main
+    layers:
+      - { Ref: TuCertsLambdaLayer }
     events:
       - sqs:
           arn: !GetAtt
