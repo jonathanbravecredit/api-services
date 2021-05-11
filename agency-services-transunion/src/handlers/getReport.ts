@@ -43,6 +43,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
         cert,
         user,
         passphrase,
+        timeout: 5000,
       },
       wsdl_headers: {
         Authorization: auth,
