@@ -6,7 +6,8 @@ import * as soap from 'soap';
 
 let key: Buffer;
 let cert: Buffer;
-let ca: Buffer;
+let cacert: Buffer;
+let user = 'CC2BraveCredit:CCltkdA8mGxpi';
 let url = 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc?singleWsdl';
 
 export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
@@ -18,7 +19,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
   try {
     key = fs.readFileSync('/opt/tubravecredit.key');
     cert = fs.readFileSync('/opt/brave.credit.crt');
-    ca = fs.readFileSync('/opt/Root-CA-Bundle.crt');
+    cacert = fs.readFileSync('/opt/Root-CA-Bundle.crt');
   } catch (err) {
     console.log('Make sure that the CA cert file is named brave.credit.crt', err);
     return response(500, { error: `Error gathering reading cert=${err}` });
@@ -39,7 +40,8 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
         wsdl_options: {
           key,
           cert,
-          ca,
+          cacert,
+          user,
         },
       });
       console.log('client', client);
