@@ -1,8 +1,7 @@
 import { SQSEvent, SQSHandler } from 'aws-lambda';
 import { response } from 'lib/utils/response';
-import axios from 'axios';
-import * as https from 'https';
 import * as fs from 'fs';
+import * as request from 'request';
 import * as soap from 'soap';
 
 let key: Buffer;
@@ -34,11 +33,18 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
       // console.log('Message Attributtes -->  ', messageAttributes.AttributeNameHere.stringValue);
       // console.log('Message Body -->  ', record.body);
       // // Do something
-
-      let client = await soap.createClientAsync(url);
-      let security = new soap.ClientSSLSecurity(key, cert, ca);
-      client.setSecurity(security);
+      let requestDefaults = request.defaults({ ciphers: 'ALL' });
+      let client = await soap.createClientAsync(url, {
+        request: requestDefaults,
+        wsdl_options: {
+          key,
+          cert,
+          ca,
+        },
+      });
       console.log('client', client);
+      // let security = new soap.ClientSSLSecurity(key, cert, ca);
+      // client.setSecurity(security);
 
       // let res = await axios.get('https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc?singleWsdl', {
       //   httpsAgent: httpsAgent,
