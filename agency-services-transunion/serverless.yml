@@ -14,8 +14,6 @@ custom:
   snsProxy: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
   bundle:
     linting: false
-    rawFileExtensions:
-      - crt
 
 provider:
   name: aws
@@ -23,7 +21,7 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-2'}
   layers:
-    - !ImportValue CertsLambdaLayer
+    - arn:aws:lambda:us-east-2:890995358345:layer:Certs:1
   environment:
     SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
   vpc:

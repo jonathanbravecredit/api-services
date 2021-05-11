@@ -78,7 +78,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/agency-layers/dev/1620679960405-2021-05-10T20:52:40.405Z/Certs.zip"
+          "S3Key": "serverless/agency-layers/dev/1620692445414-2021-05-11T00:20:45.414Z/Certs.zip"
         },
         "LayerName": "Certs"
       }
@@ -98,11 +98,11 @@
     },
     "CertsLambdaLayerHash": {
       "Description": "Current Lambda layer hash",
-      "Value": "e0145b93931fd558d058617a9dbda265c1e844f3"
+      "Value": "e2123b20ee6e3fb586028f7f13d84425836e4281"
     },
     "CertsLambdaLayerS3Key": {
       "Description": "Current Lambda layer S3Key",
-      "Value": "serverless/agency-layers/dev/1620679960405-2021-05-10T20:52:40.405Z/Certs.zip"
+      "Value": "serverless/agency-layers/dev/1620692445414-2021-05-11T00:20:45.414Z/Certs.zip"
     },
     "CertLayerExport": {
       "Value": {
