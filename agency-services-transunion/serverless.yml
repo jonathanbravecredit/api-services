@@ -21,7 +21,7 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-2'}
   layers:
-    - arn:aws:lambda:us-east-2:890995358345:layer:Certs:1
+    - Ref: TuCertsLambdaLayer
   environment:
     SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
   vpc:
@@ -30,6 +30,10 @@ provider:
     subnetIds:
       - !Ref SubnetAPrivate
       - !Ref SubnetBPrivate
+
+layers:
+  TuCerts:
+    path: tucerts
 
 functions:
   getReport:
