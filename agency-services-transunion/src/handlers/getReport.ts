@@ -5,6 +5,8 @@ import * as request from 'request';
 import * as soap from 'soap';
 import axios from 'axios';
 
+request.debug = true;
+
 let key: Buffer;
 let cert: Buffer;
 let cacert: Buffer;
@@ -26,39 +28,30 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
     return response(500, { error: `Error gathering reading cert=${err}` });
   }
 
-  // const httpsAgent = new https.Agent({ ca: caCert, keepAlive: false });
-
   try {
     for (const record of event.Records) {
-      // console.log('record=', record);
+      console.log('record=', record);
       // const messageAttributes: SQSMessageAttributes = record.messageAttributes;
       // console.log('Message Attributtes -->  ', messageAttributes.AttributeNameHere.stringValue);
       // console.log('Message Body -->  ', record.body);
-      // Do something
-      // let requestDefaults = request.defaults({ ciphers: 'ALL' });
-
-      let client = await soap
-        .createClientAsync(url, {
-          // request: requestDefaults,
-          wsdl_options: {
-            key,
-            cert,
-            cacert,
-            user,
-          },
-        })
-        .then((client) => {
-          console.log('last request ===>', client.lastRequest);
-        })
-        .catch((err) => {
-          console.log('catch err', err);
-        });
-      // console.log('client', client);
+      // // Do something
+      let requestDefaults = request.defaults({ ciphers: 'ALL' });
+      let client = await soap.createClientAsync(url, {
+        request: requestDefaults,
+        wsdl_options: {
+          key,
+          cert,
+          cacert,
+          user,
+        },
+      });
+      console.log('client', client);
       // let security = new soap.ClientSSLSecurity(key, cert, ca);
       // client.setSecurity(security);
 
-      // let res = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
-      // console.log('my response from the external api', res);
+      // let res = await axios.get('https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc?singleWsdl', {
+      //   httpsAgent: httpsAgent,
+      // });
       // console.log('my response from the external api', res);
     }
     return response(200, { response: 'sucessfully processed all messages' });
