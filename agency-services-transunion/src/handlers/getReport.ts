@@ -11,7 +11,7 @@ let cert: Buffer;
 let cacert: Buffer;
 let user = 'CC2BraveCredit:CCltkdA8mGxpi';
 let url = 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc?singleWsdl';
-let auth = 'Basic ' + Buffer.from('CC2BraveCredit' + ':' + 'CCltkdA8mGxpi').toString('base64');
+let auth = 'Basic ' + Buffer.from(user).toString('base64');
 
 export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
   // CONFIRMED WORKING WITH THIS SERVER
@@ -49,6 +49,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
     }
     return response(200, { response: 'sucessfully processed all messages' });
   } catch (err) {
+    console.log('err ===> ', err);
     return response(500, { error: err });
   }
 };

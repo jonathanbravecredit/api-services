@@ -191,7 +191,7 @@ resources:
     NatGatewayB:
       Type: 'AWS::EC2::NatGateway'
       Properties:
-        AllocationId: !GetAtt 'EIPB.AllocationId'
+        # AllocationId: !GetAtt 'EIPB.AllocationId'
         SubnetId: !Ref SubnetBPublic
     RouteB:
       Type: 'AWS::EC2::Route'
