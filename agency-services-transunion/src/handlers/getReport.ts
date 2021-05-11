@@ -37,19 +37,22 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
   }
 
   try {
+    let client = await soap.createClientAsync(url, {
+      wsdl_options: {
+        key,
+        cert,
+        user,
+        passphrase,
+      },
+      wsdl_headers: {
+        Authorization: auth,
+      },
+    });
+    console.log('last request', client.lastRequest);
+    console.log('client ====> ', client);
+
     for (const record of event.Records) {
-      let client = await soap.createClientAsync(url, {
-        wsdl_options: {
-          key,
-          cert,
-          user,
-          passphrase,
-        },
-        wsdl_headers: {
-          Authorization: auth,
-        },
-      });
-      console.log('last request', client.lastRequest);
+      // do something
     }
     return response(200, { response: 'sucessfully processed all messages' });
   } catch (err) {
