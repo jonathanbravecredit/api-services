@@ -175,6 +175,10 @@ resources:
       Type: 'AWS::EC2::EIP'
       Properties:
         Domain: vpc
+    EIPC:
+      Type: 'AWS::EC2::EIP'
+      Properties:
+        Domain: vpc
 
     # nat gateways and private routes
     NatGatewayA:
@@ -191,7 +195,7 @@ resources:
     NatGatewayB:
       Type: 'AWS::EC2::NatGateway'
       Properties:
-        # AllocationId: !GetAtt 'EIPB.AllocationId'
+        AllocationId: !GetAtt 'EIPC.AllocationId'
         SubnetId: !Ref SubnetBPublic
     RouteB:
       Type: 'AWS::EC2::Route'
