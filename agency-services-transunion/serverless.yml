@@ -24,6 +24,7 @@ provider:
     - !Ref TuCertsLambdaLayer
   environment:
     SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
+    TU_SECRET_LOCATION: '${self:provider.stage}/agency-services/transunion'
   vpc:
     securityGroupIds:
       - !GetAtt NatGatewayLambdaSecurityGroup.GroupId
@@ -36,8 +37,8 @@ layers:
     path: tucerts
 
 functions:
-  getReport:
-    handler: src/handlers/getReport.main
+  getReports:
+    handler: src/handlers/getReports.main
     layers:
       - { Ref: TuCertsLambdaLayer }
     events:
@@ -46,8 +47,8 @@ functions:
             - TransunionQueue
             - Arn
           batchSize: 1
-  altGetReports:
-    handler: src/handlers/getReport2.main
+  getReport:
+    handler: src/handlers/getReport.main
     layers:
       - { Ref: TuCertsLambdaLayer }
     events:
@@ -55,6 +56,9 @@ functions:
           arn: ${self:provider.environment.SNS_PROXY_ARN}
           topicName: SnsProxyTopic
           integration: lambda-proxy
+          filterPolicy:
+            service:
+              - 'transunion'
 
 resources:
   Resources:
@@ -204,7 +208,7 @@ resources:
     NatGatewayB:
       Type: 'AWS::EC2::NatGateway'
       Properties:
-        AllocationId: !GetAtt 'EIPC.AllocationId'
+        AllocationId: !GetAtt 'EIPB.AllocationId'
         SubnetId: !Ref SubnetBPublic
     RouteB:
       Type: 'AWS::EC2::Route'
@@ -247,7 +251,7 @@ resources:
       Properties:
         QueueName: ${self:provider.stage}-${self:service}-dlq
 
-    # Create our queue policy for the 'MailchimpQueue'
+    # Create our queue policy for the 'TransunionQueue'
     SnsToTransunionQueueSqsPolicy:
       Type: AWS::SQS::QueuePolicy
       Properties:
@@ -267,7 +271,7 @@ resources:
         Queues:
           - Ref: TransunionQueue
 
-    # Create the subscription to the 'secondQueue'
+    # Create the subscription from the transunion SQS to the SNS proxy'
     TransunionQueueSubscription:
       Type: 'AWS::SNS::Subscription'
       Properties:
@@ -278,7 +282,7 @@ resources:
         Protocol: sqs
         FilterPolicy:
           service:
-            - 'transunion'
+            - 'transunion:batch'
         RawMessageDelivery: 'true'
 
   Outputs:
