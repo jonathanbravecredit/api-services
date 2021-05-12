@@ -18,6 +18,15 @@ let auth;
 let passphrase;
 let password;
 
+/**
+ * Handler that process batch requests for Transunion Services
+ * @param service Service invoked via the SNS Proxy 'transunion'
+ * @param command REST based command to invoke actions
+ * @param message Object containing service specific package for processing
+ * @param message.name Name of client
+ * @param messsage.ssnLastFour Last four of SSN of client
+ * @returns Lambda proxy response
+ */
 export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
   // batch up items through the day/evening to process lots of data
 
