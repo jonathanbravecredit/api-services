@@ -1,4 +1,4 @@
-import { SQSEvent, SQSHandler } from 'aws-lambda';
+import { SNSEvent, SNSHandler } from 'aws-lambda';
 import { response } from 'lib/utils/response';
 import * as fs from 'fs';
 import * as soap from 'soap';
@@ -16,7 +16,16 @@ let auth;
 let passphrase;
 let password;
 
-export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
+/**
+ *
+ * @param service Service invoked via the SNS Proxy 'transunion'
+ * @param command REST based command to invoke actions
+ * @param message Object containing service specific package for processing
+ * @param message.name Name of client
+ * @param messsage.ssnLastFour Last four of SSN of client
+ * @returns Lambda proxy response
+ */
+export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
   try {
     const secretJSON = await getSecretKey(transunionSKLoc);
     const { tuKeyPassphrase, tuPassword } = JSON.parse(secretJSON);
