@@ -239,6 +239,7 @@ resources:
       Type: 'AWS::SQS::Queue'
       Properties:
         QueueName: ${self:provider.stage}-${self:service}-sqs
+        ReceiveMessageWaitTimeSeconds: 20
         RedrivePolicy:
           deadLetterTargetArn: !GetAtt
             - TransunionQueueDLQ
@@ -250,6 +251,7 @@ resources:
       Type: AWS::SQS::Queue
       Properties:
         QueueName: ${self:provider.stage}-${self:service}-dlq
+        ReceiveMessageWaitTimeSeconds: 20
 
     # Create our queue policy for the 'TransunionQueue'
     SnsToTransunionQueueSqsPolicy:
