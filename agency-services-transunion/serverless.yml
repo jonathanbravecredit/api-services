@@ -14,16 +14,17 @@ custom:
   snsProxy: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
   bundle:
     linting: false
-    rawFileExtensions:
-      - crt
 
 provider:
   name: aws
   runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-2'}
+  layers:
+    - !Ref TuCertsLambdaLayer
   environment:
     SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
+    TU_SECRET_LOCATION: '${self:provider.stage}/agency-services/transunion'
   vpc:
     securityGroupIds:
       - !GetAtt NatGatewayLambdaSecurityGroup.GroupId
@@ -31,15 +32,33 @@ provider:
       - !Ref SubnetAPrivate
       - !Ref SubnetBPrivate
 
+layers:
+  TuCerts:
+    path: tucerts
+
 functions:
-  getReport:
-    handler: src/handlers/getReport.main
+  getReports:
+    handler: src/handlers/getReports.main
+    layers:
+      - { Ref: TuCertsLambdaLayer }
     events:
       - sqs:
           arn: !GetAtt
             - TransunionQueue
             - Arn
           batchSize: 1
+  getReport:
+    handler: src/handlers/getReport.main
+    layers:
+      - { Ref: TuCertsLambdaLayer }
+    events:
+      - sns:
+          arn: ${self:provider.environment.SNS_PROXY_ARN}
+          topicName: SnsProxyTopic
+          integration: lambda-proxy
+          filterPolicy:
+            service:
+              - 'transunion'
 
 resources:
   Resources:
@@ -169,6 +188,10 @@ resources:
       Type: 'AWS::EC2::EIP'
       Properties:
         Domain: vpc
+    EIPC:
+      Type: 'AWS::EC2::EIP'
+      Properties:
+        Domain: vpc
 
     # nat gateways and private routes
     NatGatewayA:
@@ -216,6 +239,7 @@ resources:
       Type: 'AWS::SQS::Queue'
       Properties:
         QueueName: ${self:provider.stage}-${self:service}-sqs
+        ReceiveMessageWaitTimeSeconds: 20
         RedrivePolicy:
           deadLetterTargetArn: !GetAtt
             - TransunionQueueDLQ
@@ -227,8 +251,9 @@ resources:
       Type: AWS::SQS::Queue
       Properties:
         QueueName: ${self:provider.stage}-${self:service}-dlq
+        ReceiveMessageWaitTimeSeconds: 20
 
-    # Create our queue policy for the 'MailchimpQueue'
+    # Create our queue policy for the 'TransunionQueue'
     SnsToTransunionQueueSqsPolicy:
       Type: AWS::SQS::QueuePolicy
       Properties:
@@ -248,7 +273,7 @@ resources:
         Queues:
           - Ref: TransunionQueue
 
-    # Create the subscription to the 'secondQueue'
+    # Create the subscription from the transunion SQS to the SNS proxy'
     TransunionQueueSubscription:
       Type: 'AWS::SNS::Subscription'
       Properties:
@@ -259,7 +284,7 @@ resources:
         Protocol: sqs
         FilterPolicy:
           service:
-            - 'transunion'
+            - 'transunion:batch'
         RawMessageDelivery: 'true'
 
   Outputs:
