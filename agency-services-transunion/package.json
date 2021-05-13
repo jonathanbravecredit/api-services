@@ -20,6 +20,7 @@
     "serverless-offline": "^6.8.0"
   },
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.21.1",
+    "soap": "^0.37.0"
   }
 }
