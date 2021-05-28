@@ -61,16 +61,16 @@ functions:
               - 'transunion'
   postRequests:
     handler: src/handlers/postRequests.main
-      layers:
-        - { Ref: TuCertsLambdaLayer }
-      events:
-        - sns:
-            arn: ${self:provider.environment.SNS_PROXY_ARN}
-            topicName: SnsProxyTopic
-            integration: lambda-proxy
-            filterPolicy:
-              service:
-                - 'transunion'
+    layers:
+      - { Ref: TuCertsLambdaLayer }
+    events:
+      - sns:
+          arn: ${self:provider.environment.SNS_PROXY_ARN}
+          topicName: SnsProxyTopic
+          integration: lambda-proxy
+          filterPolicy:
+            service:
+              - 'transunion'
 
 resources:
   Resources:
