@@ -56,6 +56,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
         Authorization: auth,
       },
     });
+    console.log('client', client);
     for (const record of event.Records) {
       // do something
     }
