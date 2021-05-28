@@ -65,10 +65,12 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
         case 'IndicativeEnrichment':
           const msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
           console.log('formatted msg', JSON.stringify(msg));
-          const res = msg
-            ? await client.IndicativeEnrichmentAsync(msg)
-            : response(500, { error: `Poorly formed msg=${msg}` });
-          console.log('res', res);
+          console.log('client again', client);
+          if (msg) {
+            const res = await client.IndicativeEnrichmentAsync(msg).then((resp) => {
+              console.log('response in then', resp);
+            });
+          }
           break;
 
         default:
