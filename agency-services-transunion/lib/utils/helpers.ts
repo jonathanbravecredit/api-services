@@ -7,7 +7,7 @@ export const formatIndicativeEnrichment = (
   message: string,
 ): IndicativeEnrichmentModel | undefined => {
   let msg: IndicativeEnrichmentModel | undefined = JSON.parse(message);
-  console.log('unformatted msg', msg);
+  console.log('unformatted msg', JSON.stringify(msg));
   const requestKey = uuid.v4();
   return msg
     ? {
