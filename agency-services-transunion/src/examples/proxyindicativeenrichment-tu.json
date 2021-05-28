@@ -1,0 +1,23 @@
+{
+  "service": "transunion",
+  "command": "POST",
+  "action": "IndicativeEnrichment",
+  "message": {
+    "ClientKey": "6b0fe15e-22f0-4797-8087-eaf2d17106ca",
+    "Customer": {
+      "CurrentAddress": {
+        "AddressLine1": "2409 Vandever  Ave",
+        "City": "HOLLYWOOD",
+        "State": "FL",
+        "Zipcode": "33025"
+      },
+      "DateOfBirth": "1957-09-01",
+      "FullName": {
+        "FirstName": "AARON",
+        "LastName": "TESTA"
+      },
+      "Ssn": "899010001"
+    },
+    "ServiceBundleCode": "CC2BraveCreditIndicativeEnrichment"
+  }
+}

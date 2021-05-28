@@ -3,6 +3,7 @@ import { response } from 'lib/utils/response';
 import * as fs from 'fs';
 import * as soap from 'soap';
 import { getSecretKey } from 'lib/utils/secrets';
+import { formatIndicativeEnrichment } from 'lib/utils/helpers';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -10,6 +11,7 @@ let key: Buffer;
 let cert: Buffer;
 let cacert: Buffer;
 let username = 'CC2BraveCredit';
+let accountCode = 'Q0NJdGtkQThtR3hwaQ';
 let url = 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc?singleWsdl';
 let user;
 let auth;
@@ -59,6 +61,19 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     console.log('client', client);
     for (const record of event.Records) {
       // do something
+      switch (JSON.parse(record.Sns.Message)?.action) {
+        case 'IndicativeEnrichment':
+          const msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
+          console.log('formatted msg', msg);
+          const res = msg
+            ? client.IndicativeEnrichmentAsync(msg)
+            : response(500, { error: `Poorly formed msg=${msg}` });
+          console.log('res', res);
+          break;
+
+        default:
+          break;
+      }
     }
     return response(200, { response: 'sucessfully processed all messages' });
   } catch (err) {
