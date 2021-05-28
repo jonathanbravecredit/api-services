@@ -23,8 +23,6 @@ let password;
  * @param service Service invoked via the SNS Proxy 'transunion'
  * @param command REST based command to invoke actions
  * @param message Object containing service specific package for processing
- * @param message.name Name of client
- * @param messsage.ssnLastFour Last four of SSN of client
  * @returns Lambda proxy response
  */
 export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
@@ -58,14 +56,13 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
         Authorization: auth,
       },
     });
-    console.log('client', client);
+    console.log('client', client.describe());
     for (const record of event.Records) {
       // do something
       switch (JSON.parse(record.Sns.Message)?.action) {
         case 'IndicativeEnrichment':
           const msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
           console.log('formatted msg', JSON.stringify(msg));
-          console.log('client again', client);
           if (msg) {
             const res = await client.IndicativeEnrichmentAsync(msg).then((resp) => {
               console.log('response in then', resp);
