@@ -36,7 +36,7 @@ provider:
       Action:
         - secretsmanager:GetSecretValue
       Resource:
-        - !Sub 'arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:${self:provider.stage}/agency-services/transunion'
+        - '*'
 
 layers:
   TuCerts:
