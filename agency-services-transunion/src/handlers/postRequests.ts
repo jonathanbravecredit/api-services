@@ -61,8 +61,10 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     client.addHttpHeader('Authorization', auth);
     client.setSecurity(
       new soap.ClientSSLSecurity('/opt/tubravecredit.key', '/opt/brave.credit.crt', '/opt/Root-CA-Bundle.crt', {
-        user,
-        passphrase,
+        rejectUnauthorized: false,
+        strictSSL: false,
+        user: user,
+        passphrase: passphrase,
       }),
     );
     console.log('last request', client.lastRequest);
