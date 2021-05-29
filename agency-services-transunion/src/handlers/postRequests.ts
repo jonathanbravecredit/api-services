@@ -68,7 +68,6 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
         {
           rejectUnauthorized: false,
           strictSSL: false,
-          secureOptions: SSL_OP_NO_TLSv1_2,
           user: user,
           passphrase: passphrase,
         },
@@ -84,6 +83,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           console.log('formatted msg', JSON.stringify(msg));
           if (msg) {
             const res = await wait(msg);
+            client.lastRequest;
             console.log('res', res);
             // const cc2 = new Promise((resolve, reject) => {
             //   resolve(client.CC2.Soap12.IndicativeEnrichment(msg));
@@ -112,7 +112,6 @@ const wait = (msg) => {
     client
       .IndicativeEnrichmentAsync(msg)
       .then((result) => {
-        console.log('last request', client.lastRequest);
         resolve(result);
       })
       .catch((err) => {
