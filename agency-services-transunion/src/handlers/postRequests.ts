@@ -65,13 +65,11 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           const msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
           console.log('formatted msg', JSON.stringify(msg));
           if (msg) {
-            const promise = new Promise(function (resolve, reject) {
-              setTimeout(() => resolve(client.CC2.Soap12.IndicativeEnrichment(msg)), 0);
-            });
-            console.log('promise', promise);
-            const res = await promise;
+            const res = await wait(client.CC2.Soap12.IndicativeEnrichment, msg);
+            const res2 = await wait(client.IndicativeEnrichmentAsync, msg);
             console.log('res', res);
-            return promise;
+            console.log('res', res2);
+            return res;
             // const cc2 = new Promise((resolve, reject) => {
             //   resolve(client.CC2.Soap12.IndicativeEnrichment(msg));
             // });
@@ -93,3 +91,9 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     return;
   }
 };
+
+function wait(f: any, param: any) {
+  return new Promise(function (resolve, reject) {
+    setTimeout(() => resolve(f(param)), 0);
+  });
+}

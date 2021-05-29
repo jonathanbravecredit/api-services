@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as soap from 'soap';
 import { getSecretKey } from 'lib/utils/secrets';
 
-let url = 'http://www.webservicex.com/globalweather.asmx?wsdl';
+let url = 'https://www.webservicex.com/globalweather.asmx?wsdl';
 
 /**
  * !!!! FOR TESTING ONLY !!!!
