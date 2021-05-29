@@ -65,7 +65,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           const msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
           console.log('formatted msg', JSON.stringify(msg));
           if (msg) {
-            const res = await util.promisify(client.CC2.Soap12.IndicativeEnrichmentAsync(msg));
+            const res = await util.promisify(client.CC2.Soap12.IndicativeEnrichment(msg));
           }
           break;
 
