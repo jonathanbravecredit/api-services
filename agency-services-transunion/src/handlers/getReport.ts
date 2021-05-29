@@ -3,16 +3,17 @@ import { response } from 'lib/utils/response';
 import * as soap from 'soap';
 
 let url = 'http://www.thomas-bayer.com/axis2/services/BLZService?wsdl';
+let client;
 
 /**
  * !!!! FOR TESTING ONLY !!!!
  */
 export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
   try {
-    let client = await soap.createClientAsync(url);
+    client = await soap.createClientAsync(url);
     // const res = await wait(client.)
     console.log(client.describe());
-    const res = await wait(client);
+    const res = await wait();
     console.log('res', res);
     for (const record of event.Records) {
       // do something
@@ -23,10 +24,15 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
   }
 };
 
-const wait = (client: soap.Client) => {
+const wait = () => {
   return new Promise((resolve, reject) => {
-    client.getBankAsync({}).then((result) => {
-      resolve(result);
-    });
+    client
+      .getBankAsync({})
+      .then((result) => {
+        resolve(result);
+      })
+      .catch((err) => {
+        reject(err);
+      });
   });
 };
