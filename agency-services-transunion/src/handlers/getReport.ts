@@ -2,7 +2,7 @@ import { SNSEvent, SNSHandler } from 'aws-lambda';
 import { response } from 'lib/utils/response';
 import * as soap from 'soap';
 
-let url = 'http://www.thomas-bayer.com/axis2/services/BLZService?wsdl';
+let url = 'http://www.dataaccess.com/webservicesserver/numberconversion.wso?WSDL';
 let client;
 
 /**
@@ -28,7 +28,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
 const wait = () => {
   return new Promise((resolve, reject) => {
     client
-      .getBankAsync({ blz: '10000000' })
+      .getBankAsync({ ubiNum: 12345 })
       .then((result) => {
         resolve(result);
       })

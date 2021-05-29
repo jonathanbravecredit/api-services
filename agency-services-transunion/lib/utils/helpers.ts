@@ -1,20 +1,25 @@
-import { IndicativeEnrichmentModel } from 'lib/models/indicative-enrichment.model';
+import {
+  IEnrichedIndicativeEnrichment,
+  IIndicativeEnrichmentMsg,
+} from 'lib/interfaces/indicative-enrichment.interface';
 import * as uuid from 'uuid';
 
 export const formatIndicativeEnrichment = (
   accountCode: string,
   accountName: string,
-  message: string,
-): IndicativeEnrichmentModel | undefined => {
-  let msg: IndicativeEnrichmentModel | undefined = JSON.parse(message);
-  console.log('unformatted msg', JSON.stringify(msg));
+  snsMessage: string,
+): IEnrichedIndicativeEnrichment | undefined => {
+  let data: IIndicativeEnrichmentMsg = JSON.parse(snsMessage);
+  let { message } = data;
+  console.log('unformatted msg', JSON.stringify(message));
+
   const requestKey = uuid.v4();
-  return msg
+  return message
     ? {
         AccountCode: accountCode,
         AccountName: accountName,
         RequestKey: requestKey,
-        ...msg,
+        ...message,
       }
     : undefined;
 };
