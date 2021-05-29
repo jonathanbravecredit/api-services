@@ -69,6 +69,8 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
               setTimeout(() => resolve(client.CC2.Soap12.IndicativeEnrichment(msg)), 0);
             });
             console.log('promise', promise);
+            const res = await promise;
+            console.log('res', res);
             return promise;
             // const cc2 = new Promise((resolve, reject) => {
             //   resolve(client.CC2.Soap12.IndicativeEnrichment(msg));
