@@ -65,10 +65,19 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           const msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
           console.log('formatted msg', JSON.stringify(msg));
           if (msg) {
-            const indicativeEnrichmentAsync = util.promisify(client.CC2.Soap12.IndicativeEnrichment);
-            console.log('promisified function', indicativeEnrichmentAsync);
-            const res = await indicativeEnrichmentAsync(msg);
-            console.log('response', res);
+            const promise = new Promise(function (resolve, reject) {
+              setTimeout(() => resolve(client.CC2.Soap12.IndicativeEnrichment(msg)), 0);
+            });
+            console.log('promise', promise);
+            return promise;
+            // const cc2 = new Promise((resolve, reject) => {
+            //   resolve(client.CC2.Soap12.IndicativeEnrichment(msg));
+            // });
+
+            // const indicativeEnrichmentAsync = util.promisify(client.CC2.Soap12.IndicativeEnrichment);
+            // console.log('promisified function', indicativeEnrichmentAsync);
+            // const res = await indicativeEnrichmentAsync(msg);
+            // console.log('response', res);
           }
           break;
 
@@ -76,9 +85,9 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           break;
       }
     }
-    return response(200, { response: 'sucessfully processed all messages' });
+    // return response(200, { response: 'sucessfully processed all messages' });
   } catch (err) {
     console.log('error ===>', err);
-    return response(500, { error: err });
+    return;
   }
 };
