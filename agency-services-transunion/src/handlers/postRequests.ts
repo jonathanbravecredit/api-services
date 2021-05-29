@@ -58,6 +58,9 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
         Authorization: auth,
       },
     });
+    client.setSecurity(
+      new soap.ClientSSLSecurity('/opt/tubravecredit.key', '/opt/brave.credit.crt', '/opt/Root-CA-Bundle.crt'),
+    );
     console.log('client', client.describe());
     for (const record of event.Records) {
       // do something
