@@ -59,7 +59,11 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
       },
     });
     client.setSecurity(
-      new soap.ClientSSLSecurity('/opt/tubravecredit.key', '/opt/brave.credit.crt', '/opt/Root-CA-Bundle.crt'),
+      new soap.ClientSSLSecurity(
+        fs.readFileSync('/opt/tubravecredit.key'),
+        fs.readFileSync('/opt/brave.credit.crt'),
+        fs.readFileSync('/opt/Root-CA-Bundle.crt'),
+      ),
     );
     console.log('client', client.describe());
     for (const record of event.Records) {
