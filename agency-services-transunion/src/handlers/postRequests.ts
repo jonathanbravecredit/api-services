@@ -18,7 +18,7 @@ let user;
 let auth;
 let passphrase;
 let password;
-let client;
+let client: soap.Client;
 
 /**
  * Handler that processes single requests for Transunion services
@@ -58,13 +58,19 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
         Authorization: auth,
       },
     });
+    client.addHttpHeader('Authorization', auth);
     client.setSecurity(
       new soap.ClientSSLSecurity(
         fs.readFileSync('/opt/tubravecredit.key'),
         fs.readFileSync('/opt/brave.credit.crt'),
         fs.readFileSync('/opt/Root-CA-Bundle.crt'),
+        {
+          user,
+          passphrase,
+        },
       ),
     );
+    client.lastRequest;
     console.log('client', client.describe());
     for (const record of event.Records) {
       // do something
