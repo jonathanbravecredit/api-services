@@ -66,10 +66,15 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           console.log('formatted msg', JSON.stringify(msg));
           if (msg) {
             const res = await wait(client.CC2.Soap12.IndicativeEnrichment, msg);
-            const res2 = await wait(client.IndicativeEnrichmentAsync, msg);
+            // const res2 = await wait(client.IndicativeEnrichmentAsync, msg);
+            const promise = new Promise(function (resolve, reject) {
+              client.CC2.Soap12.IndicativeEnrichment(msg, (res) => {
+                resolve(res);
+              });
+            });
             console.log('res', res);
-            console.log('res', res2);
-            return res;
+            // console.log('res', res2);
+            return promise;
             // const cc2 = new Promise((resolve, reject) => {
             //   resolve(client.CC2.Soap12.IndicativeEnrichment(msg));
             // });
