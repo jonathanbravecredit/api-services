@@ -73,6 +73,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
               });
             });
             console.log('res', res);
+
             // console.log('res', res2);
             return promise;
             // const cc2 = new Promise((resolve, reject) => {

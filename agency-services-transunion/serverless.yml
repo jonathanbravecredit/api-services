@@ -64,7 +64,7 @@ functions:
           integration: lambda-proxy
           filterPolicy:
             service:
-              - 'transunion'
+              - 'test'
   postRequests:
     handler: src/handlers/postRequests.main
     layers:
