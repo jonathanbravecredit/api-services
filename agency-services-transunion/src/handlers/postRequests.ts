@@ -64,7 +64,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
       new soap.ClientSSLSecurity(
         fs.readFileSync('/opt/tubravecredit.key'),
         fs.readFileSync('/opt/brave.credit.crt'),
-        null,
+        fs.readFileSync('/opt/Root-CA-Bundle.crt'),
         {
           rejectUnauthorized: false,
           strictSSL: false,
