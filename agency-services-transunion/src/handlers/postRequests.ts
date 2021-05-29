@@ -2,6 +2,7 @@ import { SNSEvent, SNSHandler } from 'aws-lambda';
 import { response } from 'lib/utils/response';
 import * as fs from 'fs';
 import * as soap from 'soap';
+import * as util from 'util';
 import { getSecretKey } from 'lib/utils/secrets';
 import { formatIndicativeEnrichment } from 'lib/utils/helpers';
 
@@ -64,9 +65,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           const msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
           console.log('formatted msg', JSON.stringify(msg));
           if (msg) {
-            const res = await client.IndicativeEnrichmentAsync(msg).then((resp) => {
-              console.log('response in then', resp);
-            });
+            const res = await util.promisify(client.CC2.Soap12.IndicativeEnrichmentAsync(msg));
           }
           break;
 
@@ -76,6 +75,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     }
     return response(200, { response: 'sucessfully processed all messages' });
   } catch (err) {
+    console.log('error ===>', err);
     return response(500, { error: err });
   }
 };
