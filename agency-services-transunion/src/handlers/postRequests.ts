@@ -18,6 +18,7 @@ let user;
 let auth;
 let passphrase;
 let password;
+let client;
 
 /**
  * Handler that processes single requests for Transunion services
@@ -46,7 +47,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     return response(500, { error: `Error gathering/reading cert=${err}` });
   }
   try {
-    let client = await soap.createClientAsync(url, {
+    client = await soap.createClientAsync(url, {
       wsdl_options: {
         key,
         cert,
@@ -65,17 +66,8 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           const msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
           console.log('formatted msg', JSON.stringify(msg));
           if (msg) {
-            const res = await wait(client.CC2.Soap12.IndicativeEnrichment, msg);
-            // const res2 = await wait(client.IndicativeEnrichmentAsync, msg);
-            const promise = new Promise(function (resolve, reject) {
-              client.CC2.Soap12.IndicativeEnrichment(msg, (res) => {
-                resolve(res);
-              });
-            });
+            const res = await wait(msg);
             console.log('res', res);
-
-            // console.log('res', res2);
-            return promise;
             // const cc2 = new Promise((resolve, reject) => {
             //   resolve(client.CC2.Soap12.IndicativeEnrichment(msg));
             // });
@@ -98,8 +90,15 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
   }
 };
 
-function wait(f: any, param: any) {
-  return new Promise(function (resolve, reject) {
-    setTimeout(() => resolve(f(param)), 0);
+const wait = (msg) => {
+  return new Promise((resolve, reject) => {
+    client
+      .IndicativeEnrichmentAsync(msg)
+      .then((result) => {
+        resolve(result);
+      })
+      .catch((err) => {
+        reject(err);
+      });
   });
-}
+};

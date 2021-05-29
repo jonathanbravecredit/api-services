@@ -20,6 +20,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     }
     return response(200, { response: 'sucessfully processed all messages' });
   } catch (err) {
+    console.log('My Error:', err);
     return response(500, { error: err });
   }
 };
@@ -27,7 +28,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
 const wait = () => {
   return new Promise((resolve, reject) => {
     client
-      .getBankAsync({})
+      .getBankAsync({ blz: '10000000' })
       .then((result) => {
         resolve(result);
       })
