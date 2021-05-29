@@ -60,20 +60,22 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
       },
     });
     client.addHttpHeader('Authorization', auth);
-    client.setSecurity(
-      new soap.ClientSSLSecurity(
-        fs.readFileSync('/opt/tubravecredit.key'),
-        fs.readFileSync('/opt/brave.credit.crt'),
-        null,
-        {
-          rejectUnauthorized: false,
-          strictSSL: false,
-          secureOptions: SSL_OP_NO_TLSv1_2,
-          user: user,
-          passphrase: passphrase,
-        },
-      ),
-    );
+    const wsSecurity = new soap.WSSecurityCert(key, cert, passphrase);
+    client.setSecurity(wsSecurity);
+    // client.setSecurity(
+    //   new soap.ClientSSLSecurity(
+    //     fs.readFileSync('/opt/tubravecredit.key'),
+    //     fs.readFileSync('/opt/brave.credit.crt'),
+    //     null,
+    //     {
+    //       rejectUnauthorized: false,
+    //       strictSSL: false,
+    //       secureOptions: SSL_OP_NO_TLSv1_2,
+    //       user: user,
+    //       passphrase: passphrase,
+    //     },
+    //   ),
+    // );
 
     console.log('client', client.describe());
     for (const record of event.Records) {
