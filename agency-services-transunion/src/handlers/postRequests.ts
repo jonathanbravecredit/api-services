@@ -61,17 +61,12 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     });
     client.addHttpHeader('Authorization', auth);
     client.setSecurity(
-      new soap.ClientSSLSecurity(
-        fs.readFileSync('/opt/tubravecredit.key'),
-        fs.readFileSync('/opt/brave.credit.crt'),
-        fs.readFileSync('/opt/Root-CA-Bundle.crt'),
-        {
-          rejectUnauthorized: false,
-          strictSSL: false,
-          user: user,
-          passphrase: passphrase,
-        },
-      ),
+      new soap.ClientSSLSecurity(key, cert, cacert, {
+        rejectUnauthorized: false,
+        strictSSL: false,
+        user: user,
+        passphrase: passphrase,
+      }),
     );
 
     console.log('client', client.describe());
@@ -82,7 +77,8 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           const msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
           console.log('formatted msg', JSON.stringify(msg));
           if (msg) {
-            const res = await wait(msg);
+            const res = await client.IndicativeEnrichmentAsync(msg);
+            const res2 = await wait(msg);
             client.lastRequest;
             console.log('res', res);
             // const cc2 = new Promise((resolve, reject) => {
