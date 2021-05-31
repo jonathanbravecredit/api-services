@@ -1,0 +1,79 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data">
+  <soap:Header/>
+  <soap:Body>
+    <con:IndicativeEnrichment>
+      <!--Optional:-->
+      <con:request>
+        <!--Optional:-->
+        <data:AccountCode>Q0NJdGtkQThtR3hwaQ</data:AccountCode>
+        <!--Optional:-->
+        <data:AccountName>CC2BraveCredit</data:AccountName>
+        <!--Optional:-->
+        <data:RequestKey>77875fa4-a6d6-4dac-a7e9-5fe763816f2d</data:RequestKey>
+        <!--Optional:-->
+        <data:ClientKey>6b0fe15e-22f0-4797-8087-eaf2d17106ca</data:ClientKey>
+        <!--Optional:-->
+        <data:Customer>
+          <!--Optional:-->
+          <data:CurrentAddress>
+            <!--Optional:-->
+            <data:AddressLine1>2409 Vandever  Ave</data:AddressLine1>
+            <!--Optional:-->
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <!--Optional:-->
+            <data:City>HOLLYWOOD</data:City>
+            <!--Optional:-->
+            <data:State>FL</data:State>
+            <!--Optional:-->
+            <data:Zipcode>33025</data:Zipcode>
+          </data:CurrentAddress>
+          <!--Optional:-->
+          <data:DateOfBirth>1957-09-01</data:DateOfBirth>
+          <!--Optional:-->
+          <data:FullName>
+            <!--Optional:-->
+            <data:FirstName>AARON</data:FirstName>
+            <!--Optional:-->
+            <data:LastName>TESTA</data:LastName>
+            <!--Optional:-->
+            <data:MiddleName xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <!--Optional:-->
+            <data:Prefix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <!--Optional:-->
+            <data:Suffix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:FullName>
+          <!--Optional:-->
+          <data:PhoneNumber>4045049006</data:PhoneNumber>
+          <!--Optional:-->
+          <data:PreviousAddress>
+            <!--Optional:-->
+            <data:AddressLine1 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <!--Optional:-->
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <!--Optional:-->
+            <data:City xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <!--Optional:-->
+            <data:State xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <!--Optional:-->
+            <data:Zipcode xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:PreviousAddress>
+          <!--Optional:-->
+          <data:Ssn>899010001</data:Ssn>
+        </data:Customer>
+        <!--Optional:-->
+        <data:ServiceBundleCode>CC2BraveCreditIndicativeEnrichment</data:ServiceBundleCode>
+      </con:request>
+    </con:IndicativeEnrichment>
+  </soap:Body>
+</soap:Envelope>

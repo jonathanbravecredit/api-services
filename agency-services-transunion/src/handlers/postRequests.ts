@@ -49,6 +49,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
   }
   try {
     client = await soap.createClientAsync(url, {
+      forceSoap12Headers: true,
       wsdl_options: {
         key,
         cert,
@@ -59,7 +60,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
         Authorization: auth,
       },
     });
-    client.addHttpHeader('Authorization', auth);
+
     client.setSecurity(
       new soap.ClientSSLSecurity(key, cert, cacert, {
         rejectUnauthorized: false,
@@ -78,7 +79,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           console.log('formatted msg', JSON.stringify(msg));
           if (msg) {
             const res = await client.IndicativeEnrichmentAsync(msg);
-            const res2 = await wait(msg);
+            // const res2 = await wait(msg);
             client.lastRequest;
             console.log('res', res);
             // const cc2 = new Promise((resolve, reject) => {
@@ -99,6 +100,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     // return response(200, { response: 'sucessfully processed all messages' });
   } catch (err) {
     console.log('error ===>', err);
+    console.log('last request ===>', client.lastRequest);
     return;
   }
 };
