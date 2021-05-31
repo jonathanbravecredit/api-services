@@ -6,6 +6,7 @@ import * as util from 'util';
 import { getSecretKey } from 'lib/utils/secrets';
 import { formatIndicativeEnrichment } from 'lib/utils/helpers';
 import { SSL_OP_NO_TLSv1_2 } from 'constants';
+import * as Request from 'request';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -50,6 +51,11 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
   try {
     client = await soap.createClientAsync(url, {
       forceSoap12Headers: true,
+      request: Request.defaults({
+        headers: {
+          Authorization: auth,
+        },
+      }),
       wsdl_options: {
         key,
         cert,
@@ -61,35 +67,24 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
       },
     });
 
+    // client.addSoapHeader({ Authorization: auth })
     client.setSecurity(
-      new soap.ClientSSLSecurity(key, cert, cacert, {
-        rejectUnauthorized: false,
-        strictSSL: false,
+      new soap.ClientSSLSecurity(key, cert, null, {
         user: user,
         passphrase: passphrase,
       }),
     );
 
-    console.log('client', client.describe());
+    console.log('client', client);
+    console.log('client describe', client.describe());
     for (const record of event.Records) {
       // do something
       switch (JSON.parse(record.Sns.Message)?.action) {
         case 'IndicativeEnrichment':
           const msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
-          console.log('formatted msg', JSON.stringify(msg));
           if (msg) {
             const res = await client.IndicativeEnrichmentAsync(msg);
-            // const res2 = await wait(msg);
-            client.lastRequest;
             console.log('res', res);
-            // const cc2 = new Promise((resolve, reject) => {
-            //   resolve(client.CC2.Soap12.IndicativeEnrichment(msg));
-            // });
-
-            // const indicativeEnrichmentAsync = util.promisify(client.CC2.Soap12.IndicativeEnrichment);
-            // console.log('promisified function', indicativeEnrichmentAsync);
-            // const res = await indicativeEnrichmentAsync(msg);
-            // console.log('response', res);
           }
           break;
 
@@ -105,15 +100,15 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
   }
 };
 
-const wait = (msg) => {
-  return new Promise((resolve, reject) => {
-    client
-      .IndicativeEnrichmentAsync(msg)
-      .then((result) => {
-        resolve(result);
-      })
-      .catch((err) => {
-        reject(err);
-      });
-  });
-};
+// const wait = (msg) => {
+//   return new Promise((resolve, reject) => {
+//     client
+//       .IndicativeEnrichmentAsync(msg)
+//       .then((result) => {
+//         resolve(result);
+//       })
+//       .catch((err) => {
+//         reject(err);
+//       });
+//   });
+// };
