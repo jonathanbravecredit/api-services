@@ -67,7 +67,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
       },
     });
 
-    // client.addSoapHeader({ Authorization: auth })
+    // trying to set the headers correctly
     client.setSecurity(
       new soap.ClientSSLSecurity(key, cert, null, {
         user: user,
