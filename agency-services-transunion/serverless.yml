@@ -80,19 +80,19 @@ functions:
 
 resources:
   Resources:
-    TransunionData:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: 'id'
-            AttributeType: 'S'
-        KeySchema:
-          - AttributeName: 'id'
-            KeyType: 'HASH'
-        BillingMode: PAY_PER_REQUEST
-        TableName: ${self:provider.environment.TABLENAME}
-        StreamSpecification:
-          StreamViewType: NEW_AND_OLD_IMAGES
+    # TransunionData:
+    #   Type: AWS::DynamoDB::Table
+    #   Properties:
+    #     AttributeDefinitions:
+    #       - AttributeName: 'id'
+    #         AttributeType: 'S'
+    #     KeySchema:
+    #       - AttributeName: 'id'
+    #         KeyType: 'HASH'
+    #     BillingMode: PAY_PER_REQUEST
+    #     TableName: ${self:provider.environment.TABLENAME}
+    #     StreamSpecification:
+    #       StreamViewType: NEW_AND_OLD_IMAGES
 
     VPC:
       Type: 'AWS::EC2::VPC'
