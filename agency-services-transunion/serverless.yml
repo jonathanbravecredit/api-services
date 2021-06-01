@@ -13,6 +13,8 @@ plugins:
 custom:
   snsProxy: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
   bundle:
+    externals:
+      - strong-soap
     linting: false
 
 provider:
