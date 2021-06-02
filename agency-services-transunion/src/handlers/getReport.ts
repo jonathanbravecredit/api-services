@@ -67,6 +67,10 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
       },
     });
 
+    client['wsdl'].definitions.xmlns.con = 'https://consumerconnectws.tui.transunion.com/';
+    client['wsdl'].definitions.xmlns.data = 'https://consumerconnectws.tui.transunion.com/data';
+    client['wsdl'].xmlnsInEnvelope = client['wsdl']._xmlnsMap();
+
     // trying to set the headers correctly
     client.setSecurity(
       new soap.ClientSSLSecurity(key, cert, null, {
@@ -84,8 +88,8 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           const msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
           if (msg) {
             const indicativeEnrichmentAsync = util.promisify(client.IndicativeEnrichment);
-            const res2 = await indicativeEnrichmentAsync({ _xml: test });
-            console.log('res 2', res2);
+            // const res2 = await indicativeEnrichmentAsync({ _xml: test });
+            // console.log('res 2', res2);
             const res = await indicativeEnrichmentAsync(msg);
             console.log('res', res);
           }
