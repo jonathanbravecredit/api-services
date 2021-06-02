@@ -123,50 +123,50 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
 const test = `
 <con:IndicativeEnrichment>
       <con:request>
-        <data:AccountCode>123456789</data:AccountCode>
-        <data:AccountName>CC2BraveCredit</data:AccountName>
-        <data:AdditionalInputs>
-          <data:Data>
-            <data:Name>CreditReportVersion</data:Name>
-            <data:Value>7</data:Value>
-          </data:Data>
-        </data:AdditionalInputs>
-        <data:RequestKey>076b9ae3-9a5c-45ea-8b76-4377168e1650</data:RequestKey>
-        <data:ClientKey>22545f5a-3a68-42f2-8be9-9d639edbb958</data:ClientKey>
-        <data:Customer>
-          <data:CurrentAddress>
-            <data:AddressLine1>1202 Main St</data:AddressLine1>
-            <data:AddressLine2 xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:AddressLine2>
-            <data:City>Fort Wayne</data:City>
-            <data:State>IN</data:State>
-            <data:Zipcode>46808</data:Zipcode>
-          </data:CurrentAddress>
-          <data:DateOfBirth>2021-06-01</data:DateOfBirth>
-          <data:FullName>
-            <data:FirstName>Charles</data:FirstName>
-            <data:LastName>FAULCON</data:LastName>
-            <data:MiddleName>L</data:MiddleName>
-            <data:Prefix xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:Prefix>
-            <data:Suffix xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:Suffix>
-          </data:FullName>
-          <data:PreviousAddress>
-            <data:AddressLine1 xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:AddressLine1>
-            <data:AddressLine2 xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:AddressLine2>
-            <data:City xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:City>
-            <data:State xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:State>
-            <data:Zipcode xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:Zipcode>
-          </data:PreviousAddress>
-          <data:Ssn>000003657</data:Ssn>
-        </data:Customer>
-        <data:ServiceBundleCode>CC2BraveCreditIndicativeEnrichment</data:ServiceBundleCode>
+        <AccountCode>123456789</AccountCode>
+        <AccountName>CC2BraveCredit</AccountName>
+        <AdditionalInputs>
+          <Data>
+            <Name>CreditReportVersion</Name>
+            <Value>7</Value>
+          </Data>
+        </AdditionalInputs>
+        <RequestKey>076b9ae3-9a5c-45ea-8b76-4377168e1650</RequestKey>
+        <ClientKey>22545f5a-3a68-42f2-8be9-9d639edbb958</ClientKey>
+        <Customer>
+          <CurrentAddress>
+            <AddressLine1>1202 Main St</AddressLine1>
+            <AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></AddressLine2>
+            <City>Fort Wayne</City>
+            <State>IN</State>
+            <Zipcode>46808</Zipcode>
+          </CurrentAddress>
+          <DateOfBirth>2021-06-01</DateOfBirth>
+          <FullName>
+            <FirstName>Charles</FirstName>
+            <LastName>FAULCON</LastName>
+            <MiddleName>L</MiddleName>
+            <Prefix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></Prefix>
+            <Suffix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></Suffix>
+          </FullName>
+          <PreviousAddress>
+            <AddressLine1 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></AddressLine1>
+            <AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></AddressLine2>
+            <City xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></City>
+            <State xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></State>
+            <Zipcode xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></Zipcode>
+          </PreviousAddress>
+          <Ssn>000003657</Ssn>
+        </Customer>
+        <ServiceBundleCode>CC2BraveCreditIndicativeEnrichment</ServiceBundleCode>
       </con:request>
     </con:IndicativeEnrichment>
     `;

@@ -16,10 +16,10 @@ export const formatIndicativeEnrichment = (
   const requestKey = uuid.v4();
   return message
     ? {
-        'con:request': {
-          'data:AccountCode': accountCode,
-          'data:AccountName': accountName,
-          'data:RequestKey': requestKey,
+        request: {
+          AccountCode: accountCode,
+          AccountName: accountName,
+          RequestKey: requestKey,
           ...message,
         },
       }

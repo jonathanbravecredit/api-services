@@ -1,32 +1,32 @@
 export interface IEnrichedIndicativeEnrichment {
-  'con:request': {
-    'data:AccountCode': string;
-    'data:AccountName': string;
-    'data:RequestKey': string;
-    'data:ClientKey': string;
-    'data:Customer': {
-      'data:CurrentAddress': {
-        'data:AddressLine1': string;
-        'data:AddressLine2'?: string;
-        'data:City': string;
-        'data:State': string;
-        'data:Zipcode': string;
+  request: {
+    AccountCode: string;
+    AccountName: string;
+    RequestKey: string;
+    ClientKey: string;
+    Customer: {
+      CurrentAddress: {
+        AddressLine1: string;
+        AddressLine2?: string;
+        City: string;
+        State: string;
+        Zipcode: string;
       };
-      'data:PreviousAddress': {
-        'data:AddressLine1': string;
-        'data:AddressLine2'?: string;
-        'data:City': string;
-        'data:State': string;
-        'data:Zipcode': string;
+      PreviousAddress: {
+        AddressLine1: string;
+        AddressLine2?: string;
+        City: string;
+        State: string;
+        Zipcode: string;
       };
-      'data:DateOfBirth': string;
-      'data:FullName': {
-        'data:FirstName': string;
-        'data:LastName': string;
+      DateOfBirth: string;
+      FullName: {
+        FirstName: string;
+        LastName: string;
       };
-      'data:Ssn': string;
+      Ssn: string;
     };
-    'data:ServiceBundleCode': string;
+    ServiceBundleCode: string;
   };
 }
 
@@ -35,29 +35,29 @@ export interface IIndicativeEnrichmentMsg {
   command: string;
   action: string;
   message: {
-    'data:ClientKey': string;
-    'data:Customer': {
-      'data:CurrentAddress': {
-        'data:AddressLine1': string;
-        'data:AddressLine2'?: string;
-        'data:City': string;
-        'data:State': string;
-        'data:Zipcode': string;
+    ClientKey: string;
+    Customer: {
+      CurrentAddress: {
+        AddressLine1: string;
+        AddressLine2?: string;
+        City: string;
+        State: string;
+        Zipcode: string;
       };
-      'data:PreviousAddress': {
-        'data:AddressLine1': string;
-        'data:AddressLine2'?: string;
-        'data:City': string;
-        'data:State': string;
-        'data:Zipcode': string;
+      PreviousAddress: {
+        AddressLine1: string;
+        AddressLine2?: string;
+        City: string;
+        State: string;
+        Zipcode: string;
       };
-      'data:DateOfBirth': string;
-      'data:FullName': {
-        'data:FirstName': string;
-        'data:LastName': string;
+      DateOfBirth: string;
+      FullName: {
+        FirstName: string;
+        LastName: string;
       };
-      'data:Ssn': string;
+      Ssn: string;
     };
-    'data:ServiceBundleCode': string;
+    ServiceBundleCode: string;
   };
 }

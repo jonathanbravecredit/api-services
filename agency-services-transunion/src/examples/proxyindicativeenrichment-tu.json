@@ -3,21 +3,21 @@
   "command": "POST",
   "action": "IndicativeEnrichment",
   "message": {
-    "data:ClientKey": "6b0fe15e-22f0-4797-8087-eaf2d17106ca",
-    "data:Customer": {
-      "data:CurrentAddress": {
-        "data:AddressLine1": "2409 Vandever  Ave",
-        "data:City": "HOLLYWOOD",
-        "data:State": "FL",
-        "data:Zipcode": "33025"
+    "ClientKey": "6b0fe15e-22f0-4797-8087-eaf2d17106ca",
+    "Customer": {
+      "CurrentAddress": {
+        "AddressLine1": "2409 Vandever  Ave",
+        "City": "HOLLYWOOD",
+        "State": "FL",
+        "Zipcode": "33025"
       },
-      "data:DateOfBirth": "1957-09-01",
-      "data:FullName": {
-        "data:FirstName": "AARON",
-        "data:LastName": "TESTA"
+      "DateOfBirth": "1957-09-01",
+      "FullName": {
+        "FirstName": "AARON",
+        "LastName": "TESTA"
       },
-      "data:Ssn": "899010001"
+      "Ssn": "899010001"
     },
-    "data:ServiceBundleCode": "CC2BraveCreditIndicativeEnrichment"
+    "ServiceBundleCode": "CC2BraveCreditIndicativeEnrichment"
   }
 }
