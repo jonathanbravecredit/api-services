@@ -1,7 +1,7 @@
 export class FullName {
-  FirstName: string;
-  LastName: string;
-  MiddleName: string | undefined;
-  suffix: string | undefined;
-  Prefix: string | undefined;
+  'data:FirstName': string;
+  'data:LastName': string;
+  'data:MiddleName': string | undefined;
+  'data:suffix': string | undefined;
+  'data:Prefix': string | undefined;
 }

@@ -7,6 +7,8 @@ import { getSecretKey } from 'lib/utils/secrets';
 import { formatIndicativeEnrichment } from 'lib/utils/helpers';
 import { SSL_OP_NO_TLSv1_2 } from 'constants';
 import * as Request from 'request';
+import { WSDL } from 'soap';
+import { open_wsdl } from 'soap/lib/wsdl';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -21,6 +23,8 @@ let auth;
 let passphrase;
 let password;
 let client: soap.Client;
+let endpoint = 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc/Soap12';
+let wsdl;
 
 /**
  * Handler that processes single requests for Transunion services
@@ -49,25 +53,42 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     return response(500, { error: `Error gathering/reading cert=${err}` });
   }
   try {
-    client = await soap.createClientAsync(url, {
-      forceSoap12Headers: true,
-      request: Request.defaults({
-        headers: {
+    client = await soap.createClientAsync(
+      url,
+      {
+        forceSoap12Headers: true,
+        request: Request.defaults({
+          headers: {
+            Authorization: auth,
+          },
+        }),
+        wsdl_options: {
+          key,
+          cert,
+          user,
+          passphrase,
+          overrideRootElement: {
+            namespace: 'xmlns:tns',
+            xmlnsAttributes: [
+              {
+                name: 'xmlns:con',
+                value: 'https://consumerconnectws.tui.transunion.com/',
+              },
+            ],
+          },
+        },
+        wsdl_headers: {
           Authorization: auth,
         },
-      }),
-      wsdl_options: {
-        key,
-        cert,
-        user,
-        passphrase,
       },
-      wsdl_headers: {
-        Authorization: auth,
-      },
-    });
+      endpoint,
+    );
 
-    // trying to set the headers correctly
+    // set the namespaces correctly
+    client['wsdl'].definitions.xmlns.con = 'https://consumerconnectws.tui.transunion.com/';
+    client['wsdl'].definitions.xmlns.data = 'https://consumerconnectws.tui.transunion.com/data';
+    client['wsdl'].xmlnsInEnvelope = client['wsdl']._xmlnsMap();
+
     client.setSecurity(
       new soap.ClientSSLSecurity(key, cert, null, {
         user: user,
@@ -77,6 +98,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
 
     console.log('client', client);
     console.log('client describe', client.describe());
+
     for (const record of event.Records) {
       // do something
       switch (JSON.parse(record.Sns.Message)?.action) {
