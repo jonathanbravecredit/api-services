@@ -35,6 +35,13 @@ export interface IIndicativeEnrichmentMsg {
   command: string;
   action: string;
   message: {
+    AdditionalInputs: {
+      Data: {
+        Name: string;
+        Value: number | string;
+      };
+    };
+    RequestKey: string;
     ClientKey: string;
     Customer: {
       CurrentAddress: {

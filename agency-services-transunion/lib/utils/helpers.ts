@@ -19,7 +19,6 @@ export const formatIndicativeEnrichment = (
         request: {
           AccountCode: accountCode,
           AccountName: accountName,
-          RequestKey: requestKey,
           ...message,
         },
       }
