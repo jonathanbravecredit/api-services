@@ -84,10 +84,10 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           const msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
           if (msg) {
             const indicativeEnrichmentAsync = util.promisify(client.IndicativeEnrichment);
-            const res = await indicativeEnrichmentAsync(msg);
-            console.log('res', res);
             const res2 = await indicativeEnrichmentAsync({ _xml: test });
             console.log('res 2', res2);
+            const res = await indicativeEnrichmentAsync(msg);
+            console.log('res', res);
           }
           break;
 
