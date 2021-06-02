@@ -53,36 +53,24 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     return response(500, { error: `Error gathering/reading cert=${err}` });
   }
   try {
-    client = await soap.createClientAsync(
-      url,
-      {
-        forceSoap12Headers: true,
-        request: Request.defaults({
-          headers: {
-            Authorization: auth,
-          },
-        }),
-        wsdl_options: {
-          key,
-          cert,
-          user,
-          passphrase,
-          overrideRootElement: {
-            namespace: 'xmlns:tns',
-            xmlnsAttributes: [
-              {
-                name: 'xmlns:con',
-                value: 'https://consumerconnectws.tui.transunion.com/',
-              },
-            ],
-          },
-        },
-        wsdl_headers: {
+    client = await soap.createClientAsync(url, {
+      forceSoap12Headers: true,
+      request: Request.defaults({
+        headers: {
           Authorization: auth,
         },
+      }),
+      wsdl_options: {
+        key,
+        cert,
+        user,
+        passphrase,
+        envelopeKey: 'soapenv',
       },
-      endpoint,
-    );
+      wsdl_headers: {
+        Authorization: auth,
+      },
+    });
 
     // set the namespaces correctly
     client['wsdl'].definitions.xmlns.con = 'https://consumerconnectws.tui.transunion.com/';

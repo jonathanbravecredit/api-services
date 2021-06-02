@@ -48,7 +48,8 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     return response(500, { error: `Error gathering/reading cert=${err}` });
   }
   try {
-    client = await soap.createClientAsync(url, {
+    const createClientAsync = util.promisify(soap.createClient);
+    client = await createClientAsync(url, {
       forceSoap12Headers: true,
       request: Request.defaults({
         headers: {

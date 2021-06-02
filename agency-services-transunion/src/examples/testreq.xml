@@ -1,79 +1,55 @@
-<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
   xmlns:con="https://consumerconnectws.tui.transunion.com/"
   xmlns:data="https://consumerconnectws.tui.transunion.com/data">
-  <soap:Header/>
-  <soap:Body>
+  <soapenv:Header />
+  <soapenv:Body>
     <con:IndicativeEnrichment>
-      <!--Optional:-->
       <con:request>
-        <!--Optional:-->
-        <data:AccountCode>Q0NJdGtkQThtR3hwaQ</data:AccountCode>
-        <!--Optional:-->
+        <data:AccountCode>123456789</data:AccountCode>
         <data:AccountName>CC2BraveCredit</data:AccountName>
-        <!--Optional:-->
-        <data:RequestKey>77875fa4-a6d6-4dac-a7e9-5fe763816f2d</data:RequestKey>
-        <!--Optional:-->
-        <data:ClientKey>6b0fe15e-22f0-4797-8087-eaf2d17106ca</data:ClientKey>
-        <!--Optional:-->
+        <data:AdditionalInputs>
+          <data:Data>
+            <data:Name>CreditReportVersion</data:Name>
+            <data:Value>7</data:Value>
+          </data:Data>
+        </data:AdditionalInputs>
+        <data:RequestKey>076b9ae3-9a5c-45ea-8b76-4377168e1650</data:RequestKey>
+        <data:ClientKey>22545f5a-3a68-42f2-8be9-9d639edbb958</data:ClientKey>
         <data:Customer>
-          <!--Optional:-->
           <data:CurrentAddress>
-            <!--Optional:-->
-            <data:AddressLine1>2409 Vandever  Ave</data:AddressLine1>
-            <!--Optional:-->
+            <data:AddressLine1>1202 Main St</data:AddressLine1>
             <data:AddressLine2 xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-            <!--Optional:-->
-            <data:City>HOLLYWOOD</data:City>
-            <!--Optional:-->
-            <data:State>FL</data:State>
-            <!--Optional:-->
-            <data:Zipcode>33025</data:Zipcode>
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:AddressLine2>
+            <data:City>Fort Wayne</data:City>
+            <data:State>IN</data:State>
+            <data:Zipcode>46808</data:Zipcode>
           </data:CurrentAddress>
-          <!--Optional:-->
-          <data:DateOfBirth>1957-09-01</data:DateOfBirth>
-          <!--Optional:-->
+          <data:DateOfBirth>2021-06-01</data:DateOfBirth>
           <data:FullName>
-            <!--Optional:-->
-            <data:FirstName>AARON</data:FirstName>
-            <!--Optional:-->
-            <data:LastName>TESTA</data:LastName>
-            <!--Optional:-->
-            <data:MiddleName xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-            <!--Optional:-->
+            <data:FirstName>Charles</data:FirstName>
+            <data:LastName>FAULCON</data:LastName>
+            <data:MiddleName>L</data:MiddleName>
             <data:Prefix xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-            <!--Optional:-->
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:Prefix>
             <data:Suffix xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:Suffix>
           </data:FullName>
-          <!--Optional:-->
-          <data:PhoneNumber>4045049006</data:PhoneNumber>
-          <!--Optional:-->
           <data:PreviousAddress>
-            <!--Optional:-->
             <data:AddressLine1 xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-            <!--Optional:-->
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:AddressLine1>
             <data:AddressLine2 xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-            <!--Optional:-->
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:AddressLine2>
             <data:City xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-            <!--Optional:-->
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:City>
             <data:State xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-            <!--Optional:-->
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:State>
             <data:Zipcode xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:Zipcode>
           </data:PreviousAddress>
-          <!--Optional:-->
-          <data:Ssn>899010001</data:Ssn>
+          <data:Ssn>000003657</data:Ssn>
         </data:Customer>
-        <!--Optional:-->
         <data:ServiceBundleCode>CC2BraveCreditIndicativeEnrichment</data:ServiceBundleCode>
       </con:request>
     </con:IndicativeEnrichment>
-  </soap:Body>
-</soap:Envelope>
+  </soapenv:Body>
+</soapenv:Envelope>

@@ -102,29 +102,54 @@
   xmlns:q95="https://consumerconnectws.tui.transunion.com/data"
   xmlns:q96="https://consumerconnectws.tui.transunion.com/data"
   xmlns:q97="https://consumerconnectws.tui.transunion.com/data"
-  xmlns:q98="https://consumerconnectws.tui.transunion.com/data">
+  xmlns:q98="https://consumerconnectws.tui.transunion.com/data"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data">
   <soap:Header></soap:Header>
   <soap:Body>
-    <IndicativeEnrichment xmlns="https://consumerconnectws.tui.transunion.com/">
-      <AccountCode>Q0NJdGtkQThtR3hwaQ</AccountCode>
-      <AccountName>CC2BraveCredit</AccountName>
-      <RequestKey>d75ea1f3-b190-411c-af8c-723c0a242f99</RequestKey>
-      <ClientKey>6b0fe15e-22f0-4797-8087-eaf2d17106ca</ClientKey>
-      <Customer>
-        <CurrentAddress>
-          <AddressLine1>2409 Vandever  Ave</AddressLine1>
-          <City>HOLLYWOOD</City>
-          <State>FL</State>
-          <Zipcode>33025</Zipcode>
-        </CurrentAddress>
-        <DateOfBirth>1957-09-01</DateOfBirth>
-        <FullName>
-          <FirstName>AARON</FirstName>
-          <LastName>TESTA</LastName>
-        </FullName>
-        <Ssn>899010001</Ssn>
-      </Customer>
-      <ServiceBundleCode>CC2BraveCreditIndicativeEnrichment</ServiceBundleCode>
-    </IndicativeEnrichment>
+    <con:IndicativeEnrichment>
+      <con:request>
+        <data:AccountCode>Q0NJdGtkQThtR3hwaQ</data:AccountCode>
+        <data:AccountName>CC2BraveCredit</data:AccountName>
+        <data:RequestKey>77875fa4-a6d6-4dac-a7e9-5fe763816f2d</data:RequestKey>
+        <data:ClientKey>6b0fe15e-22f0-4797-8087-eaf2d17106ca</data:ClientKey>
+        <data:Customer>
+          <data:CurrentAddress>
+            <data:AddressLine1>2409 Vandever  Ave</data:AddressLine1>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:City>HOLLYWOOD</data:City>
+            <data:State>FL</data:State>
+            <data:Zipcode>33025</data:Zipcode>
+          </data:CurrentAddress>
+          <data:DateOfBirth>1957-09-01</data:DateOfBirth>
+          <data:FullName>
+            <data:FirstName>AARON</data:FirstName>
+            <data:LastName>TESTA</data:LastName>
+            <data:MiddleName xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Prefix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Suffix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:FullName>
+          <data:PhoneNumber>4045049006</data:PhoneNumber>
+          <data:PreviousAddress>
+            <data:AddressLine1 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:City xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:State xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Zipcode xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:PreviousAddress>
+          <data:Ssn>899010001</data:Ssn>
+        </data:Customer>
+        <data:ServiceBundleCode>CC2BraveCreditIndicativeEnrichment</data:ServiceBundleCode>
+      </con:request>
+    </con:IndicativeEnrichment>
   </soap:Body>
 </soap:Envelope>
