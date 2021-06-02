@@ -5,7 +5,9 @@ import { soap } from 'strong-soap';
 import * as util from 'util';
 import { getSecretKey } from 'lib/utils/secrets';
 import { formatIndicativeEnrichment } from 'lib/utils/helpers';
-import * as Request from 'request';
+import * as request from 'request';
+import * as https from 'https';
+import axios, { AxiosRequestConfig } from 'axios';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -48,9 +50,43 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     return response(500, { error: `Error gathering/reading cert=${err}` });
   }
   try {
+    const httpsAgent = new https.Agent({
+      key,
+      cert,
+      passphrase,
+    });
+    let options = {
+      url: 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc',
+      method: 'POST',
+      body: xml,
+      headers: {
+        'Accept-Encoding': 'gzip,deflate',
+        'Content-Type': 'text/xml;charset=UTF-8',
+        SOAPAction: 'https://consumerconnectws.tui.transunion.com/ICC2/Ping',
+        Authorization: auth,
+        'Content-length': xml.length,
+        Host: 'cc2ws-live.sd.demo.truelink.com',
+        Connection: 'Keep-Alive',
+        'User-Agent': 'Apache-HttpClient/4.5.2 (Java/1.8.0_181)',
+      },
+      key,
+      cert,
+      passphrase,
+    };
+
+    // POST https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc HTTP/1.1
+    // Accept-Encoding: gzip,deflate
+    // Content-Type: text/xml;charset=UTF-8
+    // SOAPAction: "https://consumerconnectws.tui.transunion.com/ICC2/IndicativeEnrichment"
+    // Authorization: Basic Y2M*************3JA==
+    // Content-Length: 2166
+    // Host: cc2ws-live.sd.demo.truelink.com
+    // Connection: Keep-Alive
+    // User-Agent: Apache-HttpClient/4.5.2 (Java/1.8.0_181)
+
     const createClientAsync = util.promisify(soap.createClient);
     client = await createClientAsync(url, {
-      request: Request.defaults({
+      request: request.defaults({
         headers: {
           Authorization: auth,
         },
@@ -96,11 +132,16 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           }
           break;
         case 'Ping':
-          const pingAsync = util.promisify(client.Ping);
+          const pingAsync = util.promisify(request);
           // const res2 = await indicativeEnrichmentAsync({ _xml: test });
           // console.log('res 2', res2);
           const res = await pingAsync();
           console.log('ping res', res);
+
+          // const axiosConfig: AxiosRequestConfig = {
+          //   ...options,
+          // };
+          // const axiosRes = await axios(axiosConfig);
 
           break;
         default:
@@ -115,66 +156,11 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
   }
 };
 
-// const wait = (msg) => {
-//   return new Promise((resolve, reject) => {
-//     client
-//       .IndicativeEnrichmentAsync(msg)
-//       .then((result) => {
-//         resolve(result);
-//       })
-//       .catch((err) => {
-//         reject(err);
-//       });
-//   });
-// };
-
-// const test = `
-// <con:IndicativeEnrichment>
-//       <con:request>
-//         <AccountCode>123456789</AccountCode>
-//         <AccountName>CC2BraveCredit</AccountName>
-//         <AdditionalInputs>
-//           <Data>
-//             <Name>CreditReportVersion</Name>
-//             <Value>7</Value>
-//           </Data>
-//         </AdditionalInputs>
-//         <RequestKey>076b9ae3-9a5c-45ea-8b76-4377168e1650</RequestKey>
-//         <ClientKey>22545f5a-3a68-42f2-8be9-9d639edbb958</ClientKey>
-//         <Customer>
-//           <CurrentAddress>
-//             <AddressLine1>1202 Main St</AddressLine1>
-//             <AddressLine2 xsi:nil="true"
-//               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></AddressLine2>
-//             <City>Fort Wayne</City>
-//             <State>IN</State>
-//             <Zipcode>46808</Zipcode>
-//           </CurrentAddress>
-//           <DateOfBirth>2021-06-01</DateOfBirth>
-//           <FullName>
-//             <FirstName>Charles</FirstName>
-//             <LastName>FAULCON</LastName>
-//             <MiddleName>L</MiddleName>
-//             <Prefix xsi:nil="true"
-//               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></Prefix>
-//             <Suffix xsi:nil="true"
-//               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></Suffix>
-//           </FullName>
-//           <PreviousAddress>
-//             <AddressLine1 xsi:nil="true"
-//               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></AddressLine1>
-//             <AddressLine2 xsi:nil="true"
-//               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></AddressLine2>
-//             <City xsi:nil="true"
-//               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></City>
-//             <State xsi:nil="true"
-//               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></State>
-//             <Zipcode xsi:nil="true"
-//               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></Zipcode>
-//           </PreviousAddress>
-//           <Ssn>000003657</Ssn>
-//         </Customer>
-//         <ServiceBundleCode>CC2BraveCreditIndicativeEnrichment</ServiceBundleCode>
-//       </con:request>
-//     </con:IndicativeEnrichment>
-//     `;
+const xml = `
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="https://consumerconnectws.tui.transunion.com/">
+  <soapenv:Header/>
+  <soapenv:Body>
+	<con:Ping/>
+  </soapenv:Body>
+</soapenv:Envelope>
+`;

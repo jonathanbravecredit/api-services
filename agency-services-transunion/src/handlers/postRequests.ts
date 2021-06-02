@@ -1,14 +1,11 @@
 import { SNSEvent, SNSHandler } from 'aws-lambda';
 import { response } from 'lib/utils/response';
 import * as fs from 'fs';
-import * as soap from 'soap';
+import { soap } from 'strong-soap';
 import * as util from 'util';
 import { getSecretKey } from 'lib/utils/secrets';
 import { formatIndicativeEnrichment } from 'lib/utils/helpers';
-import { SSL_OP_NO_TLSv1_2 } from 'constants';
 import * as Request from 'request';
-import { WSDL } from 'soap';
-import { open_wsdl } from 'soap/lib/wsdl';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -16,15 +13,13 @@ let key: Buffer;
 let cert: Buffer;
 let cacert: Buffer;
 let username = 'CC2BraveCredit';
-let accountCode = 'Q0NJdGtkQThtR3hwaQ';
+let accountCode = '123456789';
 let url = 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc?singleWsdl';
 let user;
 let auth;
 let passphrase;
 let password;
 let client: soap.Client;
-let endpoint = 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc/Soap12';
-let wsdl;
 
 /**
  * Handler that processes single requests for Transunion services
@@ -53,30 +48,26 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     return response(500, { error: `Error gathering/reading cert=${err}` });
   }
   try {
-    client = await soap.createClientAsync(url, {
-      forceSoap12Headers: true,
+    const createClientAsync = util.promisify(soap.createClient);
+    client = await createClientAsync(url, {
       request: Request.defaults({
         headers: {
           Authorization: auth,
         },
       }),
+      // envelopeKey: 'soapenv',
       wsdl_options: {
         key,
         cert,
         user,
         passphrase,
-        envelopeKey: 'soapenv',
       },
       wsdl_headers: {
         Authorization: auth,
       },
     });
 
-    // set the namespaces correctly
-    client['wsdl'].definitions.xmlns.con = 'https://consumerconnectws.tui.transunion.com/';
-    client['wsdl'].definitions.xmlns.data = 'https://consumerconnectws.tui.transunion.com/data';
-    client['wsdl'].xmlnsInEnvelope = client['wsdl']._xmlnsMap();
-
+    // trying to set the headers correctly
     client.setSecurity(
       new soap.ClientSSLSecurity(key, cert, null, {
         user: user,
@@ -86,18 +77,23 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
 
     console.log('client', client);
     console.log('client describe', client.describe());
-
     for (const record of event.Records) {
+      let msg;
       // do something
       switch (JSON.parse(record.Sns.Message)?.action) {
         case 'IndicativeEnrichment':
-          const msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
+          msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
           if (msg) {
-            const res = await client.IndicativeEnrichmentAsync(msg);
+            const indicativeEnrichmentAsync = util.promisify(client.IndicativeEnrichment);
+            const res = await indicativeEnrichmentAsync(msg);
             console.log('res', res);
           }
           break;
-
+        case 'Ping':
+          const pingAsync = util.promisify(client.Ping);
+          const res = await pingAsync();
+          console.log('ping res', res);
+          break;
         default:
           break;
       }
@@ -110,15 +106,11 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
   }
 };
 
-// const wait = (msg) => {
-//   return new Promise((resolve, reject) => {
-//     client
-//       .IndicativeEnrichmentAsync(msg)
-//       .then((result) => {
-//         resolve(result);
-//       })
-//       .catch((err) => {
-//         reject(err);
-//       });
-//   });
-// };
+const xml = `
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="https://consumerconnectws.tui.transunion.com/">
+  <soapenv:Header/>
+  <soapenv:Body>
+	<con:Ping/>
+  </soapenv:Body>
+</soapenv:Envelope>
+`;
