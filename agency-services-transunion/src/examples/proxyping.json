@@ -1,0 +1,6 @@
+{
+  "service": "test",
+  "command": "POST",
+  "action": "Ping",
+  "message": null
+}

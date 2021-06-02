@@ -1,7 +1,7 @@
 import { SNSEvent, SNSHandler } from 'aws-lambda';
 import { response } from 'lib/utils/response';
 import * as fs from 'fs';
-import { soap } from 'strong-soap';
+// import { soap } from 'strong-soap';
 import * as util from 'util';
 import { getSecretKey } from 'lib/utils/secrets';
 import { formatIndicativeEnrichment } from 'lib/utils/helpers';
@@ -21,7 +21,7 @@ let user;
 let auth;
 let passphrase;
 let password;
-let client: soap.Client;
+// let client: soap.Client;
 
 /**
  * Handler that processes single requests for Transunion services
@@ -84,39 +84,39 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     // Connection: Keep-Alive
     // User-Agent: Apache-HttpClient/4.5.2 (Java/1.8.0_181)
 
-    const createClientAsync = util.promisify(soap.createClient);
-    client = await createClientAsync(url, {
-      request: request.defaults({
-        headers: {
-          Authorization: auth,
-        },
-      }),
-      // envelopeKey: 'soapenv',
-      wsdl_options: {
-        key,
-        cert,
-        user,
-        passphrase,
-      },
-      wsdl_headers: {
-        Authorization: auth,
-      },
-    });
+    // const createClientAsync = util.promisify(soap.createClient);
+    // client = await createClientAsync(url, {
+    //   request: request.defaults({
+    //     headers: {
+    //       Authorization: auth,
+    //     },
+    //   }),
+    //   // envelopeKey: 'soapenv',
+    //   wsdl_options: {
+    //     key,
+    //     cert,
+    //     user,
+    //     passphrase,
+    //   },
+    //   wsdl_headers: {
+    //     Authorization: auth,
+    //   },
+    // });
 
     // client['wsdl'].definitions.xmlns.con = 'https://consumerconnectws.tui.transunion.com/';
     // client['wsdl'].definitions.xmlns.data = 'https://consumerconnectws.tui.transunion.com/data';
     // client['wsdl'].xmlnsInEnvelope = client['wsdl']._xmlnsMap();
 
     // trying to set the headers correctly
-    client.setSecurity(
-      new soap.ClientSSLSecurity(key, cert, null, {
-        user: user,
-        passphrase: passphrase,
-      }),
-    );
+    // client.setSecurity(
+    //   new soap.ClientSSLSecurity(key, cert, null, {
+    //     user: user,
+    //     passphrase: passphrase,
+    //   }),
+    // );
 
-    console.log('client', client);
-    console.log('client describe', client.describe());
+    // console.log('client', client);
+    // console.log('client describe', client.describe());
     for (const record of event.Records) {
       let msg;
       // do something
@@ -124,18 +124,18 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
         case 'IndicativeEnrichment':
           msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
           if (msg) {
-            const indicativeEnrichmentAsync = util.promisify(client.IndicativeEnrichment);
-            // const res2 = await indicativeEnrichmentAsync({ _xml: test });
-            // console.log('res 2', res2);
-            const res = await indicativeEnrichmentAsync(msg);
-            console.log('res', res);
+            // const indicativeEnrichmentAsync = util.promisify(client.IndicativeEnrichment);
+            // // const res2 = await indicativeEnrichmentAsync({ _xml: test });
+            // // console.log('res 2', res2);
+            // const res = await indicativeEnrichmentAsync(msg);
+            // console.log('res', res);
           }
           break;
         case 'Ping':
           const pingAsync = util.promisify(request);
           // const res2 = await indicativeEnrichmentAsync({ _xml: test });
           // console.log('res 2', res2);
-          const res = await pingAsync();
+          const res = await pingAsync(options);
           console.log('ping res', res);
 
           // const axiosConfig: AxiosRequestConfig = {
@@ -151,7 +151,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     // return response(200, { response: 'sucessfully processed all messages' });
   } catch (err) {
     console.log('error ===>', err);
-    console.log('last request ===>', client.lastRequest);
+    // console.log('last request ===>', client.lastRequest);
     return;
   }
 };
