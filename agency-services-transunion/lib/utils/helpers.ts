@@ -4,30 +4,29 @@ import {
   IIndicativeEnrichmentMsg,
 } from 'lib/interfaces/indicative-enrichment.interface';
 import * as uuid from 'uuid';
+import * as https from 'https';
 
 export const createRequestOptions = (
-  options: { key: Buffer; cert: Buffer; passphrase: string },
+  httpsAgent: https.Agent,
   auth: string,
-  body: string,
+  data: string,
   SOAPAction: string,
 ): IRequestOptions => {
   return {
     url: 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc',
     method: 'POST',
-    body: body,
+    data: data,
+    httpsAgent,
     headers: {
       'Accept-Encoding': 'gzip,deflate',
       'Content-Type': 'text/xml;charset=UTF-8',
       SOAPAction: `https://consumerconnectws.tui.transunion.com/ICC2/${SOAPAction}`,
       Authorization: auth,
-      'Content-Length': body.length,
+      'Content-Length': data.length,
       Host: 'cc2ws-live.sd.demo.truelink.com',
       Connection: 'Keep-Alive',
       'User-Agent': 'Apache-HttpClient/4.5.2 (Java/1.8.0_181)',
     },
-    key: options.key,
-    cert: options.cert,
-    passphrase: options.passphrase,
   };
 };
 

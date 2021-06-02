@@ -1,11 +1,15 @@
+import { Method } from 'axios';
+import * as https from 'https';
+
 export interface PostAPIBody {
   email: string;
 }
 
 export interface IRequestOptions {
   url: string;
-  method: string;
-  body: string;
+  method: Method;
+  data: string;
+  httpsAgent: https.Agent;
   headers: {
     'Accept-Encoding': string;
     'Content-Type': string;
@@ -16,7 +20,4 @@ export interface IRequestOptions {
     Connection: string;
     'User-Agent': string;
   };
-  key: Buffer;
-  cert: Buffer;
-  passphrase: any;
 }
