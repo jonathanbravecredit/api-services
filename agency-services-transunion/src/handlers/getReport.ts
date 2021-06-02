@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import { soap } from 'strong-soap';
 import * as util from 'util';
 import { getSecretKey } from 'lib/utils/secrets';
-import { formatIndicativeEnrichment } from 'lib/utils/helpers';
+import { formatIndicativeEnrichment, formatPing } from 'lib/utils/helpers';
 import * as Request from 'request';
 
 // request.debug = true; import * as request from 'request';
@@ -82,10 +82,11 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     console.log('client', client);
     console.log('client describe', client.describe());
     for (const record of event.Records) {
+      let msg;
       // do something
       switch (JSON.parse(record.Sns.Message)?.action) {
         case 'IndicativeEnrichment':
-          const msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
+          msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
           if (msg) {
             const indicativeEnrichmentAsync = util.promisify(client.IndicativeEnrichment);
             // const res2 = await indicativeEnrichmentAsync({ _xml: test });
@@ -94,7 +95,16 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
             console.log('res', res);
           }
           break;
-
+        case 'Ping':
+          msg = formatPing(record.Sns.Message);
+          if (msg) {
+            const pingAsync = util.promisify(client.Ping);
+            // const res2 = await indicativeEnrichmentAsync({ _xml: test });
+            // console.log('res 2', res2);
+            const res = await pingAsync(msg);
+            console.log('ping res', res);
+          }
+          break;
         default:
           break;
       }

@@ -4,23 +4,40 @@
   <soap:Body>
     <ns1:IndicativeEnrichment xmlns:ns1="https://consumerconnectws.tui.transunion.com/">
       <ns1:request>
-        <ns2:AccountCode xmlns:ns2="https://consumerconnectws.tui.transunion.com/data">Q0NJdGtkQThtR3hwaQ</ns2:AccountCode>
+        <ns2:AccountCode xmlns:ns2="https://consumerconnectws.tui.transunion.com/data">123456789</ns2:AccountCode>
         <ns2:AccountName xmlns:ns2="https://consumerconnectws.tui.transunion.com/data">CC2BraveCredit</ns2:AccountName>
-        <ns2:RequestKey xmlns:ns2="https://consumerconnectws.tui.transunion.com/data">5a02062b-ab3e-4f94-b147-365a1f3791ff</ns2:RequestKey>
-        <ns2:ClientKey xmlns:ns2="https://consumerconnectws.tui.transunion.com/data">6b0fe15e-22f0-4797-8087-eaf2d17106ca</ns2:ClientKey>
+        <ns2:AdditionalInputs xmlns:ns2="https://consumerconnectws.tui.transunion.com/data">
+          <ns2:Data>
+            <ns2:Name>CreditReportVersion</ns2:Name>
+            <ns2:Value>7</ns2:Value>
+          </ns2:Data>
+        </ns2:AdditionalInputs>
+        <ns2:RequestKey xmlns:ns2="https://consumerconnectws.tui.transunion.com/data">076b9ae3-9a5c-45ea-8b76-4377168e1650</ns2:RequestKey>
+        <ns2:ClientKey xmlns:ns2="https://consumerconnectws.tui.transunion.com/data">22545f5a-3a68-42f2-8be9-9d639edbb958</ns2:ClientKey>
         <ns2:Customer xmlns:ns2="https://consumerconnectws.tui.transunion.com/data">
           <ns2:CurrentAddress>
-            <ns2:AddressLine1>2409 Vandever  Ave</ns2:AddressLine1>
-            <ns2:City>HOLLYWOOD</ns2:City>
-            <ns2:State>FL</ns2:State>
-            <ns2:Zipcode>33025</ns2:Zipcode>
+            <ns2:AddressLine1>1202 Main St</ns2:AddressLine1>
+            <ns2:AddressLine2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <ns2:City>Fort Wayne</ns2:City>
+            <ns2:State>IN</ns2:State>
+            <ns2:Zipcode>46808</ns2:Zipcode>
           </ns2:CurrentAddress>
-          <ns2:DateOfBirth>1957-09-01T00:00:00.000Z</ns2:DateOfBirth>
+          <ns2:DateOfBirth>2021-06-01T00:00:00.000Z</ns2:DateOfBirth>
           <ns2:FullName>
-            <ns2:FirstName>AARON</ns2:FirstName>
-            <ns2:LastName>TESTA</ns2:LastName>
+            <ns2:FirstName>Charles</ns2:FirstName>
+            <ns2:LastName>FAULCON</ns2:LastName>
+            <ns2:MiddleName>L</ns2:MiddleName>
+            <ns2:Prefix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <ns2:Suffix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
           </ns2:FullName>
-          <ns2:Ssn>899010001</ns2:Ssn>
+          <ns2:PreviousAddress>
+            <ns2:AddressLine1 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <ns2:AddressLine2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <ns2:City xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <ns2:State xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <ns2:Zipcode xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+          </ns2:PreviousAddress>
+          <ns2:Ssn>000003657</ns2:Ssn>
         </ns2:Customer>
         <ns2:ServiceBundleCode xmlns:ns2="https://consumerconnectws.tui.transunion.com/data">CC2BraveCreditIndicativeEnrichment</ns2:ServiceBundleCode>
       </ns1:request>

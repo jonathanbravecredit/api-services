@@ -24,3 +24,16 @@ export const formatIndicativeEnrichment = (
       }
     : undefined;
 };
+
+export const formatPing = (snsMessage: string): any | undefined => {
+  let data: any = JSON.parse(snsMessage);
+  let { message } = data;
+  console.log('unformatted msg', JSON.stringify(message));
+
+  const requestKey = uuid.v4();
+  return message
+    ? {
+        ...message,
+      }
+    : undefined;
+};
