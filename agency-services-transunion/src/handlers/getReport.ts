@@ -1,7 +1,7 @@
 import { SNSEvent, SNSHandler } from 'aws-lambda';
 import { response } from 'lib/utils/response';
 import * as fs from 'fs';
-import * as soap from 'strong-soap';
+import { soap } from 'strong-soap';
 import * as util from 'util';
 import { getSecretKey } from 'lib/utils/secrets';
 import { formatIndicativeEnrichment } from 'lib/utils/helpers';
@@ -50,12 +50,12 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
   try {
     const createClientAsync = util.promisify(soap.createClient);
     client = await createClientAsync(url, {
-      forceSoap12Headers: true,
       request: Request.defaults({
         headers: {
           Authorization: auth,
         },
       }),
+      envelopeKey: 'soapenv',
       wsdl_options: {
         key,
         cert,
