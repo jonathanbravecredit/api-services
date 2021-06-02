@@ -110,7 +110,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
             headers: {
               'Accept-Encoding': 'gzip,deflate',
               'Content-Type': 'text/xml;charset=UTF-8',
-              SOAPAction: 'https://consumerconnectws.tui.transunion.com/ICC2/Ping',
+              SOAPAction: 'https://consumerconnectws.tui.transunion.com/ICC2/IndicativeEnrichment',
               Authorization: auth,
               'Content-length': xml1.length,
               Host: 'cc2ws-live.sd.demo.truelink.com',
