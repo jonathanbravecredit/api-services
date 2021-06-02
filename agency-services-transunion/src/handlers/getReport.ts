@@ -52,6 +52,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
   }
   try {
     const requestAsync = util.promisify(request);
+    // const headers = axios.head
     const httpsAgent = new https.Agent({
       key,
       cert,
@@ -86,37 +87,6 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     // Connection: Keep-Alive
     // User-Agent: Apache-HttpClient/4.5.2 (Java/1.8.0_181)
 
-    // const createClientAsync = util.promisify(soap.createClient);
-    // client = await createClientAsync(url, {
-    //   request: request.defaults({
-    //     headers: {
-    //       Authorization: auth,
-    //     },
-    //   }),
-    //   // envelopeKey: 'soapenv',
-    //   wsdl_options: {
-    //     key,
-    //     cert,
-    //     user,
-    //     passphrase,
-    //   },
-    //   wsdl_headers: {
-    //     Authorization: auth,
-    //   },
-    // });
-
-    // client['wsdl'].definitions.xmlns.con = 'https://consumerconnectws.tui.transunion.com/';
-    // client['wsdl'].definitions.xmlns.data = 'https://consumerconnectws.tui.transunion.com/data';
-    // client['wsdl'].xmlnsInEnvelope = client['wsdl']._xmlnsMap();
-
-    // trying to set the headers correctly
-    // client.setSecurity(
-    //   new soap.ClientSSLSecurity(key, cert, null, {
-    //     user: user,
-    //     passphrase: passphrase,
-    //   }),
-    // );
-
     // console.log('client', client);
     // console.log('client describe', client.describe());
     for (const record of event.Records) {
@@ -131,11 +101,47 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           options = createRequestOptions({ key, cert, passphrase }, auth, xml1, 'IndicativeEnrichment');
           const res1 = await requestAsync(options);
           console.log('IndicativeEnrichment res', res1);
+
+          const resA = await axios({
+            url: 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc',
+            method: 'POST',
+            data: xml1,
+            httpsAgent,
+            headers: {
+              'Accept-Encoding': 'gzip,deflate',
+              'Content-Type': 'text/xml;charset=UTF-8',
+              SOAPAction: 'https://consumerconnectws.tui.transunion.com/ICC2/Ping',
+              Authorization: auth,
+              'Content-length': xml1.length,
+              Host: 'cc2ws-live.sd.demo.truelink.com',
+              Connection: 'Keep-Alive',
+              'User-Agent': 'Apache-HttpClient/4.5.2 (Java/1.8.0_181)',
+            },
+          });
+          console.log('axios resA', resA);
           break;
         case 'Ping':
           options = createRequestOptions({ key, cert, passphrase }, auth, xml2, 'Ping');
           const res = await requestAsync(options);
           console.log('ping res', res);
+
+          const resB = await axios({
+            url: 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc',
+            method: 'POST',
+            data: xml2,
+            httpsAgent,
+            headers: {
+              'Accept-Encoding': 'gzip,deflate',
+              'Content-Type': 'text/xml;charset=UTF-8',
+              SOAPAction: 'https://consumerconnectws.tui.transunion.com/ICC2/Ping',
+              Authorization: auth,
+              'Content-length': xml1.length,
+              Host: 'cc2ws-live.sd.demo.truelink.com',
+              Connection: 'Keep-Alive',
+              'User-Agent': 'Apache-HttpClient/4.5.2 (Java/1.8.0_181)',
+            },
+          });
+          console.log('axios resB', resB);
           break;
         default:
           break;
