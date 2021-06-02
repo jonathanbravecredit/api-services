@@ -55,7 +55,7 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           Authorization: auth,
         },
       }),
-      envelopeKey: 'soapenv',
+      // envelopeKey: 'soapenv',
       wsdl_options: {
         key,
         cert,
@@ -67,9 +67,9 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
       },
     });
 
-    client['wsdl'].definitions.xmlns.con = 'https://consumerconnectws.tui.transunion.com/';
-    client['wsdl'].definitions.xmlns.data = 'https://consumerconnectws.tui.transunion.com/data';
-    client['wsdl'].xmlnsInEnvelope = client['wsdl']._xmlnsMap();
+    // client['wsdl'].definitions.xmlns.con = 'https://consumerconnectws.tui.transunion.com/';
+    // client['wsdl'].definitions.xmlns.data = 'https://consumerconnectws.tui.transunion.com/data';
+    // client['wsdl'].xmlnsInEnvelope = client['wsdl']._xmlnsMap();
 
     // trying to set the headers correctly
     client.setSecurity(
