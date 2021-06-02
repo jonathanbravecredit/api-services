@@ -18,7 +18,7 @@ export const createRequestOptions = (
     headers: {
       'Accept-Encoding': 'gzip,deflate',
       'Content-Type': 'text/xml;charset=UTF-8',
-      SOAPAction: SOAPAction,
+      SOAPAction: `https://consumerconnectws.tui.transunion.com/ICC2/${SOAPAction}`,
       Authorization: auth,
       'Content-Length': body.length,
       Host: 'cc2ws-live.sd.demo.truelink.com',
