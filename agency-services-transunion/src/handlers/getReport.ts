@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import { soap } from 'strong-soap';
 import * as util from 'util';
 import { getSecretKey } from 'lib/utils/secrets';
-import { formatIndicativeEnrichment, formatPing } from 'lib/utils/helpers';
+import { formatIndicativeEnrichment } from 'lib/utils/helpers';
 import * as Request from 'request';
 
 // request.debug = true; import * as request from 'request';
