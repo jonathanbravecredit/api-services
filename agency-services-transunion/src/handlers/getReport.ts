@@ -96,14 +96,12 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           }
           break;
         case 'Ping':
-          msg = formatPing(record.Sns.Message);
-          if (msg) {
-            const pingAsync = util.promisify(client.Ping);
-            // const res2 = await indicativeEnrichmentAsync({ _xml: test });
-            // console.log('res 2', res2);
-            const res = await pingAsync(msg);
-            console.log('ping res', res);
-          }
+          const pingAsync = util.promisify(client.Ping);
+          // const res2 = await indicativeEnrichmentAsync({ _xml: test });
+          // console.log('res 2', res2);
+          const res = await pingAsync();
+          console.log('ping res', res);
+
           break;
         default:
           break;
