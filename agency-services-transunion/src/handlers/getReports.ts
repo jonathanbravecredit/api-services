@@ -1,9 +1,5 @@
-import { SNSEvent, SNSHandler, SQSEvent, SQSHandler } from 'aws-lambda';
+import { SQSEvent, SQSHandler } from 'aws-lambda';
 import { response } from 'lib/utils/response';
-import * as fs from 'fs';
-import * as request from 'request';
-import * as soap from 'soap';
-import { ISecurity } from 'soap';
 import { getSecretKey } from 'lib/utils/secrets';
 
 // request.debug = true;

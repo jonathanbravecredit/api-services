@@ -6,7 +6,6 @@ import * as fs from 'fs';
 import { getSecretKey } from 'lib/utils/secrets';
 import { createRequestOptions } from 'lib/utils/helpers';
 import { IRequestOptions } from 'lib/interfaces/api.interfaces';
-import { parseString } from 'xml2js';
 import { createIndicativeEnrichment, formatIndicativeEnrichment } from 'lib/queries/indicative-enrichment';
 
 // request.debug = true; import * as request from 'request';
