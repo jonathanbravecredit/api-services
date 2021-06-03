@@ -30,64 +30,62 @@ let password;
  * @returns Lambda proxy response
  */
 export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
-  try {
-    const secretJSON = await getSecretKey(transunionSKLoc);
-    const { tuKeyPassphrase, tuPassword } = JSON.parse(secretJSON);
-    password = tuPassword;
-    passphrase = tuKeyPassphrase;
-    user = `${username}:${password}`;
-    auth = 'Basic ' + Buffer.from(user).toString('base64');
-  } catch (err) {
-    return response(500, { error: `Error gathering/reading secrets=${err}` });
-  }
-
-  try {
-    key = fs.readFileSync('/opt/tubravecredit.key');
-    cert = fs.readFileSync('/opt/brave.credit.crt');
-    cacert = fs.readFileSync('/opt/Root-CA-Bundle.crt');
-  } catch (err) {
-    return response(500, { error: `Error gathering/reading cert=${err}` });
-  }
-  try {
-    const httpsAgent = new https.Agent({
-      key,
-      cert,
-      passphrase,
-    });
-
-    for (const record of event.Records) {
-      let msg;
-      let options: IRequestOptions;
-      let xml;
-      let res;
-      let data;
-      let results;
-      // do something
-      switch (JSON.parse(record.Sns.Message)?.action) {
-        case 'IndicativeEnrichment':
-          msg = formatIndicativeEnrichment(accountCode, username, JSON.parse(record.Sns.Message));
-          xml = createIndicativeEnrichment(msg);
-          options = createRequestOptions(httpsAgent, auth, xml, 'IndicativeEnrichment');
-          res = await axios({ ...options });
-          results = parseString(res.data);
-          console.log('axios resA', results);
-          break;
-        case 'Ping':
-          options = createRequestOptions(httpsAgent, auth, xml2, 'Ping');
-          res = await axios({ ...options });
-          results = parseString(res.data);
-          console.log('axios resB', results);
-          break;
-        default:
-          break;
-      }
-    }
-    // return response(200, { response: 'sucessfully processed all messages' });
-  } catch (err) {
-    console.log('error ===>', err);
-    // console.log('last request ===>', client.lastRequest);
-    return;
-  }
+  // try {
+  //   const secretJSON = await getSecretKey(transunionSKLoc);
+  //   const { tuKeyPassphrase, tuPassword } = JSON.parse(secretJSON);
+  //   password = tuPassword;
+  //   passphrase = tuKeyPassphrase;
+  //   user = `${username}:${password}`;
+  //   auth = 'Basic ' + Buffer.from(user).toString('base64');
+  // } catch (err) {
+  //   return response(500, { error: `Error gathering/reading secrets=${err}` });
+  // }
+  // try {
+  //   key = fs.readFileSync('/opt/tubravecredit.key');
+  //   cert = fs.readFileSync('/opt/brave.credit.crt');
+  //   cacert = fs.readFileSync('/opt/Root-CA-Bundle.crt');
+  // } catch (err) {
+  //   return response(500, { error: `Error gathering/reading cert=${err}` });
+  // }
+  // try {
+  //   const httpsAgent = new https.Agent({
+  //     key,
+  //     cert,
+  //     passphrase,
+  //   });
+  //   for (const record of event.Records) {
+  //     let msg;
+  //     let options: IRequestOptions;
+  //     let xml;
+  //     let res;
+  //     let data;
+  //     let results;
+  //     // do something
+  //     switch (JSON.parse(record.Sns.Message)?.action) {
+  //       case 'IndicativeEnrichment':
+  //         msg = formatIndicativeEnrichment(accountCode, username, JSON.parse(record.Sns.Message));
+  //         xml = createIndicativeEnrichment(msg);
+  //         options = createRequestOptions(httpsAgent, auth, xml, 'IndicativeEnrichment');
+  //         res = await axios({ ...options });
+  //         results = parseString(res.data);
+  //         console.log('axios resA', results);
+  //         break;
+  //       case 'Ping':
+  //         options = createRequestOptions(httpsAgent, auth, xml2, 'Ping');
+  //         res = await axios({ ...options });
+  //         results = parseString(res.data);
+  //         console.log('axios resB', results);
+  //         break;
+  //       default:
+  //         break;
+  //     }
+  //   }
+  //   // return response(200, { response: 'sucessfully processed all messages' });
+  // } catch (err) {
+  //   console.log('error ===>', err);
+  //   // console.log('last request ===>', client.lastRequest);
+  //   return;
+  // }
 };
 
 const xml2 = `
