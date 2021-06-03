@@ -8,7 +8,10 @@ import { getSecretKey } from 'lib/utils/secrets';
 import { createRequestOptions } from 'lib/utils/helpers';
 import { createIndicativeEnrichment, formatIndicativeEnrichment } from 'lib/queries/indicative-enrichment';
 import { createPing } from 'lib/queries/ping';
-import { createAuthentication, formatAuthentication } from 'lib/queries/authentication';
+import {
+  createGetAuthenticationQuestions,
+  formatGetAuthenticationQuestions,
+} from 'lib/queries/get-authentication-questions';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -77,8 +80,14 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           // is SSN full added...if so send success message back to db.
           // if not then send error message back to db and then request full SSN
           break;
-        case 'Authentication':
-          results = await proxyHandler['Authentication'](accountCode, username, record.Sns.Message, httpsAgent, auth);
+        case 'GetAuthenticationQuestions':
+          results = await proxyHandler['GetAuthenticationQuestions'](
+            accountCode,
+            username,
+            record.Sns.Message,
+            httpsAgent,
+            auth,
+          );
           console.log('axios resC', results); // what do I do with this...write to db
           // is SSN full added...if so send success message back to db.
           // if not then send error message back to db and then request full SSN
@@ -116,15 +125,15 @@ const proxyHandler = {
     const results = convert.xml2json(res.data, { compact: true });
     return results;
   },
-  Authentication: async (
+  GetAuthenticationQuestions: async (
     accountCode: string,
     username: string,
     message: string,
     agent: https.Agent,
     auth: string,
   ): Promise<string> => {
-    const msg = formatAuthentication(accountCode, username, message);
-    const xml = createAuthentication(msg);
+    const msg = formatGetAuthenticationQuestions(accountCode, username, message);
+    const xml = createGetAuthenticationQuestions(msg);
     console.log('Auth xml====>', xml);
     const options = createRequestOptions(agent, auth, xml, 'Authentication');
     const res = await axios({ ...options });

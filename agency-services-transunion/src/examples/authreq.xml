@@ -3,7 +3,7 @@
   xmlns:data="https://consumerconnectws.tui.transunion.com/data">
   <soapenv:Header/>
   <soapenv:Body>
-    <con:GetAuthenticationQuestions>
+    <con:Authentication>
       <con:request>
         <data:AccountCode>123456789</data:AccountCode>
         <data:AccountName>CC2BraveCredit</data:AccountName>
@@ -18,7 +18,8 @@
         <data:Customer>
           <data:CurrentAddress>
             <data:AddressLine1>1202 Main St</data:AddressLine1>
-            <data:AddressLine2>null</data:AddressLine2>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
             <data:City>Fort Wayne</data:City>
             <data:State>IN</data:State>
             <data:Zipcode>46808</data:Zipcode>
@@ -28,24 +29,33 @@
             <data:FirstName>Charles</data:FirstName>
             <data:LastName>FAULCON</data:LastName>
             <data:MiddleName>L</data:MiddleName>
-            <data:Prefix>null</data:Prefix>
-            <data:Suffix>null</data:Suffix>
+            <data:Prefix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Suffix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
           </data:FullName>
-          <data:PhoneNumber>undefined</data:PhoneNumber>
           <data:PreviousAddress>
-            <data:AddressLine1>null</data:AddressLine1>
-            <data:AddressLine2>null</data:AddressLine2>
-            <data:City>null</data:City>
-            <data:State>null</data:State>
-            <data:Zipcode>null</data:Zipcode>
+            <data:AddressLine1 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:City xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:State xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Zipcode xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
           </data:PreviousAddress>
           <data:Ssn>000003657</data:Ssn>
         </data:Customer>
-        <data:Email>undefined</data:Email>
-        <data:Language>undefined</data:Language>
+        <data:Email xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <data:Language xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
         <data:ServiceBundleCode>CC2BraveCreditAuthentication</data:ServiceBundleCode>
-        <data:TrustSessionId>undefined</data:TrustSessionId>
+        <data:TrustSessionId xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
       </con:request>
-    </con:GetAuthenticationQuestions>
+    </con:Authentication>
   </soapenv:Body>
 </soapenv:Envelope>

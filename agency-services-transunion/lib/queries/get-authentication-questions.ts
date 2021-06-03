@@ -1,13 +1,16 @@
-import { IAuthentication, IAuthenticationMsg } from 'lib/interfaces/authentication.interface';
+import {
+  IGetAuthenticationQuestions,
+  IGetAuthenticationQuestionsMsg,
+} from 'lib/interfaces/get-authentication-questions.interface';
 import { textConstructor } from 'lib/utils/helpers';
 import * as convert from 'xml-js';
 
-export const formatAuthentication = (
+export const formatGetAuthenticationQuestions = (
   accountCode: string,
   accountName: string,
   snsMessage: string,
-): IAuthentication | undefined => {
-  let data: IAuthenticationMsg = JSON.parse(snsMessage);
+): IGetAuthenticationQuestions | undefined => {
+  let data: IGetAuthenticationQuestionsMsg = JSON.parse(snsMessage);
   let { message } = data;
   return message
     ? {
@@ -20,7 +23,7 @@ export const formatAuthentication = (
     : undefined;
 };
 
-export const createAuthentication = (msg: IAuthentication): string => {
+export const createGetAuthenticationQuestions = (msg: IGetAuthenticationQuestions): string => {
   const xmlObj = {
     'soapenv:Envelope': {
       _attributes: {
@@ -30,7 +33,7 @@ export const createAuthentication = (msg: IAuthentication): string => {
       },
       'soapenv:Header': {},
       'soapenv:Body': {
-        'con:IndicativeEnrichment': {
+        'con:GetAuthenticationQuestions': {
           'con:request': {
             'data:AccountCode': textConstructor(msg.request.AccountCode),
             'data:AccountName': textConstructor(msg.request.AccountName),

@@ -1,4 +1,4 @@
-export interface IAuthentication {
+export interface IGetAuthenticationQuestions {
   request: {
     AccountCode: string;
     AccountName: string;
@@ -43,7 +43,7 @@ export interface IAuthentication {
   };
 }
 
-export interface IAuthenticationMsg {
+export interface IGetAuthenticationQuestionsMsg {
   service: string;
   command: string;
   action: string;
@@ -89,7 +89,7 @@ export interface IAuthenticationMsg {
   };
 }
 
-export interface IAuthenticationResponse {
+export interface IGetAuthenticationQuestionsResponse {
   's:Envelope': {
     _attributes: {
       'xmlns:s': string;

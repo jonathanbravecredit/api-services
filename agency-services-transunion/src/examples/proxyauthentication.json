@@ -1,7 +1,7 @@
 {
   "service": "transunion",
   "command": "POST",
-  "action": "Authentication",
+  "action": "GetAuthenticationQuestions",
   "message": {
     "AdditionalInputs": {
       "Data": {
