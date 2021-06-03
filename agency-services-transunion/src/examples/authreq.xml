@@ -3,16 +3,10 @@
   xmlns:data="https://consumerconnectws.tui.transunion.com/data">
   <soapenv:Header/>
   <soapenv:Body>
-    <con:Authentication>
+    <con:GetAuthenticationQuestions>
       <con:request>
         <data:AccountCode>123456789</data:AccountCode>
         <data:AccountName>CC2BraveCredit</data:AccountName>
-        <data:AdditionalInputs>
-          <data:Data>
-            <data:Name>CreditReportVersion</data:Name>
-            <data:Value>7</data:Value>
-          </data:Data>
-        </data:AdditionalInputs>
         <data:RequestKey>076b9ae3-9a5c-45ea-8b76-4377168e1650</data:RequestKey>
         <data:ClientKey>22545f5a-3a68-42f2-8be9-9d639edbb958</data:ClientKey>
         <data:Customer>
@@ -56,6 +50,6 @@
         <data:TrustSessionId xsi:nil="true"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
       </con:request>
-    </con:Authentication>
+    </con:GetAuthenticationQuestions>
   </soapenv:Body>
 </soapenv:Envelope>

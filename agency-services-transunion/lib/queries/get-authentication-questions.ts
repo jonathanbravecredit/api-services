@@ -37,12 +37,6 @@ export const createGetAuthenticationQuestions = (msg: IGetAuthenticationQuestion
           'con:request': {
             'data:AccountCode': textConstructor(msg.request.AccountCode),
             'data:AccountName': textConstructor(msg.request.AccountName),
-            'data:AdditionalInputs': {
-              'data:Data': {
-                'data:Name': textConstructor(msg.request.AdditionalInputs.Data.Name),
-                'data:Value': textConstructor(msg.request.AdditionalInputs.Data.Value),
-              },
-            },
             'data:RequestKey': textConstructor(msg.request.RequestKey),
             'data:ClientKey': textConstructor(msg.request.ClientKey),
             'data:Customer': {
@@ -68,6 +62,7 @@ export const createGetAuthenticationQuestions = (msg: IGetAuthenticationQuestion
                 'data:State': textConstructor(msg.request.Customer.PreviousAddress.State, true),
                 'data:Zipcode': textConstructor(msg.request.Customer.PreviousAddress.Zipcode, true),
               },
+              'data:PhoneNumber': textConstructor(msg.request.Customer.PhoneNumber, true),
               'data:Ssn': textConstructor(msg.request.Customer.Ssn),
             },
             'data:Email': textConstructor(msg.request.Email, true),
