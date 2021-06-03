@@ -2,7 +2,7 @@ export interface IAuthentication {
   request: {
     AccountCode: string;
     AccountName: string;
-    AdditionalInputs: {
+    AdditionalInputs?: {
       Data: {
         Name: string;
         Value: number | string;
@@ -19,11 +19,11 @@ export interface IAuthentication {
         Zipcode: string;
       };
       PreviousAddress: {
-        AddressLine1: string;
+        AddressLine1?: string;
         AddressLine2?: string;
-        City: string;
-        State: string;
-        Zipcode: string;
+        City?: string;
+        State?: string;
+        Zipcode?: string;
       };
       DateOfBirth: string;
       FullName: {
@@ -33,13 +33,13 @@ export interface IAuthentication {
         Prefix?: string;
         Suffix?: string;
       };
-      PhoneNumber: string;
+      PhoneNumber?: string;
       Ssn: string;
     };
     Email?: string;
     Language?: string;
     ServiceBundleCode: string;
-    TrustSessionId: string;
+    TrustSessionId?: string;
   };
 }
 
@@ -48,7 +48,7 @@ export interface IAuthenticationMsg {
   command: string;
   action: string;
   message: {
-    AdditionalInputs: {
+    AdditionalInputs?: {
       Data: {
         Name: string;
         Value: number | string;
@@ -65,24 +65,27 @@ export interface IAuthenticationMsg {
         Zipcode: string;
       };
       PreviousAddress: {
-        AddressLine1: string;
+        AddressLine1?: string;
         AddressLine2?: string;
-        City: string;
-        State: string;
-        Zipcode: string;
+        City?: string;
+        State?: string;
+        Zipcode?: string;
       };
       DateOfBirth: string;
       FullName: {
         FirstName: string;
         LastName: string;
+        MiddleName?: string;
+        Prefix?: string;
+        Suffix?: string;
       };
-      PhoneNumber: string;
+      PhoneNumber?: string;
       Ssn: string;
     };
     Email?: string;
     Language?: string;
     ServiceBundleCode: string;
-    TrustSessionId: string;
+    TrustSessionId?: string;
   };
 }
 

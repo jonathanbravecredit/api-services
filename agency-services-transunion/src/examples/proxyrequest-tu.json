@@ -1,8 +1,0 @@
-{
-  "service": "transunion",
-  "command": "POST",
-  "message": {
-    "name": "Jon Pizzolato",
-    "ssnLastFour": "1234"
-  }
-}
