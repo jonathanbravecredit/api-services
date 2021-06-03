@@ -1,11 +1,19 @@
+import * as convert from 'xml-js';
+
 export const createPing = (): string => {
-  const xml = `
-  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="https://consumerconnectws.tui.transunion.com/">
-  <soapenv:Header/>
-  <soapenv:Body>
-	<con:Ping/>
-  </soapenv:Body>
-</soapenv:Envelope>
-  `;
+  const xmlObj = {
+    'soapenv:Envelope': {
+      _attributes: {
+        'xmlns:soapenv': 'http://schemas.xmlsoap.org/soap/envelope/',
+        'xmlns:con': 'https://consumerconnectws.tui.transunion.com/',
+        'xmlns:data': 'https://consumerconnectws.tui.transunion.com/data',
+      },
+      'soapenv:Header': {},
+      'soapenv:Body': {
+        'con:Ping': '',
+      },
+    },
+  };
+  const xml = convert.json2xml(xmlObj.toString(), { compact: true, spaces: 4 });
   return xml;
 };

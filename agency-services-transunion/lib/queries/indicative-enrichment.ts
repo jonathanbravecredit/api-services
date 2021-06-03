@@ -2,7 +2,9 @@ import {
   IEnrichedIndicativeEnrichment,
   IIndicativeEnrichmentMsg,
 } from 'lib/interfaces/indicative-enrichment.interface';
+import { textConstructor } from 'lib/utils/helpers';
 import * as uuid from 'uuid';
+import * as convert from 'xml-js';
 
 export const formatIndicativeEnrichment = (
   accountCode: string,
@@ -25,55 +27,59 @@ export const formatIndicativeEnrichment = (
 // TODO may want to keep this fresh with the WSDL
 // may want to build a parser to create this from the message
 export const createIndicativeEnrichment = (msg: IEnrichedIndicativeEnrichment): string => {
-  const xml = `
-  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:con="https://consumerconnectws.tui.transunion.com/"
-    xmlns:data="https://consumerconnectws.tui.transunion.com/data">
-    <soapenv:Header />
-    <soapenv:Body>
-      <con:IndicativeEnrichment>
-        <con:request>
-          <data:AccountCode>${msg.request.AccountCode}</data:AccountCode>
-          <data:AccountName>${msg.request.AccountName}</data:AccountName>
-          <data:AdditionalInputs>
-            <data:Data>
-              <data:Name>${msg.request.AdditionalInputs.Data.Name}</data:Name>
-              <data:Value>${msg.request.AdditionalInputs.Data.Value}</data:Value>
-            </data:Data>
-          </data:AdditionalInputs>
-          <data:RequestKey>${msg.request.RequestKey}</data:RequestKey>
-          <data:ClientKey>${msg.request.ClientKey}</data:ClientKey>
-          <data:Customer>
-            <data:CurrentAddress>
-              <data:AddressLine1>${msg.request.Customer.CurrentAddress.AddressLine1}</data:AddressLine1>
-              <data:AddressLine2>${msg.request.Customer.CurrentAddress.AddressLine2}</data:AddressLine2>
-              <data:City>${msg.request.Customer.CurrentAddress.City}</data:City>
-              <data:State>${msg.request.Customer.CurrentAddress.State}</data:State>
-              <data:Zipcode>${msg.request.Customer.CurrentAddress.Zipcode}</data:Zipcode>
-            </data:CurrentAddress>
-            <data:DateOfBirth>${msg.request.Customer.DateOfBirth}</data:DateOfBirth>
-            <data:FullName>
-              <data:FirstName>${msg.request.Customer.FullName.FirstName}</data:FirstName>
-              <data:LastName>${msg.request.Customer.FullName.LastName}</data:LastName>
-              <data:MiddleName>${msg.request.Customer.FullName.MiddleName}</data:MiddleName>
-              <data:Prefix>${msg.request.Customer.FullName.Prefix}</data:Prefix>
-              <data:Suffix>${msg.request.Customer.FullName.Suffix}</data:Suffix>
-            </data:FullName>
-            <data:PreviousAddress>
-              <data:AddressLine1>${msg.request.Customer.PreviousAddress.AddressLine1}</data:AddressLine1>
-              <data:AddressLine2>${msg.request.Customer.PreviousAddress.AddressLine2}</data:AddressLine2>
-              <data:City>${msg.request.Customer.PreviousAddress.City}</data:City>
-              <data:State>${msg.request.Customer.PreviousAddress.State}</data:State>
-              <data:Zipcode>${msg.request.Customer.PreviousAddress.Zipcode}</data:Zipcode>
-            </data:PreviousAddress>
-            <data:Ssn>${msg.request.Customer.Ssn}</data:Ssn>
-          </data:Customer>
-          <data:ServiceBundleCode>${msg.request.ServiceBundleCode}</data:ServiceBundleCode>
-        </con:request>
-      </con:IndicativeEnrichment>
-    </soapenv:Body>
-  </soapenv:Envelope>
-  `;
+  const xmlObj = {
+    'soapenv:Envelope': {
+      _attributes: {
+        'xmlns:soapenv': 'http://schemas.xmlsoap.org/soap/envelope/',
+        'xmlns:con': 'https://consumerconnectws.tui.transunion.com/',
+        'xmlns:data': 'https://consumerconnectws.tui.transunion.com/data',
+      },
+      'soapenv:Header': {},
+      'soapenv:Body': {
+        'con:IndicativeEnrichment': {
+          'con:request': {
+            'data:AccountCode': textConstructor(msg.request.AccountCode),
+            'data:AccountName': textConstructor(msg.request.AccountName),
+            'data:AdditionalInputs': {
+              'data:Data': {
+                'data:Name': textConstructor(msg.request.AdditionalInputs.Data.Name),
+                'data:Value': textConstructor(msg.request.AdditionalInputs.Data.Value),
+              },
+            },
+            'data:RequestKey': textConstructor(msg.request.RequestKey),
+            'data:ClientKey': textConstructor(msg.request.ClientKey),
+            'data:Customer': {
+              'data:CurrentAddress': {
+                'data:AddressLine1': textConstructor(msg.request.Customer.CurrentAddress.AddressLine1),
+                'data:AddressLine2': textConstructor(msg.request.Customer.CurrentAddress.AddressLine2, true),
+                'data:City': textConstructor(msg.request.Customer.CurrentAddress.City),
+                'data:State': textConstructor(msg.request.Customer.CurrentAddress.State),
+                'data:Zipcode': textConstructor(msg.request.Customer.CurrentAddress.Zipcode),
+              },
+              'data:DateOfBirth': textConstructor(msg.request.Customer.DateOfBirth),
+              'data:FullName': {
+                'data:FirstName': textConstructor(msg.request.Customer.FullName.FirstName),
+                'data:LastName': textConstructor(msg.request.Customer.FullName.LastName),
+                'data:MiddleName': textConstructor(msg.request.Customer.FullName.MiddleName, true),
+                'data:Prefix': textConstructor(msg.request.Customer.FullName.Prefix, true),
+                'data:Suffix': textConstructor(msg.request.Customer.FullName.Suffix, true),
+              },
+              'data:PreviousAddress': {
+                'data:AddressLine1': textConstructor(msg.request.Customer.PreviousAddress.AddressLine1, true),
+                'data:AddressLine2': textConstructor(msg.request.Customer.PreviousAddress.AddressLine2, true),
+                'data:City': textConstructor(msg.request.Customer.PreviousAddress.City, true),
+                'data:State': textConstructor(msg.request.Customer.PreviousAddress.State, true),
+                'data:Zipcode': textConstructor(msg.request.Customer.PreviousAddress.Zipcode, true),
+              },
+              'data:Ssn': textConstructor(msg.request.Customer.Ssn),
+            },
+            'data:ServiceBundleCode': textConstructor(msg.request.ServiceBundleCode),
+          },
+        },
+      },
+    },
+  };
 
+  const xml = convert.json2xml(xmlObj.toString(), { compact: true, spaces: 4 });
   return xml;
 };

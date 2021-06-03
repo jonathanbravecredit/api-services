@@ -5,7 +5,7 @@ export interface IAuthentication {
     AdditionalInputs?: {
       Data: {
         Name: string;
-        Value: number | string;
+        Value: string;
       };
     };
     RequestKey: string;
@@ -51,7 +51,7 @@ export interface IAuthenticationMsg {
     AdditionalInputs?: {
       Data: {
         Name: string;
-        Value: number | string;
+        Value: string;
       };
     };
     RequestKey: string;

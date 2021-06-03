@@ -1,5 +1,5 @@
 {
-  "service": "test",
+  "service": "transunion",
   "command": "POST",
   "action": "Ping",
   "message": null

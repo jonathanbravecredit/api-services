@@ -5,7 +5,7 @@ export interface IEnrichedIndicativeEnrichment {
     AdditionalInputs: {
       Data: {
         Name: string;
-        Value: number | string;
+        Value: string;
       };
     };
     RequestKey: string;
@@ -47,7 +47,7 @@ export interface IIndicativeEnrichmentMsg {
     AdditionalInputs: {
       Data: {
         Name: string;
-        Value: number | string;
+        Value: string;
       };
     };
     RequestKey: string;
@@ -114,6 +114,138 @@ export interface IIndicativeEnrichmentResponse {
             _text: string;
           };
           'a:SSN': {
+            _text: string;
+          };
+        };
+      };
+    };
+  };
+}
+
+export interface IIndicativeEnrichmentRequest {
+  'soapenv:Envelope': {
+    _attributes: {
+      'xmlns:soapenv': 'http://schemas.xmlsoap.org/soap/envelope/';
+      'xmlns:con': 'https://consumerconnectws.tui.transunion.com/';
+      'xmlns:data': 'https://consumerconnectws.tui.transunion.com/data';
+    };
+    'soapenv:Header': {};
+    'soapenv:Body': {
+      'con:IndicativeEnrichment': {
+        'con:request': {
+          'data:AccountCode': {
+            _text: string;
+          };
+          'data:AccountName': {
+            _text: string;
+          };
+          'data:AdditionalInputs': {
+            'data:Data': {
+              'data:Name': {
+                _text: string;
+              };
+              'data:Value': {
+                _text: string;
+              };
+            };
+          };
+          'data:RequestKey': {
+            _text: string;
+          };
+          'data:ClientKey': {
+            _text: string;
+          };
+          'data:Customer': {
+            'data:CurrentAddress': {
+              'data:AddressLine1': {
+                _text: string;
+              };
+              'data:AddressLine2': {
+                _attributes?: {
+                  'xsi:nil': 'true';
+                  'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance';
+                };
+                _text?: string;
+              };
+              'data:City': {
+                _text: string;
+              };
+              'data:State': {
+                _text: string;
+              };
+              'data:Zipcode': {
+                _text: string;
+              };
+            };
+            'data:DateOfBirth': {
+              _text: string;
+            };
+            'data:FullName': {
+              'data:FirstName': {
+                _text: string;
+              };
+              'data:LastName': {
+                _text: string;
+              };
+              'data:MiddleName': {
+                _text: string;
+              };
+              'data:Prefix': {
+                _attributes?: {
+                  'xsi:nil': 'true';
+                  'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance';
+                };
+                _text?: string;
+              };
+              'data:Suffix': {
+                _attributes?: {
+                  'xsi:nil': 'true';
+                  'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance';
+                };
+              };
+            };
+            'data:PreviousAddress': {
+              'data:AddressLine1': {
+                _attributes?: {
+                  'xsi:nil': 'true';
+                  'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance';
+                };
+                _text?: string;
+              };
+              'data:AddressLine2': {
+                _attributes?: {
+                  'xsi:nil': 'true';
+                  'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance';
+                };
+                _text?: string;
+              };
+              'data:City': {
+                _attributes?: {
+                  'xsi:nil': 'true';
+                  'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance';
+                };
+                _text?: string;
+              };
+              'data:State': {
+                _attributes?: {
+                  'xsi:nil': 'true';
+                  'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance';
+                };
+                _text?: string;
+              };
+              'data:Zipcode': {
+                _attributes?: {
+                  'xsi:nil': 'true';
+                  'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance';
+                };
+                _text?: string;
+              };
+            };
+            'data:Ssn': {
+              _text: string;
+            };
+          };
+          'data:ServiceBundleCode': {
             _text: string;
           };
         };

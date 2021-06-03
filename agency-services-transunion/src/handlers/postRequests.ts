@@ -8,8 +8,6 @@ import { getSecretKey } from 'lib/utils/secrets';
 import { createRequestOptions } from 'lib/utils/helpers';
 import { createIndicativeEnrichment, formatIndicativeEnrichment } from 'lib/queries/indicative-enrichment';
 import { createPing } from 'lib/queries/ping';
-import { IIndicativeEnrichmentResponse } from 'lib/interfaces/indicative-enrichment.interface';
-import { IAuthenticationResponse } from 'lib/interfaces/authentication.interface';
 import { createAuthentication, formatAuthentication } from 'lib/queries/authentication';
 
 // request.debug = true; import * as request from 'request';
@@ -89,10 +87,8 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
           break;
       }
     }
-    // return response(200, { response: 'sucessfully processed all messages' });
   } catch (err) {
     console.log('error ===>', err);
-    // console.log('last request ===>', client.lastRequest);
     return;
   }
 };

@@ -24,3 +24,22 @@ export const createRequestOptions = (
     },
   };
 };
+
+export const nilConstructor = () => {
+  return {
+    _attributes: {
+      'xsi:nil': 'true',
+      'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+    },
+  };
+};
+
+export const textConstructor = (text: string, nullable: boolean = false) => {
+  if (!text && nullable) {
+    return nilConstructor();
+  } else {
+    return {
+      _text: text || '',
+    };
+  }
+};
