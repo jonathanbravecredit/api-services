@@ -6,10 +6,11 @@ import * as fs from 'fs';
 import * as convert from 'xml-js';
 import { getSecretKey } from 'lib/utils/secrets';
 import { createRequestOptions } from 'lib/utils/helpers';
-import { IRequestOptions } from 'lib/interfaces/api.interfaces';
 import { createIndicativeEnrichment, formatIndicativeEnrichment } from 'lib/queries/indicative-enrichment';
 import { createPing } from 'lib/queries/ping';
 import { IIndicativeEnrichmentResponse } from 'lib/interfaces/indicative-enrichment.interface';
+import { IAuthenticationResponse } from 'lib/interfaces/authentication.interface';
+import { createAuthentication, formatAuthentication } from 'lib/queries/authentication';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -71,6 +72,8 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
             auth,
           );
           console.log('axios resA', results); // what do I do with this...write to db
+          // is SSN full added...if so send success message back to db.
+          // if not then send error message back to db and then request full SSN
           break;
         case 'Ping':
           results = await proxyHandler['Ping'](httpsAgent, auth);
@@ -89,6 +92,13 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
 };
 
 const proxyHandler = {
+  Ping: async (agent: https.Agent, auth: string): Promise<any> => {
+    const xml = createPing();
+    const options = createRequestOptions(agent, auth, xml, 'Ping');
+    const res = await axios({ ...options });
+    const results = convert.xml2json(res.data);
+    return results;
+  },
   IndicativeEnrichment: async (
     accountCode: string,
     username: string,
@@ -103,11 +113,18 @@ const proxyHandler = {
     const results: IIndicativeEnrichmentResponse = JSON.parse(convert.xml2json(res.data));
     return results;
   },
-  Ping: async (agent: https.Agent, auth: string): Promise<any> => {
-    const xml = createPing();
-    const options = createRequestOptions(agent, auth, xml, 'Ping');
+  Authentication: async (
+    accountCode: string,
+    username: string,
+    message: string,
+    agent: https.Agent,
+    auth: string,
+  ): Promise<IAuthenticationResponse> => {
+    const msg = formatAuthentication(accountCode, username, JSON.parse(message));
+    const xml = createAuthentication(msg);
+    const options = createRequestOptions(agent, auth, xml, 'Authentication');
     const res = await axios({ ...options });
-    const results = convert.xml2json(res.data);
+    const results: IIndicativeEnrichmentResponse = JSON.parse(convert.xml2json(res.data));
     return results;
   },
 };
