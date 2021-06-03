@@ -63,6 +63,10 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
       let results;
       // do something
       switch (JSON.parse(record.Sns.Message)?.action) {
+        case 'Ping':
+          results = await proxyHandler['Ping'](httpsAgent, auth);
+          console.log('axios resA', results);
+          break;
         case 'IndicativeEnrichment':
           results = await proxyHandler['IndicativeEnrichment'](
             accountCode,
@@ -71,13 +75,15 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
             httpsAgent,
             auth,
           );
-          console.log('axios resA', results); // what do I do with this...write to db
+          console.log('axios resB', results); // what do I do with this...write to db
           // is SSN full added...if so send success message back to db.
           // if not then send error message back to db and then request full SSN
           break;
-        case 'Ping':
-          results = await proxyHandler['Ping'](httpsAgent, auth);
-          console.log('axios resB', results);
+        case 'Authentication':
+          results = await proxyHandler['Authentication'](accountCode, username, record.Sns.Message, httpsAgent, auth);
+          console.log('axios resC', results); // what do I do with this...write to db
+          // is SSN full added...if so send success message back to db.
+          // if not then send error message back to db and then request full SSN
           break;
         default:
           break;
