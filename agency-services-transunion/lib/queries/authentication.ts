@@ -76,6 +76,6 @@ export const createAuthentication = (msg: IAuthentication): string => {
       },
     },
   };
-  const xml = convert.json2xml(xmlObj.toString(), { compact: true, spaces: 4 });
+  const xml = convert.json2xml(JSON.stringify(xmlObj), { compact: true, spaces: 4 });
   return xml;
 };

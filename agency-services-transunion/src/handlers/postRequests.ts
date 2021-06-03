@@ -110,6 +110,7 @@ const proxyHandler = {
   ): Promise<string> => {
     const msg = formatIndicativeEnrichment(accountCode, username, message);
     const xml = createIndicativeEnrichment(msg);
+    console.log('IE xml====>', xml);
     const options = createRequestOptions(agent, auth, xml, 'IndicativeEnrichment');
     const res = await axios({ ...options });
     const results = convert.xml2json(res.data, { compact: true });
@@ -124,6 +125,7 @@ const proxyHandler = {
   ): Promise<string> => {
     const msg = formatAuthentication(accountCode, username, message);
     const xml = createAuthentication(msg);
+    console.log('Auth xml====>', xml);
     const options = createRequestOptions(agent, auth, xml, 'Authentication');
     const res = await axios({ ...options });
     const results = convert.xml2json(res.data, { compact: true });
