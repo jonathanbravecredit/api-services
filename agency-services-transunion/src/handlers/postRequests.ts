@@ -1,11 +1,15 @@
 import { SNSEvent, SNSHandler } from 'aws-lambda';
 import { response } from 'lib/utils/response';
+import axios from 'axios';
+import * as https from 'https';
 import * as fs from 'fs';
-import { soap } from 'strong-soap';
-import * as util from 'util';
+import * as convert from 'xml-js';
 import { getSecretKey } from 'lib/utils/secrets';
-import { formatIndicativeEnrichment } from 'lib/utils/helpers';
-import * as Request from 'request';
+import { createRequestOptions } from 'lib/utils/helpers';
+import { IRequestOptions } from 'lib/interfaces/api.interfaces';
+import { createIndicativeEnrichment, formatIndicativeEnrichment } from 'lib/queries/indicative-enrichment';
+import { createPing } from 'lib/queries/ping';
+import { IIndicativeEnrichmentResponse } from 'lib/interfaces/indicative-enrichment.interface';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -19,7 +23,7 @@ let user;
 let auth;
 let passphrase;
 let password;
-let client: soap.Client;
+// let client: soap.Client;
 
 /**
  * Handler that processes single requests for Transunion services
@@ -48,51 +52,29 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     return response(500, { error: `Error gathering/reading cert=${err}` });
   }
   try {
-    const createClientAsync = util.promisify(soap.createClient);
-    client = await createClientAsync(url, {
-      request: Request.defaults({
-        headers: {
-          Authorization: auth,
-        },
-      }),
-      // envelopeKey: 'soapenv',
-      wsdl_options: {
-        key,
-        cert,
-        user,
-        passphrase,
-      },
-      wsdl_headers: {
-        Authorization: auth,
-      },
+    const httpsAgent = new https.Agent({
+      key,
+      cert,
+      passphrase,
     });
 
-    // trying to set the headers correctly
-    client.setSecurity(
-      new soap.ClientSSLSecurity(key, cert, null, {
-        user: user,
-        passphrase: passphrase,
-      }),
-    );
-
-    console.log('client', client);
-    console.log('client describe', client.describe());
     for (const record of event.Records) {
-      let msg;
+      let results;
       // do something
       switch (JSON.parse(record.Sns.Message)?.action) {
         case 'IndicativeEnrichment':
-          msg = formatIndicativeEnrichment(accountCode, username, record.Sns.Message);
-          if (msg) {
-            const indicativeEnrichmentAsync = util.promisify(client.IndicativeEnrichment);
-            const res = await indicativeEnrichmentAsync(msg);
-            console.log('res', res);
-          }
+          results = await proxyHandler['IndicativeEnrichment'](
+            accountCode,
+            username,
+            record.Sns.Message,
+            httpsAgent,
+            auth,
+          );
+          console.log('axios resA', results); // what do I do with this...write to db
           break;
         case 'Ping':
-          const pingAsync = util.promisify(client.Ping);
-          const res = await pingAsync();
-          console.log('ping res', res);
+          results = await proxyHandler['Ping'](httpsAgent, auth);
+          console.log('axios resB', results);
           break;
         default:
           break;
@@ -101,16 +83,31 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     // return response(200, { response: 'sucessfully processed all messages' });
   } catch (err) {
     console.log('error ===>', err);
-    console.log('last request ===>', client.lastRequest);
+    // console.log('last request ===>', client.lastRequest);
     return;
   }
 };
 
-const xml = `
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="https://consumerconnectws.tui.transunion.com/">
-  <soapenv:Header/>
-  <soapenv:Body>
-	<con:Ping/>
-  </soapenv:Body>
-</soapenv:Envelope>
-`;
+const proxyHandler = {
+  IndicativeEnrichment: async (
+    accountCode: string,
+    username: string,
+    message: string,
+    agent: https.Agent,
+    auth: string,
+  ): Promise<IIndicativeEnrichmentResponse> => {
+    const msg = formatIndicativeEnrichment(accountCode, username, JSON.parse(message));
+    const xml = createIndicativeEnrichment(msg);
+    const options = createRequestOptions(agent, auth, xml, 'IndicativeEnrichment');
+    const res = await axios({ ...options });
+    const results: IIndicativeEnrichmentResponse = JSON.parse(convert.xml2json(res.data));
+    return results;
+  },
+  Ping: async (agent: https.Agent, auth: string): Promise<any> => {
+    const xml = createPing();
+    const options = createRequestOptions(agent, auth, xml, 'Ping');
+    const res = await axios({ ...options });
+    const results = convert.xml2json(res.data);
+    return results;
+  },
+};

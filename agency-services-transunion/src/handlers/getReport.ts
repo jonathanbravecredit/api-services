@@ -1,15 +1,13 @@
 import { SNSEvent, SNSHandler } from 'aws-lambda';
 import { response } from 'lib/utils/response';
-import * as fs from 'fs';
-// import { soap } from 'strong-soap';
-import * as util from 'util';
-import { getSecretKey } from 'lib/utils/secrets';
-import { createRequestOptions, formatIndicativeEnrichment } from 'lib/utils/helpers';
-import * as request from 'request';
+import axios from 'axios';
 import * as https from 'https';
-import axios, { AxiosRequestConfig } from 'axios';
+import * as fs from 'fs';
+import { getSecretKey } from 'lib/utils/secrets';
+import { createRequestOptions } from 'lib/utils/helpers';
 import { IRequestOptions } from 'lib/interfaces/api.interfaces';
 import { parseString } from 'xml2js';
+import { createIndicativeEnrichment, formatIndicativeEnrichment } from 'lib/queries/indicative-enrichment';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -61,13 +59,16 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
     for (const record of event.Records) {
       let msg;
       let options: IRequestOptions;
+      let xml;
       let res;
       let data;
       let results;
       // do something
       switch (JSON.parse(record.Sns.Message)?.action) {
         case 'IndicativeEnrichment':
-          options = createRequestOptions(httpsAgent, auth, xml1, 'IndicativeEnrichment');
+          msg = formatIndicativeEnrichment(accountCode, username, JSON.parse(record.Sns.Message));
+          xml = createIndicativeEnrichment(msg);
+          options = createRequestOptions(httpsAgent, auth, xml, 'IndicativeEnrichment');
           res = await axios({ ...options });
           results = parseString(res.data);
           console.log('axios resA', results);
@@ -95,64 +96,6 @@ const xml2 = `
   <soapenv:Header/>
   <soapenv:Body>
 	<con:Ping/>
-  </soapenv:Body>
-</soapenv:Envelope>
-`;
-
-const xml1 = `
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-  xmlns:con="https://consumerconnectws.tui.transunion.com/"
-  xmlns:data="https://consumerconnectws.tui.transunion.com/data">
-  <soapenv:Header />
-  <soapenv:Body>
-    <con:IndicativeEnrichment>
-      <con:request>
-        <data:AccountCode>123456789</data:AccountCode>
-        <data:AccountName>CC2BraveCredit</data:AccountName>
-        <data:AdditionalInputs>
-          <data:Data>
-            <data:Name>CreditReportVersion</data:Name>
-            <data:Value>7</data:Value>
-          </data:Data>
-        </data:AdditionalInputs>
-        <data:RequestKey>076b9ae3-9a5c-45ea-8b76-4377168e1650</data:RequestKey>
-        <data:ClientKey>22545f5a-3a68-42f2-8be9-9d639edbb958</data:ClientKey>
-        <data:Customer>
-          <data:CurrentAddress>
-            <data:AddressLine1>1202 Main St</data:AddressLine1>
-            <data:AddressLine2 xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:AddressLine2>
-            <data:City>Fort Wayne</data:City>
-            <data:State>IN</data:State>
-            <data:Zipcode>46808</data:Zipcode>
-          </data:CurrentAddress>
-          <data:DateOfBirth>2021-06-01</data:DateOfBirth>
-          <data:FullName>
-            <data:FirstName>Charles</data:FirstName>
-            <data:LastName>FAULCON</data:LastName>
-            <data:MiddleName>L</data:MiddleName>
-            <data:Prefix xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:Prefix>
-            <data:Suffix xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:Suffix>
-          </data:FullName>
-          <data:PreviousAddress>
-            <data:AddressLine1 xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:AddressLine1>
-            <data:AddressLine2 xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:AddressLine2>
-            <data:City xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:City>
-            <data:State xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:State>
-            <data:Zipcode xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:Zipcode>
-          </data:PreviousAddress>
-          <data:Ssn>000003657</data:Ssn>
-        </data:Customer>
-        <data:ServiceBundleCode>CC2BraveCreditIndicativeEnrichment</data:ServiceBundleCode>
-      </con:request>
-    </con:IndicativeEnrichment>
   </soapenv:Body>
 </soapenv:Envelope>
 `;

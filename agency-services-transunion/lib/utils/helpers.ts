@@ -1,9 +1,4 @@
 import { IRequestOptions } from 'lib/interfaces/api.interfaces';
-import {
-  IEnrichedIndicativeEnrichment,
-  IIndicativeEnrichmentMsg,
-} from 'lib/interfaces/indicative-enrichment.interface';
-import * as uuid from 'uuid';
 import * as https from 'https';
 
 export const createRequestOptions = (
@@ -28,25 +23,4 @@ export const createRequestOptions = (
       'User-Agent': 'Apache-HttpClient/4.5.2 (Java/1.8.0_181)',
     },
   };
-};
-
-export const formatIndicativeEnrichment = (
-  accountCode: string,
-  accountName: string,
-  snsMessage: string,
-): IEnrichedIndicativeEnrichment | undefined => {
-  let data: IIndicativeEnrichmentMsg = JSON.parse(snsMessage);
-  let { message } = data;
-  console.log('unformatted msg', JSON.stringify(message));
-
-  const requestKey = uuid.v4();
-  return message
-    ? {
-        request: {
-          AccountCode: accountCode,
-          AccountName: accountName,
-          ...message,
-        },
-      }
-    : undefined;
 };
