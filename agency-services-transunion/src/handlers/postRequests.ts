@@ -135,7 +135,7 @@ const proxyHandler = {
     const msg = formatGetAuthenticationQuestions(accountCode, username, message);
     const xml = createGetAuthenticationQuestions(msg);
     console.log('Auth xml====>', xml);
-    const options = createRequestOptions(agent, auth, xml, 'Authentication');
+    const options = createRequestOptions(agent, auth, xml, 'GetAuthenticationQuestions');
     const res = await axios({ ...options });
     const results = convert.xml2json(res.data, { compact: true });
     return results;
