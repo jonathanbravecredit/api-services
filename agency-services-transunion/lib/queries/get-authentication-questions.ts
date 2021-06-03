@@ -4,6 +4,7 @@ import {
 } from 'lib/interfaces/get-authentication-questions.interface';
 import { textConstructor } from 'lib/utils/helpers';
 import * as convert from 'xml-js';
+import * as uuid from 'uuid';
 
 export const formatGetAuthenticationQuestions = (
   accountCode: string,
@@ -37,7 +38,7 @@ export const createGetAuthenticationQuestions = (msg: IGetAuthenticationQuestion
           'con:request': {
             'data:AccountCode': textConstructor(msg.request.AccountCode),
             'data:AccountName': textConstructor(msg.request.AccountName),
-            'data:RequestKey': textConstructor(msg.request.RequestKey),
+            'data:RequestKey': textConstructor(uuid.v4()),
             'data:ClientKey': textConstructor(msg.request.ClientKey),
             'data:Customer': {
               'data:CurrentAddress': {
