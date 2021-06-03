@@ -106,7 +106,7 @@ const proxyHandler = {
     agent: https.Agent,
     auth: string,
   ): Promise<string> => {
-    const msg = formatIndicativeEnrichment(accountCode, username, JSON.parse(message));
+    const msg = formatIndicativeEnrichment(accountCode, username, message);
     const xml = createIndicativeEnrichment(msg);
     const options = createRequestOptions(agent, auth, xml, 'IndicativeEnrichment');
     const res = await axios({ ...options });
@@ -120,7 +120,7 @@ const proxyHandler = {
     agent: https.Agent,
     auth: string,
   ): Promise<string> => {
-    const msg = formatAuthentication(accountCode, username, JSON.parse(message));
+    const msg = formatAuthentication(accountCode, username, message);
     const xml = createAuthentication(msg);
     const options = createRequestOptions(agent, auth, xml, 'Authentication');
     const res = await axios({ ...options });
