@@ -92,11 +92,11 @@ export const main: SNSHandler = async (event: SNSEvent): Promise<any> => {
 };
 
 const proxyHandler = {
-  Ping: async (agent: https.Agent, auth: string): Promise<any> => {
+  Ping: async (agent: https.Agent, auth: string): Promise<string> => {
     const xml = createPing();
     const options = createRequestOptions(agent, auth, xml, 'Ping');
     const res = await axios({ ...options });
-    const results = convert.xml2json(res.data);
+    const results = convert.xml2json(res.data, { compact: true });
     return results;
   },
   IndicativeEnrichment: async (
@@ -105,12 +105,12 @@ const proxyHandler = {
     message: string,
     agent: https.Agent,
     auth: string,
-  ): Promise<IIndicativeEnrichmentResponse> => {
+  ): Promise<string> => {
     const msg = formatIndicativeEnrichment(accountCode, username, JSON.parse(message));
     const xml = createIndicativeEnrichment(msg);
     const options = createRequestOptions(agent, auth, xml, 'IndicativeEnrichment');
     const res = await axios({ ...options });
-    const results: IIndicativeEnrichmentResponse = JSON.parse(convert.xml2json(res.data));
+    const results = convert.xml2json(res.data, { compact: true });
     return results;
   },
   Authentication: async (
@@ -119,12 +119,12 @@ const proxyHandler = {
     message: string,
     agent: https.Agent,
     auth: string,
-  ): Promise<IAuthenticationResponse> => {
+  ): Promise<string> => {
     const msg = formatAuthentication(accountCode, username, JSON.parse(message));
     const xml = createAuthentication(msg);
     const options = createRequestOptions(agent, auth, xml, 'Authentication');
     const res = await axios({ ...options });
-    const results: IIndicativeEnrichmentResponse = JSON.parse(convert.xml2json(res.data));
+    const results = convert.xml2json(res.data, { compact: true });
     return results;
   },
 };
