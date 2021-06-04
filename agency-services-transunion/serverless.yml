@@ -45,8 +45,8 @@ layers:
     path: tucerts
 
 functions:
-  testGraphQL:
-    handler: src/handlers/test-graphql.main
+  graphql:
+    handler: src/handlers/graphql.main
     layers:
       - { Ref: TuCertsLambdaLayer }
   postRequests:
