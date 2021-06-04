@@ -58,7 +58,8 @@
 // `
 
 export const main = async (event) => {
-}
+  console.log('event ===> ', event);
+};
 
 // exports.main = async (event) => {
 //   // try {
