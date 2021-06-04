@@ -45,28 +45,10 @@ layers:
     path: tucerts
 
 functions:
-  getReports:
-    handler: src/handlers/getReports.main
+  testGraphQL:
+    handler: src/handlers/test-graphql.main
     layers:
       - { Ref: TuCertsLambdaLayer }
-    events:
-      - sqs:
-          arn: !GetAtt
-            - TransunionQueue
-            - Arn
-          batchSize: 1
-  getReport:
-    handler: src/handlers/getReport.main
-    layers:
-      - { Ref: TuCertsLambdaLayer }
-    events:
-      - sns:
-          arn: ${self:provider.environment.SNS_PROXY_ARN}
-          topicName: SnsProxyTopic
-          integration: lambda-proxy
-          filterPolicy:
-            service:
-              - 'test'
   postRequests:
     handler: src/handlers/postRequests.main
     layers:
