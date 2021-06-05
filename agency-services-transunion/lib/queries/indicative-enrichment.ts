@@ -11,8 +11,7 @@ export const formatIndicativeEnrichment = (
   accountName: string,
   msg: string,
 ): IEnrichedIndicativeEnrichment | undefined => {
-  let data: IIndicativeEnrichmentMsg = JSON.parse(msg);
-  let { message } = data;
+  let message: IIndicativeEnrichmentMsg = JSON.parse(msg);
   return message
     ? {
         request: {
