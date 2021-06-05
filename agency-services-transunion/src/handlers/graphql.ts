@@ -36,6 +36,7 @@ let password;
  */
 export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> => {
   console.log('event ====> ', event);
+
   try {
     const secretJSON = await getSecretKey(transunionSKLoc);
     const { tuKeyPassphrase, tuPassword } = JSON.parse(secretJSON);
@@ -99,6 +100,8 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     console.log('error ===>', err);
     return;
   }
+
+  return response(200, 'Success!');
 };
 
 const proxyHandler = {
