@@ -36,6 +36,8 @@ let password;
  */
 export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> => {
   console.log('event ====> ', event);
+  const action: string = event?.arguments?.action;
+  const message: any = JSON.parse(event?.arguments?.message);
 
   try {
     const secretJSON = await getSecretKey(transunionSKLoc);
@@ -62,46 +64,25 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       passphrase,
     });
 
-    // let results;
-    // // do something
-    // switch (JSON.parse(record.Sns.Message)?.action) {
-    //   case 'Ping':
-    //     results = await proxyHandler['Ping'](httpsAgent, auth);
-    //     console.log('axios resA', results);
-    //     break;
-    //   case 'IndicativeEnrichment':
-    //     results = await proxyHandler['IndicativeEnrichment'](
-    //       accountCode,
-    //       username,
-    //       record.Sns.Message,
-    //       httpsAgent,
-    //       auth,
-    //     );
-    //     console.log('axios resB', results); // what do I do with this...write to db
-    //     // is SSN full added...if so send success message back to db.
-    //     // if not then send error message back to db and then request full SSN
-    //     break;
-    //   case 'GetAuthenticationQuestions':
-    //     results = await proxyHandler['GetAuthenticationQuestions'](
-    //       accountCode,
-    //       username,
-    //       record.Sns.Message,
-    //       httpsAgent,
-    //       auth,
-    //     );
-    //     console.log('axios resC', results); // what do I do with this...write to db
-    //     // is SSN full added...if so send success message back to db.
-    //     // if not then send error message back to db and then request full SSN
-    //     break;
-    //   default:
-    //     break;
-    // }
+    let results;
+    // do something
+    switch (action) {
+      case 'Ping':
+        results = await proxyHandler['Ping'](httpsAgent, auth);
+        return response(200, { PingResults: results });
+      case 'IndicativeEnrichment':
+        results = await proxyHandler['IndicativeEnrichment'](accountCode, username, message, httpsAgent, auth);
+        return response(200, { IndicativeEnrichmentResults: results });
+      case 'GetAuthenticationQuestions':
+        results = await proxyHandler['GetAuthenticationQuestions'](accountCode, username, message, httpsAgent, auth);
+        return response(200, { GetAuthenticationQuestions: results });
+      default:
+        return response(500, { Action: action, Error: 'Action not found' });
+    }
   } catch (err) {
     console.log('error ===>', err);
-    return;
+    return response(500, { Action: action, Error: err });
   }
-
-  return response(200, 'Success!');
 };
 
 const proxyHandler = {
