@@ -9,9 +9,9 @@ import * as uuid from 'uuid';
 export const formatGetAuthenticationQuestions = (
   accountCode: string,
   accountName: string,
-  snsMessage: string,
+  msg: string,
 ): IGetAuthenticationQuestions | undefined => {
-  let data: IGetAuthenticationQuestionsMsg = JSON.parse(snsMessage);
+  let data: IGetAuthenticationQuestionsMsg = JSON.parse(msg);
   let { message } = data;
   return message
     ? {

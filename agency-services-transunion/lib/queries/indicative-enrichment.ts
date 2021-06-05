@@ -9,9 +9,9 @@ import * as convert from 'xml-js';
 export const formatIndicativeEnrichment = (
   accountCode: string,
   accountName: string,
-  snsMessage: string,
+  msg: string,
 ): IEnrichedIndicativeEnrichment | undefined => {
-  let data: IIndicativeEnrichmentMsg = JSON.parse(snsMessage);
+  let data: IIndicativeEnrichmentMsg = JSON.parse(msg);
   let { message } = data;
   return message
     ? {

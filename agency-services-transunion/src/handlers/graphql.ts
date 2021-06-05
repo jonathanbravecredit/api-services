@@ -37,7 +37,10 @@ let password;
 export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> => {
   console.log('event ====> ', event);
   const action: string = event?.arguments?.action;
-  const message: any = JSON.parse(event?.arguments?.message);
+  const message: string = event?.arguments?.message;
+
+  console.log('action', action);
+  console.log('message', message);
 
   try {
     const secretJSON = await getSecretKey(transunionSKLoc);
