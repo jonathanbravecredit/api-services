@@ -11,8 +11,7 @@ export const formatGetAuthenticationQuestions = (
   accountName: string,
   msg: string,
 ): IGetAuthenticationQuestions | undefined => {
-  let data: IGetAuthenticationQuestionsMsg = JSON.parse(msg);
-  let { message } = data;
+  let message: IGetAuthenticationQuestionsMsg = JSON.parse(msg);
   return message
     ? {
         request: {
