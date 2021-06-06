@@ -75,7 +75,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         return { PingResults: results };
       case 'IndicativeEnrichment':
         results = await proxyHandler['IndicativeEnrichment'](accountCode, username, message, httpsAgent, auth);
-        return { IndicativeEnrichmentResults: results };
+        return JSON.stringify({ IndicativeEnrichmentResults: results });
       case 'GetAuthenticationQuestions':
         results = await proxyHandler['GetAuthenticationQuestions'](accountCode, username, message, httpsAgent, auth);
         return { GetAuthenticationQuestions: results };
