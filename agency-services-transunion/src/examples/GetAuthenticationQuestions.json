@@ -1,0 +1,40 @@
+{
+  "AdditionalInputs": {
+    "Data": {
+      "Name": "CreditReportVersion",
+      "Value": 7
+    }
+  },
+  "RequestKey": "076b9ae3-9a5c-45ea-8b76-4377168e1650",
+  "ClientKey": "22545f5a-3a68-42f2-8be9-9d639edbb959",
+  "Customer": {
+    "CurrentAddress": {
+      "AddressLine1": "2409 Vandever  Ave",
+      "AddressLine2": null,
+      "City": "HOLLYWOOD",
+      "State": "FL",
+      "Zipcode": "33025"
+    },
+    "PreviousAddress": {
+      "AddressLine1": null,
+      "AddressLine2": null,
+      "City": null,
+      "State": null,
+      "Zipcode": null
+    },
+    "DateOfBirth": "1957-09-01",
+    "FullName": {
+      "FirstName": "AARON",
+      "LastName": "TESTA",
+      "MiddleName": null,
+      "Prefix": null,
+      "Suffix": null
+    },
+    "PhoneNumber": null,
+    "Ssn": "899010001"
+  },
+  "Email": null,
+  "Language": null,
+  "ServiceBundleCode": "CC2BraveCreditAuthentication",
+  "TrustSessionId:": null
+}

@@ -72,15 +72,15 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     switch (action) {
       case 'Ping':
         results = await proxyHandler['Ping'](httpsAgent, auth);
-        return response(200, { PingResults: results });
+        return { PingResults: results };
       case 'IndicativeEnrichment':
         results = await proxyHandler['IndicativeEnrichment'](accountCode, username, message, httpsAgent, auth);
-        return response(200, { IndicativeEnrichmentResults: results });
+        return { IndicativeEnrichmentResults: results };
       case 'GetAuthenticationQuestions':
         results = await proxyHandler['GetAuthenticationQuestions'](accountCode, username, message, httpsAgent, auth);
-        return response(200, { GetAuthenticationQuestions: results });
+        return { GetAuthenticationQuestions: results };
       default:
-        return response(500, { Action: action, Error: 'Action not found' });
+        return { Action: action, Error: 'Action not found' };
     }
   } catch (err) {
     console.log('error ===>', err);
