@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "fast-xml-parser": "^3.19.0",
     "strong-soap": "^3.2.1",
     "uuid": "^8.3.2",
     "xml-js": "^1.6.11"

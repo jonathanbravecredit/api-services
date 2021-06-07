@@ -4,6 +4,7 @@ import axios from 'axios';
 import * as https from 'https';
 import * as fs from 'fs';
 import * as convert from 'xml-js';
+import * as fastXml from 'fast-xml-parser';
 import { getSecretKey } from 'lib/utils/secrets';
 import { createRequestOptions } from 'lib/utils/helpers';
 import { createIndicativeEnrichment, formatIndicativeEnrichment } from 'lib/queries/indicative-enrichment';
@@ -12,6 +13,10 @@ import {
   createGetAuthenticationQuestions,
   formatGetAuthenticationQuestions,
 } from 'lib/queries/get-authentication-questions';
+import {
+  createVerifyAuthenticationQuestions,
+  formatVerifyAuthenticationQuestions,
+} from 'lib/queries/verify-authentication-questions';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -26,6 +31,10 @@ let auth;
 let passphrase;
 let password;
 // let client: soap.Client;
+
+// Trying new parser
+const Parser = fastXml.j2xParser;
+const parser = new Parser({});
 
 /**
  * Handler that processes single requests for Transunion services
@@ -79,6 +88,9 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       case 'GetAuthenticationQuestions':
         results = await proxyHandler['GetAuthenticationQuestions'](accountCode, username, message, httpsAgent, auth);
         return JSON.stringify({ GetAuthenticationQuestions: results });
+      case 'VerifyAuthenticationQuestions':
+        results = await proxyHandler['GetAuthenticationQuestions'](accountCode, username, message, httpsAgent, auth);
+        return JSON.stringify({ GetAuthenticationQuestions: results });
       default:
         return JSON.stringify({ Action: action, Error: 'Action not found' });
     }
@@ -93,7 +105,7 @@ const proxyHandler = {
     const xml = createPing();
     const options = createRequestOptions(agent, auth, xml, 'Ping');
     const res = await axios({ ...options });
-    const results = convert.xml2json(res.data, { compact: true });
+    const results = convert.xml2json(res.data, { compact: true }); // TODO switch over to fast-xml-parser...handles data much better
     return results;
   },
   IndicativeEnrichment: async (
@@ -124,6 +136,21 @@ const proxyHandler = {
     const options = createRequestOptions(agent, auth, xml, 'GetAuthenticationQuestions');
     const res = await axios({ ...options });
     const results = convert.xml2json(res.data, { compact: true });
+    return results;
+  },
+  VerifyAuthenticationQuestions: async (
+    accountCode: string,
+    username: string,
+    message: string,
+    agent: https.Agent,
+    auth: string,
+  ): Promise<string> => {
+    const msg = formatVerifyAuthenticationQuestions(accountCode, username, message);
+    const xml = createVerifyAuthenticationQuestions(msg);
+    console.log('Verify xml====>', xml);
+    const options = createRequestOptions(agent, auth, xml, 'VerifyAuthenticationQuestions');
+    const res = await axios({ ...options });
+    const results = fastXml.parse(res.data);
     return results;
   },
 };

@@ -1,0 +1,26 @@
+<ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion xmlns="com/truelink/ds/sch/srv/iv/ccs">
+  <VerifyChallengeAnswersRequestMultiChoiceQuestion>
+    <QuestionId>40115386</QuestionId>
+    <SelectedAnswerChoice>
+      <AnswerChoiceId>3036300248</AnswerChoiceId>
+    </SelectedAnswerChoice>
+  </VerifyChallengeAnswersRequestMultiChoiceQuestion>
+  <VerifyChallengeAnswersRequestMultiChoiceQuestion>
+    <QuestionId>40115384</QuestionId>
+    <SelectedAnswerChoice>
+      <AnswerChoiceId>3036300230</AnswerChoiceId>
+    </SelectedAnswerChoice>
+  </VerifyChallengeAnswersRequestMultiChoiceQuestion>
+  <VerifyChallengeAnswersRequestMultiChoiceQuestion>
+    <QuestionId>40115388</QuestionId>
+    <SelectedAnswerChoice>
+      <AnswerChoiceId>3036300254</AnswerChoiceId>
+    </SelectedAnswerChoice>
+  </VerifyChallengeAnswersRequestMultiChoiceQuestion>
+  <VerifyChallengeAnswersRequestMultiChoiceQuestion>
+    <QuestionId>40115390</QuestionId>
+    <SelectedAnswerChoice>
+      <AnswerChoiceId>3036300266</AnswerChoiceId>
+    </SelectedAnswerChoice>
+  </VerifyChallengeAnswersRequestMultiChoiceQuestion>
+</ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion>

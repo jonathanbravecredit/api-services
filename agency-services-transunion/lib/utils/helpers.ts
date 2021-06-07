@@ -43,3 +43,13 @@ export const textConstructor = (text: string, nullable: boolean = false) => {
     };
   }
 };
+
+export const cdataConstructor = (text: string, nullable: boolean = false) => {
+  if (!text && nullable) {
+    return nilConstructor();
+  } else {
+    return {
+      _text: `<![CDATA[${text}]]>`,
+    };
+  }
+};
