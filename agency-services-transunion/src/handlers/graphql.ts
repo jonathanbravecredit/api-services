@@ -152,6 +152,6 @@ const proxyHandler = {
     const res = await axios({ ...options });
     const results = fastXml.parse(res.data);
     console.log('results', results);
-    return ''; //results;
+    return results;
   },
 };
