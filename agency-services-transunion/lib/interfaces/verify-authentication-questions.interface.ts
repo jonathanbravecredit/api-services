@@ -1,4 +1,4 @@
-import { IVerifyAuthenticationAnswersArray } from 'lib/interfaces/verify-authentication-answers.interface';
+import { IVerifyAuthenticationAnswer } from 'lib/interfaces/verify-authentication-answers.interface';
 
 export interface IVerifyAuthenticationQuestions {
   request: {
@@ -12,7 +12,7 @@ export interface IVerifyAuthenticationQuestions {
     };
     RequestKey: string;
     ClientKey: string;
-    Answers: IVerifyAuthenticationAnswersArray;
+    Answers: IVerifyAuthenticationAnswer[];
     ServiceBundleFulfillmentKey: string;
     TrustSessionId?: string;
   };
@@ -27,7 +27,7 @@ export interface IVerifyAuthenticationQuestionsMsg {
   };
   RequestKey: string;
   ClientKey: string;
-  Answers: IVerifyAuthenticationAnswersArray;
+  Answers: IVerifyAuthenticationAnswer[];
   ServiceBundleFulfillmentKey: string;
   TrustSessionId?: string;
 }

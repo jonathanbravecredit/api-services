@@ -1,7 +1,40 @@
 {
   "RequestKey": "076b9ae3-9a5c-45ea-8b76-4377168e1650",
   "ClientKey": "352b44ab-1b25-4b63-a325-cc8ebfe06a58",
-  "Answers": "<![CDATA[<ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion xmlns=\"com/truelink/ds/sch/srv/iv/ccs\"><VerifyChallengeAnswersRequestMultiChoiceQuestion><QuestionId>40115386</QuestionId><SelectedAnswerChoice><AnswerChoiceId>3036300248</AnswerChoiceId></SelectedAnswerChoice></VerifyChallengeAnswersRequestMultiChoiceQuestion><VerifyChallengeAnswersRequestMultiChoiceQuestion><QuestionId>40115384</QuestionId><SelectedAnswerChoice><AnswerChoiceId>3036300230</AnswerChoiceId></SelectedAnswerChoice></VerifyChallengeAnswersRequestMultiChoiceQuestion><VerifyChallengeAnswersRequestMultiChoiceQuestion><QuestionId>40115388</QuestionId><SelectedAnswerChoice><AnswerChoiceId>3036300254</AnswerChoiceId></SelectedAnswerChoice></VerifyChallengeAnswersRequestMultiChoiceQuestion><VerifyChallengeAnswersRequestMultiChoiceQuestion><QuestionId>40115390</QuestionId><SelectedAnswerChoice><AnswerChoiceId>3036300266</AnswerChoiceId></SelectedAnswerChoice></VerifyChallengeAnswersRequestMultiChoiceQuestion></ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion>]]>",
+  "Answers": [
+    {
+      "VerifyChallengeAnswersRequestMultiChoiceQuestion": {
+        "QuestionId": "40115386",
+        "SelectedAnswerChoice": {
+          "AnswerChoiceId": "3036300248"
+        }
+      }
+    },
+    {
+      "VerifyChallengeAnswersRequestMultiChoiceQuestion": {
+        "QuestionId": "40115384",
+        "SelectedAnswerChoice": {
+          "AnswerChoiceId": "3036300230"
+        }
+      }
+    },
+    {
+      "VerifyChallengeAnswersRequestMultiChoiceQuestion": {
+        "QuestionId": "40115388",
+        "SelectedAnswerChoice": {
+          "AnswerChoiceId": "3036300254"
+        }
+      }
+    },
+    {
+      "VerifyChallengeAnswersRequestMultiChoiceQuestion": {
+        "QuestionId": "40115390",
+        "SelectedAnswerChoice": {
+          "AnswerChoiceId": "3036300266"
+        }
+      }
+    }
+  ],
   "ServiceBundleFulfillmentKey": "b63d067f-acd1-495c-bbe7-db8c73de1ab3",
   "TrustSessionId": null
 }

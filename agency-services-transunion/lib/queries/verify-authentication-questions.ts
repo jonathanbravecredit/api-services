@@ -5,7 +5,10 @@ import {
   IVerifyAuthenticationQuestions,
   IVerifyAuthenticationQuestionsMsg,
 } from 'lib/interfaces/verify-authentication-questions.interface';
-import { IVerifyAuthenticationAnswersArray } from 'lib/interfaces/verify-authentication-answers.interface';
+import {
+  IVerifyAuthenticationAnswer,
+  IVerifyAuthenticationAnswersArray,
+} from 'lib/interfaces/verify-authentication-answers.interface';
 
 export const formatVerifyAuthenticationQuestions = (
   accountCode: string,
@@ -52,9 +55,10 @@ export const createVerifyAuthenticationQuestions = (msg: IVerifyAuthenticationQu
   return xml;
 };
 
-export const createVerifyAuthenticationAnswerString = (answers: IVerifyAuthenticationAnswersArray): string => {
-  const answersString = answers.ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion.map((a) => {
-    return `
+export const createVerifyAuthenticationAnswerString = (answers: IVerifyAuthenticationAnswer[]): string => {
+  const answersString = answers
+    .map((a) => {
+      return `
     <VerifyChallengeAnswersRequestMultiChoiceQuestion>
       <QuestionId>${a?.VerifyChallengeAnswersRequestMultiChoiceQuestion?.QuestionId || ''}</QuestionId>
       <SelectedAnswerChoice>
@@ -64,6 +68,7 @@ export const createVerifyAuthenticationAnswerString = (answers: IVerifyAuthentic
       </SelectedAnswerChoice>
     </VerifyChallengeAnswersRequestMultiChoiceQuestion>
     `;
-  }).join();
+    })
+    .join();
   return `<ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion xmlns="com/truelink/ds/sch/srv/iv/ccs">${answersString}</ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion>`;
 };
