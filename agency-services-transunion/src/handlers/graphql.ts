@@ -149,8 +149,8 @@ const proxyHandler = {
     const xml = createVerifyAuthenticationQuestions(msg);
     console.log('Verify xml====>', xml);
     const options = createRequestOptions(agent, auth, xml, 'VerifyAuthenticationQuestions');
-    const res = await axios({ ...options });
-    const results = fastXml.parse(res.data);
-    return results;
+    // const res = await axios({ ...options });
+    // const results = fastXml.parse(res.data);
+    return ''; //results;
   },
 };
