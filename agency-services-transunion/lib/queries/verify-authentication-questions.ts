@@ -43,7 +43,7 @@ export const createVerifyAuthenticationQuestions = (msg: IVerifyAuthenticationQu
             'data:AccountName': textConstructor(msg.request.AccountName),
             'data:RequestKey': textConstructor(uuid.v4()),
             'data:ClientKey': textConstructor(msg.request.ClientKey),
-            'data:Answers': cdataConstructor(createVerifyAuthenticationAnswerString(msg.request.Answers)),
+            'data:Answers': textConstructor(createVerifyAuthenticationAnswerString(msg.request.Answers)),
             'data:ServiceBundleFulfillmentKey': textConstructor(msg.request.ServiceBundleFulfillmentKey),
             'data:TrustSessionId': textConstructor(msg.request.TrustSessionId),
           },

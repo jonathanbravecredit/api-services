@@ -89,8 +89,8 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await proxyHandler['GetAuthenticationQuestions'](accountCode, username, message, httpsAgent, auth);
         return JSON.stringify({ GetAuthenticationQuestions: results });
       case 'VerifyAuthenticationQuestions':
-        results = await proxyHandler['GetAuthenticationQuestions'](accountCode, username, message, httpsAgent, auth);
-        return JSON.stringify({ GetAuthenticationQuestions: results });
+        results = await proxyHandler['VerifyAuthenticationQuestions'](accountCode, username, message, httpsAgent, auth);
+        return JSON.stringify({ VerifyAuthenticationQuestions: results });
       default:
         return JSON.stringify({ Action: action, Error: 'Action not found' });
     }
@@ -149,8 +149,9 @@ const proxyHandler = {
     const xml = createVerifyAuthenticationQuestions(msg);
     console.log('Verify xml====>', xml);
     const options = createRequestOptions(agent, auth, xml, 'VerifyAuthenticationQuestions');
-    // const res = await axios({ ...options });
-    // const results = fastXml.parse(res.data);
+    const res = await axios({ ...options });
+    const results = fastXml.parse(res.data);
+    console.log('results', results);
     return ''; //results;
   },
 };
