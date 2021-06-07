@@ -37,7 +37,7 @@ export const createVerifyAuthenticationQuestions = (msg: IVerifyAuthenticationQu
       },
       'soapenv:Header': {},
       'soapenv:Body': {
-        'con:GetAuthenticationQuestions': {
+        'con:VerifyAuthenticationQuestions': {
           'con:request': {
             'data:AccountCode': textConstructor(msg.request.AccountCode),
             'data:AccountName': textConstructor(msg.request.AccountName),
