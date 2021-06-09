@@ -59,13 +59,6 @@ export const createGetAuthenticationQuestions = (msg: IGetAuthenticationQuestion
                 'data:State': textConstructor(msg.request.Customer.CurrentAddress.State),
                 'data:Zipcode': textConstructor(msg.request.Customer.CurrentAddress.Zipcode),
               },
-              'data:PreviousAddress': {
-                'data:AddressLine1': textConstructor(msg.request.Customer.PreviousAddress.AddressLine1, true),
-                'data:AddressLine2': textConstructor(msg.request.Customer.PreviousAddress.AddressLine2, true),
-                'data:City': textConstructor(msg.request.Customer.PreviousAddress.City, true),
-                'data:State': textConstructor(msg.request.Customer.PreviousAddress.State, true),
-                'data:Zipcode': textConstructor(msg.request.Customer.PreviousAddress.Zipcode, true),
-              },
               'data:DateOfBirth': textConstructor(msg.request.Customer.DateOfBirth),
               'data:FullName': {
                 'data:FirstName': textConstructor(msg.request.Customer.FullName.FirstName),

@@ -2,18 +2,18 @@
   "AdditionalInputs": {
     "Data": {
       "Name": "CreditReportVersion",
-      "Value": 7
+      "Value": 1
     }
   },
   "RequestKey": "076b9ae3-9a5c-45ea-8b76-4377168e1650",
   "ClientKey": "Customer123456",
   "Customer": {
     "CurrentAddress": {
-      "AddressLine1": "1000 JUNIPER",
+      "AddressLine1": "1071 101ST",
       "AddressLine2": null,
-      "City": "Atlanta",
-      "State": "GA",
-      "Zipcode": "30326"
+      "City": "HOLLYWOOD",
+      "State": "FL",
+      "Zipcode": "33025"
     },
     "PreviousAddress": {
       "AddressLine1": null,
@@ -22,7 +22,7 @@
       "State": null,
       "Zipcode": null
     },
-    "DateOfBirth": "1982-08-31",
+    "DateOfBirth": "1957-09-01",
     "FullName": {
       "FirstName": "JACKSON",
       "LastName": "TESTJ",
