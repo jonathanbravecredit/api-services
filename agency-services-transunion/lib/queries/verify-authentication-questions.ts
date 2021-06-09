@@ -73,7 +73,7 @@ export const createVerifyAuthenticationAnswerString = (answers: IVerifyAuthentic
       <QuestionId>${questionId || ''}</QuestionId>
       <SelectedAnswerChoice>
         <AnswerChoiceId>${answerChoiceId || ''}</AnswerChoiceId>
-        ${userInputAnswer ? `<UserInputAnswerChoice>${userInputAnswer}</UserInputAnswer>` : ''}
+        ${userInputAnswer ? `<UserInputAnswer>${userInputAnswer}</UserInputAnswer>` : ''}
       </SelectedAnswerChoice>
     </VerifyChallengeAnswersRequestMultiChoiceQuestion>
     `;
