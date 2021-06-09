@@ -6,6 +6,13 @@ import { textConstructor } from 'lib/utils/helpers';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 
+/**
+ * This method packages the message in a request body and adds account information
+ * @param {string} accountCode Brave TU account code (can be overriden if passed as part of message)
+ * @param {string} accountName Brave TU account name (can be overriden if passed as part of message)
+ * @param {IGetAuthenticationQuestionsMsg} msg
+ * @returns
+ */
 export const formatGetAuthenticationQuestions = (
   accountCode: string,
   accountName: string,
@@ -15,14 +22,19 @@ export const formatGetAuthenticationQuestions = (
   return message
     ? {
         request: {
-          AccountCode: accountCode,
-          AccountName: accountName,
+          AccountCode: message.AccountCode || accountCode,
+          AccountName: message.AccountName || accountName,
           ...message,
         },
       }
     : undefined;
 };
 
+/**
+ * This method transforms the JSON message to the XML request
+ * @param {IGetAuthenticationQuestions} msg The packaged message to send in XML format to TU
+ * @returns
+ */
 export const createGetAuthenticationQuestions = (msg: IGetAuthenticationQuestions): string => {
   const xmlObj = {
     'soapenv:Envelope': {
@@ -47,6 +59,13 @@ export const createGetAuthenticationQuestions = (msg: IGetAuthenticationQuestion
                 'data:State': textConstructor(msg.request.Customer.CurrentAddress.State),
                 'data:Zipcode': textConstructor(msg.request.Customer.CurrentAddress.Zipcode),
               },
+              'data:PreviousAddress': {
+                'data:AddressLine1': textConstructor(msg.request.Customer.PreviousAddress.AddressLine1, true),
+                'data:AddressLine2': textConstructor(msg.request.Customer.PreviousAddress.AddressLine2, true),
+                'data:City': textConstructor(msg.request.Customer.PreviousAddress.City, true),
+                'data:State': textConstructor(msg.request.Customer.PreviousAddress.State, true),
+                'data:Zipcode': textConstructor(msg.request.Customer.PreviousAddress.Zipcode, true),
+              },
               'data:DateOfBirth': textConstructor(msg.request.Customer.DateOfBirth),
               'data:FullName': {
                 'data:FirstName': textConstructor(msg.request.Customer.FullName.FirstName),
@@ -54,13 +73,6 @@ export const createGetAuthenticationQuestions = (msg: IGetAuthenticationQuestion
                 'data:MiddleName': textConstructor(msg.request.Customer.FullName.MiddleName, true),
                 'data:Prefix': textConstructor(msg.request.Customer.FullName.Prefix, true),
                 'data:Suffix': textConstructor(msg.request.Customer.FullName.Suffix, true),
-              },
-              'data:PreviousAddress': {
-                'data:AddressLine1': textConstructor(msg.request.Customer.PreviousAddress.AddressLine1, true),
-                'data:AddressLine2': textConstructor(msg.request.Customer.PreviousAddress.AddressLine2, true),
-                'data:City': textConstructor(msg.request.Customer.PreviousAddress.City, true),
-                'data:State': textConstructor(msg.request.Customer.PreviousAddress.State, true),
-                'data:Zipcode': textConstructor(msg.request.Customer.PreviousAddress.Zipcode, true),
               },
               'data:PhoneNumber': textConstructor(msg.request.Customer.PhoneNumber, true),
               'data:Ssn': textConstructor(msg.request.Customer.Ssn),

@@ -44,6 +44,8 @@ export interface IGetAuthenticationQuestions {
 }
 
 export interface IGetAuthenticationQuestionsMsg {
+  AccountCode?: string;
+  AccountName?: string;
   AdditionalInputs?: {
     Data: {
       Name: string;

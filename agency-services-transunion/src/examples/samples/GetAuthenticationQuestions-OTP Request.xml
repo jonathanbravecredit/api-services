@@ -1,0 +1,38 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:GetAuthenticationQuestions>
+      <con:request>
+        <data:AccountCode>4pGebVt5s</data:AccountCode>
+        <data:AccountName>CC2PartnerTesting1</data:AccountName>
+        <data:RequestKey>c9673141-f0b4-43f8-be23-475a074a6044</data:RequestKey>
+        <data:ClientKey>Customer123456</data:ClientKey>
+        <data:Customer>
+          <data:CurrentAddress>
+            <data:AddressLine1>1000 JUNIPER</data:AddressLine1>
+            <data:AddressLine2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <data:City>Atlanta</data:City>
+            <data:State>GA</data:State>
+            <data:Zipcode>30326</data:Zipcode>
+          </data:CurrentAddress>
+          <data:DateOfBirth>1982-08-31</data:DateOfBirth>
+          <data:FullName>
+            <data:FirstName>JACKSON</data:FirstName>
+            <data:LastName>TESTJ</data:LastName>
+            <data:MiddleName xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <data:Prefix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            <data:Suffix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+          </data:FullName>
+          <data:PhoneNumber>4045049006</data:PhoneNumber>
+          <data:Ssn>899010009</data:Ssn>
+        </data:Customer>
+        <data:Email>test@gmail.com</data:Email>
+        <data:Language xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+        <data:ServiceBundleCode>CC2PartnerTesting1Authentication</data:ServiceBundleCode>
+        <data:TrustSessionId>2341234-12341234-1234-1234-1234</data:TrustSessionId>
+      </con:request>
+    </con:GetAuthenticationQuestions>
+  </soapenv:Body>
+</soapenv:Envelope>
