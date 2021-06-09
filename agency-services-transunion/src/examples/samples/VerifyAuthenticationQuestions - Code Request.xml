@@ -1,0 +1,24 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data">
+  <soapenv:Header />
+  <soapenv:Body>
+    <con:VerifyAuthenticationQuestions>
+      <con:request>
+        <data:AccountCode>123456789</data:AccountCode>
+        <data:AccountName>CC2PartnerTesting1</data:AccountName>
+        <data:AdditionalInputs>
+          <data:Data>
+            <data:Name></data:Name>
+            <data:Value></data:Value>
+          </data:Data>
+        </data:AdditionalInputs>
+        <data:RequestKey>c9673141-f0b4-43f8-be23-475a074a6044</data:RequestKey>
+        <data:ClientKey>Customer123456</data:ClientKey>
+        <data:Answers><![CDATA[<ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion xmlns="com/truelink/ds/sch/srv/iv/ccs"><VerifyChallengeAnswersRequestMultiChoiceQuestion><QuestionId>40425342</QuestionId><SelectedAnswerChoice><AnswerChoiceId>3037844536</AnswerChoiceId><UserInputAnswer>12345</UserInputAnswer></SelectedAnswerChoice></VerifyChallengeAnswersRequestMultiChoiceQuestion></ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion>]]></data:Answers>
+        <data:ServiceBundleFulfillmentKey>d7d17be1-f195-4f82-87e2-442ec813eeec</data:ServiceBundleFulfillmentKey>
+        <data:TrustSessionId>2341234-12341234-1234-1234-1234</data:TrustSessionId>
+      </con:request>
+    </con:VerifyAuthenticationQuestions>
+  </soapenv:Body>
+</soapenv:Envelope>

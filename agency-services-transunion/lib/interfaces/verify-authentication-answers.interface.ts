@@ -7,6 +7,7 @@ export interface IVerifyAuthenticationAnswer {
     QuestionId: string;
     SelectedAnswerChoice: {
       AnswerChoiceId: string;
+      UserInputAnswer?: string;
     };
   };
 }

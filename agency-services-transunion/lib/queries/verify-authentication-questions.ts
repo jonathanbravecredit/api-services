@@ -1,14 +1,11 @@
-import { cdataConstructor, textConstructor } from 'lib/utils/helpers';
+import { textConstructor } from 'lib/utils/helpers';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import {
   IVerifyAuthenticationQuestions,
   IVerifyAuthenticationQuestionsMsg,
 } from 'lib/interfaces/verify-authentication-questions.interface';
-import {
-  IVerifyAuthenticationAnswer,
-  IVerifyAuthenticationAnswersArray,
-} from 'lib/interfaces/verify-authentication-answers.interface';
+import { IVerifyAuthenticationAnswer } from 'lib/interfaces/verify-authentication-answers.interface';
 
 export const formatVerifyAuthenticationQuestions = (
   accountCode: string,
@@ -27,6 +24,11 @@ export const formatVerifyAuthenticationQuestions = (
     : undefined;
 };
 
+/**
+ * Creates the JSON object the XML parser expects
+ * @param {IVerifyAuthenticationQuestions} msg
+ * @returns
+ */
 export const createVerifyAuthenticationQuestions = (msg: IVerifyAuthenticationQuestions): string => {
   const xmlObj = {
     'soapenv:Envelope': {
@@ -55,16 +57,23 @@ export const createVerifyAuthenticationQuestions = (msg: IVerifyAuthenticationQu
   return xml;
 };
 
+/**
+ * Creates the xml structure to be passed as part of the CDATA
+ * @param {IVerifyAuthenticationAnswer} answers
+ * @returns
+ */
 export const createVerifyAuthenticationAnswerString = (answers: IVerifyAuthenticationAnswer[]): string => {
   const answersString = answers
     .map((a) => {
+      let questionId = a?.VerifyChallengeAnswersRequestMultiChoiceQuestion?.QuestionId;
+      let answerChoiceId = a?.VerifyChallengeAnswersRequestMultiChoiceQuestion?.SelectedAnswerChoice?.AnswerChoiceId;
+      let userInputAnswer = a?.VerifyChallengeAnswersRequestMultiChoiceQuestion?.SelectedAnswerChoice?.UserInputAnswer;
       return `
     <VerifyChallengeAnswersRequestMultiChoiceQuestion>
-      <QuestionId>${a?.VerifyChallengeAnswersRequestMultiChoiceQuestion?.QuestionId || ''}</QuestionId>
+      <QuestionId>${questionId || ''}</QuestionId>
       <SelectedAnswerChoice>
-        <AnswerChoiceId>${
-          a?.VerifyChallengeAnswersRequestMultiChoiceQuestion?.SelectedAnswerChoice?.AnswerChoiceId || ''
-        }</AnswerChoiceId>
+        <AnswerChoiceId>${answerChoiceId || ''}</AnswerChoiceId>
+        ${userInputAnswer ? `<UserInputAnswerChoice>${userInputAnswer}</UserInputAnswer>` : ''}
       </SelectedAnswerChoice>
     </VerifyChallengeAnswersRequestMultiChoiceQuestion>
     `;
