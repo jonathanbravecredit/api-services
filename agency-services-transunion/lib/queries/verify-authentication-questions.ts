@@ -43,7 +43,7 @@ export const createVerifyAuthenticationQuestions = (msg: IVerifyAuthenticationQu
           'con:request': {
             'data:AccountCode': textConstructor(msg.request.AccountCode),
             'data:AccountName': textConstructor(msg.request.AccountName),
-            'data:RequestKey': textConstructor(uuid.v4()),
+            'data:RequestKey': textConstructor(`BC-${uuid.v4()}`),
             'data:ClientKey': textConstructor(msg.request.ClientKey),
             'data:Answers': textConstructor(createVerifyAuthenticationAnswerString(msg.request.Answers)),
             'data:ServiceBundleFulfillmentKey': textConstructor(msg.request.ServiceBundleFulfillmentKey),
@@ -68,19 +68,11 @@ export const createVerifyAuthenticationAnswerString = (answers: IVerifyAuthentic
       let questionId = a?.VerifyChallengeAnswersRequestMultiChoiceQuestion?.QuestionId;
       let answerChoiceId = a?.VerifyChallengeAnswersRequestMultiChoiceQuestion?.SelectedAnswerChoice?.AnswerChoiceId;
       let userInputAnswer = a?.VerifyChallengeAnswersRequestMultiChoiceQuestion?.SelectedAnswerChoice?.UserInputAnswer;
-      return userInputAnswer
-        ? `<VerifyChallengeAnswersRequestMultiChoiceQuestion>
+      return `<VerifyChallengeAnswersRequestMultiChoiceQuestion>
             <QuestionId>${questionId || ''}</QuestionId>
             <SelectedAnswerChoice>
               <AnswerChoiceId>${answerChoiceId || ''}</AnswerChoiceId>
               ${userInputAnswer ? `<UserInputAnswer>${userInputAnswer}</UserInputAnswer>` : ''}
-            </SelectedAnswerChoice>
-          </VerifyChallengeAnswersRequestMultiChoiceQuestion>
-          `
-        : `<VerifyChallengeAnswersRequestMultiChoiceQuestion>
-            <QuestionId>${questionId || ''}</QuestionId>
-            <SelectedAnswerChoice>
-              <AnswerChoiceId>${answerChoiceId || ''}</AnswerChoiceId>
             </SelectedAnswerChoice>
           </VerifyChallengeAnswersRequestMultiChoiceQuestion>
           `;

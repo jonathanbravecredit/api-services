@@ -1,29 +1,15 @@
-import {
-  IGetAuthenticationQuestions,
-  IGetAuthenticationQuestionsMsg,
-} from 'lib/interfaces/get-authentication-questions.interface';
 import { textConstructor } from 'lib/utils/helpers';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
+import { IEnroll, IEnrollMsg } from 'lib/interfaces/enroll.interface';
 
-/**
- * This method packages the message in a request body and adds account information
- * @param {string} accountCode Brave TU account code (can be overriden if passed as part of message)
- * @param {string} accountName Brave TU account name (can be overriden if passed as part of message)
- * @param {IGetAuthenticationQuestionsMsg} msg
- * @returns
- */
-export const formatGetAuthenticationQuestions = (
-  accountCode: string,
-  accountName: string,
-  msg: string,
-): IGetAuthenticationQuestions | undefined => {
-  let message: IGetAuthenticationQuestionsMsg = JSON.parse(msg);
+export const formatEnroll = (accountCode: string, accountName: string, msg: string): IEnroll | undefined => {
+  let message: IEnrollMsg = JSON.parse(msg);
   return message
     ? {
         request: {
-          AccountCode: message.AccountCode || accountCode,
-          AccountName: message.AccountName || accountName,
+          AccountCode: accountCode,
+          AccountName: accountName,
           ...message,
         },
       }
@@ -31,11 +17,11 @@ export const formatGetAuthenticationQuestions = (
 };
 
 /**
- * This method transforms the JSON message to the XML request
- * @param {IGetAuthenticationQuestions} msg The packaged message to send in XML format to TU
+ * Creates the JSON object the XML parser expects
+ * @param {IEnroll} msg
  * @returns
  */
-export const createGetAuthenticationQuestions = (msg: IGetAuthenticationQuestions): string => {
+export const createEnroll = (msg: IEnroll): string => {
   const xmlObj = {
     'soapenv:Envelope': {
       _attributes: {
@@ -45,7 +31,7 @@ export const createGetAuthenticationQuestions = (msg: IGetAuthenticationQuestion
       },
       'soapenv:Header': {},
       'soapenv:Body': {
-        'con:GetAuthenticationQuestions': {
+        'con:Enroll': {
           'con:request': {
             'data:AccountCode': textConstructor(msg.request.AccountCode),
             'data:AccountName': textConstructor(msg.request.AccountName),
@@ -67,13 +53,11 @@ export const createGetAuthenticationQuestions = (msg: IGetAuthenticationQuestion
                 'data:Prefix': textConstructor(msg.request.Customer.FullName.Prefix, true),
                 'data:Suffix': textConstructor(msg.request.Customer.FullName.Suffix, true),
               },
-              'data:PhoneNumber': textConstructor(msg.request.Customer.PhoneNumber, true),
               'data:Ssn': textConstructor(msg.request.Customer.Ssn),
             },
             'data:Email': textConstructor(msg.request.Email, true),
             'data:Language': textConstructor(msg.request.Language, true),
             'data:ServiceBundleCode': textConstructor(msg.request.ServiceBundleCode),
-            'data:TrustSessionId': textConstructor(msg.request.TrustSessionId, true),
           },
         },
       },

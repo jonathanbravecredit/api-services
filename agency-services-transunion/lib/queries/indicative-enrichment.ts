@@ -45,7 +45,7 @@ export const createIndicativeEnrichment = (msg: IEnrichedIndicativeEnrichment): 
                 'data:Value': textConstructor(msg.request.AdditionalInputs.Data.Value),
               },
             },
-            'data:RequestKey': textConstructor(uuid.v4()),
+            'data:RequestKey': textConstructor(`BC-${uuid.v4()}`),
             'data:ClientKey': textConstructor(msg.request.ClientKey),
             'data:Customer': {
               'data:CurrentAddress': {
