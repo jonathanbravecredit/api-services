@@ -92,6 +92,9 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       case 'VerifyAuthenticationQuestions':
         results = await proxyHandler['VerifyAuthenticationQuestions'](accountCode, username, message, httpsAgent, auth);
         return JSON.stringify({ VerifyAuthenticationQuestions: results });
+      case 'Enroll':
+        results = await proxyHandler['Enroll'](accountCode, username, message, httpsAgent, auth);
+        return JSON.stringify({ Enroll: results });
       default:
         return JSON.stringify({ Action: action, Error: 'Action not found' });
     }
@@ -121,7 +124,7 @@ const proxyHandler = {
     console.log('IE xml====>', xml);
     const options = createRequestOptions(agent, auth, xml, 'IndicativeEnrichment');
     const res = await axios({ ...options });
-    const results = convert.xml2json(res.data, { compact: true });
+    const results = convert.xml2json(res.data, { compact: true }); // TODO need to switch over to new parser
     return results;
   },
   GetAuthenticationQuestions: async (
@@ -137,7 +140,7 @@ const proxyHandler = {
     const options = createRequestOptions(agent, auth, xml, 'GetAuthenticationQuestions');
     const res = await axios({ ...options });
     console.log('data', res.data);
-    const results = convert.xml2json(res.data, { compact: true });
+    const results = convert.xml2json(res.data, { compact: true }); // TODO need to switch over to new parser
     console.log('resulrs', results);
     return results;
   },
@@ -167,7 +170,7 @@ const proxyHandler = {
     const msg = formatEnroll(accountCode, username, message);
     const xml = createEnroll(msg);
     console.log('Verify xml====>', xml);
-    const options = createRequestOptions(agent, auth, xml, 'VerifyAuthenticationQuestions');
+    const options = createRequestOptions(agent, auth, xml, 'Enroll');
     const res = await axios({ ...options });
     const results = fastXml.parse(res.data);
     console.log('results', results);
