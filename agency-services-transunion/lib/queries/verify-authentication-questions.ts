@@ -68,15 +68,22 @@ export const createVerifyAuthenticationAnswerString = (answers: IVerifyAuthentic
       let questionId = a?.VerifyChallengeAnswersRequestMultiChoiceQuestion?.QuestionId;
       let answerChoiceId = a?.VerifyChallengeAnswersRequestMultiChoiceQuestion?.SelectedAnswerChoice?.AnswerChoiceId;
       let userInputAnswer = a?.VerifyChallengeAnswersRequestMultiChoiceQuestion?.SelectedAnswerChoice?.UserInputAnswer;
-      return `
-    <VerifyChallengeAnswersRequestMultiChoiceQuestion>
-      <QuestionId>${questionId || ''}</QuestionId>
-      <SelectedAnswerChoice>
-        <AnswerChoiceId>${answerChoiceId || ''}</AnswerChoiceId>
-        ${userInputAnswer ? `<UserInputAnswer>${userInputAnswer}</UserInputAnswer>` : ''}
-      </SelectedAnswerChoice>
-    </VerifyChallengeAnswersRequestMultiChoiceQuestion>
-    `;
+      return userInputAnswer
+        ? `<VerifyChallengeAnswersRequestMultiChoiceQuestion>
+            <QuestionId>${questionId || ''}</QuestionId>
+            <SelectedAnswerChoice>
+              <AnswerChoiceId>${answerChoiceId || ''}</AnswerChoiceId>
+              ${userInputAnswer ? `<UserInputAnswer>${userInputAnswer}</UserInputAnswer>` : ''}
+            </SelectedAnswerChoice>
+          </VerifyChallengeAnswersRequestMultiChoiceQuestion>
+          `
+        : `<VerifyChallengeAnswersRequestMultiChoiceQuestion>
+            <QuestionId>${questionId || ''}</QuestionId>
+            <SelectedAnswerChoice>
+              <AnswerChoiceId>${answerChoiceId || ''}</AnswerChoiceId>
+            </SelectedAnswerChoice>
+          </VerifyChallengeAnswersRequestMultiChoiceQuestion>
+          `;
     })
     .join();
   return `<ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion xmlns="com/truelink/ds/sch/srv/iv/ccs">${answersString}</ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion>`;

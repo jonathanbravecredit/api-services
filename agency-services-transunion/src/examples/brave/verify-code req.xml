@@ -1,0 +1,26 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:VerifyAuthenticationQuestions>
+      <con:request>
+        <data:AccountCode>123456789</data:AccountCode>
+        <data:AccountName>CC2BraveCredit</data:AccountName>
+        <data:RequestKey>e72a10d0-69eb-4bf6-90c2-24def6caca14</data:RequestKey>
+        <data:ClientKey>ea26126b-fee9-4342-b91f-66f0934d0bc7</data:ClientKey>
+        <data:Answers>&lt;ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion xmlns="com/truelink/ds/sch/srv/iv/ccs"&gt;
+    &lt;VerifyChallengeAnswersRequestMultiChoiceQuestion&gt;
+      &lt;QuestionId&gt;48498658&lt;/QuestionId&gt;
+      &lt;SelectedAnswerChoice&gt;
+        &lt;AnswerChoiceId&gt;3077100400&lt;/AnswerChoiceId&gt;
+
+      &lt;/SelectedAnswerChoice&gt;
+    &lt;/VerifyChallengeAnswersRequestMultiChoiceQuestion&gt;
+    &lt;/ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion&gt;</data:Answers>
+        <data:ServiceBundleFulfillmentKey>b37a913d-97df-4ccc-9135-80ab431b2561</data:ServiceBundleFulfillmentKey>
+        <data:TrustSessionId></data:TrustSessionId>
+      </con:request>
+    </con:VerifyAuthenticationQuestions>
+  </soapenv:Body>
+</soapenv:Envelope>
