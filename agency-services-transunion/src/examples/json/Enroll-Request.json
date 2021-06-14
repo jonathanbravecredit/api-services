@@ -1,23 +1,23 @@
 {
   "RequestKey": "",
-  "ClientKey": "ND0711_v7SOreport",
+  "ClientKey": "us-east-2:2906f223-c4e2-4fe5-b5c0-c1efa476eabc",
   "Customer": {
     "CurrentAddress": {
-      "AddressLine1": "163rd ST",
+      "AddressLine1": "1071 101ST",
       "AddressLine2": null,
-      "City": "FLUSHING",
-      "State": "NY",
-      "Zipcode": "11358"
+      "City": "HOLLYWOOD",
+      "State": "FL",
+      "Zipcode": "33025"
     },
-    "DateOfBirth": "1964-01-01",
+    "DateOfBirth": "1957-09-01",
     "FullName": {
-      "FirstName": "Anne",
-      "LastName": "Markowitz",
-      "MiddleName": "E",
+      "FirstName": "JACKSON",
+      "LastName": "TESTJ",
+      "MiddleName": null,
       "Prefix": null,
       "Suffix": null
     },
-    "Ssn": "666359515"
+    "Ssn": "899010010"
   },
   "Language": null,
   "ServiceBundleCode": "CC2BraveCreditTUReportV3Score",

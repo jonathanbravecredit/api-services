@@ -3,7 +3,7 @@ import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
 import * as uuid from 'uuid';
 import { IEnroll, IEnrollMsg, IEnrollResponse } from 'lib/interfaces/enroll.interface';
-// require('isomorphic-fetch');
+require('isomorphic-fetch');
 // const AWS = require('aws-sdk/global');
 import * as AWS from 'aws-sdk';
 import * as APPSYNC from 'aws-appsync';
@@ -124,7 +124,11 @@ const updateAppDataMutation = `mutation UpdateAppData($input: UpdateAppDataInput
 
 export const getAppData = async (id: string): Promise<unknown> => {
   try {
-    const result = await client.query({ query: gql(getAppDataQuery), variables: { id } });
+    const result = await client.query({
+      query: gql(getAppDataQuery),
+      variables: { id },
+      fetchPolicy: 'network-only',
+    });
     return result;
   } catch (err) {
     console.log('Error sending query: ', err);
@@ -132,11 +136,12 @@ export const getAppData = async (id: string): Promise<unknown> => {
   }
 };
 
-export const updateAppData = async (input: UpdateAppDataInput): Promise<unknown> => {
+export const updateAppData = async (data: UpdateAppDataInput): Promise<unknown> => {
   try {
     const result = await client.mutate({
       mutation: gql(updateAppDataMutation),
-      variables: { input },
+      variables: { input: data },
+      fetchPolicy: 'network-only',
     });
     return result;
   } catch (err) {
