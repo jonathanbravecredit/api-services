@@ -12,6 +12,12 @@ import { AUTH_TYPE } from 'aws-appsync';
 import { AWSAppSyncClientOptions } from 'aws-appsync';
 import { UpdateAppDataInput } from 'lib/queries/api.service';
 
+console.log(
+  'env vars',
+  process.env.API_braveapp_GRAPHQLAPIENDPOINTOUTPUT,
+  process.env.API_braveapp_GRAPHQLAPIKEYOUTPUT,
+);
+
 // const AUTH_TYPE = APPSYNC.AUTH_TYPE;
 // const AWSAppSyncClient = APPSYNC.default;
 
@@ -24,7 +30,7 @@ const config: AWSAppSyncClientOptions = {
   },
   disableOffline: true,
 };
-console.log('config', config);
+console.log('config', config, process.env.NODE_ENV);
 
 const client = new AWSAppSyncClient(config);
 
