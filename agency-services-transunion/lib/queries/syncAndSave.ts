@@ -7,7 +7,10 @@ import { URL } from 'url';
 import { IEnrollResponse } from 'lib/interfaces/enroll.interface';
 import V4 from 'aws-sdk/lib/signers/v4';
 import Util from 'aws-sdk/lib/util';
-const appsyncUrl = new Endpoint(process.env.GRAPHQL_APIENDPOINTOUTPUT);
+
+console.log('endpoint output', process.env.GRAPHQL_APIENDPOINTOUTPUT);
+
+const appsyncUrl = new Endpoint(process.env.GRAPHQL_ENDPOINT);
 const region = process.env.AWS_REGION;
 const endpoint = appsyncUrl.hostname;
 
