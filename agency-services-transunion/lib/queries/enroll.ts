@@ -15,16 +15,7 @@ import { UpdateAppDataInput } from 'lib/queries/api.service';
 // const AUTH_TYPE = APPSYNC.AUTH_TYPE;
 // const AWSAppSyncClient = APPSYNC.default;
 
-// const config: AWSAppSyncClientOptions = {
-//   url: process.env.APPSYNC_ENDPOINT,
-//   region: process.env.AWS_REGION,
-//   auth: {
-//     type: AUTH_TYPE.AWS_IAM,
-//     credentials: AWS.config.credentials,
-//   },
-//   disableOffline: true,
-// };
-const client = new AWSAppSyncClient({
+const config: AWSAppSyncClientOptions = {
   url: process.env.APPSYNC_ENDPOINT,
   region: process.env.AWS_REGION,
   auth: {
@@ -32,7 +23,10 @@ const client = new AWSAppSyncClient({
     credentials: AWS.config.credentials,
   },
   disableOffline: true,
-});
+};
+console.log('config', config);
+
+const client = new AWSAppSyncClient(config);
 
 const getAppDataQuery = `
 query GetAppData($id: ID!) {
