@@ -30,32 +30,41 @@ import { getAppDataQuery } from './graphql';
 
 export const syncAndSaveEnroll1 = async (res: IEnrollResponse): Promise<string> => {
   console.log('res in sync and save', res);
-  const req = new AWS.HttpRequest(appsyncUrl, region);
-
-  const item = {
-    input: {
-      name: 'Lambda Item',
-      description: 'Item Generated from Lambda',
+  const variables = { id: res.EnrollResponse.EnrollResult['a:ClientKey'] };
+  const opts = {
+    host: endpoint,
+    region: region,
+    headers: {
+      'Content-Type': 'application/json',
     },
+    path: '/graphql',
+    method: 'POST',
+    service: 'appsync',
+    body: JSON.stringify({
+      query: getAppDataQuery,
+      operationName: 'getAppData',
+      variables,
+    }),
   };
+  // const req = new AWS.HttpRequest(appsyncUrl, region);
 
-  req.method = 'POST';
-  req.path = '/graphql';
-  req.headers.host = endpoint;
-  req.headers['Content-Type'] = 'application/json';
-  req.body = JSON.stringify({
-    query: getAppDataQuery,
-    operationName: 'getAppData',
-    variables: item,
-  });
+  // req.method = 'POST';
+  // req.path = '/graphql';
+  // // req.headers.service = 'appsync';
+  // req.headers.host = endpoint;
+  // req.headers['Content-Type'] = 'application/json';
+  // req.body = JSON.stringify({
+  //   query: getAppDataQuery,
+  //   operationName: 'getAppData',
+  //   variables,
+  // });
 
-  console.log('req before signing', req);
-  aws4.sign(req);
-  console.log('req after signing', req);
+  console.log('req before signing', opts);
+  aws4.sign(opts);
+  console.log('req after signing', opts);
 
-  console.log('request', req);
   const data = await new Promise((resolve, reject) => {
-    const httpRequest = https.request({ ...req, host: endpoint }, (result) => {
+    const httpRequest = https.request(opts, (result) => {
       let data = '';
 
       result.on('data', (chunk) => {
@@ -67,7 +76,7 @@ export const syncAndSaveEnroll1 = async (res: IEnrollResponse): Promise<string> 
       });
     });
 
-    httpRequest.write(req.body);
+    httpRequest.write(opts.body);
     httpRequest.end();
   });
   console.log('data', data);
