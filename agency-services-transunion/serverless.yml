@@ -31,7 +31,7 @@ provider:
   layers:
     - !Ref TuCertsLambdaLayer
   environment:
-    NODE_ENV: ${opt:stage}
+    NODE_ENV: development
     SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
     TU_SECRET_LOCATION: '${self:provider.stage}/agency-services/transunion'
     APPSYNC_ENDPOINT: '${self:custom.settings.GRAPHQL_ENDPOINT.${opt:stage}}'
