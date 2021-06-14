@@ -6,11 +6,10 @@ import { Endpoint } from 'aws-sdk';
 import { URL } from 'url';
 import { IEnrollResponse } from 'lib/interfaces/enroll.interface';
 import V4 from 'aws-sdk/lib/signers/v4';
-import Util from 'aws-sdk/lib/util';
 
 console.log('endpoint output', process.env.GRAPHQL_APIENDPOINTOUTPUT);
 
-const appsyncUrl = new Endpoint(process.env.GRAPHQL_ENDPOINT);
+const appsyncUrl = new Endpoint(process.env.APPSYNC_ENDPOINT);
 const region = process.env.AWS_REGION;
 const endpoint = appsyncUrl.hostname;
 
@@ -29,7 +28,7 @@ import { getAppDataQuery } from './graphql';
 //   return JSON.stringify({ Status: 'Success' });
 // };
 
-export const syncAndSaveEnroll = async (res: IEnrollResponse): Promise<string> => {
+export const syncAndSaveEnroll1 = async (res: IEnrollResponse): Promise<string> => {
   console.log('res in sync and save', res);
   const req = new AWS.HttpRequest(appsyncUrl, region);
 
@@ -51,7 +50,7 @@ export const syncAndSaveEnroll = async (res: IEnrollResponse): Promise<string> =
   });
 
   const signer = new V4(req, 'appsync', true);
-  signer.addAuthorization(AWS.config.credentials, Util.date.getDate());
+  // signer.addAuthorization(AWS.config.credentials, getDate());
 
   console.log('request', req);
   const data = await new Promise((resolve, reject) => {

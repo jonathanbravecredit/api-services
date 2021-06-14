@@ -3,36 +3,6 @@ import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
 import * as uuid from 'uuid';
 import { IEnroll, IEnrollMsg, IEnrollResponse } from 'lib/interfaces/enroll.interface';
-import * as isomorphicFetch from 'isomorphic-fetch';
-// const AWS = require('aws-sdk/global');
-import * as AWS from 'aws-sdk';
-import gql from 'graphql-tag';
-import AWSAppSyncClient from 'aws-appsync';
-import { AUTH_TYPE } from 'aws-appsync';
-import { AWSAppSyncClientOptions } from 'aws-appsync';
-import { UpdateAppDataInput } from 'lib/queries/api.service';
-
-// console.log(
-//   'env vars',
-//   process.env.API_braveapp_GRAPHQLAPIENDPOINTOUTPUT,
-//   process.env.API_braveapp_GRAPHQLAPIKEYOUTPUT,
-// );
-
-// const AUTH_TYPE = APPSYNC.AUTH_TYPE;
-// const AWSAppSyncClient = APPSYNC.default;
-
-// const config: AWSAppSyncClientOptions = {
-//   url: process.env.APPSYNC_ENDPOINT,
-//   region: process.env.AWS_REGION,
-//   auth: {
-//     type: AUTH_TYPE.AWS_IAM,
-//     credentials: AWS.config.credentials,
-//   },
-//   disableOffline: true,
-// };
-// console.log('config', config, process.env.NODE_ENV);
-
-// const client = new AWSAppSyncClient(config);
 
 export const formatEnroll = (accountCode: string, accountName: string, msg: string): IEnroll | undefined => {
   let message: IEnrollMsg = JSON.parse(msg);

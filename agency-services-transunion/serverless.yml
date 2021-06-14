@@ -49,8 +49,7 @@ provider:
     - Effect: Allow
       Resource:
         - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}*'
-      Action:
-        - appsync:GraphQL
+      Action: '*'
 
 layers:
   TuCerts:

@@ -96,29 +96,29 @@ export const updateAppDataMutation = `mutation UpdateAppData($input: UpdateAppDa
 }`;
 
 // export const getAppData = async (id: string): Promise<unknown> => {
-//   // try {
-//   //   const result = await client.query({
-//   //     query: gql(getAppDataQuery),
-//   //     variables: { id },
-//   //     fetchPolicy: 'network-only',
-//   //   });
-//   //   return result;
-//   // } catch (err) {
-//   //   console.log('Error sending query: ', err);
-//   //   return err;
-//   // }
+//   try {
+//     const result = await client.query({
+//       query: gql(getAppDataQuery),
+//       variables: { id },
+//       fetchPolicy: 'network-only',
+//     });
+//     return result;
+//   } catch (err) {
+//     console.log('Error sending query: ', err);
+//     return err;
+//   }
 // };
 
 // export const updateAppData = async (data: UpdateAppDataInput): Promise<unknown> => {
-//   // try {
-//   //   const result = await client.mutate({
-//   //     mutation: gql(updateAppDataMutation),
-//   //     variables: { input: data },
-//   //     fetchPolicy: 'network-only',
-//   //   });
-//   //   return result;
-//   // } catch (err) {
-//   //   console.log('Error sending mutation: ', err);
-//   //   return err;
-//   // }
+//   try {
+//     const result = await client.mutate({
+//       mutation: gql(updateAppDataMutation),
+//       variables: { input: data },
+//       fetchPolicy: 'network-only',
+//     });
+//     return result;
+//   } catch (err) {
+//     console.log('Error sending mutation: ', err);
+//     return err;
+//   }
 // };
