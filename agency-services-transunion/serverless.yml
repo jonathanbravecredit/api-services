@@ -16,6 +16,9 @@ custom:
     externals:
       - strong-soap
     linting: false
+  settings:
+    GRAPHQL_API:
+      dev: 'rr5wtr4ev5exlbutrkih3r5lhq'
 
 provider:
   name: aws
@@ -27,8 +30,7 @@ provider:
   environment:
     SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
     TU_SECRET_LOCATION: '${self:provider.stage}/agency-services/transunion'
-    GRAPHQL_API:
-      dev: 'rr5wtr4ev5exlbutrkih3r5lhq'
+
   vpc:
     securityGroupIds:
       - !GetAtt NatGatewayLambdaSecurityGroup.GroupId
@@ -43,7 +45,7 @@ provider:
         - '*'
     - Effect: Allow
       Resource:
-        - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:provider.environment.GRAPHQL_API.${opt:stage}}*'
+        - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}*'
       Action:
         - appsync:GraphQL
 
