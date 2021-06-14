@@ -1,0 +1,25 @@
+{
+  "RequestKey": "",
+  "ClientKey": "ND0711_v7SOreport",
+  "Customer": {
+    "CurrentAddress": {
+      "AddressLine1": "163rd ST",
+      "AddressLine2": null,
+      "City": "FLUSHING",
+      "State": "NY",
+      "Zipcode": "11358"
+    },
+    "DateOfBirth": "1964-01-01",
+    "FullName": {
+      "FirstName": "Anne",
+      "LastName": "Markowitz",
+      "MiddleName": "E",
+      "Prefix": null,
+      "Suffix": null
+    },
+    "Ssn": "666359515"
+  },
+  "Language": null,
+  "ServiceBundleCode": "CC2BraveCreditTUReportV3Score",
+  "TrustSessionId:": null
+}

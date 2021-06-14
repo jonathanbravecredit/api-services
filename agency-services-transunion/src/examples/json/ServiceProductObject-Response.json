@@ -1,0 +1,46 @@
+{
+  "CreditScoreType": {
+    "CreditScoreFactor": [
+      {
+        "Factor": "",
+        "FactorText": [
+          "explain: Bankcard accounts include credit cards and charge cards from a bank and are frequently revolving accounts. Revolving accounts allow you to carry a balance and your monthly payment will vary, based on the amount of your balance. The total combined amount you owe on all of your bankcards and revolving accounts is high, a sign of increased risk. People who carry balances on multiple bankcards or other revolving accounts have reduced available credit to use if needed, creating a greater chance of becoming overextended.",
+          "factor: Total of all balances on bankcard or revolving accounts is too high",
+          "cando: Pay down the balances on your accounts. Ideally, the balance on any revolving account should be 30% or less of the total credit limit on that account."
+        ]
+      },
+      {
+        "Factor": "",
+        "FactorText": [
+          "explain: The VantageScore credit score model relies on information in your credit files at the three national credit reporting companies (Equifax, Experian and TransUnion) to generate your score. Your credit file does not contain enough credit behavior information about your first mortgage accounts. A mix of different types of open and active credit accounts, including first mortgage loans, can have a positive impact on your credit score.",
+          "factor: Lack of sufficient relevant first mortgage account information",
+          "cando: Maintaining open and active credit accounts in good standing can help improve your credit score."
+        ]
+      },
+      {
+        "Factor": "",
+        "FactorText": [
+          "explain: Bankcard accounts include credit cards and charge cards from a bank and are frequently revolving accounts. Revolving accounts allow you to carry a balance and your monthly payment will vary, based on the amount of your balance. You have had too many bankcard or revolving accounts with payments that are at least 30 days late and/or on which a lender has reported a derogatory status. People with late payments are at risk of being overextended, putting existing credit with lenders at risk.",
+          "factor: Too many bankcard or revolving accounts with delinquent or derogatory status",
+          "cando: Paying bills on time every month is important to maintaining a good credit score. If you remain behind with any payments, bring them current as soon as possible, and then make future payments on time. Over time this will have a positive impact on your score."
+        ]
+      },
+      {
+        "Factor": "",
+        "FactorText": [
+          "explain: You have had too many accounts with payments that are at least 30 days late and/or on which a lender has reported a derogatory status. Late payments are a proven indicator of increased risk. People with late payments are at risk of being overextended, putting existing credit with lenders at risk.",
+          "factor: You have too many delinquent or derogatory accounts",
+          "cando: Paying bills on time every month is important to maintaining a good credit score. If you remain behind with any payments, bring them current as soon as possible, and then make future payments on time. Over time, this will have a positive impact on your score."
+        ]
+      }
+    ],
+    "CreditScoreModel": "",
+    "NoScoreReason": "",
+    "Source": {
+      "BorrowerKey": "",
+      "Bureau": "",
+      "InquiryDate": "2015-06-09",
+      "Reference": "ND0711_v7SOreport"
+    }
+  }
+}

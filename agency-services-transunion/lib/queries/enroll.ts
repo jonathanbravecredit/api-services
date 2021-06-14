@@ -1,5 +1,6 @@
-import { textConstructor } from 'lib/utils/helpers';
+import { returnNestedObject, textConstructor, updateNestedObject } from 'lib/utils/helpers';
 import * as convert from 'xml-js';
+import * as fastXml from 'fast-xml-parser';
 import * as uuid from 'uuid';
 import { IEnroll, IEnrollMsg } from 'lib/interfaces/enroll.interface';
 
@@ -65,4 +66,30 @@ export const createEnroll = (msg: IEnroll): string => {
   };
   const xml = convert.json2xml(JSON.stringify(xmlObj), { compact: true, spaces: 4 });
   return xml;
+};
+
+/**
+ * Parse the Enroll response including the embedded Service Product Objects
+ * @param xml
+ * @returns
+ */
+export const parseEnroll = (xml: string): any => {
+  const obj = fastXml.parse(xml);
+  const resp = returnNestedObject(obj, 'a:ServiceProductResponse');
+  if (resp instanceof Array) {
+    const mapped = resp.map((prod) => {
+      let prodObj = prod['a:ServiceProductObject'];
+      if (typeof prodObj === 'string') {
+        let clean = prodObj.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
+        return {
+          ...prod,
+          'a:ServiceProductObject': fastXml.parse(clean),
+        };
+      }
+    });
+    const updated = updateNestedObject(obj, 'a:ServiceProductResponse', [...mapped]);
+    return updated ? updated : obj;
+  } else {
+    return obj;
+  }
 };
