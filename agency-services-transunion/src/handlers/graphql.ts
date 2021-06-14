@@ -176,7 +176,7 @@ const proxyHandler = {
     const options = createRequestOptions(agent, auth, xml, 'Enroll');
     const res = await axios({ ...options });
     console.log('Response xml ====> ', JSON.stringify(res.data));
-    const results = await syncAndSaveEnroll2(parseEnroll(res.data));
+    const results = await syncAndSaveEnroll1(parseEnroll(res.data));
     console.log('results', results);
     return results;
   },
