@@ -3,7 +3,7 @@ import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
 import * as uuid from 'uuid';
 import { IEnroll, IEnrollMsg, IEnrollResponse } from 'lib/interfaces/enroll.interface';
-require('isomorphic-fetch');
+import * as isomorphicFetch from 'isomorphic-fetch';
 // const AWS = require('aws-sdk/global');
 import * as AWS from 'aws-sdk';
 import * as APPSYNC from 'aws-appsync';
