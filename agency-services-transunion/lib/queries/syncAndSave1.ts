@@ -9,11 +9,10 @@ import { IEnrollResponse } from 'lib/interfaces/enroll.interface';
 
 console.log('endpoint output', process.env.GRAPHQL_APIENDPOINTOUTPUT);
 
-const appsyncUrl = new Endpoint(process.env.APPSYNC_ENDPOINT);
+const appsyncUrl = process.env.APPSYNC_ENDPOINT;
 const region = process.env.AWS_REGION;
-const endpoint = appsyncUrl.hostname;
 
-console.log('env vars', appsyncUrl, region, endpoint);
+console.log('env vars', appsyncUrl, region);
 
 import { getAppDataQuery } from './graphql';
 
@@ -31,8 +30,8 @@ import { getAppDataQuery } from './graphql';
 export const syncAndSaveEnroll1 = async (res: IEnrollResponse): Promise<string> => {
   console.log('res in sync and save', res);
   const variables = { id: res.EnrollResponse.EnrollResult['a:ClientKey'] };
-  const opts = {
-    host: endpoint,
+  let opts = {
+    host: '24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com',
     region: region,
     headers: {
       'Content-Type': 'application/json',
