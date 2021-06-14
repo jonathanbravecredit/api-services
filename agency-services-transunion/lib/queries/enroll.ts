@@ -6,15 +6,25 @@ import { IEnroll, IEnrollMsg, IEnrollResponse } from 'lib/interfaces/enroll.inte
 import * as isomorphicFetch from 'isomorphic-fetch';
 // const AWS = require('aws-sdk/global');
 import * as AWS from 'aws-sdk';
-import * as APPSYNC from 'aws-appsync';
 import gql from 'graphql-tag';
+import AWSAppSyncClient from 'aws-appsync';
+import { AUTH_TYPE } from 'aws-appsync';
 import { AWSAppSyncClientOptions } from 'aws-appsync';
 import { UpdateAppDataInput } from 'lib/queries/api.service';
 
-const AUTH_TYPE = APPSYNC.AUTH_TYPE;
-const AWSAppSyncClient = APPSYNC.default;
+// const AUTH_TYPE = APPSYNC.AUTH_TYPE;
+// const AWSAppSyncClient = APPSYNC.default;
 
-const config: AWSAppSyncClientOptions = {
+// const config: AWSAppSyncClientOptions = {
+//   url: process.env.APPSYNC_ENDPOINT,
+//   region: process.env.AWS_REGION,
+//   auth: {
+//     type: AUTH_TYPE.AWS_IAM,
+//     credentials: AWS.config.credentials,
+//   },
+//   disableOffline: true,
+// };
+const client = new AWSAppSyncClient({
   url: process.env.APPSYNC_ENDPOINT,
   region: process.env.AWS_REGION,
   auth: {
@@ -22,8 +32,7 @@ const config: AWSAppSyncClientOptions = {
     credentials: AWS.config.credentials,
   },
   disableOffline: true,
-};
-const client = new AWSAppSyncClient(config);
+});
 
 const getAppDataQuery = `
 query GetAppData($id: ID!) {
