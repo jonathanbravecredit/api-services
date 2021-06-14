@@ -3,9 +3,9 @@
 import * as https from 'https';
 import * as AWS from 'aws-sdk';
 import { Endpoint } from 'aws-sdk';
-import { URL } from 'url';
+import * as aws4 from 'aws4';
 import { IEnrollResponse } from 'lib/interfaces/enroll.interface';
-import V4 from 'aws-sdk/lib/signers/v4';
+// import V4 from 'aws-sdk/lib/signers/v4';
 
 console.log('endpoint output', process.env.GRAPHQL_APIENDPOINTOUTPUT);
 
@@ -49,8 +49,9 @@ export const syncAndSaveEnroll1 = async (res: IEnrollResponse): Promise<string> 
     variables: item,
   });
 
-  const signer = new V4(req, 'appsync', true);
-  // signer.addAuthorization(AWS.config.credentials, getDate());
+  console.log('req before signing', req);
+  aws4.sign(req);
+  console.log('req after signing', req);
 
   console.log('request', req);
   const data = await new Promise((resolve, reject) => {

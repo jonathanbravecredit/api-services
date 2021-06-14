@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "aws-appsync": "^4.0.3",
+    "aws4": "^1.11.0",
     "axios": "^0.21.1",
     "fast-xml-parser": "^3.19.0",
     "isomorphic-fetch": "^3.0.0",
