@@ -17,6 +17,7 @@ custom:
       - strong-soap
     linting: false
   settings:
+    GRAPHQL_APIENDPOINTOUTPUT: !ImportValue GraphQLAPIEndpointOutput
     GRAPHQL_API:
       dev: 'rr5wtr4ev5exlbutrkih3r5lhq'
     GRAPHQL_ENDPOINT:

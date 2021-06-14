@@ -17,8 +17,9 @@ import {
   createVerifyAuthenticationQuestions,
   formatVerifyAuthenticationQuestions,
 } from 'lib/queries/verify-authentication-questions';
-import { createEnroll, formatEnroll, parseEnroll, syncAndSaveEnroll } from 'lib/queries/enroll';
+import { createEnroll, formatEnroll, parseEnroll } from 'lib/queries/enroll';
 import { IEnrollResponse } from 'lib/interfaces/enroll.interface';
+import { syncAndSaveEnroll } from 'lib/queries/syncAndSave';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;

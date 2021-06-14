@@ -12,152 +12,27 @@ import { AUTH_TYPE } from 'aws-appsync';
 import { AWSAppSyncClientOptions } from 'aws-appsync';
 import { UpdateAppDataInput } from 'lib/queries/api.service';
 
-console.log(
-  'env vars',
-  process.env.API_braveapp_GRAPHQLAPIENDPOINTOUTPUT,
-  process.env.API_braveapp_GRAPHQLAPIKEYOUTPUT,
-);
+// console.log(
+//   'env vars',
+//   process.env.API_braveapp_GRAPHQLAPIENDPOINTOUTPUT,
+//   process.env.API_braveapp_GRAPHQLAPIKEYOUTPUT,
+// );
 
 // const AUTH_TYPE = APPSYNC.AUTH_TYPE;
 // const AWSAppSyncClient = APPSYNC.default;
 
-const config: AWSAppSyncClientOptions = {
-  url: process.env.APPSYNC_ENDPOINT,
-  region: process.env.AWS_REGION,
-  auth: {
-    type: AUTH_TYPE.AWS_IAM,
-    credentials: AWS.config.credentials,
-  },
-  disableOffline: true,
-};
-console.log('config', config, process.env.NODE_ENV);
+// const config: AWSAppSyncClientOptions = {
+//   url: process.env.APPSYNC_ENDPOINT,
+//   region: process.env.AWS_REGION,
+//   auth: {
+//     type: AUTH_TYPE.AWS_IAM,
+//     credentials: AWS.config.credentials,
+//   },
+//   disableOffline: true,
+// };
+// console.log('config', config, process.env.NODE_ENV);
 
-const client = new AWSAppSyncClient(config);
-
-const getAppDataQuery = `
-query GetAppData($id: ID!) {
-  getAppData(id: $id) {
-    id
-    user {
-      id
-      userAttributes {
-        name {
-          first
-          middle
-          last
-        }
-        address {
-          addressOne
-          addressTwo
-          city
-          state
-          zip
-        }
-        phone {
-          primary
-        }
-        dob {
-          year
-          month
-          day
-        }
-        ssn {
-          lastfour
-          full
-        }
-      }
-      onboarding {
-        lastActive
-        lastComplete
-        started
-      }
-    }
-    agencies {
-      transunion {
-        authenticated
-        indicativeEnrichmentSuccess
-        getAuthenticationQuestionsSuccess
-        serviceBundleFulfillmentKey
-        currentRawQuestions
-        currentRawAuthDetails
-        enrollmentKey
-        enrollReport {
-          bureau
-          errorResponse
-          serviceProduct
-          serviceProductFullfillmentKey
-          serviceProductObject
-          serviceProductTypeId
-          serviceProductValue
-          status
-        }
-        enrollMergeReport {
-          bureau
-          errorResponse
-          serviceProduct
-          serviceProductFullfillmentKey
-          serviceProductObject
-          serviceProductTypeId
-          serviceProductValue
-          status
-        }
-        enrollVantageScore {
-          bureau
-          errorResponse
-          serviceProduct
-          serviceProductFullfillmentKey
-          serviceProductObject
-          serviceProductTypeId
-          serviceProductValue
-          status
-        }
-      }
-      equifax {
-        authenticated
-      }
-      experian {
-        authenticated
-      }
-    }
-    createdAt
-    updatedAt
-    owner
-  }
-}
-`;
-
-const updateAppDataMutation = `mutation UpdateAppData($input: UpdateAppDataInput!) {
-  updateAppData(input: $input) {
-  }
-}`;
-
-export const getAppData = async (id: string): Promise<unknown> => {
-  try {
-    const result = await client.query({
-      query: gql(getAppDataQuery),
-      variables: { id },
-      fetchPolicy: 'network-only',
-    });
-    return result;
-  } catch (err) {
-    console.log('Error sending query: ', err);
-    return err;
-  }
-};
-
-export const updateAppData = async (data: UpdateAppDataInput): Promise<unknown> => {
-  try {
-    const result = await client.mutate({
-      mutation: gql(updateAppDataMutation),
-      variables: { input: data },
-      fetchPolicy: 'network-only',
-    });
-    return result;
-  } catch (err) {
-    console.log('Error sending mutation: ', err);
-    return err;
-  }
-};
+// const client = new AWSAppSyncClient(config);
 
 export const formatEnroll = (accountCode: string, accountName: string, msg: string): IEnroll | undefined => {
   let message: IEnrollMsg = JSON.parse(msg);
@@ -247,13 +122,4 @@ export const parseEnroll = (xml: string): IEnrollResponse => {
   } else {
     return obj;
   }
-};
-
-export const syncAndSaveEnroll = async (res: IEnrollResponse): Promise<string> => {
-  console.log('res', res);
-  if (!res['a:ClientKey']) return JSON.stringify({ Status: 'Failed, no ID returned' });
-  const data = await getAppData(res['a:ClientKey']);
-  console.log('data back from query', data);
-  if (!data) return JSON.stringify({ Status: 'Failed, no data returned from query' });
-  return JSON.stringify({ Status: 'Success' });
 };
