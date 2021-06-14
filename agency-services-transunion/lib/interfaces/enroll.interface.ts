@@ -85,3 +85,36 @@ export interface IEnrollMsg {
   ServiceBundleCode: string;
   TrustSessionId?: string;
 }
+
+export interface IEnrollResponse {
+  EnrollResponse: {
+    EnrollResult: {
+      'a:AccountName': string;
+      'a:ErrorResponse': string;
+      'a:RequestKey': string;
+      'a:ResponseType': string;
+      'a:ClientKey': string;
+      'a:EnrollmentKey': string;
+      'a:ServiceBundleFulfillmentKey': string;
+      'a:ServiceProductFulfillments': {
+        'a:ServiceProductResponse': IEnrollServiceProductResponse[];
+      };
+    };
+  };
+}
+
+export interface IEnrollServiceProductResponse {
+  'a:Bureau': string;
+  'a:ErrorResponse': string;
+  'a:ServiceBundleResponse': {
+    'a:ServiceBundleCode': string;
+    'a:ServiceBundleFulfillmentKey': string;
+    'a:ServiceBundleFulfillmentStatus': string;
+  };
+  'a:ServiceProduct': string;
+  'a:ServiceProductFulfillmentKey': string;
+  'a:ServiceProductObject': string;
+  'a:ServiceProductTypeId': string;
+  'a:ServiceProductValue': string;
+  'a:Status': string;
+}

@@ -2,7 +2,148 @@ import { returnNestedObject, textConstructor, updateNestedObject } from 'lib/uti
 import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
 import * as uuid from 'uuid';
-import { IEnroll, IEnrollMsg } from 'lib/interfaces/enroll.interface';
+import { IEnroll, IEnrollMsg, IEnrollResponse } from 'lib/interfaces/enroll.interface';
+// require('isomorphic-fetch');
+// const AWS = require('aws-sdk/global');
+import * as AWS from 'aws-sdk';
+import * as APPSYNC from 'aws-appsync';
+import gql from 'graphql-tag';
+import { AWSAppSyncClientOptions } from 'aws-appsync';
+import { UpdateAppDataInput } from 'lib/queries/api.service';
+
+const AUTH_TYPE = APPSYNC.AUTH_TYPE;
+const AWSAppSyncClient = APPSYNC.default;
+
+const config: AWSAppSyncClientOptions = {
+  url: process.env.APPSYNC_ENDPOINT,
+  region: process.env.AWS_REGION,
+  auth: {
+    type: AUTH_TYPE.AWS_IAM,
+    credentials: AWS.config.credentials,
+  },
+  disableOffline: true,
+};
+const client = new AWSAppSyncClient(config);
+
+const getAppDataQuery = `
+query GetAppData($id: ID!) {
+  getAppData(id: $id) {
+    id
+    user {
+      id
+      userAttributes {
+        name {
+          first
+          middle
+          last
+        }
+        address {
+          addressOne
+          addressTwo
+          city
+          state
+          zip
+        }
+        phone {
+          primary
+        }
+        dob {
+          year
+          month
+          day
+        }
+        ssn {
+          lastfour
+          full
+        }
+      }
+      onboarding {
+        lastActive
+        lastComplete
+        started
+      }
+    }
+    agencies {
+      transunion {
+        authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
+        currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+      }
+      equifax {
+        authenticated
+      }
+      experian {
+        authenticated
+      }
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+`;
+
+const updateAppDataMutation = `mutation UpdateAppData($input: UpdateAppDataInput!) {
+  updateAppData(input: $input) {
+  }
+}`;
+
+export const getAppData = async (id: string): Promise<unknown> => {
+  try {
+    const result = await client.query({ query: gql(getAppDataQuery), variables: { id } });
+    return result;
+  } catch (err) {
+    console.log('Error sending query: ', err);
+    return err;
+  }
+};
+
+export const updateAppData = async (input: UpdateAppDataInput): Promise<unknown> => {
+  try {
+    const result = await client.mutate({
+      mutation: gql(updateAppDataMutation),
+      variables: { input },
+    });
+    return result;
+  } catch (err) {
+    console.log('Error sending mutation: ', err);
+    return err;
+  }
+};
 
 export const formatEnroll = (accountCode: string, accountName: string, msg: string): IEnroll | undefined => {
   let message: IEnrollMsg = JSON.parse(msg);
@@ -73,8 +214,8 @@ export const createEnroll = (msg: IEnroll): string => {
  * @param xml
  * @returns
  */
-export const parseEnroll = (xml: string): any => {
-  const obj = fastXml.parse(xml);
+export const parseEnroll = (xml: string): IEnrollResponse => {
+  const obj: IEnrollResponse = returnNestedObject(fastXml.parse(xml), 'EnrollResponse');
   const resp = returnNestedObject(obj, 'a:ServiceProductResponse');
   if (resp instanceof Array) {
     const mapped = resp.map((prod) => {
@@ -92,4 +233,13 @@ export const parseEnroll = (xml: string): any => {
   } else {
     return obj;
   }
+};
+
+export const syncAndSaveEnroll = async (res: IEnrollResponse): Promise<string> => {
+  console.log('res', res);
+  if (!res['a:ClientKey']) return JSON.stringify({ Status: 'Failed, no ID returned' });
+  const data = await getAppData(res['a:ClientKey']);
+  console.log('data back from query', data);
+  if (!data) return JSON.stringify({ Status: 'Failed, no data returned from query' });
+  return JSON.stringify({ Status: 'Success' });
 };

@@ -20,6 +20,7 @@
     "serverless-offline": "^6.8.0"
   },
   "dependencies": {
+    "aws-appsync": "^4.0.3",
     "axios": "^0.21.1",
     "fast-xml-parser": "^3.19.0",
     "strong-soap": "^3.2.1",

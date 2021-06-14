@@ -19,6 +19,8 @@ custom:
   settings:
     GRAPHQL_API:
       dev: 'rr5wtr4ev5exlbutrkih3r5lhq'
+    GRAPHQL_ENDPOINT:
+      dev: 'https://24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com/graphql'
 
 provider:
   name: aws
@@ -30,7 +32,7 @@ provider:
   environment:
     SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
     TU_SECRET_LOCATION: '${self:provider.stage}/agency-services/transunion'
-
+    APPSYNC_ENDPOINT: '${self:custom.settings.GRAPHQL_ENDPOINT.${opt:stage}}'
   vpc:
     securityGroupIds:
       - !GetAtt NatGatewayLambdaSecurityGroup.GroupId

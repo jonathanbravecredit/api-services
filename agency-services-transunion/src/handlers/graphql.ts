@@ -17,7 +17,8 @@ import {
   createVerifyAuthenticationQuestions,
   formatVerifyAuthenticationQuestions,
 } from 'lib/queries/verify-authentication-questions';
-import { createEnroll, formatEnroll, parseEnroll } from 'lib/queries/enroll';
+import { createEnroll, formatEnroll, parseEnroll, syncAndSaveEnroll } from 'lib/queries/enroll';
+import { IEnrollResponse } from 'lib/interfaces/enroll.interface';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -173,7 +174,7 @@ const proxyHandler = {
     const options = createRequestOptions(agent, auth, xml, 'Enroll');
     const res = await axios({ ...options });
     console.log('Response xml ====> ', JSON.stringify(res.data));
-    const results = parseEnroll(res.data);
+    const results = await syncAndSaveEnroll(parseEnroll(res.data));
     console.log('results', results);
     return results;
   },
