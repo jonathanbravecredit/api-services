@@ -4,8 +4,6 @@ import { IEnrollResponse, IEnrollServiceProductResponse } from 'lib/interfaces/e
 import { getAppDataQuery, updateAppDataMutation } from './appdata';
 import { TUEnrollResponseInput, UpdateAppDataInput } from 'lib/queries/api.service';
 import { returnNestedObject } from 'lib/utils/helpers';
-import axios from 'axios';
-import gql from 'graphql-tag';
 
 const appsyncUrl = process.env.APPSYNC_ENDPOINT;
 const region = process.env.AWS_REGION;
@@ -21,28 +19,29 @@ export const syncAndSaveEnroll = async (
   const id = `us-east2:${enroll.EnrollResult['a:ClientKey'].split(':').pop()}`;
 
   let oldData: UpdateAppDataInput;
-  let payload1 = {
-    query: getAppDataQuery,
-    operationName: 'GetAppData',
-    variables: {
-      id: id,
-    },
-  };
   // create the options for the sync up
   let opts1 = {
     method: 'POST',
-    host: '24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com',
+    path: '/graphql',
+    headers: {
+      'Content-Type': 'application/json',
+      Host: '24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com',
+    },
     region: region,
-    path: 'graphql',
-    body: JSON.stringify(payload1),
     service: 'appsync',
+    body: JSON.stringify({
+      query: getAppDataQuery,
+      operationName: 'GetAppData',
+      variables: {
+        id: id,
+      },
+    }),
   };
   // sign the headers
-  // aws4.sign(opts1);
+  aws4.sign(opts1);
   // send request to graphql endpoint
-
   try {
-    oldData = await syncEnroll(opts1, payload1);
+    oldData = await syncEnroll(opts1);
     console.log('old data', oldData);
   } catch (err) {
     return { status: 'failed', data: null, error: `failed during sync=${err}` };
@@ -85,7 +84,6 @@ export const syncAndSaveEnroll = async (
       },
     }),
   };
-
   // sign the headers
   aws4.sign(opts2);
   // send rquest to graphql endpoint
@@ -103,15 +101,23 @@ export const syncAndSaveEnroll = async (
  * @param opts
  * @returns
  */
-export const syncEnroll = async (opts: any, data: any) => {
+export const syncEnroll = async (opts: any) => {
   try {
-    const headers = aws4.sign(opts).headers;
-    console.log('headers', headers);
-    const resp = await axios({
-      url: appsyncUrl,
-      method: 'post',
-      headers: headers,
-      data: data,
+    const resp = await new Promise((resolve, reject) => {
+      const httpRequest = https.request(opts, (result) => {
+        let data = '';
+
+        result.on('data', (chunk) => {
+          data += chunk;
+        });
+
+        result.on('end', () => {
+          resolve(JSON.parse(data.toString()));
+        });
+      });
+
+      httpRequest.write(opts.body);
+      httpRequest.end();
     });
     return { ...resp['data']['getAppData'] };
   } catch (err) {
