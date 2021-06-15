@@ -123,7 +123,7 @@ const _deleteKeyNestedObject = (o: any, k: string) => {
 };
 
 /**
- * A utility function to find the first matching key in a nested object
+ * A utility function to find the first (non-undefined) matching key in a nested object
  *   use carefully. Does not iterate over arrays
  * @param {object} o the object you want to search
  * @param {string} k the key you want to search for
@@ -132,7 +132,7 @@ export const returnNestedObject = (o: any, k: string): any => {
   let value;
   const _returnNestedObject = (obj: any) => {
     Object.keys(obj).forEach((key) => {
-      if (key === k) value = obj[k];
+      if (key === k && value === undefined) value = obj[k];
       if (typeof obj[key] === 'object' && obj[key] !== null) {
         _returnNestedObject(obj[key]);
       }

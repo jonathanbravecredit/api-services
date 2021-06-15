@@ -6,7 +6,7 @@ import * as fs from 'fs';
 import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
 import { getSecretKey } from 'lib/utils/secrets';
-import { createRequestOptions } from 'lib/utils/helpers';
+import { createRequestOptions, returnNestedObject } from 'lib/utils/helpers';
 import { createIndicativeEnrichment, formatIndicativeEnrichment } from 'lib/queries/indicative-enrichment';
 import { createPing } from 'lib/queries/ping';
 import {
@@ -175,8 +175,9 @@ const proxyHandler = {
     const options = createRequestOptions(agent, auth, xml, 'Enroll');
     const res = await axios({ ...options });
     console.log('Response xml ====> ', JSON.stringify(res.data));
-    const results = await syncAndSaveEnroll(parseEnroll(res.data));
-    console.log('results', results);
-    return JSON.stringify(results);
+    const status = returnNestedObject(res.data, 'a:ResponseType');
+    console.log('status', status);
+    if (status.toLowerCase() === 'success') await syncAndSaveEnroll(parseEnroll(res.data));
+    return JSON.stringify(res.data);
   },
 };
