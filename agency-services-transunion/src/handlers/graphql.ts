@@ -19,8 +19,6 @@ import {
 } from 'lib/queries/verify-authentication-questions';
 import { createEnroll, formatEnroll, parseEnroll } from 'lib/queries/enroll';
 import { IEnrollResponse } from 'lib/interfaces/enroll.interface';
-import { syncAndSaveEnroll } from 'lib/queries/syncAndSave';
-import { syncAndSaveEnroll2 } from 'lib/queries/syncAndSave_DNU';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -176,11 +174,7 @@ const proxyHandler = {
     const options = createRequestOptions(agent, auth, xml, 'Enroll');
     const res = await axios({ ...options });
     console.log('Response xml ====> ', JSON.stringify(res.data));
-    const status = returnNestedObject(fastXml.parse(res.data), 'a:ResponseType');
-    console.log('status', status);
-    // if (status?.toLowerCase() === 'success')
-    await syncAndSaveEnroll2(parseEnroll(res.data));
-    await syncAndSaveEnroll(parseEnroll(res.data));
-    return JSON.stringify(res.data);
+    const results = parseEnroll(res.data); // a more robust parser to parse nested objects
+    return JSON.stringify(results);
   },
 };
