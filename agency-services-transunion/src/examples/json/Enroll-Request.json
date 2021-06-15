@@ -1,6 +1,6 @@
 {
   "RequestKey": "",
-  "ClientKey": "2906f223-c4e2-4fe5-b5c0-c1efa476eabc",
+  "ClientKey": "a31af2e4-7205-43ca-a55f-34b55220a1d2",
   "Customer": {
     "CurrentAddress": {
       "AddressLine1": "1071 101ST",
@@ -11,13 +11,13 @@
     },
     "DateOfBirth": "1957-09-01",
     "FullName": {
-      "FirstName": "JACKSON",
-      "LastName": "TESTJ",
+      "FirstName": "FRANK",
+      "LastName": "TEST6",
       "MiddleName": null,
       "Prefix": null,
       "Suffix": null
     },
-    "Ssn": "899010010"
+    "Ssn": "899010006"
   },
   "Language": null,
   "ServiceBundleCode": "CC2BraveCreditTUReportV3Score",

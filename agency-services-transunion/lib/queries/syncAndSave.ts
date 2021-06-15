@@ -83,8 +83,8 @@ export const syncAndSaveEnroll = async (
   aws4.sign(opts1);
   // send rquest to graphql endpoint
   try {
-    await saveEnroll(opts2);
-    return { status: 'success', data: null };
+    const saved = await saveEnroll(opts2);
+    return { status: 'success', data: saved };
   } catch (err) {
     return { status: 'failed', data: null, error: `failed during save=${err}` };
   }
