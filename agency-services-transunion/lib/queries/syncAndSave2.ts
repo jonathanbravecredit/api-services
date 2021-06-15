@@ -31,7 +31,7 @@ console.log('config', config, process.env.NODE_ENV);
 const client = new AWSAppSyncClient(config);
 
 export const syncAndSaveEnroll2 = async (res: IEnrollResponse): Promise<string> => {
-  const variables = { id: res.EnrollResponse.EnrollResult['a:ClientKey'] };
+  const variables = { id: res.EnrollResult['a:ClientKey'] };
   console.log('variables', variables);
   try {
     const response = await client.query({

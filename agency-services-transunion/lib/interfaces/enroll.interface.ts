@@ -87,7 +87,7 @@ export interface IEnrollMsg {
 }
 
 export interface IEnrollResponse {
-  EnrollResponse: IEnrollResult;
+  EnrollResult: IEnrollResult;
 }
 
 export interface IEnrollResult {
