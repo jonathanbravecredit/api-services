@@ -6,6 +6,7 @@ import { TUEnrollResponseInput, UpdateAppDataInput } from 'lib/queries/api.servi
 import { returnNestedObject } from 'lib/utils/helpers';
 import axios from 'axios';
 import gql from 'graphql-tag';
+import { print } from 'graphql';
 
 const appsyncUrl = process.env.APPSYNC_ENDPOINT;
 const region = process.env.AWS_REGION;
@@ -22,8 +23,7 @@ export const syncAndSaveEnroll = async (
 
   let oldData: UpdateAppDataInput;
   let payload1 = {
-    query: getAppDataQuery,
-    operationName: 'GetAppData',
+    query: print(gql(getAppDataQuery)),
     variables: {
       id: id,
     },
@@ -113,7 +113,8 @@ export const syncEnroll = async (opts: any, data: any) => {
       headers: headers,
       data: data,
     });
-    return { ...resp['data']['getAppData'] };
+    console.log('resp', resp);
+    return resp.data;
   } catch (err) {
     throw `Error: ${err}`;
   }
