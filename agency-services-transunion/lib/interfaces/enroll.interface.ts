@@ -99,7 +99,7 @@ export interface IEnrollResult {
   'a:EnrollmentKey': string;
   'a:ServiceBundleFulfillmentKey': string;
   'a:ServiceProductFulfillments': {
-    'a:ServiceProductResponse': IEnrollServiceProductResponse[];
+    'a:ServiceProductResponse': IEnrollServiceProductResponse[] | IEnrollServiceProductResponse;
   };
 }
 
