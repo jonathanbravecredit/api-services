@@ -6,7 +6,7 @@ import { AUTH_TYPE } from 'aws-appsync';
 import { AWSAppSyncClientOptions } from 'aws-appsync';
 import { UpdateAppDataInput } from 'lib/queries/api.service';
 import { IEnrollResponse } from 'lib/interfaces/enroll.interface';
-import { getAppDataQuery } from 'lib/queries/graphql';
+import { getAppDataQuery } from 'lib/queries/appdata';
 
 console.log(
   'env vars',

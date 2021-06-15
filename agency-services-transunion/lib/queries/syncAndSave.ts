@@ -1,7 +1,7 @@
 import * as https from 'https';
 import * as aws4 from 'aws4';
 import { IEnrollResponse, IEnrollServiceProductResponse } from 'lib/interfaces/enroll.interface';
-import { getAppDataQuery, updateAppDataMutation } from './graphql';
+import { getAppDataQuery, updateAppDataMutation } from './appdata';
 import { TUEnrollResponseInput, UpdateAppDataInput } from 'lib/queries/api.service';
 import { returnNestedObject } from 'lib/utils/helpers';
 
@@ -16,7 +16,7 @@ const region = process.env.AWS_REGION;
 export const syncAndSaveEnroll = async (
   enroll: IEnrollResponse,
 ): Promise<{ status: string; data: any; error?: string }> => {
-  const variables = { id: enroll.EnrollResult['a:ClientKey'] };
+  const variables = { id: `us-east2:${enroll.EnrollResult['a:ClientKey']}` };
   let oldData: UpdateAppDataInput;
   // create the options for the sync up
   let opts1 = {
@@ -92,6 +92,7 @@ export const syncAndSaveEnroll = async (
 
 /**
  * Takes the aws4 signed options and sends the request to get the lastest db data
+ *  -- TODO couldn't get to work with Axios...needs more work
  * @param opts
  * @returns
  */
@@ -121,6 +122,7 @@ export const syncEnroll = async (opts: any) => {
 
 /**
  * Takes the aws4 signed options and sends the rquest to save the updated data
+ *  -- TODO couldn't get to work with Axios...needs more work
  * @param opts
  * @returns
  */
