@@ -39,6 +39,7 @@ export const syncAndSaveEnroll = async (
   // send request to graphql endpoint
   try {
     oldData = await syncEnroll(opts1);
+    console.log('old data', oldData);
   } catch (err) {
     return { status: 'failed', data: null, error: `failed during sync=${err}` };
   }
