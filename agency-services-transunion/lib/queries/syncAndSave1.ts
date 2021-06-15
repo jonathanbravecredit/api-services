@@ -15,7 +15,7 @@ const region = process.env.AWS_REGION;
 console.log('env vars', appsyncUrl, region);
 
 import { getAppDataQuery } from './graphql';
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 // const graphqlQuery = require('./query.js').mutation;
 
@@ -63,14 +63,18 @@ export const syncAndSaveEnroll1 = async (res: any): Promise<string> => {
   aws4.sign(opts);
   console.log('req after signing', opts);
   try {
-    const resp = await axios({
+    const headers = aws4.sign(opts).headers;
+    const config: AxiosRequestConfig = {
       url: appsyncUrl,
-      method: 'post',
-      headers: aws4.sign(opts).headers,
+      method: 'POST',
+      headers: headers,
       data: {
         query: getAppDataQuery,
+        operationName: 'getAppData',
+        variables,
       },
-    });
+    };
+    const resp = await axios(config);
     console.log('resp', resp);
     return JSON.stringify({ status: 'success' });
   } catch (err) {

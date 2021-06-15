@@ -87,19 +87,19 @@ export interface IEnrollMsg {
 }
 
 export interface IEnrollResponse {
-  EnrollResponse: {
-    EnrollResult: {
-      'a:AccountName': string;
-      'a:ErrorResponse': string;
-      'a:RequestKey': string;
-      'a:ResponseType': string;
-      'a:ClientKey': string;
-      'a:EnrollmentKey': string;
-      'a:ServiceBundleFulfillmentKey': string;
-      'a:ServiceProductFulfillments': {
-        'a:ServiceProductResponse': IEnrollServiceProductResponse[];
-      };
-    };
+  EnrollResponse: IEnrollResult;
+}
+
+export interface IEnrollResult {
+  'a:AccountName': string;
+  'a:ErrorResponse': string;
+  'a:RequestKey': string;
+  'a:ResponseType': string;
+  'a:ClientKey': string;
+  'a:EnrollmentKey': string;
+  'a:ServiceBundleFulfillmentKey': string;
+  'a:ServiceProductFulfillments': {
+    'a:ServiceProductResponse': IEnrollServiceProductResponse[];
   };
 }
 
