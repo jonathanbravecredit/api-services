@@ -175,9 +175,9 @@ const proxyHandler = {
     const options = createRequestOptions(agent, auth, xml, 'Enroll');
     const res = await axios({ ...options });
     console.log('Response xml ====> ', JSON.stringify(res.data));
-    const status = returnNestedObject(res.data, 'a:ResponseType');
+    const status = returnNestedObject(fastXml.parse(res.data), 'a:ResponseType');
     console.log('status', status);
-    if (status.toLowerCase() === 'success') await syncAndSaveEnroll(parseEnroll(res.data));
+    if (status?.toLowerCase() === 'success') await syncAndSaveEnroll(parseEnroll(res.data));
     return JSON.stringify(res.data);
   },
 };
