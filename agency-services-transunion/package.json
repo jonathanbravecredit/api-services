@@ -23,6 +23,7 @@
     "aws-appsync": "^4.0.3",
     "aws4": "^1.11.0",
     "axios": "^0.21.1",
+    "es6-promise": "^4.2.8",
     "fast-xml-parser": "^3.19.0",
     "isomorphic-fetch": "^3.0.0",
     "uuid": "^8.3.2",
