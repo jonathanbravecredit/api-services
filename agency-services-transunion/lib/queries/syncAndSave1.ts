@@ -15,7 +15,6 @@ const region = process.env.AWS_REGION;
 console.log('env vars', appsyncUrl, region);
 
 import { getAppDataQuery } from './graphql';
-import axios, { AxiosRequestConfig } from 'axios';
 
 // const graphqlQuery = require('./query.js').mutation;
 
@@ -62,23 +61,23 @@ export const syncAndSaveEnroll1 = async (res: any): Promise<string> => {
   console.log('req before signing', opts);
   aws4.sign(opts);
   console.log('req after signing', opts);
-  try {
-    const headers = aws4.sign(opts).headers;
-    const config: AxiosRequestConfig = {
-      url: appsyncUrl,
-      method: 'POST',
-      headers: headers,
-      data: {
-        query: getAppDataQuery,
-        operationName: 'getAppData',
-        variables,
-      },
-    };
-    const resp = await axios(config);
-    console.log('resp', resp);
-    return JSON.stringify({ status: 'success' });
-  } catch (err) {
-    console.log('err', err);
-    return JSON.stringify({ status: 'failed' });
-  }
+
+  const data = await new Promise((resolve, reject) => {
+    const httpRequest = https.request(opts, (result) => {
+      let data = '';
+
+      result.on('data', (chunk) => {
+        data += chunk;
+      });
+
+      result.on('end', () => {
+        resolve(JSON.parse(data.toString()));
+      });
+    });
+
+    httpRequest.write(opts.body);
+    httpRequest.end();
+  });
+  console.log('data', data);
+  return JSON.stringify({ Status: 'Success' });
 };
