@@ -175,6 +175,7 @@ const proxyHandler = {
     const res = await axios({ ...options });
     console.log('Response xml ====> ', JSON.stringify(res.data));
     const results = parseEnroll(res.data); // a more robust parser to parse nested objects
+    console.log('results', results);
     return JSON.stringify(results);
   },
 };
