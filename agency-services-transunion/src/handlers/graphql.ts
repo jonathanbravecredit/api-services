@@ -19,6 +19,7 @@ import {
 } from 'lib/queries/verify-authentication-questions';
 import { createEnroll, formatEnroll, parseEnroll } from 'lib/queries/enroll';
 import { IEnrollResponse } from 'lib/interfaces/enroll.interface';
+import { createFulfill, formatFulfill } from 'lib/queries/fulfill';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -96,9 +97,12 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       case 'Enroll':
         results = await proxyHandler['Enroll'](accountCode, username, message, httpsAgent, auth);
         return JSON.stringify({ Enroll: results });
+      case 'Fulfill':
+        results = await proxyHandler['Fulfill'](accountCode, username, message, httpsAgent, auth);
+        return JSON.stringify({ Fulfill: results });
       case 'GetServiceProduct':
         results = await proxyHandler['GetServiceProduct'](accountCode, username, message, httpsAgent, auth);
-        return JSON.stringify({ Enroll: results });
+        return JSON.stringify({ GetServiceProduct: results });
       default:
         return JSON.stringify({ Action: action, Error: 'Action not found' });
     }
@@ -181,6 +185,24 @@ const proxyHandler = {
     console.log('results', results);
     return JSON.stringify(results);
   },
+  Fulfill: async (
+    accountCode: string,
+    username: string,
+    message: string,
+    agent: https.Agent,
+    auth: string,
+  ): Promise<string> => {
+    const msg = formatFulfill(accountCode, username, message);
+    const xml = createFulfill(msg);
+    console.log('Verify xml====>', xml);
+    const options = createRequestOptions(agent, auth, xml, 'Fulfill');
+    const res = await axios({ ...options });
+    console.log('Response xml ====> ', JSON.stringify(res.data));
+    const results = fastXml.parse(res.data); // may need more robust parser below
+    //const results = parseEnroll(res.data); // a more robust parser to parse nested objects
+    console.log('results', results);
+    return JSON.stringify(results);
+  },
   GetServiceProduct: async (
     accountCode: string,
     username: string,
@@ -188,6 +210,7 @@ const proxyHandler = {
     agent: https.Agent,
     auth: string,
   ): Promise<string> => {
+    return JSON.stringify({ GetServiceProduct: 'Not ready' });
     // const msg = formatEnroll(accountCode, username, message);
     // const xml = createEnroll(msg);
     // console.log('Verify xml====>', xml);

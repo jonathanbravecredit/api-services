@@ -1,0 +1,25 @@
+{
+  "RequestKey": "",
+  "ClientKey": "us-east-2:de1f853b-9c23-4e7f-8a8b-2ebf1585b532",
+  "Customer": {
+    "CurrentAddress": {
+      "AddressLine1": "1071 101ST",
+      "AddressLine2": null,
+      "City": "HOLLYWOOD",
+      "State": "FL",
+      "Zipcode": "33025"
+    },
+    "DateOfBirth": "1957-09-01",
+    "FullName": {
+      "FirstName": "ELLEN",
+      "LastName": "TESTE",
+      "MiddleName": null,
+      "Prefix": null,
+      "Suffix": null
+    },
+    "Ssn": "899010005"
+  },
+  "EnrollmentKey": "aa5ad8d2-24ea-4c11-b493-7764340f90b7",
+  "Language": null,
+  "ServiceBundleCode": "CC2BraveCreditTUReportV3Score"
+}
