@@ -96,6 +96,9 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       case 'Enroll':
         results = await proxyHandler['Enroll'](accountCode, username, message, httpsAgent, auth);
         return JSON.stringify({ Enroll: results });
+      case 'GetServiceProduct':
+        results = await proxyHandler['GetServiceProduct'](accountCode, username, message, httpsAgent, auth);
+        return JSON.stringify({ Enroll: results });
       default:
         return JSON.stringify({ Action: action, Error: 'Action not found' });
     }
@@ -177,5 +180,22 @@ const proxyHandler = {
     const results = parseEnroll(res.data); // a more robust parser to parse nested objects
     console.log('results', results);
     return JSON.stringify(results);
+  },
+  GetServiceProduct: async (
+    accountCode: string,
+    username: string,
+    message: string,
+    agent: https.Agent,
+    auth: string,
+  ): Promise<string> => {
+    // const msg = formatEnroll(accountCode, username, message);
+    // const xml = createEnroll(msg);
+    // console.log('Verify xml====>', xml);
+    // const options = createRequestOptions(agent, auth, xml, 'Enroll');
+    // const res = await axios({ ...options });
+    // console.log('Response xml ====> ', JSON.stringify(res.data));
+    // const results = parseEnroll(res.data); // a more robust parser to parse nested objects
+    // console.log('results', results);
+    // return JSON.stringify(results);
   },
 };
