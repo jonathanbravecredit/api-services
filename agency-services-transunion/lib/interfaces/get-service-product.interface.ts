@@ -13,6 +13,10 @@ export interface IGetServiceProductMsg {
   };
   RequestKey: string;
   ClientKey: string;
+  CSRFToken?: string;
+  ClientBrowserType?: string;
+  IpAddress?: string;
+  ProductDisplay: string;
   SeviceBundleFulfillmentKey: string;
 }
 // TODO updated the response with the actual
