@@ -53,7 +53,7 @@ export const createGetServiceProduct = (msg: IGetServiceProduct): string => {
             'data:ClientBrowserType': textConstructor(msg.request.ClientBrowserType, true),
             'data:IpAddress': textConstructor(msg.request.IpAddress, true),
             'data:ProductDisplay': textConstructor(msg.request.ProductDisplay),
-            'data:SeviceBundleFulfillmentKey': textConstructor(msg.request.SeviceBundleFulfillmentKey),
+            'data:ServiceBundleFulfillmentKey': textConstructor(msg.request.SeviceBundleFulfillmentKey),
           },
         },
       },
