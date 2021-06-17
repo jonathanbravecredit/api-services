@@ -19,7 +19,8 @@ import {
 } from 'lib/queries/verify-authentication-questions';
 import { createEnroll, formatEnroll, parseEnroll } from 'lib/queries/enroll';
 import { IEnrollResponse } from 'lib/interfaces/enroll.interface';
-import { createFulfill, formatFulfill } from 'lib/queries/fulfill';
+import { createFulfill, formatFulfill, parseFulfill } from 'lib/queries/fulfill';
+import { createGetServiceProduct, formatGetServiceProduct } from 'lib/queries/get-service-product';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -198,8 +199,7 @@ const proxyHandler = {
     const options = createRequestOptions(agent, auth, xml, 'Fulfill');
     const res = await axios({ ...options });
     console.log('Response xml ====> ', JSON.stringify(res.data));
-    const results = fastXml.parse(res.data); // may need more robust parser below
-    //const results = parseEnroll(res.data); // a more robust parser to parse nested objects
+    const results = parseFulfill(res.data); // a more robust parser to parse nested objects
     console.log('results', results);
     return JSON.stringify(results);
   },
@@ -210,15 +210,15 @@ const proxyHandler = {
     agent: https.Agent,
     auth: string,
   ): Promise<string> => {
-    return JSON.stringify({ GetServiceProduct: 'Not ready' });
-    // const msg = formatEnroll(accountCode, username, message);
-    // const xml = createEnroll(msg);
-    // console.log('Verify xml====>', xml);
-    // const options = createRequestOptions(agent, auth, xml, 'Enroll');
-    // const res = await axios({ ...options });
-    // console.log('Response xml ====> ', JSON.stringify(res.data));
+    const msg = formatGetServiceProduct(accountCode, username, message);
+    const xml = createGetServiceProduct(msg);
+    console.log('Verify xml====>', xml);
+    const options = createRequestOptions(agent, auth, xml, 'GetServiceProduct');
+    const res = await axios({ ...options });
+    console.log('Response xml ====> ', JSON.stringify(res.data));
+    const results = fastXml.parse(res.data); // basic parse for now
     // const results = parseEnroll(res.data); // a more robust parser to parse nested objects
-    // console.log('results', results);
-    // return JSON.stringify(results);
+    console.log('results', results);
+    return JSON.stringify(results);
   },
 };

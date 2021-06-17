@@ -44,6 +44,7 @@ export interface IFulfillMsg {
   ServiceBundleCode: string;
 }
 
+// TODO updated the response with the actual
 export interface IFulfillResponse {
-  EnrollResult: any;
+  FulfullResult: any;
 }

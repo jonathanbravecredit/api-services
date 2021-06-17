@@ -1,0 +1,16 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:GetServiceProduct>
+      <con:request>
+        <data:AccountCode>?</data:AccountCode>
+        <data:AccountName>?</data:AccountName>
+        <data:RequestKey>?</data:RequestKey>
+        <data:ClientKey>?</data:ClientKey>
+        <data:SeviceBundleFulfillmentKey>?</data:SeviceBundleFulfillmentKey>
+      </con:request>
+    </con:GetServiceProduct>
+  </soapenv:Body>
+</soapenv:Envelope>
