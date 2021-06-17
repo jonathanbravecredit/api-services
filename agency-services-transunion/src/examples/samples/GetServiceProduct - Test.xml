@@ -1,0 +1,24 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data"
+  xmlns:arr="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:GetServiceProduct>
+      <con:request>
+        <data:AccountCode>123456789</data:AccountCode>
+        <data:AccountName>CC2BraveCredit</data:AccountName>
+        <data:RequestKey>BC-3ca816af-3cb9-4ba8-8990-59deff560da7</data:RequestKey>
+        <data:ClientKey>de1f853b-9c23-4e7f-8a8b-2ebf1585b532</data:ClientKey>
+        <data:CSRFToken xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <data:ClientBrowserType xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <data:IpAddress xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <data:ProductDisplay>false</data:ProductDisplay>
+        <data:SeviceBundleFulfillmentKey>20057d58-8e49-4e22-8e55-cc2752702c45</data:SeviceBundleFulfillmentKey>
+      </con:request>
+    </con:GetServiceProduct>
+  </soapenv:Body>
+</soapenv:Envelope>

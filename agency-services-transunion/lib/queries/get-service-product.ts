@@ -39,6 +39,7 @@ export const createGetServiceProduct = (msg: IGetServiceProduct): string => {
         'xmlns:soapenv': 'http://schemas.xmlsoap.org/soap/envelope/',
         'xmlns:con': 'https://consumerconnectws.tui.transunion.com/',
         'xmlns:data': 'https://consumerconnectws.tui.transunion.com/data',
+        'xmlns:arr': 'http://schemas.microsoft.com/2003/10/Serialization/Arrays',
       },
       'soapenv:Header': {},
       'soapenv:Body': {
