@@ -42,7 +42,7 @@ export const createGetServiceProduct = (msg: IGetServiceProduct): string => {
       },
       'soapenv:Header': {},
       'soapenv:Body': {
-        'con:GetAuthenticationQuestions': {
+        'con:GetServiceProduct': {
           'con:request': {
             'data:AccountCode': textConstructor(msg.request.AccountCode),
             'data:AccountName': textConstructor(msg.request.AccountName),
