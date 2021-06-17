@@ -1,0 +1,31 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <IndicativeEnrichmentResponse xmlns="https://consumerconnectws.tui.transunion.com/">
+      <IndicativeEnrichmentResult xmlns:a="https://consumerconnectws.tui.transunion.com/data"
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <a:AccountName>CC2PartnerTesting1</a:AccountName>
+        <a:ErrorResponse i:nil="true" />
+        <a:RequestKey>bc4c96f0-1b08-4a01-95f0-92282be82213</a:RequestKey>
+        <a:ResponseType>Success</a:ResponseType>
+        <a:ClientKey>cdedbb7d-caff-4cd0-8133-d20b7d3d9c02</a:ClientKey>
+        <a:Customer>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;CustomerInfoType xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;FullName xmlns="com/truelink/ds/sch/srv/cr/ccs"&gt;
+    &lt;FirstName&gt;THOMAS&lt;/FirstName&gt;
+    &lt;MiddleName&gt;E&lt;/MiddleName&gt;
+    &lt;LastName&gt;FRIEDMAN&lt;/LastName&gt;
+  &lt;/FullName&gt;
+  &lt;SocialSecurityNumber xmlns="com/truelink/ds/sch/srv/cr/ccs"&gt;666234390&lt;/SocialSecurityNumber&gt;
+  &lt;Address xmlns="com/truelink/ds/sch/srv/cr/ccs"&gt;
+    &lt;StreetAddressLineOne&gt;535 30 RD&lt;/StreetAddressLineOne&gt;
+    &lt;City&gt;GRAND JUNCTION&lt;/City&gt;
+    &lt;Zip&gt;81504&lt;/Zip&gt;
+    &lt;State&gt;CO&lt;/State&gt;
+  &lt;/Address&gt;
+  &lt;DateOfBirth xmlns="com/truelink/ds/sch/srv/cr/ccs"&gt;1975-01-01&lt;/DateOfBirth&gt;
+&lt;/CustomerInfoType&gt;</a:Customer>
+        <a:SSN>666234390</a:SSN>
+      </IndicativeEnrichmentResult>
+    </IndicativeEnrichmentResponse>
+  </s:Body>
+</s:Envelope>

@@ -73,8 +73,8 @@ export const createFulfill = (msg: IFulfill): string => {
  * @param xml
  * @returns
  */
-export const parseFulfill = (xml: string): IFulfillResponse => {
-  const obj: IFulfillResponse = returnNestedObject(fastXml.parse(xml), 'FulfillResponse');
+export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
+  const obj: IFulfillResponse = returnNestedObject(fastXml.parse(xml, options), 'FulfillResponse');
   const resp = returnNestedObject(obj, 'a:ServiceProductResponse');
   if (resp instanceof Array) {
     const mapped = resp.map((prod) => {

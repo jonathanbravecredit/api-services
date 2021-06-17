@@ -1,0 +1,1282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TrueLinkCreditReportType xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" FraudIndicator="false" DeceasedIndicator="false"
+  xmlns="com/truelink/ds/sch/report/truelink">
+  <SB168Frozen equifax="false" experian="false" transunion="false" />
+  <Borrower SocialSecurityNumber="666628891">
+    <BorrowerAddress dateReported="2012-09-20" addressOrder="0" partitionSet="0">
+      <CreditAddress city="DEWEY" direction="W" houseNumber="397620" postDirection="" stateCode="OK" streetName="1300" streetType="RD" unit="" postalCode="74029" />
+      <Dwelling abbreviation="" description="" symbol="" rank="100000" />
+      <Origin abbreviation="" description="" symbol="" rank="100000" />
+      <Ownership abbreviation="" description="" symbol="" rank="100000" />
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </BorrowerAddress>
+    <PreviousAddress dateReported="2009-02-01" addressOrder="0" partitionSet="0">
+      <CreditAddress city="BARTLESVILLE" direction="" houseNumber="725" stateCode="OK" streetName="YALE" streetType="DR" unit="" postalCode="74006" />
+      <Dwelling abbreviation="" description="" symbol="" rank="100000" />
+      <Origin abbreviation="" description="" symbol="" rank="100000" />
+      <Ownership abbreviation="" description="" symbol="" rank="100000" />
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </PreviousAddress>
+    <PreviousAddress addressOrder="1" partitionSet="1">
+      <CreditAddress city="DEWEY" direction="W" houseNumber="397250" stateCode="OK" streetName="1300" streetType="RD" unit="" postalCode="74029" />
+      <Dwelling abbreviation="" description="" symbol="" rank="100000" />
+      <Origin abbreviation="" description="" symbol="" rank="100000" />
+      <Ownership abbreviation="" description="" symbol="" rank="100000" />
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </PreviousAddress>
+    <Birth age="0" date="1961-01-01" partitionSet="0">
+      <BirthDate year="1961" month="1" day="1" />
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Birth>
+    <CreditScore riskScore="668" scoreName="VantageScore3" populationRank="49" inquiriesAffectedScore="true">
+      <CreditScoreFactor bureauCode="04">
+        <Factor abbreviation="" description="" symbol="04" rank="100000" />
+        <FactorText>explain: The balances on your accounts are high compared to the original loan amounts, lowering your score.</FactorText>
+        <FactorText>factor: The balances on your accounts are too high compared to loan amounts</FactorText>
+        <FactorText>cando: Paying down the balances on your accounts will benefit your score.</FactorText>
+      </CreditScoreFactor>
+      <CreditScoreFactor bureauCode="12">
+        <Factor abbreviation="" description="" symbol="12" rank="100000" />
+        <FactorText>explain: Your oldest account is still too recent. A credit file containing older accounts will have a positive impact on your credit score because it demonstrates that you are experienced managing credit.</FactorText>
+        <FactorText>factor: The date that you opened your oldest account is too recent</FactorText>
+        <FactorText>cando: Don't open more accounts than you actually need. Research shows that new accounts indicate greater risk. Your score will benefit as your accounts get older.</FactorText>
+      </CreditScoreFactor>
+      <CreditScoreFactor bureauCode="07">
+        <Factor abbreviation="" description="" symbol="07" rank="100000" />
+        <FactorText>explain: You have had too many accounts with payments that are at least 30 days late and/or on which a lender has reported a derogatory status. Late payments are a proven indicator of increased risk. People with late payments are at risk of being overextended, putting existing credit with lenders at risk.</FactorText>
+        <FactorText>factor: You have too many delinquent or derogatory accounts</FactorText>
+        <FactorText>cando: Paying bills on time every month is important to maintaining a good credit score. If you remain behind with any payments, bring them current as soon as possible, and then make future payments on time. Over time, this will have a positive impact on your score.</FactorText>
+      </CreditScoreFactor>
+      <CreditScoreFactor bureauCode="55">
+        <Factor abbreviation="" description="" symbol="55" rank="100000" />
+        <FactorText>explain: A real estate loan can be a first mortgage, a home equity loan, or home equity line of credit. The outstanding balances on open real estate accounts remain high compared to the original loan amounts. People who haven't paid down much of their mortgage or other real estate loans are higher credit risks than people who have.</FactorText>
+        <FactorText>factor: Open real estate account balances are too high compared to their loan amounts</FactorText>
+        <FactorText>cando: As monthly real estate payments are made, a portion of the outstanding principle balance is reduced, benefitting your score. Whenever possible, further pay down balances on your real estate accounts. Over time this will also have a positive impact on your score.</FactorText>
+      </CreditScoreFactor>
+      <CreditScoreModel abbreviation="" description="" symbol="00W40" rank="100000" />
+      <NoScoreReason abbreviation="" description="" symbol="" rank="100000" />
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </CreditScore>
+    <Employer name="EMPLOYER X" partitionSet="0">
+      <CreditAddress city="" stateCode="" unparsedStreet="" postalCode="" />
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Employer>
+    <BorrowerName partitionSet="0">
+      <Name first="DIANNE" middle="J" last="COSGRAVE" />
+      <NameType abbreviation="Primary" description="Primary" symbol="1" rank="199" />
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </BorrowerName>
+    <SocialPartition>
+      <Social>
+        <SocialSecurityNumber>666628891</SocialSecurityNumber>
+        <Source>
+          <BorrowerKey />
+          <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+          <InquiryDate>2015-06-09</InquiryDate>
+          <Reference>0757326e-da32-48ea-99e  </Reference>
+        </Source>
+      </Social>
+    </SocialPartition>
+  </Borrower>
+  <TradeLinePartition accountTypeDescription="Collection Account" accountTypeSymbol="Y" accountTypeAbbreviation="Collection">
+    <Tradeline subscriberCode="063VB001" highBalance="6530" dateVerified="2015-04-15" dateReported="2015-04-15" dateOpened="2012-08-05" accountNumber="9X1X0X6X" dateAccountStatus="2015-04-15" currentBalance="2668" creditorName="TULSA ADJUST" position="0" bureau="TransUnion">
+      <AccountCondition abbreviation="Derog" description="Derogatory" symbol="F" rank="20" />
+      <AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Collection Services" description="Collection Services" symbol="Y" rank="199" />
+      <OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" />
+      <PayStatus abbreviation="Coll/Chargeoff" description="Collection/Chargeoff" symbol="9" rank="2" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <Remark customRemark="">
+        <RemarkCode abbreviation="Placed for collection" description="Placed for collection" symbol="T00CLA" rank="199" />
+      </Remark>
+      <CollectionTrade originalCreditor="MEDICAL">
+        <creditType abbreviation="Collection" description="Collection Account" symbol="Y" rank="5" />
+      </CollectionTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Collection Account" accountTypeSymbol="Y" accountTypeAbbreviation="Collection">
+    <Tradeline subscriberCode="049XV001" highBalance="209" dateVerified="2013-10-24" dateReported="2013-10-24" dateOpened="2013-02-16" accountNumber="1X9X5X5X" dateAccountStatus="2013-10-21" currentBalance="0" creditorName="EOS CCA" position="1" bureau="TransUnion">
+      <AccountCondition abbreviation="Paid" description="Paid" symbol="P" rank="10" />
+      <AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Collection Services" description="Collection Services" symbol="Y" rank="199" />
+      <OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" />
+      <PayStatus abbreviation="Coll/Chargeoff" description="Collection/Chargeoff" symbol="9" rank="2" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <Remark customRemark="">
+        <RemarkCode abbreviation="Paid collection" description="Paid collection" symbol="T00PCL" rank="199" />
+      </Remark>
+      <CollectionTrade originalCreditor="10 AT T">
+        <creditType abbreviation="Collection" description="Collection Account" symbol="Y" rank="5" />
+      </CollectionTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Collection Account" accountTypeSymbol="Y" accountTypeAbbreviation="Collection">
+    <Tradeline subscriberCode="063VB001" highBalance="521" dateVerified="2013-03-18" dateReported="2013-03-18" dateOpened="2012-04-10" accountNumber="9X0X0X4X" dateAccountStatus="2013-03-18" currentBalance="0" creditorName="TULSA ADJUST" position="2" bureau="TransUnion">
+      <AccountCondition abbreviation="Derog" description="Derogatory" symbol="F" rank="20" />
+      <AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Collection Services" description="Collection Services" symbol="Y" rank="199" />
+      <OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" />
+      <PayStatus abbreviation="Coll/Chargeoff" description="Collection/Chargeoff" symbol="9" rank="2" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <Remark customRemark="">
+        <RemarkCode abbreviation="Paid collection" description="Paid collection" symbol="T00PCL" rank="199" />
+      </Remark>
+      <CollectionTrade originalCreditor="MEDICAL">
+        <creditType abbreviation="Collection" description="Collection Account" symbol="Y" rank="5" />
+      </CollectionTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving">
+    <Tradeline subscriberCode="0235058D" highBalance="52" dateVerified="2015-05-20" dateReported="2015-05-20" dateOpened="1999-11-23" accountNumber="600884930301" dateAccountStatus="2015-03-20" currentBalance="0" creditorName="SYNCB/JCP" position="3" dateClosed="2015-03-20" bureau="TransUnion">
+      <AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50" />
+      <AccountDesignator abbreviation="Joint" description="Joint" symbol="J" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Department/Variety and Other Retail" description="Department/Variety and Other Retail" symbol="D" rank="199" />
+      <OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <Remark customRemark="">
+        <RemarkCode abbreviation="Closed" description="Closed" symbol="T00CLO" rank="199" />
+      </Remark>
+      <GrantedTrade monthsReviewed="48" monthlyPayment="0" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2000-08-01" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="48">
+        <AccountType abbreviation="Charge account" description="Charge account" symbol="CH" rank="50" />
+        <CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50" />
+        <PaymentFrequency abbreviation="" description="" symbol="" rank="100000" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+        <PayStatusHistory status="CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2015-04-20">
+          <MonthlyPayStatus date="2015-04-20" status="C" />
+          <MonthlyPayStatus date="2015-03-20" status="C" />
+          <MonthlyPayStatus date="2015-02-19" status="C" />
+          <MonthlyPayStatus date="2015-01-19" status="C" />
+          <MonthlyPayStatus date="2014-12-19" status="C" />
+          <MonthlyPayStatus date="2014-11-19" status="C" />
+          <MonthlyPayStatus date="2014-10-20" status="C" />
+          <MonthlyPayStatus date="2014-09-20" status="C" />
+          <MonthlyPayStatus date="2014-08-20" status="C" />
+          <MonthlyPayStatus date="2014-07-20" status="C" />
+          <MonthlyPayStatus date="2014-06-20" status="C" />
+          <MonthlyPayStatus date="2014-05-20" status="C" />
+          <MonthlyPayStatus date="2014-04-20" status="C" />
+          <MonthlyPayStatus date="2014-03-20" status="C" />
+          <MonthlyPayStatus date="2014-02-19" status="C" />
+          <MonthlyPayStatus date="2014-01-19" status="C" />
+          <MonthlyPayStatus date="2013-12-19" status="C" />
+          <MonthlyPayStatus date="2013-11-19" status="C" />
+          <MonthlyPayStatus date="2013-10-20" status="C" />
+          <MonthlyPayStatus date="2013-09-20" status="C" />
+          <MonthlyPayStatus date="2013-08-20" status="C" />
+          <MonthlyPayStatus date="2013-07-20" status="C" />
+          <MonthlyPayStatus date="2013-06-20" status="C" />
+          <MonthlyPayStatus date="2013-05-20" status="C" />
+          <MonthlyPayStatus date="2013-04-20" status="C" />
+          <MonthlyPayStatus date="2013-03-20" status="C" />
+          <MonthlyPayStatus date="2013-02-19" status="C" />
+          <MonthlyPayStatus date="2013-01-19" status="C" />
+          <MonthlyPayStatus date="2012-12-19" status="C" />
+          <MonthlyPayStatus date="2012-11-19" status="C" />
+          <MonthlyPayStatus date="2012-10-20" status="C" />
+          <MonthlyPayStatus date="2012-09-20" status="C" />
+          <MonthlyPayStatus date="2012-08-20" status="C" />
+          <MonthlyPayStatus date="2012-07-20" status="C" />
+          <MonthlyPayStatus date="2012-06-20" status="C" />
+          <MonthlyPayStatus date="2012-05-20" status="C" />
+          <MonthlyPayStatus date="2012-04-20" status="C" />
+          <MonthlyPayStatus date="2012-03-20" status="C" />
+          <MonthlyPayStatus date="2012-02-19" status="C" />
+          <MonthlyPayStatus date="2012-01-19" status="C" />
+          <MonthlyPayStatus date="2011-12-19" status="C" />
+          <MonthlyPayStatus date="2011-11-19" status="C" />
+          <MonthlyPayStatus date="2011-10-20" status="C" />
+          <MonthlyPayStatus date="2011-09-20" status="C" />
+          <MonthlyPayStatus date="2011-08-20" status="C" />
+          <MonthlyPayStatus date="2011-07-20" status="C" />
+          <MonthlyPayStatus date="2011-06-20" status="C" />
+          <MonthlyPayStatus date="2011-05-20" status="C" />
+        </PayStatusHistory>
+        <CreditLimit>124</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Primary or secondary mortgage" accountTypeSymbol="M" accountTypeAbbreviation="Mortgage">
+    <Tradeline subscriberCode="082TE004" highBalance="148106" dateVerified="2015-05-08" dateReported="2015-05-08" dateOpened="2014-06-30" accountNumber="9X6X3X3X2X4X2" dateAccountStatus="2015-05-08" currentBalance="141990" creditorName="WFHM" position="4" bureau="TransUnion">
+      <AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60" />
+      <AccountDesignator abbreviation="Joint" description="Joint" symbol="J" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" />
+      <OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <GrantedTrade monthsReviewed="6" monthlyPayment="1204" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2015-04-16" termMonths="180" collateral="" amountPastDue="0" worstPatStatusCount="6">
+        <AccountType abbreviation="FHA real estate mortgage" description="FHA real estate mortgage" symbol="FR" rank="50" />
+        <CreditType abbreviation="Mortgage" description="Primary or secondary mortgage" symbol="M" rank="10" />
+        <PaymentFrequency abbreviation="Monthly (every month)" description="Monthly (every month)" symbol="M" rank="199" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+        <PayStatusHistory status="CCUCCC" startDate="2015-04-08">
+          <MonthlyPayStatus date="2015-04-08" status="C" />
+          <MonthlyPayStatus date="2015-03-07" status="C" />
+          <MonthlyPayStatus date="2015-02-07" status="U" />
+          <MonthlyPayStatus date="2015-01-07" status="C" />
+          <MonthlyPayStatus date="2014-12-07" status="C" />
+          <MonthlyPayStatus date="2014-11-07" status="C" />
+          <MonthlyPayStatus date="2014-10-08" status=" " />
+          <MonthlyPayStatus date="2014-09-08" status=" " />
+          <MonthlyPayStatus date="2014-08-08" status=" " />
+          <MonthlyPayStatus date="2014-07-08" status=" " />
+          <MonthlyPayStatus date="2014-06-08" status=" " />
+          <MonthlyPayStatus date="2014-05-08" status=" " />
+          <MonthlyPayStatus date="2014-04-08" status=" " />
+          <MonthlyPayStatus date="2014-03-07" status=" " />
+          <MonthlyPayStatus date="2014-02-07" status=" " />
+          <MonthlyPayStatus date="2014-01-07" status=" " />
+          <MonthlyPayStatus date="2013-12-07" status=" " />
+          <MonthlyPayStatus date="2013-11-07" status=" " />
+          <MonthlyPayStatus date="2013-10-08" status=" " />
+          <MonthlyPayStatus date="2013-09-08" status=" " />
+          <MonthlyPayStatus date="2013-08-08" status=" " />
+          <MonthlyPayStatus date="2013-07-08" status=" " />
+          <MonthlyPayStatus date="2013-06-08" status=" " />
+          <MonthlyPayStatus date="2013-05-08" status=" " />
+        </PayStatusHistory>
+        <CreditLimit>0</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving">
+    <Tradeline subscriberCode="09992952" highBalance="0" dateVerified="2015-05-08" dateReported="2015-05-08" dateOpened="2010-05-20" accountNumber="601915437403" dateAccountStatus="2012-04-30" currentBalance="0" creditorName="SYNCB/CARECR" position="5" dateClosed="2012-04-30" bureau="TransUnion">
+      <AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50" />
+      <AccountDesignator abbreviation="Joint" description="Joint" symbol="J" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Finance/Personal" description="Finance/Personal" symbol="F" rank="199" />
+      <OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <Remark customRemark="">
+        <RemarkCode abbreviation="Canceled by credit grantor" description="Canceled by credit grantor" symbol="T00CBG" rank="199" />
+      </Remark>
+      <GrantedTrade monthsReviewed="48" monthlyPayment="0" late90Count="0" late60Count="0" late30Count="0" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="48">
+        <AccountType abbreviation="Charge account" description="Charge account" symbol="CH" rank="50" />
+        <CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50" />
+        <PaymentFrequency abbreviation="" description="" symbol="" rank="100000" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+        <PayStatusHistory status="CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2015-04-08">
+          <MonthlyPayStatus date="2015-04-08" status="C" />
+          <MonthlyPayStatus date="2015-03-07" status="C" />
+          <MonthlyPayStatus date="2015-02-07" status="C" />
+          <MonthlyPayStatus date="2015-01-07" status="C" />
+          <MonthlyPayStatus date="2014-12-07" status="C" />
+          <MonthlyPayStatus date="2014-11-07" status="C" />
+          <MonthlyPayStatus date="2014-10-08" status="C" />
+          <MonthlyPayStatus date="2014-09-08" status="C" />
+          <MonthlyPayStatus date="2014-08-08" status="C" />
+          <MonthlyPayStatus date="2014-07-08" status="C" />
+          <MonthlyPayStatus date="2014-06-08" status="C" />
+          <MonthlyPayStatus date="2014-05-08" status="C" />
+          <MonthlyPayStatus date="2014-04-08" status="C" />
+          <MonthlyPayStatus date="2014-03-07" status="C" />
+          <MonthlyPayStatus date="2014-02-07" status="C" />
+          <MonthlyPayStatus date="2014-01-07" status="C" />
+          <MonthlyPayStatus date="2013-12-07" status="C" />
+          <MonthlyPayStatus date="2013-11-07" status="C" />
+          <MonthlyPayStatus date="2013-10-08" status="C" />
+          <MonthlyPayStatus date="2013-09-08" status="C" />
+          <MonthlyPayStatus date="2013-08-08" status="C" />
+          <MonthlyPayStatus date="2013-07-08" status="C" />
+          <MonthlyPayStatus date="2013-06-08" status="C" />
+          <MonthlyPayStatus date="2013-05-08" status="C" />
+          <MonthlyPayStatus date="2013-04-08" status="C" />
+          <MonthlyPayStatus date="2013-03-07" status="C" />
+          <MonthlyPayStatus date="2013-02-07" status="C" />
+          <MonthlyPayStatus date="2013-01-07" status="C" />
+          <MonthlyPayStatus date="2012-12-07" status="C" />
+          <MonthlyPayStatus date="2012-11-07" status="C" />
+          <MonthlyPayStatus date="2012-10-08" status="C" />
+          <MonthlyPayStatus date="2012-09-08" status="C" />
+          <MonthlyPayStatus date="2012-08-08" status="C" />
+          <MonthlyPayStatus date="2012-07-08" status="C" />
+          <MonthlyPayStatus date="2012-06-08" status="C" />
+          <MonthlyPayStatus date="2012-05-08" status="C" />
+          <MonthlyPayStatus date="2012-04-08" status="C" />
+          <MonthlyPayStatus date="2012-03-07" status="C" />
+          <MonthlyPayStatus date="2012-02-07" status="C" />
+          <MonthlyPayStatus date="2012-01-07" status="C" />
+          <MonthlyPayStatus date="2011-12-07" status="C" />
+          <MonthlyPayStatus date="2011-11-07" status="C" />
+          <MonthlyPayStatus date="2011-10-08" status="C" />
+          <MonthlyPayStatus date="2011-09-08" status="C" />
+          <MonthlyPayStatus date="2011-08-08" status="C" />
+          <MonthlyPayStatus date="2011-07-08" status="C" />
+          <MonthlyPayStatus date="2011-06-08" status="C" />
+          <MonthlyPayStatus date="2011-05-08" status="C" />
+        </PayStatusHistory>
+        <CreditLimit>1000</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving">
+    <Tradeline subscriberCode="0235058D" highBalance="681" dateVerified="2015-04-22" dateReported="2015-04-22" dateOpened="2007-12-10" accountNumber="600886311190" dateAccountStatus="2013-05-02" currentBalance="0" creditorName="SYNCB/JCP" position="6" bureau="TransUnion">
+      <AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60" />
+      <AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Department/Variety and Other Retail" description="Department/Variety and Other Retail" symbol="D" rank="199" />
+      <OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <GrantedTrade monthsReviewed="48" monthlyPayment="0" late90Count="0" late60Count="1" late30Count="1" dateLastPayment="2013-05-02" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="48">
+        <AccountType abbreviation="Charge account" description="Charge account" symbol="CH" rank="50" />
+        <CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50" />
+        <PaymentFrequency abbreviation="" description="" symbol="" rank="100000" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="60 Delinq" description="Late 60 Days" symbol="2" rank="104" />
+        <PayStatusHistory status="CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC21C" startDate="2015-03-22">
+          <MonthlyPayStatus date="2015-03-22" status="C" />
+          <MonthlyPayStatus date="2015-02-21" status="C" />
+          <MonthlyPayStatus date="2015-01-21" status="C" />
+          <MonthlyPayStatus date="2014-12-21" status="C" />
+          <MonthlyPayStatus date="2014-11-21" status="C" />
+          <MonthlyPayStatus date="2014-10-22" status="C" />
+          <MonthlyPayStatus date="2014-09-22" status="C" />
+          <MonthlyPayStatus date="2014-08-22" status="C" />
+          <MonthlyPayStatus date="2014-07-22" status="C" />
+          <MonthlyPayStatus date="2014-06-22" status="C" />
+          <MonthlyPayStatus date="2014-05-22" status="C" />
+          <MonthlyPayStatus date="2014-04-22" status="C" />
+          <MonthlyPayStatus date="2014-03-22" status="C" />
+          <MonthlyPayStatus date="2014-02-21" status="C" />
+          <MonthlyPayStatus date="2014-01-21" status="C" />
+          <MonthlyPayStatus date="2013-12-21" status="C" />
+          <MonthlyPayStatus date="2013-11-21" status="C" />
+          <MonthlyPayStatus date="2013-10-22" status="C" />
+          <MonthlyPayStatus date="2013-09-22" status="C" />
+          <MonthlyPayStatus date="2013-08-22" status="C" />
+          <MonthlyPayStatus date="2013-07-22" status="C" />
+          <MonthlyPayStatus date="2013-06-22" status="C" />
+          <MonthlyPayStatus date="2013-05-22" status="C" />
+          <MonthlyPayStatus date="2013-04-22" status="C" />
+          <MonthlyPayStatus date="2013-03-22" status="C" />
+          <MonthlyPayStatus date="2013-02-21" status="C" />
+          <MonthlyPayStatus date="2013-01-21" status="C" />
+          <MonthlyPayStatus date="2012-12-21" status="C" />
+          <MonthlyPayStatus date="2012-11-21" status="C" />
+          <MonthlyPayStatus date="2012-10-22" status="C" />
+          <MonthlyPayStatus date="2012-09-22" status="C" />
+          <MonthlyPayStatus date="2012-08-22" status="C" />
+          <MonthlyPayStatus date="2012-07-22" status="C" />
+          <MonthlyPayStatus date="2012-06-22" status="C" />
+          <MonthlyPayStatus date="2012-05-22" status="C" />
+          <MonthlyPayStatus date="2012-04-22" status="C" />
+          <MonthlyPayStatus date="2012-03-22" status="C" />
+          <MonthlyPayStatus date="2012-02-21" status="C" />
+          <MonthlyPayStatus date="2012-01-21" status="C" />
+          <MonthlyPayStatus date="2011-12-21" status="C" />
+          <MonthlyPayStatus date="2011-11-21" status="C" />
+          <MonthlyPayStatus date="2011-10-22" status="C" />
+          <MonthlyPayStatus date="2011-09-22" status="C" />
+          <MonthlyPayStatus date="2011-08-22" status="C" />
+          <MonthlyPayStatus date="2011-07-22" status="C" />
+          <MonthlyPayStatus date="2011-06-22" status="2" />
+          <MonthlyPayStatus date="2011-05-22" status="1" />
+          <MonthlyPayStatus date="2011-04-22" status="C" />
+        </PayStatusHistory>
+        <CreditLimit>341</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving">
+    <Tradeline subscriberCode="01597029" highBalance="11208" dateVerified="2014-05-07" dateReported="2014-05-07" dateOpened="2001-01-12" accountNumber="1587" dateAccountStatus="2013-11-15" currentBalance="0" creditorName="BK OF AMER" position="7" dateClosed="2014-05-07" bureau="TransUnion">
+      <AccountCondition abbreviation="Paid" description="Paid" symbol="P" rank="10" />
+      <AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" />
+      <OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <Remark customRemark="">
+        <RemarkCode abbreviation="Account closed by consumer" description="Account closed by consumer" symbol="T00CBC" rank="199" />
+      </Remark>
+      <GrantedTrade monthsReviewed="48" monthlyPayment="0" late90Count="20" late60Count="2" late30Count="3" dateLastPayment="2013-11-15" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="48">
+        <AccountType abbreviation="Credit Card" description="Credit Card" symbol="CC" rank="50" />
+        <CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50" />
+        <PaymentFrequency abbreviation="" description="" symbol="" rank="100000" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="120 Delinq" description="Late 120 Days" symbol="4" rank="102" />
+        <PayStatusHistory status="UUCCCC3334333334321CCCC44444321CCCCCCC1CCCCCC444" startDate="2014-04-07">
+          <MonthlyPayStatus date="2014-04-07" status="U" />
+          <MonthlyPayStatus date="2014-03-06" status="U" />
+          <MonthlyPayStatus date="2014-02-06" status="C" />
+          <MonthlyPayStatus date="2014-01-06" status="C" />
+          <MonthlyPayStatus date="2013-12-06" status="C" />
+          <MonthlyPayStatus date="2013-11-06" status="C" />
+          <MonthlyPayStatus date="2013-10-07" status="3" />
+          <MonthlyPayStatus date="2013-09-07" status="3" />
+          <MonthlyPayStatus date="2013-08-07" status="3" />
+          <MonthlyPayStatus date="2013-07-07" status="4" />
+          <MonthlyPayStatus date="2013-06-07" status="3" />
+          <MonthlyPayStatus date="2013-05-07" status="3" />
+          <MonthlyPayStatus date="2013-04-07" status="3" />
+          <MonthlyPayStatus date="2013-03-06" status="3" />
+          <MonthlyPayStatus date="2013-02-06" status="3" />
+          <MonthlyPayStatus date="2013-01-06" status="4" />
+          <MonthlyPayStatus date="2012-12-06" status="3" />
+          <MonthlyPayStatus date="2012-11-06" status="2" />
+          <MonthlyPayStatus date="2012-10-07" status="1" />
+          <MonthlyPayStatus date="2012-09-07" status="C" />
+          <MonthlyPayStatus date="2012-08-07" status="C" />
+          <MonthlyPayStatus date="2012-07-07" status="C" />
+          <MonthlyPayStatus date="2012-06-07" status="C" />
+          <MonthlyPayStatus date="2012-05-07" status="4" />
+          <MonthlyPayStatus date="2012-04-07" status="4" />
+          <MonthlyPayStatus date="2012-03-06" status="4" />
+          <MonthlyPayStatus date="2012-02-06" status="4" />
+          <MonthlyPayStatus date="2012-01-06" status="4" />
+          <MonthlyPayStatus date="2011-12-06" status="3" />
+          <MonthlyPayStatus date="2011-11-06" status="2" />
+          <MonthlyPayStatus date="2011-10-07" status="1" />
+          <MonthlyPayStatus date="2011-09-07" status="C" />
+          <MonthlyPayStatus date="2011-08-07" status="C" />
+          <MonthlyPayStatus date="2011-07-07" status="C" />
+          <MonthlyPayStatus date="2011-06-07" status="C" />
+          <MonthlyPayStatus date="2011-05-07" status="C" />
+          <MonthlyPayStatus date="2011-04-07" status="C" />
+          <MonthlyPayStatus date="2011-03-06" status="C" />
+          <MonthlyPayStatus date="2011-02-06" status="1" />
+          <MonthlyPayStatus date="2011-01-06" status="C" />
+          <MonthlyPayStatus date="2010-12-06" status="C" />
+          <MonthlyPayStatus date="2010-11-07" status="C" />
+          <MonthlyPayStatus date="2010-10-07" status="C" />
+          <MonthlyPayStatus date="2010-09-07" status="C" />
+          <MonthlyPayStatus date="2010-08-07" status="C" />
+          <MonthlyPayStatus date="2010-07-07" status="4" />
+          <MonthlyPayStatus date="2010-06-07" status="4" />
+          <MonthlyPayStatus date="2010-05-07" status="4" />
+        </PayStatusHistory>
+        <CreditLimit>9400</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Installment Account" accountTypeSymbol="I" accountTypeAbbreviation="Installment">
+    <Tradeline subscriberCode="03946018" highBalance="31888" dateVerified="2014-03-10" dateReported="2014-03-10" dateOpened="2009-09-09" accountNumber="8X6X9X8X" dateAccountStatus="2013-10-08" currentBalance="245" creditorName="AMER HONDA" position="8" dateClosed="2013-10-08" bureau="TransUnion">
+      <AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50" />
+      <AccountDesignator abbreviation="Joint" description="Joint" symbol="J" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Credit Union" description="Credit Union" symbol="Q" rank="199" />
+      <OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <GrantedTrade monthsReviewed="48" monthlyPayment="642" late90Count="0" late60Count="0" late30Count="3" dateLastPayment="2013-10-08" termMonths="72" collateral="" amountPastDue="0" worstPatStatusCount="48">
+        <AccountType abbreviation="Auto Loan" description="Auto Loan" symbol="AU" rank="50" />
+        <CreditType abbreviation="Installment" description="Installment Account" symbol="I" rank="20" />
+        <PaymentFrequency abbreviation="Monthly (every month)" description="Monthly (every month)" symbol="M" rank="199" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="30 Delinq" description="Late 30 Days" symbol="1" rank="105" />
+        <PayStatusHistory status="CCCCCCCCCCCC111CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2014-02-10">
+          <MonthlyPayStatus date="2014-02-10" status="C" />
+          <MonthlyPayStatus date="2014-01-10" status="C" />
+          <MonthlyPayStatus date="2013-12-10" status="C" />
+          <MonthlyPayStatus date="2013-11-10" status="C" />
+          <MonthlyPayStatus date="2013-10-10" status="C" />
+          <MonthlyPayStatus date="2013-09-10" status="C" />
+          <MonthlyPayStatus date="2013-08-10" status="C" />
+          <MonthlyPayStatus date="2013-07-10" status="C" />
+          <MonthlyPayStatus date="2013-06-10" status="C" />
+          <MonthlyPayStatus date="2013-05-10" status="C" />
+          <MonthlyPayStatus date="2013-04-10" status="C" />
+          <MonthlyPayStatus date="2013-03-10" status="C" />
+          <MonthlyPayStatus date="2013-02-10" status="1" />
+          <MonthlyPayStatus date="2013-01-10" status="1" />
+          <MonthlyPayStatus date="2012-12-10" status="1" />
+          <MonthlyPayStatus date="2012-11-10" status="C" />
+          <MonthlyPayStatus date="2012-10-10" status="C" />
+          <MonthlyPayStatus date="2012-09-10" status="C" />
+          <MonthlyPayStatus date="2012-08-10" status="C" />
+          <MonthlyPayStatus date="2012-07-10" status="C" />
+          <MonthlyPayStatus date="2012-06-10" status="C" />
+          <MonthlyPayStatus date="2012-05-10" status="C" />
+          <MonthlyPayStatus date="2012-04-10" status="C" />
+          <MonthlyPayStatus date="2012-03-10" status="C" />
+          <MonthlyPayStatus date="2012-02-10" status="C" />
+          <MonthlyPayStatus date="2012-01-10" status="C" />
+          <MonthlyPayStatus date="2011-12-10" status="C" />
+          <MonthlyPayStatus date="2011-11-10" status="C" />
+          <MonthlyPayStatus date="2011-10-10" status="C" />
+          <MonthlyPayStatus date="2011-09-10" status="C" />
+          <MonthlyPayStatus date="2011-08-10" status="C" />
+          <MonthlyPayStatus date="2011-07-10" status="C" />
+          <MonthlyPayStatus date="2011-06-10" status="C" />
+          <MonthlyPayStatus date="2011-05-10" status="C" />
+          <MonthlyPayStatus date="2011-04-10" status="C" />
+          <MonthlyPayStatus date="2011-03-10" status="C" />
+          <MonthlyPayStatus date="2011-02-10" status="C" />
+          <MonthlyPayStatus date="2011-01-10" status="C" />
+          <MonthlyPayStatus date="2010-12-10" status="C" />
+          <MonthlyPayStatus date="2010-11-10" status="C" />
+          <MonthlyPayStatus date="2010-10-10" status="C" />
+          <MonthlyPayStatus date="2010-09-10" status="C" />
+          <MonthlyPayStatus date="2010-08-10" status="C" />
+          <MonthlyPayStatus date="2010-07-10" status="C" />
+          <MonthlyPayStatus date="2010-06-10" status="C" />
+          <MonthlyPayStatus date="2010-05-10" status="C" />
+          <MonthlyPayStatus date="2010-04-10" status="C" />
+          <MonthlyPayStatus date="2010-03-10" status="C" />
+        </PayStatusHistory>
+        <CreditLimit>0</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Installment Account" accountTypeSymbol="I" accountTypeAbbreviation="Installment">
+    <Tradeline subscriberCode="01ZHV008" highBalance="5889" dateVerified="2012-08-16" dateReported="2012-08-16" dateOpened="2010-09-27" accountNumber="1X5X4X9" dateAccountStatus="2012-08-16" currentBalance="0" creditorName="ARVEST BANK" position="9" dateClosed="2012-08-16" bureau="TransUnion">
+      <AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50" />
+      <AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" />
+      <OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <Remark customRemark="">
+        <RemarkCode abbreviation="Closed" description="Closed" symbol="T00CLO" rank="199" />
+      </Remark>
+      <GrantedTrade monthsReviewed="21" monthlyPayment="0" late90Count="0" late60Count="0" late30Count="1" dateLastPayment="2012-07-17" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="21">
+        <AccountType abbreviation="Secured loan" description="Secured loan" symbol="SE" rank="50" />
+        <CreditType abbreviation="Installment" description="Installment Account" symbol="I" rank="20" />
+        <PaymentFrequency abbreviation="" description="" symbol="" rank="100000" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="30 Delinq" description="Late 30 Days" symbol="1" rank="105" />
+        <PayStatusHistory status="CCCCCCCCCCCCCC1CCCCCC" startDate="2012-07-16">
+          <MonthlyPayStatus date="2012-07-16" status="C" />
+          <MonthlyPayStatus date="2012-06-16" status="C" />
+          <MonthlyPayStatus date="2012-05-16" status="C" />
+          <MonthlyPayStatus date="2012-04-16" status="C" />
+          <MonthlyPayStatus date="2012-03-16" status="C" />
+          <MonthlyPayStatus date="2012-02-15" status="C" />
+          <MonthlyPayStatus date="2012-01-15" status="C" />
+          <MonthlyPayStatus date="2011-12-15" status="C" />
+          <MonthlyPayStatus date="2011-11-15" status="C" />
+          <MonthlyPayStatus date="2011-10-16" status="C" />
+          <MonthlyPayStatus date="2011-09-16" status="C" />
+          <MonthlyPayStatus date="2011-08-16" status="C" />
+          <MonthlyPayStatus date="2011-07-16" status="C" />
+          <MonthlyPayStatus date="2011-06-16" status="C" />
+          <MonthlyPayStatus date="2011-05-16" status="1" />
+          <MonthlyPayStatus date="2011-04-16" status="C" />
+          <MonthlyPayStatus date="2011-03-16" status="C" />
+          <MonthlyPayStatus date="2011-02-15" status="C" />
+          <MonthlyPayStatus date="2011-01-15" status="C" />
+          <MonthlyPayStatus date="2010-12-15" status="C" />
+          <MonthlyPayStatus date="2010-11-15" status="C" />
+          <MonthlyPayStatus date="2010-10-16" status=" " />
+          <MonthlyPayStatus date="2010-09-16" status=" " />
+          <MonthlyPayStatus date="2010-08-16" status=" " />
+        </PayStatusHistory>
+        <CreditLimit>0</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Installment Account" accountTypeSymbol="I" accountTypeAbbreviation="Installment">
+    <Tradeline subscriberCode="0654N1XG" highBalance="7720" dateVerified="2012-02-29" dateReported="2012-02-29" dateOpened="2009-08-11" accountNumber="8X6X6X5X3X8X5X5X" dateAccountStatus="2012-02-29" currentBalance="0" creditorName="SPRINGLF FIN" position="10" dateClosed="2012-02-29" bureau="TransUnion">
+      <AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50" />
+      <AccountDesignator abbreviation="Joint" description="Joint" symbol="J" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Finance/Personal" description="Finance/Personal" symbol="F" rank="199" />
+      <OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <Remark customRemark="">
+        <RemarkCode abbreviation="Closed" description="Closed" symbol="T00CLO" rank="199" />
+      </Remark>
+      <GrantedTrade monthsReviewed="28" monthlyPayment="214" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2011-11-13" termMonths="36" collateral="" amountPastDue="0" worstPatStatusCount="28">
+        <AccountType abbreviation="Secured by household goods/collateral" description="Secured by household goods/collateral" symbol="SO" rank="50" />
+        <CreditType abbreviation="Installment" description="Installment Account" symbol="I" rank="20" />
+        <PaymentFrequency abbreviation="Monthly (every month)" description="Monthly (every month)" symbol="M" rank="199" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+        <PayStatusHistory status="CCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2012-01-29">
+          <MonthlyPayStatus date="2012-01-29" status="C" />
+          <MonthlyPayStatus date="2011-12-29" status="C" />
+          <MonthlyPayStatus date="2011-11-29" status="C" />
+          <MonthlyPayStatus date="2011-10-29" status="C" />
+          <MonthlyPayStatus date="2011-09-29" status="C" />
+          <MonthlyPayStatus date="2011-08-29" status="C" />
+          <MonthlyPayStatus date="2011-07-29" status="C" />
+          <MonthlyPayStatus date="2011-06-29" status="C" />
+          <MonthlyPayStatus date="2011-05-29" status="C" />
+          <MonthlyPayStatus date="2011-04-29" status="C" />
+          <MonthlyPayStatus date="2011-03-29" status="C" />
+          <MonthlyPayStatus date="2011-02-28" status="C" />
+          <MonthlyPayStatus date="2011-01-28" status="C" />
+          <MonthlyPayStatus date="2010-12-28" status="C" />
+          <MonthlyPayStatus date="2010-11-28" status="C" />
+          <MonthlyPayStatus date="2010-10-28" status="C" />
+          <MonthlyPayStatus date="2010-09-28" status="C" />
+          <MonthlyPayStatus date="2010-08-28" status="C" />
+          <MonthlyPayStatus date="2010-07-28" status="C" />
+          <MonthlyPayStatus date="2010-06-28" status="C" />
+          <MonthlyPayStatus date="2010-05-28" status="C" />
+          <MonthlyPayStatus date="2010-04-28" status="C" />
+          <MonthlyPayStatus date="2010-03-28" status="C" />
+          <MonthlyPayStatus date="2010-02-28" status="C" />
+          <MonthlyPayStatus date="2010-01-28" status="C" />
+          <MonthlyPayStatus date="2009-12-28" status="C" />
+          <MonthlyPayStatus date="2009-11-28" status="C" />
+          <MonthlyPayStatus date="2009-10-28" status="C" />
+        </PayStatusHistory>
+        <CreditLimit>0</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Installment Account" accountTypeSymbol="I" accountTypeAbbreviation="Installment">
+    <Tradeline subscriberCode="0890D30G" highBalance="20093" dateVerified="2012-01-31" dateReported="2012-01-31" dateOpened="2006-01-20" accountNumber="1X4X3X0X0X" dateAccountStatus="2012-01-31" currentBalance="0" creditorName="CITI AUTO" position="11" dateClosed="2012-01-31" bureau="TransUnion">
+      <AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50" />
+      <AccountDesignator abbreviation="Joint" description="Joint" symbol="J" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Finance/Personal" description="Finance/Personal" symbol="F" rank="199" />
+      <OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <Remark customRemark="">
+        <RemarkCode abbreviation="Closed" description="Closed" symbol="T00CLO" rank="199" />
+      </Remark>
+      <GrantedTrade monthsReviewed="48" monthlyPayment="0" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2011-12-31" termMonths="72" collateral="" amountPastDue="0" worstPatStatusCount="48">
+        <AccountType abbreviation="Auto Loan" description="Auto Loan" symbol="AU" rank="50" />
+        <CreditType abbreviation="Installment" description="Installment Account" symbol="I" rank="20" />
+        <PaymentFrequency abbreviation="Monthly (every month)" description="Monthly (every month)" symbol="M" rank="199" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+        <PayStatusHistory status="CCCCCCCCCCCCCCCCCCCCCCCCCCCCCUCCCCCCCCCCCCCCCCCC" startDate="2011-12-31">
+          <MonthlyPayStatus date="2011-12-31" status="C" />
+          <MonthlyPayStatus date="2011-11-30" status="C" />
+          <MonthlyPayStatus date="2011-10-30" status="C" />
+          <MonthlyPayStatus date="2011-09-30" status="C" />
+          <MonthlyPayStatus date="2011-08-30" status="C" />
+          <MonthlyPayStatus date="2011-07-30" status="C" />
+          <MonthlyPayStatus date="2011-06-30" status="C" />
+          <MonthlyPayStatus date="2011-05-30" status="C" />
+          <MonthlyPayStatus date="2011-04-30" status="C" />
+          <MonthlyPayStatus date="2011-03-30" status="C" />
+          <MonthlyPayStatus date="2011-02-28" status="C" />
+          <MonthlyPayStatus date="2011-01-28" status="C" />
+          <MonthlyPayStatus date="2010-12-28" status="C" />
+          <MonthlyPayStatus date="2010-11-28" status="C" />
+          <MonthlyPayStatus date="2010-10-28" status="C" />
+          <MonthlyPayStatus date="2010-09-28" status="C" />
+          <MonthlyPayStatus date="2010-08-28" status="C" />
+          <MonthlyPayStatus date="2010-07-28" status="C" />
+          <MonthlyPayStatus date="2010-06-28" status="C" />
+          <MonthlyPayStatus date="2010-05-28" status="C" />
+          <MonthlyPayStatus date="2010-04-28" status="C" />
+          <MonthlyPayStatus date="2010-03-28" status="C" />
+          <MonthlyPayStatus date="2010-02-28" status="C" />
+          <MonthlyPayStatus date="2010-01-28" status="C" />
+          <MonthlyPayStatus date="2009-12-28" status="C" />
+          <MonthlyPayStatus date="2009-11-28" status="C" />
+          <MonthlyPayStatus date="2009-10-28" status="C" />
+          <MonthlyPayStatus date="2009-09-28" status="C" />
+          <MonthlyPayStatus date="2009-08-28" status="C" />
+          <MonthlyPayStatus date="2009-07-28" status="U" />
+          <MonthlyPayStatus date="2009-06-28" status="C" />
+          <MonthlyPayStatus date="2009-05-28" status="C" />
+          <MonthlyPayStatus date="2009-04-28" status="C" />
+          <MonthlyPayStatus date="2009-03-28" status="C" />
+          <MonthlyPayStatus date="2009-02-28" status="C" />
+          <MonthlyPayStatus date="2009-01-28" status="C" />
+          <MonthlyPayStatus date="2008-12-28" status="C" />
+          <MonthlyPayStatus date="2008-11-28" status="C" />
+          <MonthlyPayStatus date="2008-10-28" status="C" />
+          <MonthlyPayStatus date="2008-09-28" status="C" />
+          <MonthlyPayStatus date="2008-08-28" status="C" />
+          <MonthlyPayStatus date="2008-07-28" status="C" />
+          <MonthlyPayStatus date="2008-06-28" status="C" />
+          <MonthlyPayStatus date="2008-05-28" status="C" />
+          <MonthlyPayStatus date="2008-04-28" status="C" />
+          <MonthlyPayStatus date="2008-03-28" status="C" />
+          <MonthlyPayStatus date="2008-02-28" status="C" />
+          <MonthlyPayStatus date="2008-01-28" status="C" />
+        </PayStatusHistory>
+        <CreditLimit>0</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Installment Account" accountTypeSymbol="I" accountTypeAbbreviation="Installment">
+    <Tradeline subscriberCode="01ZHV008" highBalance="7034" dateVerified="2010-11-01" dateReported="2010-11-01" dateOpened="2009-04-06" accountNumber="3X7X7X7" dateAccountStatus="2010-11-01" currentBalance="0" creditorName="ARVEST BANK" position="12" dateClosed="2010-11-01" bureau="TransUnion">
+      <AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50" />
+      <AccountDesignator abbreviation="Joint" description="Joint" symbol="J" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" />
+      <OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <Remark customRemark="">
+        <RemarkCode abbreviation="Closed" description="Closed" symbol="T00CLO" rank="199" />
+      </Remark>
+      <GrantedTrade monthsReviewed="17" monthlyPayment="312" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2010-10-31" termMonths="24" collateral="" amountPastDue="0" worstPatStatusCount="17">
+        <AccountType abbreviation="Secured loan" description="Secured loan" symbol="SE" rank="50" />
+        <CreditType abbreviation="Installment" description="Installment Account" symbol="I" rank="20" />
+        <PaymentFrequency abbreviation="Monthly (every month)" description="Monthly (every month)" symbol="M" rank="199" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+        <PayStatusHistory status="CCCCCCCCCCCCCCCCC" startDate="2010-10-01">
+          <MonthlyPayStatus date="2010-10-01" status="C" />
+          <MonthlyPayStatus date="2010-09-01" status="C" />
+          <MonthlyPayStatus date="2010-08-01" status="C" />
+          <MonthlyPayStatus date="2010-07-01" status="C" />
+          <MonthlyPayStatus date="2010-06-01" status="C" />
+          <MonthlyPayStatus date="2010-05-01" status="C" />
+          <MonthlyPayStatus date="2010-04-01" status="C" />
+          <MonthlyPayStatus date="2010-02-28" status="C" />
+          <MonthlyPayStatus date="2010-01-31" status="C" />
+          <MonthlyPayStatus date="2009-12-31" status="C" />
+          <MonthlyPayStatus date="2009-11-30" status="C" />
+          <MonthlyPayStatus date="2009-11-01" status="C" />
+          <MonthlyPayStatus date="2009-10-01" status="C" />
+          <MonthlyPayStatus date="2009-09-01" status="C" />
+          <MonthlyPayStatus date="2009-08-01" status="C" />
+          <MonthlyPayStatus date="2009-07-01" status="C" />
+          <MonthlyPayStatus date="2009-06-01" status="C" />
+          <MonthlyPayStatus date="2009-05-01" status=" " />
+          <MonthlyPayStatus date="2009-04-01" status=" " />
+          <MonthlyPayStatus date="2009-02-28" status=" " />
+          <MonthlyPayStatus date="2009-01-31" status=" " />
+          <MonthlyPayStatus date="2008-12-31" status=" " />
+          <MonthlyPayStatus date="2008-11-30" status=" " />
+          <MonthlyPayStatus date="2008-11-01" status=" " />
+        </PayStatusHistory>
+        <CreditLimit>0</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Installment Account" accountTypeSymbol="I" accountTypeAbbreviation="Installment">
+    <Tradeline subscriberCode="0654N1XG" highBalance="1215" dateVerified="2009-07-31" dateReported="2009-07-31" dateOpened="2008-02-10" accountNumber="2X5X6X5X3X8X5X5X" dateAccountStatus="2009-07-31" currentBalance="0" creditorName="SPRINGLF FIN" position="13" dateClosed="2009-07-31" bureau="TransUnion">
+      <AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50" />
+      <AccountDesignator abbreviation="Joint" description="Joint" symbol="J" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Finance/Personal" description="Finance/Personal" symbol="F" rank="199" />
+      <OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <Remark customRemark="">
+        <RemarkCode abbreviation="Closed" description="Closed" symbol="T00CLO" rank="199" />
+      </Remark>
+      <GrantedTrade monthsReviewed="16" monthlyPayment="80" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2009-06-16" termMonths="15" collateral="" amountPastDue="0" worstPatStatusCount="16">
+        <AccountType abbreviation="Secured by household goods/collateral" description="Secured by household goods/collateral" symbol="SO" rank="50" />
+        <CreditType abbreviation="Installment" description="Installment Account" symbol="I" rank="20" />
+        <PaymentFrequency abbreviation="Monthly (every month)" description="Monthly (every month)" symbol="M" rank="199" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+        <PayStatusHistory status="CCCCCCCUCCCCCCCC" startDate="2009-06-30">
+          <MonthlyPayStatus date="2009-06-30" status="C" />
+          <MonthlyPayStatus date="2009-05-30" status="C" />
+          <MonthlyPayStatus date="2009-04-30" status="C" />
+          <MonthlyPayStatus date="2009-03-30" status="C" />
+          <MonthlyPayStatus date="2009-02-27" status="C" />
+          <MonthlyPayStatus date="2009-01-27" status="C" />
+          <MonthlyPayStatus date="2008-12-27" status="C" />
+          <MonthlyPayStatus date="2008-11-27" status="U" />
+          <MonthlyPayStatus date="2008-10-28" status="C" />
+          <MonthlyPayStatus date="2008-09-28" status="C" />
+          <MonthlyPayStatus date="2008-08-28" status="C" />
+          <MonthlyPayStatus date="2008-07-28" status="C" />
+          <MonthlyPayStatus date="2008-06-28" status="C" />
+          <MonthlyPayStatus date="2008-05-28" status="C" />
+          <MonthlyPayStatus date="2008-04-28" status="C" />
+          <MonthlyPayStatus date="2008-03-28" status="C" />
+          <MonthlyPayStatus date="2008-02-27" status=" " />
+          <MonthlyPayStatus date="2008-01-27" status=" " />
+          <MonthlyPayStatus date="2007-12-27" status=" " />
+          <MonthlyPayStatus date="2007-11-27" status=" " />
+          <MonthlyPayStatus date="2007-10-28" status=" " />
+          <MonthlyPayStatus date="2007-09-28" status=" " />
+          <MonthlyPayStatus date="2007-08-28" status=" " />
+          <MonthlyPayStatus date="2007-07-28" status=" " />
+        </PayStatusHistory>
+        <CreditLimit>0</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Installment Account" accountTypeSymbol="I" accountTypeAbbreviation="Installment">
+    <Tradeline subscriberCode="04176128" highBalance="13724" dateVerified="2009-07-31" dateReported="2009-07-31" dateOpened="2004-06-16" accountNumber="7X4X0X6X7X9X1X0X1" dateAccountStatus="2009-07-31" currentBalance="0" creditorName="TOYOTA MTR" position="14" dateClosed="2009-07-31" bureau="TransUnion">
+      <AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50" />
+      <AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Credit Union" description="Credit Union" symbol="Q" rank="199" />
+      <OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <Remark customRemark="">
+        <RemarkCode abbreviation="Closed" description="Closed" symbol="T00CLO" rank="199" />
+      </Remark>
+      <GrantedTrade monthsReviewed="47" monthlyPayment="332" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2009-07-31" termMonths="60" collateral="" amountPastDue="0" worstPatStatusCount="47">
+        <AccountType abbreviation="Auto Loan" description="Auto Loan" symbol="AU" rank="50" />
+        <CreditType abbreviation="Installment" description="Installment Account" symbol="I" rank="20" />
+        <PaymentFrequency abbreviation="Monthly (every month)" description="Monthly (every month)" symbol="M" rank="199" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+        <PayStatusHistory status="CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2009-06-30">
+          <MonthlyPayStatus date="2009-06-30" status="C" />
+          <MonthlyPayStatus date="2009-05-30" status="C" />
+          <MonthlyPayStatus date="2009-04-30" status="C" />
+          <MonthlyPayStatus date="2009-03-30" status="C" />
+          <MonthlyPayStatus date="2009-02-27" status="C" />
+          <MonthlyPayStatus date="2009-01-27" status="C" />
+          <MonthlyPayStatus date="2008-12-27" status="C" />
+          <MonthlyPayStatus date="2008-11-27" status="C" />
+          <MonthlyPayStatus date="2008-10-28" status="C" />
+          <MonthlyPayStatus date="2008-09-28" status="C" />
+          <MonthlyPayStatus date="2008-08-28" status="C" />
+          <MonthlyPayStatus date="2008-07-28" status="C" />
+          <MonthlyPayStatus date="2008-06-28" status="C" />
+          <MonthlyPayStatus date="2008-05-28" status="C" />
+          <MonthlyPayStatus date="2008-04-28" status="C" />
+          <MonthlyPayStatus date="2008-03-28" status="C" />
+          <MonthlyPayStatus date="2008-02-27" status="C" />
+          <MonthlyPayStatus date="2008-01-27" status="C" />
+          <MonthlyPayStatus date="2007-12-27" status="C" />
+          <MonthlyPayStatus date="2007-11-27" status="C" />
+          <MonthlyPayStatus date="2007-10-28" status="C" />
+          <MonthlyPayStatus date="2007-09-28" status="C" />
+          <MonthlyPayStatus date="2007-08-28" status="C" />
+          <MonthlyPayStatus date="2007-07-28" status="C" />
+          <MonthlyPayStatus date="2007-06-28" status="C" />
+          <MonthlyPayStatus date="2007-05-28" status="C" />
+          <MonthlyPayStatus date="2007-04-28" status="C" />
+          <MonthlyPayStatus date="2007-03-28" status="C" />
+          <MonthlyPayStatus date="2007-02-27" status="C" />
+          <MonthlyPayStatus date="2007-01-27" status="C" />
+          <MonthlyPayStatus date="2006-12-27" status="C" />
+          <MonthlyPayStatus date="2006-11-27" status="C" />
+          <MonthlyPayStatus date="2006-10-28" status="C" />
+          <MonthlyPayStatus date="2006-09-28" status="C" />
+          <MonthlyPayStatus date="2006-08-28" status="C" />
+          <MonthlyPayStatus date="2006-07-28" status="C" />
+          <MonthlyPayStatus date="2006-06-28" status="C" />
+          <MonthlyPayStatus date="2006-05-28" status="C" />
+          <MonthlyPayStatus date="2006-04-28" status="C" />
+          <MonthlyPayStatus date="2006-03-27" status="C" />
+          <MonthlyPayStatus date="2006-02-27" status="C" />
+          <MonthlyPayStatus date="2006-01-27" status="C" />
+          <MonthlyPayStatus date="2005-12-27" status="C" />
+          <MonthlyPayStatus date="2005-11-27" status="C" />
+          <MonthlyPayStatus date="2005-10-28" status="C" />
+          <MonthlyPayStatus date="2005-09-28" status="C" />
+          <MonthlyPayStatus date="2005-08-28" status="C" />
+        </PayStatusHistory>
+        <CreditLimit>0</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Installment Account" accountTypeSymbol="I" accountTypeAbbreviation="Installment">
+    <Tradeline subscriberCode="01ZHV008" highBalance="14927" dateVerified="2009-05-20" dateReported="2009-05-20" dateOpened="2007-01-31" accountNumber="2X2X4X5" dateAccountStatus="2009-05-20" currentBalance="0" creditorName="ARVEST BANK" position="15" dateClosed="2009-05-20" bureau="TransUnion">
+      <AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50" />
+      <AccountDesignator abbreviation="Joint" description="Joint" symbol="J" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" />
+      <OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <Remark customRemark="">
+        <RemarkCode abbreviation="Closed" description="Closed" symbol="T00CLO" rank="199" />
+      </Remark>
+      <GrantedTrade monthsReviewed="27" monthlyPayment="0" late90Count="0" late60Count="0" late30Count="1" dateLastPayment="2009-03-17" termMonths="26" collateral="" amountPastDue="0" worstPatStatusCount="27">
+        <AccountType abbreviation="Secured loan" description="Secured loan" symbol="SE" rank="50" />
+        <CreditType abbreviation="Installment" description="Installment Account" symbol="I" rank="20" />
+        <PaymentFrequency abbreviation="Monthly (every month)" description="Monthly (every month)" symbol="M" rank="199" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="30 Delinq" description="Late 30 Days" symbol="1" rank="105" />
+        <PayStatusHistory status="U1CCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2009-04-20">
+          <MonthlyPayStatus date="2009-04-20" status="U" />
+          <MonthlyPayStatus date="2009-03-20" status="1" />
+          <MonthlyPayStatus date="2009-02-19" status="C" />
+          <MonthlyPayStatus date="2009-01-19" status="C" />
+          <MonthlyPayStatus date="2008-12-19" status="C" />
+          <MonthlyPayStatus date="2008-11-19" status="C" />
+          <MonthlyPayStatus date="2008-10-20" status="C" />
+          <MonthlyPayStatus date="2008-09-20" status="C" />
+          <MonthlyPayStatus date="2008-08-20" status="C" />
+          <MonthlyPayStatus date="2008-07-20" status="C" />
+          <MonthlyPayStatus date="2008-06-20" status="C" />
+          <MonthlyPayStatus date="2008-05-20" status="C" />
+          <MonthlyPayStatus date="2008-04-20" status="C" />
+          <MonthlyPayStatus date="2008-03-20" status="C" />
+          <MonthlyPayStatus date="2008-02-19" status="C" />
+          <MonthlyPayStatus date="2008-01-19" status="C" />
+          <MonthlyPayStatus date="2007-12-19" status="C" />
+          <MonthlyPayStatus date="2007-11-19" status="C" />
+          <MonthlyPayStatus date="2007-10-20" status="C" />
+          <MonthlyPayStatus date="2007-09-20" status="C" />
+          <MonthlyPayStatus date="2007-08-20" status="C" />
+          <MonthlyPayStatus date="2007-07-20" status="C" />
+          <MonthlyPayStatus date="2007-06-20" status="C" />
+          <MonthlyPayStatus date="2007-05-20" status="C" />
+          <MonthlyPayStatus date="2007-04-20" status="C" />
+          <MonthlyPayStatus date="2007-03-20" status="C" />
+          <MonthlyPayStatus date="2007-02-19" status="C" />
+        </PayStatusHistory>
+        <CreditLimit>0</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving">
+    <Tradeline subscriberCode="01NZ8094" highBalance="200" dateVerified="2008-07-23" dateReported="2008-07-23" dateOpened="2002-07-01" accountNumber="585632851620" dateAccountStatus="2008-07-01" currentBalance="0" creditorName="CB/STAGE" position="16" bureau="TransUnion">
+      <AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60" />
+      <AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Department/Variety and Other Retail" description="Department/Variety and Other Retail" symbol="D" rank="199" />
+      <OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <GrantedTrade monthsReviewed="4" monthlyPayment="0" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2008-07-01" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="4">
+        <AccountType abbreviation="Charge account" description="Charge account" symbol="CH" rank="50" />
+        <CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50" />
+        <PaymentFrequency abbreviation="" description="" symbol="" rank="100000" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+        <PayStatusHistory status="CCCC" startDate="2008-06-23">
+          <MonthlyPayStatus date="2008-06-23" status="C" />
+          <MonthlyPayStatus date="2008-05-23" status="C" />
+          <MonthlyPayStatus date="2008-04-23" status="C" />
+          <MonthlyPayStatus date="2008-03-23" status="C" />
+          <MonthlyPayStatus date="2008-02-22" status=" " />
+          <MonthlyPayStatus date="2008-01-22" status=" " />
+          <MonthlyPayStatus date="2007-12-22" status=" " />
+          <MonthlyPayStatus date="2007-11-22" status=" " />
+          <MonthlyPayStatus date="2007-10-23" status=" " />
+          <MonthlyPayStatus date="2007-09-23" status=" " />
+          <MonthlyPayStatus date="2007-08-23" status=" " />
+          <MonthlyPayStatus date="2007-07-23" status=" " />
+          <MonthlyPayStatus date="2007-06-23" status=" " />
+          <MonthlyPayStatus date="2007-05-23" status=" " />
+          <MonthlyPayStatus date="2007-04-23" status=" " />
+          <MonthlyPayStatus date="2007-03-23" status=" " />
+          <MonthlyPayStatus date="2007-02-22" status=" " />
+          <MonthlyPayStatus date="2007-01-22" status=" " />
+          <MonthlyPayStatus date="2006-12-22" status=" " />
+          <MonthlyPayStatus date="2006-11-22" status=" " />
+          <MonthlyPayStatus date="2006-10-23" status=" " />
+          <MonthlyPayStatus date="2006-09-23" status=" " />
+          <MonthlyPayStatus date="2006-08-23" status=" " />
+          <MonthlyPayStatus date="2006-07-23" status=" " />
+        </PayStatusHistory>
+        <CreditLimit>0</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Installment Account" accountTypeSymbol="I" accountTypeAbbreviation="Installment">
+    <Tradeline subscriberCode="0654N1XG" highBalance="1190" dateVerified="2007-11-30" dateReported="2007-11-30" dateOpened="2006-09-26" accountNumber="9X3X6X5X1X0X3X3X" dateAccountStatus="2007-11-30" currentBalance="0" creditorName="SPRINGLF FIN" position="17" dateClosed="2007-11-30" bureau="TransUnion">
+      <AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50" />
+      <AccountDesignator abbreviation="Joint" description="Joint" symbol="J" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Finance/Personal" description="Finance/Personal" symbol="F" rank="199" />
+      <OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <Remark customRemark="">
+        <RemarkCode abbreviation="Closed" description="Closed" symbol="T00CLO" rank="199" />
+      </Remark>
+      <GrantedTrade monthsReviewed="13" monthlyPayment="98" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2007-10-09" termMonths="12" collateral="" amountPastDue="0" worstPatStatusCount="13">
+        <AccountType abbreviation="Secured by household goods/collateral" description="Secured by household goods/collateral" symbol="SO" rank="50" />
+        <CreditType abbreviation="Installment" description="Installment Account" symbol="I" rank="20" />
+        <PaymentFrequency abbreviation="Monthly (every month)" description="Monthly (every month)" symbol="M" rank="199" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+        <PayStatusHistory status="CCCCCCCCCCCCC" startDate="2007-10-30">
+          <MonthlyPayStatus date="2007-10-30" status="C" />
+          <MonthlyPayStatus date="2007-09-30" status="C" />
+          <MonthlyPayStatus date="2007-08-30" status="C" />
+          <MonthlyPayStatus date="2007-07-30" status="C" />
+          <MonthlyPayStatus date="2007-06-30" status="C" />
+          <MonthlyPayStatus date="2007-05-30" status="C" />
+          <MonthlyPayStatus date="2007-04-30" status="C" />
+          <MonthlyPayStatus date="2007-03-30" status="C" />
+          <MonthlyPayStatus date="2007-02-27" status="C" />
+          <MonthlyPayStatus date="2007-01-27" status="C" />
+          <MonthlyPayStatus date="2006-12-27" status="C" />
+          <MonthlyPayStatus date="2006-11-27" status="C" />
+          <MonthlyPayStatus date="2006-10-28" status="C" />
+          <MonthlyPayStatus date="2006-09-28" status=" " />
+          <MonthlyPayStatus date="2006-08-28" status=" " />
+          <MonthlyPayStatus date="2006-07-28" status=" " />
+          <MonthlyPayStatus date="2006-06-28" status=" " />
+          <MonthlyPayStatus date="2006-05-28" status=" " />
+          <MonthlyPayStatus date="2006-04-28" status=" " />
+          <MonthlyPayStatus date="2006-03-27" status=" " />
+          <MonthlyPayStatus date="2006-02-27" status=" " />
+          <MonthlyPayStatus date="2006-01-27" status=" " />
+          <MonthlyPayStatus date="2005-12-27" status=" " />
+          <MonthlyPayStatus date="2005-11-27" status=" " />
+        </PayStatusHistory>
+        <CreditLimit>0</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Installment Account" accountTypeSymbol="I" accountTypeAbbreviation="Installment">
+    <Tradeline subscriberCode="01ZHV008" highBalance="7000" dateVerified="2007-03-03" dateReported="2007-03-03" dateOpened="2005-08-27" accountNumber="5X5X3X" dateAccountStatus="2007-03-03" currentBalance="0" creditorName="ARVEST BANK" position="18" dateClosed="2007-03-03" bureau="TransUnion">
+      <AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50" />
+      <AccountDesignator abbreviation="Joint" description="Joint" symbol="J" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" />
+      <OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <Remark customRemark="">
+        <RemarkCode abbreviation="Closed" description="Closed" symbol="T00CLO" rank="199" />
+      </Remark>
+      <GrantedTrade monthsReviewed="18" monthlyPayment="0" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2007-02-16" termMonths="19" collateral="" amountPastDue="0" worstPatStatusCount="18">
+        <AccountType abbreviation="" description="" symbol="" rank="100000" />
+        <CreditType abbreviation="Installment" description="Installment Account" symbol="I" rank="20" />
+        <PaymentFrequency abbreviation="Monthly (every month)" description="Monthly (every month)" symbol="M" rank="199" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="Unk" description="Unknown" symbol="U" rank="10000" />
+        <PayStatusHistory />
+        <CreditLimit>0</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving">
+    <Tradeline subscriberCode="01GYY001" highBalance="200" dateVerified="2006-10-12" dateReported="2006-10-12" dateOpened="2002-07-01" accountNumber="4" dateAccountStatus="2006-10-11" currentBalance="0" creditorName="GNB/STAGE" position="19" dateClosed="2006-10-11" bureau="TransUnion">
+      <AccountCondition abbreviation="Xfer" description="Transferred" symbol="T" rank="30" />
+      <AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199" />
+      <DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <IndustryCode abbreviation="Department/Variety and Other Retail" description="Department/Variety and Other Retail" symbol="D" rank="199" />
+      <OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" />
+      <PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+      <VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" />
+      <Remark customRemark="">
+        <RemarkCode abbreviation="Purchased by another lender" description="Purchased by another lender" symbol="T00PAL" rank="199" />
+      </Remark>
+      <GrantedTrade monthsReviewed="13" monthlyPayment="0" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2005-12-06" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="13">
+        <AccountType abbreviation="Charge account" description="Charge account" symbol="CH" rank="50" />
+        <CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50" />
+        <PaymentFrequency abbreviation="" description="" symbol="" rank="100000" />
+        <TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" />
+        <WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110" />
+        <PayStatusHistory status="UUUUUUUUUCCCC" startDate="2006-09-12">
+          <MonthlyPayStatus date="2006-09-12" status="U" />
+          <MonthlyPayStatus date="2006-08-12" status="U" />
+          <MonthlyPayStatus date="2006-07-12" status="U" />
+          <MonthlyPayStatus date="2006-06-12" status="U" />
+          <MonthlyPayStatus date="2006-05-12" status="U" />
+          <MonthlyPayStatus date="2006-04-12" status="U" />
+          <MonthlyPayStatus date="2006-03-11" status="U" />
+          <MonthlyPayStatus date="2006-02-11" status="U" />
+          <MonthlyPayStatus date="2006-01-11" status="U" />
+          <MonthlyPayStatus date="2005-12-11" status="C" />
+          <MonthlyPayStatus date="2005-11-11" status="C" />
+          <MonthlyPayStatus date="2005-10-12" status="C" />
+          <MonthlyPayStatus date="2005-09-12" status="C" />
+          <MonthlyPayStatus date="2005-08-12" status=" " />
+          <MonthlyPayStatus date="2005-07-12" status=" " />
+          <MonthlyPayStatus date="2005-06-12" status=" " />
+          <MonthlyPayStatus date="2005-05-12" status=" " />
+          <MonthlyPayStatus date="2005-04-12" status=" " />
+          <MonthlyPayStatus date="2005-03-11" status=" " />
+          <MonthlyPayStatus date="2005-02-11" status=" " />
+          <MonthlyPayStatus date="2005-01-11" status=" " />
+          <MonthlyPayStatus date="2004-12-11" status=" " />
+          <MonthlyPayStatus date="2004-11-11" status=" " />
+          <MonthlyPayStatus date="2004-10-12" status=" " />
+        </PayStatusHistory>
+        <CreditLimit>400</CreditLimit>
+      </GrantedTrade>
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Tradeline>
+  </TradeLinePartition>
+  <InquiryPartition>
+    <Inquiry inquiryDate="2014-05-18" subscriberName="CREDCO" subscriberNumber="00728002" bureau="TransUnion" inquiryType="A">
+      <IndustryCode abbreviation="Finance/Personal" description="Finance/Personal" symbol="F" rank="199" />
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Inquiry>
+  </InquiryPartition>
+  <InquiryPartition>
+    <Inquiry inquiryDate="2013-10-05" subscriberName="DATAFACTS" subscriberNumber="00180844" bureau="TransUnion" inquiryType="I">
+      <IndustryCode abbreviation="Miscellaneous" description="Miscellaneous" symbol="Z" rank="199" />
+      <Source>
+        <BorrowerKey />
+        <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+        <InquiryDate>2015-06-09</InquiryDate>
+        <Reference>0757326e-da32-48ea-99e  </Reference>
+      </Source>
+    </Inquiry>
+  </InquiryPartition>
+  <Summary>
+    <TradelineSummary>
+      <TransUnion TotalAccounts="20" OpenAccounts="4" CloseAccounts="16" DelinquentAccounts="0" DerogatoryAccounts="3" TotalBalances="144903" TotalMonthlyPayments="1846" />
+    </TradelineSummary>
+    <InquirySummary>
+      <TransUnion NumberInLast2Years="2" />
+    </InquirySummary>
+    <PublicRecordSummary>
+      <TransUnion NumberOfRecords="0" />
+    </PublicRecordSummary>
+  </Summary>
+  <Sources>
+    <Source>
+      <Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" />
+      <InquiryDate>2015-06-09</InquiryDate>
+      <OriginalData>VFU0UjA2MjAxMTA3NTczMjZlLWRhMzItNDhlYS05OWUgIDA2VFJaIDAyMTY5Nzg3MjAxNTA2MDkxMjQyNDJQSDAxMDEyMDcwMDBTSDAxMDI3MTAxWTA1TjQ1V0lOMTk5ODAyMDFOTTAxMDcwRjFDT1NHUkFWRSAgICAgICAgICAgICAgICAgRElBTk5FICAgICAgICAgSiAgICAgICAgICAgICAgICAgICAgUEkwMTAyOUY2NjY2Mjg4OTExOTYxMDEwMSAgICBBRDAxMTA1RjExMzk3NjIwICAgIFcgMTMwMCAgICAgICAgICAgICAgICAgICAgICAgICBSRCAgICAgREVXRVkgICAgICAgICAgICAgICAgICAgICAgT0s3NDAyOSAgICAgMjAxMjA5MjBBRDAxMTA1RjExNzI1ICAgICAgICAgWUFMRSAgICAgICAgICAgICAgICAgICAgICAgICBEUiAgICAgQkFSVExFU1ZJTExFICAgICAgICAgICAgICAgT0s3NDAwNiAgICAgMjAwOTAyMDFBRDAxMTA1RjExMzk3MjUwICAgIFcgMTMwMCAgICAgICAgICAgICAgICAgICAgICAgICBSRCAgICAgREVXRVkgICAgICAgICAgICAgICAgICAgICAgT0s3NDAyOSAgICAgICAgICAgICBFTTAxMTAwRU1QTE9ZRVIgWCAgICAgICAgICAgICAgICAgICAgICAgICBGICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIE4gICAgICAgICAgU00wMTA0MTEwMDAwMDMwMDAwMDUwMzIwMTcwMDYwMTAwMDEwMDAwMDJTRDAxMDU2UjAwMDAwMDg4MTAwMDAwMDM0MTAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDEwMFNEMDEwNTZNMDAwMTQ4MTA2MDAwMDAwMDAwMDAwMTQxOTkwMDAwMDAwMDAwMDAwMDAxMjA0ICAgU0QwMTA1NkIgICAgICAgICAgICAgICAgICAwMDAwMDAyNDUwMDAwMDAwMDAwMDAwMDA2NDIgICBTRDAxMDU2VDAwMDE0ODk4NzAwMDAwMDM0MTAwMDE0MjIzNTAwMDAwMDAwMDAwMDAwMTg0NiAgIENMMDExNjBZIDA2M1ZCMDAxVFVMU0EgQURKVVNUICAgICAgICAgICAgTzlYMVgwWDZYICAgICAgICAgICAgICAgIElNRURJQ0FMICAgICAgICAgICAgICAgICAgICAgICAgICAgICAyMDEyMDgwNTIwMTUwNDE1QSAgICAgICAgICAgICAgICAgOUIwMDAwMDI2NjgwMDAwMDY1MzBDTEFDTDAxMTYwWSAwNDlYVjAwMUVPUyBDQ0EgICAgICAgICAgICAgICAgIE8xWDlYNVg1WCAgICAgICAgICAgICAgICBJMTAgQVQgVCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMjAxMzAyMTYyMDEzMTAyNEEyMDEzMTAyMUYyMDEzMTAyMTlQMDAwMDAwMDAwMDAwMDAwMjA5UENMQ0wwMTE2MFkgMDYzVkIwMDFUVUxTQSBBREpVU1QgICAgICAgICAgICBPOVgwWDBYNFggICAgICAgICAgICAgICAgSU1FRElDQUwgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDIwMTIwNDEwMjAxMzAzMThBMjAxMzAzMThGICAgICAgICA5UDAwMDAwMDAwMDAwMDAwMDUyMVBDTFRSMDEyODhEIDAyMzUwNThEU1lOQ0IvSkNQICAgICAgICAgICAgICAgUjYwMDg4NDkzMDMwMSAgICAgICAgICAgIEMxOTk5MTEyMzIwMTUwNTIwQTIwMTUwMzIwQyAgICAgICAgMjAwMDA4MDEwMTEwMDAwMDAwMDAwMDAwMDAwNTIwMDAwMDAxMjQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQ0hDTE8wMDAwMDAwMDAgICAgICAgICAgICAgICAgICAgICAyMDE1MDQyMDExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTQ4MDAwMDAwMlRSMDEyODhCIDA4MlRFMDA0V0ZITSAgICAgICAgICAgICAgICAgICAgTTlYNlgzWDNYMlg0WDIgICAgICAgICAgIEMyMDE0MDYzMDIwMTUwNTA4QSAgICAgICAgICAgICAgICAgMjAxNTA0MTYwMTEwMDAxNDE5OTAwMDAxNDgxMDYgICAgICAgICAxODBNMDAwMDAxMjA0ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgRlIgICAwMDAwMDAwMDAgICAgICAgICAgICAgICAgICAgICAyMDE1MDQwODExWDExMSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDA2MDAwMDAwMlRSMDEyODhGIDA5OTkyOTUyU1lOQ0IvQ0FSRUNSICAgICAgICAgICAgUjYwMTkxNTQzNzQwMyAgICAgICAgICAgIEMyMDEwMDUyMDIwMTUwNTA4QTIwMTIwNDMwQyAgICAgICAgICAgICAgICAwMTEwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDEwMDAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQ0hDQkcwMDAwMDAwMDAgICAgICAgICAgICAgICAgICAgICAyMDE1MDQwODExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTQ4MDAwMDAwMlRSMDEyODhEIDAyMzUwNThEU1lOQ0IvSkNQICAgICAgICAgICAgICAgUjYwMDg4NjMxMTE5MCAgICAgICAgICAgIEkyMDA3MTIxMDIwMTUwNDIyQSAgICAgICAgIDIwMTMwNTAyMjAxMzA1MDIwMTEwMDAwMDAwMDAwMDAwMDA2ODEwMDAwMDAzNDEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQ0ggICAwMDAwMDAwMDAgICAgICAgICAgIDIwMTAwNTAxMDMyMDE1MDMyMjExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTMyMTQ4MDEwMTAwMlRSMDEyODhCIDAxNTk3MDI5QksgT0YgQU1FUiAgICAgICAgICAgICAgUjE1ODcgICAgICAgICAgICAgICAgICAgIEkyMDAxMDExMjIwMTQwNTA3QTIwMTQwNTA3QzIwMTMxMTE1MjAxMzExMTUwMTEwMDAwMDAwMDAwMDAwMTEyMDgwMDAwMDk0MDAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQ0NDQkMwMDAwMDAwMDAgIDAwMDAwMDg3NzIwMDgxMjAxMDUyMDE0MDQwN1hYMTExMTQ0NDU0NDQ0NDU0MzIxMTExNTU1NTU0MzIxMTExMTExMjExMTExMTU1NTQ4MDMwMjIwMlRSMDEyODhRIDAzOTQ2MDE4QU1FUiBIT05EQSAgICAgICAgICAgICAgSThYNlg5WDhYICAgICAgICAgICAgICAgIEMyMDA5MDkwOTIwMTQwMzEwQTIwMTMxMDA4QyAgICAgICAgMjAxMzEwMDgwMTEwMDAwMDAyNDUwMDAwMzE4ODggICAgICAgICAgNzJNMDAwMDAwNjQyICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQVUgICAwMDAwMDAwMDAgICAgICAgICAgICAgICAgICAgICAyMDE0MDIxMDExMTExMTExMTExMTIyMjExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTQ4MDMwMDAwMlRSMDEyODhCIDAxWkhWMDA4QVJWRVNUIEJBTksgICAgICAgICAgICAgSTFYNVg0WDkgICAgICAgICAgICAgICAgIEkyMDEwMDkyNzIwMTIwODE2QTIwMTIwODE2QyAgICAgICAgMjAxMjA3MTcwMTEwMDAwMDAwMDAwMDAwMDU4ODkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgU0VDTE8wMDAwMDAwMDAgICAgICAgICAgICAgICAgICAgICAyMDEyMDcxNjExMTExMTExMTExMTExMjExMTExMSAgICAgICAgICAgICAgICAgICAgICAgICAgIDIxMDEwMDAwMlRSMDEyODhGIDA2NTROMVhHU1BSSU5HTEYgRklOICAgICAgICAgICAgSThYNlg2WDVYM1g4WDVYNVggICAgICAgIEMyMDA5MDgxMTIwMTIwMjI5QTIwMTIwMjI5QyAgICAgICAgMjAxMTExMTMwMTEwMDAwMDAwMDAwMDAwMDc3MjAgICAgICAgICAgMzZNMDAwMDAwMjE0ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgU09DTE8wMDAwMDAwMDAgICAgICAgICAgICAgICAgICAgICAyMDEyMDEyOTExMTExMTExMTExMTExMTExMTExMTExMTExMTEgICAgICAgICAgICAgICAgICAgIDI4MDAwMDAwMlRSMDEyODhGIDA4OTBEMzBHQ0lUSSBBVVRPICAgICAgICAgICAgICAgSTFYNFgzWDBYMFggICAgICAgICAgICAgIEMyMDA2MDEyMDIwMTIwMTMxQTIwMTIwMTMxQyAgICAgICAgMjAxMTEyMzEwMTEwMDAwMDAwMDAwMDAwMjAwOTMgICAgICAgICAgNzJNMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQVVDTE8wMDAwMDAwMDAgICAgICAgICAgICAgICAgICAgICAyMDExMTIzMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExWDExMTExMTExMTExMTExMTExMTQ4MDAwMDAwMlRSMDEyODhCIDAxWkhWMDA4QVJWRVNUIEJBTksgICAgICAgICAgICAgSTNYN1g3WDcgICAgICAgICAgICAgICAgIEMyMDA5MDQwNjIwMTAxMTAxQTIwMTAxMTAxQyAgICAgICAgMjAxMDEwMzEwMTEwMDAwMDAwMDAwMDAwMDcwMzQgICAgICAgICAgMjRNMDAwMDAwMzEyICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgU0VDTE8wMDAwMDAwMDAgICAgICAgICAgICAgICAgICAgICAyMDEwMTAwMTExMTExMTExMTExMTExMTExICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDE3MDAwMDAwMlRSMDEyODhGIDA2NTROMVhHU1BSSU5HTEYgRklOICAgICAgICAgICAgSTJYNVg2WDVYM1g4WDVYNVggICAgICAgIEMyMDA4MDIxMDIwMDkwNzMxQTIwMDkwNzMxQyAgICAgICAgMjAwOTA2MTYwMTEwMDAwMDAwMDAwMDAwMDEyMTUgICAgICAgICAgMTVNMDAwMDAwMDgwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgU09DTE8wMDAwMDAwMDAgICAgICAgICAgICAgICAgICAgICAyMDA5MDYzMDExMTExMTFYMTExMTExMTEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDE2MDAwMDAwMlRSMDEyODhRIDA0MTc2MTI4VE9ZT1RBIE1UUiAgICAgICAgICAgICAgSTdYNFgwWDZYN1g5WDFYMFgxICAgICAgIEkyMDA0MDYxNjIwMDkwNzMxQTIwMDkwNzMxQyAgICAgICAgMjAwOTA3MzEwMTEwMDAwMDAwMDAwMDAwMTM3MjQgICAgICAgICAgNjBNMDAwMDAwMzMyICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQVVDTE8wMDAwMDAwMDAgICAgICAgICAgICAgICAgICAgICAyMDA5MDYzMDExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExIDQ3MDAwMDAwMlRSMDEyODhCIDAxWkhWMDA4QVJWRVNUIEJBTksgICAgICAgICAgICAgSTJYMlg0WDUgICAgICAgICAgICAgICAgIEMyMDA3MDEzMTIwMDkwNTIwQTIwMDkwNTIwQyAgICAgICAgMjAwOTAzMTcwMTEwMDAwMDAwMDAwMDAwMTQ5MjcgICAgICAgICAgMjZNMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgU0VDTE8wMDAwMDAwMDAgICAgICAgICAgICAgICAgICAgICAyMDA5MDQyMFgyMTExMTExMTExMTExMTExMTExMTExMTExMSAgICAgICAgICAgICAgICAgICAgIDI3MDEwMDAwMlRSMDEyODhEIDAxTlo4MDk0Q0IvU1RBR0UgICAgICAgICAgICAgICAgUjU4NTYzMjg1MTYyMCAgICAgICAgICAgIEkyMDAyMDcwMTIwMDgwNzIzQSAgICAgICAgIDIwMDgwNzAxMjAwODA3MDEwMTEwMDAwMDAwMDAwMDAwMDAyMDAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQ0ggICAwMDAwMDAwMDAgICAgICAgICAgICAgICAgICAgICAyMDA4MDYyMzExMTEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDA0MDAwMDAwMlRSMDEyODhGIDA2NTROMVhHU1BSSU5HTEYgRklOICAgICAgICAgICAgSTlYM1g2WDVYMVgwWDNYM1ggICAgICAgIEMyMDA2MDkyNjIwMDcxMTMwQTIwMDcxMTMwQyAgICAgICAgMjAwNzEwMDkwMTEwMDAwMDAwMDAwMDAwMDExOTAgICAgICAgICAgMTJNMDAwMDAwMDk4ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgU09DTE8wMDAwMDAwMDAgICAgICAgICAgICAgICAgICAgICAyMDA3MTAzMDExMTExMTExMTExMTEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDEzMDAwMDAwMlRSMDEyODhCIDAxWkhWMDA4QVJWRVNUIEJBTksgICAgICAgICAgICAgSTVYNVgzWCAgICAgICAgICAgICAgICAgIEMyMDA1MDgyNzIwMDcwMzAzQTIwMDcwMzAzQyAgICAgICAgMjAwNzAyMTYwMTEwMDAwMDAwMDAwMDAwMDcwMDAgICAgICAgICAgMTlNMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDTE8wMDAwMDAwMDAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDE4MDAwMDAwMlRSMDEyODhEIDAxR1lZMDAxR05CL1NUQUdFICAgICAgICAgICAgICAgUjQgICAgICAgICAgICAgICAgICAgICAgIEkyMDAyMDcwMTIwMDYxMDEyQTIwMDYxMDExQyAgICAgICAgMjAwNTEyMDYwMTEwMDAwMDAwMDAwMDAwMDAyMDAwMDAwMDA0MDAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQ0hQQUwwMDAwMDAwMDAgICAgICAgICAgICAgICAgICAgICAyMDA2MDkxMlhYWFhYWFhYWDExMTEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDEzMDAwMDAwMklOMDEwNjUwN0RNRiAwMDcyODAwMkNSRURDTyAgICAgICAgICAgICAgICAgIEEgICAgICAgICAgIDIwMTQwNTE4SU4wMTA2NTE1TUVaIDAwMTgwODQ0REFUQUZBQ1RTICAgICAgICAgICAgICAgSSAgICAgICAgICAgMjAxMzEwMDVBTzAxMDE3MDBXNDAwMSAgIFNDMDEwMzQwMFc0MCs2NjggICBJMDQgMTIgMDcgNTUgMDhDSDAxMDMwMDBXNDBQT1NSRUExIFAzNCAgICAgICBDSDAxMDMwMDBXNDBQT1NSRUEyIFAwNSAgICAgICBDSDAxMDMwMDBXNDBQT1NSRUEzIFA3MiAgICAgICBDSDAxMDMwMDBXNDBQT1NSRUE0IFA0NyAgICAgICBFTkRTMDEwMDQz</OriginalData>
+    </Source>
+  </Sources>
+  <SafetyCheckPassed>true</SafetyCheckPassed>
+</TrueLinkCreditReportType>

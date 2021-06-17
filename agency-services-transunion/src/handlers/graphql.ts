@@ -40,6 +40,13 @@ let password;
 const Parser = fastXml.j2xParser;
 const parser = new Parser({});
 
+const parserOptions = {
+  attributeNamePrefix: '',
+  ignoreAttributes: false,
+  ignoreNameSpace: true,
+  parseAttributeValue: true,
+};
+
 /**
  * Handler that processes single requests for Transunion services
  * @param service Service invoked via the SNS Proxy 'transunion'
@@ -165,7 +172,7 @@ const proxyHandler = {
     console.log('Verify xml====>', xml);
     const options = createRequestOptions(agent, auth, xml, 'VerifyAuthenticationQuestions');
     const res = await axios({ ...options });
-    const results = fastXml.parse(res.data);
+    const results = fastXml.parse(res.data); // TODO need to update with options
     console.log('results', results);
     return results;
   },
@@ -182,7 +189,7 @@ const proxyHandler = {
     const options = createRequestOptions(agent, auth, xml, 'Enroll');
     const res = await axios({ ...options });
     console.log('Response xml ====> ', JSON.stringify(res.data));
-    const results = parseEnroll(res.data); // a more robust parser to parse nested objects
+    const results = parseEnroll(res.data, parserOptions); // a more robust parser to parse nested objects
     console.log('results', results);
     return JSON.stringify(results);
   },
@@ -199,7 +206,7 @@ const proxyHandler = {
     const options = createRequestOptions(agent, auth, xml, 'Fulfill');
     const res = await axios({ ...options });
     console.log('Response xml ====> ', JSON.stringify(res.data));
-    const results = parseFulfill(res.data); // a more robust parser to parse nested objects
+    const results = parseFulfill(res.data, parserOptions); // a more robust parser to parse nested objects
     console.log('results', results);
     return JSON.stringify(results);
   },
@@ -216,7 +223,7 @@ const proxyHandler = {
     const options = createRequestOptions(agent, auth, xml, 'GetServiceProduct');
     const res = await axios({ ...options });
     console.log('Response xml ====> ', JSON.stringify(res.data));
-    const results = fastXml.parse(res.data); // basic parse for now
+    const results = fastXml.parse(res.data, parserOptions); // basic parse for now
     // const results = parseEnroll(res.data); // a more robust parser to parse nested objects
     console.log('results', results);
     return JSON.stringify(results);
