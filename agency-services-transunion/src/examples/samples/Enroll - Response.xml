@@ -38,7 +38,8 @@
             <a:ServiceProduct>TUCVantageScore3</a:ServiceProduct>
             <a:ServiceProductFulfillmentKey>5a6f1d64-267b-4066-92fe-ce422ba5e444</a:ServiceProductFulfillmentKey>
             <a:ServiceProductObject i:type="b:string"
-              xmlns:b="http://www.w3.org/2001/XMLSchema">&lt;?xml version="1.0" encoding="utf-8"?&gt;&#xD; &lt;CreditScoreType xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" riskScore="527" scoreName="VantageScore3" populationRank="16"&gt;&#xD;
+              xmlns:b="http://www.w3.org/2001/XMLSchema">
+              &lt;?xml version="1.0" encoding="utf-8"?&gt;&#xD; &lt;CreditScoreType xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" riskScore="527" scoreName="VantageScore3" populationRank="16"&gt;&#xD;
                             &lt;CreditScoreFactor bureauCode="34" FactorType="Negative" xmlns="com/truelink/ds/sch/report/truelink/v3"&gt;&#xD; &lt;Factor abbreviation="" description="" symbol="34" rank="100000" /&gt;&#xD;
                             &lt;FactorText&gt;explain: Bankcard accounts include credit cards and
                             charge cards from a bank and are frequently revolving accounts.
