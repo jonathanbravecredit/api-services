@@ -21,6 +21,7 @@ import { createEnroll, formatEnroll, parseEnroll } from 'lib/queries/enroll';
 import { IEnrollResponse } from 'lib/interfaces/enroll.interface';
 import { createFulfill, formatFulfill, parseFulfill } from 'lib/queries/fulfill';
 import { createGetServiceProduct, formatGetServiceProduct } from 'lib/queries/get-service-product';
+import { formatGetDisputeStatus, createGetDisputeStatus } from 'lib/queries/get-dispute-status';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -111,6 +112,9 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       case 'GetServiceProduct':
         results = await proxyHandler['GetServiceProduct'](accountCode, username, message, httpsAgent, auth);
         return JSON.stringify({ GetServiceProduct: results });
+      case 'GetDisputeStatus':
+        results = await proxyHandler['GetDisputeStatus'](accountCode, username, message, httpsAgent, auth);
+        return JSON.stringify({ GetDisputeStatus: results });
       default:
         return JSON.stringify({ Action: action, Error: 'Action not found' });
     }
@@ -221,6 +225,24 @@ const proxyHandler = {
     const xml = createGetServiceProduct(msg);
     console.log('Verify xml====>', xml);
     const options = createRequestOptions(agent, auth, xml, 'GetServiceProduct');
+    const res = await axios({ ...options });
+    console.log('Response xml ====> ', JSON.stringify(res.data));
+    const results = fastXml.parse(res.data, parserOptions); // basic parse for now
+    // const results = parseEnroll(res.data); // a more robust parser to parse nested objects
+    console.log('results', results);
+    return JSON.stringify(results);
+  },
+  GetDisputeStatus: async (
+    accountCode: string,
+    username: string,
+    message: string,
+    agent: https.Agent,
+    auth: string,
+  ): Promise<string> => {
+    const msg = formatGetDisputeStatus(accountCode, username, message);
+    const xml = createGetDisputeStatus(msg);
+    console.log('Verify xml====>', xml);
+    const options = createRequestOptions(agent, auth, xml, 'GetDisputeStatus');
     const res = await axios({ ...options });
     console.log('Response xml ====> ', JSON.stringify(res.data));
     const results = fastXml.parse(res.data, parserOptions); // basic parse for now

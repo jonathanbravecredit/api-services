@@ -1,0 +1,60 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:GetDisputeStatus>
+      <con:request>
+        <data:AccountCode>4pGebVt5s</data:AccountCode>
+        <data:AccountName>CCSIntegration</data:AccountName>
+        <data:AdditionalInputs>
+          <!--Zero or more repetitions:-->
+          <data:Data>
+            <data:Name xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Value xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:Data>
+        </data:AdditionalInputs>
+        <data:RequestKey>816e1fc1-0096-4c2b-8fd7-013daea4fc07</data:RequestKey>
+        <data:ClientKey>SR_2018-03-09_13-33-18_DORA</data:ClientKey>
+        <data:Customer>
+          <data:CurrentAddress>
+            <data:AddressLine1>384 PO BOX 384</data:AddressLine1>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:City>BRAHAM</data:City>
+            <data:State>MN</data:State>
+            <data:Zipcode>55006</data:Zipcode>
+          </data:CurrentAddress>
+          <data:DateOfBirth>1973-11-01</data:DateOfBirth>
+          <data:FullName>
+            <data:FirstName>DORA</data:FirstName>
+            <data:LastName>JULIEN</data:LastName>
+            <data:MiddleName>G</data:MiddleName>
+            <data:Prefix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Suffix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:FullName>
+          <data:PhoneNumber>5053923096</data:PhoneNumber>
+          <data:Ssn xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          <data:Gender>Male</data:Gender>
+          <data:Identifier>
+            <data:Id>460864947</data:Id>
+            <data:IdentifierType xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:CustomerIdentifier>
+              <data:Id>471866871</data:Id>
+              <data:IdentifierType>SocialId</data:IdentifierType>
+            </data:CustomerIdentifier>
+          </data:Identifier>
+        </data:Customer>
+        <data:DisputeId xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <data:EnrollmentKey>7d80a773-9183-412a-a982-fe4f7cac4d6f</data:EnrollmentKey>
+      </con:request>
+    </con:GetDisputeStatus>
+  </soapenv:Body>
+</soapenv:Envelope>

@@ -7,7 +7,7 @@ import { IGetServiceProduct, IGetServiceProductMsg } from 'lib/interfaces/get-se
  * This method packages the message in a request body and adds account information
  * @param {string} accountCode Brave TU account code (can be overriden if passed as part of message)
  * @param {string} accountName Brave TU account name (can be overriden if passed as part of message)
- * @param {IGetAuthenticationQuestionsMsg} msg
+ * @param {IGetServiceProductMsg} msg
  * @returns
  */
 export const formatGetServiceProduct = (
