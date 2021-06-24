@@ -93,8 +93,7 @@ resources:
                 Service: appsync.amazonaws.com
               Action: sts:AssumeRole
     lambdaexecutionpolicy:
-      DependsOn:
-        - { Ref: LambdaExecutionRole }
+      DependsOn: { Ref: LambdaExecutionRole }
       Type: AWS::IAM::Policy
       Properties:
         PolicyName: lambda-execution-policy
@@ -111,8 +110,7 @@ resources:
               Resource:
                 - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${self:service}-${opt:stage}-graphql:log-stream:*'
     AmplifyResourcesPolicy:
-      DependsOn:
-        - { Ref: LambdaExecutionRole }
+      DependsOn: { Ref: LambdaExecutionRole }
       Type: AWS::IAM::Policy
       Properties:
         PolicyName: amplify-lambda-execution-policy
