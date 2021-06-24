@@ -48,13 +48,16 @@ provider:
         - secretsmanager:GetSecretValue
       Resource:
         - '*'
-    # - Effect: Allow
-    #   Resource:
-    #     - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/*'
-    #     - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Query/*'
-    #     - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Mutation/*'
-    #     - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Subscription/*'
-    #   Action: 'appsync:GraphQL'
+    - Effect: Allow
+      Principal:
+        Service: appsync.amazonaws.com
+      Action: sts:AssumeRole
+    - Effect: Allow
+      Resource:
+        - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Query/*'
+        - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Mutation/*'
+        - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Subscription/*'
+      Action: 'appsync:GraphQL'
 
 layers:
   TuCerts:
@@ -81,53 +84,53 @@ functions:
 
 resources:
   Resources:
-    LambdaExecutionRole:
-      Type: AWS::IAM::Role
-      Properties:
-        RoleName: !Sub 'braveappAgencyLambdaRole-${opt:stage}'
-        AssumeRolePolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            - Effect: Allow
-              Principal:
-                Service: appsync.amazonaws.com
-              Action: sts:AssumeRole
-    lambdaexecutionpolicy:
-      DependsOn:
-        - 'LambdaExecutionRole'
-      Type: AWS::IAM::Policy
-      Properties:
-        PolicyName: lambda-execution-policy
-        Roles:
-          - { Ref: LambdaExecutionRole }
-        PolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            - Effect: Allow
-              Action:
-                - logs:CreateLogGroup
-                - logs:CreateLogStream
-                - logs:PutLogEvents
-              Resource:
-                - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${self:service}-${opt:stage}-graphql:log-stream:*'
-    AmplifyResourcesPolicy:
-      DependsOn:
-        - 'LambdaExecutionRole'
-      Type: AWS::IAM::Policy
-      Properties:
-        PolicyName: amplify-lambda-execution-policy
-        Roles:
-          - { Ref: LambdaExecutionRole }
-        PolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            - Effect: Allow
-              Action:
-                - appsync:GraphQL
-              Resource:
-                - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Query/*'
-                - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Mutation/*'
-                - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Subscription/*'
+    # LambdaExecutionRole:
+    #   Type: AWS::IAM::Role
+    #   Properties:
+    #     RoleName: !Sub 'braveappAgencyLambdaRole-${opt:stage}'
+    #     AssumeRolePolicyDocument:
+    #       Version: '2012-10-17'
+    #       Statement:
+    #         - Effect: Allow
+    #           Principal:
+    #             Service: appsync.amazonaws.com
+    #           Action: sts:AssumeRole
+    # lambdaexecutionpolicy:
+    #   DependsOn:
+    #     - 'LambdaExecutionRole'
+    #   Type: AWS::IAM::Policy
+    #   Properties:
+    #     PolicyName: lambda-execution-policy
+    #     Roles:
+    #       - { Ref: LambdaExecutionRole }
+    #     PolicyDocument:
+    #       Version: '2012-10-17'
+    #       Statement:
+    #         - Effect: Allow
+    #           Action:
+    #             - logs:CreateLogGroup
+    #             - logs:CreateLogStream
+    #             - logs:PutLogEvents
+    #           Resource:
+    #             - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${self:service}-${opt:stage}-graphql:log-stream:*'
+    # AmplifyResourcesPolicy:
+    #   DependsOn:
+    #     - 'LambdaExecutionRole'
+    #   Type: AWS::IAM::Policy
+    #   Properties:
+    #     PolicyName: amplify-lambda-execution-policy
+    #     Roles:
+    #       - { Ref: LambdaExecutionRole }
+    #     PolicyDocument:
+    #       Version: '2012-10-17'
+    #       Statement:
+    #         - Effect: Allow
+    #           Action:
+    #             - appsync:GraphQL
+    #           Resource:
+    #             - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Query/*'
+    #             - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Mutation/*'
+    #             - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Subscription/*'
     # TransunionData:
     #   Type: AWS::DynamoDB::Table
     #   Properties:
