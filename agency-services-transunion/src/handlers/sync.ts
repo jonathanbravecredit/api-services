@@ -16,6 +16,7 @@ const con: AWSAppSyncClientOptions = {
   disableOffline: true,
 };
 const client = new AWSAppSyncClient(con);
+console.log('client', client);
 
 const pingTuQuery = `query GetAppData($id: ID!) {
   getAppData(id: $id) {
