@@ -6,19 +6,6 @@ import AWSAppSyncClient, { AUTH_TYPE, AWSAppSyncClientOptions } from 'aws-appsyn
 import gql from 'graphql-tag';
 import { AppSyncResolverEvent } from 'aws-lambda';
 
-const con: AWSAppSyncClientOptions = {
-  url: process.env.APPSYNC_ENDPOINT,
-  region: process.env.AWS_REGION,
-  auth: {
-    type: AUTH_TYPE.AWS_IAM,
-    credentials: config.credentials,
-  },
-  disableOffline: true,
-};
-console.log('config', con);
-const client = new AWSAppSyncClient(con);
-console.log('client', client);
-
 const pingTuQuery = `query GetAppData($id: ID!) {
   getAppData(id: $id) {
     __typename
@@ -140,7 +127,21 @@ const pingTuQuery = `query GetAppData($id: ID!) {
 }`;
 
 export const getAppData = async (id: string): Promise<unknown> => {
+  const con: AWSAppSyncClientOptions = {
+    url: process.env.APPSYNC_ENDPOINT,
+    region: process.env.AWS_REGION,
+    auth: {
+      type: AUTH_TYPE.AWS_IAM,
+      credentials: config.credentials,
+    },
+    disableOffline: true,
+  };
+  console.log('config', con);
+  const client = new AWSAppSyncClient(con);
+  console.log('client', client);
+
   try {
+    console.log('in getApp', id);
     const result = await client.query({
       query: gql(pingTuQuery),
       variables: { id },
@@ -154,7 +155,9 @@ export const getAppData = async (id: string): Promise<unknown> => {
 };
 
 export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> => {
+  console.log('event', event);
   try {
+    console.log('in main');
     const results = await getAppData('us-east-2:f1708371-02f4-4853-bb7e-d446678297bc');
     console.log(results);
     return results;
