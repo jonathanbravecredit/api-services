@@ -15,6 +15,7 @@ const con: AWSAppSyncClientOptions = {
   },
   disableOffline: true,
 };
+console.log('config', con);
 const client = new AWSAppSyncClient(con);
 console.log('client', client);
 
