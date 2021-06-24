@@ -65,7 +65,6 @@ layers:
 
 functions:
   graphql:
-    role: { Ref: LambdaExecutionRole }
     handler: src/handlers/graphql.main
     layers:
       - { Ref: TuCertsLambdaLayer }
