@@ -1,5 +1,32 @@
 import { IRequestOptions } from 'lib/interfaces/api.interfaces';
 import * as https from 'https';
+import * as aws4 from 'aws4';
+import axios from 'axios';
+
+const appsyncUrl = process.env.APPSYNC_ENDPOINT;
+
+/**
+ * Takes the aws4 signed options and sends the request to get the lastest db data
+ *  -- TODO couldn't get to work with Axios...needs more work
+ * @param opts
+ * @returns
+ */
+export const postCustomQuery = async (opts: any, data: any) => {
+  try {
+    const headers = aws4.sign(opts).headers;
+    console.log('headers', headers);
+    const resp = await axios({
+      url: appsyncUrl,
+      method: 'post',
+      headers: headers,
+      data: data,
+    });
+    console.log('resp', resp);
+    return resp.data;
+  } catch (err) {
+    throw `Error: ${err}`;
+  }
+};
 
 /**
  * This method creates the https agent needed to make the SOAP calls

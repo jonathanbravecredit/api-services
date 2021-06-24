@@ -22,6 +22,7 @@ import { IEnrollResponse } from 'lib/interfaces/enroll.interface';
 import { createFulfill, formatFulfill, parseFulfill } from 'lib/queries/fulfill';
 import { createGetServiceProduct, formatGetServiceProduct } from 'lib/queries/get-service-product';
 import { formatGetDisputeStatus, createGetDisputeStatus } from 'lib/queries/get-dispute-status';
+import { getLastActive } from 'lib/queries/get-last-active';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -115,6 +116,9 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       case 'GetDisputeStatus':
         results = await proxyHandler['GetDisputeStatus'](accountCode, username, message, httpsAgent, auth);
         return JSON.stringify({ GetDisputeStatus: results });
+      case 'GetLastActive':
+        results = await proxyHandler['GetLastActive'](accountCode, username, message, httpsAgent, auth);
+        return JSON.stringify({ GetLastActive: results });
       default:
         return JSON.stringify({ Action: action, Error: 'Action not found' });
     }
@@ -249,5 +253,19 @@ const proxyHandler = {
     // const results = parseEnroll(res.data); // a more robust parser to parse nested objects
     console.log('results', results);
     return JSON.stringify(results);
+  },
+  GetLastActive: async (
+    accountCode: string,
+    username: string,
+    message: string,
+    agent: https.Agent,
+    auth: string,
+  ): Promise<string> => {
+    try {
+      const results = await getLastActive();
+      return JSON.stringify(results);
+    } catch (err) {
+      return JSON.stringify(err);
+    }
   },
 };

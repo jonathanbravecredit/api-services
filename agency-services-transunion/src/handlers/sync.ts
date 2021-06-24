@@ -144,7 +144,7 @@ export const getAppData = async (id: string): Promise<unknown> => {
     console.log('in getApp', id);
     const result = await client.query({
       query: gql(pingTuQuery),
-      variables: { id },
+      variables: { id: id },
       fetchPolicy: 'network-only',
     });
     return result;

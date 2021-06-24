@@ -95,6 +95,17 @@ export const updateAppDataMutation = `mutation UpdateAppData($input: UpdateAppDa
   }
 }`;
 
+export const getUserLastActive = `query GetAppData($id: ID!) {
+  getAppData(id: $id) {
+    user {
+      id
+      onboarding {
+        lastActive
+      }
+    }
+  }
+}`;
+
 // export const getAppData = async (id: string): Promise<unknown> => {
 //   try {
 //     const result = await client.query({
