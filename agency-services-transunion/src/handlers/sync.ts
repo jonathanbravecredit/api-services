@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
 import { config } from 'aws-sdk';
 import AWSAppSyncClient, { AUTH_TYPE, AWSAppSyncClientOptions } from 'aws-appsync';
 import gql from 'graphql-tag';
