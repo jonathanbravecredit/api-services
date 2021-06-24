@@ -49,10 +49,6 @@ provider:
       Resource:
         - '*'
     - Effect: Allow
-      Principal:
-        Service: appsync.amazonaws.com
-      Action: sts:AssumeRole
-    - Effect: Allow
       Resource:
         - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Query/*'
         - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Mutation/*'
