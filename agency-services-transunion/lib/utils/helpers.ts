@@ -2,29 +2,47 @@ import { IRequestOptions } from 'lib/interfaces/api.interfaces';
 import * as https from 'https';
 import * as aws4 from 'aws4';
 import axios from 'axios';
+import gql from 'graphql-tag';
+import { print } from 'graphql';
 
 const appsyncUrl = process.env.APPSYNC_ENDPOINT;
+const region = process.env.AWS_REGION;
 
 /**
- * Takes the aws4 signed options and sends the request to get the lastest db data
- *  -- TODO couldn't get to work with Axios...needs more work
- * @param opts
+ * Processes generic graphql requests
+ * @param {string} query
+ * @param {any} variables
  * @returns
  */
-export const postCustomQuery = async (opts: any, data: any) => {
+export const postGraphQLRequest = async (
+  query: string,
+  variables: any,
+): Promise<{ status: string; data: any; error?: string }> => {
+  let payload = {
+    query: print(gql(query)),
+    variables: variables,
+  };
+  // create the options for the sync up
+  let opts = {
+    method: 'POST',
+    host: '24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com',
+    region: region,
+    path: 'graphql',
+    body: JSON.stringify(payload),
+    service: 'appsync',
+  };
+
   try {
     const headers = aws4.sign(opts).headers;
-    console.log('headers', headers);
     const resp = await axios({
       url: appsyncUrl,
       method: 'post',
       headers: headers,
-      data: data,
+      data: payload,
     });
-    console.log('resp', resp);
-    return resp.data;
+    return { status: 'success', data: resp, error: null };
   } catch (err) {
-    throw `Error: ${err}`;
+    return { status: 'failed', data: null, error: `failed during sync=${err}` };
   }
 };
 
