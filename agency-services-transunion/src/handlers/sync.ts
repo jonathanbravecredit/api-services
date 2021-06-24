@@ -1,22 +1,18 @@
-import * as AWS from 'aws-sdk';
-import * as APPSYNC from 'aws-appsync';
+import { config } from 'aws-sdk';
+import AWSAppSyncClient, { AUTH_TYPE, AWSAppSyncClientOptions } from 'aws-appsync';
 import gql from 'graphql-tag';
-import { AWSAppSyncClientOptions } from 'aws-appsync';
 import { AppSyncResolverEvent } from 'aws-lambda';
 
-const AUTH_TYPE = APPSYNC.AUTH_TYPE;
-const AWSAppSyncClient = APPSYNC.default;
-
-const config: AWSAppSyncClientOptions = {
+const con: AWSAppSyncClientOptions = {
   url: process.env.APPSYNC_ENDPOINT,
   region: process.env.AWS_REGION,
   auth: {
     type: AUTH_TYPE.AWS_IAM,
-    credentials: AWS.config.credentials,
+    credentials: config.credentials,
   },
   disableOffline: true,
 };
-const client = new AWSAppSyncClient(config);
+const client = new AWSAppSyncClient(con);
 
 const pingTuQuery = `query GetAppData($id: ID!) {
   getAppData(id: $id) {
