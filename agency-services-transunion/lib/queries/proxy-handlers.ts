@@ -260,7 +260,7 @@ export const DisputePreflightCheck = async (
   auth: string,
 ): Promise<string> => {
   const variables = {
-    id: username,
+    id: message,
     agencies: {
       transunion: {
         disputes: {
