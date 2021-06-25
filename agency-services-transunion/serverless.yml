@@ -64,8 +64,6 @@ functions:
     handler: src/handlers/graphql.main
     layers:
       - { Ref: TuCertsLambdaLayer }
-  sync:
-    handler: src/handlers/sync.main
   postRequests:
     handler: src/handlers/postRequests.main
     layers:
