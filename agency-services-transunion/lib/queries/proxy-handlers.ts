@@ -270,7 +270,7 @@ export const DisputePreflightCheck = async (
     },
   };
   try {
-    const resp = postGraphQLRequest(updatePreflightStatus, variables);
+    const resp = await postGraphQLRequest(updatePreflightStatus, variables);
     console.log('resp', resp);
   } catch (err) {
     console.log('error', err);
