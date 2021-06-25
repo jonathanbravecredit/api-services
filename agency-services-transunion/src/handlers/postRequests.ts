@@ -6,12 +6,12 @@ import * as fs from 'fs';
 import * as convert from 'xml-js';
 import { getSecretKey } from 'lib/utils/secrets';
 import { createRequestOptions } from 'lib/utils/helpers';
-import { createIndicativeEnrichment, formatIndicativeEnrichment } from 'lib/queries/indicative-enrichment';
-import { createPing } from 'lib/queries/ping';
 import {
-  createGetAuthenticationQuestions,
   formatGetAuthenticationQuestions,
-} from 'lib/queries/get-authentication-questions';
+  createGetAuthenticationQuestions,
+} from 'lib/soap/get-authentication-questions';
+import { formatIndicativeEnrichment, createIndicativeEnrichment } from 'lib/soap/indicative-enrichment';
+import { createPing } from 'lib/soap/ping';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
