@@ -51,7 +51,7 @@ export const getTransunionDisputes = `query GetAppData($id: ID!) {
  * @param {ID!} id user identity id
  * @param {string} disputePreflightStatus 'failed | success'
  */
-export const updatePreflightStatus = `query UpdatePreflightStatus($id: ID!, $disputePreflightStatus: String ) {
+export const updatePreflightStatus = `mutation UpdatePreflightStatus($id: ID!, $disputePreflightStatus: String ) {
   updatePreflightStatus(id: $id, disputePreflightStatus: $disputePreflightStatus) {
     id
     agencies {

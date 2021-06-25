@@ -271,15 +271,15 @@ export const DisputePreflightCheck = async (
   };
   try {
     const resp = await postGraphQLRequest(updatePreflightStatus, variables);
-    console.log('resp', resp);
+    console.log('resp', resp.data);
+    return JSON.stringify(resp.data);
   } catch (err) {
     console.log('error', err);
+    return JSON.stringify(err);
   }
   // //call fulfill
   // results = await proxyHandler['GetServiceProduct'](accountCode, username, message, httpsAgent, auth);
   //     return JSON.stringify({ GetServiceProduct: results });
   // //if report is successfull, then call getDisputeStatus, else end
   // //if eligible for dispute, then call Initiation (but responde with success), else end...
-
-  return JSON.stringify(null);
 };
