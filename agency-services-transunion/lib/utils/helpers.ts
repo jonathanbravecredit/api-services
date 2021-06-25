@@ -1,7 +1,7 @@
 import { IRequestOptions } from 'lib/interfaces/api.interfaces';
 import * as https from 'https';
 import * as aws4 from 'aws4';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
 
@@ -14,10 +14,7 @@ const region = process.env.AWS_REGION;
  * @param {any} variables
  * @returns
  */
-export const postGraphQLRequest = async (
-  query: string,
-  variables: any,
-): Promise<{ status: string; data: any; error?: string }> => {
+export const postGraphQLRequest = async (query: string, variables: any): Promise<AxiosResponse<any>> => {
   let payload = {
     query: print(gql(query)),
     variables: variables,
@@ -34,15 +31,15 @@ export const postGraphQLRequest = async (
 
   try {
     const headers = aws4.sign(opts).headers;
-    const resp = await axios({
+    const resp: AxiosResponse<any> = await axios({
       url: appsyncUrl,
       method: 'post',
       headers: headers,
       data: payload,
     });
-    return { status: 'success', data: resp, error: null };
+    return resp;
   } catch (err) {
-    return { status: 'failed', data: null, error: `failed during sync=${err}` };
+    return err;
   }
 };
 
