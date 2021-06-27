@@ -13,7 +13,7 @@ import {
   formatVerifyAuthenticationQuestions,
   createVerifyAuthenticationQuestions,
 } from 'lib/soap/verify-authentication-questions';
-import { createRequestOptions, postGraphQLRequest } from 'lib/utils/helpers';
+import { createRequestOptions, postGraphQLRequest, returnNestedObject } from 'lib/utils/helpers';
 
 import * as https from 'https';
 import * as convert from 'xml-js';
@@ -259,7 +259,10 @@ export const DisputePreflightCheck = async (
   agent: https.Agent,
   auth: string,
 ): Promise<string> => {
-  const variables = {
+  // //call fulfill
+  let report: string;
+  let disputeStatus: string;
+  let variables = {
     id: message,
     agencies: {
       transunion: {
@@ -269,17 +272,38 @@ export const DisputePreflightCheck = async (
       },
     },
   };
-  try {
-    const resp = await postGraphQLRequest(updatePreflightStatus, variables);
-    console.log('resp', resp.data);
-    return JSON.stringify(resp.data);
-  } catch (err) {
-    console.log('error', err);
-    return JSON.stringify(err);
+  // start simple...assume you call the step...it starts and then finishes
+  // try {
+  //   report = await Fulfill(accountCode, username, message, agent, auth);
+  //   // assume we refresh the data in the database for now
+  // } catch (err) {
+  //   console.log('preflight check fulfill error ====> ', err);
+  //   throw new Error(err);
+  //   // updated the preflight check with 'failed'
+  // }
+
+  // try {
+  //   disputeStatus = await GetDisputeStatus(accountCode, username, message, agent, auth);
+  //   disputeStatus = returnNestedObject(JSON.parse(disputeStatus), 'ResponseType');
+  // } catch (err) {
+  //   console.log('preflight check disputeStatus error ====> ', err);
+  //   throw new Error(err);
+  // }
+
+  if (disputeStatus.toLowerCase() === 'success') {
+    // update preflight check to success
+    // call start dispute
+    variables = {
+      id: message,
+      agencies: {
+        transunion: {
+          disputes: {
+            disputePreflightStatus: 'success',
+          },
+        },
+      },
+    };
   }
-  // //call fulfill
-  // results = await proxyHandler['GetServiceProduct'](accountCode, username, message, httpsAgent, auth);
-  //     return JSON.stringify({ GetServiceProduct: results });
-  // //if report is successfull, then call getDisputeStatus, else end
-  // //if eligible for dispute, then call Initiation (but responde with success), else end...
+
+  return 'Success';
 };
