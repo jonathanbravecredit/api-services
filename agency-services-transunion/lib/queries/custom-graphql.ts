@@ -63,3 +63,14 @@ export const updatePreflightStatus = `mutation UpdatePreflightStatus($id: ID!, $
     }
   }
 }`;
+
+/**
+ * Gets the transunion disputes preflight status
+ * @param {ID!} id user identity id
+ * @param {string} disputePreflightStatus 'failed | success'
+ */
+export const patchDisputes = `mutation PatchDisputes($id: ID!, $disputes: Disputes ) {
+  patchDisputes(id: $id, disputes: $disputes) {
+    id
+  }
+}`;

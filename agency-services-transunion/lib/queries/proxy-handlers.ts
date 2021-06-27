@@ -18,7 +18,7 @@ import { createRequestOptions, postGraphQLRequest, returnNestedObject } from 'li
 import * as https from 'https';
 import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
-import { updatePreflightStatus } from 'lib/queries/custom-graphql';
+import { patchDisputes, updatePreflightStatus } from 'lib/queries/custom-graphql';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -264,14 +264,17 @@ export const DisputePreflightCheck = async (
   let disputeStatus: string;
   let variables = {
     id: message,
-    agencies: {
-      transunion: {
-        disputes: {
-          disputePreflightStatus: 'inprogress',
-        },
-      },
+    disputes: {
+      disputePreflightStatus: 'inprogress',
     },
   };
+
+  try {
+    const resp1 = await postGraphQLRequest(patchDisputes, variables);
+    console.log('response 1', resp1);
+  } catch (err) {
+    console.log('error: ===>', err);
+  }
   // start simple...assume you call the step...it starts and then finishes
   // try {
   //   report = await Fulfill(accountCode, username, message, agent, auth);
@@ -290,20 +293,29 @@ export const DisputePreflightCheck = async (
   //   throw new Error(err);
   // }
 
-  if (disputeStatus.toLowerCase() === 'success') {
-    // update preflight check to success
-    // call start dispute
-    variables = {
-      id: message,
-      agencies: {
-        transunion: {
-          disputes: {
-            disputePreflightStatus: 'success',
-          },
-        },
-      },
-    };
+  variables = {
+    id: message,
+    disputes: {
+      disputePreflightStatus: 'success',
+    },
+  };
+  try {
+    const resp2 = await postGraphQLRequest(patchDisputes, variables);
+    console.log('response 2', resp2);
+  } catch (err) {
+    console.log('error: ===>', err);
   }
+
+  // if (disputeStatus.toLowerCase() === 'success') {
+  //   // update preflight check to success
+  //   // call start dispute
+  //   variables = {
+  //     id: message,
+  //     disputes: {
+  //       disputePreflightStatus: 'success',
+  //     }
+  //   };
+  // }
 
   return 'Success';
 };
