@@ -264,9 +264,9 @@ export const DisputePreflightCheck = async (
   let disputeStatus: string;
   let variables = {
     id: message,
-    disputes: {
+    msg: JSON.stringify({
       disputePreflightStatus: 'inprogress',
-    },
+    }),
   };
 
   try {
@@ -295,9 +295,9 @@ export const DisputePreflightCheck = async (
 
   variables = {
     id: message,
-    disputes: {
+    msg: JSON.stringify({
       disputePreflightStatus: 'success',
-    },
+    }),
   };
   try {
     const resp2 = await postGraphQLRequest(patchDisputes, variables);
