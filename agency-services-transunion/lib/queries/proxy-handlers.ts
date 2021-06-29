@@ -6,7 +6,12 @@ import {
   createGetAuthenticationQuestions,
 } from 'lib/soap/get-authentication-questions';
 import { formatGetDisputeStatus, createGetDisputeStatus } from 'lib/soap/get-dispute-status';
-import { formatGetServiceProduct, createGetServiceProduct } from 'lib/soap/get-service-product';
+import {
+  formatGetServiceProduct,
+  createGetServiceProduct,
+  parseCreditBureau,
+  parseInvestigationResults,
+} from 'lib/soap/get-service-product';
 import { formatIndicativeEnrichment, createIndicativeEnrichment } from 'lib/soap/indicative-enrichment';
 import { createPing } from 'lib/soap/ping';
 import {
@@ -19,6 +24,9 @@ import * as https from 'https';
 import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
 import { patchDisputes, updatePreflightStatus } from 'lib/queries/custom-graphql';
+import { createStartDispute, formatStartDispute } from 'lib/soap/start-dispute';
+import { createGetDisputeHistory, formatGetDisputeHistory } from 'lib/soap/get-dispute-history';
+import { formatGetInvestigationResults, createGetInvestigationResults } from 'lib/soap/get-investigation-results';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -225,6 +233,7 @@ export const GetServiceProduct = async (
 
 /**
  * Confirms eligibility to open a dispute
+ *  (Optional) ID can be passsed to check status of open dispute
  * @param {string} accountCode Brave account code
  * @param {string} username Brave user ID (Identity ID)
  * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
@@ -252,6 +261,73 @@ export const GetDisputeStatus = async (
   }
 };
 
+/**
+ * Confirms eligibility to open a dispute
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const StartDispute = async (
+  accountCode: string,
+  username: string,
+  message: string,
+  agent: https.Agent,
+  auth: string,
+): Promise<string> => {
+  const msg = formatStartDispute(accountCode, username, message);
+  const xml = createStartDispute(msg);
+  const options = createRequestOptions(agent, auth, xml, 'StartDispute');
+  if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
+  try {
+    const res = await axios({ ...options });
+    const results = fastXml.parse(res.data, parserOptions); // basic parse for now
+    return JSON.stringify(results);
+  } catch (err) {
+    return JSON.stringify(err);
+  }
+};
+
+/**
+ * Return the dispute history
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const GetDisputeHistory = async (
+  accountCode: string,
+  username: string,
+  message: string,
+  agent: https.Agent,
+  auth: string,
+): Promise<string> => {
+  const msg = formatGetDisputeHistory(accountCode, username, message);
+  const xml = createGetDisputeHistory(msg);
+  const options = createRequestOptions(agent, auth, xml, 'GetDisputeHistory');
+  if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
+  try {
+    const res = await axios({ ...options });
+    const results = fastXml.parse(res.data, parserOptions); // basic parse for now
+    return JSON.stringify(results);
+  } catch (err) {
+    return JSON.stringify(err);
+  }
+};
+
+/**
+ * This performs the preflight check and returns the dispute status eligibility
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
 export const DisputePreflightCheck = async (
   accountCode: string,
   username: string,
@@ -259,8 +335,6 @@ export const DisputePreflightCheck = async (
   agent: https.Agent,
   auth: string,
 ): Promise<string> => {
-  // //call fulfill
-  let report: string;
   let disputeStatus: string;
   let variables = {
     id: message,
@@ -274,48 +348,92 @@ export const DisputePreflightCheck = async (
     console.log('response 1', resp1);
   } catch (err) {
     console.log('error: ===>', err);
+    throw new Error(`Error in initiating Preflight status; Error:${err}`);
   }
-  // start simple...assume you call the step...it starts and then finishes
-  // try {
-  //   report = await Fulfill(accountCode, username, message, agent, auth);
-  //   // assume we refresh the data in the database for now
-  // } catch (err) {
-  //   console.log('preflight check fulfill error ====> ', err);
-  //   throw new Error(err);
-  //   // updated the preflight check with 'failed'
-  // }
 
-  // try {
-  //   disputeStatus = await GetDisputeStatus(accountCode, username, message, agent, auth);
-  //   disputeStatus = returnNestedObject(JSON.parse(disputeStatus), 'ResponseType');
-  // } catch (err) {
-  //   console.log('preflight check disputeStatus error ====> ', err);
-  //   throw new Error(err);
-  // }
+  try {
+    disputeStatus = await GetDisputeStatus(accountCode, username, message, agent, auth);
+    disputeStatus = returnNestedObject(JSON.parse(disputeStatus), 'ResponseType');
+    console.log('dispute status', disputeStatus);
+  } catch (err) {
+    console.log('preflight check disputeStatus error ====> ', err);
+    throw new Error(`Error in GetDisputeStatus; Error:${err}`);
+  }
 
+  const eligibility = disputeStatus.toLowerCase() === 'success' ? 'success' : 'ineligible';
   variables = {
     id: message,
     msg: JSON.stringify({
       disputePreflightStatus: 'success',
+      disputeEligibility: eligibility,
     }),
   };
   try {
     const resp2 = await postGraphQLRequest(patchDisputes, variables);
     console.log('response 2', resp2);
   } catch (err) {
-    console.log('error: ===>', err);
+    throw new Error(`Error in ending Preflight status; Error:${err}`);
   }
 
-  // if (disputeStatus.toLowerCase() === 'success') {
-  //   // update preflight check to success
-  //   // call start dispute
-  //   variables = {
-  //     id: message,
-  //     disputes: {
-  //       disputePreflightStatus: 'success',
-  //     }
-  //   };
-  // }
-
   return 'Success';
+};
+
+/**
+ * This initiates the dispute process
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const DisputeInitiation = async (
+  accountCode: string,
+  username: string,
+  message: string,
+  agent: https.Agent,
+  auth: string,
+): Promise<string> => {
+  try {
+    return await StartDispute(accountCode, username, message, agent, auth);
+  } catch (err) {
+    return JSON.stringify(err);
+  }
+};
+
+/**
+ * This initiates the dispute process
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const GetInvestigationResults = async (
+  accountCode: string,
+  username: string,
+  message: string,
+  agent: https.Agent,
+  auth: string,
+): Promise<string> => {
+  const msg = formatGetInvestigationResults(accountCode, username, message);
+  const xml = createGetInvestigationResults(msg);
+  const options = createRequestOptions(agent, auth, xml, 'GetInvestigationResults');
+  if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
+  try {
+    const res = await axios({ ...options });
+    const xmlOptions = {
+      attributeNamePrefix: '',
+      ignoreAttributes: false,
+      ignoreNameSpace: true,
+      parseAttributeValue: true,
+      arrayMode: false,
+    }; // Overriding default parser options
+    let results = parseCreditBureau(res.data, xmlOptions); // basic parse for now
+    results = parseInvestigationResults(results, xmlOptions);
+    return JSON.stringify(results);
+  } catch (err) {
+    return JSON.stringify(err);
+  }
 };

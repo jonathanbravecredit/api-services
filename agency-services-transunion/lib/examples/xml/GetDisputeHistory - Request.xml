@@ -1,0 +1,24 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:GetDisputeHistory>
+      <con:request>
+        <data:AccountCode>4pGebVt5s</data:AccountCode>
+        <data:AccountName>CCSIntegration</data:AccountName>
+        <data:AdditionalInputs>
+          <data:Data>
+            <data:Name xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Value xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:Data>
+        </data:AdditionalInputs>
+        <data:RequestKey>a8ae0233-a3b1-4873-8cc1-f1bc9c4c0315</data:RequestKey>
+        <data:ClientKey>SR_2018-03-09_13-33-18_DORA</data:ClientKey>
+        <data:EnrollmentKey>7d80a773-9183-412a-a982-fe4f7cac4d6f</data:EnrollmentKey>
+      </con:request>
+    </con:GetDisputeHistory>
+  </soapenv:Body>
+</soapenv:Envelope>

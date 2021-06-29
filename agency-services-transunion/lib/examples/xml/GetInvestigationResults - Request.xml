@@ -1,0 +1,23 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data">
+  <soap:Header/>
+  <soap:Body>
+    <con:GetInvestigationResults>
+      <con:request>
+        <data:AccountCode>?</data:AccountCode>
+        <data:AccountName>?</data:AccountName>
+        <data:AdditionalInputs>
+          <data:Data>
+            <data:Name>?</data:Name>
+            <data:Value>?</data:Value>
+          </data:Data>
+        </data:AdditionalInputs>
+        <data:RequestKey>?</data:RequestKey>
+        <data:ClientKey>?</data:ClientKey>
+        <data:DisputeId>?</data:DisputeId>
+        <data:EnrollmentKey>?</data:EnrollmentKey>
+      </con:request>
+    </con:GetInvestigationResults>
+  </soap:Body>
+</soap:Envelope>

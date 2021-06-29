@@ -71,6 +71,15 @@ export const updatePreflightStatus = `mutation UpdatePreflightStatus($id: ID!, $
  */
 export const patchDisputes = `mutation PatchDisputes($id: ID!, $msg: String ) {
   patchDisputes(id: $id, msg: $msg) {
-    id
+    disputePreflightStatus
+    disputeInflightStatus
+    disputeEligibility
+    disputeResults
+    modifiedOn
+    createdOn
+    notificationStatus
+    notificationMessage
+    notificationSentOn
+    disputeHistory
   }
 }`;

@@ -1,0 +1,26 @@
+{
+  "Envelope": {
+    "Header": "",
+    "Body": {
+      "GetDisputeHistory": {
+        "request": {
+          "AccountCode": "4pGebVt5s",
+          "AccountName": "CCSIntegration",
+          "AdditionalInputs": {
+            "Data": {
+              "Name": {
+                "nil": true
+              },
+              "Value": {
+                "nil": true
+              }
+            }
+          },
+          "RequestKey": "a8ae0233-a3b1-4873-8cc1-f1bc9c4c0315",
+          "ClientKey": "SR_2018-03-09_13-33-18_DORA",
+          "EnrollmentKey": "7d80a773-9183-412a-a982-fe4f7cac4d6f"
+        }
+      }
+    }
+  }
+}

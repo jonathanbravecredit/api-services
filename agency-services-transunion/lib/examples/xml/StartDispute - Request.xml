@@ -1,0 +1,113 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data"
+  xmlns:arr="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:StartDispute>
+      <con:request>
+        <data:AccountCode>4pGebVt5s</data:AccountCode>
+        <data:AccountName>CCSIntegration</data:AccountName>
+        <data:RequestKey>f8958f94-4842-4142-a9a7-ff05523ec414</data:RequestKey>
+        <data:ClientKey>SR_2018-03-09_13-33-18_DORA</data:ClientKey>
+        <data:ConsumerStatement>
+          <data:Codes>
+            <!--Zero or more repetitions:-->
+            <arr:string xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <arr:string>12345</arr:string>
+          </data:Codes>
+          <data:Comment>Testing for OCP changes</data:Comment>
+          <data:Delete>false</data:Delete>
+          <data:ExpirationDate>2018-04-13</data:ExpirationDate>
+        </data:ConsumerStatement>
+        <data:Customer>
+          <data:CurrentAddress>
+            <data:AddressLine1>384 PO BOX 384</data:AddressLine1>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:City>BRAHAM</data:City>
+            <data:State>MN</data:State>
+            <data:Zipcode>55006</data:Zipcode>
+          </data:CurrentAddress>
+          <data:DateOfBirth>1973-11-01</data:DateOfBirth>
+          <data:FullName>
+            <data:FirstName>DORA</data:FirstName>
+            <data:LastName>JULIEN</data:LastName>
+            <data:MiddleName>G</data:MiddleName>
+            <data:Prefix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Suffix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:FullName>
+          <data:PhoneNumber>5053923096</data:PhoneNumber>
+          <data:Ssn>471866871</data:Ssn>
+          <data:DisputePhoneNumber>
+            <data:Extension xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Number>3923096</data:Number>
+            <data:AreaCode>505</data:AreaCode>
+            <data:CountryCode>1</data:CountryCode>
+          </data:DisputePhoneNumber>
+          <data:Gender>Male</data:Gender>
+          <data:Identifier>
+            <data:CustomerIdentifier>
+              <data:Id>471866871</data:Id>
+              <data:IdentifierType>SocialId</data:IdentifierType>
+            </data:CustomerIdentifier>
+          </data:Identifier>
+        </data:Customer>
+        <data:EnrollmentKey>7d80a773-9183-412a-a982-fe4f7cac4d6f</data:EnrollmentKey>
+        <data:IndicativeDisputes>
+          <data:Address>
+            <data:AddressLine1>123 Cross Street</data:AddressLine1>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:City>Chicago</data:City>
+            <data:State>IL</data:State>
+            <data:Zipcode>60662</data:Zipcode>
+          </data:Address>
+          <data:DeleteAddress>false</data:DeleteAddress>
+          <data:PreviousAddress xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          <data:PhoneNumber>
+            <!--Zero or more repetitions:-->
+            <data:ValueData>
+              <data:Delete>false</data:Delete>
+              <data:Value>987654321</data:Value>
+            </data:ValueData>
+          </data:PhoneNumber>
+        </data:IndicativeDisputes>
+        <data:LineItems>
+          <!--Zero or more repetitions:-->
+          <data:LineItem>
+            <data:ClaimCodes>
+              <!--Zero or more repetitions:-->
+              <data:ClaimCode>
+                <data:Balance xsi:nil="true"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+                <data:Code>A3</data:Code>
+              </data:ClaimCode>
+            </data:ClaimCodes>
+            <data:CreditReportItem>TR01_922340180_-22249854_82</data:CreditReportItem>
+            <data:LineItemComment>Account Tradeline</data:LineItemComment>
+            <data:UploadDocumentId xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:LineItem>
+          <data:LineItem>
+            <data:ClaimCodes>
+              <data:ClaimCode>
+                <data:Code>P3</data:Code>
+              </data:ClaimCode>
+            </data:ClaimCodes>
+            <data:CreditReportItem>PR01_1618166926_-1683362106</data:CreditReportItem>
+            <data:LineItemComment>Public TradeLine</data:LineItemComment>
+          </data:LineItem>
+        </data:LineItems>
+        <data:ServiceBundleFulfillmentKey>7acf666a-2b7f-4ab2-a2f6-2f00b6c6914a</data:ServiceBundleFulfillmentKey>
+        <data:ServiceProductFulfillmentKey xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+      </con:request>
+    </con:StartDispute>
+  </soapenv:Body>
+</soapenv:Envelope>

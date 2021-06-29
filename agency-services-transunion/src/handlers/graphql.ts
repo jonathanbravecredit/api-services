@@ -98,9 +98,21 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       case 'GetDisputeStatus':
         results = await queries.GetDisputeStatus(accountCode, username, message, httpsAgent, auth);
         return JSON.stringify({ GetDisputeStatus: results });
+      case 'StartDispute':
+        results = await queries.StartDispute(accountCode, username, message, httpsAgent, auth);
+        return JSON.stringify({ StartDispute: results });
+      case 'GetDisputeHistory':
+        results = await queries.GetDisputeHistory(accountCode, username, message, httpsAgent, auth);
+        return JSON.stringify({ GetDisputeHistory: results });
       case 'DisputePreflightCheck':
         results = await queries.DisputePreflightCheck(accountCode, username, message, httpsAgent, auth);
         return JSON.stringify({ DisputePreflightCheck: results });
+      case 'DisputeInitiation':
+        results = await queries.DisputeInitiation(accountCode, username, message, httpsAgent, auth);
+        return JSON.stringify({ DisputeInitiation: results });
+      case 'GetInvestigationResults':
+        results = await queries.GetInvestigationResults(accountCode, username, message, httpsAgent, auth);
+        return JSON.stringify({ GetInvestigationResults: results });
       default:
         return JSON.stringify({ Action: action, Error: 'Action not found' });
     }

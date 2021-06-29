@@ -1,0 +1,19 @@
+{
+  "Envelope": {
+    "Body": {
+      "GetInvestigationResultsResponse": {
+        "GetInvestigationResultsResult": {
+          "AccountName": "CCSIntegration",
+          "ErrorResponse": {
+            "nil": true
+          },
+          "RequestKey": "f214bb46-e1db-47a0-9e12-8aa90e5a922b",
+          "ResponseType": "Success",
+          "ClientKey": "SR_2018-03-09_13-33-18_DORA",
+          "CreditBureau": "CDATA",
+          "InvestigationResults": "CDATA"
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
-import { textConstructor } from 'lib/utils/helpers';
+import { returnNestedObject, textConstructor, updateNestedObject } from 'lib/utils/helpers';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
+import * as fastXml from 'fast-xml-parser';
 import { IGetServiceProduct, IGetServiceProductMsg } from 'lib/interfaces/get-service-product.interface';
 
 /**
@@ -61,4 +62,36 @@ export const createGetServiceProduct = (msg: IGetServiceProduct): string => {
   };
   const xml = convert.json2xml(JSON.stringify(xmlObj), { compact: true, spaces: 4 });
   return xml;
+};
+
+/**
+ * Parse the Fulfill response including the embedded Service Product Objects
+ * @param xml
+ * @returns
+ */
+export const parseCreditBureau = (xml: string, options: any): any => {
+  const obj: any = returnNestedObject(fastXml.parse(xml, options), 'GetInvestigationResultsResponse');
+  const creditBureau = returnNestedObject(obj, 'CreditBureau');
+  if (typeof creditBureau === 'string') {
+    let clean = creditBureau.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
+    return updateNestedObject(obj, 'CreditBureau', clean);
+  } else {
+    return obj;
+  }
+};
+
+/**
+ * Parse the Fulfill response including the embedded Service Product Objects
+ * @param xml
+ * @returns
+ */
+export const parseInvestigationResults = (xml: string, options: any): any => {
+  const obj: any = returnNestedObject(fastXml.parse(xml, options), 'GetInvestigationResultsResponse');
+  const investigationResults = returnNestedObject(obj, 'InvestigationResults');
+  if (typeof investigationResults === 'string') {
+    let clean = investigationResults.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
+    return updateNestedObject(obj, 'InvestigationResults', clean);
+  } else {
+    return obj;
+  }
 };

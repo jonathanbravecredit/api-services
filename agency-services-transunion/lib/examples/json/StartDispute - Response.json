@@ -1,0 +1,36 @@
+{
+  "Envelope": {
+    "Body": {
+      "StartDisputeResponse": {
+        "StartDisputeResult": {
+          "AccountName": "CCSIntegration",
+          "ErrorResponse": {
+            "nil": true
+          },
+          "RequestKey": "f8958f94-4842-4142-a9a7-ff05523ec414",
+          "ResponseType": "Success",
+          "ClientKey": "SR_2018-03-09_13-33-18_DORA",
+          "DisputeStatus": {
+            "DisputeStatusDetail": {
+              "DisputeId": 4606,
+              "LetterStatus": {
+                "DisputeLetterCode": "FIN 000300010987 - Dispute Status DORA G\n                              JULIEN",
+                "DisputeLetterContent": "Thank you for contacting TransUnion. Our goal is\n                              to maintain complete and accurate information on consumer credit\n                              reports. Re: Dispute Status We received your request on 03/09/2018\n                              and are currently processing it. When the investigation is\n                              completed, you will receive a response and/or a copy of your updated\n                              credit report to notify you of the results. If you have any\n                              additional questions or concerns, please contact TransUnion at the\n                              address shown below, or visit us on the web at the following web\n                              site to check the status of your dispute. We update the status page\n                              once each business day. When contacting our office, please provide\n                              your current file number 300010987. Web Site: https://dispute.transunion.com?src=email TransUnion Consumer\n                              Relations P.O. Box 2000 Chester, PA 19022-2000 Please do not reply\n                              to this email as this is a system generated\n                              email."
+              },
+              "OpenDisputes": {
+                "EstimatedCompletionDate": "4/8/2018",
+                "LastUpdatedDate": "3/9/2018",
+                "OpenDate": "3/9/2018",
+                "RequestedDate": "3/9/2018",
+                "TotalClosedDisputedItems": 1,
+                "TotalDisputedItems": 2,
+                "TotalOpenDisputedItems": 1
+              },
+              "Status": "openDispute"
+            }
+          }
+        }
+      }
+    }
+  }
+}
