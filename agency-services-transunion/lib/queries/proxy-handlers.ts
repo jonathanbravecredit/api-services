@@ -250,6 +250,7 @@ export const GetDisputeStatus = async (
 ): Promise<string> => {
   const msg = formatGetDisputeStatus(accountCode, username, message);
   const xml = createGetDisputeStatus(msg);
+  console.log('xml', xml);
   const options = createRequestOptions(agent, auth, xml, 'GetDisputeStatus');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
