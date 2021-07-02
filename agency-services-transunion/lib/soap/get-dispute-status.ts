@@ -48,6 +48,7 @@ export const createGetDisputeStatus = (msg: IGetDisputeStatus): string => {
             'data:AccountCode': textConstructor(msg.request.AccountCode),
             'data:AccountName': textConstructor(msg.request.AccountName),
             'data:RequestKey': textConstructor(`BC-${uuid.v4()}`),
+            'data:ClientKey': textConstructor(msg.request.ClientKey),
             'data:Customer': {
               'data:CurrentAddress': {
                 'data:AddressLine1': textConstructor(msg.request.Customer.CurrentAddress.AddressLine1),
