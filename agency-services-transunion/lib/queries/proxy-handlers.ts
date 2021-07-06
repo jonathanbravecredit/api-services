@@ -27,6 +27,10 @@ import { patchDisputes, updatePreflightStatus } from 'lib/queries/custom-graphql
 import { createStartDispute, formatStartDispute } from 'lib/soap/start-dispute';
 import { createGetDisputeHistory, formatGetDisputeHistory } from 'lib/soap/get-dispute-history';
 import { formatGetInvestigationResults, createGetInvestigationResults } from 'lib/soap/get-investigation-results';
+import { GET_DISPUTE_STATUS_RESPONSE } from 'lib/examples/mocks/GetDisputeStatusResponse';
+import { START_DISPUTE_RESPONSE } from 'lib/examples/mocks/StartDisputeResponse';
+import { GET_INVESTIGATION_RESULTS_RESPONSE } from 'lib/examples/mocks/GetInvestigationResultsResponse';
+import { GET_DISPUTE_HISTORY_RESPONSE } from 'lib/examples/mocks/GetDisputeHistoryResponse';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -254,8 +258,10 @@ export const GetDisputeStatus = async (
   const options = createRequestOptions(agent, auth, xml, 'GetDisputeStatus');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    const res = await axios({ ...options });
-    const results = fastXml.parse(res.data, parserOptions); // basic parse for now
+    // const res = await axios({ ...options });
+    // const results = fastXml.parse(res.data, parserOptions); // basic parse for now
+    const res = GET_DISPUTE_STATUS_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
+    const results = fastXml.parse(res, parserOptions); // TODO sending back mocks until TU can set us up on disputes
     return JSON.stringify(results);
   } catch (err) {
     return JSON.stringify(err);
@@ -280,11 +286,14 @@ export const StartDispute = async (
 ): Promise<string> => {
   const msg = formatStartDispute(accountCode, username, message);
   const xml = createStartDispute(msg);
+
   const options = createRequestOptions(agent, auth, xml, 'StartDispute');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    const res = await axios({ ...options });
-    const results = fastXml.parse(res.data, parserOptions); // basic parse for now
+    // const res = await axios({ ...options });
+    // const results = fastXml.parse(res.data, parserOptions); // basic parse for now
+    const res = START_DISPUTE_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
+    const results = fastXml.parse(res, parserOptions); // TODO sending back mocks until TU can set us up on disputes
     return JSON.stringify(results);
   } catch (err) {
     return JSON.stringify(err);
@@ -312,8 +321,10 @@ export const GetDisputeHistory = async (
   const options = createRequestOptions(agent, auth, xml, 'GetDisputeHistory');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    const res = await axios({ ...options });
-    const results = fastXml.parse(res.data, parserOptions); // basic parse for now
+    // const res = await axios({ ...options });
+    // const results = fastXml.parse(res.data, parserOptions); // basic parse for now
+    const res = GET_DISPUTE_HISTORY_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
+    let results = fastXml.parse(res, parserOptions); // TODO sending back mocks until TU can set us up on disputes
     return JSON.stringify(results);
   } catch (err) {
     return JSON.stringify(err);
@@ -423,7 +434,6 @@ export const GetInvestigationResults = async (
   const options = createRequestOptions(agent, auth, xml, 'GetInvestigationResults');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    const res = await axios({ ...options });
     const xmlOptions = {
       attributeNamePrefix: '',
       ignoreAttributes: false,
@@ -431,7 +441,10 @@ export const GetInvestigationResults = async (
       parseAttributeValue: true,
       arrayMode: false,
     }; // Overriding default parser options
-    let results = parseCreditBureau(res.data, xmlOptions); // basic parse for now
+    // const res = await axios({ ...options });
+    // let results = parseCreditBureau(res.data, xmlOptions);
+    const res = GET_INVESTIGATION_RESULTS_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
+    let results = parseCreditBureau(res, xmlOptions); // TODO sending back mocks until TU can set us up on disputes
     results = parseInvestigationResults(results, xmlOptions);
     return JSON.stringify(results);
   } catch (err) {
