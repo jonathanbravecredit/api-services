@@ -1,4 +1,4 @@
-export const GET_INVESTIGATION_RESULTS_RESPONS = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+export const GET_INVESTIGATION_RESULTS_RESPONSE = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
 <s:Body>
   <GetInvestigationResultsResponse xmlns="https://consumerconnectws.tui.transunion.com/">
     <GetInvestigationResultsResult xmlns:a="https://consumerconnectws.tui.transunion.com/data"
