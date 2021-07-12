@@ -258,10 +258,10 @@ export const GetDisputeStatus = async (
   const options = createRequestOptions(agent, auth, xml, 'GetDisputeStatus');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    // const res = await axios({ ...options });
-    // const results = fastXml.parse(res.data, parserOptions); // basic parse for now
-    const res = GET_DISPUTE_STATUS_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
-    const results = fastXml.parse(res, parserOptions); // TODO sending back mocks until TU can set us up on disputes
+    const res = await axios({ ...options });
+    const results = fastXml.parse(res.data, parserOptions); // basic parse for now
+    // const res = GET_DISPUTE_STATUS_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
+    // const results = fastXml.parse(res, parserOptions); // TODO sending back mocks until TU can set us up on disputes
     return JSON.stringify(results);
   } catch (err) {
     return JSON.stringify(err);
@@ -290,10 +290,10 @@ export const StartDispute = async (
   const options = createRequestOptions(agent, auth, xml, 'StartDispute');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    // const res = await axios({ ...options });
-    // const results = fastXml.parse(res.data, parserOptions); // basic parse for now
-    const res = START_DISPUTE_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
-    const results = fastXml.parse(res, parserOptions); // TODO sending back mocks until TU can set us up on disputes
+    const res = await axios({ ...options });
+    const results = fastXml.parse(res.data, parserOptions); // basic parse for now
+    // const res = START_DISPUTE_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
+    // const results = fastXml.parse(res, parserOptions); // TODO sending back mocks until TU can set us up on disputes
     return JSON.stringify(results);
   } catch (err) {
     return JSON.stringify(err);
@@ -321,10 +321,10 @@ export const GetDisputeHistory = async (
   const options = createRequestOptions(agent, auth, xml, 'GetDisputeHistory');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    // const res = await axios({ ...options });
-    // const results = fastXml.parse(res.data, parserOptions); // basic parse for now
-    const res = GET_DISPUTE_HISTORY_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
-    let results = fastXml.parse(res, parserOptions); // TODO sending back mocks until TU can set us up on disputes
+    const res = await axios({ ...options });
+    const results = fastXml.parse(res.data, parserOptions); // basic parse for now
+    // const res = GET_DISPUTE_HISTORY_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
+    // let results = fastXml.parse(res, parserOptions); // TODO sending back mocks until TU can set us up on disputes
     return JSON.stringify(results);
   } catch (err) {
     return JSON.stringify(err);
@@ -441,10 +441,10 @@ export const GetInvestigationResults = async (
       parseAttributeValue: true,
       arrayMode: false,
     }; // Overriding default parser options
-    // const res = await axios({ ...options });
-    // let results = parseCreditBureau(res.data, xmlOptions);
-    const res = GET_INVESTIGATION_RESULTS_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
-    let results = parseCreditBureau(res, xmlOptions); // TODO sending back mocks until TU can set us up on disputes
+    const res = await axios({ ...options });
+    let results = parseCreditBureau(res.data, xmlOptions);
+    // const res = GET_INVESTIGATION_RESULTS_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
+    // let results = parseCreditBureau(res, xmlOptions); // TODO sending back mocks until TU can set us up on disputes
     results = parseInvestigationResults(results, xmlOptions);
     return JSON.stringify(results);
   } catch (err) {
