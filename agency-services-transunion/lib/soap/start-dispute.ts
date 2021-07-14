@@ -195,14 +195,14 @@ export const mapClaimCodes = (codes: IClaimCode | IClaimCode[]) => {
  * @returns
  */
 export const createStartDispute = (msg: IStartDispute): string => {
-  let attachments = msg.request.Attachment;
-  let mappedAttachments = mapAttachments(attachments);
+  // let attachments = msg.request.Attachment;
+  // let mappedAttachments = mapAttachments(attachments);
 
-  let employers = msg.request.Employers;
-  let mappedEmployers = mapEmployers(employers);
+  // let employers = msg.request.Employers;
+  // let mappedEmployers = mapEmployers(employers);
 
-  let indicativeDisputes = msg.request.IndicativeDisputes;
-  let mappedIndicativeDisputes = mapIndicativeDisputes(indicativeDisputes);
+  // let indicativeDisputes = msg.request.IndicativeDisputes;
+  // let mappedIndicativeDisputes = mapIndicativeDisputes(indicativeDisputes);
 
   let lineItems = msg.request.LineItems;
   let mappedLineItems = mapLineItems(lineItems);
@@ -224,7 +224,7 @@ export const createStartDispute = (msg: IStartDispute): string => {
             'data:AccountName': textConstructor(msg.request.AccountName),
             'data:RequestKey': textConstructor(`BC-${uuid.v4()}`),
             'data:ClientKey': textConstructor(msg.request.ClientKey),
-            'data:Attachment': mappedAttachments,
+            // 'data:Attachment': mappedAttachments,
             'data:Customer': {
               'data:CurrentAddress': {
                 'data:AddressLine1': textConstructor(msg.request.Customer.CurrentAddress.AddressLine1),
@@ -244,9 +244,9 @@ export const createStartDispute = (msg: IStartDispute): string => {
               'data:PhoneNumber': textConstructor(msg.request.Customer.PhoneNumber, true),
               'data:Ssn': textConstructor(msg.request.Customer.Ssn),
             },
-            'data:Employers': mappedEmployers,
+            // 'data:Employers': mappedEmployers,
             'data:EnrollmentKey': textConstructor(msg.request.EnrollmentKey),
-            'data:IndicativeDisputes': mappedIndicativeDisputes,
+            // 'data:IndicativeDisputes': mappedIndicativeDisputes,
             'data:LineItems': mappedLineItems,
             'data:ServiceBundleFulfillmentKey': textConstructor(msg.request.ServiceBundleFulfillmentKey),
             'data:ServiceProductFulfillmentKey': textConstructor(msg.request.ServiceProductFulfillmentKey),
