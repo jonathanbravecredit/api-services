@@ -36,6 +36,12 @@ export const createEnroll = (msg: IEnroll): string => {
           'con:request': {
             'data:AccountCode': textConstructor(msg.request.AccountCode),
             'data:AccountName': textConstructor(msg.request.AccountName),
+            'data:AdditionalInputs': {
+              'data:Data': {
+                'data:Name': textConstructor('CreditReportVersion'),
+                'data:Value': textConstructor('7.1'),
+              },
+            },
             'data:RequestKey': textConstructor(`BC-${uuid.v4()}`),
             'data:ClientKey': textConstructor(msg.request.ClientKey),
             'data:Customer': {
