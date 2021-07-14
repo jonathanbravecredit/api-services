@@ -170,9 +170,9 @@ export const Enroll = async (
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
     const res = await axios({ ...options });
-    console.log('res ===> ', JSON.stringify(res));
+    console.log('res ===> ', res);
     const results = parseEnroll(res.data, parserOptions); // a more robust parser to parse nested objects
-    console.log('results ===> ', JSON.stringify(results));
+    console.log('results ===> ', results);
     return JSON.stringify(results);
   } catch (err) {
     console.log('err ===> ', err);
