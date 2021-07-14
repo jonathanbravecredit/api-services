@@ -39,7 +39,7 @@ export const createEnroll = (msg: IEnroll): string => {
             'data:AdditionalInputs': {
               'data:Data': {
                 'data:Name': textConstructor('CreditReportVersion'),
-                'data:Value': textConstructor('7.1'),
+                'data:Value': textConstructor(msg.request.AdditionalInputs?.Data.Value || '7'),
               },
             },
             'data:RequestKey': textConstructor(`BC-${uuid.v4()}`),

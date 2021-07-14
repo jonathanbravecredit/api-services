@@ -36,6 +36,12 @@ export const createFulfill = (msg: IFulfill): string => {
           'con:request': {
             'data:AccountCode': textConstructor(msg.request.AccountCode),
             'data:AccountName': textConstructor(msg.request.AccountName),
+            'data:AdditionalInputs': {
+              'data:Data': {
+                'data:Name': textConstructor('CreditReportVersion'),
+                'data:Value': textConstructor(msg.request.AdditionalInputs?.Data.Value || '7'),
+              },
+            },
             'data:RequestKey': textConstructor(`BC-${uuid.v4()}`),
             'data:ClientKey': textConstructor(msg.request.ClientKey),
             'data:Customer': {
