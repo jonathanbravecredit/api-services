@@ -175,6 +175,7 @@ export const Enroll = async (
     console.log('results ===> ', JSON.stringify(results));
     return JSON.stringify(results);
   } catch (err) {
+    console.log('err ===> ', err);
     return JSON.stringify(err);
   }
 };
@@ -210,6 +211,7 @@ export const Fulfill = async (
     // get the current
     return JSON.stringify(results);
   } catch (err) {
+    console.log('err ===> ', err);
     return JSON.stringify(err);
   }
 };
