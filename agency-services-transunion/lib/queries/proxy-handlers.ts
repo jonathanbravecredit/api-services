@@ -18,7 +18,13 @@ import {
   formatVerifyAuthenticationQuestions,
   createVerifyAuthenticationQuestions,
 } from 'lib/soap/verify-authentication-questions';
-import { createRequestOptions, postGraphQLRequest, returnNestedObject } from 'lib/utils/helpers';
+import {
+  createPackage,
+  createRequestOptions,
+  postGraphQLRequest,
+  processRequest,
+  returnNestedObject,
+} from 'lib/utils/helpers';
 
 import * as https from 'https';
 import * as convert from 'xml-js';
@@ -27,10 +33,8 @@ import { patchDisputes, updatePreflightStatus } from 'lib/queries/custom-graphql
 import { createStartDispute, formatStartDispute } from 'lib/soap/start-dispute';
 import { createGetDisputeHistory, formatGetDisputeHistory } from 'lib/soap/get-dispute-history';
 import { formatGetInvestigationResults, createGetInvestigationResults } from 'lib/soap/get-investigation-results';
-import { GET_DISPUTE_STATUS_RESPONSE } from 'lib/examples/mocks/GetDisputeStatusResponse';
-import { START_DISPUTE_RESPONSE } from 'lib/examples/mocks/StartDisputeResponse';
-import { GET_INVESTIGATION_RESULTS_RESPONSE } from 'lib/examples/mocks/GetInvestigationResultsResponse';
-import { GET_DISPUTE_HISTORY_RESPONSE } from 'lib/examples/mocks/GetDisputeHistoryResponse';
+import { IFulfillResponse } from 'lib/interfaces/fulfill.interface';
+import { IEnrollResponse } from 'lib/interfaces/enroll.interface';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -47,14 +51,18 @@ const parserOptions = {
  */
 export const Ping = async (agent: https.Agent, auth: string): Promise<string> => {
   const xml = createPing();
+  console.log('xml ===> ', xml);
   const options = createRequestOptions(agent, auth, xml, 'Ping');
   if (!xml || !options) throw new Error(`Missing xml:${xml}, or options:${options}`);
   try {
     const res = await axios({ ...options });
-    const results = convert.xml2json(res.data, { compact: true }); // TODO switch over to fast-xml-parser...handles data much better
+    console.log('res ===> ', JSON.stringify(res.data));
+    const results = fastXml.parse(res.data, parserOptions);
+    console.log('results ===> ', JSON.stringify(results));
     return results;
   } catch (err) {
-    return JSON.stringify(err);
+    console.log('err ===> ', err);
+    return err;
   }
 };
 
@@ -74,16 +82,20 @@ export const IndicativeEnrichment = async (
   agent: https.Agent,
   auth: string,
 ): Promise<string> => {
-  const msg = formatIndicativeEnrichment(accountCode, username, message);
-  const xml = createIndicativeEnrichment(msg);
+  const { msg, xml } = createPackage(
+    accountCode,
+    username,
+    message,
+    formatIndicativeEnrichment,
+    createIndicativeEnrichment,
+  );
   const options = createRequestOptions(agent, auth, xml, 'IndicativeEnrichment');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    const res = await axios({ ...options });
-    const results = convert.xml2json(res.data, { compact: true }); // TODO need to switch over to new parser
-    return results;
+    return processRequest(options, fastXml.parse, parserOptions);
   } catch (err) {
-    return JSON.stringify(err);
+    console.log('err ===> ', err);
+    return err;
   }
 };
 
@@ -104,15 +116,20 @@ export const GetAuthenticationQuestions = async (
   auth: string,
 ): Promise<string> => {
   const msg = formatGetAuthenticationQuestions(accountCode, username, message);
+  console.log('msg ===> ', msg);
   const xml = createGetAuthenticationQuestions(msg);
+  console.log('xml ===> ', xml);
   const options = createRequestOptions(agent, auth, xml, 'GetAuthenticationQuestions');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
     const res = await axios({ ...options });
-    const results = convert.xml2json(res.data, { compact: true }); // TODO need to switch over to new parser
+    console.log('res ===> ', JSON.stringify(res.data));
+    const results = fastXml.parse(res.data, parserOptions);
+    console.log('results ===> ', JSON.stringify(results));
     return results;
   } catch (err) {
-    return JSON.stringify(err);
+    console.log('err ===> ', err);
+    return err;
   }
 };
 
@@ -133,15 +150,20 @@ export const VerifyAuthenticationQuestions = async (
   auth: string,
 ): Promise<string> => {
   const msg = formatVerifyAuthenticationQuestions(accountCode, username, message);
+  console.log('msg ===> ', msg);
   const xml = createVerifyAuthenticationQuestions(msg);
+  console.log('xml ===> ', xml);
   const options = createRequestOptions(agent, auth, xml, 'VerifyAuthenticationQuestions');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
     const res = await axios({ ...options });
-    const results = fastXml.parse(res.data); // TODO need to update with options
+    console.log('res ===> ', JSON.stringify(res.data));
+    const results = fastXml.parse(res.data, parserOptions); // TODO need to update with options
+    console.log('results ===> ', JSON.stringify(results));
     return results;
   } catch (err) {
-    return JSON.stringify(err);
+    console.log('err ===> ', err);
+    return err;
   }
 };
 
@@ -161,22 +183,22 @@ export const Enroll = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<string> => {
+): Promise<IEnrollResponse> => {
   const msg = formatEnroll(accountCode, username, message);
-  console.log('msg ===> ', JSON.stringify(msg));
+  console.log('msg ===> ', msg);
   const xml = createEnroll(msg);
   console.log('xml ===> ', xml);
   const options = createRequestOptions(agent, auth, xml, 'Enroll');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
     const res = await axios({ ...options });
-    console.log('res ===> ', res);
+    console.log('res ===> ', JSON.stringify(res.data));
     const results = parseEnroll(res.data, parserOptions); // a more robust parser to parse nested objects
-    console.log('results ===> ', results);
-    return JSON.stringify(results);
+    console.log('results ===> ', results.EnrollResult);
+    return results;
   } catch (err) {
     console.log('err ===> ', err);
-    return JSON.stringify(err);
+    return err;
   }
 };
 
@@ -195,9 +217,9 @@ export const Fulfill = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<string> => {
+): Promise<IFulfillResponse> => {
   const msg = formatFulfill(accountCode, username, message);
-  console.log('msg ===> ', JSON.stringify(msg));
+  console.log('msg ===> ', msg);
   const xml = createFulfill(msg);
   console.log('xml ===> ', xml);
   const options = createRequestOptions(agent, auth, xml, 'Fulfill');
@@ -207,12 +229,10 @@ export const Fulfill = async (
     console.log('res ===> ', res);
     const results = parseFulfill(res.data, parserOptions); // a more robust parser to parse nested objects
     console.log('results ===> ', results);
-    // write to the database.
-    // get the current
-    return JSON.stringify(results);
+    return results;
   } catch (err) {
     console.log('err ===> ', err);
-    return JSON.stringify(err);
+    return err;
   }
 };
 
@@ -239,9 +259,9 @@ export const GetServiceProduct = async (
   try {
     const res = await axios({ ...options });
     const results = fastXml.parse(res.data, parserOptions); // basic parse for now
-    return JSON.stringify(results);
+    return results;
   } catch (err) {
-    return JSON.stringify(err);
+    return err;
   }
 };
 
@@ -272,9 +292,9 @@ export const GetDisputeStatus = async (
     const results = fastXml.parse(res.data, parserOptions); // basic parse for now
     // const res = GET_DISPUTE_STATUS_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
     // const results = fastXml.parse(res, parserOptions); // TODO sending back mocks until TU can set us up on disputes
-    return JSON.stringify(results);
+    return results;
   } catch (err) {
-    return JSON.stringify(err);
+    return err;
   }
 };
 
@@ -308,9 +328,9 @@ export const StartDispute = async (
     console.log('results ===> ', results);
     // const res = START_DISPUTE_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
     // const results = fastXml.parse(res, parserOptions); // TODO sending back mocks until TU can set us up on disputes
-    return JSON.stringify(results);
+    return results;
   } catch (err) {
-    return JSON.stringify(err);
+    return err;
   }
 };
 
@@ -339,9 +359,9 @@ export const GetDisputeHistory = async (
     const results = fastXml.parse(res.data, parserOptions); // basic parse for now
     // const res = GET_DISPUTE_HISTORY_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
     // let results = fastXml.parse(res, parserOptions); // TODO sending back mocks until TU can set us up on disputes
-    return JSON.stringify(results);
+    return results;
   } catch (err) {
-    return JSON.stringify(err);
+    return err;
   }
 };
 
@@ -460,8 +480,8 @@ export const GetInvestigationResults = async (
     // const res = GET_INVESTIGATION_RESULTS_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
     // let results = parseCreditBureau(res, xmlOptions); // TODO sending back mocks until TU can set us up on disputes
     results = parseInvestigationResults(results, xmlOptions);
-    return JSON.stringify(results);
+    return results;
   } catch (err) {
-    return JSON.stringify(err);
+    return err;
   }
 };

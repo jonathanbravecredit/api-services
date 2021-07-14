@@ -1,12 +1,69 @@
 import { IRequestOptions } from 'lib/interfaces/api.interfaces';
 import * as https from 'https';
 import * as aws4 from 'aws4';
+import * as fastXml from 'fast-xml-parser';
 import axios, { AxiosResponse } from 'axios';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
 
 const appsyncUrl = process.env.APPSYNC_ENDPOINT;
 const region = process.env.AWS_REGION;
+
+/**
+ * Generic method to create package to send to TU
+ * - uses callbacks to create message and xml messages
+ * @param code
+ * @param username
+ * @param message
+ * @param cbMsg
+ * @param cbXml
+ * @returns
+ */
+export const createPackage = (
+  code: string,
+  username: string,
+  message: string,
+  cbMsg: (code: string, username: string, message: string) => void,
+  cbXml: (msg: any) => void,
+): { msg: any; xml: any } => {
+  const msg = cbMsg(code, username, message);
+  console.log('msg ===> ', msg, JSON.stringify(msg));
+  const xml = cbXml(msg);
+  console.log('xml ===> ', xml);
+  return {
+    msg,
+    xml,
+  };
+};
+
+/**
+ * Generic method to process the axios request to send to TU
+ * - uses the parser provided to process return message
+ * @param options
+ * @param parser
+ * @param parserOptions
+ * @returns
+ */
+export const processRequest = async (
+  options: IRequestOptions,
+  parser: (
+    xmlData: string,
+    options?: Partial<fastXml.X2jOptions>,
+    validationOptions?: boolean | Partial<fastXml.validationOptions>,
+  ) => void,
+  parserOptions: Partial<fastXml.X2jOptions>,
+) => {
+  try {
+    const res = await axios({ ...options });
+    console.log('res ===> ', JSON.stringify(res.data));
+    const results = parser(res.data, parserOptions);
+    console.log('results ===> ', JSON.stringify(results));
+    return results;
+  } catch (err) {
+    console.log('err ===> ', err);
+    return err;
+  }
+};
 
 /**
  * Processes generic graphql requests

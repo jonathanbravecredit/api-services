@@ -71,7 +71,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       passphrase,
     });
 
-    let results;
+    let results: any;
     // do something
     switch (action) {
       case 'Ping':

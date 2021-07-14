@@ -79,7 +79,7 @@ export const createFulfill = (msg: IFulfill): string => {
 /**
  * Parse the Fulfill response including the embedded Service Product Objects
  * @param xml
- * @returns
+ * @returns IFulfillResponse
  */
 export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
   const obj: IFulfillResponse = returnNestedObject(fastXml.parse(xml, options), 'FulfillResponse');
