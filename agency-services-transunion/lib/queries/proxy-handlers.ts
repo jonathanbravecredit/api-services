@@ -163,12 +163,16 @@ export const Enroll = async (
   auth: string,
 ): Promise<string> => {
   const msg = formatEnroll(accountCode, username, message);
+  console.log('msg ===> ', JSON.stringify(msg));
   const xml = createEnroll(msg);
+  console.log('xml ===> ', xml);
   const options = createRequestOptions(agent, auth, xml, 'Enroll');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
     const res = await axios({ ...options });
+    console.log('res ===> ', JSON.stringify(res));
     const results = parseEnroll(res.data, parserOptions); // a more robust parser to parse nested objects
+    console.log('results ===> ', JSON.stringify(results));
     return JSON.stringify(results);
   } catch (err) {
     return JSON.stringify(err);
@@ -192,12 +196,16 @@ export const Fulfill = async (
   auth: string,
 ): Promise<string> => {
   const msg = formatFulfill(accountCode, username, message);
+  console.log('msg ===> ', JSON.stringify(msg));
   const xml = createFulfill(msg);
+  console.log('xml ===> ', xml);
   const options = createRequestOptions(agent, auth, xml, 'Fulfill');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
     const res = await axios({ ...options });
+    console.log('res ===> ', JSON.stringify(res));
     const results = parseFulfill(res.data, parserOptions); // a more robust parser to parse nested objects
+    console.log('results ===> ', JSON.stringify(results));
     // write to the database.
     // get the current
     return JSON.stringify(results);
