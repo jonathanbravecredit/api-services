@@ -99,6 +99,7 @@ export const mapEmployers = (employers: IEmployers | IEmployers[] | undefined): 
 };
 
 export const mapIndicativeDisputes = (disputes: IIndicativeDisputes) => {
+  if (!disputes) return textConstructor(null, true);
   return disputes instanceof Array
     ? disputes.map((d: IIndicativeDisputes) => {
         const mappedAka = mapAka(d.Aka);
@@ -147,6 +148,7 @@ export const mapAka = (aka: IAka | IAka[]) => {
 };
 
 export const mapLineItems = (items: ILineItem | ILineItem[]) => {
+  if (!items) return textConstructor(null, true);
   return items instanceof Array
     ? items.map((item) => {
         const mappedCodes = mapClaimCodes(item.LineItem.ClaimCodes);
@@ -172,6 +174,7 @@ export const mapLineItems = (items: ILineItem | ILineItem[]) => {
 };
 
 export const mapClaimCodes = (codes: IClaimCode | IClaimCode[]) => {
+  if (!codes) return textConstructor(null, true);
   return codes instanceof Array
     ? codes.map((code: IClaimCode) => {
         return {
