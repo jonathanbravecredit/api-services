@@ -244,12 +244,12 @@ export const createStartDispute = (msg: IStartDispute): string => {
               },
               'data:PhoneNumber': textConstructor(msg.request.Customer.PhoneNumber, true),
               'data:Ssn': textConstructor(msg.request.Customer.Ssn),
-              'data:DisputePhoneNumber': {
-                'data:Extension': textConstructor(null, true),
-                'data:Number': textConstructor(msg.request.Customer.PhoneNumber.slice(-7), true),
-                'data:AreaCode': textConstructor(msg.request.Customer.PhoneNumber.substring(0, 3), true),
-                'data:CountryCode': textConstructor('1', true),
-              },
+              // 'data:DisputePhoneNumber': {
+              //   'data:Extension': textConstructor(null, true),
+              //   'data:Number': textConstructor(msg.request.Customer.PhoneNumber.slice(-7), true),
+              //   'data:AreaCode': textConstructor(msg.request.Customer.PhoneNumber.substring(0, 3), true),
+              //   'data:CountryCode': textConstructor('1', true),
+              // },
               'data:Identifier': {
                 'data:CustomerIdentifier': {
                   'data:Id': textConstructor(msg.request.Customer.Ssn, true),
