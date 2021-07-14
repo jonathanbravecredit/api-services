@@ -204,9 +204,9 @@ export const Fulfill = async (
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
     const res = await axios({ ...options });
-    console.log('res ===> ', JSON.stringify(res));
+    console.log('res ===> ', res);
     const results = parseFulfill(res.data, parserOptions); // a more robust parser to parse nested objects
-    console.log('results ===> ', JSON.stringify(results));
+    console.log('results ===> ', results);
     // write to the database.
     // get the current
     return JSON.stringify(results);
