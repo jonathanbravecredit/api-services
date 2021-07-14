@@ -206,7 +206,7 @@ export const createStartDispute = (msg: IStartDispute): string => {
 
   let lineItems = msg.request.LineItems;
   let mappedLineItems = mapLineItems(lineItems);
-  console.log('mapped lineitems ==> ', mappedLineItems);
+  console.log('mapped lineitems ==> ', JSON.stringify(mappedLineItems));
 
   // !!!! May need to add array schema back....see get dispute status
   const xmlObj = {
@@ -215,6 +215,7 @@ export const createStartDispute = (msg: IStartDispute): string => {
         'xmlns:soapenv': 'http://schemas.xmlsoap.org/soap/envelope/',
         'xmlns:con': 'https://consumerconnectws.tui.transunion.com/',
         'xmlns:data': 'https://consumerconnectws.tui.transunion.com/data',
+        'xmlns:arr': 'http://schemas.microsoft.com/2003/10/Serialization/Arrays',
       },
       'soapenv:Header': {},
       'soapenv:Body': {
@@ -243,6 +244,18 @@ export const createStartDispute = (msg: IStartDispute): string => {
               },
               'data:PhoneNumber': textConstructor(msg.request.Customer.PhoneNumber, true),
               'data:Ssn': textConstructor(msg.request.Customer.Ssn),
+              'data:DisputePhoneNumber': {
+                'data:Extension': textConstructor(null, true),
+                'data:Number': textConstructor(msg.request.Customer.PhoneNumber.slice(-7), true),
+                'data:AreaCode': textConstructor(msg.request.Customer.PhoneNumber.substring(0, 3), true),
+                'data:CountryCode': textConstructor('1', true),
+              },
+              'data:Identifier': {
+                'data:CustomerIdentifier': {
+                  'data:Id': textConstructor(msg.request.Customer.Ssn, true),
+                  'data:IdentifierType': textConstructor('SocialId', true),
+                },
+              },
             },
             // 'data:Employers': mappedEmployers,
             'data:EnrollmentKey': textConstructor(msg.request.EnrollmentKey),
@@ -255,7 +268,7 @@ export const createStartDispute = (msg: IStartDispute): string => {
       },
     },
   };
-  console.log('xmlObj ===> ', xmlObj);
+  console.log('xmlObj ===> ', JSON.stringify(xmlObj));
   const xml = convert.json2xml(JSON.stringify(xmlObj), { compact: true, spaces: 4 });
   return xml;
 };

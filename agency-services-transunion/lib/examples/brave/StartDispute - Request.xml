@@ -7,13 +7,11 @@
       <con:request>
         <data:AccountCode>123456789</data:AccountCode>
         <data:AccountName>CC2BraveCredit</data:AccountName>
-        <data:RequestKey>BC-27dfafd0-4306-42f2-a06f-fecc557d8522</data:RequestKey>
+        <data:RequestKey>BC-cbe66edf-edac-487b-92e7-3ddf652f3c43</data:RequestKey>
         <data:ClientKey>3aefd237-6940-446a-9346-0174a0525f1b</data:ClientKey>
-        <data:Attachment xsi:nil="true"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
         <data:Customer>
           <data:CurrentAddress>
-            <data:AddressLine1>101 2NS ST</data:AddressLine1>
+            <data:AddressLine1>101 2ND ST</data:AddressLine1>
             <data:AddressLine2 xsi:nil="true"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
             <data:City>BURT</data:City>
@@ -35,53 +33,9 @@
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
           <data:Ssn>666403077</data:Ssn>
         </data:Customer>
-        <data:Employers xsi:nil="true"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
         <data:EnrollmentKey>c42ffa2b-288c-4558-b4cf-83f0c86f00a8</data:EnrollmentKey>
-        <data:IndicativeDisputes xsi:nil="true"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
         <data:LineItems>
           <data:LineItem>
-            <data:ClaimCodes>
-              <data:ClaimCode>
-                <data:Code>F3</data:Code>
-              </data:ClaimCode>
-            </data:ClaimCodes>
-            <data:CreditReportItem>TR01_1291748319_804122595_82</data:CreditReportItem>
-            <data:LineItemComment>Account Tradeline</data:LineItemComment>
-            <data:LineItemCommentType xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-            <data:UploadDocumentId xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-          </data:LineItem>
-        </data:LineItems>
-        <data:LineItems>
-          <data:LineItem>
-            <data:ClaimCodes>
-              <data:ClaimCode>
-                <data:Code>F3</data:Code>
-              </data:ClaimCode>
-            </data:ClaimCodes>
-            <data:ClaimCodes>
-              <data:ClaimCode>
-                <data:Code>E2</data:Code>
-              </data:ClaimCode>
-            </data:ClaimCodes>
-            <data:CreditReportItem>TR01_1291748319_804122595_82</data:CreditReportItem>
-            <data:LineItemComment>Account Tradeline</data:LineItemComment>
-            <data:LineItemCommentType xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-            <data:UploadDocumentId xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-          </data:LineItem>
-        </data:LineItems>
-        <data:LineItems>
-          <data:LineItem>
-            <data:ClaimCodes>
-              <data:ClaimCode>
-                <data:Code>E2</data:Code>
-              </data:ClaimCode>
-            </data:ClaimCodes>
             <data:ClaimCodes>
               <data:ClaimCode>
                 <data:Code>F3</data:Code>
