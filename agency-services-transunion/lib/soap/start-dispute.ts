@@ -206,6 +206,7 @@ export const createStartDispute = (msg: IStartDispute): string => {
 
   let lineItems = msg.request.LineItems;
   let mappedLineItems = mapLineItems(lineItems);
+  console.log('mapped lineitems ==> ', mappedLineItems);
 
   // !!!! May need to add array schema back....see get dispute status
   const xmlObj = {
@@ -254,6 +255,7 @@ export const createStartDispute = (msg: IStartDispute): string => {
       },
     },
   };
+  console.log('xmlObj ===> ', xmlObj);
   const xml = convert.json2xml(JSON.stringify(xmlObj), { compact: true, spaces: 4 });
   return xml;
 };
