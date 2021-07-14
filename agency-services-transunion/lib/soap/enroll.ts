@@ -19,6 +19,8 @@ export const formatEnroll = (accountCode: string, accountName: string, msg: stri
 
 /**
  * Creates the JSON object the XML parser expects
+ * - version 7 = CreditReports
+ * - version 7.1 = Disputes
  * @param {IEnroll} msg
  * @returns
  */
