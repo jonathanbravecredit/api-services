@@ -36,7 +36,8 @@ export const formatStartDispute = (
     : undefined;
 };
 
-export const mapAttachments = (attachments: IAttachment | IAttachment[]): any => {
+export const mapAttachments = (attachments: IAttachment | IAttachment[] | undefined): any | null => {
+  if (!attachments) return textConstructor(null, true);
   return attachments instanceof Array
     ? attachments.map((attach: IAttachment) => {
         return {
@@ -54,7 +55,8 @@ export const mapAttachments = (attachments: IAttachment | IAttachment[]): any =>
       };
 };
 
-export const mapEmployers = (employers: IEmployers | IEmployers[]): any => {
+export const mapEmployers = (employers: IEmployers | IEmployers[] | undefined): any => {
+  if (!employers) return textConstructor(null, true);
   return employers instanceof Array
     ? employers.map((e: IEmployers) => {
         return {
@@ -126,6 +128,7 @@ export const mapIndicativeDisputes = (disputes: IIndicativeDisputes) => {
 };
 
 export const mapAka = (aka: IAka | IAka[]) => {
+  if (!aka) return textConstructor(null, true);
   return aka instanceof Array
     ? aka.map((a: IAka) => {
         return {

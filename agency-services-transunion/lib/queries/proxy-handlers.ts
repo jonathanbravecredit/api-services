@@ -285,13 +285,17 @@ export const StartDispute = async (
   auth: string,
 ): Promise<string> => {
   const msg = formatStartDispute(accountCode, username, message);
+  console.log('msg ===> ', msg);
   const xml = createStartDispute(msg);
-
+  console.log('xml ===> ', xml);
   const options = createRequestOptions(agent, auth, xml, 'StartDispute');
+  console.log('options ===> ', options);
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
     const res = await axios({ ...options });
+    console.log('res ===> ', res);
     const results = fastXml.parse(res.data, parserOptions); // basic parse for now
+    console.log('results ===> ', results);
     // const res = START_DISPUTE_RESPONSE; // TODO sending back mocks until TU can set us up on disputes
     // const results = fastXml.parse(res, parserOptions); // TODO sending back mocks until TU can set us up on disputes
     return JSON.stringify(results);

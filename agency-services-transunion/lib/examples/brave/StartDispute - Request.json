@@ -1,8 +1,8 @@
 {
-  "ClientKey": "316f4406-4eba-4e21-ab9f-7c5df638c580",
+  "ClientKey": "3aefd237-6940-446a-9346-0174a0525f1b",
   "Customer": {
     "CurrentAddress": {
-      "AddressLine1": "101 2ND ST",
+      "AddressLine1": "101 2NS ST",
       "AddressLine2": "",
       "City": "BURT",
       "State": "IA",
@@ -16,7 +16,7 @@
     },
     "Ssn": "666403077"
   },
-  "EnrollmentKey": "2693e726-6d0b-4042-9c7a-4e90d99cc85f",
+  "EnrollmentKey": "c42ffa2b-288c-4558-b4cf-83f0c86f00a8",
   "LineItems": [
     {
       "LineItem": {
@@ -27,10 +27,11 @@
             }
           }
         ],
+        "CreditReportItem": "TR01_1291748319_804122595_82",
         "LineItemComment": "Account Tradeline"
       }
     }
   ],
-  "ServiceBundleFulfillmentKey": "fb807bc8-1922-42b6-9320-444ff0dddcc2",
+  "ServiceBundleFulfillmentKey": "6aaf7881-58e4-4ef5-b076-94d8be2520c5",
   "ServiceProductFulfillmentKey": null
 }
