@@ -15,6 +15,7 @@ custom:
   bundle:
     externals:
       - strong-soap
+      - ajv
     linting: false
   settings:
     GRAPHQL_APIENDPOINTOUTPUT: !ImportValue GraphQLAPIEndpointOutput
