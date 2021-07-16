@@ -12,8 +12,7 @@ plugins:
 
 custom:
   bundle:
-    ignorePackages:
-      - ajv
+    external: all
     linting: false
   snsProxy: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
   settings:
