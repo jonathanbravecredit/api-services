@@ -12,6 +12,8 @@ plugins:
 
 custom:
   bundle:
+    ignorePackages:
+      - ajv
     linting: false
   snsProxy: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
   settings:
@@ -56,15 +58,12 @@ provider:
 layers:
   TuCerts:
     path: tucerts
-  CommonLibs:
-    path: commonLibs
 
 functions:
   graphql:
     handler: src/handlers/graphql.main
     layers:
       - { Ref: TuCertsLambdaLayer }
-      - { Ref: CommonLibsLambdaLayer }
   postRequests:
     handler: src/handlers/postRequests.main
     layers:
