@@ -11,11 +11,11 @@ plugins:
   - serverless-dotenv-plugin # Load .env as environment variables
 
 custom:
-  snsProxy: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
   bundle:
     externals:
       - ajv
     linting: false
+  snsProxy: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
   settings:
     GRAPHQL_APIENDPOINTOUTPUT: !ImportValue GraphQLAPIEndpointOutput
     GRAPHQL_API:
@@ -58,6 +58,8 @@ provider:
 layers:
   TuCerts:
     path: tucerts
+  Ajv:
+    path: ajv
 
 functions:
   graphql:
