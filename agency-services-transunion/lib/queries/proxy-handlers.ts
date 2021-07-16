@@ -36,6 +36,8 @@ import { formatGetInvestigationResults, createGetInvestigationResults } from 'li
 import { IFulfillResponse } from 'lib/interfaces/fulfill.interface';
 import { IEnrollResponse } from 'lib/interfaces/enroll.interface';
 import { getAppData } from 'lib/soap/test';
+import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
+import { ajv } from 'lib/schema/validation';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -77,9 +79,12 @@ export const Test = async (
   agent: https.Agent,
   auth: string,
 ): Promise<string> => {
-  let variables = {
+  let variables: IGetAppDataRequest = {
     ...JSON.parse(message),
-  };
+  }; // can add schema validation here or in the query
+  const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
+  console.log('validation ===> ', validate(variables));
+  // if (validate(variables))
   try {
     const resp = await getAppData(variables);
     return resp ? resp.data : undefined;
