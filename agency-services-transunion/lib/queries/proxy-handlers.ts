@@ -35,6 +35,7 @@ import { createGetDisputeHistory, formatGetDisputeHistory } from 'lib/soap/get-d
 import { formatGetInvestigationResults, createGetInvestigationResults } from 'lib/soap/get-investigation-results';
 import { IFulfillResponse } from 'lib/interfaces/fulfill.interface';
 import { IEnrollResponse } from 'lib/interfaces/enroll.interface';
+import { getAppData } from 'lib/soap/test';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -55,6 +56,33 @@ export const Ping = async (agent: https.Agent, auth: string): Promise<string> =>
   if (!xml || !options) throw new Error(`Missing xml:${xml}, or options:${options}`);
   try {
     return processRequest(options, fastXml.parse, parserOptions);
+  } catch (err) {
+    return err;
+  }
+};
+
+/**
+ * This initiates the dispute process
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const Test = async (
+  accountCode: string,
+  username: string,
+  message: string,
+  agent: https.Agent,
+  auth: string,
+): Promise<string> => {
+  let variables = {
+    id: message,
+  };
+  try {
+    const resp = await getAppData(variables);
+    return resp ? resp.data : undefined;
   } catch (err) {
     return err;
   }

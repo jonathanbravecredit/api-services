@@ -1,0 +1,19 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <GetDisputeHistoryResponse xmlns="https://consumerconnectws.tui.transunion.com/">
+      <GetDisputeHistoryResult xmlns:a="https://consumerconnectws.tui.transunion.com/data"
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <a:AccountName>CC2BraveCredit</a:AccountName>
+        <a:ErrorResponse>
+          <a:Code>103022</a:Code>
+          <a:Message>Enrollment key is not valid for request information including (accountID, clientkey, ServiceBundleCode)</a:Message>
+          <a:Name>EnrollmentNotValidForRequestInformation</a:Name>
+        </a:ErrorResponse>
+        <a:RequestKey>BC-0f679099-109a-4f96-adad-9c828d5cb4f2</a:RequestKey>
+        <a:ResponseType>Failure</a:ResponseType>
+        <a:ClientKey>25ab07bf-b9b2-49e7-97cf-093b8230211a</a:ClientKey>
+        <a:Disputes i:nil="true"/>
+      </GetDisputeHistoryResult>
+    </GetDisputeHistoryResponse>
+  </s:Body>
+</s:Envelope>

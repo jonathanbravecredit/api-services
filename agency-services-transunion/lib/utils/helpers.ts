@@ -85,17 +85,23 @@ export const postGraphQLRequest = async (query: string, variables: any): Promise
     body: JSON.stringify(payload),
     service: 'appsync',
   };
+  console.log('payload ===> ', payload);
+  console.log('options ===> ', opts);
+  console.log('url ===> ', appsyncUrl);
 
   try {
     const headers = aws4.sign(opts).headers;
+    console.log('headers ===> ', headers);
     const resp: AxiosResponse<any> = await axios({
       url: appsyncUrl,
       method: 'post',
       headers: headers,
       data: payload,
     });
+    console.log('resp ===> ', JSON.stringify(resp.data));
     return resp;
   } catch (err) {
+    console.log('error ===> ', err);
     return err;
   }
 };
