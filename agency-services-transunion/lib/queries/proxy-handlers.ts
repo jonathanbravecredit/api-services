@@ -78,7 +78,7 @@ export const Test = async (
   auth: string,
 ): Promise<string> => {
   let variables = {
-    id: message,
+    ...JSON.parse(message),
   };
   try {
     const resp = await getAppData(variables);
