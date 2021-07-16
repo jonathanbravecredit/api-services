@@ -14,7 +14,6 @@ custom:
   snsProxy: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
   bundle:
     externals:
-      - strong-soap
       - ajv
     linting: false
   settings:
