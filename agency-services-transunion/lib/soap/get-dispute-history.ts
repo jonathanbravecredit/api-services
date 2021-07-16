@@ -43,11 +43,12 @@ export const createGetDisputeHistory = (msg: IGetDisputeHistory): string => {
       },
       'soapenv:Header': {},
       'soapenv:Body': {
-        'con:GetDisputeStatus': {
+        'con:GetDisputeHistory': {
           'con:request': {
             'data:AccountCode': textConstructor(msg.request.AccountCode),
             'data:AccountName': textConstructor(msg.request.AccountName),
             'data:RequestKey': textConstructor(`BC-${uuid.v4()}`),
+            'data:ClientKey': textConstructor(msg.request.ClientKey),
             'data:EnrollmentKey': textConstructor(msg.request.EnrollmentKey),
           },
         },
