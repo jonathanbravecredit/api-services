@@ -203,7 +203,7 @@ export const Enroll = async (
   if (!validate(variables)) {
     let id = returnNestedObject(JSON.parse(message), 'ClientKey'); // try to remedy
     variables = {
-      id: id,
+      id: `us-east-2:${id}`,
     };
     if (!validate(variables)) throw `Malformed message=${message}`;
   }
@@ -248,7 +248,7 @@ export const Fulfill = async (
   if (!validate(variables)) {
     let id = returnNestedObject(JSON.parse(message), 'ClientKey'); // try to remedy
     variables = {
-      id: id,
+      id: `us-east-2:${id}`,
     };
     if (!validate(variables)) throw `Malformed message=${message}`;
   }
