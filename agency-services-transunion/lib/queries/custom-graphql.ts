@@ -252,13 +252,18 @@ export const qryGetDataForEnrollment = `query GetAppData($id: ID!) {
           state
           zip
         }
-        phone
+        phone {
+          primary
+        }
         dob {
           year
           month
           day
         }
-        ssn
+        ssn {
+          lastfour
+          full
+        }
       }
     }
   }
@@ -287,13 +292,18 @@ export const qryGetDataForFulfill = `query GetAppData($id: ID!) {
           state
           zip
         }
-        phone
+        phone {
+          primary
+        }
         dob {
           year
           month
           day
         }
-        ssn
+        ssn {
+          lastfour
+          full
+        }
       }
     }
   }
