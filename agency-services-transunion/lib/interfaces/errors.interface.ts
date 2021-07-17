@@ -1,10 +1,16 @@
 export interface IErrorResult {
   AccountName: string;
-  ErrorResponse: string;
+  ErrorResponse: IErrorResponse;
   RequestKey: string;
   ClientKey: string;
   EnrollmentKey?: string;
   ServiceBundleFulfillmentKey?: string;
+}
+
+export interface IErrorResponse {
+  Code: number | string;
+  Name: string;
+  Message: string;
 }
 
 export interface IErrorCodes {
