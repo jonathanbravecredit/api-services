@@ -192,8 +192,17 @@ export const Enroll = async (
     if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
     const enroll = await processRequest(options, parseEnroll, parserOptions);
     const enrollResults: IEnrollResult = returnNestedObject(enroll, 'EnrollResult');
-    await syncData(variables, enrollResults, enrichEnrollmentData, dispute);
-    return enroll; // for stand alone calls if needed
+    if (enrollResults?.ResponseType.toLowerCase() === 'success') {
+      await syncData(variables, enrollResults, enrichEnrollmentData, dispute);
+    } else {
+      if (enrollResults?.ErrorResponse['Code'] === '103045') {
+        // already enrolled...bypass
+        return;
+      } else {
+        throw `Enroll failure=${enrollResults}`;
+      }
+    }
+    return enroll;
   } catch (err) {
     return err;
   }
@@ -414,8 +423,8 @@ export const DisputePreflightCheck = async (
   try {
     console.log('*** IN GET ENROLL STATSU ***');
     const { data } = await getDisputeEnrollment(variables);
-    console.log('DisputePreflightCheck:getEnrollment 1 ===> ', data);
-    enrolled = data ? false : returnNestedObject(data, 'disputeEnrolled');
+    console.log('DisputePreflightCheck:getEnrollment 1 ===> ', JSON.stringify(data));
+    enrolled = !data ? false : returnNestedObject(data, 'disputeEnrolled');
     console.log('DisputePreflightCheck:enrolled ===> ', enrolled);
   } catch (err) {
     console.log('DisputePreflightCheck:error: ===>', err);
@@ -436,7 +445,7 @@ export const DisputePreflightCheck = async (
     console.log('*** IN REFRESH ***');
     const { data } = await getFulfilledOn(variables);
     console.log('DisputePreflightCheck:getFulfilledOn ===> ', data);
-    const fulfilledOn = data ? false : returnNestedObject(data, 'fulfilledOn');
+    const fulfilledOn = !data ? false : returnNestedObject(data, 'fulfilledOn');
     console.log('DisputePreflightCheck:fulfilledOn ===> ', fulfilledOn);
     if (!fulfilledOn) {
       refresh = true;

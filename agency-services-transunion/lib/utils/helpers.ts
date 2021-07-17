@@ -31,7 +31,7 @@ export const createPackage = (
   cbXml: (msg: any) => void,
 ): { msg: any; xml: any } => {
   const msg = cbMsg(code, username, message);
-  console.log('createPackage:msg ===> ', msg, JSON.stringify(msg));
+  console.log('createPackage:msg ===> ', JSON.stringify(msg));
   const xml = cbXml(msg);
   console.log('createPackage:xml ===> ', xml);
   return {
@@ -282,7 +282,7 @@ export const mapReportResponse = (res: IEnrollServiceProductResponse | undefined
   if (res === undefined) return null;
   return {
     bureau: res['Bureau'],
-    errorResponse: res['ErrorResponse'],
+    errorResponse: res['ErrorResponse']['Code'] || res['ErrorResponse']['nil'],
     serviceProduct: res['ServiceProduct'],
     serviceProductFullfillmentKey: res['ServiceProductFulfillmentKey'],
     serviceProductObject: JSON.stringify(res['ServiceProductObject']),

@@ -1,3 +1,6 @@
+import { IErrorResponse } from 'lib/interfaces/errors.interface';
+import { INil } from 'lib/interfaces/tu-common.interface';
+
 export interface IFulfillGraphQLResponse {
   data: {
     getAppData: {
@@ -143,7 +146,7 @@ export interface IFulfillResponse {
 
 export interface IFulfillResult {
   AccountName: string;
-  ErrorResponse: string;
+  ErrorResponse: IErrorResponse | INil;
   RequestKey: string;
   ResponseType: string;
   ClientKey: string;
@@ -156,7 +159,7 @@ export interface IFulfillResult {
 
 export interface IFulfillServiceProductResponse {
   Bureau: string;
-  ErrorResponse: string;
+  ErrorResponse: IErrorResponse | INil;
   ServiceBundleResponse: {
     ServiceBundleCode: string;
     ServiceBundleFulfillmentKey: string;

@@ -187,6 +187,20 @@ export const enrichEnrollmentData = (
   let enrolledOn = new Date().toISOString();
   const enrollmentKey = returnNestedObject(enroll, 'EnrollmentKey');
   const prodResponse = returnNestedObject(enroll, 'ServiceProductResponse');
+  if (dispute) {
+    return {
+      ...data,
+      agencies: {
+        ...data.agencies,
+        transunion: {
+          ...data.agencies?.transunion,
+          disputeEnrolled: true,
+          disputeEnrolledOn: enrolledOn,
+          disputeEnrollmentKey: enrollmentKey,
+        },
+      },
+    };
+  }
   if (!prodResponse) return;
   if (prodResponse instanceof Array) {
     enrollReport = prodResponse.find((item: IEnrollServiceProductResponse) => {
@@ -213,32 +227,19 @@ export const enrichEnrollmentData = (
         break;
     }
   }
-  return dispute
-    ? {
-        ...data,
-        agencies: {
-          ...data.agencies,
-          transunion: {
-            ...data.agencies?.transunion,
-            disputeEnrolled: true,
-            disputeEnrolledOn: enrolledOn,
-            disputeEnrollmentKey: enrollmentKey,
-          },
-        },
-      }
-    : {
-        ...data,
-        agencies: {
-          ...data.agencies,
-          transunion: {
-            ...data.agencies?.transunion,
-            enrolled: true,
-            enrolledOn: enrolledOn,
-            enrollmentKey: enrollmentKey,
-            enrollReport: mapReportResponse(enrollReport),
-            enrollMergeReport: mapReportResponse(enrollMergeReport),
-            enrollVantageScore: mapReportResponse(enrollVantageScore),
-          },
-        },
-      };
+  return {
+    ...data,
+    agencies: {
+      ...data.agencies,
+      transunion: {
+        ...data.agencies?.transunion,
+        enrolled: true,
+        enrolledOn: enrolledOn,
+        enrollmentKey: enrollmentKey,
+        enrollReport: mapReportResponse(enrollReport),
+        enrollMergeReport: mapReportResponse(enrollMergeReport),
+        enrollVantageScore: mapReportResponse(enrollVantageScore),
+      },
+    },
+  };
 };

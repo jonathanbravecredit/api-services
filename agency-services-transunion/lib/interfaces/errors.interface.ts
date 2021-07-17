@@ -1,6 +1,6 @@
 export interface IErrorResult {
   AccountName: string;
-  ErrorResponse: IErrorResponse;
+  ErrorResponse: IErrorResponse | INil;
   RequestKey: string;
   ClientKey: string;
   EnrollmentKey?: string;
@@ -14,7 +14,7 @@ export interface IErrorResponse {
 }
 
 export interface IErrorCodes {
-  [key: string]: IErrorCode
+  [key: string]: IErrorCode;
 }
 
 export interface IErrorCode {
@@ -24,4 +24,8 @@ export interface IErrorCode {
   category: string;
   method: string;
   action: string;
+}
+
+export interface INil {
+  nil: true;
 }
