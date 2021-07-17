@@ -1,8 +1,67 @@
-import { returnNestedObject, textConstructor, updateNestedObject } from 'lib/utils/helpers';
+import { mapReportResponse, returnNestedObject, textConstructor, updateNestedObject } from 'lib/utils/helpers';
 import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
 import * as uuid from 'uuid';
-import { IFulfill, IFulfillMsg, IFulfillResponse } from 'lib/interfaces/fulfill.interface';
+import {
+  IFulfill,
+  IFulfillGraphQLResponse,
+  IFulfillMsg,
+  IFulfillPayload,
+  IFulfillResponse,
+  IFulfillResult,
+  IFulfillServiceProductResponse,
+} from 'lib/interfaces/fulfill.interface';
+import { MONTH_MAP } from 'lib/data/constants';
+import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
+import { IEnrollServiceProductResponse } from 'lib/interfaces/enroll.interface';
+
+/**
+ * Genarates the message payload for TU Enroll service
+ * @param data
+ * @returns IEnrollPayload
+ */
+export const createFulfillPayload = (data: IFulfillGraphQLResponse, dispute: boolean = false): IFulfillPayload => {
+  const id = data.data.getAppData.id?.split(':')?.pop();
+  const attrs = data.data.getAppData.user?.userAttributes;
+  const dob = attrs?.dob;
+  const serviceBundleCode = dispute ? 'CC2BraveCreditTUReport24Hour' : 'CC2BraveCreditTUReportV3Score';
+  const fulfillmentKey = dispute
+    ? data.data.getAppData.agencies?.transunion?.disputeServiceBundleFulfillmentKey
+    : data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey;
+
+  if (!id || !attrs || !dob) {
+    console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
+    return;
+  }
+
+  return {
+    RequestKey: '',
+    AdditionalInputs: {
+      Data: {
+        Name: 'CreditReportVersion',
+        Value: '7.1',
+      },
+    },
+    ClientKey: id,
+    Customer: {
+      CurrentAddress: {
+        AddressLine1: attrs.address?.addressOne || '',
+        AddressLine2: attrs.address?.addressTwo || '',
+        City: attrs.address?.city || '',
+        State: attrs.address?.state || '',
+        Zipcode: attrs.address?.zip || '',
+      },
+      DateOfBirth: `${attrs.dob?.year}-${MONTH_MAP[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
+      FullName: {
+        FirstName: attrs.name?.first || '',
+        LastName: attrs.name?.last || '',
+        MiddleName: attrs.name?.middle || '',
+      },
+      Ssn: attrs.ssn?.full || '',
+    },
+    ServiceBundleCode: serviceBundleCode,
+  };
+};
 
 export const formatFulfill = (accountCode: string, accountName: string, msg: string): IFulfill | undefined => {
   let message: IFulfillMsg = JSON.parse(msg);
@@ -83,21 +142,81 @@ export const createFulfill = (msg: IFulfill): string => {
  */
 export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
   const obj: IFulfillResponse = returnNestedObject(fastXml.parse(xml, options), 'FulfillResponse');
-  const resp = returnNestedObject(obj, 'a:ServiceProductResponse');
+  const resp = returnNestedObject(obj, 'ServiceProductResponse');
   if (resp instanceof Array) {
     const mapped = resp.map((prod) => {
-      let prodObj = prod['a:ServiceProductObject'];
+      let prodObj = prod['ServiceProductObject'];
       if (typeof prodObj === 'string') {
         let clean = prodObj.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
         return {
           ...prod,
-          'a:ServiceProductObject': fastXml.parse(clean),
+          ServiceProductObject: fastXml.parse(clean),
         };
       }
     });
-    const updated = updateNestedObject(obj, 'a:ServiceProductResponse', [...mapped]);
+    const updated = updateNestedObject(obj, 'ServiceProductResponse', [...mapped]);
     return updated ? updated : obj;
   } else {
     return obj;
   }
+};
+
+/**
+ * This method parses and enriches the state data
+ * @param {UpdateAppDataInput} data
+ * @param {IFulfillResult} enroll
+ * @returns {UpdateAppDataInput | undefined }
+ */
+export const enrichFulfillData = (
+  data: UpdateAppDataInput | undefined,
+  fulfill: IFulfillResult, // IFulfillResult
+  dispute: boolean = false,
+): UpdateAppDataInput | undefined => {
+  if (!data) return;
+  let fulfillReport;
+  let fulfillMergeReport;
+  let fulfillVantageScore;
+  let fulfilledOn = new Date().toISOString();
+  const prodResponse = returnNestedObject(fulfill, 'ServiceProductResponse');
+  if (!prodResponse) return;
+  if (prodResponse instanceof Array) {
+    fulfillReport = prodResponse.find((item: IFulfillServiceProductResponse) => {
+      return item['ServiceProduct'] === 'TUCReport';
+    });
+    fulfillMergeReport = prodResponse.find((item: IFulfillServiceProductResponse) => {
+      return item['ServiceProduct'] === 'MergeCreditReports';
+    });
+    fulfillVantageScore = prodResponse.find((item: IFulfillServiceProductResponse) => {
+      return item['ServiceProduct'] === 'TUCVantageScore3';
+    });
+  } else {
+    switch (prodResponse['ServiceProduct']) {
+      case 'TUCReport':
+        fulfillReport = prodResponse || null;
+        break;
+      case 'MergeCreditReports':
+        fulfillMergeReport = prodResponse || null;
+        break;
+      case 'TUCVantageScore3':
+        fulfillVantageScore = prodResponse || null;
+        break;
+      default:
+        break;
+    }
+  }
+  const mapped = {
+    ...data,
+    agencies: {
+      ...data.agencies,
+      transunion: {
+        ...data.agencies?.transunion,
+        fulfilledOn: fulfilledOn,
+        fulfillReport: mapReportResponse(fulfillReport),
+        fulfillMergeReport: mapReportResponse(fulfillMergeReport),
+        fulfillVantageScore: mapReportResponse(fulfillVantageScore),
+      },
+    },
+  };
+  console.log('mapped', mapped);
+  return mapped;
 };

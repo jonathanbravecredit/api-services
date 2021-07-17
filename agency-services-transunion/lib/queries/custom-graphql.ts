@@ -1,6 +1,179 @@
 //==============================
 //          QUERIES
 //==============================
+/** Full get AppData */
+export const qryGetAppData = `query GetAppData($id: ID!) {
+  getAppData(id: $id) {
+    __typename
+    id
+    user {
+      __typename
+      id
+      userAttributes {
+        __typename
+        name {
+          __typename
+          first
+          middle
+          last
+        }
+        address {
+          __typename
+          addressOne
+          addressTwo
+          city
+          state
+          zip
+        }
+        phone {
+          __typename
+          primary
+        }
+        dob {
+          __typename
+          year
+          month
+          day
+        }
+        ssn {
+          __typename
+          lastfour
+          full
+        }
+      }
+      onboarding {
+        __typename
+        lastActive
+        lastComplete
+        started
+      }
+    }
+    agencies {
+      __typename
+      transunion {
+        __typename
+        authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
+        currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          __typename
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          __typename
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          __typename
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrolled
+        enrolledOn
+        fulfillReport {
+          __typename
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillMergeReport {
+          __typename
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillVantageScore {
+          __typename
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfilledOn
+        acknowledgedDisputeTerms
+        acknowledgedDisputeTermsOn
+        disputeServiceBundleFulfillmentKey
+        disputeEnrollmentKey
+        disputeEnrolled
+        disputeEnrolledOn
+        disputeStatus
+        disputes {
+          __typename
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
+      }
+      equifax {
+        __typename
+        authenticated
+      }
+      experian {
+        __typename
+        authenticated
+      }
+    }
+    preferences {
+      __typename
+      showAllAccounts {
+        __typename
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
+      }
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}`;
+
 /**
  * Gets the last active task for onboarding
  * @param {ID!} id user identity id
@@ -42,10 +215,265 @@ export const getTransunionDisputes = `query GetAppData($id: ID!) {
   }
 }`;
 
+export const qryGetEnrollment = `query GetAppData($id: ID!) {
+  getAppData(id: $id) {
+    agencies {
+      transunion {
+        enrolled
+      }
+    }
+  }
+}`;
+
+export const qryGetFulfilledOn = `query GetAppData($id: ID!) {
+  getAppData(id: $id) {
+    agencies {
+      transunion {
+        fulfilledOn
+      }
+    }
+  }
+}`;
+
+export const qryGetDataForEnrollment = `query GetAppData($id: ID!) {
+  getAppData(id: $id) {
+    id
+    user {
+      userAttributes {
+        name {
+          first
+          middle
+          last
+        }
+        address {
+          addressOne
+          addressTwo
+          city
+          state
+          zip
+        }
+        phone
+        dob {
+          year
+          month
+          day
+        }
+        ssn
+      }
+    }
+  }
+}`;
+
+export const qryGetDataForFulfill = `query GetAppData($id: ID!) {
+  getAppData(id: $id) {
+    id
+    agencies {
+      transunion {
+        serviceBundleFulfillmentKey
+        disputeServiceBundleFulfillmentKey
+      }
+    }
+    user {
+      userAttributes {
+        name {
+          first
+          middle
+          last
+        }
+        address {
+          addressOne
+          addressTwo
+          city
+          state
+          zip
+        }
+        phone
+        dob {
+          year
+          month
+          day
+        }
+        ssn
+      }
+    }
+  }
+}`;
+
 //==============================
 //          MUTATIONS
 //==============================
-
+/** Full update AppData */
+export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInput!, $condition: ModelAppDataConditionInput) {
+  updateAppData(input: $input, condition: $condition) {
+    __typename
+    id
+    user {
+      __typename
+      id
+      userAttributes {
+        __typename
+        name {
+          __typename
+          first
+          middle
+          last
+        }
+        address {
+          __typename
+          addressOne
+          addressTwo
+          city
+          state
+          zip
+        }
+        phone {
+          __typename
+          primary
+        }
+        dob {
+          __typename
+          year
+          month
+          day
+        }
+        ssn {
+          __typename
+          lastfour
+          full
+        }
+      }
+      onboarding {
+        __typename
+        lastActive
+        lastComplete
+        started
+      }
+    }
+    agencies {
+      __typename
+      transunion {
+        __typename
+        authenticated
+        indicativeEnrichmentSuccess
+        getAuthenticationQuestionsSuccess
+        serviceBundleFulfillmentKey
+        currentRawQuestions
+        currentRawAuthDetails
+        enrollmentKey
+        enrollReport {
+          __typename
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollMergeReport {
+          __typename
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrollVantageScore {
+          __typename
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        enrolled
+        enrolledOn
+        fulfillReport {
+          __typename
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillMergeReport {
+          __typename
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfillVantageScore {
+          __typename
+          bureau
+          errorResponse
+          serviceProduct
+          serviceProductFullfillmentKey
+          serviceProductObject
+          serviceProductTypeId
+          serviceProductValue
+          status
+        }
+        fulfilledOn
+        acknowledgedDisputeTerms
+        acknowledgedDisputeTermsOn
+        disputeServiceBundleFulfillmentKey
+        disputeEnrollmentKey
+        disputeEnrolled
+        disputeEnrolledOn
+        disputeStatus
+        disputes {
+          __typename
+          disputePreflightStatus
+          disputeInflightStatus
+          disputeEligibility
+          disputeResults
+          disputeHistory
+          modifiedOn
+          createdOn
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
+      }
+      equifax {
+        __typename
+        authenticated
+      }
+      experian {
+        __typename
+        authenticated
+      }
+    }
+    preferences {
+      __typename
+      showAllAccounts {
+        __typename
+        creditCards
+        collectionsAccounts
+        installmentLoans
+        mortgages
+      }
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}`;
 /**
  * Gets the transunion disputes preflight status
  * @param {ID!} id user identity id

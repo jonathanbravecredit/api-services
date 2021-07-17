@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { formatEnroll, createEnroll, parseEnroll } from 'lib/soap/enroll';
-import { formatFulfill, createFulfill, parseFulfill } from 'lib/soap/fulfill';
+import { formatEnroll, createEnroll, parseEnroll, createEnrollPayload, enrichEnrollmentData } from 'lib/soap/enroll';
+import { formatFulfill, createFulfill, parseFulfill, createFulfillPayload, enrichFulfillData } from 'lib/soap/fulfill';
 import {
   formatGetAuthenticationQuestions,
   createGetAuthenticationQuestions,
 } from 'lib/soap/get-authentication-questions';
-import { formatGetDisputeStatus, createGetDisputeStatus } from 'lib/soap/get-dispute-status';
+import { formatGetDisputeStatus, createGetDisputeStatus, parseGetDisputeStatus } from 'lib/soap/get-dispute-status';
 import {
   formatGetServiceProduct,
   createGetServiceProduct,
@@ -24,20 +24,30 @@ import {
   postGraphQLRequest,
   processRequest,
   returnNestedObject,
+  syncData,
 } from 'lib/utils/helpers';
 
 import * as https from 'https';
-import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
 import { patchDisputes, updatePreflightStatus } from 'lib/queries/custom-graphql';
 import { createStartDispute, formatStartDispute } from 'lib/soap/start-dispute';
 import { createGetDisputeHistory, formatGetDisputeHistory } from 'lib/soap/get-dispute-history';
 import { formatGetInvestigationResults, createGetInvestigationResults } from 'lib/soap/get-investigation-results';
-import { IFulfillResponse } from 'lib/interfaces/fulfill.interface';
-import { IEnrollResponse } from 'lib/interfaces/enroll.interface';
+import { IFulfillGraphQLResponse, IFulfillResponse, IFulfillResult } from 'lib/interfaces/fulfill.interface';
+import { IEnrollGraphQLResponse, IEnrollResponse, IEnrollResult } from 'lib/interfaces/enroll.interface';
 import { getAppData } from 'lib/soap/test';
 import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
 import { ajv } from 'lib/schema/validation';
+import {
+  getEnrollment,
+  getDataForEnrollment,
+  getDataForFulfill,
+  getFulfilledOn,
+  updateAppData,
+} from 'lib/queries/proxy-queries';
+import { dateDiffInDays } from 'lib/utils/dates';
+import { UpdateAppDataInput } from 'src/api/api.service';
+import { IGetDisputeStatusResponse } from 'lib/interfaces/get-dispute-status.interface';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -81,10 +91,10 @@ export const Test = async (
 ): Promise<string> => {
   let variables: IGetAppDataRequest = {
     ...JSON.parse(message),
-  }; // can add schema validation here or in the query
+  };
   const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
   console.log('validation ===> ', validate(variables));
-  if (validate(variables))
+  if (!validate(variables)) throw `Malformed message=${message}`;
   try {
     const resp = await getAppData(variables);
     return resp ? resp.data : undefined;
@@ -205,12 +215,25 @@ export const Enroll = async (
   message: string,
   agent: https.Agent,
   auth: string,
+  dispute: boolean = false,
 ): Promise<IEnrollResponse> => {
-  const { msg, xml } = createPackage(accountCode, username, message, formatEnroll, createEnroll);
-  const options = createRequestOptions(agent, auth, xml, 'Enroll');
-  if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
+  let variables: IGetAppDataRequest = {
+    ...JSON.parse(message),
+  };
+  const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
+  if (!validate(variables)) throw `Malformed message=${message}`;
+
   try {
-    return processRequest(options, parseEnroll, parserOptions);
+    const resp = await getDataForEnrollment(variables);
+    const gql: IEnrollGraphQLResponse = resp.data; // add validation here
+    const payload = createEnrollPayload(gql, dispute);
+    const { msg, xml } = createPackage(accountCode, username, JSON.stringify(payload), formatEnroll, createEnroll);
+    const options = createRequestOptions(agent, auth, xml, 'Enroll');
+    if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
+    const enroll = processRequest(options, parseEnroll, parserOptions);
+    const enrollResults: IEnrollResult = returnNestedObject(enroll, 'EnrollResult');
+    syncData(variables, enrollResults, enrichEnrollmentData, dispute);
+    return enroll; // for stand alone calls if needed
   } catch (err) {
     return err;
   }
@@ -231,12 +254,25 @@ export const Fulfill = async (
   message: string,
   agent: https.Agent,
   auth: string,
+  dispute: boolean = false,
 ): Promise<IFulfillResponse> => {
-  const { msg, xml } = createPackage(accountCode, username, message, formatFulfill, createFulfill);
-  const options = createRequestOptions(agent, auth, xml, 'Fulfill');
-  if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
+  let variables: IGetAppDataRequest = {
+    ...JSON.parse(message),
+  };
+  const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
+  if (!validate(variables)) throw `Malformed message=${message}`;
+
   try {
-    return processRequest(options, parseFulfill, parserOptions);
+    const resp = await getDataForFulfill(variables);
+    const gql: IFulfillGraphQLResponse = resp.data; // add validation here
+    const payload = createFulfillPayload(gql, dispute);
+    const { msg, xml } = createPackage(accountCode, username, JSON.stringify(payload), formatFulfill, createFulfill);
+    const options = createRequestOptions(agent, auth, xml, 'Fulfill');
+    if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
+    const fulfill = processRequest(options, parseFulfill, parserOptions);
+    const fulfillResults: IFulfillResult = returnNestedObject(fulfill, 'FulfillResult');
+    syncData(variables, fulfillResults, enrichFulfillData, dispute);
+    return fulfill; // for stand alone calls if needed
   } catch (err) {
     return err;
   }
@@ -284,12 +320,12 @@ export const GetDisputeStatus = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<string> => {
+): Promise<IGetDisputeStatusResponse> => {
   const { msg, xml } = createPackage(accountCode, username, message, formatGetDisputeStatus, createGetDisputeStatus);
   const options = createRequestOptions(agent, auth, xml, 'GetDisputeStatus');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    return processRequest(options, fastXml.parse, parserOptions);
+    return processRequest(options, parseGetDisputeStatus, parserOptions);
   } catch (err) {
     return err;
   }
@@ -400,48 +436,70 @@ export const DisputePreflightCheck = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<string> => {
-  let disputeStatus: string;
-  let variables = {
-    id: message,
-    msg: JSON.stringify({
-      disputePreflightStatus: 'inprogress',
-    }),
+): Promise<{ eligible: boolean }> => {
+  let variables: IGetAppDataRequest = {
+    ...JSON.parse(message),
   };
+  const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
+  if (!validate(variables)) throw `Malformed message=${message}`;
 
+  let enrolled: boolean;
   try {
-    const resp1 = await postGraphQLRequest(patchDisputes, variables);
-    console.log('response 1', resp1);
+    const { data } = await getEnrollment(variables);
+    console.log('response 1', data);
+    enrolled = returnNestedObject(data, 'enrolled');
   } catch (err) {
     console.log('error: ===>', err);
-    throw new Error(`Error in initiating Preflight status; Error:${err}`);
+    throw new Error(`DisputePreflightCheck:getEnrollment=${err}`);
   }
 
+  if (!enrolled) {
+    try {
+      await Enroll(accountCode, username, message, agent, auth, true);
+    } catch (err) {
+      throw new Error(`DisputePreflightCheck:Enroll=${err}`);
+    }
+  }
+
+  let refresh: boolean;
   try {
-    disputeStatus = await GetDisputeStatus(accountCode, username, message, agent, auth);
-    disputeStatus = returnNestedObject(JSON.parse(disputeStatus), 'ResponseType');
-    console.log('dispute status', disputeStatus);
+    const { data } = await getFulfilledOn(variables);
+    console.log('response 2', data);
+    const fulfilledOn = returnNestedObject(data, 'fulfilledOn');
+    if (!fulfilledOn) {
+      refresh = true;
+    } else {
+      const now = new Date();
+      const last = new Date(fulfilledOn);
+      refresh = dateDiffInDays(last, now) > 0 ? true : false;
+    }
   } catch (err) {
-    console.log('preflight check disputeStatus error ====> ', err);
-    throw new Error(`Error in GetDisputeStatus; Error:${err}`);
+    throw new Error(`DisputePreflightCheck:getFulfilledOn=${err}`);
   }
 
-  const eligibility = disputeStatus.toLowerCase() === 'success' ? 'success' : 'ineligible';
-  variables = {
-    id: message,
-    msg: JSON.stringify({
-      disputePreflightStatus: 'success',
-      disputeEligibility: eligibility,
-    }),
-  };
+  if (refresh) {
+    try {
+      await Fulfill(accountCode, username, message, agent, auth, true);
+    } catch (err) {
+      throw new Error(`DisputePreflightCheck:Fulfill=${err}`);
+    }
+  }
+
+  let eligible: boolean;
   try {
-    const resp2 = await postGraphQLRequest(patchDisputes, variables);
-    console.log('response 2', resp2);
+    const resp = GetDisputeStatus(accountCode, username, message, agent, auth);
+    const type = returnNestedObject(resp, 'ResponseType');
+    eligible = type?.toLowerCase() === 'success';
   } catch (err) {
-    throw new Error(`Error in ending Preflight status; Error:${err}`);
+    throw new Error(`DisputePreflightCheck:GetDisputeStatus=${err}`);
   }
 
-  return 'Success';
+  if (eligible) {
+    try {
+      // update data eligibility
+    } catch (err) {}
+  }
+  return { eligible };
 };
 
 /**

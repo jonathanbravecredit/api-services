@@ -1,3 +1,67 @@
+export interface IEnrollGraphQLResponse {
+  data: {
+    getAppData: {
+      id?: string;
+      user?: {
+        userAttributes?: {
+          name?: {
+            first?: string;
+            middle?: string;
+            last?: string;
+          };
+          address?: {
+            addressOne?: string;
+            addressTwo?: string;
+            city?: string;
+            state?: string;
+            zip?: string;
+          };
+          phone?: {
+            primary?: string;
+          };
+          dob?: {
+            year?: string;
+            month?: string;
+            day?: string;
+          };
+          ssn?: {
+            lastfour?: string;
+            full?: string;
+          };
+        };
+      };
+    };
+  };
+}
+
+export interface IEnrollPayload {
+  RequestKey: string;
+  AdditionalInputs: {
+    Data: {
+      Name: string;
+      Value: string;
+    };
+  };
+  ClientKey: string;
+  Customer: {
+    CurrentAddress: {
+      AddressLine1: string;
+      AddressLine2: string;
+      City: string;
+      State: string;
+      Zipcode: string;
+    };
+    DateOfBirth: string;
+    FullName: {
+      FirstName: string;
+      LastName: string;
+      MiddleName: string;
+    };
+    Ssn: string;
+  };
+  ServiceBundleCode: string;
+}
+
 export interface IEnroll {
   request: {
     AccountCode: string;
@@ -91,30 +155,30 @@ export interface IEnrollResponse {
 }
 
 export interface IEnrollResult {
-  'a:AccountName': string;
-  'a:ErrorResponse': string;
-  'a:RequestKey': string;
-  'a:ResponseType': string;
-  'a:ClientKey': string;
-  'a:EnrollmentKey': string;
-  'a:ServiceBundleFulfillmentKey': string;
-  'a:ServiceProductFulfillments': {
-    'a:ServiceProductResponse': IEnrollServiceProductResponse[] | IEnrollServiceProductResponse;
+  AccountName: string;
+  ErrorResponse: string;
+  RequestKey: string;
+  ResponseType: string;
+  ClientKey: string;
+  EnrollmentKey: string;
+  ServiceBundleFulfillmentKey: string;
+  ServiceProductFulfillments: {
+    ServiceProductResponse: IEnrollServiceProductResponse[] | IEnrollServiceProductResponse;
   };
 }
 
 export interface IEnrollServiceProductResponse {
-  'a:Bureau': string;
-  'a:ErrorResponse': string;
-  'a:ServiceBundleResponse': {
-    'a:ServiceBundleCode': string;
-    'a:ServiceBundleFulfillmentKey': string;
-    'a:ServiceBundleFulfillmentStatus': string;
+  Bureau: string;
+  ErrorResponse: string;
+  ServiceBundleResponse: {
+    ServiceBundleCode: string;
+    ServiceBundleFulfillmentKey: string;
+    ServiceBundleFulfillmentStatus: string;
   };
-  'a:ServiceProduct': string;
-  'a:ServiceProductFulfillmentKey': string;
-  'a:ServiceProductObject': string;
-  'a:ServiceProductTypeId': string;
-  'a:ServiceProductValue': string;
-  'a:Status': string;
+  ServiceProduct: string;
+  ServiceProductFulfillmentKey: string;
+  ServiceProductObject: string;
+  ServiceProductTypeId: string;
+  ServiceProductValue: string;
+  Status: string;
 }

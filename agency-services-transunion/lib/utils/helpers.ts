@@ -5,6 +5,11 @@ import * as fastXml from 'fast-xml-parser';
 import axios, { AxiosResponse } from 'axios';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
+import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
+import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
+import { updateAppData } from 'lib/queries/proxy-queries';
+import { getAppData } from 'lib/soap/test';
+import { IEnrollServiceProductResponse } from 'lib/interfaces/enroll.interface';
 
 const appsyncUrl = process.env.APPSYNC_ENDPOINT;
 const region = process.env.AWS_REGION;
@@ -37,12 +42,41 @@ export const createPackage = (
 };
 
 /**
+ * Generic method to take the prior data, enrich it using a passed enricher
+ *   and to update the database with the new enriched data.
+ * @param variables
+ * @param prior
+ * @param curr
+ * @param cbEnricher
+ * @returns
+ */
+export const syncData = async (
+  variables: IGetAppDataRequest,
+  updated: any,
+  cbEnricher: (prior: any, updated: any, dispute: boolean) => UpdateAppDataInput,
+  dispute: boolean = false,
+): Promise<boolean> => {
+  try {
+    const { data } = await getAppData(variables);
+    console.log('data ===> ', data);
+    const enriched: UpdateAppDataInput = cbEnricher(data, updated, dispute);
+    console.log('enriched ===> ', enriched);
+    const sync = await updateAppData(enriched);
+    console.log('sync ===> ', sync);
+    return true;
+  } catch (err) {
+    console.log('err ===> ', err);
+    return false;
+  }
+};
+
+/**
  * Generic method to process the axios request to send to TU
  * - uses the parser provided to process return message
  * @param options
  * @param parser
  * @param parserOptions
- * @returns
+ * @returns parsed and stringified data
  */
 export const processRequest = async (
   options: IRequestOptions,
@@ -69,7 +103,7 @@ export const processRequest = async (
  * Processes generic graphql requests
  * @param {string} query
  * @param {any} variables
- * @returns
+ * @returns axios response
  */
 export const postGraphQLRequest = async (query: string, variables: any): Promise<AxiosResponse<any>> => {
   let payload = {
@@ -245,4 +279,19 @@ export const returnNestedObject = (o: any, k: string): any => {
   };
   _returnNestedObject(o);
   return value;
+};
+
+// TODO use a pascal to camel converter
+export const mapReportResponse = (res: IEnrollServiceProductResponse | undefined): TUReportResponseInput | null => {
+  if (res === undefined) return null;
+  return {
+    bureau: res['Bureau'],
+    errorResponse: res['ErrorResponse'],
+    serviceProduct: res['ServiceProduct'],
+    serviceProductFullfillmentKey: res['ServiceProductFulfillmentKey'],
+    serviceProductObject: JSON.stringify(res['ServiceProductObject']),
+    serviceProductTypeId: res['ServiceProductTypeId'],
+    serviceProductValue: res['ServiceProductValue'],
+    status: res['Status'],
+  };
 };

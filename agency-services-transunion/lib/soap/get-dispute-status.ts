@@ -1,5 +1,11 @@
-import { IGetDisputeStatus, IGetDisputeStatusMsg } from 'lib/interfaces/get-dispute-status.interface';
-import { textConstructor } from 'lib/utils/helpers';
+import {
+  IGetDisputeStatus,
+  IGetDisputeStatusMsg,
+  IGetDisputeStatusResponse,
+  IGetDisputeStatusResult,
+} from 'lib/interfaces/get-dispute-status.interface';
+import { returnNestedObject, textConstructor } from 'lib/utils/helpers';
+import * as fastXml from 'fast-xml-parser';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 
@@ -77,4 +83,14 @@ export const createGetDisputeStatus = (msg: IGetDisputeStatus): string => {
   };
   const xml = convert.json2xml(JSON.stringify(xmlObj), { compact: true, spaces: 4 });
   return xml;
+};
+
+/**
+ * Parse the GetDisputeStatus response
+ * @param xml
+ * @returns IGetDisputeStatusResponse
+ */
+export const parseGetDisputeStatus = (xml: string, options: any): IGetDisputeStatusResponse => {
+  const obj: IGetDisputeStatusResponse = returnNestedObject(fastXml.parse(xml, options), 'IGetDisputeStatusResponse');
+  return obj;
 };

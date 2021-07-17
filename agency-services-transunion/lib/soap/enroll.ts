@@ -1,11 +1,73 @@
-import { returnNestedObject, textConstructor, updateNestedObject } from 'lib/utils/helpers';
+import { mapReportResponse, returnNestedObject, textConstructor, updateNestedObject } from 'lib/utils/helpers';
 import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
 import * as uuid from 'uuid';
-import { IEnroll, IEnrollMsg, IEnrollResponse } from 'lib/interfaces/enroll.interface';
+import {
+  IEnroll,
+  IEnrollGraphQLResponse,
+  IEnrollPayload,
+  IEnrollResponse,
+  IEnrollResult,
+  IEnrollServiceProductResponse,
+} from 'lib/interfaces/enroll.interface';
+import { MONTH_MAP } from 'lib/data/constants';
+import { UpdateAppDataInput } from 'src/api/api.service';
 
+/**
+ * Genarates the message payload for TU Enroll service
+ * @param data
+ * @returns IEnrollPayload
+ */
+export const createEnrollPayload = (data: IEnrollGraphQLResponse, dispute: boolean = false): IEnrollPayload => {
+  const id = data.data.getAppData.id?.split(':')?.pop();
+  const attrs = data.data.getAppData.user?.userAttributes;
+  const dob = attrs?.dob;
+  const serviceBundleCode = dispute ? 'CC2BraveCreditTUDispute' : 'CC2BraveCreditTUReportV3Score';
+
+  if (!id || !attrs || !dob) {
+    console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
+    return;
+  }
+
+  return {
+    RequestKey: '', // gets added below
+    AdditionalInputs: {
+      Data: {
+        Name: 'CreditReportVersion',
+        Value: '7.1',
+      },
+    },
+    ClientKey: id,
+    Customer: {
+      CurrentAddress: {
+        AddressLine1: attrs.address?.addressOne || '',
+        AddressLine2: attrs.address?.addressTwo || '',
+        City: attrs.address?.city || '',
+        State: attrs.address?.state || '',
+        Zipcode: attrs.address?.zip || '',
+      },
+      DateOfBirth: `${attrs.dob?.year}-${MONTH_MAP[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
+      FullName: {
+        FirstName: attrs.name?.first || '',
+        LastName: attrs.name?.last || '',
+        MiddleName: attrs.name?.middle || '',
+      },
+      Ssn: attrs.ssn?.full || '',
+    },
+    ServiceBundleCode: serviceBundleCode,
+  };
+};
+
+/**
+ * Add the header information to the formated payload
+ * @param accountCode
+ * @param accountName
+ * @param msg
+ * @returns
+ */
 export const formatEnroll = (accountCode: string, accountName: string, msg: string): IEnroll | undefined => {
-  let message: IEnrollMsg = JSON.parse(msg);
+  let message: IEnrollPayload = JSON.parse(msg);
+  // consider adding validation here
   return message
     ? {
         request: {
@@ -83,21 +145,95 @@ export const createEnroll = (msg: IEnroll): string => {
  */
 export const parseEnroll = (xml: string, options: any): IEnrollResponse => {
   const obj: IEnrollResponse = returnNestedObject(fastXml.parse(xml, options), 'EnrollResponse');
-  const resp = returnNestedObject(obj, 'a:ServiceProductResponse');
+  const resp = returnNestedObject(obj, 'ServiceProductResponse');
   if (resp instanceof Array) {
     const mapped = resp.map((prod) => {
-      let prodObj = prod['a:ServiceProductObject'];
+      let prodObj = prod['ServiceProductObject'];
       if (typeof prodObj === 'string') {
         let clean = prodObj.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
         return {
           ...prod,
-          'a:ServiceProductObject': fastXml.parse(clean),
+          ServiceProductObject: fastXml.parse(clean),
         };
       }
     });
-    const updated = updateNestedObject(obj, 'a:ServiceProductResponse', [...mapped]);
+    const updated = updateNestedObject(obj, 'ServiceProductResponse', [...mapped]);
     return updated ? updated : obj;
   } else {
     return obj;
   }
+};
+
+/**
+ * This method parses and enriches the state data
+ * @param {UpdateAppDataInput} data
+ * @param {IEnrollResponse} enroll
+ * @returns
+ */
+export const enrichEnrollmentData = (
+  data: UpdateAppDataInput | undefined,
+  enroll: IEnrollResult,
+  dispute: boolean = false,
+): UpdateAppDataInput | undefined => {
+  if (!data) return;
+  let enrollReport: IEnrollServiceProductResponse | undefined;
+  let enrollMergeReport: IEnrollServiceProductResponse | undefined;
+  let enrollVantageScore: IEnrollServiceProductResponse | undefined;
+  let enrolledOn = new Date().toISOString();
+  const enrollmentKey = returnNestedObject(enroll, 'EnrollmentKey');
+  const prodResponse = returnNestedObject(enroll, 'ServiceProductResponse');
+  if (!prodResponse) return;
+  if (prodResponse instanceof Array) {
+    enrollReport = prodResponse.find((item: IEnrollServiceProductResponse) => {
+      return item['ServiceProduct'] === 'TUCReport';
+    });
+    enrollMergeReport = prodResponse.find((item: IEnrollServiceProductResponse) => {
+      return item['ServiceProduct'] === 'MergeCreditReports';
+    });
+    enrollVantageScore = prodResponse.find((item: IEnrollServiceProductResponse) => {
+      return item['ServiceProduct'] === 'TUCVantageScore3';
+    });
+  } else {
+    switch (prodResponse['ServiceProduct']) {
+      case 'TUCReport':
+        enrollReport = prodResponse || null;
+        break;
+      case 'MergeCreditReports':
+        enrollMergeReport = prodResponse || null;
+        break;
+      case 'TUCVantageScore3':
+        enrollVantageScore = prodResponse || null;
+        break;
+      default:
+        break;
+    }
+  }
+  return dispute
+    ? {
+        ...data,
+        agencies: {
+          ...data.agencies,
+          transunion: {
+            ...data.agencies?.transunion,
+            disputeEnrolled: true,
+            disputeEnrolledOn: enrolledOn,
+            disputeEnrollmentKey: enrollmentKey,
+          },
+        },
+      }
+    : {
+        ...data,
+        agencies: {
+          ...data.agencies,
+          transunion: {
+            ...data.agencies?.transunion,
+            enrolled: true,
+            enrolledOn: enrolledOn,
+            enrollmentKey: enrollmentKey,
+            enrollReport: mapReportResponse(enrollReport),
+            enrollMergeReport: mapReportResponse(enrollMergeReport),
+            enrollVantageScore: mapReportResponse(enrollVantageScore),
+          },
+        },
+      };
 };
