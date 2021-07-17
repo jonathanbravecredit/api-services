@@ -1,6 +1,6 @@
 export interface IErrorResult {
   AccountName: string;
-  ErrorResponse: IErrorResponse | INil;
+  ErrorResponse: string;
   RequestKey: string;
   ClientKey: string;
   EnrollmentKey?: string;

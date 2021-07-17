@@ -158,7 +158,7 @@ export interface IEnrollResponse {
 
 export interface IEnrollResult {
   AccountName: string;
-  ErrorResponse: IErrorResponse | INil;
+  ErrorResponse: string;
   RequestKey: string;
   ResponseType: string;
   ClientKey: string;
@@ -171,7 +171,7 @@ export interface IEnrollResult {
 
 export interface IEnrollServiceProductResponse {
   Bureau: string;
-  ErrorResponse: IErrorResponse | INil;
+  ErrorResponse: string;
   ServiceBundleResponse: {
     ServiceBundleCode: string;
     ServiceBundleFulfillmentKey: string;

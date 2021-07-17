@@ -145,7 +145,7 @@ export interface IFulfillResponse {
 
 export interface IFulfillResult {
   AccountName: string;
-  ErrorResponse: IErrorResponse | INil;
+  ErrorResponse: string;
   RequestKey: string;
   ResponseType: string;
   ClientKey: string;
@@ -158,7 +158,7 @@ export interface IFulfillResult {
 
 export interface IFulfillServiceProductResponse {
   Bureau: string;
-  ErrorResponse: IErrorResponse | INil;
+  ErrorResponse: string;
   ServiceBundleResponse: {
     ServiceBundleCode: string;
     ServiceBundleFulfillmentKey: string;
