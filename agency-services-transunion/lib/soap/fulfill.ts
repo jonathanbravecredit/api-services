@@ -157,7 +157,7 @@ export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
         };
       }
     });
-    const updated = updateNestedObject(obj, 'ServiceProductResponse', [...mapped]);
+    const updated = updateNestedObject(obj, 'ServiceProductResponse', [...mapped.filter(Boolean)]);
     return updated ? updated : obj;
   } else {
     return obj;
