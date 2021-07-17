@@ -222,6 +222,6 @@ export const enrichFulfillData = (
       },
     },
   };
-  console.log('mapped', JSON.stringify(mapped));
+  console.log('mapped', mapped);
   return mapped;
 };
