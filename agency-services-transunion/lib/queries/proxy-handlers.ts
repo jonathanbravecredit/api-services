@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { formatEnroll, createEnroll, parseEnroll, createEnrollPayload, enrichEnrollmentData } from 'lib/soap/enroll';
 import { formatFulfill, createFulfill, parseFulfill, createFulfillPayload, enrichFulfillData } from 'lib/soap/fulfill';
 import {
@@ -6,30 +5,17 @@ import {
   createGetAuthenticationQuestions,
 } from 'lib/soap/get-authentication-questions';
 import { formatGetDisputeStatus, createGetDisputeStatus, parseGetDisputeStatus } from 'lib/soap/get-dispute-status';
-import {
-  formatGetServiceProduct,
-  createGetServiceProduct,
-  parseCreditBureau,
-  parseInvestigationResults,
-} from 'lib/soap/get-service-product';
+import { formatGetServiceProduct, createGetServiceProduct, parseCreditBureau } from 'lib/soap/get-service-product';
 import { formatIndicativeEnrichment, createIndicativeEnrichment } from 'lib/soap/indicative-enrichment';
 import { createPing } from 'lib/soap/ping';
 import {
   formatVerifyAuthenticationQuestions,
   createVerifyAuthenticationQuestions,
 } from 'lib/soap/verify-authentication-questions';
-import {
-  createPackage,
-  createRequestOptions,
-  postGraphQLRequest,
-  processRequest,
-  returnNestedObject,
-  syncData,
-} from 'lib/utils/helpers';
+import { createPackage, createRequestOptions, processRequest, returnNestedObject, syncData } from 'lib/utils/helpers';
 
 import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
-import { patchDisputes, updatePreflightStatus } from 'lib/queries/custom-graphql';
 import { createStartDispute, formatStartDispute } from 'lib/soap/start-dispute';
 import { createGetDisputeHistory, formatGetDisputeHistory } from 'lib/soap/get-dispute-history';
 import { formatGetInvestigationResults, createGetInvestigationResults } from 'lib/soap/get-investigation-results';
@@ -38,15 +24,8 @@ import { IEnrollGraphQLResponse, IEnrollResponse, IEnrollResult } from 'lib/inte
 import { getAppData } from 'lib/soap/test';
 import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
 import { ajv } from 'lib/schema/validation';
-import {
-  getEnrollment,
-  getDataForEnrollment,
-  getDataForFulfill,
-  getFulfilledOn,
-  updateAppData,
-} from 'lib/queries/proxy-queries';
+import { getEnrollment, getDataForEnrollment, getDataForFulfill, getFulfilledOn } from 'lib/queries/proxy-queries';
 import { dateDiffInDays } from 'lib/utils/dates';
-import { UpdateAppDataInput } from 'src/api/api.service';
 import { IGetDisputeStatusResponse } from 'lib/interfaces/get-dispute-status.interface';
 
 const parserOptions = {
