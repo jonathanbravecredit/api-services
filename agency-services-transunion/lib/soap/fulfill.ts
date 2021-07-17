@@ -146,11 +146,14 @@ export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
   if (resp instanceof Array) {
     const mapped = resp.map((prod) => {
       let prodObj = prod['ServiceProductObject']['#text'];
+      console.log('prodObj ===> ', prodObj);
       if (typeof prodObj === 'string') {
         let clean = prodObj.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
+        const parsed = fastXml.parse(clean, options);
+        console.log('parsed ===> ', parsed);
         return {
           ...prod,
-          ServiceProductObject: fastXml.parse(clean, options),
+          ServiceProductObject: parsed,
         };
       }
     });
