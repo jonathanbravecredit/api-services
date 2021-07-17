@@ -200,7 +200,13 @@ export const Enroll = async (
     ...JSON.parse(message),
   };
   const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
-  if (!validate(variables)) throw `Malformed message=${message}`;
+  if (!validate(variables)) {
+    let id = returnNestedObject(JSON.parse(message), 'id'); // try to remedy
+    variables = {
+      id: id,
+    };
+    if (!validate(variables)) throw `Malformed message=${message}`;
+  }
 
   try {
     const resp = await getDataForEnrollment(variables);
@@ -239,7 +245,13 @@ export const Fulfill = async (
     ...JSON.parse(message),
   };
   const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
-  if (!validate(variables)) throw `Malformed message=${message}`;
+  if (!validate(variables)) {
+    let id = returnNestedObject(JSON.parse(message), 'id'); // try to remedy
+    variables = {
+      id: id,
+    };
+    if (!validate(variables)) throw `Malformed message=${message}`;
+  }
 
   try {
     const resp = await getDataForFulfill(variables);
@@ -473,11 +485,6 @@ export const DisputePreflightCheck = async (
     throw new Error(`DisputePreflightCheck:GetDisputeStatus=${err}`);
   }
 
-  if (eligible) {
-    try {
-      // update data eligibility
-    } catch (err) {}
-  }
   return { eligible };
 };
 
