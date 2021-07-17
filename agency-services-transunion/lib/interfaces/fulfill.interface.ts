@@ -1,5 +1,4 @@
-import { IErrorResponse } from 'lib/interfaces/errors.interface';
-import { INil } from 'lib/interfaces/tu-common.interface';
+import { IErrorResponse, INil } from 'lib/interfaces/errors.interface';
 
 export interface IFulfillGraphQLResponse {
   data: {
