@@ -229,6 +229,7 @@ export const Fulfill = async (
   }
 
   try {
+    console.log('*** IN FULFILL ***');
     const resp = await getDataForFulfill(variables);
     const gql: IFulfillGraphQLResponse = resp.data; // add validation here
     const payload = createFulfillPayload(gql, dispute);
@@ -411,6 +412,7 @@ export const DisputePreflightCheck = async (
 
   let enrolled: boolean;
   try {
+    console.log('*** IN GET ENROLL STATSU ***');
     const { data } = await getDisputeEnrollment(variables);
     console.log('DisputePreflightCheck:getEnrollment 1 ===> ', data);
     enrolled = data ? false : returnNestedObject(data, 'disputeEnrolled');
@@ -421,6 +423,7 @@ export const DisputePreflightCheck = async (
   }
 
   if (!enrolled) {
+    console.log('*** IN ENROLL ***');
     try {
       await Enroll(accountCode, username, message, agent, auth, true);
     } catch (err) {
@@ -430,6 +433,7 @@ export const DisputePreflightCheck = async (
 
   let refresh: boolean;
   try {
+    console.log('*** IN REFRESH ***');
     const { data } = await getFulfilledOn(variables);
     console.log('DisputePreflightCheck:getFulfilledOn ===> ', data);
     const fulfilledOn = data ? false : returnNestedObject(data, 'fulfilledOn');
@@ -448,6 +452,7 @@ export const DisputePreflightCheck = async (
 
   if (refresh) {
     try {
+      console.log('*** IN REFRESH:FULFILL ***');
       await Fulfill(accountCode, username, message, agent, auth, true);
     } catch (err) {
       throw new Error(`DisputePreflightCheck:Fulfill=${err}`);
@@ -456,6 +461,7 @@ export const DisputePreflightCheck = async (
 
   let eligible: boolean;
   try {
+    console.log('*** IN GETDISPUTESTATUS ***');
     const resp = await GetDisputeStatus(accountCode, username, message, agent, auth);
     console.log('DisputePreflightCheck:GetDisputeStatus ===> ', resp);
     const type = returnNestedObject(resp, 'ResponseType');
