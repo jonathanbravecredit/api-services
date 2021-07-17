@@ -51,7 +51,7 @@ export const Ping = async (agent: https.Agent, auth: string): Promise<string> =>
   const options = createRequestOptions(agent, auth, xml, 'Ping');
   if (!xml || !options) throw new Error(`Missing xml:${xml}, or options:${options}`);
   try {
-    return processRequest(options, fastXml.parse, parserOptions);
+    return await processRequest(options, fastXml.parse, parserOptions);
   } catch (err) {
     return err;
   }
@@ -83,7 +83,7 @@ export const IndicativeEnrichment = async (
   const options = createRequestOptions(agent, auth, xml, 'IndicativeEnrichment');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    return processRequest(options, fastXml.parse, parserOptions);
+    return await processRequest(options, fastXml.parse, parserOptions);
   } catch (err) {
     return err;
   }
@@ -115,7 +115,7 @@ export const GetAuthenticationQuestions = async (
   const options = createRequestOptions(agent, auth, xml, 'GetAuthenticationQuestions');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    return processRequest(options, fastXml.parse, parserOptions);
+    return await processRequest(options, fastXml.parse, parserOptions);
   } catch (err) {
     return err;
   }
@@ -147,7 +147,7 @@ export const VerifyAuthenticationQuestions = async (
   const options = createRequestOptions(agent, auth, xml, 'VerifyAuthenticationQuestions');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    return processRequest(options, fastXml.parse, parserOptions);
+    return await processRequest(options, fastXml.parse, parserOptions);
   } catch (err) {
     return err;
   }
@@ -190,9 +190,9 @@ export const Enroll = async (
     const { msg, xml } = createPackage(accountCode, username, JSON.stringify(payload), formatEnroll, createEnroll);
     const options = createRequestOptions(agent, auth, xml, 'Enroll');
     if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
-    const enroll = processRequest(options, parseEnroll, parserOptions);
+    const enroll = await processRequest(options, parseEnroll, parserOptions);
     const enrollResults: IEnrollResult = returnNestedObject(enroll, 'EnrollResult');
-    syncData(variables, enrollResults, enrichEnrollmentData, dispute);
+    await syncData(variables, enrollResults, enrichEnrollmentData, dispute);
     return enroll; // for stand alone calls if needed
   } catch (err) {
     return err;
@@ -235,9 +235,9 @@ export const Fulfill = async (
     const { msg, xml } = createPackage(accountCode, username, JSON.stringify(payload), formatFulfill, createFulfill);
     const options = createRequestOptions(agent, auth, xml, 'Fulfill');
     if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
-    const fulfill = processRequest(options, parseFulfill, parserOptions);
+    const fulfill = await processRequest(options, parseFulfill, parserOptions);
     const fulfillResults: IFulfillResult = returnNestedObject(fulfill, 'FulfillResult');
-    syncData(variables, fulfillResults, enrichFulfillData, dispute);
+    await syncData(variables, fulfillResults, enrichFulfillData, dispute);
     return fulfill; // for stand alone calls if needed
   } catch (err) {
     return err;
@@ -264,7 +264,7 @@ export const GetServiceProduct = async (
   const options = createRequestOptions(agent, auth, xml, 'GetServiceProduct');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    return processRequest(options, fastXml.parse, parserOptions);
+    return await processRequest(options, fastXml.parse, parserOptions);
   } catch (err) {
     return err;
   }
@@ -291,7 +291,7 @@ export const GetDisputeStatus = async (
   const options = createRequestOptions(agent, auth, xml, 'GetDisputeStatus');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    return processRequest(options, parseGetDisputeStatus, parserOptions);
+    return await processRequest(options, parseGetDisputeStatus, parserOptions);
   } catch (err) {
     return err;
   }
@@ -317,7 +317,7 @@ export const StartDispute = async (
   const options = createRequestOptions(agent, auth, xml, 'StartDispute');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    return processRequest(options, fastXml.parse, parserOptions);
+    return await processRequest(options, fastXml.parse, parserOptions);
   } catch (err) {
     return err;
   }
@@ -343,7 +343,7 @@ export const GetDisputeHistory = async (
   const options = createRequestOptions(agent, auth, xml, 'GetDisputeHistory');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    return processRequest(options, fastXml.parse, parserOptions);
+    return await processRequest(options, fastXml.parse, parserOptions);
   } catch (err) {
     return err;
   }
@@ -375,7 +375,7 @@ export const GetInvestigationResults = async (
   const options = createRequestOptions(agent, auth, xml, 'GetInvestigationResults');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    return processRequest(options, parseCreditBureau, parserOptions);
+    return await processRequest(options, parseCreditBureau, parserOptions);
     // results = parseInvestigationResults(results, xmlOptions); // may need to add this additionallayer of parsing
   } catch (err) {
     return err;
@@ -413,7 +413,7 @@ export const DisputePreflightCheck = async (
   try {
     const { data } = await getDisputeEnrollment(variables);
     console.log('getEnrollment 1 ===> ', data);
-    enrolled = returnNestedObject(data, 'disputeEnrolled');
+    enrolled = data ? false : returnNestedObject(data, 'disputeEnrolled');
     console.log('enrolled ===> ', enrolled);
   } catch (err) {
     console.log('error: ===>', err);
@@ -432,7 +432,7 @@ export const DisputePreflightCheck = async (
   try {
     const { data } = await getFulfilledOn(variables);
     console.log('getFulfilledOn ===> ', data);
-    const fulfilledOn = returnNestedObject(data, 'fulfilledOn');
+    const fulfilledOn = data ? false : returnNestedObject(data, 'fulfilledOn');
     console.log('fulfilledOn ===> ', fulfilledOn);
     if (!fulfilledOn) {
       refresh = true;
@@ -456,7 +456,7 @@ export const DisputePreflightCheck = async (
 
   let eligible: boolean;
   try {
-    const resp = GetDisputeStatus(accountCode, username, message, agent, auth);
+    const resp = await GetDisputeStatus(accountCode, username, message, agent, auth);
     console.log('GetDisputeStatus ===> ', resp);
     const type = returnNestedObject(resp, 'ResponseType');
     console.log('type ===> ', type);
