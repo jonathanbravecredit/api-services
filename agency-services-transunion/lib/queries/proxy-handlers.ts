@@ -201,7 +201,7 @@ export const Enroll = async (
   };
   const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
   if (!validate(variables)) {
-    let id = returnNestedObject(JSON.parse(message), 'id'); // try to remedy
+    let id = returnNestedObject(JSON.parse(message), 'ClientKey'); // try to remedy
     variables = {
       id: id,
     };
@@ -246,7 +246,7 @@ export const Fulfill = async (
   };
   const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
   if (!validate(variables)) {
-    let id = returnNestedObject(JSON.parse(message), 'id'); // try to remedy
+    let id = returnNestedObject(JSON.parse(message), 'ClientKey'); // try to remedy
     variables = {
       id: id,
     };
