@@ -58,11 +58,11 @@ export const syncData = async (
   try {
     const resp = await getAppData(variables);
     const app: UpdateAppDataInput = returnNestedObject(resp.data, 'getAppData');
-    console.log('syncData:data ===> ', JSON.stringify(app));
+    console.log('syncData:data ===> ', app);
     const enriched: UpdateAppDataInput = cbEnricher(app, updated, dispute);
-    console.log('syncData:enriched ===> ', JSON.stringify(enriched));
+    console.log('syncData:enriched ===> ', enriched);
     const sync = await updateAppData(enriched);
-    console.log('syncData:sync ===> ', JSON.stringify(sync.data));
+    console.log('syncData:sync ===> ', sync.data);
     return true;
   } catch (err) {
     console.log('syncData:err ===> ', err);
