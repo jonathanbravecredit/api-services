@@ -145,7 +145,7 @@ export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
   const resp = returnNestedObject(obj, 'ServiceProductResponse');
   if (resp instanceof Array) {
     const mapped = resp.map((prod) => {
-      let prodObj = prod['ServiceProductObject'];
+      let prodObj = prod['ServiceProductObject']['#text'];
       if (typeof prodObj === 'string') {
         let clean = prodObj.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
         return {
