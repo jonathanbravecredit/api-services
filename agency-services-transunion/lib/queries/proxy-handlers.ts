@@ -21,7 +21,6 @@ import { createGetDisputeHistory, formatGetDisputeHistory } from 'lib/soap/get-d
 import { formatGetInvestigationResults, createGetInvestigationResults } from 'lib/soap/get-investigation-results';
 import { IFulfillGraphQLResponse, IFulfillResponse, IFulfillResult } from 'lib/interfaces/fulfill.interface';
 import { IEnrollGraphQLResponse, IEnrollResponse, IEnrollResult } from 'lib/interfaces/enroll.interface';
-import { getAppData } from 'lib/soap/test';
 import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
 import { ajv } from 'lib/schema/validation';
 import { getEnrollment, getDataForEnrollment, getDataForFulfill, getFulfilledOn } from 'lib/queries/proxy-queries';
@@ -47,36 +46,6 @@ export const Ping = async (agent: https.Agent, auth: string): Promise<string> =>
   if (!xml || !options) throw new Error(`Missing xml:${xml}, or options:${options}`);
   try {
     return processRequest(options, fastXml.parse, parserOptions);
-  } catch (err) {
-    return err;
-  }
-};
-
-/**
- * This initiates the dispute process
- * @param {string} accountCode Brave account code
- * @param {string} username Brave user ID (Identity ID)
- * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
- * @param {https.Agent} agent
- * @param {string} auth
- * @returns
- */
-export const Test = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-): Promise<string> => {
-  let variables: IGetAppDataRequest = {
-    ...JSON.parse(message),
-  };
-  const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
-  console.log('validation ===> ', validate(variables));
-  if (!validate(variables)) throw `Malformed message=${message}`;
-  try {
-    const resp = await getAppData(variables);
-    return resp ? resp.data : undefined;
   } catch (err) {
     return err;
   }

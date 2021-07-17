@@ -7,8 +7,7 @@ import gql from 'graphql-tag';
 import { print } from 'graphql';
 import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
 import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
-import { updateAppData } from 'lib/queries/proxy-queries';
-import { getAppData } from 'lib/soap/test';
+import { getAppData, updateAppData } from 'lib/queries/proxy-queries';
 import { IEnrollServiceProductResponse } from 'lib/interfaces/enroll.interface';
 
 const appsyncUrl = process.env.APPSYNC_ENDPOINT;

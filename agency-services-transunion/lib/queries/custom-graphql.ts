@@ -179,7 +179,7 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
  * @param {ID!} id user identity id
  */
 export const getLastActiveOnboardingQuery = `query GetAppData($id: ID!) {
-  getAppData(id: $id) {
+  getLastActiveOnboardingQuery(id: $id) {
     user {
       id
       onboarding {
@@ -194,7 +194,7 @@ export const getLastActiveOnboardingQuery = `query GetAppData($id: ID!) {
  * @param {ID!} id user identity id
  */
 export const getTransunionDisputes = `query GetAppData($id: ID!) {
-  getAppData(id: $id) {
+  getTransunionDisputes(id: $id) {
     id
     agencies {
       transunion {
@@ -216,7 +216,7 @@ export const getTransunionDisputes = `query GetAppData($id: ID!) {
 }`;
 
 export const qryGetEnrollment = `query GetAppData($id: ID!) {
-  getAppData(id: $id) {
+  getEnrollment(id: $id) {
     agencies {
       transunion {
         enrolled
@@ -226,7 +226,7 @@ export const qryGetEnrollment = `query GetAppData($id: ID!) {
 }`;
 
 export const qryGetFulfilledOn = `query GetAppData($id: ID!) {
-  getAppData(id: $id) {
+  getFulfilledOn(id: $id) {
     agencies {
       transunion {
         fulfilledOn
@@ -236,7 +236,7 @@ export const qryGetFulfilledOn = `query GetAppData($id: ID!) {
 }`;
 
 export const qryGetDataForEnrollment = `query GetAppData($id: ID!) {
-  getAppData(id: $id) {
+  getDataForEnrollment(id: $id) {
     id
     user {
       userAttributes {
@@ -270,7 +270,7 @@ export const qryGetDataForEnrollment = `query GetAppData($id: ID!) {
 }`;
 
 export const qryGetDataForFulfill = `query GetAppData($id: ID!) {
-  getAppData(id: $id) {
+  getDateForFulfill(id: $id) {
     id
     agencies {
       transunion {
