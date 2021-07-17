@@ -31,9 +31,9 @@ export const createPackage = (
   cbXml: (msg: any) => void,
 ): { msg: any; xml: any } => {
   const msg = cbMsg(code, username, message);
-  console.log('msg ===> ', msg, JSON.stringify(msg));
+  console.log('createPackage:msg ===> ', msg, JSON.stringify(msg));
   const xml = cbXml(msg);
-  console.log('xml ===> ', xml);
+  console.log('createPackage:xml ===> ', xml);
   return {
     msg,
     xml,
@@ -56,15 +56,15 @@ export const syncData = async (
   dispute: boolean = false,
 ): Promise<boolean> => {
   try {
-    const { data } = await getAppData(variables);
-    console.log('data ===> ', data);
-    const enriched: UpdateAppDataInput = cbEnricher(data, updated, dispute);
-    console.log('enriched ===> ', enriched);
+    const app = await getAppData(variables);
+    console.log('syncData:data ===> ', JSON.stringify(app.data));
+    const enriched: UpdateAppDataInput = cbEnricher(app.data, updated, dispute);
+    console.log('syncData:enriched ===> ', JSON.stringify(enriched));
     const sync = await updateAppData(enriched);
-    console.log('sync ===> ', sync);
+    console.log('syncData:sync ===> ', JSON.stringify(sync.data));
     return true;
   } catch (err) {
-    console.log('err ===> ', err);
+    console.log('syncData:err ===> ', err);
     return false;
   }
 };
@@ -88,12 +88,12 @@ export const processRequest = async (
 ) => {
   try {
     const res = await axios({ ...options });
-    console.log('res ===> ', JSON.stringify(res.data));
+    console.log('processRequest:res ===> ', JSON.stringify(res.data));
     const results = parser(res.data, parserOptions);
-    console.log('results ===> ', JSON.stringify(results));
+    console.log('processRequest:results ===> ', JSON.stringify(results));
     return results;
   } catch (err) {
-    console.log('err ===> ', err);
+    console.log('processRequest:err ===> ', err);
     return err;
   }
 };
@@ -118,23 +118,19 @@ export const postGraphQLRequest = async (query: string, variables: any): Promise
     body: JSON.stringify(payload),
     service: 'appsync',
   };
-  console.log('payload ===> ', payload);
-  console.log('options ===> ', opts);
-  console.log('url ===> ', appsyncUrl);
 
   try {
     const headers = aws4.sign(opts).headers;
-    console.log('headers ===> ', headers);
     const resp: AxiosResponse<any> = await axios({
       url: appsyncUrl,
       method: 'post',
       headers: headers,
       data: payload,
     });
-    console.log('resp ===> ', JSON.stringify(resp.data));
+    console.log('postGraphQLRequest:resp ===> ', JSON.stringify(resp.data));
     return resp;
   } catch (err) {
-    console.log('error ===> ', err);
+    console.log('postGraphQLRequest:error ===> ', err);
     return err;
   }
 };

@@ -412,11 +412,11 @@ export const DisputePreflightCheck = async (
   let enrolled: boolean;
   try {
     const { data } = await getDisputeEnrollment(variables);
-    console.log('getEnrollment 1 ===> ', data);
+    console.log('DisputePreflightCheck:getEnrollment 1 ===> ', data);
     enrolled = data ? false : returnNestedObject(data, 'disputeEnrolled');
-    console.log('enrolled ===> ', enrolled);
+    console.log('DisputePreflightCheck:enrolled ===> ', enrolled);
   } catch (err) {
-    console.log('error: ===>', err);
+    console.log('DisputePreflightCheck:error: ===>', err);
     throw new Error(`DisputePreflightCheck:getEnrollment=${err}`);
   }
 
@@ -431,9 +431,9 @@ export const DisputePreflightCheck = async (
   let refresh: boolean;
   try {
     const { data } = await getFulfilledOn(variables);
-    console.log('getFulfilledOn ===> ', data);
+    console.log('DisputePreflightCheck:getFulfilledOn ===> ', data);
     const fulfilledOn = data ? false : returnNestedObject(data, 'fulfilledOn');
-    console.log('fulfilledOn ===> ', fulfilledOn);
+    console.log('DisputePreflightCheck:fulfilledOn ===> ', fulfilledOn);
     if (!fulfilledOn) {
       refresh = true;
     } else {
@@ -441,7 +441,7 @@ export const DisputePreflightCheck = async (
       const last = new Date(fulfilledOn);
       refresh = dateDiffInDays(last, now) > 0 ? true : false;
     }
-    console.log('refresh ===> ', refresh);
+    console.log('DisputePreflightCheck:refresh ===> ', refresh);
   } catch (err) {
     throw new Error(`DisputePreflightCheck:getFulfilledOn=${err}`);
   }
@@ -457,11 +457,11 @@ export const DisputePreflightCheck = async (
   let eligible: boolean;
   try {
     const resp = await GetDisputeStatus(accountCode, username, message, agent, auth);
-    console.log('GetDisputeStatus ===> ', resp);
+    console.log('DisputePreflightCheck:GetDisputeStatus ===> ', resp);
     const type = returnNestedObject(resp, 'ResponseType');
-    console.log('type ===> ', type);
+    console.log('DisputePreflightCheck:type ===> ', type);
     eligible = type?.toLowerCase() === 'success';
-    console.log('eligible ===> ', eligible);
+    console.log('DisputePreflightCheck:eligible ===> ', eligible);
   } catch (err) {
     throw new Error(`DisputePreflightCheck:GetDisputeStatus=${err}`);
   }
