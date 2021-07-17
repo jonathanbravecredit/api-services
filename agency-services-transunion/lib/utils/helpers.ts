@@ -61,7 +61,7 @@ export const syncData = async (
     console.log('syncData:data ===> ', app);
     const enriched: UpdateAppDataInput = cbEnricher(app, updated, dispute);
     console.log('syncData:enriched ===> ', enriched);
-    const sync = await updateAppData(enriched);
+    const sync = await updateAppData({ input: enriched });
     console.log('syncData:sync ===> ', sync.data);
     return true;
   } catch (err) {
