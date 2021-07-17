@@ -1,5 +1,3 @@
-import { IErrorResponse, INil } from 'lib/interfaces/errors.interface';
-
 export interface IEnrollGraphQLResponse {
   data: {
     getAppData: {

@@ -7,12 +7,6 @@ export interface IErrorResult {
   ServiceBundleFulfillmentKey?: string;
 }
 
-export interface IErrorResponse {
-  Code: number | string;
-  Name: string;
-  Message: string;
-}
-
 export interface IErrorCodes {
   [key: string]: IErrorCode;
 }
@@ -24,8 +18,4 @@ export interface IErrorCode {
   category: string;
   method: string;
   action: string;
-}
-
-export interface INil {
-  nil: true;
 }
