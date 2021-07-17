@@ -6,7 +6,7 @@ import axios, { AxiosResponse } from 'axios';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
 import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
-import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
+import { GetAppDataQuery, TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 import { getAppData, updateAppData } from 'lib/queries/proxy-queries';
 import { IEnrollServiceProductResponse } from 'lib/interfaces/enroll.interface';
 
@@ -52,16 +52,18 @@ export const createPackage = (
 export const syncData = async (
   variables: IGetAppDataRequest,
   updated: any,
-  cbEnricher: (prior: any, updated: any, dispute: boolean) => UpdateAppDataInput,
+  cbEnricher: (prior: any, updated: any, dispute: boolean) => GetAppDataQuery,
   dispute: boolean = false,
 ): Promise<boolean> => {
   try {
     const resp = await getAppData(variables);
-    const app: UpdateAppDataInput = returnNestedObject(resp.data, 'getAppData');
+    const app: GetAppDataQuery = returnNestedObject(resp.data, 'getAppData');
     console.log('syncData:data ===> ', app);
-    const enriched: UpdateAppDataInput = cbEnricher(app, updated, dispute);
+    const clean: UpdateAppDataInput = cleanBackendData(app);
+    const enriched: GetAppDataQuery = cbEnricher(clean, updated, dispute);
     console.log('syncData:enriched ===> ', enriched);
-    const sync = await updateAppData({ input: enriched });
+
+    const sync = await updateAppData({ input: clean });
     console.log('syncData:sync ===> ', sync.data);
     return true;
   } catch (err) {
@@ -167,6 +169,19 @@ export const createRequestOptions = (
       'User-Agent': 'Apache-HttpClient/4.5.2 (Java/1.8.0_181)',
     },
   };
+};
+
+/**
+ * Removes the '__typename' fields from query results
+ * @param data
+ * @returns
+ */
+export const cleanBackendData = (data: GetAppDataQuery): UpdateAppDataInput => {
+  let clean = deleteKeyNestedObject(data, '__typename');
+  delete clean.createdAt; // this is a graphql managed field
+  delete clean.updatedAt; // this is a graphql managed field
+  delete clean.owner; // this is a graphql managed field
+  return clean;
 };
 
 /**
