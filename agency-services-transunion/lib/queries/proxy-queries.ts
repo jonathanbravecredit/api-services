@@ -28,6 +28,14 @@ export const getEnrollment = async (msg: IGetAppDataRequest): Promise<AxiosRespo
   }
 };
 
+export const getDisputeEnrollment = async (msg: IGetAppDataRequest): Promise<AxiosResponse<any>> => {
+  try {
+    return await postGraphQLRequest(qry.qryGetDisputeEnrollment, msg);
+  } catch (err) {
+    return err;
+  }
+};
+
 export const getFulfilledOn = async (msg: IGetAppDataRequest): Promise<AxiosResponse<any>> => {
   try {
     return await postGraphQLRequest(qry.qryGetFulfilledOn, msg);
