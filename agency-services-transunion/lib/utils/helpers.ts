@@ -56,8 +56,8 @@ export const syncData = async (
   dispute: boolean = false,
 ): Promise<boolean> => {
   try {
-    const data = await getAppData(variables);
-    const app: UpdateAppDataInput = returnNestedObject(data, 'getAppData');
+    const resp = await getAppData(variables);
+    const app: UpdateAppDataInput = returnNestedObject(resp.data, 'getAppData');
     console.log('syncData:data ===> ', JSON.stringify(app));
     const enriched: UpdateAppDataInput = cbEnricher(app, updated, dispute);
     console.log('syncData:enriched ===> ', JSON.stringify(enriched));
