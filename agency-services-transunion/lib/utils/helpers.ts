@@ -110,7 +110,7 @@ export const postGraphQLRequest = async (query: string, variables: any): Promise
     query: print(gql(query)),
     variables: variables,
   };
-  console.log('postGraphQLRequest:payload ===> ', JSON.stringify(payload));
+  console.log('postGraphQLRequest:payload ===> ', payload);
   // create the options for the sync up
   let opts = {
     method: 'POST',
