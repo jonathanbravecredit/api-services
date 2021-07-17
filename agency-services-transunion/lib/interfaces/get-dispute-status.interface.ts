@@ -36,7 +36,35 @@ export interface IGetDisputeStatusMsg {
   DisputeId?: string;
   EnrollmentKey: string;
 }
+
+export interface IGetDsputeStatusResponseSuccess {
+  GetDisputeStatus: {
+    Envelope: {
+      Body: {
+        GetDisputeStatusResponse: {
+          GetDisputeStatusResult: {
+            AccountName: string;
+            ErrorResponse: string;
+            RequestKey: string;
+            ResponseType: string;
+            ClientKey: string;
+            DisputeStatus: string;
+          };
+        };
+      };
+    };
+  };
+}
 // TODO updated the response with the actual
 export interface IGetDisputeStatusResponse {
   GetDisputeStatusResult: any;
+}
+
+export interface IGetDisputeStatusResult {
+  AccountName: string;
+  ErrorResponse: string;
+  RequestKey: string;
+  ResponseType: string;
+  ClientKey: string;
+  DisputeStatus: string;
 }
