@@ -52,7 +52,7 @@ export const createPackage = (
 export const syncData = async (
   variables: IGetAppDataRequest,
   updated: any,
-  cbEnricher: (prior: any, updated: any, dispute: boolean) => GetAppDataQuery,
+  cbEnricher: (prior: any, updated: any, dispute: boolean) => UpdateAppDataInput,
   dispute: boolean = false,
 ): Promise<boolean> => {
   try {
@@ -60,7 +60,7 @@ export const syncData = async (
     const app: GetAppDataQuery = returnNestedObject(resp.data, 'getAppData');
     console.log('syncData:data ===> ', app);
     const clean: UpdateAppDataInput = cleanBackendData(app);
-    const enriched: GetAppDataQuery = cbEnricher(clean, updated, dispute);
+    const enriched: UpdateAppDataInput = cbEnricher(clean, updated, dispute);
     console.log('syncData:enriched ===> ', enriched);
 
     const sync = await updateAppData({ input: clean });
