@@ -150,7 +150,7 @@ export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
         let clean = prodObj.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
         return {
           ...prod,
-          ServiceProductObject: fastXml.parse(clean),
+          ServiceProductObject: fastXml.parse(clean, options),
         };
       }
     });
