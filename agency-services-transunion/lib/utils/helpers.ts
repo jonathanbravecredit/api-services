@@ -113,6 +113,8 @@ export const postGraphQLRequest = async (query: string, variables: any): Promise
     variables: variables,
   };
   console.log('postGraphQLRequest:payload ===> ', payload);
+  console.log('fulfillReport ===> ', returnNestedObject(variables, 'fulfillMergeReport'));
+  console.log('fulfilledOn ===> ', returnNestedObject(variables, 'fulfilledOn'));
   // create the options for the sync up
   let opts = {
     method: 'POST',
