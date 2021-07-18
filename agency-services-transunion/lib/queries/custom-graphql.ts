@@ -358,6 +358,43 @@ export const qryGetDataForGetDisputeStatus = `query GetAppData($id: ID!) {
   }
 }`;
 
+export const qryGetDataForStartDisputes = `query GetAppData($id: ID!) {
+  getAppData(id: $id) {
+    id
+    user {
+      userAttributes {
+        name {
+          first
+          middle
+          last
+        }
+        address {
+          addressOne
+          addressTwo
+          city
+          state
+          zip
+        }
+        dob {
+          year
+          month
+          day
+        }
+        ssn {
+          lastfour
+          full
+        }
+      }
+    }
+    agencies {
+      transunion {
+        disputeEnrollmentKey
+        disputeServiceBundleFulfillmentKey
+      }
+    }
+  }
+}`;
+
 //==============================
 //          MUTATIONS
 //==============================

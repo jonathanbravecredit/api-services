@@ -61,6 +61,7 @@ layers:
 functions:
   graphql:
     handler: src/handlers/graphql.main
+    timeout: 30
     layers:
       - { Ref: TuCertsLambdaLayer }
   postRequests:

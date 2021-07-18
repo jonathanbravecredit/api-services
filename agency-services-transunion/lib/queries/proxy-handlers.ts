@@ -21,7 +21,12 @@ import { createPackage, createRequestOptions, processRequest, returnNestedObject
 
 import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
-import { createStartDispute, formatStartDispute } from 'lib/soap/start-dispute';
+import {
+  createStartDispute,
+  createStartDisputePayload,
+  formatStartDispute,
+  parseStartDispute,
+} from 'lib/soap/start-dispute';
 import { createGetDisputeHistory, formatGetDisputeHistory } from 'lib/soap/get-dispute-history';
 import { formatGetInvestigationResults, createGetInvestigationResults } from 'lib/soap/get-investigation-results';
 import { IFulfillGraphQLResponse, IFulfillResponse, IFulfillResult } from 'lib/interfaces/fulfill.interface';
@@ -35,12 +40,18 @@ import {
   getFulfilledOn,
   getDisputeEnrollment,
   getDataForGetDisputeStatus,
+  getDataForStartDispute,
 } from 'lib/queries/proxy-queries';
 import { dateDiffInDays } from 'lib/utils/dates';
 import {
   IGetDisputeStatusGraphQLResponse,
   IGetDisputeStatusResponse,
 } from 'lib/interfaces/get-dispute-status.interface';
+import {
+  IStartDisputeGraphQLResponse,
+  IStartDisputeRequest,
+  IStartDisputeResult,
+} from 'lib/interfaces/start-dispute.interface';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -353,11 +364,30 @@ export const StartDispute = async (
   agent: https.Agent,
   auth: string,
 ): Promise<string> => {
-  const { msg, xml } = createPackage(accountCode, username, message, formatStartDispute, createStartDispute);
-  const options = createRequestOptions(agent, auth, xml, 'StartDispute');
-  if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
+  let variables: IStartDisputeRequest = {
+    ...JSON.parse(message),
+  };
+  const validate = ajv.getSchema<IStartDisputeRequest>('startDisputeRequest');
+  if (!validate(variables)) throw `Malformed message=${message}`;
+
   try {
-    return await processRequest(options, fastXml.parse, parserOptions);
+    console.log('*** IN START DISPUTE ***');
+    const resp = await getDataForStartDispute(variables);
+    const gql: IStartDisputeGraphQLResponse = resp.data;
+    const payload = createStartDisputePayload(gql, variables.disputes);
+    const { msg, xml } = createPackage(
+      accountCode,
+      username,
+      JSON.stringify(payload),
+      formatStartDispute,
+      createStartDispute,
+    );
+    const options = createRequestOptions(agent, auth, xml, 'StartDispute');
+    if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
+    const dispute = await processRequest(options, parseStartDispute, parserOptions);
+    const disputeResults: IStartDisputeResult = returnNestedObject(dispute, 'StartDisputeResult');
+    // Need toadd sync await syncData(variables, fulfillResults, enrichFulfillData, dispute);
+    return dispute;
   } catch (err) {
     return err;
   }

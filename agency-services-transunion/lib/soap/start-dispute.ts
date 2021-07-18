@@ -6,11 +6,106 @@ import {
   IIndicativeDisputes,
   ILineItem,
   IStartDispute,
+  IStartDisputeGraphQLResponse,
   IStartDisputeMsg,
+  IStartDisputeResponse,
 } from 'lib/interfaces/start-dispute.interface';
-import { textConstructor } from 'lib/utils/helpers';
+import { returnNestedObject, textConstructor } from 'lib/utils/helpers';
+import * as fastXml from 'fast-xml-parser';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
+import { IDisputeReason, IProcessDisputeTradelineResult } from 'lib/interfaces/disputes.interface';
+import { MONTH_MAP } from 'lib/data/constants';
+
+/**
+ * Genarates the message payload for TU Fulfill request
+ * TODO: need to incorporate Personal and Public items
+ * @param { UpdateAppDataInput} data
+ * @returns {IGetDisputeStatusRequest | undefined }
+ */
+export const createStartDisputePayload = (
+  data: IStartDisputeGraphQLResponse,
+  disputes: IProcessDisputeTradelineResult[],
+): IStartDisputeMsg | undefined => {
+  const id = data.data.getAppData.id?.split(':')?.pop();
+  const attrs = data.data.getAppData.user?.userAttributes;
+  const dob = attrs?.dob;
+
+  if (!id || !attrs || !dob) {
+    console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
+    return;
+  }
+  console.log('id in StartDispute', id);
+  return {
+    AccountCode: '',
+    AccountName: '',
+    RequestKey: '',
+    ClientKey: id,
+    Customer: {
+      CurrentAddress: {
+        AddressLine1: attrs.address?.addressOne || '',
+        AddressLine2: attrs.address?.addressTwo || '',
+        City: attrs.address?.city || '',
+        State: attrs.address?.state || '',
+        Zipcode: attrs.address?.zip || '',
+      },
+      DateOfBirth: `${attrs.dob?.year}-${MONTH_MAP[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
+      FullName: {
+        FirstName: attrs.name?.first || '',
+        LastName: attrs.name?.last || '',
+        MiddleName: attrs.name?.middle || '',
+      },
+      Ssn: attrs.ssn?.full || '',
+    },
+    EnrollmentKey: data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey,
+    LineItems: parseDisputeToLineItem(disputes),
+    ServiceBundleFulfillmentKey: data.data.getAppData.agencies?.transunion?.disputeServiceBundleFulfillmentKey,
+    ServiceProductFulfillmentKey: null,
+  };
+};
+
+/**
+ * Helper function to parse the disputes to Line Items
+ * @param {IProcessDisputeTradelineResult[]} disputes
+ * @returns {ILineItem[] | ILineItem}
+ */
+export const parseDisputeToLineItem = (disputes: IProcessDisputeTradelineResult[]): ILineItem[] | ILineItem | null => {
+  if (!disputes.length) return null;
+  return disputes
+    .map((item) => {
+      const reason = item?.result?.data?.reasons;
+      const handle = item?.tradeline?.Tradeline?.handle;
+      if (reason !== undefined) {
+        return {
+          LineItem: {
+            ClaimCodes: parseReasonsToClaimCodes(reason),
+            CreditReportItem: handle,
+            LineItemComment: 'Account Tradeline',
+          },
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
+};
+
+/**
+ * Helper function to parse the reasons to Claim Codes
+ * @param {[(IDisputeReason | undefined), (IDisputeReason | undefined)]} reasons
+ * @returns {IClaimCode[] | IClaimCode}
+ */
+export const parseReasonsToClaimCodes = (
+  reasons: [IDisputeReason | undefined, IDisputeReason | undefined],
+): IClaimCode[] | IClaimCode | null => {
+  if (!reasons.length) return null;
+  return reasons.map((code) => {
+    return {
+      ClaimCode: {
+        Code: code?.claimCode || '',
+      },
+    };
+  });
+};
 
 /**
  * This method packages the message in a request body and adds account information
@@ -271,4 +366,14 @@ export const createStartDispute = (msg: IStartDispute): string => {
   console.log('xmlObj ===> ', JSON.stringify(xmlObj));
   const xml = convert.json2xml(JSON.stringify(xmlObj), { compact: true, spaces: 4 });
   return xml;
+};
+
+/**
+ * Parse the StartDispute response
+ * @param xml
+ * @returns IStartDisputeResponse
+ */
+export const parseStartDispute = (xml: string, options: any): IStartDisputeResponse => {
+  const obj: IStartDisputeResponse = returnNestedObject(fastXml.parse(xml, options), 'StartDisputeResponse');
+  return obj;
 };

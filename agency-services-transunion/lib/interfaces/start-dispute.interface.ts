@@ -1,3 +1,52 @@
+import { IProcessDisputeTradelineResult } from 'lib/interfaces/disputes.interface';
+
+export interface IStartDisputeGraphQLResponse {
+  data: {
+    getAppData: {
+      id?: string;
+      agencies?: {
+        transunion?: {
+          disputeEnrollmentKey: string;
+          disputeServiceBundleFulfillmentKey?: string;
+        };
+      };
+      user?: {
+        userAttributes?: {
+          name?: {
+            first?: string;
+            middle?: string;
+            last?: string;
+          };
+          address?: {
+            addressOne?: string;
+            addressTwo?: string;
+            city?: string;
+            state?: string;
+            zip?: string;
+          };
+          phone?: {
+            primary?: string;
+          };
+          dob?: {
+            year?: string;
+            month?: string;
+            day?: string;
+          };
+          ssn?: {
+            lastfour?: string;
+            full?: string;
+          };
+        };
+      };
+    };
+  };
+}
+
+export interface IStartDisputeRequest {
+  id: string;
+  disputes: IProcessDisputeTradelineResult[];
+}
+
 export interface IStartDispute {
   request: IStartDisputeMsg;
 }
@@ -42,8 +91,42 @@ export interface IStartDisputeMsg {
   ServiceProductFulfillmentKey?: string;
 }
 // TODO updated the response with the actual
-export interface IGetDisputeStatusResponse {
-  GetDisputeStatusResult: any;
+export interface IStartDisputeResponse {
+  StartDisputeResult: IStartDisputeResult;
+}
+
+export interface IStartDisputeResult {
+  AccountName: string;
+  ErrorResponse: string;
+  RequestKey: string;
+  ResponseType: string;
+  ClientKey: string;
+  DisputeStatus: string;
+}
+
+export interface IDisputeStatus {
+  DisputeStatusDetail: IDisputeStatusDetail;
+}
+
+export interface IDisputeStatusDetail {
+  DisputeId: string;
+  LetterStatus: ILetterStatus;
+  OpenDisputes: IOpenDisputes;
+}
+
+export interface ILetterStatus {
+  DisputeLetterCode: string;
+  DisputeLetterContent: string;
+}
+
+export interface IOpenDisputes {
+  EstimatedCompletionDate: string;
+  LastUpdatedDate: string;
+  OpenDate: string;
+  RequestedDate: string;
+  TotalClosedDisputedItems: string;
+  TotalDisputedItems: string;
+  TotalOpenDisputedItems: string;
 }
 
 export interface IAttachment {
@@ -94,8 +177,8 @@ export interface ILineItem {
     ClaimCodes: IClaimCode | IClaimCode[];
     CreditReportItem: string;
     LineItemComment: string;
-    LineItemCommentType: string;
-    UploadDocumentId: string;
+    LineItemCommentType?: string;
+    UploadDocumentId?: string;
   };
 }
 

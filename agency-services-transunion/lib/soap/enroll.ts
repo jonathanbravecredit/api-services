@@ -182,6 +182,7 @@ export const enrichEnrollmentData = (
   let enrollVantageScore: IEnrollServiceProductResponse | undefined;
   let enrolledOn = new Date().toISOString();
   const enrollmentKey = returnNestedObject(enroll, 'EnrollmentKey');
+  const serviceBundleFulfillmentKey = returnNestedObject(enroll, 'ServiceBundleFulfillmentKey');
   const prodResponse = returnNestedObject(enroll, 'ServiceProductResponse');
   if (dispute) {
     return {
@@ -193,6 +194,7 @@ export const enrichEnrollmentData = (
           disputeEnrolled: true,
           disputeEnrolledOn: enrolledOn,
           disputeEnrollmentKey: enrollmentKey,
+          disputeServiceBundleFulfillmentKey: serviceBundleFulfillmentKey
         },
       },
     };
