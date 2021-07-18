@@ -324,8 +324,7 @@ export const qryGetDataForGetDisputeStatus = `query GetAppData($id: ID!) {
     id
     agencies {
       transunion {
-        serviceBundleFulfillmentKey
-        disputeServiceBundleFulfillmentKey
+        disputeEnrollmentKey
       }
     }
     user {
