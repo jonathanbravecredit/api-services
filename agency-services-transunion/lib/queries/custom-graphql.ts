@@ -319,6 +319,46 @@ export const qryGetDataForFulfill = `query GetAppData($id: ID!) {
   }
 }`;
 
+export const qryGetDataForGetDisputeStatus = `query GetAppData($id: ID!) {
+  getAppData(id: $id) {
+    id
+    agencies {
+      transunion {
+        serviceBundleFulfillmentKey
+        disputeServiceBundleFulfillmentKey
+      }
+    }
+    user {
+      userAttributes {
+        name {
+          first
+          middle
+          last
+        }
+        address {
+          addressOne
+          addressTwo
+          city
+          state
+          zip
+        }
+        phone {
+          primary
+        }
+        dob {
+          year
+          month
+          day
+        }
+        ssn {
+          lastfour
+          full
+        }
+      }
+    }
+  }
+}`;
+
 //==============================
 //          MUTATIONS
 //==============================

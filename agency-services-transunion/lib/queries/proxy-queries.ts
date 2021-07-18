@@ -60,3 +60,11 @@ export const getDataForFulfill = async (msg: IGetAppDataRequest): Promise<AxiosR
     return err;
   }
 };
+
+export const getDataForGetDisputeStatus = async (msg: IGetAppDataRequest): Promise<AxiosResponse<any>> => {
+  try {
+    return await postGraphQLRequest(qry.qryGetDataForGetDisputeStatus, msg);
+  } catch (err) {
+    return err;
+  }
+};

@@ -1,6 +1,8 @@
 import {
   IGetDisputeStatus,
+  IGetDisputeStatusGraphQLResponse,
   IGetDisputeStatusMsg,
+  IGetDisputeStatusPayload,
   IGetDisputeStatusResponse,
   IGetDisputeStatusResult,
 } from 'lib/interfaces/get-dispute-status.interface';
@@ -8,6 +10,52 @@ import { returnNestedObject, textConstructor } from 'lib/utils/helpers';
 import * as fastXml from 'fast-xml-parser';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
+import { MONTH_MAP } from 'lib/data/constants';
+
+// IGetDisputeStatusGraphQLResponse
+/**
+ * Genarates the message payload for TU Enroll service
+ * @param data
+ * @returns IEnrollPayload
+ */
+export const createGetDisputeStatusPayload = (data: IGetDisputeStatusGraphQLResponse): IGetDisputeStatusPayload => {
+  const id = data.data.getAppData.id?.split(':')?.pop();
+  const attrs = data.data.getAppData.user?.userAttributes;
+  const dob = attrs?.dob;
+
+  if (!id || !attrs || !dob) {
+    console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
+    return;
+  }
+
+  return {
+    RequestKey: '',
+    AdditionalInputs: {
+      Data: {
+        Name: 'CreditReportVersion',
+        Value: '7.1',
+      },
+    },
+    ClientKey: id,
+    Customer: {
+      CurrentAddress: {
+        AddressLine1: attrs.address?.addressOne || '',
+        AddressLine2: attrs.address?.addressTwo || '',
+        City: attrs.address?.city || '',
+        State: attrs.address?.state || '',
+        Zipcode: attrs.address?.zip || '',
+      },
+      DateOfBirth: `${attrs.dob?.year}-${MONTH_MAP[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
+      FullName: {
+        FirstName: attrs.name?.first || '',
+        LastName: attrs.name?.last || '',
+        MiddleName: attrs.name?.middle || '',
+      },
+      Ssn: attrs.ssn?.full || '',
+    },
+    EnrollmentKey: data.data.getAppData.agencies?.transunion?.disputeServiceBundleFulfillmentKey,
+  };
+};
 
 /**
  * This method packages the message in a request body and adds account information

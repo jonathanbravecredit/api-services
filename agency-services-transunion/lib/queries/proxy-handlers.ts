@@ -4,7 +4,12 @@ import {
   formatGetAuthenticationQuestions,
   createGetAuthenticationQuestions,
 } from 'lib/soap/get-authentication-questions';
-import { formatGetDisputeStatus, createGetDisputeStatus, parseGetDisputeStatus } from 'lib/soap/get-dispute-status';
+import {
+  formatGetDisputeStatus,
+  createGetDisputeStatus,
+  parseGetDisputeStatus,
+  createGetDisputeStatusPayload,
+} from 'lib/soap/get-dispute-status';
 import { formatGetServiceProduct, createGetServiceProduct, parseCreditBureau } from 'lib/soap/get-service-product';
 import { formatIndicativeEnrichment, createIndicativeEnrichment } from 'lib/soap/indicative-enrichment';
 import { createPing } from 'lib/soap/ping';
@@ -29,9 +34,13 @@ import {
   getDataForFulfill,
   getFulfilledOn,
   getDisputeEnrollment,
+  getDataForGetDisputeStatus,
 } from 'lib/queries/proxy-queries';
 import { dateDiffInDays } from 'lib/utils/dates';
-import { IGetDisputeStatusResponse } from 'lib/interfaces/get-dispute-status.interface';
+import {
+  IGetDisputeStatusGraphQLResponse,
+  IGetDisputeStatusResponse,
+} from 'lib/interfaces/get-dispute-status.interface';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -297,10 +306,31 @@ export const GetDisputeStatus = async (
   agent: https.Agent,
   auth: string,
 ): Promise<IGetDisputeStatusResponse> => {
-  const { msg, xml } = createPackage(accountCode, username, message, formatGetDisputeStatus, createGetDisputeStatus);
-  const options = createRequestOptions(agent, auth, xml, 'GetDisputeStatus');
-  if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
+  let variables: IGetAppDataRequest = {
+    ...JSON.parse(message),
+  };
+  const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
+  if (!validate(variables)) {
+    let id = returnNestedObject(JSON.parse(message), 'ClientKey'); // try to remedy
+    variables = {
+      id: `us-east-2:${id}`,
+    };
+    if (!validate(variables)) throw `Malformed message=${message}`;
+  }
+
   try {
+    const resp = await getDataForGetDisputeStatus(variables);
+    const gql: IGetDisputeStatusGraphQLResponse = resp.data; // add validation here
+    const payload = createGetDisputeStatusPayload(gql);
+    const { msg, xml } = createPackage(
+      accountCode,
+      username,
+      JSON.stringify(payload),
+      formatGetDisputeStatus,
+      createGetDisputeStatus,
+    );
+    const options = createRequestOptions(agent, auth, xml, 'GetDisputeStatus');
+    if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
     return await processRequest(options, parseGetDisputeStatus, parserOptions);
   } catch (err) {
     return err;
