@@ -4,8 +4,7 @@ export interface IGetDisputeStatusGraphQLResponse {
       id?: string;
       agencies?: {
         transunion?: {
-          serviceBundleFulfillmentKey?: string;
-          disputeServiceBundleFulfillmentKey?: string;
+          disputeEnrollmentKey?: string;
         };
       };
       user?: {

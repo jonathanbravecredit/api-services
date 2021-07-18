@@ -53,7 +53,7 @@ export const createGetDisputeStatusPayload = (data: IGetDisputeStatusGraphQLResp
       },
       Ssn: attrs.ssn?.full || '',
     },
-    EnrollmentKey: data.data.getAppData.agencies?.transunion?.disputeServiceBundleFulfillmentKey,
+    EnrollmentKey: data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey,
   };
 };
 
