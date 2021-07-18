@@ -145,17 +145,13 @@ export const createEnroll = (msg: IEnroll): string => {
  */
 export const parseEnroll = (xml: string, options: any): IEnrollResponse => {
   const obj: IEnrollResponse = returnNestedObject(fastXml.parse(xml, options), 'EnrollResponse');
-  console.log('parseEnroll:enrollResponse ===> ', obj);
   const resp = returnNestedObject(obj, 'ServiceProductResponse');
-  console.log('parseEnroll:resp parseEnroll ===> ', resp);
   if (resp instanceof Array) {
     const mapped = resp.map((prod) => {
       let prodObj = prod['ServiceProductObject']['#text'];
-      console.log('parseEnroll:prodObj ===> ', prodObj);
       if (typeof prodObj === 'string') {
         let clean = prodObj.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
         const parsed = fastXml.parse(clean, options);
-        console.log('parseEnroll:parsed ===> ', parsed);
         return {
           ...prod,
           ServiceProductObject: parsed,

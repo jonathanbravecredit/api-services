@@ -451,9 +451,8 @@ export const DisputePreflightCheck = async (
 
   let enrolled: boolean;
   try {
-    console.log('*** IN GET ENROLL STATSU ***');
+    console.log('*** IN GET ENROLL STATUS ***');
     const { data } = await getDisputeEnrollment(variables);
-    console.log('DisputePreflightCheck:getEnrollment 1 ===> ', JSON.stringify(data));
     enrolled = !data ? false : returnNestedObject(data, 'disputeEnrolled');
     console.log('DisputePreflightCheck:enrolled ===> ', enrolled);
   } catch (err) {
@@ -474,7 +473,6 @@ export const DisputePreflightCheck = async (
   try {
     console.log('*** IN REFRESH ***');
     const { data } = await getFulfilledOn(variables);
-    console.log('DisputePreflightCheck:getFulfilledOn ===> ', data);
     const fulfilledOn = !data ? false : returnNestedObject(data, 'fulfilledOn');
     console.log('DisputePreflightCheck:fulfilledOn ===> ', fulfilledOn);
     if (!fulfilledOn) {
@@ -502,9 +500,7 @@ export const DisputePreflightCheck = async (
   try {
     console.log('*** IN GETDISPUTESTATUS ***');
     const resp = await GetDisputeStatus(accountCode, username, message, agent, auth);
-    console.log('DisputePreflightCheck:GetDisputeStatus ===> ', resp);
     const type = returnNestedObject(resp, 'ResponseType');
-    console.log('DisputePreflightCheck:type ===> ', type);
     eligible = type?.toLowerCase() === 'success';
     console.log('DisputePreflightCheck:eligible ===> ', eligible);
   } catch (err) {

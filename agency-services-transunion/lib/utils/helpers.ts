@@ -58,13 +58,9 @@ export const syncData = async (
   try {
     const resp = await getAppData(variables);
     const app: GetAppDataQuery = returnNestedObject(resp.data, 'getAppData');
-    console.log('syncData:data ===> ', app);
     const clean: UpdateAppDataInput = cleanBackendData(app);
     const enriched: UpdateAppDataInput = cbEnricher(clean, updated, dispute);
-    console.log('syncData:enriched ===> ', enriched);
-
     const sync = await updateAppData({ input: enriched });
-    console.log('syncData:sync ===> ', sync.data);
     return true;
   } catch (err) {
     console.log('syncData:err ===> ', err);
@@ -91,9 +87,7 @@ export const processRequest = async (
 ) => {
   try {
     const res = await axios({ ...options });
-    console.log('processRequest:res ===> ', JSON.stringify(res.data));
     const results = parser(res.data, parserOptions);
-    console.log('processRequest:results ===> ', JSON.stringify(results));
     return results;
   } catch (err) {
     console.log('processRequest:err ===> ', err);
@@ -112,9 +106,6 @@ export const postGraphQLRequest = async (query: string, variables: any): Promise
     query: print(gql(query)),
     variables: variables,
   };
-  console.log('postGraphQLRequest:payload ===> ', payload);
-  console.log('fulfillReport ===> ', returnNestedObject(variables, 'fulfillMergeReport'));
-  console.log('fulfilledOn ===> ', returnNestedObject(variables, 'fulfilledOn'));
   // create the options for the sync up
   let opts = {
     method: 'POST',
@@ -133,7 +124,6 @@ export const postGraphQLRequest = async (query: string, variables: any): Promise
       headers: headers,
       data: payload,
     });
-    console.log('postGraphQLRequest:resp ===> ', JSON.stringify(resp.data));
     return resp;
   } catch (err) {
     console.log('postGraphQLRequest:error ===> ', err);

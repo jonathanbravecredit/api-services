@@ -12,8 +12,7 @@ import {
   IFulfillServiceProductResponse,
 } from 'lib/interfaces/fulfill.interface';
 import { MONTH_MAP } from 'lib/data/constants';
-import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
-import { IEnrollServiceProductResponse } from 'lib/interfaces/enroll.interface';
+import { UpdateAppDataInput } from 'src/api/api.service';
 
 /**
  * Genarates the message payload for TU Enroll service
@@ -142,17 +141,13 @@ export const createFulfill = (msg: IFulfill): string => {
  */
 export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
   const obj: IFulfillResponse = returnNestedObject(fastXml.parse(xml, options), 'FulfillResponse');
-  console.log('parseFulfill:fulfilResponse ===> ', obj);
   const resp = returnNestedObject(obj, 'ServiceProductResponse');
-  console.log('parseFulfill:resp parseFulfill ===> ', resp);
   if (resp instanceof Array) {
     const mapped = resp.map((prod) => {
       let prodObj = prod['ServiceProductObject']['#text'];
-      console.log('parseFulfill:prodObj ===> ', prodObj);
       if (typeof prodObj === 'string') {
         let clean = prodObj.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
         const parsed = fastXml.parse(clean, options);
-        console.log('parseFulfill:parsed ===> ', parsed);
         return {
           ...prod,
           ServiceProductObject: parsed,
