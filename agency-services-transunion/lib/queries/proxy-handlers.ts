@@ -471,7 +471,7 @@ export const DisputePreflightCheck = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ eligible: boolean }> => {
+): Promise<{ eligible: boolean, error?: any }> => {
   let variables: IGetAppDataRequest = {
     ...JSON.parse(message),
   };
@@ -529,14 +529,13 @@ export const DisputePreflightCheck = async (
   try {
     console.log('*** IN GETDISPUTESTATUS ***');
     const resp = await GetDisputeStatus(accountCode, username, message, agent, auth);
-    const type = returnNestedObject(resp, 'ResponseType');
+    const type = resp.GetDisputeStatusResult.ResponseType;  //returnNestedObject(resp, 'ResponseType');
     eligible = type?.toLowerCase() === 'success';
     console.log('DisputePreflightCheck:eligible ===> ', eligible);
+    return (eligible) ? { eligible } : { eligible, error: resp.GetDisputeStatusResult.ErrorResponse };
   } catch (err) {
     throw new Error(`DisputePreflightCheck:GetDisputeStatus=${err}`);
   }
-
-  return { eligible };
 };
 
 /**
