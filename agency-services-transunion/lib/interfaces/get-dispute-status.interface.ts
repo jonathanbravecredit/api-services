@@ -126,12 +126,12 @@ export interface IGetDsputeStatusResponseSuccess {
 }
 // TODO updated the response with the actual
 export interface IGetDisputeStatusResponse {
-  GetDisputeStatusResult: any;
+  GetDisputeStatusResult: IGetDisputeStatusResult;
 }
 
 export interface IGetDisputeStatusResult {
   AccountName: string;
-  ErrorResponse: string;
+  ErrorResponse: any;
   RequestKey: string;
   ResponseType: string;
   ClientKey: string;
