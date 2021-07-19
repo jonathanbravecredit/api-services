@@ -375,6 +375,7 @@ export const StartDispute = async (
     console.log('*** IN START DISPUTE ***');
     const resp = await getDataForStartDispute(variables);
     const gql: IStartDisputeGraphQLResponse = resp.data;
+    console.log('StartDispute:gql ===> ', JSON.stringify(gql));
     // const gql = GQL_TEST;
     const payload = createStartDisputePayload(gql, variables.disputes);
     const { msg, xml } = createPackage(
