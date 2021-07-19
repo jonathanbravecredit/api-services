@@ -1,29 +1,29 @@
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
   xmlns:con="https://consumerconnectws.tui.transunion.com/"
-  xmlns:data="https://consumerconnectws.tui.transunion.com/data">
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data"
+  xmlns:arr="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
   <soapenv:Header/>
   <soapenv:Body>
     <con:StartDispute>
       <con:request>
         <data:AccountCode>123456789</data:AccountCode>
         <data:AccountName>CC2BraveCredit</data:AccountName>
-        <data:RequestKey>BC-cbe66edf-edac-487b-92e7-3ddf652f3c43</data:RequestKey>
-        <data:ClientKey>3aefd237-6940-446a-9346-0174a0525f1b</data:ClientKey>
+        <data:RequestKey>BC-2961dd5c-bca3-4460-b06c-71d4734affe3</data:RequestKey>
+        <data:ClientKey>fc02d26c-516e-453a-b18b-729000d1be39</data:ClientKey>
         <data:Customer>
           <data:CurrentAddress>
-            <data:AddressLine1>101 2ND ST</data:AddressLine1>
+            <data:AddressLine1>105 2ND AV</data:AddressLine1>
             <data:AddressLine2 xsi:nil="true"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-            <data:City>BURT</data:City>
+            <data:City>NEWTON</data:City>
             <data:State>IA</data:State>
-            <data:Zipcode>50522</data:Zipcode>
+            <data:Zipcode>50208</data:Zipcode>
           </data:CurrentAddress>
-          <data:DateOfBirth>1956-02-01</data:DateOfBirth>
+          <data:DateOfBirth>1971-02-01</data:DateOfBirth>
           <data:FullName>
-            <data:FirstName>NEIL</data:FirstName>
-            <data:LastName>GIDDENS</data:LastName>
-            <data:MiddleName xsi:nil="true"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:FirstName>DANIEL</data:FirstName>
+            <data:LastName>ILES</data:LastName>
+            <data:MiddleName>J</data:MiddleName>
             <data:Prefix xsi:nil="true"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
             <data:Suffix xsi:nil="true"
@@ -31,9 +31,15 @@
           </data:FullName>
           <data:PhoneNumber xsi:nil="true"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-          <data:Ssn>666403077</data:Ssn>
+          <data:Ssn>666130041</data:Ssn>
+          <data:Identifier>
+            <data:CustomerIdentifier>
+              <data:Id>666130041</data:Id>
+              <data:IdentifierType>SocialId</data:IdentifierType>
+            </data:CustomerIdentifier>
+          </data:Identifier>
         </data:Customer>
-        <data:EnrollmentKey>c42ffa2b-288c-4558-b4cf-83f0c86f00a8</data:EnrollmentKey>
+        <data:EnrollmentKey>db73073c-86ac-46ab-a31c-47855d237e28</data:EnrollmentKey>
         <data:LineItems>
           <data:LineItem>
             <data:ClaimCodes>
@@ -41,7 +47,7 @@
                 <data:Code>F3</data:Code>
               </data:ClaimCode>
             </data:ClaimCodes>
-            <data:CreditReportItem>TR01_1291748319_804122595_82</data:CreditReportItem>
+            <data:CreditReportItem>TR01_1927605729_320525292_82</data:CreditReportItem>
             <data:LineItemComment>Account Tradeline</data:LineItemComment>
             <data:LineItemCommentType xsi:nil="true"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
@@ -49,8 +55,9 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
           </data:LineItem>
         </data:LineItems>
-        <data:ServiceBundleFulfillmentKey>6aaf7881-58e4-4ef5-b076-94d8be2520c5</data:ServiceBundleFulfillmentKey>
-        <data:ServiceProductFulfillmentKey></data:ServiceProductFulfillmentKey>
+        <data:ServiceBundleFulfillmentKey>8426ca08-b076-4bfc-89f2-bf3f855e1619</data:ServiceBundleFulfillmentKey>
+        <data:ServiceProductFulfillmentKey xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
       </con:request>
     </con:StartDispute>
   </soapenv:Body>

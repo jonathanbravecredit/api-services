@@ -46,3 +46,24 @@ export const START_DISPUTE_RESPONSE = `<s:Envelope xmlns:s="http://schemas.xmlso
     </StartDisputeResponse>
 </s:Body>
 </s:Envelope>`;
+
+const errpr = {
+  data: {
+    transunion: {
+      StartDispute: {
+        StartDisputeResult: {
+          AccountName: 'CC2BraveCredit',
+          ErrorResponse: {
+            Code: 103059,
+            Message: 'Unable to find the required service product information for specified key',
+            Name: 'LookupKeyNotFound',
+          },
+          RequestKey: 'BC-2961dd5c-bca3-4460-b06c-71d4734affe3',
+          ResponseType: 'Failure',
+          ClientKey: 'fc02d26c-516e-453a-b18b-729000d1be39',
+          DisputeStatus: { nil: true },
+        },
+      },
+    },
+  },
+};
