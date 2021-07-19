@@ -360,7 +360,7 @@ export const createStartDispute = (msg: IStartDispute): string => {
             // 'data:IndicativeDisputes': mappedIndicativeDisputes,
             'data:LineItems': mappedLineItems,
             'data:ServiceBundleFulfillmentKey': textConstructor(msg.request.ServiceBundleFulfillmentKey),
-            'data:ServiceProductFulfillmentKey': textConstructor(msg.request.ServiceProductFulfillmentKey, true),
+            // 'data:ServiceProductFulfillmentKey': textConstructor(msg.request.ServiceProductFulfillmentKey, true),
           },
         },
       },
