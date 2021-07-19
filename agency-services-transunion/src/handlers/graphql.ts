@@ -2,9 +2,8 @@ import { AppSyncResolverEvent } from 'aws-lambda';
 import { response } from 'lib/utils/response';
 import * as https from 'https';
 import * as fs from 'fs';
-import * as fastXml from 'fast-xml-parser';
 import * as queries from 'lib/queries';
-import { getSecretKey } from 'lib/utils/secrets';
+import * as secrets from 'lib/utils/secrets';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -18,18 +17,6 @@ let user;
 let auth;
 let passphrase;
 let password;
-// let client: soap.Client;
-
-// Trying new parser
-const Parser = fastXml.j2xParser;
-const parser = new Parser({});
-
-const parserOptions = {
-  attributeNamePrefix: '',
-  ignoreAttributes: false,
-  ignoreNameSpace: true,
-  parseAttributeValue: true,
-};
 
 /**
  * Handler that processes single requests for Transunion services
@@ -47,7 +34,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
   console.log('message', message);
 
   try {
-    const secretJSON = await getSecretKey(transunionSKLoc);
+    const secretJSON = await secrets.getSecretKey(transunionSKLoc);
     const { tuKeyPassphrase, tuPassword } = JSON.parse(secretJSON);
     password = tuPassword;
     passphrase = tuKeyPassphrase;

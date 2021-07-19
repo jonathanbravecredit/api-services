@@ -37,8 +37,8 @@ export const createStartDisputePayload = (
   }
   console.log('id in StartDispute', id);
   return {
-    AccountCode: '',
-    AccountName: '',
+    AccountCode: '123456789',
+    AccountName: 'CC2BraveCredit',
     RequestKey: '',
     ClientKey: id,
     Customer: {
@@ -75,6 +75,8 @@ export const parseDisputeToLineItem = (disputes: IProcessDisputeTradelineResult[
     .map((item) => {
       const reason = item?.result?.data?.reasons;
       const handle = item?.tradeline?.Tradeline?.handle;
+      console.log('parseDisputeToLineItem:reason ===> ', reason);
+      console.log('parseDisputeToLineItem:handle ===> ', handle);
       if (reason !== undefined) {
         return {
           LineItem: {
@@ -243,6 +245,7 @@ export const mapAka = (aka: IAka | IAka[]) => {
 };
 
 export const mapLineItems = (items: ILineItem | ILineItem[]) => {
+  console.log('startDispute:mapLineItems ===> ', items);
   if (!items) return textConstructor(null, true);
   return items instanceof Array
     ? items.map((item) => {

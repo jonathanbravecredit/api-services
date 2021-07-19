@@ -52,6 +52,7 @@ import {
   IStartDisputeRequest,
   IStartDisputeResult,
 } from 'lib/interfaces/start-dispute.interface';
+import { GQL_TEST } from 'lib/examples/mocks/DBRecord';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -374,6 +375,7 @@ export const StartDispute = async (
     console.log('*** IN START DISPUTE ***');
     const resp = await getDataForStartDispute(variables);
     const gql: IStartDisputeGraphQLResponse = resp.data;
+    // const gql = GQL_TEST;
     const payload = createStartDisputePayload(gql, variables.disputes);
     const { msg, xml } = createPackage(
       accountCode,
@@ -388,6 +390,7 @@ export const StartDispute = async (
     const disputeResults: IStartDisputeResult = returnNestedObject(dispute, 'StartDisputeResult');
     // Need toadd sync await syncData(variables, fulfillResults, enrichFulfillData, dispute);
     return dispute;
+    // return '';
   } catch (err) {
     return err;
   }
@@ -452,11 +455,6 @@ export const GetInvestigationResults = async (
   }
 };
 
-/*======================*/
-/* !!!! NEEDs WORK !!!! */
-/* attempting to bundle */
-/* it all together      */
-/*======================*/
 /**
  * This performs the preflight check and returns the dispute status eligibility
  * @param {string} accountCode Brave account code

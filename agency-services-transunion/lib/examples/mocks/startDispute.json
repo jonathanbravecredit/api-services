@@ -1,0 +1,166 @@
+{
+  "arguments": {
+    "action": "StartDispute",
+    "message": {
+      "id": "us-east-2:fc02d26c-516e-453a-b18b-729000d1be39",
+      "disputes": [
+        {
+          "result": {
+            "isFinished": true,
+            "data": {
+              "hasCustomInput": false,
+              "customInput": "",
+              "reasonsId": [
+                "4"
+              ],
+              "reasons": [
+                {
+                  "id": "4",
+                  "claimCode": "F3",
+                  "text": "This account is not closed"
+                }
+              ]
+            }
+          },
+          "tradeline": {
+            "accountTypeAbbreviation": "Revolving",
+            "accountTypeDescription": "Revolving Account",
+            "accountTypeSymbol": "R",
+            "Tradeline": {
+              "PayStatus": {
+                "symbol": 9,
+                "description": "Collection/Chargeoff",
+                "rank": 2,
+                "abbreviation": "Coll/Chargeoff"
+              },
+              "creditorName": "CAPITAL ONE",
+              "IndustryCode": {
+                "symbol": "B",
+                "description": "Bank",
+                "rank": 199,
+                "abbreviation": "Bank"
+              },
+              "GrantedTrade": {
+                "PayStatusHistory": "",
+                "CreditLimit": 300,
+                "PaymentFrequency": {
+                  "symbol": "",
+                  "description": "",
+                  "rank": 100000,
+                  "abbreviation": ""
+                },
+                "worstPatStatusCount": 0,
+                "dateLastPayment": "2019-07-31",
+                "late60Count": 0,
+                "late90Count": 0,
+                "AccountType": {
+                  "symbol": "CC",
+                  "description": "Credit Card",
+                  "rank": 50,
+                  "abbreviation": "Credit Card"
+                },
+                "TermType": {
+                  "symbol": "P",
+                  "description": "Provided",
+                  "rank": 199,
+                  "abbreviation": "Provided"
+                },
+                "monthlyPayment": 0,
+                "termMonths": 0,
+                "WorstPayStatus": {
+                  "symbol": "U",
+                  "description": "Unknown",
+                  "rank": 10000,
+                  "abbreviation": "Unk"
+                },
+                "monthsReviewed": 0,
+                "amountPastDue": 343,
+                "collateral": "",
+                "CreditType": {
+                  "symbol": "R",
+                  "description": "Revolving Account",
+                  "rank": 50,
+                  "abbreviation": "Revolving"
+                },
+                "late30Count": 0
+              },
+              "currentBalance": 343,
+              "handle": "TR01_1927605729_320525292_82",
+              "subscriberCode": "01DTV001",
+              "dateAccountStatus": "2020-02-02",
+              "accountNumber": 5178019869942778,
+              "dateClosed": "2020-02-02",
+              "DisputeFlag": {
+                "symbol": "F",
+                "description": "Account not disputed",
+                "rank": 199,
+                "abbreviation": "Account not disputed"
+              },
+              "Source": {
+                "InquiryDate": "2021-07-08",
+                "Reference": "fc02d26c-516e-453a-b18",
+                "BorrowerKey": "",
+                "Bureau": {
+                  "symbol": "TUC",
+                  "description": "TransUnion",
+                  "rank": 1,
+                  "abbreviation": "TransUnion"
+                }
+              },
+              "OpenClosed": {
+                "symbol": "C",
+                "description": "Closed",
+                "rank": 198,
+                "abbreviation": "Closed"
+              },
+              "Remark": [
+                {
+                  "RemarkCode": {
+                    "symbol": "TM009",
+                    "description": "Charged off as bad debt",
+                    "rank": 10000,
+                    "abbreviation": "Charged off as bad debt"
+                  },
+                  "customRemark": ""
+                },
+                {
+                  "RemarkCode": {
+                    "symbol": "T00CBG",
+                    "description": "Canceled by credit grantor",
+                    "rank": 199,
+                    "abbreviation": "Canceled by credit grantor"
+                  },
+                  "customRemark": ""
+                }
+              ],
+              "highBalance": 343,
+              "dateOpened": "2019-03-03",
+              "dateReported": "2021-05-08",
+              "VerificationIndicator": {
+                "symbol": "F",
+                "description": "Account not disputed",
+                "rank": 199,
+                "abbreviation": "Account not disputed"
+              },
+              "bureau": "TransUnion",
+              "dateVerified": "2021-05-08",
+              "position": 7,
+              "AccountDesignator": {
+                "symbol": "I",
+                "description": "Individual",
+                "rank": 199,
+                "abbreviation": "Individual"
+              },
+              "AccountCondition": {
+                "symbol": "F",
+                "description": "Derogatory",
+                "rank": 20,
+                "abbreviation": "Derog"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
