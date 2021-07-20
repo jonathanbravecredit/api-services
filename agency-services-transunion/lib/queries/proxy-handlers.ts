@@ -471,7 +471,7 @@ export const DisputePreflightCheck = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ eligible: boolean, error?: any }> => {
+): Promise<{ eligible: boolean; error?: any }> => {
   let variables: IGetAppDataRequest = {
     ...JSON.parse(message),
   };
@@ -492,7 +492,12 @@ export const DisputePreflightCheck = async (
   if (!enrolled) {
     console.log('*** IN ENROLL ***');
     try {
-      await Enroll(accountCode, username, message, agent, auth, true);
+      const resp = await Enroll(accountCode, username, message, agent, auth, true);
+      const type = resp.EnrollResult.ResponseType;
+      const enrolled = type?.toLowerCase() !== 'success';
+      if (!enrolled) {
+        return { eligible: enrolled, error: resp.EnrollResult.ErrorResponse };
+      }
     } catch (err) {
       throw new Error(`DisputePreflightCheck:Enroll=${err}`);
     }
@@ -529,10 +534,10 @@ export const DisputePreflightCheck = async (
   try {
     console.log('*** IN GETDISPUTESTATUS ***');
     const resp = await GetDisputeStatus(accountCode, username, message, agent, auth);
-    const type = resp.GetDisputeStatusResult.ResponseType;  //returnNestedObject(resp, 'ResponseType');
+    const type = resp.GetDisputeStatusResult.ResponseType; //returnNestedObject(resp, 'ResponseType');
     eligible = type?.toLowerCase() === 'success';
     console.log('DisputePreflightCheck:eligible ===> ', eligible);
-    return (eligible) ? { eligible } : { eligible, error: resp.GetDisputeStatusResult.ErrorResponse };
+    return eligible ? { eligible } : { eligible, error: resp.GetDisputeStatusResult.ErrorResponse };
   } catch (err) {
     throw new Error(`DisputePreflightCheck:GetDisputeStatus=${err}`);
   }
