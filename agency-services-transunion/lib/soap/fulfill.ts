@@ -178,6 +178,8 @@ export const enrichFulfillData = (
   let fulfillVantageScore;
   let fulfilledOn = new Date().toISOString();
   const prodResponse = returnNestedObject(fulfill, 'ServiceProductResponse');
+  const serviceBundleFulfillmentKey = fulfill.ServiceBundleFulfillmentKey;
+
   if (!prodResponse) return;
   if (prodResponse instanceof Array) {
     fulfillReport = prodResponse.find((item: IFulfillServiceProductResponse) => {
@@ -214,6 +216,7 @@ export const enrichFulfillData = (
         fulfillReport: mapReportResponse(fulfillReport),
         fulfillMergeReport: mapReportResponse(fulfillMergeReport),
         fulfillVantageScore: mapReportResponse(fulfillVantageScore),
+        serviceBundleFulfillmentKey: serviceBundleFulfillmentKey,
       },
     },
   };

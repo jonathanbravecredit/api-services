@@ -8,6 +8,7 @@ export interface IStartDisputeGraphQLResponse {
         transunion?: {
           disputeEnrollmentKey: string;
           disputeServiceBundleFulfillmentKey?: string;
+          serviceBundleFulfillmentKey?: string;
         };
       };
       user?: {

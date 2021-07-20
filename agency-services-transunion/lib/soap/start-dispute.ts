@@ -59,7 +59,7 @@ export const createStartDisputePayload = (
     },
     EnrollmentKey: data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey,
     LineItems: parseDisputeToLineItem(disputes),
-    ServiceBundleFulfillmentKey: data.data.getAppData.agencies?.transunion?.disputeServiceBundleFulfillmentKey,
+    ServiceBundleFulfillmentKey: data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey,
     ServiceProductFulfillmentKey: null,
   };
 };

@@ -390,6 +390,7 @@ export const qryGetDataForStartDisputes = `query GetAppData($id: ID!) {
       transunion {
         disputeEnrollmentKey
         disputeServiceBundleFulfillmentKey
+        serviceBundleFulfillmentKey
       }
     }
   }
