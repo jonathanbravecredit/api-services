@@ -67,3 +67,43 @@ const errpr = {
     },
   },
 };
+
+const gql = {
+  data: {
+    getAppData: {
+      id: 'us-east-2:fc02d26c-516e-453a-b18b-729000d1be39',
+      user: {
+        userAttributes: {
+          name: {
+            first: 'DANIEL',
+            middle: 'J',
+            last: 'ILES',
+          },
+          address: {
+            addressOne: '105 2ND AV',
+            addressTwo: null,
+            city: 'NEWTON',
+            state: 'IA',
+            zip: '50208',
+          },
+          dob: {
+            year: '1971',
+            month: 'Feb',
+            day: '1',
+          },
+          ssn: {
+            lastfour: '6661',
+            full: '666130041',
+          },
+        },
+      },
+      agencies: {
+        transunion: {
+          disputeEnrollmentKey: 'db73073c-86ac-46ab-a31c-47855d237e28',
+          disputeServiceBundleFulfillmentKey: '8426ca08-b076-4bfc-89f2-bf3f855e1619',
+          serviceBundleFulfillmentKey: '1a0d174a-2f5a-4e86-9406-3e2cb4d52453',
+        },
+      },
+    },
+  },
+};
