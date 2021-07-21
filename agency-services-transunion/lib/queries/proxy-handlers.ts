@@ -10,7 +10,7 @@ import {
   parseGetDisputeStatus,
   createGetDisputeStatusPayload,
 } from 'lib/soap/get-dispute-status';
-import { formatGetServiceProduct, createGetServiceProduct, parseCreditBureau } from 'lib/soap/get-service-product';
+import { formatGetServiceProduct, createGetServiceProduct, parseCreditBureau, parseInvestigationResults } from 'lib/soap/get-service-product';
 import { formatIndicativeEnrichment, createIndicativeEnrichment } from 'lib/soap/indicative-enrichment';
 import { createPing } from 'lib/soap/ping';
 import {
@@ -497,7 +497,7 @@ export const GetInvestigationResults = async (
   const options = createRequestOptions(agent, auth, xml, 'GetInvestigationResults');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    const parsed = await processRequest(options, parseCreditBureau, parserOptions);
+    const parsed = await processRequest(options, parseInvestigationResults, parserOptions);
     console.log('parsed investigation results ===> ', parsed);
     // results = parseInvestigationResults(results, xmlOptions); // may need to add this additionallayer of parsing
   } catch (err) {

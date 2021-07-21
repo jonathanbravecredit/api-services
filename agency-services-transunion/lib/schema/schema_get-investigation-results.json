@@ -7,11 +7,12 @@
     },
     "disputeId": {
       "type": "string",
-      "nullable": true
+      "nullable": false
     }
   },
   "required": [
-    "id"
+    "id",
+    "disputeId"
   ],
   "additionalProperties": false
 }
