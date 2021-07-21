@@ -102,7 +102,7 @@ export interface IStartDisputeResult {
   RequestKey: string;
   ResponseType: string;
   ClientKey: string;
-  DisputeStatus: string;
+  DisputeStatus: IDisputeStatus;
 }
 
 export interface IDisputeStatus {
@@ -113,6 +113,7 @@ export interface IDisputeStatusDetail {
   DisputeId: string;
   LetterStatus: ILetterStatus;
   OpenDisputes: IOpenDisputes;
+  Status: string;
 }
 
 export interface ILetterStatus {

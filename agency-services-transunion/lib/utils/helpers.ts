@@ -6,9 +6,16 @@ import axios, { AxiosResponse } from 'axios';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
 import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
-import { GetAppDataQuery, TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
+import {
+  CreateDisputeInput,
+  GetAppDataQuery,
+  GetDisputeQuery,
+  TUReportResponseInput,
+  UpdateAppDataInput,
+} from 'src/api/api.service';
 import { getAppData, updateAppData } from 'lib/queries/proxy-queries';
 import { IEnrollServiceProductResponse } from 'lib/interfaces/enroll.interface';
+import { IGetDisputeRequest } from 'lib/interfaces/get-dispute-data-interface';
 
 const appsyncUrl = process.env.APPSYNC_ENDPOINT;
 const region = process.env.AWS_REGION;

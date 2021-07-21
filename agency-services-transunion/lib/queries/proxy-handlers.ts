@@ -24,10 +24,15 @@ import * as fastXml from 'fast-xml-parser';
 import {
   createStartDispute,
   createStartDisputePayload,
+  enrichDisputeData,
   formatStartDispute,
   parseStartDispute,
 } from 'lib/soap/start-dispute';
-import { createGetDisputeHistory, formatGetDisputeHistory } from 'lib/soap/get-dispute-history';
+import {
+  createGetDisputeHistory,
+  createGetDisputeHistoryPayload,
+  formatGetDisputeHistory,
+} from 'lib/soap/get-dispute-history';
 import { formatGetInvestigationResults, createGetInvestigationResults } from 'lib/soap/get-investigation-results';
 import { IFulfillGraphQLResponse, IFulfillResponse, IFulfillResult } from 'lib/interfaces/fulfill.interface';
 import { IEnrollGraphQLResponse, IEnrollResponse, IEnrollResult } from 'lib/interfaces/enroll.interface';
@@ -41,6 +46,8 @@ import {
   getDisputeEnrollment,
   getDataForGetDisputeStatus,
   getDataForStartDispute,
+  createDispute,
+  getDataForGetDisputeHistory,
 } from 'lib/queries/proxy-queries';
 import { dateDiffInDays } from 'lib/utils/dates';
 import {
@@ -53,6 +60,8 @@ import {
   IStartDisputeResult,
 } from 'lib/interfaces/start-dispute.interface';
 import { GQL_TEST } from 'lib/examples/mocks/DBRecord';
+import { IGenericRequest } from 'lib/interfaces/api.interfaces';
+import { IGetDisputeHistoryGraphQLResponse } from 'lib/interfaces/get-dispute-history.interface';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -377,6 +386,7 @@ export const StartDispute = async (
     const gql: IStartDisputeGraphQLResponse = resp.data;
     console.log('StartDispute:gql ===> ', JSON.stringify(gql));
     // const gql = GQL_TEST;
+    const userId = gql.data.getAppData.id;
     const id = `BC-${uuid.v4()}`; // create dispute record for db, blank is the TU dispute ID
     // need to wait until the dispute creation is
     const payload = createStartDisputePayload(gql, variables.disputes);
@@ -394,7 +404,9 @@ export const StartDispute = async (
     console.log('disputeResults ===> ', JSON.stringify(disputeResults));
     const status = disputeResults?.ResponseType.toLowerCase() === 'success';
     if (status) {
-      // Need toadd sync await syncData(variables, fulfillResults, enrichFulfillData, dispute);
+      const enrichedData = enrichDisputeData(variables.id, variables.disputes, disputeResults);
+      console.log('enrichedData ===> ', enrichedData);
+      await createDispute({ input: enrichedData });
     }
     return status ? { status: 'submitted' } : { status: 'failed', error: disputeResults.ErrorResponse };
     // return '';
@@ -419,7 +431,22 @@ export const GetDisputeHistory = async (
   agent: https.Agent,
   auth: string,
 ): Promise<string> => {
-  const { msg, xml } = createPackage(accountCode, username, message, formatGetDisputeHistory, createGetDisputeHistory);
+  let variables: IGenericRequest = {
+    ...JSON.parse(message),
+  };
+  const validate = ajv.getSchema<IGenericRequest>('getRequest');
+  if (!validate(variables)) throw `Malformed message=${message}`;
+
+  const resp = await getDataForGetDisputeHistory(variables); // same data
+  const gql: IGetDisputeHistoryGraphQLResponse = resp.data; // add validation here
+  const payload = createGetDisputeHistoryPayload(gql);
+  const { msg, xml } = createPackage(
+    accountCode,
+    username,
+    JSON.stringify(payload),
+    formatGetDisputeHistory,
+    createGetDisputeHistory,
+  );
   const options = createRequestOptions(agent, auth, xml, 'GetDisputeHistory');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {

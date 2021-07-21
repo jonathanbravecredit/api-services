@@ -1,9 +1,33 @@
-import { IGetDisputeStatus, IGetDisputeStatusMsg } from 'lib/interfaces/get-dispute-status.interface';
 import { textConstructor } from 'lib/utils/helpers';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
-import { IGetDisputeHistory, IGetDisputeHistoryMsg } from 'lib/interfaces/get-dispute-history.interface';
+import {
+  IGetDisputeHistory,
+  IGetDisputeHistoryGraphQLResponse,
+  IGetDisputeHistoryMsg,
+  IGetDisputeHistoryPayload,
+} from 'lib/interfaces/get-dispute-history.interface';
 
+/**
+ * Genarates the message payload for TU get dispute history
+ * @param data
+ * @returns IEnrollPayload
+ */
+export const createGetDisputeHistoryPayload = (data: IGetDisputeHistoryGraphQLResponse): IGetDisputeHistoryPayload => {
+  const id = data.data.getAppData.id?.split(':')?.pop();
+  const key = data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey;
+
+  if (!id || !key) {
+    console.log(`no id or enrollmentKey provided: id=${id}, key=${key}`);
+    return;
+  }
+
+  return {
+    RequestKey: '',
+    ClientKey: id,
+    EnrollmentKey: key,
+  };
+};
 /**
  * This method packages the message in a request body and adds account information
  * @param {string} accountCode Brave TU account code (can be overriden if passed as part of message)

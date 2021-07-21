@@ -135,19 +135,6 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
-        disputes {
-          __typename
-          disputePreflightStatus
-          disputeInflightStatus
-          disputeEligibility
-          disputeResults
-          disputeHistory
-          modifiedOn
-          createdOn
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         __typename
@@ -184,32 +171,6 @@ export const getLastActiveOnboardingQuery = `query GetAppData($id: ID!) {
       id
       onboarding {
         lastActive
-      }
-    }
-  }
-}`;
-
-/**
- * Gets the transunion disputes by user
- * @param {ID!} id user identity id
- */
-export const getTransunionDisputes = `query GetAppData($id: ID!) {
-  getAppData(id: $id) {
-    id
-    agencies {
-      transunion {
-        disputes {
-          createdOn
-          disputeEligibility
-          disputeHistory
-          disputeInflightStatus
-          disputePreflightStatus
-          disputeResults
-          modifiedOn
-          notificationMessage
-          notificationSentOn
-          notificationStatus
-        }
       }
     }
   }
@@ -358,6 +319,17 @@ export const qryGetDataForGetDisputeStatus = `query GetAppData($id: ID!) {
   }
 }`;
 
+export const qryGetDataForGetDisputeHistory = `query GetAppData($id: ID!) {
+  getAppData(id: $id) {
+    id
+    agencies {
+      transunion {
+        disputeEnrollmentKey
+      }
+    }
+  }
+}`;
+
 export const qryGetDataForStartDisputes = `query GetAppData($id: ID!) {
   getAppData(id: $id) {
     id
@@ -393,6 +365,25 @@ export const qryGetDataForStartDisputes = `query GetAppData($id: ID!) {
         serviceBundleFulfillmentKey
       }
     }
+  }
+}`;
+
+export const qryGetDispute = `query GetDispute($id: ID!) {
+  getDispute(id: $id) {
+    __typename
+    id
+    agencyId
+    disputeId
+    disputeStatus
+    openedOn
+    closedOn
+    disputeResults
+    notificationStatus
+    notificationMessage
+    notificationSentOn
+    createdAt
+    updatedAt
+    owner
   }
 }`;
 
@@ -533,19 +524,6 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
-        disputes {
-          __typename
-          disputePreflightStatus
-          disputeInflightStatus
-          disputeEligibility
-          disputeResults
-          disputeHistory
-          modifiedOn
-          createdOn
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         __typename
@@ -589,22 +567,26 @@ export const updatePreflightStatus = `mutation UpdatePreflightStatus($id: ID!, $
   }
 }`;
 
-/**
- * Gets the transunion disputes preflight status
- * @param {ID!} id user identity id
- * @param {string} msg JSON string of Dispute object
- */
-export const patchDisputes = `mutation PatchDisputes($id: ID!, $msg: String ) {
-  patchDisputes(id: $id, msg: $msg) {
-    disputePreflightStatus
-    disputeInflightStatus
-    disputeEligibility
+export const qryCreateDispute = `mutation CreateDispute($input: CreateDisputeInput!, $condition: ModelDisputeConditionInput) {
+  createDispute(input: $input, condition: $condition) {
+    __typename
+    id
+    appDataId
+    disputeId
+    disputeStatus
+    disputeLetterCode
+    disputeLetterContent
+    openDisputes
+    agencyName
+    openedOn
+    closedOn
+    disputeItems
     disputeResults
-    modifiedOn
-    createdOn
     notificationStatus
     notificationMessage
     notificationSentOn
-    disputeHistory
+    createdAt
+    updatedAt
+    owner
   }
 }`;

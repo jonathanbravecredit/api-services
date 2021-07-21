@@ -1,8 +1,9 @@
 import { AxiosResponse } from 'axios';
 import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
+import { IGetDisputeRequest } from 'lib/interfaces/get-dispute-data-interface';
 import * as qry from 'lib/queries';
 import { postGraphQLRequest } from 'lib/utils/helpers';
-import { UpdateAppDataInput } from 'src/api/api.service';
+import { CreateDisputeInput, UpdateAppDataInput } from 'src/api/api.service';
 
 export const getAppData = async (msg: IGetAppDataRequest): Promise<AxiosResponse<any>> => {
   try {
@@ -68,9 +69,33 @@ export const getDataForGetDisputeStatus = async (msg: IGetAppDataRequest): Promi
   }
 };
 
+export const getDataForGetDisputeHistory = async (msg: IGetAppDataRequest): Promise<AxiosResponse<any>> => {
+  try {
+    return await postGraphQLRequest(qry.qryGetDataForGetDisputeHistory, msg);
+  } catch (err) {
+    return err;
+  }
+};
+
 export const getDataForStartDispute = async (msg: IGetAppDataRequest): Promise<AxiosResponse<any>> => {
   try {
     return await postGraphQLRequest(qry.qryGetDataForStartDisputes, msg);
+  } catch (err) {
+    return err;
+  }
+};
+
+export const createDispute = async (msg: { input: CreateDisputeInput }): Promise<AxiosResponse<any>> => {
+  try {
+    return await postGraphQLRequest(qry.qryCreateDispute, msg);
+  } catch (err) {
+    return err;
+  }
+};
+
+export const getDispute = async (msg: IGetDisputeRequest): Promise<AxiosResponse<any>> => {
+  try {
+    return await postGraphQLRequest(qry.qryGetDispute, msg);
   } catch (err) {
     return err;
   }

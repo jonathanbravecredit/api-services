@@ -8,7 +8,9 @@ import {
   IStartDispute,
   IStartDisputeGraphQLResponse,
   IStartDisputeMsg,
+  IStartDisputeRequest,
   IStartDisputeResponse,
+  IStartDisputeResult,
 } from 'lib/interfaces/start-dispute.interface';
 import { returnNestedObject, textConstructor } from 'lib/utils/helpers';
 import * as fastXml from 'fast-xml-parser';
@@ -16,6 +18,8 @@ import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import { IDisputeReason, IProcessDisputeTradelineResult } from 'lib/interfaces/disputes.interface';
 import { MONTH_MAP } from 'lib/data/constants';
+import { CreateDisputeInput } from 'src/api/api.service';
+import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
 
 /**
  * Genarates the message payload for TU Fulfill request
@@ -379,4 +383,37 @@ export const createStartDispute = (msg: IStartDispute): string => {
 export const parseStartDispute = (xml: string, options: any): IStartDisputeResponse => {
   const obj: IStartDisputeResponse = returnNestedObject(fastXml.parse(xml, options), 'StartDisputeResponse');
   return obj;
+};
+
+/**
+ * Take the results from TU and save to db
+ * @param data
+ * @returns
+ */
+export const enrichDisputeData = (
+  id: string,
+  disputes: IProcessDisputeTradelineResult[],
+  data: IStartDisputeResult | undefined,
+): CreateDisputeInput | undefined => {
+  if (!data) return;
+  let openedOn = new Date().toISOString();
+
+  const mapped = {
+    appDataId: id,
+    disputeId: data?.DisputeStatus?.DisputeStatusDetail?.DisputeId,
+    disputeStatus: data?.DisputeStatus?.DisputeStatusDetail?.Status,
+    disputeLetterCode: data?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterCode,
+    disputeLetterContent: data?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterContent,
+    openDisputes: JSON.stringify(data?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes),
+    agencyName: 'TU',
+    openedOn: openedOn,
+    closedOn: null,
+    disputeItems: JSON.stringify(disputes),
+    disputeResults: null,
+    notificationStatus: null,
+    notificationMessage: null,
+    notificationSentOn: null,
+  };
+  console.log('mapped', mapped);
+  return mapped;
 };
