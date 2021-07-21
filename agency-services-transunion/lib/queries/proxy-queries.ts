@@ -77,6 +77,14 @@ export const getDataForGetDisputeHistory = async (msg: IGetAppDataRequest): Prom
   }
 };
 
+export const getDataForGetInvestigationResults = async (msg: IGetAppDataRequest): Promise<AxiosResponse<any>> => {
+  try {
+    return await postGraphQLRequest(qry.qryGetDataForGetInvestigationResults, msg);
+  } catch (err) {
+    return err;
+  }
+};
+
 export const getDataForStartDispute = async (msg: IGetAppDataRequest): Promise<AxiosResponse<any>> => {
   try {
     return await postGraphQLRequest(qry.qryGetDataForStartDisputes, msg);

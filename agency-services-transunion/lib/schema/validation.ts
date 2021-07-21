@@ -1,8 +1,10 @@
 import Ajv from 'ajv';
+import * as schemaGenericRequest from './schema_generic-request.json';
 import * as schemaGetAppDataRequest from './schema_get-app-data-request.json';
 import * as schemaStartDisputeRequest from './schema_start-dispute-request.json';
-import * as scheamGenericRequest from './schema_generic-request.json';
+import * as schemaGetInvestigationRequest from './schema_get-investigation-results.json';
 export const ajv = new Ajv();
-ajv.addSchema(scheamGenericRequest, 'getRequest');
+ajv.addSchema(schemaGenericRequest, 'getRequest');
 ajv.addSchema(schemaGetAppDataRequest, 'getAppDataRequest');
 ajv.addSchema(schemaStartDisputeRequest, 'startDisputeRequest');
+ajv.addSchema(schemaGetInvestigationRequest, 'getInvestigationResultsRequest');

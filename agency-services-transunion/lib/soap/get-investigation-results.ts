@@ -1,11 +1,35 @@
-import { IGetDisputeStatus, IGetDisputeStatusMsg } from 'lib/interfaces/get-dispute-status.interface';
 import { textConstructor } from 'lib/utils/helpers';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import {
   IGetInvestigationResults,
+  IGetInvestigationResultsGraphQLResponse,
   IGetInvestigationResultsMsg,
+  IGetInvestigationResultsPayload,
 } from 'lib/interfaces/get-investigation-results.interface';
+
+/**
+ * Genarates the message payload for TU get dispute history
+ * @param data
+ * @returns IEnrollPayload
+ */
+export const createGetInvestigationResultsPayload = (
+  data: IGetInvestigationResultsGraphQLResponse,
+): IGetInvestigationResultsPayload => {
+  const id = data.data.getAppData.id?.split(':')?.pop();
+  const key = data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey;
+
+  if (!id || !key) {
+    console.log(`no id or enrollmentKey provided: id=${id}, key=${key}`);
+    return;
+  }
+
+  return {
+    RequestKey: '',
+    ClientKey: id,
+    EnrollmentKey: key,
+  };
+};
 
 /**
  * This method packages the message in a request body and adds account information

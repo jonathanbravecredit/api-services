@@ -33,7 +33,11 @@ import {
   createGetDisputeHistoryPayload,
   formatGetDisputeHistory,
 } from 'lib/soap/get-dispute-history';
-import { formatGetInvestigationResults, createGetInvestigationResults } from 'lib/soap/get-investigation-results';
+import {
+  formatGetInvestigationResults,
+  createGetInvestigationResults,
+  createGetInvestigationResultsPayload,
+} from 'lib/soap/get-investigation-results';
 import { IFulfillGraphQLResponse, IFulfillResponse, IFulfillResult } from 'lib/interfaces/fulfill.interface';
 import { IEnrollGraphQLResponse, IEnrollResponse, IEnrollResult } from 'lib/interfaces/enroll.interface';
 import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
@@ -48,6 +52,7 @@ import {
   getDataForStartDispute,
   createDispute,
   getDataForGetDisputeHistory,
+  getDataForGetInvestigationResults,
 } from 'lib/queries/proxy-queries';
 import { dateDiffInDays } from 'lib/utils/dates';
 import {
@@ -62,6 +67,10 @@ import {
 import { GQL_TEST } from 'lib/examples/mocks/DBRecord';
 import { IGenericRequest } from 'lib/interfaces/api.interfaces';
 import { IGetDisputeHistoryGraphQLResponse } from 'lib/interfaces/get-dispute-history.interface';
+import {
+  IGetInvestigationResultsGraphQLResponse,
+  IGetInvestigationResultsRequest,
+} from 'lib/interfaces/get-investigation-results.interface';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -470,17 +479,26 @@ export const GetInvestigationResults = async (
   agent: https.Agent,
   auth: string,
 ): Promise<string> => {
+  let variables: IGetInvestigationResultsRequest = {
+    ...JSON.parse(message),
+  };
+  const validate = ajv.getSchema<IGetInvestigationResultsRequest>('getInvestigationResultsRequest');
+  if (!validate(variables)) throw `Malformed message=${message}`;
+  const resp = await getDataForGetInvestigationResults(variables); // same data
+  const gql: IGetInvestigationResultsGraphQLResponse = resp.data; // add validation here
+  const payload = createGetInvestigationResultsPayload(gql);
   const { msg, xml } = createPackage(
     accountCode,
     username,
-    message,
+    JSON.stringify(payload),
     formatGetInvestigationResults,
     createGetInvestigationResults,
   );
   const options = createRequestOptions(agent, auth, xml, 'GetInvestigationResults');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    return await processRequest(options, parseCreditBureau, parserOptions);
+    const parsed = await processRequest(options, parseCreditBureau, parserOptions);
+    console.log('parsed investigation results ===> ', parsed);
     // results = parseInvestigationResults(results, xmlOptions); // may need to add this additionallayer of parsing
   } catch (err) {
     return err;
