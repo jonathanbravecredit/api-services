@@ -18,7 +18,7 @@ import {
   createVerifyAuthenticationQuestions,
 } from 'lib/soap/verify-authentication-questions';
 import { createPackage, createRequestOptions, processRequest, returnNestedObject, syncData } from 'lib/utils/helpers';
-
+import * as uuid from 'uuid';
 import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
 import {
@@ -364,7 +364,7 @@ export const StartDispute = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<string> => {
+): Promise<{ status: string; error?: any }> => {
   let variables: IStartDisputeRequest = {
     ...JSON.parse(message),
   };
@@ -377,6 +377,8 @@ export const StartDispute = async (
     const gql: IStartDisputeGraphQLResponse = resp.data;
     console.log('StartDispute:gql ===> ', JSON.stringify(gql));
     // const gql = GQL_TEST;
+    const id = `BC-${uuid.v4()}`; // create dispute record for db, blank is the TU dispute ID
+    // need to wait until the dispute creation is
     const payload = createStartDisputePayload(gql, variables.disputes);
     const { msg, xml } = createPackage(
       accountCode,
@@ -389,8 +391,12 @@ export const StartDispute = async (
     if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
     const dispute = await processRequest(options, parseStartDispute, parserOptions);
     const disputeResults: IStartDisputeResult = returnNestedObject(dispute, 'StartDisputeResult');
-    // Need toadd sync await syncData(variables, fulfillResults, enrichFulfillData, dispute);
-    return dispute;
+    console.log('disputeResults ===> ', JSON.stringify(disputeResults));
+    const status = disputeResults?.ResponseType.toLowerCase() === 'success';
+    if (status) {
+      // Need toadd sync await syncData(variables, fulfillResults, enrichFulfillData, dispute);
+    }
+    return status ? { status: 'submitted' } : { status: 'failed', error: disputeResults.ErrorResponse };
     // return '';
   } catch (err) {
     return err;
@@ -540,28 +546,5 @@ export const DisputePreflightCheck = async (
     return eligible ? { eligible } : { eligible, error: resp.GetDisputeStatusResult.ErrorResponse };
   } catch (err) {
     throw new Error(`DisputePreflightCheck:GetDisputeStatus=${err}`);
-  }
-};
-
-/**
- * This initiates the dispute process
- * @param {string} accountCode Brave account code
- * @param {string} username Brave user ID (Identity ID)
- * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
- * @param {https.Agent} agent
- * @param {string} auth
- * @returns
- */
-export const DisputeInitiation = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-): Promise<string> => {
-  try {
-    return await StartDispute(accountCode, username, message, agent, auth);
-  } catch (err) {
-    return JSON.stringify(err);
   }
 };
