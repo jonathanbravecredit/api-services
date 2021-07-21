@@ -385,10 +385,8 @@ export const StartDispute = async (
     const resp = await getDataForStartDispute(variables);
     const gql: IStartDisputeGraphQLResponse = resp.data;
     console.log('StartDispute:gql ===> ', JSON.stringify(gql));
-    // const gql = GQL_TEST;
     const userId = gql.data.getAppData.id;
     const id = `BC-${uuid.v4()}`; // create dispute record for db, blank is the TU dispute ID
-    // need to wait until the dispute creation is
     const payload = createStartDisputePayload(gql, variables.disputes);
     const { msg, xml } = createPackage(
       accountCode,
