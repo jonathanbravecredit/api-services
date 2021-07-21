@@ -20,6 +20,7 @@ export interface IGetInvestigationResultsPayload {
   RequestKey: string;
   ClientKey: string;
   EnrollmentKey: string;
+  DisputeId?: string;
 }
 
 export interface IGetInvestigationResults {

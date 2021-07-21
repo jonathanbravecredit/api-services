@@ -15,6 +15,7 @@ import {
  */
 export const createGetInvestigationResultsPayload = (
   data: IGetInvestigationResultsGraphQLResponse,
+  disputeId?: string,
 ): IGetInvestigationResultsPayload => {
   const id = data.data.getAppData.id?.split(':')?.pop();
   const key = data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey;
@@ -28,6 +29,7 @@ export const createGetInvestigationResultsPayload = (
     RequestKey: '',
     ClientKey: id,
     EnrollmentKey: key,
+    DisputeId: disputeId,
   };
 };
 
@@ -75,6 +77,7 @@ export const createGetInvestigationResults = (msg: IGetInvestigationResults): st
             'data:AccountCode': textConstructor(msg.request.AccountCode),
             'data:AccountName': textConstructor(msg.request.AccountName),
             'data:RequestKey': textConstructor(`BC-${uuid.v4()}`),
+            'data:ClientKey': textConstructor(msg.request.ClientKey),
             'data:DisputeId': textConstructor(msg.request.DisputeId, true),
             'data:EnrollmentKey': textConstructor(msg.request.EnrollmentKey),
           },

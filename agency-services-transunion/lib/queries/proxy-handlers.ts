@@ -486,7 +486,7 @@ export const GetInvestigationResults = async (
   if (!validate(variables)) throw `Malformed message=${message}`;
   const resp = await getDataForGetInvestigationResults(variables); // same data
   const gql: IGetInvestigationResultsGraphQLResponse = resp.data; // add validation here
-  const payload = createGetInvestigationResultsPayload(gql);
+  const payload = createGetInvestigationResultsPayload(gql, variables.disputeId);
   const { msg, xml } = createPackage(
     accountCode,
     username,
