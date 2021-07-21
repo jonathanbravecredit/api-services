@@ -330,6 +330,17 @@ export const qryGetDataForGetDisputeHistory = `query GetAppData($id: ID!) {
   }
 }`;
 
+export const qryGetDataForGetInvestigationResults = `query GetAppData($id: ID!) {
+  getAppData(id: $id) {
+    id
+    agencies {
+      transunion {
+        disputeEnrollmentKey
+      }
+    }
+  }
+}`;
+
 export const qryGetDataForStartDisputes = `query GetAppData($id: ID!) {
   getAppData(id: $id) {
     id
