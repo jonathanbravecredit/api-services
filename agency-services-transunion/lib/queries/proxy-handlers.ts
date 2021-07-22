@@ -511,6 +511,31 @@ export const GetInvestigationResults = async (
   }
 };
 
+export const CompleteOnboardingEnrollments = async (
+  accountCode: string,
+  username: string,
+  message: string,
+  agent: https.Agent,
+  auth: string,
+): Promise<{ onboarded: Boolean; error?: any }> => {
+  let variables: IGetAppDataRequest = {
+    ...JSON.parse(message),
+  };
+  const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
+  if (!validate(variables)) throw `Malformed message=${message}`;
+  try {
+    const enroll = await Enroll(accountCode, username, message, agent, auth, false); // report & score enroll
+    console.log('onboarding:enroll ===> ', enroll);
+    const disputeEnroll = await Enroll(accountCode, username, message, agent, auth, true); // report & score enroll
+    console.log('onboarding:disputeEnroll ===> ', disputeEnroll);
+    const fulfill = await Fulfill(accountCode, username, message, agent, auth, true);
+    console.log('onboarding:fulfill ===> ', fulfill);
+    return { onboarded: true };
+  } catch (err) {
+    return { onboarded: false, error: err };
+  }
+};
+
 /**
  * This performs the preflight check and returns the dispute status eligibility
  * @param {string} accountCode Brave account code

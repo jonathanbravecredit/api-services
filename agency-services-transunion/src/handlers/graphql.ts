@@ -91,6 +91,9 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       case 'GetDisputeHistory':
         results = await queries.GetDisputeHistory(accountCode, username, message, httpsAgent, auth);
         return JSON.stringify({ GetDisputeHistory: results });
+      case 'CompleteOnboardingEnrollments':
+        results = await queries.CompleteOnboardingEnrollments(accountCode, username, message, httpsAgent, auth);
+        return JSON.stringify({ CompleteOnboardingEnrollments: results });
       case 'DisputePreflightCheck':
         results = await queries.DisputePreflightCheck(accountCode, username, message, httpsAgent, auth);
         return JSON.stringify({ DisputePreflightCheck: results });
