@@ -392,7 +392,7 @@ export const StartDispute = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ status: string; error?: any }> => {
+): Promise<{ success: boolean; error?: any }> => {
   let variables: IStartDisputeRequest = {
     ...JSON.parse(message),
   };
@@ -419,19 +419,18 @@ export const StartDispute = async (
     const dispute = await processRequest(options, parseStartDispute, parserOptions);
     const disputeResults: IStartDisputeResult = returnNestedObject(dispute, 'StartDisputeResult');
     console.log('disputeResults ===> ', JSON.stringify(disputeResults));
-    const status = disputeResults?.ResponseType.toLowerCase() === 'success';
+    const started = disputeResults?.ResponseType.toLowerCase() === 'success';
     const bundle: IStartDisputeBundle = {
       startDisputeResult: disputeResults,
       disputes: variables.disputes,
     };
     console.log('bundle ===> ', bundle);
-    if (status) {
+    if (started) {
       await syncData({ id: variables.id }, bundle, enrichDisputeData);
     }
-    return status ? { status: 'submitted' } : { status: 'failed', error: disputeResults.ErrorResponse };
-    // return '';
+    return started ? { success: true } : { success: false, error: disputeResults.ErrorResponse };
   } catch (err) {
-    return err;
+    return { success: false, error: err };
   }
 };
 
@@ -524,7 +523,7 @@ export const CompleteOnboardingEnrollments = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ onboarded: Boolean; error?: any }> => {
+): Promise<{ success: Boolean; error?: any }> => {
   let variables: IGetAppDataRequest = {
     ...JSON.parse(message),
   };
@@ -533,16 +532,15 @@ export const CompleteOnboardingEnrollments = async (
   try {
     const enroll = await Enroll(accountCode, username, message, agent, auth, false); // report & score enroll
     if (enroll?.EnrollResult?.ResponseType.toLowerCase() !== 'success')
-      return { onboarded: false, error: enroll.EnrollResult.ErrorResponse };
+      return { success: false, error: enroll.EnrollResult.ErrorResponse };
     const disputeEnroll = await Enroll(accountCode, username, message, agent, auth, true); // dispute enroll
     if (disputeEnroll?.EnrollResult?.ResponseType.toLowerCase() !== 'success')
-      return { onboarded: false, error: disputeEnroll.EnrollResult.ErrorResponse };
+      return { success: false, error: disputeEnroll.EnrollResult.ErrorResponse };
     const fulfill = await Fulfill(accountCode, username, message, agent, auth, true);
-    if (fulfill?.FulfillResult?.ResponseType.toLowerCase() !== 'success')
-      return { onboarded: false, error: fulfill.FulfillResult.ErrorResponse };
-    return { onboarded: true };
+    const onboarded = fulfill?.FulfillResult?.ResponseType.toLowerCase() !== 'success';
+    return onboarded ? { success: true } : { success: false, error: fulfill.FulfillResult.ErrorResponse };
   } catch (err) {
-    return { onboarded: false, error: err };
+    return { success: false, error: err };
   }
 };
 
@@ -561,7 +559,7 @@ export const DisputePreflightCheck = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ eligible: boolean; error?: any }> => {
+): Promise<{ success: boolean; error?: any }> => {
   let variables: IGetAppDataRequest = {
     ...JSON.parse(message),
   };
@@ -575,8 +573,7 @@ export const DisputePreflightCheck = async (
     enrolled = !data ? false : returnNestedObject(data, 'disputeEnrolled');
     console.log('DisputePreflightCheck:enrolled ===> ', enrolled);
   } catch (err) {
-    console.log('DisputePreflightCheck:error: ===>', err);
-    throw new Error(`DisputePreflightCheck:getEnrollment=${err}`);
+    return { success: false, error: err };
   }
 
   if (!enrolled) {
@@ -586,10 +583,10 @@ export const DisputePreflightCheck = async (
       const type = resp.EnrollResult.ResponseType;
       const enrolled = type?.toLowerCase() !== 'success';
       if (!enrolled) {
-        return { eligible: enrolled, error: resp.EnrollResult.ErrorResponse };
+        return { success: false, error: resp.EnrollResult.ErrorResponse };
       }
     } catch (err) {
-      throw new Error(`DisputePreflightCheck:Enroll=${err}`);
+      return { success: false, error: err };
     }
   }
 
@@ -608,7 +605,7 @@ export const DisputePreflightCheck = async (
     }
     console.log('DisputePreflightCheck:refresh ===> ', refresh);
   } catch (err) {
-    throw new Error(`DisputePreflightCheck:getFulfilledOn=${err}`);
+    return { success: false, error: err };
   }
 
   if (refresh) {
@@ -616,7 +613,7 @@ export const DisputePreflightCheck = async (
       console.log('*** IN REFRESH:FULFILL ***');
       await Fulfill(accountCode, username, message, agent, auth, true);
     } catch (err) {
-      throw new Error(`DisputePreflightCheck:Fulfill=${err}`);
+      return { success: false, error: err };
     }
   }
 
@@ -627,8 +624,8 @@ export const DisputePreflightCheck = async (
     const type = resp.GetDisputeStatusResult.ResponseType; //returnNestedObject(resp, 'ResponseType');
     eligible = type?.toLowerCase() === 'success';
     console.log('DisputePreflightCheck:eligible ===> ', eligible);
-    return eligible ? { eligible } : { eligible, error: resp.GetDisputeStatusResult.ErrorResponse };
+    return eligible ? { success: true } : { success: false, error: resp.GetDisputeStatusResult.ErrorResponse };
   } catch (err) {
-    throw new Error(`DisputePreflightCheck:GetDisputeStatus=${err}`);
+    return { success: false, error: err };
   }
 };
