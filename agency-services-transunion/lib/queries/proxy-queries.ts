@@ -93,14 +93,6 @@ export const getDataForStartDispute = async (msg: IGetAppDataRequest): Promise<A
   }
 };
 
-export const createDispute = async (msg: { input: CreateDisputeInput }): Promise<AxiosResponse<any>> => {
-  try {
-    return await postGraphQLRequest(qry.qryCreateDispute, msg);
-  } catch (err) {
-    return err;
-  }
-};
-
 export const getDispute = async (msg: IGetDisputeRequest): Promise<AxiosResponse<any>> => {
   try {
     return await postGraphQLRequest(qry.qryGetDispute, msg);

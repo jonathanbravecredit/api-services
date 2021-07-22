@@ -577,27 +577,3 @@ export const updatePreflightStatus = `mutation UpdatePreflightStatus($id: ID!, $
     }
   }
 }`;
-
-export const qryCreateDispute = `mutation CreateDispute($input: CreateDisputeInput!, $condition: ModelDisputeConditionInput) {
-  createDispute(input: $input, condition: $condition) {
-    __typename
-    id
-    appDataId
-    disputeId
-    disputeStatus
-    disputeLetterCode
-    disputeLetterContent
-    openDisputes
-    agencyName
-    openedOn
-    closedOn
-    disputeItems
-    disputeResults
-    notificationStatus
-    notificationMessage
-    notificationSentOn
-    createdAt
-    updatedAt
-    owner
-  }
-}`;

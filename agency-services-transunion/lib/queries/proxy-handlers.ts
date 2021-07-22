@@ -55,7 +55,6 @@ import {
   getDisputeEnrollment,
   getDataForGetDisputeStatus,
   getDataForStartDispute,
-  createDispute,
   getDataForGetDisputeHistory,
   getDataForGetInvestigationResults,
 } from 'lib/queries/proxy-queries';
@@ -419,7 +418,7 @@ export const StartDispute = async (
     if (status) {
       const enrichedData = enrichDisputeData(variables.id, variables.disputes, disputeResults);
       console.log('enrichedData ===> ', enrichedData);
-      await createDispute({ input: enrichedData });
+      // await createDispute({ input: enrichedData });
     }
     return status ? { status: 'submitted' } : { status: 'failed', error: disputeResults.ErrorResponse };
     // return '';
