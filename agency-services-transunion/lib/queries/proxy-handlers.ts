@@ -531,7 +531,9 @@ export const CompleteOnboardingEnrollments = async (
     console.log('onboarding:disputeEnroll ===> ', disputeEnroll);
     const fulfill = await Fulfill(accountCode, username, message, agent, auth, true);
     console.log('onboarding:fulfill ===> ', fulfill);
-    return { onboarded: true };
+    await setTimeout(async () => {
+      return { onboarded: true };
+    }, 0);
   } catch (err) {
     return { onboarded: false, error: err };
   }
