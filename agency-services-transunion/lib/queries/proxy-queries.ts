@@ -3,7 +3,7 @@ import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
 import { IGetDisputeRequest } from 'lib/interfaces/get-dispute-data-interface';
 import * as qry from 'lib/queries';
 import { postGraphQLRequest } from 'lib/utils/helpers';
-import { CreateDisputeInput, UpdateAppDataInput } from 'src/api/api.service';
+import { UpdateAppDataInput } from 'src/api/api.service';
 
 export const getAppData = async (msg: IGetAppDataRequest): Promise<AxiosResponse<any>> => {
   try {

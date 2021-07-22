@@ -57,6 +57,7 @@ import {
   getDataForStartDispute,
   getDataForGetDisputeHistory,
   getDataForGetInvestigationResults,
+  getAppData,
 } from 'lib/queries/proxy-queries';
 import { dateDiffInDays } from 'lib/utils/dates';
 import {
@@ -291,7 +292,9 @@ export const Fulfill = async (
     if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
     const fulfill = await processRequest(options, parseFulfill, parserOptions);
     const fulfillResults: IFulfillResult = returnNestedObject(fulfill, 'FulfillResult');
-    await syncData(variables, fulfillResults, enrichFulfillData, dispute);
+    if (fulfillResults?.ResponseType.toLowerCase() === 'success') {
+      await syncData(variables, fulfillResults, enrichFulfillData, dispute);
+    }
     return fulfill; // for stand alone calls if needed
   } catch (err) {
     return err;
@@ -416,9 +419,7 @@ export const StartDispute = async (
     console.log('disputeResults ===> ', JSON.stringify(disputeResults));
     const status = disputeResults?.ResponseType.toLowerCase() === 'success';
     if (status) {
-      const enrichedData = enrichDisputeData(variables.id, variables.disputes, disputeResults);
-      console.log('enrichedData ===> ', enrichedData);
-      // await createDispute({ input: enrichedData });
+      await syncData(variables, disputeResults, enrichFulfillData, dispute);
     }
     return status ? { status: 'submitted' } : { status: 'failed', error: disputeResults.ErrorResponse };
     // return '';

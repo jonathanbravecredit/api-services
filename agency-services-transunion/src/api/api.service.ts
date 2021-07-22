@@ -1,7 +1,7 @@
 /*======= copied over from app =======*/
 
 export type Transunion = {
-  __typename: "Transunion";
+  __typename: 'Transunion';
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
@@ -25,10 +25,11 @@ export type Transunion = {
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
+  disputes?: Array<Dispute | null> | null;
 };
 
 export type TUReportResponse = {
-  __typename: "TUReportResponse";
+  __typename: 'TUReportResponse';
   bureau?: string | null;
   errorResponse?: string | null;
   serviceProduct?: string | null;
@@ -37,6 +38,25 @@ export type TUReportResponse = {
   serviceProductTypeId?: string | null;
   serviceProductValue?: string | null;
   status?: string | null;
+};
+
+export type Dispute = {
+  __typename: 'Dispute';
+  id?: string;
+  appDataId?: string;
+  disputeId?: string | null;
+  disputeStatus?: string | null;
+  disputeLetterCode?: string | null;
+  disputeLetterContent?: string | null;
+  openDisputes?: string | null;
+  agencyName?: string | null;
+  openedOn?: string | null;
+  closedOn?: string | null;
+  disputeItems?: string | null;
+  disputeResults?: string | null;
+  notificationStatus?: string | null;
+  notificationMessage?: string | null;
+  notificationSentOn?: string | null;
 };
 
 export type CreateAppDataInput = {
@@ -125,6 +145,7 @@ export type TransunionInput = {
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
+  disputes?: Array<DisputeInput | null> | null;
 };
 
 export type TUReportResponseInput = {
@@ -136,6 +157,24 @@ export type TUReportResponseInput = {
   serviceProductTypeId?: string | null;
   serviceProductValue?: string | null;
   status?: string | null;
+};
+
+export type DisputeInput = {
+  id: string;
+  appDataId: string;
+  disputeId?: string | null;
+  disputeStatus?: string | null;
+  disputeLetterCode?: string | null;
+  disputeLetterContent?: string | null;
+  openDisputes?: string | null;
+  agencyName?: string | null;
+  openedOn?: string | null;
+  closedOn?: string | null;
+  disputeItems?: string | null;
+  disputeResults?: string | null;
+  notificationStatus?: string | null;
+  notificationMessage?: string | null;
+  notificationSentOn?: string | null;
 };
 
 export type EquifaxInput = {
@@ -164,7 +203,7 @@ export type ModelAppDataConditionInput = {
 };
 
 export type AppData = {
-  __typename: "AppData";
+  __typename: 'AppData';
   id?: string;
   user?: User;
   agencies?: Agencies;
@@ -172,18 +211,17 @@ export type AppData = {
   createdAt?: string;
   updatedAt?: string;
   owner?: string | null;
-  disputes?: ModelDisputeConnection;
 };
 
 export type User = {
-  __typename: "User";
+  __typename: 'User';
   id?: string;
   userAttributes?: UserAttributes;
   onboarding?: Onboarding;
 };
 
 export type UserAttributes = {
-  __typename: "UserAttributes";
+  __typename: 'UserAttributes';
   name?: Name;
   address?: Address;
   phone?: Phone;
@@ -192,14 +230,14 @@ export type UserAttributes = {
 };
 
 export type Name = {
-  __typename: "Name";
+  __typename: 'Name';
   first?: string;
   middle?: string | null;
   last?: string;
 };
 
 export type Address = {
-  __typename: "Address";
+  __typename: 'Address';
   addressOne?: string;
   addressTwo?: string | null;
   city?: string;
@@ -208,86 +246,58 @@ export type Address = {
 };
 
 export type Phone = {
-  __typename: "Phone";
+  __typename: 'Phone';
   primary?: string;
 };
 
 export type Dob = {
-  __typename: "Dob";
+  __typename: 'Dob';
   year?: string;
   month?: string;
   day?: string;
 };
 
 export type Ssn = {
-  __typename: "Ssn";
+  __typename: 'Ssn';
   lastfour?: string;
   full?: string | null;
 };
 
 export type Onboarding = {
-  __typename: "Onboarding";
+  __typename: 'Onboarding';
   lastActive?: number;
   lastComplete?: number;
   started?: boolean | null;
 };
 
 export type Agencies = {
-  __typename: "Agencies";
+  __typename: 'Agencies';
   transunion?: Transunion;
   equifax?: Equifax;
   experian?: Experian;
 };
 
 export type Equifax = {
-  __typename: "Equifax";
+  __typename: 'Equifax';
   authenticated?: boolean | null;
 };
 
 export type Experian = {
-  __typename: "Experian";
+  __typename: 'Experian';
   authenticated?: boolean | null;
 };
 
 export type Preferences = {
-  __typename: "Preferences";
+  __typename: 'Preferences';
   showAllAccounts?: ShowAccountsPreference;
 };
 
 export type ShowAccountsPreference = {
-  __typename: "ShowAccountsPreference";
+  __typename: 'ShowAccountsPreference';
   creditCards?: boolean | null;
   collectionsAccounts?: boolean | null;
   installmentLoans?: boolean | null;
   mortgages?: boolean | null;
-};
-
-export type ModelDisputeConnection = {
-  __typename: "ModelDisputeConnection";
-  items?: Array<Dispute | null> | null;
-  nextToken?: string | null;
-};
-
-export type Dispute = {
-  __typename: "Dispute";
-  id?: string;
-  appDataId?: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-  createdAt?: string;
-  updatedAt?: string;
-  owner?: string | null;
 };
 
 export type UpdateAppDataInput = {
@@ -301,42 +311,11 @@ export type DeleteAppDataInput = {
   id: string;
 };
 
-export type CreateDisputeInput = {
-  id?: string | null;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-};
-
-export type ModelDisputeConditionInput = {
-  appDataId?: ModelIDInput | null;
-  disputeId?: ModelStringInput | null;
-  disputeStatus?: ModelStringInput | null;
-  disputeLetterCode?: ModelStringInput | null;
-  disputeLetterContent?: ModelStringInput | null;
-  openDisputes?: ModelStringInput | null;
-  agencyName?: ModelStringInput | null;
-  openedOn?: ModelStringInput | null;
-  closedOn?: ModelStringInput | null;
-  disputeItems?: ModelStringInput | null;
-  disputeResults?: ModelStringInput | null;
-  notificationStatus?: ModelStringInput | null;
-  notificationMessage?: ModelStringInput | null;
-  notificationSentOn?: ModelStringInput | null;
-  and?: Array<ModelDisputeConditionInput | null> | null;
-  or?: Array<ModelDisputeConditionInput | null> | null;
-  not?: ModelDisputeConditionInput | null;
+export type ModelAppDataFilterInput = {
+  id?: ModelIDInput | null;
+  and?: Array<ModelAppDataFilterInput | null> | null;
+  or?: Array<ModelAppDataFilterInput | null> | null;
+  not?: ModelAppDataFilterInput | null;
 };
 
 export type ModelIDInput = {
@@ -356,16 +335,16 @@ export type ModelIDInput = {
 };
 
 export enum ModelAttributeTypes {
-  Binary = "binary",
-  BinarySet = "binarySet",
-  Bool = "bool",
-  List = "list",
-  Map = "map",
-  Number = "number",
-  NumberSet = "numberSet",
-  String = "string",
-  StringSet = "stringSet",
-  _null = "_null"
+  Binary = 'binary',
+  BinarySet = 'binarySet',
+  Bool = 'bool',
+  List = 'list',
+  Map = 'map',
+  Number = 'number',
+  NumberSet = 'numberSet',
+  String = 'string',
+  StringSet = 'stringSet',
+  _null = '_null',
 }
 
 export type ModelSizeInput = {
@@ -378,80 +357,14 @@ export type ModelSizeInput = {
   between?: Array<number | null> | null;
 };
 
-export type ModelStringInput = {
-  ne?: string | null;
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  contains?: string | null;
-  notContains?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-  size?: ModelSizeInput | null;
-};
-
-export type UpdateDisputeInput = {
-  id: string;
-  appDataId?: string | null;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-};
-
-export type DeleteDisputeInput = {
-  id: string;
-};
-
-export type ModelAppDataFilterInput = {
-  id?: ModelIDInput | null;
-  and?: Array<ModelAppDataFilterInput | null> | null;
-  or?: Array<ModelAppDataFilterInput | null> | null;
-  not?: ModelAppDataFilterInput | null;
-};
-
 export type ModelAppDataConnection = {
-  __typename: "ModelAppDataConnection";
+  __typename: 'ModelAppDataConnection';
   items?: Array<AppData | null> | null;
   nextToken?: string | null;
 };
 
-export type ModelDisputeFilterInput = {
-  id?: ModelIDInput | null;
-  appDataId?: ModelIDInput | null;
-  disputeId?: ModelStringInput | null;
-  disputeStatus?: ModelStringInput | null;
-  disputeLetterCode?: ModelStringInput | null;
-  disputeLetterContent?: ModelStringInput | null;
-  openDisputes?: ModelStringInput | null;
-  agencyName?: ModelStringInput | null;
-  openedOn?: ModelStringInput | null;
-  closedOn?: ModelStringInput | null;
-  disputeItems?: ModelStringInput | null;
-  disputeResults?: ModelStringInput | null;
-  notificationStatus?: ModelStringInput | null;
-  notificationMessage?: ModelStringInput | null;
-  notificationSentOn?: ModelStringInput | null;
-  and?: Array<ModelDisputeFilterInput | null> | null;
-  or?: Array<ModelDisputeFilterInput | null> | null;
-  not?: ModelDisputeFilterInput | null;
-};
-
 export type PatchTransunionMutation = {
-  __typename: "Transunion";
+  __typename: 'Transunion';
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
@@ -460,7 +373,7 @@ export type PatchTransunionMutation = {
   currentRawAuthDetails?: string | null;
   enrollmentKey?: string | null;
   enrollReport?: {
-    __typename: "TUReportResponse";
+    __typename: 'TUReportResponse';
     bureau?: string | null;
     errorResponse?: string | null;
     serviceProduct?: string | null;
@@ -471,7 +384,7 @@ export type PatchTransunionMutation = {
     status?: string | null;
   } | null;
   enrollMergeReport?: {
-    __typename: "TUReportResponse";
+    __typename: 'TUReportResponse';
     bureau?: string | null;
     errorResponse?: string | null;
     serviceProduct?: string | null;
@@ -482,7 +395,7 @@ export type PatchTransunionMutation = {
     status?: string | null;
   } | null;
   enrollVantageScore?: {
-    __typename: "TUReportResponse";
+    __typename: 'TUReportResponse';
     bureau?: string | null;
     errorResponse?: string | null;
     serviceProduct?: string | null;
@@ -495,7 +408,7 @@ export type PatchTransunionMutation = {
   enrolled?: boolean | null;
   enrolledOn?: string | null;
   fulfillReport?: {
-    __typename: "TUReportResponse";
+    __typename: 'TUReportResponse';
     bureau?: string | null;
     errorResponse?: string | null;
     serviceProduct?: string | null;
@@ -506,7 +419,7 @@ export type PatchTransunionMutation = {
     status?: string | null;
   } | null;
   fulfillMergeReport?: {
-    __typename: "TUReportResponse";
+    __typename: 'TUReportResponse';
     bureau?: string | null;
     errorResponse?: string | null;
     serviceProduct?: string | null;
@@ -517,7 +430,7 @@ export type PatchTransunionMutation = {
     status?: string | null;
   } | null;
   fulfillVantageScore?: {
-    __typename: "TUReportResponse";
+    __typename: 'TUReportResponse';
     bureau?: string | null;
     errorResponse?: string | null;
     serviceProduct?: string | null;
@@ -535,24 +448,42 @@ export type PatchTransunionMutation = {
   disputeEnrolled?: boolean | null;
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
+  disputes?: Array<{
+    __typename: 'Dispute';
+    id: string;
+    appDataId: string;
+    disputeId?: string | null;
+    disputeStatus?: string | null;
+    disputeLetterCode?: string | null;
+    disputeLetterContent?: string | null;
+    openDisputes?: string | null;
+    agencyName?: string | null;
+    openedOn?: string | null;
+    closedOn?: string | null;
+    disputeItems?: string | null;
+    disputeResults?: string | null;
+    notificationStatus?: string | null;
+    notificationMessage?: string | null;
+    notificationSentOn?: string | null;
+  } | null> | null;
 };
 
 export type CreateAppDataMutation = {
-  __typename: "AppData";
+  __typename: 'AppData';
   id: string;
   user: {
-    __typename: "User";
+    __typename: 'User';
     id: string;
     userAttributes?: {
-      __typename: "UserAttributes";
+      __typename: 'UserAttributes';
       name?: {
-        __typename: "Name";
+        __typename: 'Name';
         first: string;
         middle?: string | null;
         last: string;
       } | null;
       address?: {
-        __typename: "Address";
+        __typename: 'Address';
         addressOne: string;
         addressTwo?: string | null;
         city: string;
@@ -560,32 +491,32 @@ export type CreateAppDataMutation = {
         zip: string;
       } | null;
       phone?: {
-        __typename: "Phone";
+        __typename: 'Phone';
         primary: string;
       } | null;
       dob?: {
-        __typename: "Dob";
+        __typename: 'Dob';
         year: string;
         month: string;
         day: string;
       } | null;
       ssn?: {
-        __typename: "Ssn";
+        __typename: 'Ssn';
         lastfour: string;
         full?: string | null;
       } | null;
     } | null;
     onboarding?: {
-      __typename: "Onboarding";
+      __typename: 'Onboarding';
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
     } | null;
   };
   agencies: {
-    __typename: "Agencies";
+    __typename: 'Agencies';
     transunion?: {
-      __typename: "Transunion";
+      __typename: 'Transunion';
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -594,7 +525,7 @@ export type CreateAppDataMutation = {
       currentRawAuthDetails?: string | null;
       enrollmentKey?: string | null;
       enrollReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -605,7 +536,7 @@ export type CreateAppDataMutation = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -616,7 +547,7 @@ export type CreateAppDataMutation = {
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -629,7 +560,7 @@ export type CreateAppDataMutation = {
       enrolled?: boolean | null;
       enrolledOn?: string | null;
       fulfillReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -640,7 +571,7 @@ export type CreateAppDataMutation = {
         status?: string | null;
       } | null;
       fulfillMergeReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -651,7 +582,7 @@ export type CreateAppDataMutation = {
         status?: string | null;
       } | null;
       fulfillVantageScore?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -669,20 +600,38 @@ export type CreateAppDataMutation = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputes?: Array<{
+        __typename: 'Dispute';
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: string | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeResults?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
     } | null;
     equifax?: {
-      __typename: "Equifax";
+      __typename: 'Equifax';
       authenticated?: boolean | null;
     } | null;
     experian?: {
-      __typename: "Experian";
+      __typename: 'Experian';
       authenticated?: boolean | null;
     } | null;
   };
   preferences: {
-    __typename: "Preferences";
+    __typename: 'Preferences';
     showAllAccounts?: {
-      __typename: "ShowAccountsPreference";
+      __typename: 'ShowAccountsPreference';
       creditCards?: boolean | null;
       collectionsAccounts?: boolean | null;
       installmentLoans?: boolean | null;
@@ -692,49 +641,24 @@ export type CreateAppDataMutation = {
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
-  disputes?: {
-    __typename: "ModelDisputeConnection";
-    items?: Array<{
-      __typename: "Dispute";
-      id: string;
-      appDataId: string;
-      disputeId?: string | null;
-      disputeStatus?: string | null;
-      disputeLetterCode?: string | null;
-      disputeLetterContent?: string | null;
-      openDisputes?: string | null;
-      agencyName?: string | null;
-      openedOn?: string | null;
-      closedOn?: string | null;
-      disputeItems?: string | null;
-      disputeResults?: string | null;
-      notificationStatus?: string | null;
-      notificationMessage?: string | null;
-      notificationSentOn?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
 };
 
 export type UpdateAppDataMutation = {
-  __typename: "AppData";
+  __typename: 'AppData';
   id: string;
   user: {
-    __typename: "User";
+    __typename: 'User';
     id: string;
     userAttributes?: {
-      __typename: "UserAttributes";
+      __typename: 'UserAttributes';
       name?: {
-        __typename: "Name";
+        __typename: 'Name';
         first: string;
         middle?: string | null;
         last: string;
       } | null;
       address?: {
-        __typename: "Address";
+        __typename: 'Address';
         addressOne: string;
         addressTwo?: string | null;
         city: string;
@@ -742,32 +666,32 @@ export type UpdateAppDataMutation = {
         zip: string;
       } | null;
       phone?: {
-        __typename: "Phone";
+        __typename: 'Phone';
         primary: string;
       } | null;
       dob?: {
-        __typename: "Dob";
+        __typename: 'Dob';
         year: string;
         month: string;
         day: string;
       } | null;
       ssn?: {
-        __typename: "Ssn";
+        __typename: 'Ssn';
         lastfour: string;
         full?: string | null;
       } | null;
     } | null;
     onboarding?: {
-      __typename: "Onboarding";
+      __typename: 'Onboarding';
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
     } | null;
   };
   agencies: {
-    __typename: "Agencies";
+    __typename: 'Agencies';
     transunion?: {
-      __typename: "Transunion";
+      __typename: 'Transunion';
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -776,7 +700,7 @@ export type UpdateAppDataMutation = {
       currentRawAuthDetails?: string | null;
       enrollmentKey?: string | null;
       enrollReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -787,7 +711,7 @@ export type UpdateAppDataMutation = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -798,7 +722,7 @@ export type UpdateAppDataMutation = {
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -811,7 +735,7 @@ export type UpdateAppDataMutation = {
       enrolled?: boolean | null;
       enrolledOn?: string | null;
       fulfillReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -822,7 +746,7 @@ export type UpdateAppDataMutation = {
         status?: string | null;
       } | null;
       fulfillMergeReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -833,7 +757,7 @@ export type UpdateAppDataMutation = {
         status?: string | null;
       } | null;
       fulfillVantageScore?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -851,20 +775,38 @@ export type UpdateAppDataMutation = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputes?: Array<{
+        __typename: 'Dispute';
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: string | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeResults?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
     } | null;
     equifax?: {
-      __typename: "Equifax";
+      __typename: 'Equifax';
       authenticated?: boolean | null;
     } | null;
     experian?: {
-      __typename: "Experian";
+      __typename: 'Experian';
       authenticated?: boolean | null;
     } | null;
   };
   preferences: {
-    __typename: "Preferences";
+    __typename: 'Preferences';
     showAllAccounts?: {
-      __typename: "ShowAccountsPreference";
+      __typename: 'ShowAccountsPreference';
       creditCards?: boolean | null;
       collectionsAccounts?: boolean | null;
       installmentLoans?: boolean | null;
@@ -874,49 +816,24 @@ export type UpdateAppDataMutation = {
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
-  disputes?: {
-    __typename: "ModelDisputeConnection";
-    items?: Array<{
-      __typename: "Dispute";
-      id: string;
-      appDataId: string;
-      disputeId?: string | null;
-      disputeStatus?: string | null;
-      disputeLetterCode?: string | null;
-      disputeLetterContent?: string | null;
-      openDisputes?: string | null;
-      agencyName?: string | null;
-      openedOn?: string | null;
-      closedOn?: string | null;
-      disputeItems?: string | null;
-      disputeResults?: string | null;
-      notificationStatus?: string | null;
-      notificationMessage?: string | null;
-      notificationSentOn?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
 };
 
 export type DeleteAppDataMutation = {
-  __typename: "AppData";
+  __typename: 'AppData';
   id: string;
   user: {
-    __typename: "User";
+    __typename: 'User';
     id: string;
     userAttributes?: {
-      __typename: "UserAttributes";
+      __typename: 'UserAttributes';
       name?: {
-        __typename: "Name";
+        __typename: 'Name';
         first: string;
         middle?: string | null;
         last: string;
       } | null;
       address?: {
-        __typename: "Address";
+        __typename: 'Address';
         addressOne: string;
         addressTwo?: string | null;
         city: string;
@@ -924,32 +841,32 @@ export type DeleteAppDataMutation = {
         zip: string;
       } | null;
       phone?: {
-        __typename: "Phone";
+        __typename: 'Phone';
         primary: string;
       } | null;
       dob?: {
-        __typename: "Dob";
+        __typename: 'Dob';
         year: string;
         month: string;
         day: string;
       } | null;
       ssn?: {
-        __typename: "Ssn";
+        __typename: 'Ssn';
         lastfour: string;
         full?: string | null;
       } | null;
     } | null;
     onboarding?: {
-      __typename: "Onboarding";
+      __typename: 'Onboarding';
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
     } | null;
   };
   agencies: {
-    __typename: "Agencies";
+    __typename: 'Agencies';
     transunion?: {
-      __typename: "Transunion";
+      __typename: 'Transunion';
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -958,7 +875,7 @@ export type DeleteAppDataMutation = {
       currentRawAuthDetails?: string | null;
       enrollmentKey?: string | null;
       enrollReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -969,7 +886,7 @@ export type DeleteAppDataMutation = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -980,7 +897,7 @@ export type DeleteAppDataMutation = {
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -993,7 +910,7 @@ export type DeleteAppDataMutation = {
       enrolled?: boolean | null;
       enrolledOn?: string | null;
       fulfillReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1004,7 +921,7 @@ export type DeleteAppDataMutation = {
         status?: string | null;
       } | null;
       fulfillMergeReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1015,7 +932,7 @@ export type DeleteAppDataMutation = {
         status?: string | null;
       } | null;
       fulfillVantageScore?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1033,138 +950,65 @@ export type DeleteAppDataMutation = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputes?: Array<{
+        __typename: 'Dispute';
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: string | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeResults?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
     } | null;
     equifax?: {
-      __typename: "Equifax";
+      __typename: 'Equifax';
       authenticated?: boolean | null;
     } | null;
     experian?: {
-      __typename: "Experian";
+      __typename: 'Experian';
       authenticated?: boolean | null;
     } | null;
   };
   preferences: {
-    __typename: "Preferences";
+    __typename: 'Preferences';
     showAllAccounts?: {
-      __typename: "ShowAccountsPreference";
+      __typename: 'ShowAccountsPreference';
       creditCards?: boolean | null;
       collectionsAccounts?: boolean | null;
       installmentLoans?: boolean | null;
       mortgages?: boolean | null;
     } | null;
   };
-  createdAt: string;
-  updatedAt: string;
-  owner?: string | null;
-  disputes?: {
-    __typename: "ModelDisputeConnection";
-    items?: Array<{
-      __typename: "Dispute";
-      id: string;
-      appDataId: string;
-      disputeId?: string | null;
-      disputeStatus?: string | null;
-      disputeLetterCode?: string | null;
-      disputeLetterContent?: string | null;
-      openDisputes?: string | null;
-      agencyName?: string | null;
-      openedOn?: string | null;
-      closedOn?: string | null;
-      disputeItems?: string | null;
-      disputeResults?: string | null;
-      notificationStatus?: string | null;
-      notificationMessage?: string | null;
-      notificationSentOn?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
-};
-
-export type CreateDisputeMutation = {
-  __typename: "Dispute";
-  id: string;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  owner?: string | null;
-};
-
-export type UpdateDisputeMutation = {
-  __typename: "Dispute";
-  id: string;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  owner?: string | null;
-};
-
-export type DeleteDisputeMutation = {
-  __typename: "Dispute";
-  id: string;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
 };
 
 export type GetAppDataQuery = {
-  __typename: "AppData";
+  __typename: 'AppData';
   id: string;
   user: {
-    __typename: "User";
+    __typename: 'User';
     id: string;
     userAttributes?: {
-      __typename: "UserAttributes";
+      __typename: 'UserAttributes';
       name?: {
-        __typename: "Name";
+        __typename: 'Name';
         first: string;
         middle?: string | null;
         last: string;
       } | null;
       address?: {
-        __typename: "Address";
+        __typename: 'Address';
         addressOne: string;
         addressTwo?: string | null;
         city: string;
@@ -1172,32 +1016,32 @@ export type GetAppDataQuery = {
         zip: string;
       } | null;
       phone?: {
-        __typename: "Phone";
+        __typename: 'Phone';
         primary: string;
       } | null;
       dob?: {
-        __typename: "Dob";
+        __typename: 'Dob';
         year: string;
         month: string;
         day: string;
       } | null;
       ssn?: {
-        __typename: "Ssn";
+        __typename: 'Ssn';
         lastfour: string;
         full?: string | null;
       } | null;
     } | null;
     onboarding?: {
-      __typename: "Onboarding";
+      __typename: 'Onboarding';
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
     } | null;
   };
   agencies: {
-    __typename: "Agencies";
+    __typename: 'Agencies';
     transunion?: {
-      __typename: "Transunion";
+      __typename: 'Transunion';
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -1206,7 +1050,7 @@ export type GetAppDataQuery = {
       currentRawAuthDetails?: string | null;
       enrollmentKey?: string | null;
       enrollReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1217,7 +1061,7 @@ export type GetAppDataQuery = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1228,7 +1072,7 @@ export type GetAppDataQuery = {
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1241,7 +1085,7 @@ export type GetAppDataQuery = {
       enrolled?: boolean | null;
       enrolledOn?: string | null;
       fulfillReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1252,7 +1096,7 @@ export type GetAppDataQuery = {
         status?: string | null;
       } | null;
       fulfillMergeReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1263,7 +1107,7 @@ export type GetAppDataQuery = {
         status?: string | null;
       } | null;
       fulfillVantageScore?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1281,20 +1125,38 @@ export type GetAppDataQuery = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputes?: Array<{
+        __typename: 'Dispute';
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: string | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeResults?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
     } | null;
     equifax?: {
-      __typename: "Equifax";
+      __typename: 'Equifax';
       authenticated?: boolean | null;
     } | null;
     experian?: {
-      __typename: "Experian";
+      __typename: 'Experian';
       authenticated?: boolean | null;
     } | null;
   };
   preferences: {
-    __typename: "Preferences";
+    __typename: 'Preferences';
     showAllAccounts?: {
-      __typename: "ShowAccountsPreference";
+      __typename: 'ShowAccountsPreference';
       creditCards?: boolean | null;
       collectionsAccounts?: boolean | null;
       installmentLoans?: boolean | null;
@@ -1304,51 +1166,26 @@ export type GetAppDataQuery = {
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
-  disputes?: {
-    __typename: "ModelDisputeConnection";
-    items?: Array<{
-      __typename: "Dispute";
-      id: string;
-      appDataId: string;
-      disputeId?: string | null;
-      disputeStatus?: string | null;
-      disputeLetterCode?: string | null;
-      disputeLetterContent?: string | null;
-      openDisputes?: string | null;
-      agencyName?: string | null;
-      openedOn?: string | null;
-      closedOn?: string | null;
-      disputeItems?: string | null;
-      disputeResults?: string | null;
-      notificationStatus?: string | null;
-      notificationMessage?: string | null;
-      notificationSentOn?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
 };
 
 export type ListAppDatasQuery = {
-  __typename: "ModelAppDataConnection";
+  __typename: 'ModelAppDataConnection';
   items?: Array<{
-    __typename: "AppData";
+    __typename: 'AppData';
     id: string;
     user: {
-      __typename: "User";
+      __typename: 'User';
       id: string;
       userAttributes?: {
-        __typename: "UserAttributes";
+        __typename: 'UserAttributes';
         name?: {
-          __typename: "Name";
+          __typename: 'Name';
           first: string;
           middle?: string | null;
           last: string;
         } | null;
         address?: {
-          __typename: "Address";
+          __typename: 'Address';
           addressOne: string;
           addressTwo?: string | null;
           city: string;
@@ -1356,32 +1193,32 @@ export type ListAppDatasQuery = {
           zip: string;
         } | null;
         phone?: {
-          __typename: "Phone";
+          __typename: 'Phone';
           primary: string;
         } | null;
         dob?: {
-          __typename: "Dob";
+          __typename: 'Dob';
           year: string;
           month: string;
           day: string;
         } | null;
         ssn?: {
-          __typename: "Ssn";
+          __typename: 'Ssn';
           lastfour: string;
           full?: string | null;
         } | null;
       } | null;
       onboarding?: {
-        __typename: "Onboarding";
+        __typename: 'Onboarding';
         lastActive: number;
         lastComplete: number;
         started?: boolean | null;
       } | null;
     };
     agencies: {
-      __typename: "Agencies";
+      __typename: 'Agencies';
       transunion?: {
-        __typename: "Transunion";
+        __typename: 'Transunion';
         authenticated?: boolean | null;
         indicativeEnrichmentSuccess?: boolean | null;
         getAuthenticationQuestionsSuccess?: boolean | null;
@@ -1390,7 +1227,7 @@ export type ListAppDatasQuery = {
         currentRawAuthDetails?: string | null;
         enrollmentKey?: string | null;
         enrollReport?: {
-          __typename: "TUReportResponse";
+          __typename: 'TUReportResponse';
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
@@ -1401,7 +1238,7 @@ export type ListAppDatasQuery = {
           status?: string | null;
         } | null;
         enrollMergeReport?: {
-          __typename: "TUReportResponse";
+          __typename: 'TUReportResponse';
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
@@ -1412,7 +1249,7 @@ export type ListAppDatasQuery = {
           status?: string | null;
         } | null;
         enrollVantageScore?: {
-          __typename: "TUReportResponse";
+          __typename: 'TUReportResponse';
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
@@ -1425,7 +1262,7 @@ export type ListAppDatasQuery = {
         enrolled?: boolean | null;
         enrolledOn?: string | null;
         fulfillReport?: {
-          __typename: "TUReportResponse";
+          __typename: 'TUReportResponse';
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
@@ -1436,7 +1273,7 @@ export type ListAppDatasQuery = {
           status?: string | null;
         } | null;
         fulfillMergeReport?: {
-          __typename: "TUReportResponse";
+          __typename: 'TUReportResponse';
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
@@ -1447,7 +1284,7 @@ export type ListAppDatasQuery = {
           status?: string | null;
         } | null;
         fulfillVantageScore?: {
-          __typename: "TUReportResponse";
+          __typename: 'TUReportResponse';
           bureau?: string | null;
           errorResponse?: string | null;
           serviceProduct?: string | null;
@@ -1465,20 +1302,38 @@ export type ListAppDatasQuery = {
         disputeEnrolled?: boolean | null;
         disputeEnrolledOn?: string | null;
         disputeStatus?: string | null;
+        disputes?: Array<{
+          __typename: 'Dispute';
+          id: string;
+          appDataId: string;
+          disputeId?: string | null;
+          disputeStatus?: string | null;
+          disputeLetterCode?: string | null;
+          disputeLetterContent?: string | null;
+          openDisputes?: string | null;
+          agencyName?: string | null;
+          openedOn?: string | null;
+          closedOn?: string | null;
+          disputeItems?: string | null;
+          disputeResults?: string | null;
+          notificationStatus?: string | null;
+          notificationMessage?: string | null;
+          notificationSentOn?: string | null;
+        } | null> | null;
       } | null;
       equifax?: {
-        __typename: "Equifax";
+        __typename: 'Equifax';
         authenticated?: boolean | null;
       } | null;
       experian?: {
-        __typename: "Experian";
+        __typename: 'Experian';
         authenticated?: boolean | null;
       } | null;
     };
     preferences: {
-      __typename: "Preferences";
+      __typename: 'Preferences';
       showAllAccounts?: {
-        __typename: "ShowAccountsPreference";
+        __typename: 'ShowAccountsPreference';
         creditCards?: boolean | null;
         collectionsAccounts?: boolean | null;
         installmentLoans?: boolean | null;
@@ -1488,10 +1343,144 @@ export type ListAppDatasQuery = {
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
-    disputes?: {
-      __typename: "ModelDisputeConnection";
-      items?: Array<{
-        __typename: "Dispute";
+  } | null> | null;
+  nextToken?: string | null;
+};
+
+export type OnCreateAppDataSubscription = {
+  __typename: 'AppData';
+  id: string;
+  user: {
+    __typename: 'User';
+    id: string;
+    userAttributes?: {
+      __typename: 'UserAttributes';
+      name?: {
+        __typename: 'Name';
+        first: string;
+        middle?: string | null;
+        last: string;
+      } | null;
+      address?: {
+        __typename: 'Address';
+        addressOne: string;
+        addressTwo?: string | null;
+        city: string;
+        state: string;
+        zip: string;
+      } | null;
+      phone?: {
+        __typename: 'Phone';
+        primary: string;
+      } | null;
+      dob?: {
+        __typename: 'Dob';
+        year: string;
+        month: string;
+        day: string;
+      } | null;
+      ssn?: {
+        __typename: 'Ssn';
+        lastfour: string;
+        full?: string | null;
+      } | null;
+    } | null;
+    onboarding?: {
+      __typename: 'Onboarding';
+      lastActive: number;
+      lastComplete: number;
+      started?: boolean | null;
+    } | null;
+  };
+  agencies: {
+    __typename: 'Agencies';
+    transunion?: {
+      __typename: 'Transunion';
+      authenticated?: boolean | null;
+      indicativeEnrichmentSuccess?: boolean | null;
+      getAuthenticationQuestionsSuccess?: boolean | null;
+      serviceBundleFulfillmentKey?: string | null;
+      currentRawQuestions?: string | null;
+      currentRawAuthDetails?: string | null;
+      enrollmentKey?: string | null;
+      enrollReport?: {
+        __typename: 'TUReportResponse';
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollMergeReport?: {
+        __typename: 'TUReportResponse';
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrollVantageScore?: {
+        __typename: 'TUReportResponse';
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      enrolled?: boolean | null;
+      enrolledOn?: string | null;
+      fulfillReport?: {
+        __typename: 'TUReportResponse';
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfillMergeReport?: {
+        __typename: 'TUReportResponse';
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfillVantageScore?: {
+        __typename: 'TUReportResponse';
+        bureau?: string | null;
+        errorResponse?: string | null;
+        serviceProduct?: string | null;
+        serviceProductFullfillmentKey?: string | null;
+        serviceProductObject?: string | null;
+        serviceProductTypeId?: string | null;
+        serviceProductValue?: string | null;
+        status?: string | null;
+      } | null;
+      fulfilledOn?: string | null;
+      acknowledgedDisputeTerms?: boolean | null;
+      acknowledgedDisputeTermsOn?: string | null;
+      disputeServiceBundleFulfillmentKey?: string | null;
+      disputeEnrollmentKey?: string | null;
+      disputeEnrolled?: boolean | null;
+      disputeEnrolledOn?: string | null;
+      disputeStatus?: string | null;
+      disputes?: Array<{
+        __typename: 'Dispute';
         id: string;
         appDataId: string;
         disputeId?: string | null;
@@ -1507,210 +1496,21 @@ export type ListAppDatasQuery = {
         notificationStatus?: string | null;
         notificationMessage?: string | null;
         notificationSentOn?: string | null;
-        createdAt: string;
-        updatedAt: string;
-        owner?: string | null;
       } | null> | null;
-      nextToken?: string | null;
-    } | null;
-  } | null> | null;
-  nextToken?: string | null;
-};
-
-export type GetDisputeQuery = {
-  __typename: "Dispute";
-  id: string;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  owner?: string | null;
-};
-
-export type ListDisputesQuery = {
-  __typename: "ModelDisputeConnection";
-  items?: Array<{
-    __typename: "Dispute";
-    id: string;
-    appDataId: string;
-    disputeId?: string | null;
-    disputeStatus?: string | null;
-    disputeLetterCode?: string | null;
-    disputeLetterContent?: string | null;
-    openDisputes?: string | null;
-    agencyName?: string | null;
-    openedOn?: string | null;
-    closedOn?: string | null;
-    disputeItems?: string | null;
-    disputeResults?: string | null;
-    notificationStatus?: string | null;
-    notificationMessage?: string | null;
-    notificationSentOn?: string | null;
-    createdAt: string;
-    updatedAt: string;
-    owner?: string | null;
-  } | null> | null;
-  nextToken?: string | null;
-};
-
-export type OnCreateAppDataSubscription = {
-  __typename: "AppData";
-  id: string;
-  user: {
-    __typename: "User";
-    id: string;
-    userAttributes?: {
-      __typename: "UserAttributes";
-      name?: {
-        __typename: "Name";
-        first: string;
-        middle?: string | null;
-        last: string;
-      } | null;
-      address?: {
-        __typename: "Address";
-        addressOne: string;
-        addressTwo?: string | null;
-        city: string;
-        state: string;
-        zip: string;
-      } | null;
-      phone?: {
-        __typename: "Phone";
-        primary: string;
-      } | null;
-      dob?: {
-        __typename: "Dob";
-        year: string;
-        month: string;
-        day: string;
-      } | null;
-      ssn?: {
-        __typename: "Ssn";
-        lastfour: string;
-        full?: string | null;
-      } | null;
-    } | null;
-    onboarding?: {
-      __typename: "Onboarding";
-      lastActive: number;
-      lastComplete: number;
-      started?: boolean | null;
-    } | null;
-  };
-  agencies: {
-    __typename: "Agencies";
-    transunion?: {
-      __typename: "Transunion";
-      authenticated?: boolean | null;
-      indicativeEnrichmentSuccess?: boolean | null;
-      getAuthenticationQuestionsSuccess?: boolean | null;
-      serviceBundleFulfillmentKey?: string | null;
-      currentRawQuestions?: string | null;
-      currentRawAuthDetails?: string | null;
-      enrollmentKey?: string | null;
-      enrollReport?: {
-        __typename: "TUReportResponse";
-        bureau?: string | null;
-        errorResponse?: string | null;
-        serviceProduct?: string | null;
-        serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
-        serviceProductTypeId?: string | null;
-        serviceProductValue?: string | null;
-        status?: string | null;
-      } | null;
-      enrollMergeReport?: {
-        __typename: "TUReportResponse";
-        bureau?: string | null;
-        errorResponse?: string | null;
-        serviceProduct?: string | null;
-        serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
-        serviceProductTypeId?: string | null;
-        serviceProductValue?: string | null;
-        status?: string | null;
-      } | null;
-      enrollVantageScore?: {
-        __typename: "TUReportResponse";
-        bureau?: string | null;
-        errorResponse?: string | null;
-        serviceProduct?: string | null;
-        serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
-        serviceProductTypeId?: string | null;
-        serviceProductValue?: string | null;
-        status?: string | null;
-      } | null;
-      enrolled?: boolean | null;
-      enrolledOn?: string | null;
-      fulfillReport?: {
-        __typename: "TUReportResponse";
-        bureau?: string | null;
-        errorResponse?: string | null;
-        serviceProduct?: string | null;
-        serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
-        serviceProductTypeId?: string | null;
-        serviceProductValue?: string | null;
-        status?: string | null;
-      } | null;
-      fulfillMergeReport?: {
-        __typename: "TUReportResponse";
-        bureau?: string | null;
-        errorResponse?: string | null;
-        serviceProduct?: string | null;
-        serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
-        serviceProductTypeId?: string | null;
-        serviceProductValue?: string | null;
-        status?: string | null;
-      } | null;
-      fulfillVantageScore?: {
-        __typename: "TUReportResponse";
-        bureau?: string | null;
-        errorResponse?: string | null;
-        serviceProduct?: string | null;
-        serviceProductFullfillmentKey?: string | null;
-        serviceProductObject?: string | null;
-        serviceProductTypeId?: string | null;
-        serviceProductValue?: string | null;
-        status?: string | null;
-      } | null;
-      fulfilledOn?: string | null;
-      acknowledgedDisputeTerms?: boolean | null;
-      acknowledgedDisputeTermsOn?: string | null;
-      disputeServiceBundleFulfillmentKey?: string | null;
-      disputeEnrollmentKey?: string | null;
-      disputeEnrolled?: boolean | null;
-      disputeEnrolledOn?: string | null;
-      disputeStatus?: string | null;
     } | null;
     equifax?: {
-      __typename: "Equifax";
+      __typename: 'Equifax';
       authenticated?: boolean | null;
     } | null;
     experian?: {
-      __typename: "Experian";
+      __typename: 'Experian';
       authenticated?: boolean | null;
     } | null;
   };
   preferences: {
-    __typename: "Preferences";
+    __typename: 'Preferences';
     showAllAccounts?: {
-      __typename: "ShowAccountsPreference";
+      __typename: 'ShowAccountsPreference';
       creditCards?: boolean | null;
       collectionsAccounts?: boolean | null;
       installmentLoans?: boolean | null;
@@ -1720,49 +1520,24 @@ export type OnCreateAppDataSubscription = {
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
-  disputes?: {
-    __typename: "ModelDisputeConnection";
-    items?: Array<{
-      __typename: "Dispute";
-      id: string;
-      appDataId: string;
-      disputeId?: string | null;
-      disputeStatus?: string | null;
-      disputeLetterCode?: string | null;
-      disputeLetterContent?: string | null;
-      openDisputes?: string | null;
-      agencyName?: string | null;
-      openedOn?: string | null;
-      closedOn?: string | null;
-      disputeItems?: string | null;
-      disputeResults?: string | null;
-      notificationStatus?: string | null;
-      notificationMessage?: string | null;
-      notificationSentOn?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
 };
 
 export type OnUpdateAppDataSubscription = {
-  __typename: "AppData";
+  __typename: 'AppData';
   id: string;
   user: {
-    __typename: "User";
+    __typename: 'User';
     id: string;
     userAttributes?: {
-      __typename: "UserAttributes";
+      __typename: 'UserAttributes';
       name?: {
-        __typename: "Name";
+        __typename: 'Name';
         first: string;
         middle?: string | null;
         last: string;
       } | null;
       address?: {
-        __typename: "Address";
+        __typename: 'Address';
         addressOne: string;
         addressTwo?: string | null;
         city: string;
@@ -1770,32 +1545,32 @@ export type OnUpdateAppDataSubscription = {
         zip: string;
       } | null;
       phone?: {
-        __typename: "Phone";
+        __typename: 'Phone';
         primary: string;
       } | null;
       dob?: {
-        __typename: "Dob";
+        __typename: 'Dob';
         year: string;
         month: string;
         day: string;
       } | null;
       ssn?: {
-        __typename: "Ssn";
+        __typename: 'Ssn';
         lastfour: string;
         full?: string | null;
       } | null;
     } | null;
     onboarding?: {
-      __typename: "Onboarding";
+      __typename: 'Onboarding';
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
     } | null;
   };
   agencies: {
-    __typename: "Agencies";
+    __typename: 'Agencies';
     transunion?: {
-      __typename: "Transunion";
+      __typename: 'Transunion';
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -1804,7 +1579,7 @@ export type OnUpdateAppDataSubscription = {
       currentRawAuthDetails?: string | null;
       enrollmentKey?: string | null;
       enrollReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1815,7 +1590,7 @@ export type OnUpdateAppDataSubscription = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1826,7 +1601,7 @@ export type OnUpdateAppDataSubscription = {
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1839,7 +1614,7 @@ export type OnUpdateAppDataSubscription = {
       enrolled?: boolean | null;
       enrolledOn?: string | null;
       fulfillReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1850,7 +1625,7 @@ export type OnUpdateAppDataSubscription = {
         status?: string | null;
       } | null;
       fulfillMergeReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1861,7 +1636,7 @@ export type OnUpdateAppDataSubscription = {
         status?: string | null;
       } | null;
       fulfillVantageScore?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1879,20 +1654,38 @@ export type OnUpdateAppDataSubscription = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputes?: Array<{
+        __typename: 'Dispute';
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: string | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeResults?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
     } | null;
     equifax?: {
-      __typename: "Equifax";
+      __typename: 'Equifax';
       authenticated?: boolean | null;
     } | null;
     experian?: {
-      __typename: "Experian";
+      __typename: 'Experian';
       authenticated?: boolean | null;
     } | null;
   };
   preferences: {
-    __typename: "Preferences";
+    __typename: 'Preferences';
     showAllAccounts?: {
-      __typename: "ShowAccountsPreference";
+      __typename: 'ShowAccountsPreference';
       creditCards?: boolean | null;
       collectionsAccounts?: boolean | null;
       installmentLoans?: boolean | null;
@@ -1902,49 +1695,24 @@ export type OnUpdateAppDataSubscription = {
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
-  disputes?: {
-    __typename: "ModelDisputeConnection";
-    items?: Array<{
-      __typename: "Dispute";
-      id: string;
-      appDataId: string;
-      disputeId?: string | null;
-      disputeStatus?: string | null;
-      disputeLetterCode?: string | null;
-      disputeLetterContent?: string | null;
-      openDisputes?: string | null;
-      agencyName?: string | null;
-      openedOn?: string | null;
-      closedOn?: string | null;
-      disputeItems?: string | null;
-      disputeResults?: string | null;
-      notificationStatus?: string | null;
-      notificationMessage?: string | null;
-      notificationSentOn?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
 };
 
 export type OnDeleteAppDataSubscription = {
-  __typename: "AppData";
+  __typename: 'AppData';
   id: string;
   user: {
-    __typename: "User";
+    __typename: 'User';
     id: string;
     userAttributes?: {
-      __typename: "UserAttributes";
+      __typename: 'UserAttributes';
       name?: {
-        __typename: "Name";
+        __typename: 'Name';
         first: string;
         middle?: string | null;
         last: string;
       } | null;
       address?: {
-        __typename: "Address";
+        __typename: 'Address';
         addressOne: string;
         addressTwo?: string | null;
         city: string;
@@ -1952,32 +1720,32 @@ export type OnDeleteAppDataSubscription = {
         zip: string;
       } | null;
       phone?: {
-        __typename: "Phone";
+        __typename: 'Phone';
         primary: string;
       } | null;
       dob?: {
-        __typename: "Dob";
+        __typename: 'Dob';
         year: string;
         month: string;
         day: string;
       } | null;
       ssn?: {
-        __typename: "Ssn";
+        __typename: 'Ssn';
         lastfour: string;
         full?: string | null;
       } | null;
     } | null;
     onboarding?: {
-      __typename: "Onboarding";
+      __typename: 'Onboarding';
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
     } | null;
   };
   agencies: {
-    __typename: "Agencies";
+    __typename: 'Agencies';
     transunion?: {
-      __typename: "Transunion";
+      __typename: 'Transunion';
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
@@ -1986,7 +1754,7 @@ export type OnDeleteAppDataSubscription = {
       currentRawAuthDetails?: string | null;
       enrollmentKey?: string | null;
       enrollReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -1997,7 +1765,7 @@ export type OnDeleteAppDataSubscription = {
         status?: string | null;
       } | null;
       enrollMergeReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -2008,7 +1776,7 @@ export type OnDeleteAppDataSubscription = {
         status?: string | null;
       } | null;
       enrollVantageScore?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -2021,7 +1789,7 @@ export type OnDeleteAppDataSubscription = {
       enrolled?: boolean | null;
       enrolledOn?: string | null;
       fulfillReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -2032,7 +1800,7 @@ export type OnDeleteAppDataSubscription = {
         status?: string | null;
       } | null;
       fulfillMergeReport?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -2043,7 +1811,7 @@ export type OnDeleteAppDataSubscription = {
         status?: string | null;
       } | null;
       fulfillVantageScore?: {
-        __typename: "TUReportResponse";
+        __typename: 'TUReportResponse';
         bureau?: string | null;
         errorResponse?: string | null;
         serviceProduct?: string | null;
@@ -2061,117 +1829,44 @@ export type OnDeleteAppDataSubscription = {
       disputeEnrolled?: boolean | null;
       disputeEnrolledOn?: string | null;
       disputeStatus?: string | null;
+      disputes?: Array<{
+        __typename: 'Dispute';
+        id: string;
+        appDataId: string;
+        disputeId?: string | null;
+        disputeStatus?: string | null;
+        disputeLetterCode?: string | null;
+        disputeLetterContent?: string | null;
+        openDisputes?: string | null;
+        agencyName?: string | null;
+        openedOn?: string | null;
+        closedOn?: string | null;
+        disputeItems?: string | null;
+        disputeResults?: string | null;
+        notificationStatus?: string | null;
+        notificationMessage?: string | null;
+        notificationSentOn?: string | null;
+      } | null> | null;
     } | null;
     equifax?: {
-      __typename: "Equifax";
+      __typename: 'Equifax';
       authenticated?: boolean | null;
     } | null;
     experian?: {
-      __typename: "Experian";
+      __typename: 'Experian';
       authenticated?: boolean | null;
     } | null;
   };
   preferences: {
-    __typename: "Preferences";
+    __typename: 'Preferences';
     showAllAccounts?: {
-      __typename: "ShowAccountsPreference";
+      __typename: 'ShowAccountsPreference';
       creditCards?: boolean | null;
       collectionsAccounts?: boolean | null;
       installmentLoans?: boolean | null;
       mortgages?: boolean | null;
     } | null;
   };
-  createdAt: string;
-  updatedAt: string;
-  owner?: string | null;
-  disputes?: {
-    __typename: "ModelDisputeConnection";
-    items?: Array<{
-      __typename: "Dispute";
-      id: string;
-      appDataId: string;
-      disputeId?: string | null;
-      disputeStatus?: string | null;
-      disputeLetterCode?: string | null;
-      disputeLetterContent?: string | null;
-      openDisputes?: string | null;
-      agencyName?: string | null;
-      openedOn?: string | null;
-      closedOn?: string | null;
-      disputeItems?: string | null;
-      disputeResults?: string | null;
-      notificationStatus?: string | null;
-      notificationMessage?: string | null;
-      notificationSentOn?: string | null;
-      createdAt: string;
-      updatedAt: string;
-      owner?: string | null;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
-};
-
-export type OnCreateDisputeSubscription = {
-  __typename: "Dispute";
-  id: string;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  owner?: string | null;
-};
-
-export type OnUpdateDisputeSubscription = {
-  __typename: "Dispute";
-  id: string;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  owner?: string | null;
-};
-
-export type OnDeleteDisputeSubscription = {
-  __typename: "Dispute";
-  id: string;
-  appDataId: string;
-  disputeId?: string | null;
-  disputeStatus?: string | null;
-  disputeLetterCode?: string | null;
-  disputeLetterContent?: string | null;
-  openDisputes?: string | null;
-  agencyName?: string | null;
-  openedOn?: string | null;
-  closedOn?: string | null;
-  disputeItems?: string | null;
-  disputeResults?: string | null;
-  notificationStatus?: string | null;
-  notificationMessage?: string | null;
-  notificationSentOn?: string | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;

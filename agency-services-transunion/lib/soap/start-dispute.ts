@@ -18,8 +18,8 @@ import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import { IDisputeReason, IProcessDisputeTradelineResult } from 'lib/interfaces/disputes.interface';
 import { MONTH_MAP } from 'lib/data/constants';
-import { CreateDisputeInput } from 'src/api/api.service';
 import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
+import { UpdateAppDataInput } from 'src/api/api.service';
 
 /**
  * Genarates the message payload for TU Fulfill request
@@ -391,15 +391,15 @@ export const parseStartDispute = (xml: string, options: any): IStartDisputeRespo
  * @returns
  */
 export const enrichDisputeData = (
-  id: string,
+  state: UpdateAppDataInput,
   disputes: IProcessDisputeTradelineResult[],
   data: IStartDisputeResult | undefined,
-): CreateDisputeInput | undefined => {
-  if (!data) return;
+): UpdateAppDataInput | undefined => {
+  if (!state) return;
   let openedOn = new Date().toISOString();
-
-  const mapped = {
-    appDataId: id,
+  const dispute = {
+    id: uuid.v4(),
+    appDataId: state.id,
     disputeId: data?.DisputeStatus?.DisputeStatusDetail?.DisputeId,
     disputeStatus: data?.DisputeStatus?.DisputeStatusDetail?.Status,
     disputeLetterCode: data?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterCode,
@@ -413,6 +413,16 @@ export const enrichDisputeData = (
     notificationStatus: null,
     notificationMessage: null,
     notificationSentOn: null,
+  };
+  const mapped = {
+    ...state,
+    agencies: {
+      ...state.agencies,
+      transunion: {
+        ...state.agencies?.transunion,
+        disputes: [...state.agencies?.transunion?.disputes, dispute].filter(Boolean),
+      },
+    },
   };
   console.log('mapped', mapped);
   return mapped;
