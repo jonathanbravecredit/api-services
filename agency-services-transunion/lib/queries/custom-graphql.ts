@@ -553,6 +553,24 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
+        disputes {
+          __typename
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeResults
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         __typename
