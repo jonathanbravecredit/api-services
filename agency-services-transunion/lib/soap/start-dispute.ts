@@ -415,13 +415,14 @@ export const enrichDisputeData = (
     notificationMessage: null,
     notificationSentOn: null,
   };
+  const oldDisutes = state.agencies?.transunion?.disputes || [];
   const mapped = {
     ...state,
     agencies: {
       ...state.agencies,
       transunion: {
         ...state.agencies?.transunion,
-        disputes: [...state.agencies?.transunion?.disputes, dispute].filter(Boolean),
+        disputes: [...oldDisutes, dispute].filter(Boolean),
       },
     },
   };
