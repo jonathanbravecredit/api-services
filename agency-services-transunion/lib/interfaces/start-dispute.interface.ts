@@ -96,6 +96,12 @@ export interface IStartDisputeResponse {
   StartDisputeResult: IStartDisputeResult;
 }
 
+// I need to bundle our dispute package with the dispute resp from TU
+export interface IStartDisputeBundle {
+  startDisputeResult: IStartDisputeResult;
+  disputes: IProcessDisputeTradelineResult[];
+}
+
 export interface IStartDisputeResult {
   AccountName: string;
   ErrorResponse: string;

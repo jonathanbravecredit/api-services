@@ -6,6 +6,7 @@ import {
   IIndicativeDisputes,
   ILineItem,
   IStartDispute,
+  IStartDisputeBundle,
   IStartDisputeGraphQLResponse,
   IStartDisputeMsg,
   IStartDisputeRequest,
@@ -392,19 +393,19 @@ export const parseStartDispute = (xml: string, options: any): IStartDisputeRespo
  */
 export const enrichDisputeData = (
   state: UpdateAppDataInput,
-  disputes: IProcessDisputeTradelineResult[],
-  data: IStartDisputeResult | undefined,
+  data: IStartDisputeBundle | undefined,
 ): UpdateAppDataInput | undefined => {
   if (!state) return;
   let openedOn = new Date().toISOString();
+  const { startDisputeResult, disputes } = data;
   const dispute = {
     id: uuid.v4(),
     appDataId: state.id,
-    disputeId: data?.DisputeStatus?.DisputeStatusDetail?.DisputeId,
-    disputeStatus: data?.DisputeStatus?.DisputeStatusDetail?.Status,
-    disputeLetterCode: data?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterCode,
-    disputeLetterContent: data?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterContent,
-    openDisputes: JSON.stringify(data?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes),
+    disputeId: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.DisputeId,
+    disputeStatus: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.Status,
+    disputeLetterCode: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterCode,
+    disputeLetterContent: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterContent,
+    openDisputes: JSON.stringify(startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes),
     agencyName: 'TU',
     openedOn: openedOn,
     closedOn: null,

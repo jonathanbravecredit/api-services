@@ -65,6 +65,7 @@ import {
   IGetDisputeStatusResponse,
 } from 'lib/interfaces/get-dispute-status.interface';
 import {
+  IStartDisputeBundle,
   IStartDisputeGraphQLResponse,
   IStartDisputeRequest,
   IStartDisputeResult,
@@ -419,8 +420,13 @@ export const StartDispute = async (
     const disputeResults: IStartDisputeResult = returnNestedObject(dispute, 'StartDisputeResult');
     console.log('disputeResults ===> ', JSON.stringify(disputeResults));
     const status = disputeResults?.ResponseType.toLowerCase() === 'success';
+    const bundle: IStartDisputeBundle = {
+      startDisputeResult: disputeResults,
+      disputes: variables.disputes,
+    };
+    console.log('bundle ===> ', bundle);
     if (status) {
-      await syncData(variables, disputeResults, enrichFulfillData, dispute);
+      await syncData({ id: variables.id }, bundle, enrichDisputeData);
     }
     return status ? { status: 'submitted' } : { status: 'failed', error: disputeResults.ErrorResponse };
     // return '';
