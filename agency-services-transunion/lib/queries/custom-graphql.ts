@@ -135,6 +135,24 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
+        disputes {
+          __typename
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeResults
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
       }
       equifax {
         __typename
