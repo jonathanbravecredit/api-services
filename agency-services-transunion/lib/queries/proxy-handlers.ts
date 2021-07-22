@@ -10,7 +10,12 @@ import {
   parseGetDisputeStatus,
   createGetDisputeStatusPayload,
 } from 'lib/soap/get-dispute-status';
-import { formatGetServiceProduct, createGetServiceProduct, parseCreditBureau, parseInvestigationResults } from 'lib/soap/get-service-product';
+import {
+  formatGetServiceProduct,
+  createGetServiceProduct,
+  parseCreditBureau,
+  parseInvestigationResults,
+} from 'lib/soap/get-service-product';
 import { formatIndicativeEnrichment, createIndicativeEnrichment } from 'lib/soap/indicative-enrichment';
 import { createPing } from 'lib/soap/ping';
 import {
@@ -230,6 +235,7 @@ export const Enroll = async (
     const options = createRequestOptions(agent, auth, xml, 'Enroll');
     if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
     const enroll = await processRequest(options, parseEnroll, parserOptions);
+    console.log('enroll response ===> ', enroll);
     const enrollResults: IEnrollResult = returnNestedObject(enroll, 'EnrollResult');
     if (enrollResults?.ResponseType.toLowerCase() === 'success') {
       await syncData(variables, enrollResults, enrichEnrollmentData, dispute);
