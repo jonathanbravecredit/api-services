@@ -241,8 +241,7 @@ export const Enroll = async (
       await syncData(variables, enrollResults, enrichEnrollmentData, dispute);
     } else {
       if (enrollResults?.ErrorResponse['Code'] === '103045') {
-        // already enrolled...bypass
-        return;
+        return; // already enrolled...bypass
       } else {
         throw `Enroll failure=${enrollResults}`;
       }
@@ -292,8 +291,10 @@ export const Fulfill = async (
     if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
     const fulfill = await processRequest(options, parseFulfill, parserOptions);
     const fulfillResults: IFulfillResult = returnNestedObject(fulfill, 'FulfillResult');
+    console.log('fulfillResults ===> ', fulfillResults);
     if (fulfillResults?.ResponseType.toLowerCase() === 'success') {
-      await syncData(variables, fulfillResults, enrichFulfillData, dispute);
+      const fulfillSync = await syncData(variables, fulfillResults, enrichFulfillData, dispute);
+      console.log('fulfilSync ===> ', fulfillSync);
     }
     return fulfill; // for stand alone calls if needed
   } catch (err) {
