@@ -526,11 +526,14 @@ export const CompleteOnboardingEnrollments = async (
   if (!validate(variables)) throw `Malformed message=${message}`;
   try {
     const enroll = await Enroll(accountCode, username, message, agent, auth, false); // report & score enroll
-    console.log('onboarding:enroll ===> ', enroll);
-    const disputeEnroll = await Enroll(accountCode, username, message, agent, auth, true); // report & score enroll
-    console.log('onboarding:disputeEnroll ===> ', disputeEnroll);
+    if (enroll?.EnrollResult?.ResponseType.toLowerCase() !== 'success')
+      return { onboarded: false, error: enroll.EnrollResult.ErrorResponse };
+    const disputeEnroll = await Enroll(accountCode, username, message, agent, auth, true); // dispute enroll
+    if (disputeEnroll?.EnrollResult?.ResponseType.toLowerCase() !== 'success')
+      return { onboarded: false, error: disputeEnroll.EnrollResult.ErrorResponse };
     const fulfill = await Fulfill(accountCode, username, message, agent, auth, true);
-    console.log('onboarding:fulfill ===> ', fulfill);
+    if (fulfill?.FulfillResult?.ResponseType.toLowerCase() !== 'success')
+      return { onboarded: false, error: fulfill.FulfillResult.ErrorResponse };
     return { onboarded: true };
   } catch (err) {
     return { onboarded: false, error: err };
