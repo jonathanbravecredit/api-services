@@ -103,6 +103,8 @@ export const enrichGetInvestigationResult = (
   flag: boolean = false,
 ): UpdateAppDataInput | undefined => {
   if (!data) return;
+  console.log('db data ===> ', data);
+  console.log('db data ===> ', data.agencies?.transunion);
   const disputes = data.agencies?.transunion?.disputes;
   console.log('disputes in enricher ===> ', disputes);
   if (!disputes?.length) return; // no disputes saved to find

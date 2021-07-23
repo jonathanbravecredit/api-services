@@ -537,10 +537,11 @@ export const GetInvestigationResults = async (
         disputeId: variables.disputeId,
         getInvestigationResult: investigation,
       };
-      const investigationResultsSync = await syncData({ id: variables.id }, bundle, enrichGetInvestigationResult);
-      console.log('investigationResultsSync ===> ', investigationResultsSync);
+      const synced = await syncData({ id: variables.id }, bundle, enrichGetInvestigationResult);
+      console.log('investigationResultsSync ===> ', synced);
+      return synced ? { success: true } : { success: false, error: investigationResults.ErrorResponse };
     }
-    return responded ? { success: true } : { success: false, error: investigationResults.ErrorResponse };
+    return { success: false, error: 'failed db sync' };
   } catch (err) {
     return { success: false, error: err };
   }

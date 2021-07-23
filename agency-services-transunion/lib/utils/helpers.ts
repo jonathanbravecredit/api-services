@@ -60,8 +60,9 @@ export const syncData = async (
     const resp = await getAppData(variables);
     const app: GetAppDataQuery = returnNestedObject(resp.data, 'getAppData');
     const clean: UpdateAppDataInput = cleanBackendData(app);
-    const enriched: UpdateAppDataInput = cbEnricher(clean, updated, dispute);
-    const sync = await updateAppData({ input: enriched });
+    const enriched: UpdateAppDataInput | undefined = cbEnricher(clean, updated, dispute);
+    if (!enriched) return false;
+    await updateAppData({ input: enriched });
     return true;
   } catch (err) {
     console.log('syncData:err ===> ', err);
