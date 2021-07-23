@@ -103,10 +103,9 @@ export const enrichGetInvestigationResult = (
   flag: boolean = false,
 ): UpdateAppDataInput | undefined => {
   if (!data) return;
-  console.log('db data ===> ', data);
-  console.log('db data ===> ', data.agencies?.transunion);
   const disputes = data.agencies?.transunion?.disputes;
   console.log('disputes in enricher ===> ', disputes);
+  console.log('investigationresults in enricher ===> ', getInvestigationResult.getInvestigationResult);
   if (!disputes?.length) return; // no disputes saved to find
   const updated = disputes.map((dispute) => {
     if (!dispute.disputeId && dispute.disputeId === getInvestigationResult.disputeId) {
@@ -129,6 +128,6 @@ export const enrichGetInvestigationResult = (
       },
     },
   };
-  console.log('mapped', mapped);
+  console.log('mapped', mapped.agencies?.transunion.disputes);
   return mapped;
 };
