@@ -522,7 +522,7 @@ export const GetInvestigationResults = async (
       parseInvestigationResults,
       parserOptions,
     );
-    console.log('parsed investigation results ===> ', parsed);
+    console.log('parsed investigation results ===> ', JSON.stringify(parsed));
     // then I need to find the right dispute ID and update that with the results. I don't think I can use the standard
     // sync and save.
     // results = parseInvestigationResults(results, xmlOptions); // may need to add this additionallayer of parsing
