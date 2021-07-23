@@ -143,7 +143,28 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
           disputeStatus
           disputeLetterCode
           disputeLetterContent
-          openDisputes
+          openDisputes {
+            __typename
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            __typename
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
           agencyName
           openedOn
           closedOn
@@ -420,8 +441,8 @@ export const qryGetDispute = `query GetDispute($id: ID!) {
 //          MUTATIONS
 //==============================
 /** Full update AppData */
-export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInput!, $condition: ModelAppDataConditionInput) {
-  updateAppData(input: $input, condition: $condition) {
+export const qryUpdateAppData = `subscription OnUpdateAppData($owner: String) {
+  onUpdateAppData(owner: $owner) {
     __typename
     id
     user {
@@ -561,7 +582,28 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
           disputeStatus
           disputeLetterCode
           disputeLetterContent
-          openDisputes
+          openDisputes {
+            __typename
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            __typename
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
           agencyName
           openedOn
           closedOn

@@ -118,7 +118,8 @@ export interface IDisputeStatus {
 export interface IDisputeStatusDetail {
   DisputeId: string;
   LetterStatus: ILetterStatus;
-  OpenDisputes: IOpenDisputes;
+  OpenDisputes?: IDisputesStatus;
+  ClosedDisputes?: IDisputesStatus;
   Status: string;
 }
 
@@ -127,14 +128,15 @@ export interface ILetterStatus {
   DisputeLetterContent: string;
 }
 
-export interface IOpenDisputes {
-  EstimatedCompletionDate: string;
-  LastUpdatedDate: string;
-  OpenDate: string;
-  RequestedDate: string;
-  TotalClosedDisputedItems: string;
-  TotalDisputedItems: string;
-  TotalOpenDisputedItems: string;
+export interface IDisputesStatus {
+  EstimatedCompletionDate?: string;
+  LastUpdatedDate?: string;
+  OpenDate?: string;
+  RequestedDate?: string;
+  TotalClosedDisputedItems?: string;
+  TotalDisputedItems?: string;
+  TotalOpenDisputedItems?: string;
+  TotalPVDisputedItemCount?: string;
 }
 
 export interface IAttachment {

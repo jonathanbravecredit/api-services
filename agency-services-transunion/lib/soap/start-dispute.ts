@@ -9,9 +9,7 @@ import {
   IStartDisputeBundle,
   IStartDisputeGraphQLResponse,
   IStartDisputeMsg,
-  IStartDisputeRequest,
   IStartDisputeResponse,
-  IStartDisputeResult,
 } from 'lib/interfaces/start-dispute.interface';
 import { returnNestedObject, textConstructor } from 'lib/utils/helpers';
 import * as fastXml from 'fast-xml-parser';
@@ -405,7 +403,34 @@ export const enrichDisputeData = (
     disputeStatus: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.Status,
     disputeLetterCode: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterCode,
     disputeLetterContent: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterContent,
-    openDisputes: JSON.stringify(startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes),
+    openDisputes: {
+      estimatedCompletionDate:
+        startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.EstimatedCompletionDate,
+      lastUpdatedDate: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate,
+      openDate: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.OpenDate,
+      requestedDate: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.RequestedDate,
+      totalClosedDisputedItems:
+        startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalClosedDisputedItems,
+      totalDisputedItems: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalDisputedItems,
+      totalOpenDisputedItems:
+        startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalOpenDisputedItems,
+      totalPVDisputedItemCount:
+        startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalPVDisputedItemCount,
+    },
+    closedDisputes: {
+      estimatedCompletionDate:
+        startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.EstimatedCompletionDate,
+      lastUpdatedDate: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate,
+      openDate: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.OpenDate,
+      requestedDate: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.RequestedDate,
+      totalClosedDisputedItems:
+        startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalClosedDisputedItems,
+      totalDisputedItems: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalDisputedItems,
+      totalOpenDisputedItems:
+        startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalOpenDisputedItems,
+      totalPVDisputedItemCount:
+        startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalPVDisputedItemCount,
+    },
     agencyName: 'TU',
     openedOn: openedOn,
     closedOn: null,

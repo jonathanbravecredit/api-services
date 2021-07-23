@@ -48,7 +48,8 @@ export type Dispute = {
   disputeStatus?: string | null;
   disputeLetterCode?: string | null;
   disputeLetterContent?: string | null;
-  openDisputes?: string | null;
+  openDisputes?: DisputeSummary;
+  closedDisputes?: DisputeSummary;
   agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
@@ -57,6 +58,18 @@ export type Dispute = {
   notificationStatus?: string | null;
   notificationMessage?: string | null;
   notificationSentOn?: string | null;
+};
+
+export type DisputeSummary = {
+  __typename: 'DisputeSummary';
+  estimatedCompletionDate?: string | null;
+  lastUpdatedDate?: string | null;
+  openDate?: string | null;
+  requestedDate?: string | null;
+  totalClosedDisputedItems?: string | null;
+  totalDisputedItems?: string | null;
+  totalOpenDisputedItems?: string | null;
+  totalPVDisputedItemCount?: string | null;
 };
 
 export type CreateAppDataInput = {
@@ -166,7 +179,8 @@ export type DisputeInput = {
   disputeStatus?: string | null;
   disputeLetterCode?: string | null;
   disputeLetterContent?: string | null;
-  openDisputes?: string | null;
+  openDisputes?: DisputeSummaryInput | null;
+  closedDisputes?: DisputeSummaryInput | null;
   agencyName?: string | null;
   openedOn?: string | null;
   closedOn?: string | null;
@@ -175,6 +189,17 @@ export type DisputeInput = {
   notificationStatus?: string | null;
   notificationMessage?: string | null;
   notificationSentOn?: string | null;
+};
+
+export type DisputeSummaryInput = {
+  estimatedCompletionDate?: string | null;
+  lastUpdatedDate?: string | null;
+  openDate?: string | null;
+  requestedDate?: string | null;
+  totalClosedDisputedItems?: string | null;
+  totalDisputedItems?: string | null;
+  totalOpenDisputedItems?: string | null;
+  totalPVDisputedItemCount?: string | null;
 };
 
 export type EquifaxInput = {
@@ -456,7 +481,28 @@ export type PatchTransunionMutation = {
     disputeStatus?: string | null;
     disputeLetterCode?: string | null;
     disputeLetterContent?: string | null;
-    openDisputes?: string | null;
+    openDisputes?: {
+      __typename: 'DisputeSummary';
+      estimatedCompletionDate?: string | null;
+      lastUpdatedDate?: string | null;
+      openDate?: string | null;
+      requestedDate?: string | null;
+      totalClosedDisputedItems?: string | null;
+      totalDisputedItems?: string | null;
+      totalOpenDisputedItems?: string | null;
+      totalPVDisputedItemCount?: string | null;
+    } | null;
+    closedDisputes?: {
+      __typename: 'DisputeSummary';
+      estimatedCompletionDate?: string | null;
+      lastUpdatedDate?: string | null;
+      openDate?: string | null;
+      requestedDate?: string | null;
+      totalClosedDisputedItems?: string | null;
+      totalDisputedItems?: string | null;
+      totalOpenDisputedItems?: string | null;
+      totalPVDisputedItemCount?: string | null;
+    } | null;
     agencyName?: string | null;
     openedOn?: string | null;
     closedOn?: string | null;
@@ -608,7 +654,28 @@ export type CreateAppDataMutation = {
         disputeStatus?: string | null;
         disputeLetterCode?: string | null;
         disputeLetterContent?: string | null;
-        openDisputes?: string | null;
+        openDisputes?: {
+          __typename: 'DisputeSummary';
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: 'DisputeSummary';
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
         agencyName?: string | null;
         openedOn?: string | null;
         closedOn?: string | null;
@@ -783,7 +850,28 @@ export type UpdateAppDataMutation = {
         disputeStatus?: string | null;
         disputeLetterCode?: string | null;
         disputeLetterContent?: string | null;
-        openDisputes?: string | null;
+        openDisputes?: {
+          __typename: 'DisputeSummary';
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: 'DisputeSummary';
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
         agencyName?: string | null;
         openedOn?: string | null;
         closedOn?: string | null;
@@ -958,7 +1046,28 @@ export type DeleteAppDataMutation = {
         disputeStatus?: string | null;
         disputeLetterCode?: string | null;
         disputeLetterContent?: string | null;
-        openDisputes?: string | null;
+        openDisputes?: {
+          __typename: 'DisputeSummary';
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: 'DisputeSummary';
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
         agencyName?: string | null;
         openedOn?: string | null;
         closedOn?: string | null;
@@ -1133,7 +1242,28 @@ export type GetAppDataQuery = {
         disputeStatus?: string | null;
         disputeLetterCode?: string | null;
         disputeLetterContent?: string | null;
-        openDisputes?: string | null;
+        openDisputes?: {
+          __typename: 'DisputeSummary';
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: 'DisputeSummary';
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
         agencyName?: string | null;
         openedOn?: string | null;
         closedOn?: string | null;
@@ -1310,7 +1440,28 @@ export type ListAppDatasQuery = {
           disputeStatus?: string | null;
           disputeLetterCode?: string | null;
           disputeLetterContent?: string | null;
-          openDisputes?: string | null;
+          openDisputes?: {
+            __typename: 'DisputeSummary';
+            estimatedCompletionDate?: string | null;
+            lastUpdatedDate?: string | null;
+            openDate?: string | null;
+            requestedDate?: string | null;
+            totalClosedDisputedItems?: string | null;
+            totalDisputedItems?: string | null;
+            totalOpenDisputedItems?: string | null;
+            totalPVDisputedItemCount?: string | null;
+          } | null;
+          closedDisputes?: {
+            __typename: 'DisputeSummary';
+            estimatedCompletionDate?: string | null;
+            lastUpdatedDate?: string | null;
+            openDate?: string | null;
+            requestedDate?: string | null;
+            totalClosedDisputedItems?: string | null;
+            totalDisputedItems?: string | null;
+            totalOpenDisputedItems?: string | null;
+            totalPVDisputedItemCount?: string | null;
+          } | null;
           agencyName?: string | null;
           openedOn?: string | null;
           closedOn?: string | null;
@@ -1487,7 +1638,28 @@ export type OnCreateAppDataSubscription = {
         disputeStatus?: string | null;
         disputeLetterCode?: string | null;
         disputeLetterContent?: string | null;
-        openDisputes?: string | null;
+        openDisputes?: {
+          __typename: 'DisputeSummary';
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: 'DisputeSummary';
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
         agencyName?: string | null;
         openedOn?: string | null;
         closedOn?: string | null;
@@ -1662,7 +1834,28 @@ export type OnUpdateAppDataSubscription = {
         disputeStatus?: string | null;
         disputeLetterCode?: string | null;
         disputeLetterContent?: string | null;
-        openDisputes?: string | null;
+        openDisputes?: {
+          __typename: 'DisputeSummary';
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: 'DisputeSummary';
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
         agencyName?: string | null;
         openedOn?: string | null;
         closedOn?: string | null;
@@ -1837,7 +2030,28 @@ export type OnDeleteAppDataSubscription = {
         disputeStatus?: string | null;
         disputeLetterCode?: string | null;
         disputeLetterContent?: string | null;
-        openDisputes?: string | null;
+        openDisputes?: {
+          __typename: 'DisputeSummary';
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
+        closedDisputes?: {
+          __typename: 'DisputeSummary';
+          estimatedCompletionDate?: string | null;
+          lastUpdatedDate?: string | null;
+          openDate?: string | null;
+          requestedDate?: string | null;
+          totalClosedDisputedItems?: string | null;
+          totalDisputedItems?: string | null;
+          totalOpenDisputedItems?: string | null;
+          totalPVDisputedItemCount?: string | null;
+        } | null;
         agencyName?: string | null;
         openedOn?: string | null;
         closedOn?: string | null;
