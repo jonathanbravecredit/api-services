@@ -2,11 +2,13 @@ import { textConstructor } from 'lib/utils/helpers';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import {
+  IGetInvestigationEnrichPayload,
   IGetInvestigationResults,
   IGetInvestigationResultsGraphQLResponse,
   IGetInvestigationResultsMsg,
   IGetInvestigationResultsPayload,
 } from 'lib/interfaces/get-investigation-results.interface';
+import { UpdateAppDataInput } from 'src/api/api.service';
 
 /**
  * Genarates the message payload for TU get dispute history
@@ -87,4 +89,43 @@ export const createGetInvestigationResults = (msg: IGetInvestigationResults): st
   };
   const xml = convert.json2xml(JSON.stringify(xmlObj), { compact: true, spaces: 4 });
   return xml;
+};
+
+/**
+ * This method parses and enriches the state data
+ * @param {UpdateAppDataInput} data
+ * @param {IGetInvestigationResult} getInvestigationResult
+ * @returns {UpdateAppDataInput | undefined }
+ */
+export const enrichGetInvestigationResult = (
+  data: UpdateAppDataInput | undefined,
+  getInvestigationResult: IGetInvestigationEnrichPayload,
+  flag: boolean = false,
+): UpdateAppDataInput | undefined => {
+  if (!data) return;
+  const disputes = data.agencies?.transunion?.disputes;
+  if (!disputes.length) return; // no disputes saved to find
+  const updated = disputes.map((dispute) => {
+    if (!dispute.disputeId && dispute.disputeId === getInvestigationResult.disputeId) {
+      return {
+        ...dispute,
+        disputeCreditBureau: JSON.stringify(getInvestigationResult.getInvestigationResult.CreditBureau),
+        disputeInvestigationResults: JSON.stringify(getInvestigationResult.getInvestigationResult.InvestigationResults),
+      };
+    } else {
+      return dispute;
+    }
+  });
+  const mapped = {
+    ...data,
+    agencies: {
+      ...data.agencies,
+      transunion: {
+        ...data.agencies?.transunion,
+        disputes: updated,
+      },
+    },
+  };
+  console.log('mapped', mapped);
+  return mapped;
 };

@@ -49,6 +49,7 @@ import {
   formatGetInvestigationResults,
   createGetInvestigationResults,
   createGetInvestigationResultsPayload,
+  enrichGetInvestigationResult,
 } from 'lib/soap/get-investigation-results';
 import { IFulfillGraphQLResponse, IFulfillResponse, IFulfillResult } from 'lib/interfaces/fulfill.interface';
 import { IEnrollGraphQLResponse, IEnrollResponse, IEnrollResult } from 'lib/interfaces/enroll.interface';
@@ -81,6 +82,8 @@ import { GQL_TEST } from 'lib/examples/mocks/DBRecord';
 import { IGenericRequest } from 'lib/interfaces/api.interfaces';
 import { IGetDisputeHistoryGraphQLResponse } from 'lib/interfaces/get-dispute-history.interface';
 import {
+  IGetInvestigationEnrichPayload,
+  IGetInvestigationResult,
   IGetInvestigationResultsGraphQLResponse,
   IGetInvestigationResultsRequest,
 } from 'lib/interfaces/get-investigation-results.interface';
@@ -496,7 +499,7 @@ export const GetInvestigationResults = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<string> => {
+): Promise<{ success: boolean; error?: any }> => {
   let variables: IGetInvestigationResultsRequest = {
     ...JSON.parse(message),
   };
@@ -516,18 +519,30 @@ export const GetInvestigationResults = async (
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
     // const parsed = await processRequest(options, parseInvestigationResults, parserOptions);
-    const parsed = await processMockRequest(
+    const investigation = await processMockRequest(
       GET_INVESTIGATION_RESULTS_RESPONSE,
       options,
       parseInvestigationResults,
       parserOptions,
     );
-    console.log('parsed investigation results ===> ', JSON.stringify(parsed));
-    // then I need to find the right dispute ID and update that with the results. I don't think I can use the standard
-    // sync and save.
-    // results = parseInvestigationResults(results, xmlOptions); // may need to add this additionallayer of parsing
+    console.log('parsed investigation results ===> ', JSON.stringify(investigation));
+    const investigationResults: IGetInvestigationResult = returnNestedObject(
+      investigation,
+      'GetInvestigationResultsResult',
+    );
+    console.log('investigationResults ===> ', investigationResults);
+    const responded = investigationResults?.ResponseType.toLowerCase() === 'success';
+    if (responded) {
+      const bundle: IGetInvestigationEnrichPayload = {
+        disputeId: variables.disputeId,
+        getInvestigationResult: investigation,
+      };
+      const investigationResultsSync = await syncData({ id: variables.id }, bundle, enrichGetInvestigationResult);
+      console.log('investigationResultsSync ===> ', investigationResultsSync);
+    }
+    return responded ? { success: true } : { success: false, error: investigationResults.ErrorResponse };
   } catch (err) {
-    return err;
+    return { success: false, error: err };
   }
 };
 
