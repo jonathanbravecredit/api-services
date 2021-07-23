@@ -108,7 +108,7 @@ export const enrichGetInvestigationResult = (
   console.log('investigationresults in enricher ===> ', getInvestigationResult.getInvestigationResult);
   if (!disputes?.length) return; // no disputes saved to find
   const updated = disputes.map((dispute) => {
-    if (!dispute.disputeId && dispute.disputeId === getInvestigationResult.disputeId) {
+    if (dispute.disputeId && dispute.disputeId === getInvestigationResult.disputeId) {
       return {
         ...dispute,
         disputeCreditBureau: JSON.stringify(getInvestigationResult.getInvestigationResult.CreditBureau),
