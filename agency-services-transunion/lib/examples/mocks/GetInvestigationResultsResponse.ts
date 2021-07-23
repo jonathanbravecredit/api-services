@@ -7,7 +7,7 @@ export const GET_INVESTIGATION_RESULTS_RESPONSE = `<s:Envelope xmlns:s="http://s
       <a:ErrorResponse i:nil="true"/>
       <a:RequestKey>f214bb46-e1db-47a0-9e12-8aa90e5a922b</a:RequestKey>
       <a:ResponseType>Success</a:ResponseType>
-      <a:ClientKey>SR_2018-03-09_13-33-18_DORA</a:ClientKey>
+      <a:ClientKey>f8f12125-6686-4431-9f70-991da2b39f40</a:ClientKey>
       <a:CreditBureau><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <ns0:creditBureau xmlns:ns1="com.tuc.common" xmlns:ns0="http://www.transunion.com/disclosure">
  <ns0:version>2</ns0:version>

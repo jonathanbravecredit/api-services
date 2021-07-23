@@ -22,7 +22,14 @@ import {
   formatVerifyAuthenticationQuestions,
   createVerifyAuthenticationQuestions,
 } from 'lib/soap/verify-authentication-questions';
-import { createPackage, createRequestOptions, processRequest, returnNestedObject, syncData } from 'lib/utils/helpers';
+import {
+  createPackage,
+  createRequestOptions,
+  processMockRequest,
+  processRequest,
+  returnNestedObject,
+  syncData,
+} from 'lib/utils/helpers';
 import * as uuid from 'uuid';
 import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
@@ -77,6 +84,7 @@ import {
   IGetInvestigationResultsGraphQLResponse,
   IGetInvestigationResultsRequest,
 } from 'lib/interfaces/get-investigation-results.interface';
+import { GET_INVESTIGATION_RESULTS_RESPONSE } from 'lib/examples/mocks/GetInvestigationResultsResponse';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -404,8 +412,6 @@ export const StartDispute = async (
     const resp = await getDataForStartDispute(variables);
     const gql: IStartDisputeGraphQLResponse = resp.data;
     console.log('StartDispute:gql ===> ', JSON.stringify(gql));
-    const userId = gql.data.getAppData.id;
-    const id = `BC-${uuid.v4()}`; // create dispute record for db, blank is the TU dispute ID
     const payload = createStartDisputePayload(gql, variables.disputes);
     const { msg, xml } = createPackage(
       accountCode,
@@ -509,8 +515,16 @@ export const GetInvestigationResults = async (
   const options = createRequestOptions(agent, auth, xml, 'GetInvestigationResults');
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
-    const parsed = await processRequest(options, parseInvestigationResults, parserOptions);
+    // const parsed = await processRequest(options, parseInvestigationResults, parserOptions);
+    const parsed = await processMockRequest(
+      GET_INVESTIGATION_RESULTS_RESPONSE,
+      options,
+      parseInvestigationResults,
+      parserOptions,
+    );
     console.log('parsed investigation results ===> ', parsed);
+    // then I need to find the right dispute ID and update that with the results. I don't think I can use the standard
+    // sync and save.
     // results = parseInvestigationResults(results, xmlOptions); // may need to add this additionallayer of parsing
   } catch (err) {
     return err;

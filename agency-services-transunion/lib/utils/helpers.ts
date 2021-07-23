@@ -97,6 +97,32 @@ export const processRequest = async (
 };
 
 /**
+ * Generic method to process the axios request to send to TU
+ * - uses the parser provided to process return message
+ * @param options
+ * @param parser
+ * @param parserOptions
+ * @returns parsed and stringified data
+ */
+export const processMockRequest = async (
+  mock: string,
+  options: IRequestOptions,
+  parser: (
+    xmlData: string,
+    options?: Partial<fastXml.X2jOptions>,
+    validationOptions?: boolean | Partial<fastXml.validationOptions>,
+  ) => void,
+  parserOptions: Partial<fastXml.X2jOptions>,
+) => {
+  try {
+    const results = parser(mock, parserOptions);
+    return results;
+  } catch (err) {
+    console.log('processRequest:err ===> ', err);
+    return err;
+  }
+};
+/**
  * Processes generic graphql requests
  * @param {string} query
  * @param {any} variables
