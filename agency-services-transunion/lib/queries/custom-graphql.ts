@@ -169,7 +169,8 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
           openedOn
           closedOn
           disputeItems
-          disputeResults
+          disputeInvestigationResults
+          disputeCreditBureau
           notificationStatus
           notificationMessage
           notificationSentOn
@@ -441,8 +442,8 @@ export const qryGetDispute = `query GetDispute($id: ID!) {
 //          MUTATIONS
 //==============================
 /** Full update AppData */
-export const qryUpdateAppData = `subscription OnUpdateAppData($owner: String) {
-  onUpdateAppData(owner: $owner) {
+export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInput!, $condition: ModelAppDataConditionInput) {
+  updateAppData(input: $input, condition: $condition) {
     __typename
     id
     user {
@@ -608,7 +609,8 @@ export const qryUpdateAppData = `subscription OnUpdateAppData($owner: String) {
           openedOn
           closedOn
           disputeItems
-          disputeResults
+          disputeInvestigationResults
+          disputeCreditBureau
           notificationStatus
           notificationMessage
           notificationSentOn
