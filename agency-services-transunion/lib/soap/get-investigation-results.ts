@@ -104,7 +104,8 @@ export const enrichGetInvestigationResult = (
 ): UpdateAppDataInput | undefined => {
   if (!data) return;
   const disputes = data.agencies?.transunion?.disputes;
-  if (!disputes.length) return; // no disputes saved to find
+  console.log('disputes in enricher ===> ', disputes);
+  if (!disputes?.length) return; // no disputes saved to find
   const updated = disputes.map((dispute) => {
     if (!dispute.disputeId && dispute.disputeId === getInvestigationResult.disputeId) {
       return {
