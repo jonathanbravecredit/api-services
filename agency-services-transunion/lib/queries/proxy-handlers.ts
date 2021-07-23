@@ -535,7 +535,7 @@ export const GetInvestigationResults = async (
     if (responded) {
       const bundle: IGetInvestigationEnrichPayload = {
         disputeId: variables.disputeId,
-        getInvestigationResult: investigation,
+        getInvestigationResult: investigationResults,
       };
       const synced = await syncData({ id: variables.id }, bundle, enrichGetInvestigationResult);
       console.log('investigationResultsSync ===> ', synced);
