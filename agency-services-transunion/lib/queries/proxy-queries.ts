@@ -14,6 +14,7 @@ export const getAppData = async (msg: IGetAppDataRequest): Promise<AxiosResponse
 };
 
 export const updateAppData = async (msg: { input: UpdateAppDataInput }): Promise<AxiosResponse<any>> => {
+  console.log('updating appdata ===> ', msg.input.agencies?.transunion?.disputes);
   try {
     return await postGraphQLRequest(qry.qryUpdateAppData, msg);
   } catch (err) {

@@ -61,6 +61,7 @@ export const syncData = async (
     const app: GetAppDataQuery = returnNestedObject(resp.data, 'getAppData');
     const clean: UpdateAppDataInput = cleanBackendData(app);
     const enriched: UpdateAppDataInput | undefined = cbEnricher(clean, updated, dispute);
+    console.log('enriched in sync ===> ', enriched, !enriched);
     if (!enriched) return false;
     await updateAppData({ input: enriched });
     return true;
