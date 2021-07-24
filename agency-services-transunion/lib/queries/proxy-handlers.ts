@@ -567,7 +567,12 @@ export const CompleteOnboardingEnrollments = async (
     if (disputeEnroll?.EnrollResult?.ResponseType.toLowerCase() !== 'success')
       return { success: false, error: disputeEnroll.EnrollResult.ErrorResponse };
     const fulfill = await Fulfill(accountCode, username, message, agent, auth, true);
-    const onboarded = fulfill?.FulfillResult?.ResponseType.toLowerCase() !== 'success';
+    const fulfillResults: IFulfillResult = returnNestedObject(fulfill, 'FulfillResult');
+    const onboarded = fulfillResults?.ResponseType.toLowerCase() !== 'success';
+    console.log(
+      'onboarding results ===> ',
+      onboarded ? { success: true } : { success: false, error: fulfill.FulfillResult.ErrorResponse },
+    );
     return onboarded ? { success: true } : { success: false, error: fulfill.FulfillResult.ErrorResponse };
   } catch (err) {
     return { success: false, error: err };
