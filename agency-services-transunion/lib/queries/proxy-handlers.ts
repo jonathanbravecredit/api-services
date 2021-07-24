@@ -10,12 +10,7 @@ import {
   parseGetDisputeStatus,
   createGetDisputeStatusPayload,
 } from 'lib/soap/get-dispute-status';
-import {
-  formatGetServiceProduct,
-  createGetServiceProduct,
-  parseCreditBureau,
-  parseInvestigationResults,
-} from 'lib/soap/get-service-product';
+import { formatGetServiceProduct, createGetServiceProduct } from 'lib/soap/get-service-product';
 import { formatIndicativeEnrichment, createIndicativeEnrichment } from 'lib/soap/indicative-enrichment';
 import { createPing } from 'lib/soap/ping';
 import {
@@ -50,6 +45,7 @@ import {
   createGetInvestigationResults,
   createGetInvestigationResultsPayload,
   enrichGetInvestigationResult,
+  parseInvestigationResults,
 } from 'lib/soap/get-investigation-results';
 import { IFulfillGraphQLResponse, IFulfillResponse, IFulfillResult } from 'lib/interfaces/fulfill.interface';
 import { IEnrollGraphQLResponse, IEnrollResponse, IEnrollResult } from 'lib/interfaces/enroll.interface';
@@ -430,13 +426,11 @@ export const StartDispute = async (
     if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
     const dispute = await processRequest(options, parseStartDispute, parserOptions);
     const disputeResults: IStartDisputeResult = returnNestedObject(dispute, 'StartDisputeResult');
-    console.log('disputeResults ===> ', JSON.stringify(disputeResults));
     const started = disputeResults?.ResponseType.toLowerCase() === 'success';
     const bundle: IStartDisputeBundle = {
       startDisputeResult: disputeResults,
       disputes: variables.disputes,
     };
-    console.log('bundle ===> ', bundle);
     if (started) {
       await syncData({ id: variables.id }, bundle, enrichDisputeData);
     }
@@ -528,12 +522,10 @@ export const GetInvestigationResults = async (
       parseInvestigationResults,
       parserOptions,
     );
-    console.log('parsed investigation results ===> ', JSON.stringify(investigation));
     const investigationResults: IGetInvestigationResult = returnNestedObject(
       investigation,
       'GetInvestigationResultsResult',
     );
-    console.log('investigationResults ===> ', investigationResults);
     const responded = investigationResults?.ResponseType.toLowerCase() === 'success';
     if (responded) {
       const bundle: IGetInvestigationEnrichPayload = {
@@ -541,7 +533,6 @@ export const GetInvestigationResults = async (
         getInvestigationResult: investigationResults,
       };
       const synced = await syncData({ id: variables.id }, bundle, enrichGetInvestigationResult);
-      console.log('investigationResultsSync ===> ', synced);
       return synced ? { success: true } : { success: false, error: investigationResults.ErrorResponse };
     }
     return { success: false, error: 'failed db sync' };

@@ -1,6 +1,7 @@
-import { textConstructor } from 'lib/utils/helpers';
+import { returnNestedObject, textConstructor, updateNestedObject } from 'lib/utils/helpers';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
+import * as fastXml from 'fast-xml-parser';
 import {
   IGetInvestigationEnrichPayload,
   IGetInvestigationResults,
@@ -132,4 +133,27 @@ export const enrichGetInvestigationResult = (
   };
   console.log('mapped', mapped.agencies?.transunion.disputes);
   return mapped;
+};
+
+/**
+ * Parse the Fulfill response including the embedded Service Product Objects
+ * @param xml
+ * @returns
+ */
+export const parseInvestigationResults = (xml: string, options: any): any => {
+  const obj: any = returnNestedObject(fastXml.parse(xml, options), 'GetInvestigationResultsResponse');
+  const investigationResults = returnNestedObject(obj, 'InvestigationResults');
+  const creditBureau = returnNestedObject(obj, 'CreditBureau');
+  let results = obj;
+  if (typeof investigationResults === 'string') {
+    console.log('investigationResults in parser pre-parse ====> ', investigationResults);
+    let clean = investigationResults;
+    const parsed = fastXml.parse(clean, options);
+    results = updateNestedObject(obj, 'InvestigationResults', parsed);
+  }
+  if (typeof creditBureau === 'string') {
+    const parsed = fastXml.parse(creditBureau, options);
+    results = updateNestedObject(obj, 'CreditBureau', parsed);
+  }
+  return results;
 };
