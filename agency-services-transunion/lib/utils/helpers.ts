@@ -62,8 +62,9 @@ export const syncData = async (
     const clean: UpdateAppDataInput = cleanBackendData(app);
     const enriched: UpdateAppDataInput | undefined = cbEnricher(clean, updated, dispute);
     console.log('enriched in sync ===> ', enriched, !enriched);
-    if (!enriched) return false;
-    await updateAppData({ input: enriched });
+    if (enriched !== undefined) return false;
+    const sync = await updateAppData({ input: enriched });
+    console.log('sync data back ===> ', JSON.stringify(sync.data));
     return true;
   } catch (err) {
     console.log('syncData:err ===> ', err);
