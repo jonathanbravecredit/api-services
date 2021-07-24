@@ -8,7 +8,7 @@ import {
   IGetInvestigationResultsMsg,
   IGetInvestigationResultsPayload,
 } from 'lib/interfaces/get-investigation-results.interface';
-import { UpdateAppDataInput } from 'src/api/api.service';
+import { DisputeInput, UpdateAppDataInput } from 'src/api/api.service';
 
 /**
  * Genarates the message payload for TU get dispute history
@@ -107,14 +107,14 @@ export const enrichGetInvestigationResult = (
   console.log('disputes in enricher ===> ', disputes);
   console.log('investigationresults in enricher ===> ', getInvestigationResult.getInvestigationResult);
   if (!disputes?.length) return; // no disputes saved to find
-  const updated = disputes.map((dispute) => {
+  const updated: DisputeInput[] = disputes.map((dispute) => {
     console.log('test  ===> ', dispute.disputeId == getInvestigationResult.disputeId);
     console.log('values  ===> ', dispute.disputeId, getInvestigationResult.disputeId);
     if (dispute.disputeId == getInvestigationResult.disputeId) {
       return {
         ...dispute,
-        disputeCreditBureau: JSON.stringify(getInvestigationResult.getInvestigationResult.CreditBureau),
-        disputeInvestigationResults: JSON.stringify(getInvestigationResult.getInvestigationResult.InvestigationResults),
+        disputeCreditBureau: getInvestigationResult.getInvestigationResult.CreditBureau,
+        disputeInvestigationResults: getInvestigationResult.getInvestigationResult.InvestigationResults,
       };
     } else {
       return dispute;
