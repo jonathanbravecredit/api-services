@@ -88,12 +88,15 @@ import {
   IGetInvestigationResultsRequest,
 } from 'lib/interfaces/get-investigation-results.interface';
 import { GET_INVESTIGATION_RESULTS_RESPONSE } from 'lib/examples/mocks/GetInvestigationResultsResponse';
+import * as he from 'he';
 
 const parserOptions = {
   attributeNamePrefix: '',
   ignoreAttributes: false,
   ignoreNameSpace: true,
   parseAttributeValue: true,
+  attrValueProcessor: (val, attrName) => he.encode(val, { isAttributeValue: true }), //default is a=>a
+  tagValueProcessor: (val, tagName) => he.encode(val), //default is a=>a
 };
 
 /**
