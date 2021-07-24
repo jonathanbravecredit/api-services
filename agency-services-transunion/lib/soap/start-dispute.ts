@@ -18,7 +18,7 @@ import * as uuid from 'uuid';
 import { IDisputeReason, IProcessDisputeTradelineResult } from 'lib/interfaces/disputes.interface';
 import { MONTH_MAP } from 'lib/data/constants';
 import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
-import { UpdateAppDataInput } from 'src/api/api.service';
+import { DisputeInput, UpdateAppDataInput } from 'src/api/api.service';
 
 /**
  * Genarates the message payload for TU Fulfill request
@@ -396,7 +396,7 @@ export const enrichDisputeData = (
   if (!state) return;
   let openedOn = new Date().toISOString();
   const { startDisputeResult, disputes } = data;
-  const dispute = {
+  const dispute: DisputeInput = {
     id: uuid.v4(),
     appDataId: state.id,
     disputeId: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.DisputeId,
@@ -435,7 +435,8 @@ export const enrichDisputeData = (
     openedOn: openedOn,
     closedOn: null,
     disputeItems: JSON.stringify(disputes),
-    disputeResults: null,
+    disputeInvestigationResults: null,
+    disputeCreditBureau: null,
     notificationStatus: null,
     notificationMessage: null,
     notificationSentOn: null,
