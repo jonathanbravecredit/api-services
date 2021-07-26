@@ -19,14 +19,14 @@ import { UpdateAppDataInput } from 'src/api/api.service';
  * @param data
  * @returns IEnrollPayload
  */
-export const createFulfillPayload = (data: IFulfillGraphQLResponse, dispute: boolean = false): IFulfillPayload => {
-  const id = data.data.getAppData.id?.split(':')?.pop();
-  const attrs = data.data.getAppData.user?.userAttributes;
+export const createFulfillPayload = (data: { data: IFulfillGraphQLResponse; dispute?: boolean }): IFulfillPayload => {
+  const id = data.data.data.getAppData.id?.split(':')?.pop();
+  const attrs = data.data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;
   const serviceBundleCode = dispute ? 'CC2BraveCreditTUReport24Hour' : 'CC2BraveCreditTUReportV3Score';
   const fulfillmentKey = dispute
-    ? data.data.getAppData.agencies?.transunion?.disputeServiceBundleFulfillmentKey
-    : data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey;
+    ? data.data.data.getAppData.agencies?.transunion?.disputeServiceBundleFulfillmentKey
+    : data.data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey;
 
   if (!id || !attrs || !dob) {
     console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);

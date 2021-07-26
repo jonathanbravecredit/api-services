@@ -1,3 +1,5 @@
+import { IStandardResponse } from 'lib/interfaces/transunion/common-tu.interface';
+
 export interface IGetDisputeHistoryGraphQLResponse {
   data: {
     getAppData: {
@@ -9,6 +11,20 @@ export interface IGetDisputeHistoryGraphQLResponse {
       };
     };
   };
+}
+
+export interface IGetDisputeHistoryResponse {
+  Envelope: {
+    Body: {
+      GetDisputeHistoryResponse: {
+        GetDisputeHistoryResult: IGetDisputeHistoryResult;
+      };
+    };
+  };
+}
+
+export interface IGetDisputeHistoryResult extends IStandardResponse {
+  Disputes: any;
 }
 
 export interface IGetDisputeHistoryPayload {

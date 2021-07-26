@@ -26,12 +26,12 @@ import { DisputeInput, UpdateAppDataInput } from 'src/api/api.service';
  * @param { UpdateAppDataInput} data
  * @returns {IGetDisputeStatusRequest | undefined }
  */
-export const createStartDisputePayload = (
-  data: IStartDisputeGraphQLResponse,
-  disputes: IProcessDisputeTradelineResult[],
-): IStartDisputeMsg | undefined => {
-  const id = data.data.getAppData.id?.split(':')?.pop();
-  const attrs = data.data.getAppData.user?.userAttributes;
+export const createStartDisputePayload = (data: {
+  data: IStartDisputeGraphQLResponse;
+  disputes: IProcessDisputeTradelineResult[];
+}): IStartDisputeMsg | undefined => {
+  const id = data.data.data.getAppData.id?.split(':')?.pop();
+  const attrs = data.data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;
 
   if (!id || !attrs || !dob) {
@@ -60,9 +60,9 @@ export const createStartDisputePayload = (
       },
       Ssn: attrs.ssn?.full || '',
     },
-    EnrollmentKey: data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey,
-    LineItems: parseDisputeToLineItem(disputes),
-    ServiceBundleFulfillmentKey: data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey,
+    EnrollmentKey: data.data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey,
+    LineItems: parseDisputeToLineItem(data.disputes),
+    ServiceBundleFulfillmentKey: data.data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey,
     ServiceProductFulfillmentKey: null,
   };
 };

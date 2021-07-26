@@ -25,3 +25,7 @@ export interface IErrorCode {
   method: string;
   action: string;
 }
+
+export interface INil {
+  nil: true;
+}

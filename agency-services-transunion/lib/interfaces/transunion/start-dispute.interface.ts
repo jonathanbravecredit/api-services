@@ -1,4 +1,5 @@
 import { IProcessDisputeTradelineResult } from 'lib/interfaces';
+import { IStandardResponse } from 'lib/interfaces/transunion/common-tu.interface';
 
 export interface IStartDisputeGraphQLResponse {
   data: {
@@ -91,9 +92,15 @@ export interface IStartDisputeMsg {
   ServiceBundleFulfillmentKey?: string;
   ServiceProductFulfillmentKey?: string;
 }
-// TODO updated the response with the actual
+
 export interface IStartDisputeResponse {
-  StartDisputeResult: IStartDisputeResult;
+  Envelope: {
+    Body: {
+      StartDisputeResponse: {
+        StartDisputeResult: IStartDisputeResult;
+      };
+    };
+  };
 }
 
 // I need to bundle our dispute package with the dispute resp from TU
@@ -102,12 +109,7 @@ export interface IStartDisputeBundle {
   disputes: IProcessDisputeTradelineResult[];
 }
 
-export interface IStartDisputeResult {
-  AccountName: string;
-  ErrorResponse: string;
-  RequestKey: string;
-  ResponseType: string;
-  ClientKey: string;
+export interface IStartDisputeResult extends IStandardResponse {
   DisputeStatus: IDisputeStatus;
 }
 

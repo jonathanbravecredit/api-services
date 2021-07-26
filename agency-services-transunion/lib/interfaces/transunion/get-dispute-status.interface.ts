@@ -1,3 +1,5 @@
+import { IStandardResponse } from 'lib/interfaces';
+
 export interface IGetDisputeStatusGraphQLResponse {
   data: {
     getAppData: {
@@ -107,33 +109,19 @@ export interface IGetDisputeStatusMsg {
 }
 
 export interface IGetDsputeStatusResponseSuccess {
-  GetDisputeStatus: {
-    Envelope: {
-      Body: {
-        GetDisputeStatusResponse: {
-          GetDisputeStatusResult: {
-            AccountName: string;
-            ErrorResponse: string;
-            RequestKey: string;
-            ResponseType: string;
-            ClientKey: string;
-            DisputeStatus: string;
-          };
-        };
+  GetDisputeStatus: IGetDisputeStatusResponse;
+}
+
+export interface IGetDisputeStatusResponse {
+  Envelope: {
+    Body: {
+      GetDisputeStatusResponse: {
+        GetDisputeStatusResult: IGetDisputeStatusResult;
       };
     };
   };
 }
-// TODO updated the response with the actual
-export interface IGetDisputeStatusResponse {
-  GetDisputeStatusResult: IGetDisputeStatusResult;
-}
 
-export interface IGetDisputeStatusResult {
-  AccountName: string;
-  ErrorResponse: any;
-  RequestKey: string;
-  ResponseType: string;
-  ClientKey: string;
+export interface IGetDisputeStatusResult extends IStandardResponse {
   DisputeStatus: string;
 }

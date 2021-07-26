@@ -1,3 +1,6 @@
+import { IFulfillServiceProductResponse } from 'lib/interfaces';
+import { IStandardResponse } from 'lib/interfaces/transunion/common-tu.interface';
+
 export interface IGetServiceProduct {
   request: IGetServiceProductMsg;
 }
@@ -19,7 +22,20 @@ export interface IGetServiceProductMsg {
   ProductDisplay: string;
   SeviceBundleFulfillmentKey: string;
 }
-// TODO updated the response with the actual
+
 export interface IGetServiceProductResponse {
-  GetServiceProductResult: any;
+  Envelope: {
+    Body: {
+      GetServiceProductResponse: {
+        GetServiceProductResult: IGetServiceProductResult;
+      };
+    };
+  };
+}
+// TODO updated the response with the actual
+export interface IGetServiceProductResult extends IStandardResponse {
+  ProductDisplayToken?: any;
+  ServiceProductFulfillments: {
+    ServiceProductResponse: IFulfillServiceProductResponse[] | IFulfillServiceProductResponse;
+  };
 }

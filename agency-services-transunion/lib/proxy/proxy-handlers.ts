@@ -1,17 +1,5 @@
-import {
-  formatEnroll,
-  createEnroll,
-  parseEnroll,
-  createEnrollPayload,
-  enrichEnrollmentData,
-} from 'lib/transunion/enroll/enroll';
-import {
-  formatFulfill,
-  createFulfill,
-  parseFulfill,
-  createFulfillPayload,
-  enrichFulfillData,
-} from 'lib/transunion/fulfill/fulfill';
+import { formatEnroll, createEnroll, parseEnroll, createEnrollPayload } from 'lib/transunion/enroll/enroll';
+import { formatFulfill, createFulfill, createFulfillPayload, enrichFulfillData } from 'lib/transunion/fulfill/fulfill';
 import {
   formatGetAuthenticationQuestions,
   createGetAuthenticationQuestions,
@@ -32,15 +20,7 @@ import {
   formatVerifyAuthenticationQuestions,
   createVerifyAuthenticationQuestions,
 } from 'lib/transunion/authentication-questions-verify/verify-authentication-questions';
-import {
-  createPackage,
-  createRequestOptions,
-  processMockRequest,
-  processRequest,
-  returnNestedObject,
-  syncData,
-} from 'lib/utils/helpers/helpers';
-import * as uuid from 'uuid';
+import { returnNestedObject } from 'lib/utils/helpers/helpers';
 import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
 import {
@@ -64,7 +44,6 @@ import {
 } from 'lib/transunion/investigation-results/investigation-results';
 import { ajv } from 'lib/schema/validation';
 import {
-  getEnrollment,
   getDataForEnrollment,
   getDataForFulfill,
   getFulfilledOn,
@@ -73,30 +52,34 @@ import {
   getDataForStartDispute,
   getDataForGetDisputeHistory,
   getDataForGetInvestigationResults,
-  getAppData,
 } from 'lib/proxy/proxy-queries';
 import { dateDiffInDays } from 'lib/utils/dates/dates';
 import {
-  IFulfillGraphQLResponse,
   IFulfillResponse,
   IFulfillResult,
-  IEnrollGraphQLResponse,
   IEnrollResponse,
   IEnrollResult,
   IGetAppDataRequest,
-  IGetDisputeStatusGraphQLResponse,
   IGetDisputeStatusResponse,
   IStartDisputeBundle,
-  IStartDisputeGraphQLResponse,
   IStartDisputeRequest,
-  IStartDisputeResult,
   IGetInvestigationEnrichPayload,
-  IGetInvestigationResult,
-  IGetInvestigationResultsGraphQLResponse,
   IGetInvestigationResultsRequest,
-  IGetDisputeHistoryGraphQLResponse,
+  IGetInvestigationResultsResponse,
   IGenericRequest,
   IGetInvestigationResultsPayload,
+  IGetDisputeHistoryPayload,
+  IGetDisputeHistoryResponse,
+  IErrorResponse,
+  INil,
+  IStartDisputeResponse,
+  IGetDisputeStatusPayload,
+  IGetServiceProductResponse,
+  IFulfillPayload,
+  IEnrollPayload,
+  IVerifyAuthenticationQuestionsResponse,
+  IGetAuthenticationQuestionsResponse,
+  IIndicativeEnrichmentResponse,
 } from 'lib/interfaces';
 import { GET_INVESTIGATION_RESULTS_RESPONSE } from 'lib/examples/mocks/GetInvestigationResultsResponse';
 import * as he from 'he';
@@ -118,14 +101,19 @@ const parserOptions = {
  * @param {string} auth
  * @returns
  */
-export const Ping = async (agent: https.Agent, auth: string): Promise<string> => {
-  const xml = createPing();
-  const options = createRequestOptions(agent, auth, xml, 'Ping');
-  if (!xml || !options) throw new Error(`Missing xml:${xml}, or options:${options}`);
+export const Ping = async (
+  agent: https.Agent,
+  auth: string,
+): Promise<{ success: boolean; error?: IErrorResponse | INil | string; data?: any }> => {
+  const soap = new SoapAid(fastXml.parse, () => {}, createPing);
+  const { xml } = soap.createPackage(null, null, null);
+  const request = soap.createRequestPayload(agent, auth, xml, 'Ping');
+  if (!xml || !request) throw new Error(`Missing xml:${xml}, or request:${request}`);
   try {
-    return await processRequest(options, fastXml.parse, parserOptions);
+    await soap.processRequest(request, parserOptions);
+    return { success: true, error: 'ping failed' };
   } catch (err) {
-    return err;
+    return { success: false, error: err };
   }
 };
 
@@ -144,18 +132,19 @@ export const IndicativeEnrichment = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<string> => {
-  const { msg, xml } = createPackage(
-    accountCode,
-    username,
-    message,
-    formatIndicativeEnrichment,
-    createIndicativeEnrichment,
-  );
-  const options = createRequestOptions(agent, auth, xml, 'IndicativeEnrichment');
-  if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
+): Promise<{ success: boolean; error: IErrorResponse | INil; data: any }> => {
+  const soap = new SoapAid(fastXml.parse, formatIndicativeEnrichment, createIndicativeEnrichment);
+  const { msg, xml } = soap.createPackage(accountCode, username, message);
+  const request = soap.createRequestPayload(agent, auth, xml, 'IndicativeEnrichment');
+  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
   try {
-    return await processRequest(options, fastXml.parse, parserOptions);
+    const resp = await soap.processRequest<IIndicativeEnrichmentResponse>(request, parserOptions);
+    const responseType = resp?.Envelope?.Body?.IndicativeEnrichmentResponse?.IndicativeEnrichmentResult?.ResponseType;
+    const data = resp?.Envelope?.Body?.IndicativeEnrichmentResponse?.IndicativeEnrichmentResult;
+    const error = resp?.Envelope?.Body?.IndicativeEnrichmentResponse?.IndicativeEnrichmentResult?.ErrorResponse;
+    return responseType.toLowerCase() === 'success'
+      ? { success: true, error: error, data: data }
+      : { success: false, error: error, data: null };
   } catch (err) {
     return err;
   }
@@ -176,20 +165,25 @@ export const GetAuthenticationQuestions = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<string> => {
-  const { msg, xml } = createPackage(
-    accountCode,
-    username,
-    message,
-    formatGetAuthenticationQuestions,
-    createGetAuthenticationQuestions,
-  );
-  const options = createRequestOptions(agent, auth, xml, 'GetAuthenticationQuestions');
-  if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
+): Promise<{ success: boolean; error: IErrorResponse | INil; data: any }> => {
+  //create helper classes
+  const soap = new SoapAid(fastXml.parse, formatGetAuthenticationQuestions, createGetAuthenticationQuestions);
+
+  const { msg, xml } = soap.createPackage(accountCode, username, message);
+  const request = soap.createRequestPayload(agent, auth, xml, 'GetAuthenticationQuestions');
+  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
   try {
-    return await processRequest(options, fastXml.parse, parserOptions);
+    const resp = await soap.processRequest<IGetAuthenticationQuestionsResponse>(request, parserOptions);
+    const responseType =
+      resp?.Envelope?.Body?.GetAuthenticationQuestionsResponse?.GetAuthenticationQuestionsResult?.ResponseType;
+    const data = resp?.Envelope?.Body?.GetAuthenticationQuestionsResponse?.GetAuthenticationQuestionsResult;
+    const error =
+      resp?.Envelope?.Body?.GetAuthenticationQuestionsResponse?.GetAuthenticationQuestionsResult?.ErrorResponse;
+    return responseType.toLowerCase() === 'success'
+      ? { success: true, error: error, data: data }
+      : { success: false, error: error, data: null };
   } catch (err) {
-    return err;
+    return { success: false, error: err, data: null };
   }
 };
 
@@ -208,20 +202,25 @@ export const VerifyAuthenticationQuestions = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<string> => {
-  const { msg, xml } = createPackage(
-    accountCode,
-    username,
-    message,
-    formatVerifyAuthenticationQuestions,
-    createVerifyAuthenticationQuestions,
-  );
-  const options = createRequestOptions(agent, auth, xml, 'VerifyAuthenticationQuestions');
-  if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
+): Promise<{ success: boolean; error: IErrorResponse | INil; data: any }> => {
+  //create helper classes
+  const soap = new SoapAid(fastXml.parse, formatVerifyAuthenticationQuestions, createVerifyAuthenticationQuestions);
+
+  const { msg, xml } = soap.createPackage(accountCode, username, message);
+  const request = soap.createRequestPayload(agent, auth, xml, 'VerifyAuthenticationQuestions');
+  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${request}`);
   try {
-    return await processRequest(options, fastXml.parse, parserOptions);
+    const resp = await soap.processRequest<IVerifyAuthenticationQuestionsResponse>(request, parserOptions);
+    const responseType =
+      resp?.Envelope?.Body?.VerifyAuthenticationQuestionsResponse?.VerifyAuthenticationQuestionsResult?.ResponseType;
+    const data = resp?.Envelope?.Body?.VerifyAuthenticationQuestionsResponse?.VerifyAuthenticationQuestionsResult;
+    const error =
+      resp?.Envelope?.Body?.VerifyAuthenticationQuestionsResponse?.VerifyAuthenticationQuestionsResult?.ErrorResponse;
+    return responseType.toLowerCase() === 'success'
+      ? { success: true, error: error, data: data }
+      : { success: false, error: error, data: null };
   } catch (err) {
-    return err;
+    return { success: false, error: err, data: null };
   }
 };
 
@@ -242,7 +241,8 @@ export const Enroll = async (
   agent: https.Agent,
   auth: string,
   dispute: boolean = false,
-): Promise<IEnrollResponse> => {
+): Promise<{ success: boolean; error?: IErrorResponse | INil | string; data?: IEnrollResult }> => {
+  // validate incoming message
   let variables: IGetAppDataRequest = {
     ...JSON.parse(message),
   };
@@ -255,28 +255,33 @@ export const Enroll = async (
     if (!validate(variables)) throw `Malformed message=${message}`;
   }
 
+  //create helper classes
+  const soap = new SoapAid(parseEnroll, formatEnroll, createEnroll, createEnrollPayload);
+  const sync = new Sync(enrichFulfillData);
+
+  const resp = await getDataForEnrollment(variables);
+  const payload = soap.createPayload<IEnrollPayload>({ data: resp.data, dispute: dispute });
+  const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
+  const request = soap.createRequestPayload(agent, auth, xml, 'Enroll');
+  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${request}`);
+
   try {
-    const resp = await getDataForEnrollment(variables);
-    const gql: IEnrollGraphQLResponse = resp.data; // add validation here
-    const payload = createEnrollPayload(gql, dispute);
-    const { msg, xml } = createPackage(accountCode, username, JSON.stringify(payload), formatEnroll, createEnroll);
-    const options = createRequestOptions(agent, auth, xml, 'Enroll');
-    if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
-    const enroll = await processRequest(options, parseEnroll, parserOptions);
-    console.log('enroll response ===> ', enroll);
-    const enrollResults: IEnrollResult = returnNestedObject(enroll, 'EnrollResult');
-    if (enrollResults?.ResponseType.toLowerCase() === 'success') {
-      await syncData(variables, enrollResults, enrichEnrollmentData, dispute);
+    const resp = await soap.processRequest<IEnrollResponse>(request, parserOptions);
+    const responseType = resp?.Envelope?.Body?.EnrollResponse?.EnrollResult?.ResponseType;
+    const data = resp?.Envelope?.Body?.EnrollResponse?.EnrollResult;
+    const error = resp?.Envelope?.Body?.EnrollResponse?.EnrollResult?.ErrorResponse;
+    if (responseType.toLowerCase() === 'success') {
+      const synced = await sync.syncData({ id: variables.id }, data);
+      return synced
+        ? { success: true, error: null, data: data }
+        : { success: false, error: 'failed to sync data to db' };
     } else {
-      if (enrollResults?.ErrorResponse['Code'] === '103045') {
-        return; // already enrolled...bypass
-      } else {
-        throw `Enroll failure=${enrollResults}`;
-      }
+      return error.Code === '103045'
+        ? { success: true, error: null, data: null }
+        : { success: false, error: error, data: null };
     }
-    return enroll;
   } catch (err) {
-    return err;
+    return { success: false, error: err, data: null };
   }
 };
 
@@ -296,7 +301,8 @@ export const Fulfill = async (
   agent: https.Agent,
   auth: string,
   dispute: boolean = false,
-): Promise<IFulfillResponse> => {
+): Promise<{ success: boolean; error?: IErrorResponse | INil | string; data?: IFulfillResult }> => {
+  // validate incoming message
   let variables: IGetAppDataRequest = {
     ...JSON.parse(message),
   };
@@ -309,24 +315,32 @@ export const Fulfill = async (
     if (!validate(variables)) throw `Malformed message=${message}`;
   }
 
+  //create helper classes
+  const soap = new SoapAid(fastXml.parse, formatFulfill, createFulfill, createFulfillPayload);
+  const sync = new Sync(enrichFulfillData);
+
+  // get / parse data needed to process request
+  const resp = await getDataForFulfill(variables);
+  const payload = soap.createPayload<IFulfillPayload>({ data: resp.data, dispute: dispute });
+  const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
+  const request = soap.createRequestPayload(agent, auth, xml, 'Fulfill');
+
+  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
   try {
-    console.log('*** IN FULFILL ***');
-    const resp = await getDataForFulfill(variables);
-    const gql: IFulfillGraphQLResponse = resp.data; // add validation here
-    const payload = createFulfillPayload(gql, dispute);
-    const { msg, xml } = createPackage(accountCode, username, JSON.stringify(payload), formatFulfill, createFulfill);
-    const options = createRequestOptions(agent, auth, xml, 'Fulfill');
-    if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
-    const fulfill = await processRequest(options, parseFulfill, parserOptions);
-    const fulfillResults: IFulfillResult = returnNestedObject(fulfill, 'FulfillResult');
-    console.log('fulfillResults ===> ', fulfillResults);
-    if (fulfillResults?.ResponseType.toLowerCase() === 'success') {
-      const fulfillSync = await syncData(variables, fulfillResults, enrichFulfillData, dispute);
-      console.log('fulfilSync ===> ', fulfillSync);
+    const resp = await soap.processRequest<IFulfillResponse>(request, parserOptions);
+    const responseType = resp?.Envelope?.Body?.FulfillResponse?.FulfillResult?.ResponseType;
+    const data = resp?.Envelope?.Body?.FulfillResponse?.FulfillResult;
+    const error = resp?.Envelope?.Body?.FulfillResponse?.FulfillResult?.ErrorResponse;
+    if (responseType.toLowerCase() === 'success') {
+      const synced = await sync.syncData({ id: variables.id }, data);
+      return synced
+        ? { success: true, error: null, data: data }
+        : { success: false, error: 'failed to sync data to db' };
+    } else {
+      return { success: false, error: error };
     }
-    return fulfill; // for stand alone calls if needed
   } catch (err) {
-    return err;
+    return { success: false, error: err };
   }
 };
 
@@ -345,14 +359,24 @@ export const GetServiceProduct = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<string> => {
-  const { msg, xml } = createPackage(accountCode, username, message, formatGetServiceProduct, createGetServiceProduct);
-  const options = createRequestOptions(agent, auth, xml, 'GetServiceProduct');
-  if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
+): Promise<{ success: boolean; error: IErrorResponse | INil; data: any }> => {
+  // TODO add validation
+
+  // create helper classes
+  const soap = new SoapAid(fastXml.parse, formatGetServiceProduct, createGetServiceProduct);
+  const { msg, xml } = soap.createPackage(accountCode, username, message);
+  const request = soap.createRequestPayload(agent, auth, xml, 'GetServiceProduct');
+  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
   try {
-    return await processRequest(options, fastXml.parse, parserOptions);
+    const resp = await soap.processRequest<IGetServiceProductResponse>(request, parserOptions);
+    const responseType = resp?.Envelope?.Body?.GetServiceProductResponse?.GetServiceProductResult?.ResponseType;
+    const data = resp?.Envelope?.Body?.GetServiceProductResponse?.GetServiceProductResult;
+    const error = resp?.Envelope?.Body?.GetServiceProductResponse?.GetServiceProductResult?.ErrorResponse;
+    return responseType.toLowerCase() === 'success'
+      ? { success: true, error: error, data: data }
+      : { success: false, error: error, data: null };
   } catch (err) {
-    return err;
+    return { success: false, error: err, data: null };
   }
 };
 
@@ -372,7 +396,8 @@ export const GetDisputeStatus = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<IGetDisputeStatusResponse> => {
+): Promise<{ success: boolean; error?: IErrorResponse | INil; data?: any }> => {
+  // validate incoming message
   let variables: IGetAppDataRequest = {
     ...JSON.parse(message),
   };
@@ -385,22 +410,31 @@ export const GetDisputeStatus = async (
     if (!validate(variables)) throw `Malformed message=${message}`;
   }
 
+  //create helper classes
+  const soap = new SoapAid(
+    parseGetDisputeStatus,
+    formatGetDisputeStatus,
+    createGetDisputeStatus,
+    createGetDisputeStatusPayload,
+  );
+
+  // get / parse data needed to process request
+  const resp = await getDataForGetDisputeStatus(variables);
+  const payload = soap.createPayload<IGetDisputeStatusPayload>(resp.data);
+  const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
+  const request = soap.createRequestPayload(agent, auth, xml, 'GetDisputeStatus');
+
+  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
   try {
-    const resp = await getDataForGetDisputeStatus(variables);
-    const gql: IGetDisputeStatusGraphQLResponse = resp.data; // add validation here
-    const payload = createGetDisputeStatusPayload(gql);
-    const { msg, xml } = createPackage(
-      accountCode,
-      username,
-      JSON.stringify(payload),
-      formatGetDisputeStatus,
-      createGetDisputeStatus,
-    );
-    const options = createRequestOptions(agent, auth, xml, 'GetDisputeStatus');
-    if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
-    return await processRequest(options, parseGetDisputeStatus, parserOptions);
+    const resp = await soap.processRequest<IGetDisputeStatusResponse>(request, parserOptions);
+    const responseType = resp?.Envelope?.Body?.GetDisputeStatusResponse?.GetDisputeStatusResult?.ResponseType;
+    const data = resp?.Envelope?.Body?.GetDisputeStatusResponse?.GetDisputeStatusResult;
+    const error = resp?.Envelope?.Body?.GetDisputeStatusResponse?.GetDisputeStatusResult?.ErrorResponse;
+    return responseType.toLowerCase() === 'success'
+      ? { success: true, error: error, data: data }
+      : { success: false, error: error, data: null };
   } catch (err) {
-    return err;
+    return { success: false, error: err, data: null };
   }
 };
 
@@ -420,38 +454,39 @@ export const StartDispute = async (
   agent: https.Agent,
   auth: string,
 ): Promise<{ success: boolean; error?: any }> => {
+  // validate incoming message
   let variables: IStartDisputeRequest = {
     ...JSON.parse(message),
   };
   const validate = ajv.getSchema<IStartDisputeRequest>('startDisputeRequest');
   if (!validate(variables)) throw `Malformed message=${message}`;
 
+  //create helper classes
+  const soap = new SoapAid(parseStartDispute, formatStartDispute, createStartDispute, createStartDisputePayload);
+  const sync = new Sync(enrichDisputeData);
+
+  console.log('*** IN START DISPUTE ***');
+  const resp = await getDataForStartDispute(variables);
+  const payload = soap.createPayload({ data: resp.data, disputes: variables.disputes });
+  const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
+  const request = soap.createRequestPayload(agent, auth, xml, 'StartDispute');
+
+  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
   try {
-    console.log('*** IN START DISPUTE ***');
-    const resp = await getDataForStartDispute(variables);
-    const gql: IStartDisputeGraphQLResponse = resp.data;
-    console.log('StartDispute:gql ===> ', JSON.stringify(gql));
-    const payload = createStartDisputePayload(gql, variables.disputes);
-    const { msg, xml } = createPackage(
-      accountCode,
-      username,
-      JSON.stringify(payload),
-      formatStartDispute,
-      createStartDispute,
-    );
-    const options = createRequestOptions(agent, auth, xml, 'StartDispute');
-    if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
-    const dispute = await processRequest(options, parseStartDispute, parserOptions);
-    const disputeResults: IStartDisputeResult = returnNestedObject(dispute, 'StartDisputeResult');
-    const started = disputeResults?.ResponseType.toLowerCase() === 'success';
+    const resp = await soap.processRequest<IStartDisputeResponse>(request, parserOptions);
+    const responseType = resp?.Envelope?.Body?.StartDisputeResponse?.StartDisputeResult?.ResponseType;
+    const data = resp?.Envelope?.Body?.StartDisputeResponse?.StartDisputeResult;
+    const error = resp?.Envelope?.Body?.StartDisputeResponse?.StartDisputeResult?.ErrorResponse;
     const bundle: IStartDisputeBundle = {
-      startDisputeResult: disputeResults,
+      startDisputeResult: data,
       disputes: variables.disputes,
     };
-    if (started) {
-      await syncData({ id: variables.id }, bundle, enrichDisputeData);
+    if (responseType.toLowerCase() === 'success') {
+      const synced = await sync.syncData({ id: variables.id }, bundle);
+      return synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
+    } else {
+      return { success: false, error: error };
     }
-    return started ? { success: true } : { success: false, error: disputeResults.ErrorResponse };
   } catch (err) {
     return { success: false, error: err };
   }
@@ -472,29 +507,40 @@ export const GetDisputeHistory = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<string> => {
+): Promise<{ success: boolean; error: IErrorResponse | INil; data: any }> => {
+  // validate incoming message
   let variables: IGenericRequest = {
     ...JSON.parse(message),
   };
   const validate = ajv.getSchema<IGenericRequest>('getRequest');
   if (!validate(variables)) throw `Malformed message=${message}`;
 
-  const resp = await getDataForGetDisputeHistory(variables); // same data
-  const gql: IGetDisputeHistoryGraphQLResponse = resp.data; // add validation here
-  const payload = createGetDisputeHistoryPayload(gql);
-  const { msg, xml } = createPackage(
-    accountCode,
-    username,
-    JSON.stringify(payload),
+  //create helper classes
+  const soap = new SoapAid(
+    fastXml.parse,
     formatGetDisputeHistory,
     createGetDisputeHistory,
+    createGetDisputeHistoryPayload,
   );
-  const options = createRequestOptions(agent, auth, xml, 'GetDisputeHistory');
-  if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
+
+  // get / parse data needed to process request
+  const resp = await getDataForGetDisputeHistory(variables); // same data
+  const payload = soap.createPayload<IGetDisputeHistoryPayload>(resp.data);
+  const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
+  const request = soap.createRequestPayload(agent, auth, xml, 'GetDisputeHistory');
+
+  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
   try {
-    return await processRequest(options, fastXml.parse, parserOptions);
+    // process request and sync response to db
+    const resp = await soap.processRequest<IGetDisputeHistoryResponse>(request, parserOptions);
+    const responseType = resp?.Envelope?.Body?.GetDisputeHistoryResponse?.GetDisputeHistoryResult?.ResponseType;
+    const data = resp?.Envelope?.Body?.GetDisputeHistoryResponse?.GetDisputeHistoryResult;
+    const error = resp?.Envelope?.Body?.GetDisputeHistoryResponse?.GetDisputeHistoryResult?.ErrorResponse;
+    return responseType.toLowerCase() === 'success'
+      ? { success: true, error: error, data: data }
+      : { success: false, error: error, data: null };
   } catch (err) {
-    return err;
+    return { success: false, error: err, data: null };
   }
 };
 
@@ -513,7 +559,7 @@ export const GetInvestigationResults = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: boolean; error?: any }> => {
+): Promise<{ success: boolean; error?: any; data?: any }> => {
   // validate incoming message
   let variables: IGetInvestigationResultsRequest = {
     ...JSON.parse(message),
@@ -534,26 +580,30 @@ export const GetInvestigationResults = async (
   const resp = await getDataForGetInvestigationResults(variables); // same data
   const payload = soap.createPayload<IGetInvestigationResultsPayload>(resp.data, variables.disputeId);
   const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
-  const options = soap.createRequestOptions(agent, auth, xml, 'GetInvestigationResults');
+  const request = soap.createRequestPayload(agent, auth, xml, 'GetInvestigationResults');
 
-  if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
+  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${request}`);
   try {
     // const parsed = await processRequest(options, parseInvestigationResults, parserOptions);
-    const investigation = await soap.processMockRequest<any>(GET_INVESTIGATION_RESULTS_RESPONSE, parserOptions);
-    const investigationResults: IGetInvestigationResult = returnNestedObject(
-      investigation,
-      'GetInvestigationResultsResult',
+    const resp = await soap.processMockRequest<IGetInvestigationResultsResponse>(
+      GET_INVESTIGATION_RESULTS_RESPONSE,
+      parserOptions,
     );
-    const responded = investigationResults?.ResponseType.toLowerCase() === 'success';
-    if (responded) {
-      const bundle: IGetInvestigationEnrichPayload = {
-        disputeId: variables.disputeId,
-        getInvestigationResult: investigationResults,
-      };
+    const responseType =
+      resp.Envelope?.Body?.GetInvestigationResultsResponse?.GetInvestigationResultsResult?.ResponseType;
+    const data = resp?.Envelope?.Body?.GetInvestigationResultsResponse?.GetInvestigationResultsResult;
+    const error = resp?.Envelope?.Body?.GetInvestigationResultsResponse?.GetInvestigationResultsResult?.ErrorResponse;
+    const bundle: IGetInvestigationEnrichPayload = {
+      disputeId: variables.disputeId,
+      getInvestigationResult: data,
+    };
+
+    if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: variables.id }, bundle);
-      return synced ? { success: true } : { success: false, error: investigationResults.ErrorResponse };
+      return synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
+    } else {
+      return { success: false, error: error };
     }
-    return { success: false, error: 'failed db sync' };
   } catch (err) {
     return { success: false, error: err };
   }
@@ -565,29 +615,34 @@ export const CompleteOnboardingEnrollments = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: Boolean; error?: any }> => {
+): Promise<{ success: Boolean; error?: any; data?: IFulfillResult }> => {
   let variables: IGetAppDataRequest = {
     ...JSON.parse(message),
   };
   const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
   if (!validate(variables)) throw `Malformed message=${message}`;
+
   try {
-    const enroll = await Enroll(accountCode, username, message, agent, auth, false); // report & score enroll
-    if (enroll?.EnrollResult?.ResponseType.toLowerCase() !== 'success')
-      return { success: false, error: enroll.EnrollResult.ErrorResponse };
-    const disputeEnroll = await Enroll(accountCode, username, message, agent, auth, true); // dispute enroll
-    if (disputeEnroll?.EnrollResult?.ResponseType.toLowerCase() !== 'success')
-      return { success: false, error: disputeEnroll.EnrollResult.ErrorResponse };
-    const fulfill = await Fulfill(accountCode, username, message, agent, auth, true);
-    const fulfillResults: IFulfillResult = returnNestedObject(fulfill, 'FulfillResult');
-    const onboarded = fulfillResults?.ResponseType.toLowerCase() !== 'success';
-    console.log(
-      'onboarding results ===> ',
-      onboarded ? { success: true } : { success: false, error: fulfill.FulfillResult.ErrorResponse },
-    );
-    return onboarded ? { success: true } : { success: false, error: fulfill.FulfillResult.ErrorResponse };
+    const {
+      success: enrollSuccess,
+      error: enrollError,
+      data: enrollData,
+    } = await Enroll(accountCode, username, message, agent, auth, false); // report & score enroll
+    if (!enrollSuccess) return { success: false, error: enrollError };
+    const {
+      success: disputeSuccess,
+      error: disputeError,
+      data: disputeEnroll,
+    } = await Enroll(accountCode, username, message, agent, auth, true); // dispute enroll
+    if (!disputeSuccess) return { success: false, error: disputeError };
+    const {
+      success: fulfillSuccess,
+      error: fulfillError,
+      data: fulfill,
+    } = await Fulfill(accountCode, username, message, agent, auth, true);
+    return fulfillSuccess ? { success: true, error: null, data: fulfill } : { success: false, error: fulfillError };
   } catch (err) {
-    return { success: false, error: err };
+    return { success: false, error: err, data: null };
   }
 };
 
@@ -626,12 +681,8 @@ export const DisputePreflightCheck = async (
   if (!enrolled) {
     console.log('*** IN ENROLL ***');
     try {
-      const resp = await Enroll(accountCode, username, message, agent, auth, true);
-      const type = resp.EnrollResult.ResponseType;
-      const enrolled = type?.toLowerCase() !== 'success';
-      if (!enrolled) {
-        return { success: false, error: resp.EnrollResult.ErrorResponse };
-      }
+      const { success, error, data } = await Enroll(accountCode, username, message, agent, auth, true);
+      if (!success) return { success: false, error: error };
     } catch (err) {
       return { success: false, error: err };
     }
@@ -656,22 +707,19 @@ export const DisputePreflightCheck = async (
   }
 
   if (refresh) {
+    console.log('*** IN REFRESH:FULFILL ***');
     try {
-      console.log('*** IN REFRESH:FULFILL ***');
-      await Fulfill(accountCode, username, message, agent, auth, true);
+      const { success, error } = await Fulfill(accountCode, username, message, agent, auth, true);
+      if (!success) return { success: false, error: error };
     } catch (err) {
       return { success: false, error: err };
     }
   }
 
-  let eligible: boolean;
   try {
     console.log('*** IN GETDISPUTESTATUS ***');
-    const resp = await GetDisputeStatus(accountCode, username, message, agent, auth);
-    const type = resp.GetDisputeStatusResult.ResponseType; //returnNestedObject(resp, 'ResponseType');
-    eligible = type?.toLowerCase() === 'success';
-    console.log('DisputePreflightCheck:eligible ===> ', eligible);
-    return eligible ? { success: true } : { success: false, error: resp.GetDisputeStatusResult.ErrorResponse };
+    const { success, error } = await GetDisputeStatus(accountCode, username, message, agent, auth);
+    return success ? { success: true } : { success: false, error: error };
   } catch (err) {
     return { success: false, error: err };
   }

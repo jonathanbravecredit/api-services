@@ -11,8 +11,8 @@ export class SoapAid {
   ) => any;
   cbMsg: (code: string, username: string, message: string) => string;
   cbXml: (msg: any) => string;
-  cbPayload: (data: any, disputeId: string) => any;
-  requestOptions: IRequestOptions;
+  cbPayload: (data: any, disputeId: string) => any | undefined;
+  requestPayload: IRequestOptions;
   msg: string;
   xml: string;
 
@@ -21,15 +21,15 @@ export class SoapAid {
       xmlData: string,
       options?: Partial<fastXml.X2jOptions>,
       validationOptions?: boolean | Partial<fastXml.validationOptions>,
-    ) => any,
+    ) => any = fastXml.parse,
     cbMsg: (code: string, username: string, message: string) => any,
     cbXml: (msg: any) => string,
-    cbPayload: (data: any, disputeId: string) => any,
+    cbPayload: (data: any, disputeId?: string) => any = (a, b): void => {},
   ) {
     this.parser = parser;
     this.cbMsg = cbMsg;
     this.cbXml = cbXml;
-    this.cbPayload = cbPayload;
+    this.cbPayload = cbPayload; // can send preformed payload
   }
 
   /**
@@ -39,7 +39,7 @@ export class SoapAid {
    * @param disputeId
    * @returns
    */
-  createPayload<T>(data, disputeId): T {
+  createPayload<T>(data: any, disputeId?: string): T {
     return this.cbPayload(data, disputeId);
   }
 
@@ -69,8 +69,8 @@ export class SoapAid {
    * @param SOAPAction
    * @returns
    */
-  createRequestOptions(httpsAgent: https.Agent, auth: string, data: string, SOAPAction: string): IRequestOptions {
-    this.requestOptions = {
+  createRequestPayload(httpsAgent: https.Agent, auth: string, data: string, SOAPAction: string): IRequestOptions {
+    this.requestPayload = {
       url: 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc',
       method: 'POST',
       data: data,
@@ -86,7 +86,7 @@ export class SoapAid {
         'User-Agent': 'Apache-HttpClient/4.5.2 (Java/1.8.0_181)',
       },
     };
-    return this.requestOptions;
+    return this.requestPayload;
   }
 
   /**
@@ -97,9 +97,9 @@ export class SoapAid {
    * @param parserOptions
    * @returns parsed and stringified data
    */
-  async processRequest(parserOptions: Partial<fastXml.X2jOptions>): Promise<any> {
+  async processRequest<T>(request: IRequestOptions, parserOptions: Partial<fastXml.X2jOptions>): Promise<T> {
     try {
-      const res = await axios({ ...this.requestOptions });
+      const res = await axios({ ...request });
       const results = this.parser(res.data, parserOptions);
       return results;
     } catch (err) {

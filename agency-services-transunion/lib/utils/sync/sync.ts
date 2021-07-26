@@ -2,9 +2,9 @@ import axios, { AxiosResponse } from 'axios';
 import * as aws4 from 'aws4';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
-import { IEnrollServiceProductResponse, IGetAppDataRequest } from 'lib/interfaces';
+import { IEnrollServiceProductResponse, IGetAppDataRequest, IGetAppDataResponse } from 'lib/interfaces';
 import { getAppData, updateAppData } from 'lib/proxy';
-import { returnNestedObject, deleteKeyNestedObject } from 'lib/utils';
+import { deleteKeyNestedObject } from 'lib/utils';
 import { GetAppDataQuery, TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 
 const appsyncUrl = process.env.APPSYNC_ENDPOINT;
@@ -18,13 +18,15 @@ export class Sync {
 
   async syncData(variables: IGetAppDataRequest, updated: any, dispute: boolean = false): Promise<boolean> {
     try {
-      const resp = await getAppData(variables);
-      const app: GetAppDataQuery = returnNestedObject(resp.data, 'getAppData');
-      const clean: UpdateAppDataInput = this.cleanBackendData(app);
+      const app = await getAppData(variables);
+      const appData: IGetAppDataResponse = app.data;
+      if (appData?.errors?.length > 0) return false; // gql error;
+      const clean: UpdateAppDataInput = this.cleanBackendData(appData.data.getAppData);
       const enriched: UpdateAppDataInput | undefined = this.enricher(clean, updated, dispute);
-      if (enriched === undefined) return false;
+      if (enriched === undefined) return false; // enrichment error
       const sync = await updateAppData({ input: enriched });
-      return true;
+      const syncData: IGetAppDataResponse = sync.data; // gql error
+      return syncData?.errors?.length > 0 ? false : true;
     } catch (err) {
       console.log('syncData:err ===> ', err);
       return false;

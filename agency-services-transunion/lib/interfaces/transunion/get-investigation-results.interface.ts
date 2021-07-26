@@ -1,3 +1,5 @@
+import { IStandardResponse } from 'lib/interfaces/transunion/common-tu.interface';
+
 export interface IGetInvestigationResultsRequest {
   id: string;
   disputeId: string;
@@ -23,12 +25,17 @@ export interface IGetInvestigationResultsPayload {
   DisputeId?: string;
 }
 
-export interface IGetInvestigationResult {
-  AccountName: string;
-  ErrorResponse: string;
-  RequestKey: string;
-  ResponseType: string;
-  ClientKey: string;
+export interface IGetInvestigationResultsResponse {
+  Envelope: {
+    Body: {
+      GetInvestigationResultsResponse: {
+        GetInvestigationResultsResult: IGetInvestigationResultsResult;
+      };
+    };
+  };
+}
+
+export interface IGetInvestigationResultsResult extends IStandardResponse {
   CreditBureau: string;
   InvestigationResults: string;
 }
@@ -49,5 +56,5 @@ export interface IGetInvestigationResultsMsg {
 
 export interface IGetInvestigationEnrichPayload {
   disputeId: string;
-  getInvestigationResult: IGetInvestigationResult;
+  getInvestigationResult: IGetInvestigationResultsResult;
 }

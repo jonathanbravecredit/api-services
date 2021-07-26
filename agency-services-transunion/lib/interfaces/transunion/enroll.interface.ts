@@ -1,3 +1,5 @@
+import { IErrorResponse, INil, IStandardResponse } from 'lib/interfaces';
+
 export interface IEnrollGraphQLResponse {
   data: {
     getAppData: {
@@ -151,15 +153,16 @@ export interface IEnrollMsg {
 }
 
 export interface IEnrollResponse {
-  EnrollResult: IEnrollResult;
+  Envelope: {
+    Body: {
+      EnrollResponse: {
+        EnrollResult: IEnrollResult;
+      };
+    };
+  };
 }
 
-export interface IEnrollResult {
-  AccountName: string;
-  ErrorResponse: string;
-  RequestKey: string;
-  ResponseType: string;
-  ClientKey: string;
+export interface IEnrollResult extends IStandardResponse {
   EnrollmentKey: string;
   ServiceBundleFulfillmentKey: string;
   ServiceProductFulfillments: {
@@ -169,7 +172,7 @@ export interface IEnrollResult {
 
 export interface IEnrollServiceProductResponse {
   Bureau: string;
-  ErrorResponse: string;
+  ErrorResponse: IErrorResponse;
   ServiceBundleResponse: {
     ServiceBundleCode: string;
     ServiceBundleFulfillmentKey: string;

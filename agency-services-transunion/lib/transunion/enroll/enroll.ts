@@ -18,9 +18,9 @@ import { UpdateAppDataInput } from 'src/api/api.service';
  * @param data
  * @returns IEnrollPayload
  */
-export const createEnrollPayload = (data: IEnrollGraphQLResponse, dispute: boolean = false): IEnrollPayload => {
-  const id = data.data.getAppData.id?.split(':')?.pop();
-  const attrs = data.data.getAppData.user?.userAttributes;
+export const createEnrollPayload = (data: { data: IEnrollGraphQLResponse; dispute?: boolean }): IEnrollPayload => {
+  const id = data.data.data.getAppData.id?.split(':')?.pop();
+  const attrs = data.data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;
   const serviceBundleCode = dispute ? 'CC2BraveCreditTUDispute' : 'CC2BraveCreditTUReportV3Score';
 
