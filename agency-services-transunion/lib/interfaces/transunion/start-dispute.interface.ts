@@ -1,4 +1,4 @@
-import { IProcessDisputeTradelineResult } from 'lib/interfaces/disputes.interface';
+import { IProcessDisputeTradelineResult } from 'lib/interfaces';
 
 export interface IStartDisputeGraphQLResponse {
   data: {

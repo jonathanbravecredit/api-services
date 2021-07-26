@@ -1,4 +1,4 @@
-import { IVerifyAuthenticationAnswer } from 'lib/interfaces/verify-authentication-answers.interface';
+import { IVerifyAuthenticationAnswer } from 'lib/interfaces';
 
 export interface IVerifyAuthenticationQuestions {
   request: {

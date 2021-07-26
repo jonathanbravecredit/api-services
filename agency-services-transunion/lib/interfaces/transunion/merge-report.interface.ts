@@ -2,13 +2,7 @@
 /* !!Important!!                      */
 /* - Keep all spelling mistakes as is */
 
-import {
-  ISource,
-  ICodeRef,
-  IPartitionSet,
-  IPartitionElements,
-  IRemark,
-} from 'lib/interfaces/transunion/common-tu.interface';
+import { ISource, ICodeRef, IPartitionSet, IPartitionElements, IRemark } from 'lib/interfaces';
 
 /*====================================*/
 export interface IMergeReport {

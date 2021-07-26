@@ -1,4 +1,4 @@
-import { IErrorCodes } from 'lib/interfaces/errors.interface';
+import { IErrorCodes } from 'lib/interfaces';
 
 export const MONTH_MAP: Record<string, any> = {
   jan: '01',

@@ -1,4 +1,4 @@
-import { ITradeLinePartition } from 'lib/interfaces/merge-report.interface';
+import { ITradeLinePartition } from 'lib/interfaces';
 
 export interface IProcessDisputeTradelineResult {
   result: IDisputeTradelineProcessResult;
