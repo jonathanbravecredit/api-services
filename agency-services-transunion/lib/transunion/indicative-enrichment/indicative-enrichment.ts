@@ -1,7 +1,4 @@
-import {
-  IEnrichedIndicativeEnrichment,
-  IIndicativeEnrichmentMsg,
-} from 'lib/interfaces/transunion/indicative-enrichment.interface';
+import { IEnrichedIndicativeEnrichment, IIndicativeEnrichmentMsg } from 'lib/interfaces';
 import { textConstructor } from 'lib/utils/helpers/helpers';
 import * as uuid from 'uuid';
 import * as convert from 'xml-js';

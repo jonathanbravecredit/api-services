@@ -1,4 +1,3 @@
-import { IRequestOptions } from 'lib/interfaces/api/api.interfaces';
 import * as https from 'https';
 import * as aws4 from 'aws4';
 import * as fastXml from 'fast-xml-parser';
@@ -7,7 +6,7 @@ import gql from 'graphql-tag';
 import { print } from 'graphql';
 import { GetAppDataQuery, TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 import { getAppData, updateAppData } from 'lib/proxy/proxy-queries';
-import { IEnrollServiceProductResponse, IGetAppDataRequest } from 'lib/interfaces';
+import { IEnrollServiceProductResponse, IGetAppDataRequest, IRequestOptions } from 'lib/interfaces';
 
 const appsyncUrl = process.env.APPSYNC_ENDPOINT;
 const region = process.env.AWS_REGION;
