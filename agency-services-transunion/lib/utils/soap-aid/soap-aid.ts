@@ -32,6 +32,24 @@ export class SoapAid {
     this.cbPayload = cbPayload;
   }
 
+  /**
+   * Generic method to create payloads by type
+   * @param cbPayload
+   * @param data
+   * @param disputeId
+   * @returns
+   */
+  createPayload<T>(data, disputeId): T {
+    return this.cbPayload(data, disputeId);
+  }
+
+  /**
+   * Generic method to generate the xml and msg object for sending to TU
+   * @param code
+   * @param username
+   * @param message
+   * @returns
+   */
   createPackage(code: string, username: string, message: string): { msg: string; xml: string } {
     this.msg = this.cbMsg(code, username, message);
     console.log('createPackage:msg ===> ', JSON.stringify(this.msg));
@@ -43,6 +61,14 @@ export class SoapAid {
     };
   }
 
+  /**
+   * Creates the request options to send to soap service as part of axios request
+   * @param httpsAgent
+   * @param auth
+   * @param data
+   * @param SOAPAction
+   * @returns
+   */
   createRequestOptions(httpsAgent: https.Agent, auth: string, data: string, SOAPAction: string): IRequestOptions {
     this.requestOptions = {
       url: 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc',
@@ -61,17 +87,6 @@ export class SoapAid {
       },
     };
     return this.requestOptions;
-  }
-
-  /**
-   * Generic method to create payloads by type
-   * @param cbPayload
-   * @param data
-   * @param disputeId
-   * @returns
-   */
-  createPayload<T>(data, disputeId): T {
-    return this.cbPayload(data, disputeId);
   }
 
   /**
