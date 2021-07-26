@@ -96,9 +96,12 @@ import {
   IGetInvestigationResultsRequest,
   IGetDisputeHistoryGraphQLResponse,
   IGenericRequest,
+  IGetInvestigationResultsPayload,
 } from 'lib/interfaces';
 import { GET_INVESTIGATION_RESULTS_RESPONSE } from 'lib/examples/mocks/GetInvestigationResultsResponse';
 import * as he from 'he';
+import { SoapAid } from 'lib/utils/soap-aid/soap-aid';
+import { Sync } from 'lib/utils/sync/sync';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -511,31 +514,32 @@ export const GetInvestigationResults = async (
   agent: https.Agent,
   auth: string,
 ): Promise<{ success: boolean; error?: any }> => {
+  // validate incoming message
   let variables: IGetInvestigationResultsRequest = {
     ...JSON.parse(message),
   };
   const validate = ajv.getSchema<IGetInvestigationResultsRequest>('getInvestigationResultsRequest');
   if (!validate(variables)) throw `Malformed message=${message}`;
-  const resp = await getDataForGetInvestigationResults(variables); // same data
-  const gql: IGetInvestigationResultsGraphQLResponse = resp.data; // add validation here
-  const payload = createGetInvestigationResultsPayload(gql, variables.disputeId);
-  const { msg, xml } = createPackage(
-    accountCode,
-    username,
-    JSON.stringify(payload),
+
+  //create helper classes
+  const soap = new SoapAid(
+    parseInvestigationResults,
     formatGetInvestigationResults,
     createGetInvestigationResults,
+    createGetInvestigationResultsPayload,
   );
-  const options = createRequestOptions(agent, auth, xml, 'GetInvestigationResults');
+  const sync = new Sync(enrichGetInvestigationResult);
+
+  // get / parse data needed
+  const resp = await getDataForGetInvestigationResults(variables); // same data
+  const payload = soap.createPayload<IGetInvestigationResultsPayload>(resp.data, variables.disputeId);
+  const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
+  const options = soap.createRequestOptions(agent, auth, xml, 'GetInvestigationResults');
+
   if (!msg || !xml || !options) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${options}`);
   try {
     // const parsed = await processRequest(options, parseInvestigationResults, parserOptions);
-    const investigation = await processMockRequest(
-      GET_INVESTIGATION_RESULTS_RESPONSE,
-      options,
-      parseInvestigationResults,
-      parserOptions,
-    );
+    const investigation = await soap.processMockRequest<any>(GET_INVESTIGATION_RESULTS_RESPONSE, parserOptions);
     const investigationResults: IGetInvestigationResult = returnNestedObject(
       investigation,
       'GetInvestigationResultsResult',
@@ -546,7 +550,7 @@ export const GetInvestigationResults = async (
         disputeId: variables.disputeId,
         getInvestigationResult: investigationResults,
       };
-      const synced = await syncData({ id: variables.id }, bundle, enrichGetInvestigationResult);
+      const synced = await sync.syncData({ id: variables.id }, bundle);
       return synced ? { success: true } : { success: false, error: investigationResults.ErrorResponse };
     }
     return { success: false, error: 'failed db sync' };

@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { print } from 'graphql';
 import { IEnrollServiceProductResponse, IGetAppDataRequest } from 'lib/interfaces';
 import { getAppData, updateAppData } from 'lib/proxy';
-import { returnNestedObject, cleanBackendData, deleteKeyNestedObject } from 'lib/utils';
+import { returnNestedObject, deleteKeyNestedObject } from 'lib/utils';
 import { GetAppDataQuery, TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 
 const appsyncUrl = process.env.APPSYNC_ENDPOINT;

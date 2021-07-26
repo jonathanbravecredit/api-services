@@ -1,6 +1,5 @@
 import { returnNestedObject, updateNestedObject } from 'lib/utils/helpers/helpers';
 import * as convert from 'xml-js';
-import * as https from 'https';
 import * as uuid from 'uuid';
 import * as fastXml from 'fast-xml-parser';
 import {
@@ -142,11 +141,13 @@ export const parseInvestigationResults = (xml: string, options: any): any => {
   const obj: any = returnNestedObject(fastXml.parse(xml, options), 'GetInvestigationResultsResponse');
   const investigationResults = returnNestedObject(obj, 'InvestigationResults');
   const creditBureau = returnNestedObject(obj, 'CreditBureau');
+
   let results = obj;
   if (typeof investigationResults === 'string') {
     const parsed = fastXml.parse(investigationResults, options);
     results = updateNestedObject(obj, 'InvestigationResults', parsed);
   }
+
   if (typeof creditBureau === 'string') {
     const parsed = fastXml.parse(creditBureau, options);
     results = updateNestedObject(obj, 'CreditBureau', parsed);

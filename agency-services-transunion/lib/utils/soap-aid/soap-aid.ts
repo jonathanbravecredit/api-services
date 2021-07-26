@@ -11,6 +11,7 @@ export class SoapAid {
   ) => any;
   cbMsg: (code: string, username: string, message: string) => string;
   cbXml: (msg: any) => string;
+  cbPayload: (data: any, disputeId: string) => any;
   requestOptions: IRequestOptions;
   msg: string;
   xml: string;
@@ -23,10 +24,12 @@ export class SoapAid {
     ) => any,
     cbMsg: (code: string, username: string, message: string) => any,
     cbXml: (msg: any) => string,
+    cbPayload: (data: any, disputeId: string) => any,
   ) {
     this.parser = parser;
     this.cbMsg = cbMsg;
     this.cbXml = cbXml;
+    this.cbPayload = cbPayload;
   }
 
   createPackage(code: string, username: string, message: string): { msg: string; xml: string } {
@@ -61,6 +64,17 @@ export class SoapAid {
   }
 
   /**
+   * Generic method to create payloads by type
+   * @param cbPayload
+   * @param data
+   * @param disputeId
+   * @returns
+   */
+  createPayload<T>(data, disputeId): T {
+    return this.cbPayload(data, disputeId);
+  }
+
+  /**
    * Generic method to process the axios request to send to TU
    * - uses the parser provided to process return message
    * @param options
@@ -72,6 +86,24 @@ export class SoapAid {
     try {
       const res = await axios({ ...this.requestOptions });
       const results = this.parser(res.data, parserOptions);
+      return results;
+    } catch (err) {
+      console.log('processRequest:err ===> ', err);
+      return err;
+    }
+  }
+
+  /**
+   * Generic method to process the axios request to send to TU
+   * - uses the parser provided to process return message
+   * @param options
+   * @param parser
+   * @param parserOptions
+   * @returns parsed and stringified data
+   */
+  async processMockRequest<T>(mock: string, parserOptions: Partial<fastXml.X2jOptions>): Promise<T> {
+    try {
+      const results = this.parser(mock, parserOptions);
       return results;
     } catch (err) {
       console.log('processRequest:err ===> ', err);
