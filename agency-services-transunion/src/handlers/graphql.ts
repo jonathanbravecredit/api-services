@@ -1,9 +1,9 @@
 import { AppSyncResolverEvent } from 'aws-lambda';
-import { response } from 'lib/utils/response';
+import { response } from 'lib/utils/response/response';
 import * as https from 'https';
 import * as fs from 'fs';
-import * as queries from 'lib/queries';
-import * as secrets from 'lib/utils/secrets';
+import * as queries from 'lib/proxy';
+import * as secrets from 'lib/utils/secrets/secrets';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;

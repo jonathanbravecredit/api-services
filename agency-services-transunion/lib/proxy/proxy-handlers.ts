@@ -1,22 +1,37 @@
-import { formatEnroll, createEnroll, parseEnroll, createEnrollPayload, enrichEnrollmentData } from 'lib/soap/enroll';
-import { formatFulfill, createFulfill, parseFulfill, createFulfillPayload, enrichFulfillData } from 'lib/soap/fulfill';
+import {
+  formatEnroll,
+  createEnroll,
+  parseEnroll,
+  createEnrollPayload,
+  enrichEnrollmentData,
+} from 'lib/transunion/enroll/enroll';
+import {
+  formatFulfill,
+  createFulfill,
+  parseFulfill,
+  createFulfillPayload,
+  enrichFulfillData,
+} from 'lib/transunion/fulfill/fulfill';
 import {
   formatGetAuthenticationQuestions,
   createGetAuthenticationQuestions,
-} from 'lib/soap/get-authentication-questions';
+} from 'lib/transunion/authentication-questions/get-authentication-questions';
 import {
   formatGetDisputeStatus,
   createGetDisputeStatus,
   parseGetDisputeStatus,
   createGetDisputeStatusPayload,
-} from 'lib/soap/get-dispute-status';
-import { formatGetServiceProduct, createGetServiceProduct } from 'lib/soap/get-service-product';
-import { formatIndicativeEnrichment, createIndicativeEnrichment } from 'lib/soap/indicative-enrichment';
-import { createPing } from 'lib/soap/ping';
+} from 'lib/transunion/dispute-status/get-dispute-status';
+import { formatGetServiceProduct, createGetServiceProduct } from 'lib/transunion/service-product/get-service-product';
+import {
+  formatIndicativeEnrichment,
+  createIndicativeEnrichment,
+} from 'lib/transunion/indicative-enrichment/indicative-enrichment';
+import { createPing } from 'lib/transunion/ping/ping';
 import {
   formatVerifyAuthenticationQuestions,
   createVerifyAuthenticationQuestions,
-} from 'lib/soap/verify-authentication-questions';
+} from 'lib/transunion/authentication-questions-verify/verify-authentication-questions';
 import {
   createPackage,
   createRequestOptions,
@@ -24,7 +39,7 @@ import {
   processRequest,
   returnNestedObject,
   syncData,
-} from 'lib/utils/helpers';
+} from 'lib/utils/helpers/helpers';
 import * as uuid from 'uuid';
 import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
@@ -34,22 +49,19 @@ import {
   enrichDisputeData,
   formatStartDispute,
   parseStartDispute,
-} from 'lib/soap/start-dispute';
+} from 'lib/transunion/start-dispute/start-dispute';
 import {
   createGetDisputeHistory,
   createGetDisputeHistoryPayload,
   formatGetDisputeHistory,
-} from 'lib/soap/get-dispute-history';
+} from 'lib/transunion/dispute-history/get-dispute-history';
 import {
   formatGetInvestigationResults,
   createGetInvestigationResults,
   createGetInvestigationResultsPayload,
   enrichGetInvestigationResult,
   parseInvestigationResults,
-} from 'lib/soap/get-investigation-results';
-import { IFulfillGraphQLResponse, IFulfillResponse, IFulfillResult } from 'lib/interfaces/fulfill.interface';
-import { IEnrollGraphQLResponse, IEnrollResponse, IEnrollResult } from 'lib/interfaces/enroll.interface';
-import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
+} from 'lib/transunion/investigation-results/get-investigation-results';
 import { ajv } from 'lib/schema/validation';
 import {
   getEnrollment,
@@ -62,27 +74,29 @@ import {
   getDataForGetDisputeHistory,
   getDataForGetInvestigationResults,
   getAppData,
-} from 'lib/queries/proxy-queries';
-import { dateDiffInDays } from 'lib/utils/dates';
+} from 'lib/proxy/proxy-queries';
+import { dateDiffInDays } from 'lib/utils/dates/dates';
 import {
+  IFulfillGraphQLResponse,
+  IFulfillResponse,
+  IFulfillResult,
+  IEnrollGraphQLResponse,
+  IEnrollResponse,
+  IEnrollResult,
+  IGetAppDataRequest,
   IGetDisputeStatusGraphQLResponse,
   IGetDisputeStatusResponse,
-} from 'lib/interfaces/get-dispute-status.interface';
-import {
   IStartDisputeBundle,
   IStartDisputeGraphQLResponse,
   IStartDisputeRequest,
   IStartDisputeResult,
-} from 'lib/interfaces/start-dispute.interface';
-import { GQL_TEST } from 'lib/examples/mocks/DBRecord';
-import { IGenericRequest } from 'lib/interfaces/api.interfaces';
-import { IGetDisputeHistoryGraphQLResponse } from 'lib/interfaces/get-dispute-history.interface';
-import {
   IGetInvestigationEnrichPayload,
   IGetInvestigationResult,
   IGetInvestigationResultsGraphQLResponse,
   IGetInvestigationResultsRequest,
-} from 'lib/interfaces/get-investigation-results.interface';
+  IGetDisputeHistoryGraphQLResponse,
+  IGenericRequest,
+} from 'lib/interfaces';
 import { GET_INVESTIGATION_RESULTS_RESPONSE } from 'lib/examples/mocks/GetInvestigationResultsResponse';
 import * as he from 'he';
 

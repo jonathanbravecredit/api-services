@@ -1,4 +1,4 @@
-import { mapReportResponse, returnNestedObject, textConstructor, updateNestedObject } from 'lib/utils/helpers';
+import { mapReportResponse, returnNestedObject, textConstructor, updateNestedObject } from 'lib/utils/helpers/helpers';
 import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
 import * as uuid from 'uuid';
@@ -10,7 +10,7 @@ import {
   IFulfillResponse,
   IFulfillResult,
   IFulfillServiceProductResponse,
-} from 'lib/interfaces/fulfill.interface';
+} from 'lib/interfaces';
 import { MONTH_MAP } from 'lib/data/constants';
 import { UpdateAppDataInput } from 'src/api/api.service';
 

@@ -1,17 +1,20 @@
 import { SNSEvent, SNSHandler } from 'aws-lambda';
-import { response } from 'lib/utils/response';
+import { response } from 'lib/utils/response/response';
 import axios from 'axios';
 import * as https from 'https';
 import * as fs from 'fs';
 import * as convert from 'xml-js';
-import { getSecretKey } from 'lib/utils/secrets';
-import { createRequestOptions } from 'lib/utils/helpers';
+import { getSecretKey } from 'lib/utils/secrets/secrets';
+import { createRequestOptions } from 'lib/utils/helpers/helpers';
 import {
   formatGetAuthenticationQuestions,
   createGetAuthenticationQuestions,
-} from 'lib/soap/get-authentication-questions';
-import { formatIndicativeEnrichment, createIndicativeEnrichment } from 'lib/soap/indicative-enrichment';
-import { createPing } from 'lib/soap/ping';
+} from 'lib/transunion/authentication-questions/get-authentication-questions';
+import {
+  formatIndicativeEnrichment,
+  createIndicativeEnrichment,
+} from 'lib/transunion/indicative-enrichment/indicative-enrichment';
+import { createPing } from 'lib/transunion/ping/ping';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;

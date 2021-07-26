@@ -1,11 +1,11 @@
-import { textConstructor } from 'lib/utils/helpers';
+import { textConstructor } from 'lib/utils/helpers/helpers';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import {
   IVerifyAuthenticationQuestions,
   IVerifyAuthenticationQuestionsMsg,
-} from 'lib/interfaces/verify-authentication-questions.interface';
-import { IVerifyAuthenticationAnswer } from 'lib/interfaces/verify-authentication-answers.interface';
+  IVerifyAuthenticationAnswer,
+} from 'lib/interfaces';
 
 export const formatVerifyAuthenticationQuestions = (
   accountCode: string,

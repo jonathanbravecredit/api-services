@@ -4,9 +4,8 @@ import {
   IGetDisputeStatusMsg,
   IGetDisputeStatusPayload,
   IGetDisputeStatusResponse,
-  IGetDisputeStatusResult,
-} from 'lib/interfaces/get-dispute-status.interface';
-import { returnNestedObject, textConstructor } from 'lib/utils/helpers';
+} from 'lib/interfaces';
+import { returnNestedObject, textConstructor } from 'lib/utils';
 import * as fastXml from 'fast-xml-parser';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';

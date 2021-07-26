@@ -10,14 +10,14 @@ import {
   IStartDisputeGraphQLResponse,
   IStartDisputeMsg,
   IStartDisputeResponse,
-} from 'lib/interfaces/start-dispute.interface';
-import { returnNestedObject, textConstructor } from 'lib/utils/helpers';
+  IDisputeReason,
+  IProcessDisputeTradelineResult,
+} from 'lib/interfaces';
+import { returnNestedObject, textConstructor } from 'lib/utils/helpers/helpers';
 import * as fastXml from 'fast-xml-parser';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
-import { IDisputeReason, IProcessDisputeTradelineResult } from 'lib/interfaces/disputes.interface';
 import { MONTH_MAP } from 'lib/data/constants';
-import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
 import { DisputeInput, UpdateAppDataInput } from 'src/api/api.service';
 
 /**

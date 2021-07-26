@@ -1,8 +1,8 @@
-import { returnNestedObject, textConstructor, updateNestedObject } from 'lib/utils/helpers';
+import { returnNestedObject, textConstructor, updateNestedObject } from 'lib/utils/helpers/helpers';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import * as fastXml from 'fast-xml-parser';
-import { IGetServiceProduct, IGetServiceProductMsg } from 'lib/interfaces/get-service-product.interface';
+import { IGetServiceProduct, IGetServiceProductMsg } from 'lib/interfaces';
 
 /**
  * This method packages the message in a request body and adds account information

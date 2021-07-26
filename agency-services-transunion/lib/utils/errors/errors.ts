@@ -1,5 +1,5 @@
 import { TU_ERROR_CODES } from 'lib/data/constants';
-import { IErrorCode, IErrorResult } from 'lib/interfaces/errors.interface';
+import { IErrorCode, IErrorResult } from 'lib/interfaces';
 
 // const sampleResp = {
 //   Enroll:

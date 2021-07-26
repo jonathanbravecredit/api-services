@@ -1,5 +1,5 @@
 import { getLastActiveOnboardingQuery } from 'lib/queries/custom-graphql';
-import { postGraphQLRequest } from 'lib/utils/helpers';
+import { postGraphQLRequest } from 'lib/utils/helpers/helpers';
 
 /**
  * Gets the last active onboarding step by user

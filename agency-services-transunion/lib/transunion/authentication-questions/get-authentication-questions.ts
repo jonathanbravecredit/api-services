@@ -1,8 +1,5 @@
-import {
-  IGetAuthenticationQuestions,
-  IGetAuthenticationQuestionsMsg,
-} from 'lib/interfaces/get-authentication-questions.interface';
-import { textConstructor } from 'lib/utils/helpers';
+import { IGetAuthenticationQuestions, IGetAuthenticationQuestionsMsg } from 'lib/interfaces';
+import { textConstructor } from 'lib/utils/helpers/helpers';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 

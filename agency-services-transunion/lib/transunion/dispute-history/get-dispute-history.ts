@@ -1,4 +1,4 @@
-import { textConstructor } from 'lib/utils/helpers';
+import { textConstructor } from 'lib/utils/helpers/helpers';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import {
@@ -6,7 +6,7 @@ import {
   IGetDisputeHistoryGraphQLResponse,
   IGetDisputeHistoryMsg,
   IGetDisputeHistoryPayload,
-} from 'lib/interfaces/get-dispute-history.interface';
+} from 'lib/interfaces';
 
 /**
  * Genarates the message payload for TU get dispute history
