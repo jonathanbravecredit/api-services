@@ -21,7 +21,7 @@ export class SoapAid {
       options?: Partial<fastXml.X2jOptions>,
       validationOptions?: boolean | Partial<fastXml.validationOptions>,
     ) => any,
-    cbMsg: (code: string, username: string, message: string) => string,
+    cbMsg: (code: string, username: string, message: string) => any,
     cbXml: (msg: any) => string,
   ) {
     this.parser = parser;

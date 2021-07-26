@@ -61,7 +61,7 @@ import {
   createGetInvestigationResultsPayload,
   enrichGetInvestigationResult,
   parseInvestigationResults,
-} from 'lib/transunion/investigation-results/get-investigation-results';
+} from 'lib/transunion/investigation-results/investigation-results';
 import { ajv } from 'lib/schema/validation';
 import {
   getEnrollment,

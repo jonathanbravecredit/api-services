@@ -1,6 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { IGetAppDataRequest } from 'lib/interfaces/get-app-data.interface';
-import { IGetDisputeRequest } from 'lib/interfaces/get-dispute-data-interface';
+import { IGetAppDataRequest, IGetDisputeRequest } from 'lib/interfaces';
 import * as qry from 'lib/queries';
 import { postGraphQLRequest } from 'lib/utils/helpers/helpers';
 import { UpdateAppDataInput } from 'src/api/api.service';
