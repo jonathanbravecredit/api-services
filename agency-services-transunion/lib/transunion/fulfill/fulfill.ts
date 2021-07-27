@@ -212,9 +212,13 @@ export const enrichFulfillData = (
     }
   }
 
-  const report = mapReportResponse(fulfillReport);
-  const mergeReport = mapReportResponse(fulfillMergeReport);
-  const vantageScore = mapReportResponse(fulfillVantageScore);
+  const priorReport = data.agencies?.transunion?.fulfillReport;
+  const priorMergeReport = data.agencies?.transunion?.fulfillMergeReport;
+  const priorVantageScore = data.agencies?.transunion?.fulfillVantageScore;
+
+  const report = fulfillReport ? mapReportResponse(fulfillReport) : priorReport;
+  const mergeReport = fulfillMergeReport ? mapReportResponse(fulfillMergeReport) : priorMergeReport;
+  const vantageScore = fulfillVantageScore ? mapReportResponse(fulfillVantageScore) : priorVantageScore;
 
   if (!mergeReport) return data; // don't overwrite report if there is an error mapping...the other two are less critical
   const mapped = {
@@ -224,10 +228,10 @@ export const enrichFulfillData = (
       transunion: {
         ...data.agencies?.transunion,
         fulfilledOn: fulfilledOn,
-        fulfillReport: mapReportResponse(fulfillReport),
-        fulfillMergeReport: mapReportResponse(fulfillMergeReport),
-        fulfillVantageScore: mapReportResponse(fulfillVantageScore),
-        serviceBundleFulfillmentKey: serviceBundleFulfillmentKey,
+        fulfillReport: report,
+        fulfillMergeReport: mergeReport,
+        fulfillVantageScore: vantageScore,
+        serviceBundleFulfillmentKey: serviceBundleFulfillmentKey, // this always has to be synced to the report in fulfill fields
       },
     },
   };

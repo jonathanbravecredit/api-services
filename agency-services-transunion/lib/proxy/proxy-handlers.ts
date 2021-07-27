@@ -746,15 +746,6 @@ export const DisputePreflightCheck = async (
     } catch (err) {
       return { success: false, error: err };
     }
-    console.log('*** IN ENROLL:FULFILL ***');
-    // If enrolling for the first time, you have to refresh in order to since up the reports
-    // the report returned from the Report and Score enrollment will not work.
-    try {
-      const { success, error } = await Fulfill(accountCode, username, message, agent, auth, true);
-      if (!success) return { success: false, error: error };
-    } catch (err) {
-      return { success: false, error: err };
-    }
   }
 
   let refresh: boolean;

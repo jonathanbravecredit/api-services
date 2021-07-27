@@ -250,7 +250,7 @@ export const enrichEnrollmentData = (
         fulfillReport: mapReportResponse(enrollReport),
         fulfillMergeReport: mapReportResponse(enrollMergeReport),
         fulfillVantageScore: mapReportResponse(enrollVantageScore),
-        serviceBundleFulfillmentKey: serviceBundleFulfillmentKey,
+        serviceBundleFulfillmentKey: serviceBundleFulfillmentKey, // this always has to be synced to the report in fulfill fields
       },
     },
   };
