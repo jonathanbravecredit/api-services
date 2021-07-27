@@ -79,6 +79,7 @@ import {
   createGetInvestigationResults,
   createGetInvestigationResultsPayload,
   enrichGetInvestigationResult,
+  enrichEnrollmentData,
 } from 'lib/transunion';
 
 const parserOptions = {
@@ -252,19 +253,18 @@ export const Enroll = async (
 
   //create helper classes
   const soap = new SoapAid(parseEnroll, formatEnroll, createEnroll, createEnrollPayload);
-  const sync = new Sync(enrichFulfillData);
-
-  const resp = await getDataForEnrollment(variables);
-  const payload = soap.createPayload<IEnrollPayload>({ data: resp.data, dispute: dispute });
-  const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
-  const request = soap.createRequestPayload(agent, auth, xml, 'Enroll');
-  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${request}`);
+  const sync = new Sync(enrichEnrollmentData);
 
   try {
-    const resp = await soap.processRequest<IEnrollResponse>(request, parserOptions);
-    const responseType = resp?.Envelope?.Body?.EnrollResponse?.EnrollResult?.ResponseType;
-    const data = resp?.Envelope?.Body?.EnrollResponse?.EnrollResult;
-    const error = resp?.Envelope?.Body?.EnrollResponse?.EnrollResult?.ErrorResponse;
+    const prepayload = await getDataForEnrollment(variables);
+    const payload = soap.createPayload<IEnrollPayload>({ data: prepayload.data, dispute: dispute });
+    const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
+    const request = soap.createRequestPayload(agent, auth, xml, 'Enroll');
+    if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${request}`);
+    const enroll = await soap.processRequest<IEnrollResponse>(request, parserOptions);
+    const responseType = enroll?.Envelope?.Body?.EnrollResponse?.EnrollResult?.ResponseType;
+    const data = enroll?.Envelope?.Body?.EnrollResponse?.EnrollResult;
+    const error = enroll?.Envelope?.Body?.EnrollResponse?.EnrollResult?.ErrorResponse;
     if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: variables.id }, data);
       return synced
@@ -314,14 +314,13 @@ export const Fulfill = async (
   const soap = new SoapAid(fastXml.parse, formatFulfill, createFulfill, createFulfillPayload);
   const sync = new Sync(enrichFulfillData);
 
-  // get / parse data needed to process request
-  const resp = await getDataForFulfill(variables);
-  const payload = soap.createPayload<IFulfillPayload>({ data: resp.data, dispute: dispute });
-  const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
-  const request = soap.createRequestPayload(agent, auth, xml, 'Fulfill');
-
-  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
   try {
+    // get / parse data needed to process request
+    const prepayload = await getDataForFulfill(variables);
+    const payload = soap.createPayload<IFulfillPayload>({ data: prepayload.data, dispute: dispute });
+    const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
+    const request = soap.createRequestPayload(agent, auth, xml, 'Fulfill');
+    if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
     const resp = await soap.processRequest<IFulfillResponse>(request, parserOptions);
     const responseType = resp?.Envelope?.Body?.FulfillResponse?.FulfillResult?.ResponseType;
     const data = resp?.Envelope?.Body?.FulfillResponse?.FulfillResult;
@@ -357,12 +356,12 @@ export const GetServiceProduct = async (
 ): Promise<{ success: boolean; error: IErrorResponse | INil; data: any }> => {
   // TODO add validation
 
-  // create helper classes
-  const soap = new SoapAid(fastXml.parse, formatGetServiceProduct, createGetServiceProduct);
-  const { msg, xml } = soap.createPackage(accountCode, username, message);
-  const request = soap.createRequestPayload(agent, auth, xml, 'GetServiceProduct');
-  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
   try {
+    // create helper classes
+    const soap = new SoapAid(fastXml.parse, formatGetServiceProduct, createGetServiceProduct);
+    const { msg, xml } = soap.createPackage(accountCode, username, message);
+    const request = soap.createRequestPayload(agent, auth, xml, 'GetServiceProduct');
+    if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
     const resp = await soap.processRequest<IGetServiceProductResponse>(request, parserOptions);
     const responseType = resp?.Envelope?.Body?.GetServiceProductResponse?.GetServiceProductResult?.ResponseType;
     const data = resp?.Envelope?.Body?.GetServiceProductResponse?.GetServiceProductResult;
@@ -413,14 +412,13 @@ export const GetDisputeStatus = async (
     createGetDisputeStatusPayload,
   );
 
-  // get / parse data needed to process request
-  const resp = await getDataForGetDisputeStatus(variables);
-  const payload = soap.createPayload<IGetDisputeStatusPayload>(resp.data);
-  const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
-  const request = soap.createRequestPayload(agent, auth, xml, 'GetDisputeStatus');
-
-  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
   try {
+    // get / parse data needed to process request
+    const prepayload = await getDataForGetDisputeStatus(variables);
+    const payload = soap.createPayload<IGetDisputeStatusPayload>(prepayload.data);
+    const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
+    const request = soap.createRequestPayload(agent, auth, xml, 'GetDisputeStatus');
+    if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
     const resp = await soap.processRequest<IGetDisputeStatusResponse>(request, parserOptions);
     const responseType = resp?.Envelope?.Body?.GetDisputeStatusResponse?.GetDisputeStatusResult?.ResponseType;
     const data = resp?.Envelope?.Body?.GetDisputeStatusResponse?.GetDisputeStatusResult;
@@ -460,14 +458,13 @@ export const StartDispute = async (
   const soap = new SoapAid(parseStartDispute, formatStartDispute, createStartDispute, createStartDisputePayload);
   const sync = new Sync(enrichDisputeData);
 
-  console.log('*** IN START DISPUTE ***');
-  const resp = await getDataForStartDispute(variables);
-  const payload = soap.createPayload({ data: resp.data, disputes: variables.disputes });
-  const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
-  const request = soap.createRequestPayload(agent, auth, xml, 'StartDispute');
-
-  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
   try {
+    console.log('*** IN START DISPUTE ***');
+    const prepayload = await getDataForStartDispute(variables);
+    const payload = soap.createPayload({ data: prepayload.data, disputes: variables.disputes });
+    const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
+    const request = soap.createRequestPayload(agent, auth, xml, 'StartDispute');
+    if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
     const resp = await soap.processRequest<IStartDisputeResponse>(request, parserOptions);
     const responseType = resp?.Envelope?.Body?.StartDisputeResponse?.StartDisputeResult?.ResponseType;
     const data = resp?.Envelope?.Body?.StartDisputeResponse?.StartDisputeResult;
@@ -518,14 +515,13 @@ export const GetDisputeHistory = async (
     createGetDisputeHistoryPayload,
   );
 
-  // get / parse data needed to process request
-  const resp = await getDataForGetDisputeHistory(variables); // same data
-  const payload = soap.createPayload<IGetDisputeHistoryPayload>(resp.data);
-  const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
-  const request = soap.createRequestPayload(agent, auth, xml, 'GetDisputeHistory');
-
-  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
   try {
+    // get / parse data needed to process request
+    const prepayload = await getDataForGetDisputeHistory(variables); // same data
+    const payload = soap.createPayload<IGetDisputeHistoryPayload>(prepayload.data);
+    const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
+    const request = soap.createRequestPayload(agent, auth, xml, 'GetDisputeHistory');
+    if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
     // process request and sync response to db
     const resp = await soap.processRequest<IGetDisputeHistoryResponse>(request, parserOptions);
     const responseType = resp?.Envelope?.Body?.GetDisputeHistoryResponse?.GetDisputeHistoryResult?.ResponseType;
@@ -571,14 +567,14 @@ export const GetInvestigationResults = async (
   );
   const sync = new Sync(enrichGetInvestigationResult);
 
-  // get / parse data needed
-  const resp = await getDataForGetInvestigationResults(variables); // same data
-  const payload = soap.createPayload<IGetInvestigationResultsPayload>(resp.data, variables.disputeId);
-  const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
-  const request = soap.createRequestPayload(agent, auth, xml, 'GetInvestigationResults');
-
-  if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${request}`);
   try {
+    // get / parse data needed
+    const prepayload = await getDataForGetInvestigationResults(variables); // same data
+    const payload = soap.createPayload<IGetInvestigationResultsPayload>(prepayload.data, variables.disputeId);
+    const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
+    const request = soap.createRequestPayload(agent, auth, xml, 'GetInvestigationResults');
+
+    if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${request}`);
     // const parsed = await processRequest(options, parseInvestigationResults, parserOptions);
     const resp = await soap.processMockRequest<IGetInvestigationResultsResponse>(
       GET_INVESTIGATION_RESULTS_RESPONSE,
