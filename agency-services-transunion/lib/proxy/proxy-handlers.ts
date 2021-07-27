@@ -535,6 +535,10 @@ export const StartDispute = async (
       disputes: variables.disputes,
     };
 
+    console.log('start dispute response data ===> ', JSON.stringify(data));
+    console.log('start dispute response type ===> ', JSON.stringify(responseType));
+    console.log('start dispute response error ===> ', JSON.stringify(error));
+
     if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: variables.id }, bundle);
       return synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
