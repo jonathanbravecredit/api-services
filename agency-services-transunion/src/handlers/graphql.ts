@@ -41,7 +41,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     user = `${username}:${password}`;
     auth = 'Basic ' + Buffer.from(user).toString('base64');
   } catch (err) {
-    return response(500, { error: `Error gathering/reading secrets=${err}` });
+    return { success: false, error: { error: `Error gathering/reading secrets=${err}` } };
   }
 
   try {
@@ -49,7 +49,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     cert = fs.readFileSync('/opt/brave.credit.crt');
     cacert = fs.readFileSync('/opt/Root-CA-Bundle.crt');
   } catch (err) {
-    return response(500, { error: `Error gathering/reading cert=${err}` });
+    return { success: false, error: { error: `Error gathering/reading cert=${err}` } };
   }
   try {
     const httpsAgent = new https.Agent({
@@ -63,48 +63,48 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     switch (action) {
       case 'Ping':
         results = await queries.Ping(httpsAgent, auth);
-        return JSON.stringify({ PingResults: results });
+        return JSON.stringify(results);
       case 'IndicativeEnrichment':
         results = await queries.IndicativeEnrichment(accountCode, username, message, httpsAgent, auth);
-        return JSON.stringify({ IndicativeEnrichmentResults: results });
+        return JSON.stringify(results);
       case 'GetAuthenticationQuestions':
         results = await queries.GetAuthenticationQuestions(accountCode, username, message, httpsAgent, auth);
-        return JSON.stringify({ GetAuthenticationQuestions: results });
+        return JSON.stringify(results);
       case 'VerifyAuthenticationQuestions':
         results = await queries.VerifyAuthenticationQuestions(accountCode, username, message, httpsAgent, auth);
-        return JSON.stringify({ VerifyAuthenticationQuestions: results });
+        return JSON.stringify(results);
       case 'Enroll':
         results = await queries.Enroll(accountCode, username, message, httpsAgent, auth);
-        return JSON.stringify({ Enroll: results });
+        return JSON.stringify(results);
       case 'Fulfill':
         results = await queries.Fulfill(accountCode, username, message, httpsAgent, auth);
-        return JSON.stringify({ Fulfill: results });
+        return JSON.stringify(results);
       case 'GetServiceProduct':
         results = await queries.GetServiceProduct(accountCode, username, message, httpsAgent, auth);
-        return JSON.stringify({ GetServiceProduct: results });
+        return JSON.stringify(results);
       case 'GetDisputeStatus':
         results = await queries.GetDisputeStatus(accountCode, username, message, httpsAgent, auth);
-        return JSON.stringify({ GetDisputeStatus: results });
+        return JSON.stringify(results);
       case 'StartDispute':
         results = await queries.StartDispute(accountCode, username, message, httpsAgent, auth);
-        return JSON.stringify({ StartDispute: results });
+        return JSON.stringify(results);
       case 'GetDisputeHistory':
         results = await queries.GetDisputeHistory(accountCode, username, message, httpsAgent, auth);
-        return JSON.stringify({ GetDisputeHistory: results });
+        return JSON.stringify(results);
       case 'CompleteOnboardingEnrollments':
         results = await queries.CompleteOnboardingEnrollments(accountCode, username, message, httpsAgent, auth);
-        return JSON.stringify({ CompleteOnboardingEnrollments: results });
+        return JSON.stringify(results);
       case 'DisputePreflightCheck':
         results = await queries.DisputePreflightCheck(accountCode, username, message, httpsAgent, auth);
-        return JSON.stringify({ DisputePreflightCheck: results });
+        return JSON.stringify(results);
       case 'GetInvestigationResults':
         results = await queries.GetInvestigationResults(accountCode, username, message, httpsAgent, auth);
-        return JSON.stringify({ GetInvestigationResults: results });
+        return JSON.stringify(results);
       default:
-        return JSON.stringify({ Action: action, Error: 'Action not found' });
+        return JSON.stringify({ success: false, error: 'Action not found', data: action });
     }
   } catch (err) {
     console.log('error ===>', err);
-    return response(500, { Action: action, Error: err });
+    return { success: false, error: { error: `Unknown server error=${err}` } };
   }
 };
