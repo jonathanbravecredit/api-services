@@ -285,6 +285,8 @@ export const qryGetDataForFulfill = `query GetAppData($id: ID!) {
     id
     agencies {
       transunion {
+        enrollmentKey
+        disputeEnrollmentKey
         serviceBundleFulfillmentKey
         disputeServiceBundleFulfillmentKey
       }

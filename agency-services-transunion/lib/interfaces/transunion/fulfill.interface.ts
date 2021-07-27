@@ -6,6 +6,8 @@ export interface IFulfillGraphQLResponse {
       id?: string;
       agencies?: {
         transunion?: {
+          enrollmentKey: string;
+          disputeEnrollmentKey: string;
           serviceBundleFulfillmentKey?: string;
           disputeServiceBundleFulfillmentKey?: string;
         };
@@ -77,6 +79,7 @@ export interface IFulfillPayload {
     PhoneNumber?: string;
     Ssn: string;
   };
+  EnrollmentKey: string;
   ServiceBundleCode: string;
 }
 

@@ -25,9 +25,9 @@ export const createFulfillPayload = (data: { data: IFulfillGraphQLResponse; disp
   const attrs = data.data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;
   const serviceBundleCode = data.dispute ? 'CC2BraveCreditTUReport24Hour' : 'CC2BraveCreditTUReportV3Score';
-  const fulfillmentKey = data.dispute
-    ? data.data.data.getAppData.agencies?.transunion?.disputeServiceBundleFulfillmentKey
-    : data.data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey;
+  const enrollmentKey = data.dispute
+    ? data.data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey
+    : data.data.data.getAppData.agencies?.transunion?.enrollmentKey;
 
   if (!id || !attrs || !dob) {
     console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
@@ -59,6 +59,7 @@ export const createFulfillPayload = (data: { data: IFulfillGraphQLResponse; disp
       },
       Ssn: attrs.ssn?.full || '',
     },
+    EnrollmentKey: enrollmentKey,
     ServiceBundleCode: serviceBundleCode,
   };
 };
