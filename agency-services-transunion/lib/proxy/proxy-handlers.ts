@@ -265,7 +265,7 @@ export const Enroll = async (
     const responseType = resp?.Envelope?.Body?.EnrollResponse?.EnrollResult?.ResponseType;
     const data = resp?.Envelope?.Body?.EnrollResponse?.EnrollResult;
     const error = resp?.Envelope?.Body?.EnrollResponse?.EnrollResult?.ErrorResponse;
-    console.log('enroll respn ===> ', resp);
+    console.log('enroll respn ===> ', JSON.stringify(resp));
     if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: variables.id }, data);
       return synced
