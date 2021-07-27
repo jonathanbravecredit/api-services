@@ -133,12 +133,13 @@ export class SoapAid {
     agent: https.Agent,
     auth: string,
     prepayload: any,
+    action: string,
     parserOptions: Partial<fastXml.X2jOptions>,
     message?: any,
   ): Promise<T> {
     const payload = message ? message : this.createPayload(prepayload);
     const { msg, xml } = this.createPackage(accountCode, username, JSON.stringify(payload));
-    const request = this.createRequestPayload(agent, auth, xml, 'GetServiceProduct');
+    const request = this.createRequestPayload(agent, auth, xml, action);
     if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
     return await this.processRequest<T>(request, parserOptions);
   }

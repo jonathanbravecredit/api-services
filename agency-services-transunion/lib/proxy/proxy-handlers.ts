@@ -264,6 +264,7 @@ export const Enroll = async (
       agent,
       auth,
       payload,
+      'Enroll',
       parserOptions,
     );
 
@@ -333,6 +334,7 @@ export const Fulfill = async (
       agent,
       auth,
       payload,
+      'Fulfill',
       parserOptions,
     );
 
