@@ -80,6 +80,7 @@ import {
   createGetInvestigationResultsPayload,
   enrichGetInvestigationResult,
   enrichEnrollmentData,
+  parseFulfill,
 } from 'lib/transunion';
 
 const parserOptions = {
@@ -321,7 +322,7 @@ export const Fulfill = async (
   }
 
   //create helper classes
-  const soap = new SoapAid(fastXml.parse, formatFulfill, createFulfill, createFulfillPayload);
+  const soap = new SoapAid(parseFulfill, formatFulfill, createFulfill, createFulfillPayload);
   const sync = new Sync(enrichFulfillData);
 
   try {

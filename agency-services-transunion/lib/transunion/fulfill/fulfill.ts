@@ -143,18 +143,14 @@ export const createFulfill = (msg: IFulfill): string => {
  */
 export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
   const obj: IFulfillResponse = fastXml.parse(xml, options);
-  console.log('fulfill obj ==> ', obj);
   const resp = returnNestedObject(obj, 'ServiceProductResponse');
-  console.log('fulfill resp ==> ', resp);
   if (resp instanceof Array) {
     const mapped = resp.map((prod) => {
       let prodObj = prod['ServiceProductObject']['#text'];
-      console.log('fulfill prodObj ===> ', prodObj);
       if (typeof prodObj === 'string') {
         // two decodes, because comes in encoded, and our defualt parser options encode it again.
         let clean = he.decode(he.decode(prodObj));
         const parsed = fastXml.parse(clean, options);
-        console.log('fulfill parsed ====> ', parsed);
         return {
           ...prod,
           ServiceProductObject: parsed,
