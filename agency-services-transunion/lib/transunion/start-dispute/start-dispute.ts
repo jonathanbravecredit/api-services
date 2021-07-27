@@ -62,7 +62,9 @@ export const createStartDisputePayload = (data: {
     },
     EnrollmentKey: data.data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey,
     LineItems: parseDisputeToLineItem(data.disputes),
-    ServiceBundleFulfillmentKey: data.data.data.getAppData.agencies?.transunion?.disputeServiceBundleFulfillmentKey,
+    //not the disputeServiceBundleKey...needs to be the bundle key return with the report returned on
+    // either fulfill or enroll calls on the fulfill or enroll report key
+    ServiceBundleFulfillmentKey: data.data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey,
     ServiceProductFulfillmentKey: null,
   };
 };

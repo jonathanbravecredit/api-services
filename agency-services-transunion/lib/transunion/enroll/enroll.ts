@@ -188,7 +188,6 @@ export const enrichEnrollmentData = (
   const enrollmentKey = enroll.EnrollmentKey;
   const serviceBundleFulfillmentKey = enroll.ServiceBundleFulfillmentKey;
   const prodResponse = enroll.ServiceProductFulfillments.ServiceProductResponse;
-  console.log('enroll ====> ', JSON.stringify(enroll));
   console.log('enroll enrollmentkey ===> ', JSON.stringify(enrollmentKey));
   console.log('enroll serviceBundleFulfillmentKey ===> ', JSON.stringify(serviceBundleFulfillmentKey));
   console.log('enroll prodResponse ===> ', JSON.stringify(prodResponse));

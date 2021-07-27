@@ -216,7 +216,6 @@ export const enrichFulfillData = (
   const priorReport = data.agencies?.transunion.fulfillReport;
   const priorMergeReport = data.agencies?.transunion.fulfillMergeReport;
   const priorVantage = data.agencies?.transunion.fulfillVantageScore;
-
   const mapped = {
     ...data,
     agencies: {
