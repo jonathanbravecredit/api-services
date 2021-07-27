@@ -3,6 +3,12 @@ import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
 import axios from 'axios';
 
+/**
+ * Class to help create and parse payloads for requests to Transunion SOAP service
+ * - Takes in unique parsers, formatters(messages, and xml), and payload generators
+ * - Each method provided is unique to the transunion service called but this class
+ *   standards the invocations needed to successfully send the request
+ */
 export class SoapAid {
   parser: (
     xmlData: string,
@@ -129,6 +135,17 @@ export class SoapAid {
     }
   }
 
+  /**
+   * The catch all method helps simply the TU service request and send back the response
+   * @param accountCode
+   * @param username
+   * @param agent
+   * @param auth
+   * @param prepayload
+   * @param action
+   * @param parserOptions
+   * @returns
+   */
   async parseAndSendPayload<T>(
     accountCode: string,
     username: string,

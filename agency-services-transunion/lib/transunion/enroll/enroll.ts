@@ -241,6 +241,10 @@ export const enrichEnrollmentData = (
         enrollReport: mapReportResponse(enrollReport),
         enrollMergeReport: mapReportResponse(enrollMergeReport),
         enrollVantageScore: mapReportResponse(enrollVantageScore),
+        fulfilledOn: enrolledOn,
+        fulfillReport: mapReportResponse(enrollReport),
+        fulfillMergeReport: mapReportResponse(enrollMergeReport),
+        fulfillVantageScore: mapReportResponse(enrollVantageScore),
       },
     },
   };

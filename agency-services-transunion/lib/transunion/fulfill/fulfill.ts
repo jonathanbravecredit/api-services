@@ -211,6 +211,12 @@ export const enrichFulfillData = (
         break;
     }
   }
+
+  // prior results so they are not overwritten if an issue mapping the data.
+  const priorReport = data.agencies?.transunion.fulfillReport;
+  const priorMergeReport = data.agencies?.transunion.fulfillMergeReport;
+  const priorVantage = data.agencies?.transunion.fulfillVantageScore;
+
   const mapped = {
     ...data,
     agencies: {
@@ -218,9 +224,9 @@ export const enrichFulfillData = (
       transunion: {
         ...data.agencies?.transunion,
         fulfilledOn: fulfilledOn,
-        fulfillReport: mapReportResponse(fulfillReport),
-        fulfillMergeReport: mapReportResponse(fulfillMergeReport),
-        fulfillVantageScore: mapReportResponse(fulfillVantageScore),
+        fulfillReport: mapReportResponse(fulfillReport) || priorReport,
+        fulfillMergeReport: mapReportResponse(fulfillMergeReport) || priorMergeReport,
+        fulfillVantageScore: mapReportResponse(fulfillVantageScore) || priorVantage,
         serviceBundleFulfillmentKey: serviceBundleFulfillmentKey,
       },
     },

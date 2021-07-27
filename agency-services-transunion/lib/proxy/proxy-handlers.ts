@@ -696,25 +696,6 @@ export const CompleteOnboardingEnrollments = async (
     console.log('enrollment results:success ====> ', enrollSuccess);
     console.log('enrollment results:error ====> ', enrollError);
     console.log('enrollment results:enrollData ====> ', enrollData);
-    if (!enrollSuccess) return { success: false, error: enrollError };
-    const {
-      success: disputeSuccess,
-      error: disputeError,
-      data: disputeEnroll,
-    } = await Enroll(accountCode, username, message, agent, auth, true); // dispute enroll
-    console.log('enrollment disputes:success ====> ', disputeSuccess);
-    console.log('enrollment disputes:error ====> ', disputeError);
-    console.log('enrollment disputes:enrollData ====> ', disputeEnroll);
-    if (!disputeSuccess) return { success: false, error: disputeError };
-    const {
-      success: fulfillSuccess,
-      error: fulfillError,
-      data: fulfill,
-    } = await Fulfill(accountCode, username, message, agent, auth, true);
-    console.log('enrollment fulfill:success ====> ', fulfillSuccess);
-    console.log('enrollment fulfill:error ====> ', fulfillError);
-    console.log('enrollment fulfill:enrollData ====> ', fulfill);
-    return fulfillSuccess ? { success: true, error: null, data: fulfill } : { success: false, error: fulfillError };
   } catch (err) {
     return { success: false, error: err, data: null };
   }
