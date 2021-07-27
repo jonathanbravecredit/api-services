@@ -54,7 +54,7 @@ export const getDataForEnrollment = async (msg: IGetAppDataRequest): Promise<Axi
 
 export const getDataForFulfill = async (msg: IGetAppDataRequest): Promise<AxiosResponse<any>> => {
   try {
-    return await postGraphQLRequest(qry.qryGetDataForEnrollment, msg);
+    return await postGraphQLRequest(qry.qryGetDataForFulfill, msg);
   } catch (err) {
     return err;
   }
