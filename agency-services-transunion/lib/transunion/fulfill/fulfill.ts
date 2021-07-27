@@ -2,6 +2,7 @@ import { mapReportResponse, returnNestedObject, textConstructor, updateNestedObj
 import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
 import * as uuid from 'uuid';
+import * as he from 'he';
 import {
   IFulfill,
   IFulfillGraphQLResponse,
@@ -146,11 +147,12 @@ export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
     const mapped = resp.map((prod) => {
       let prodObj = prod['ServiceProductObject']['#text'];
       if (typeof prodObj === 'string') {
-        let clean = prodObj
-          .replace(/&#x26;/g, '&')
-          .replace(/&lt;/g, '<')
-          .replace(/&gt;/g, '>')
-          .replace(/&#xD;/g, '');
+        let clean = he.decode(prodObj);
+        console.log('cleaned ====> ', clean);
+        // .replace(/&#x26;/g, '&')
+        // .replace(/&lt;/g, '<')
+        // .replace(/&gt;/g, '>')
+        // .replace(/&#xD;/g, '');
         const parsed = fastXml.parse(clean, options);
         return {
           ...prod,
