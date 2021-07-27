@@ -147,12 +147,8 @@ export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
     const mapped = resp.map((prod) => {
       let prodObj = prod['ServiceProductObject']['#text'];
       if (typeof prodObj === 'string') {
-        let clean = he.decode(prodObj);
-        console.log('cleaned ====> ', clean);
-        // .replace(/&#x26;/g, '&')
-        // .replace(/&lt;/g, '<')
-        // .replace(/&gt;/g, '>')
-        // .replace(/&#xD;/g, '');
+        // two decodes, because comes in encoded, and our defualt parser options encode it again.
+        let clean = he.decode(he.decode(prodObj));
         const parsed = fastXml.parse(clean, options);
         return {
           ...prod,

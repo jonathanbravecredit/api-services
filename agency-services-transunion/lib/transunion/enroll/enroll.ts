@@ -151,12 +151,8 @@ export const parseEnroll = (xml: string, options: any): IEnrollResponse => {
     const mapped = resp.map((prod) => {
       let prodObj = prod['ServiceProductObject']['#text'];
       if (typeof prodObj === 'string') {
+        // two decodes, because comes in encoded, and our defualt parser options encode it again.
         let clean = he.decode(he.decode(prodObj));
-        console.log('cleaned ====> ', clean);
-        // .replace(/&#x26;/g, '&')
-        // .replace(/&lt;/g, '<')
-        // .replace(/&gt;/g, '>')
-        // .replace(/&#xD;/g, '');
         const parsed = fastXml.parse(clean, options);
         console.log('parsed ===> ', parsed);
         return {
