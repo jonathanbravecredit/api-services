@@ -146,7 +146,11 @@ export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
     const mapped = resp.map((prod) => {
       let prodObj = prod['ServiceProductObject']['#text'];
       if (typeof prodObj === 'string') {
-        let clean = prodObj.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
+        let clean = prodObj
+          .replace(/&#x26;/g, '&')
+          .replace(/&lt;/g, '<')
+          .replace(/&gt;/g, '>')
+          .replace(/&#xD;/g, '');
         const parsed = fastXml.parse(clean, options);
         return {
           ...prod,
