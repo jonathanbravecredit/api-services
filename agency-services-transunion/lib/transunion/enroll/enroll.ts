@@ -229,6 +229,8 @@ export const enrichEnrollmentData = (
         break;
     }
   }
+
+  //when first enrolling, enrollment reports are the same as fulfillment reports
   return {
     ...data,
     agencies: {

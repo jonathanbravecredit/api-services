@@ -680,7 +680,7 @@ export const CompleteOnboardingEnrollments = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: Boolean; error?: any; data?: IFulfillResult }> => {
+): Promise<{ success: Boolean; error?: any; data?: IEnrollResult }> => {
   let variables: IGetAppDataRequest = {
     ...JSON.parse(message),
   };
@@ -696,6 +696,7 @@ export const CompleteOnboardingEnrollments = async (
     console.log('enrollment results:success ====> ', enrollSuccess);
     console.log('enrollment results:error ====> ', enrollError);
     console.log('enrollment results:enrollData ====> ', enrollData);
+    return enrollSuccess ? { success: true, error: null, data: enrollData } : { success: false, error: enrollError };
   } catch (err) {
     return { success: false, error: err, data: null };
   }
