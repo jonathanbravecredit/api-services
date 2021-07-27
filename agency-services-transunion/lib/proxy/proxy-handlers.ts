@@ -267,7 +267,7 @@ export const Enroll = async (
     const error = resp?.Envelope?.Body?.EnrollResponse?.EnrollResult?.ErrorResponse;
     console.log('enroll respn ===> ', JSON.stringify(resp));
     if (responseType.toLowerCase() === 'success') {
-      const synced = await sync.syncData({ id: variables.id }, data);
+      const synced = await sync.syncData({ id: variables.id }, data, dispute);
       return synced
         ? { success: true, error: null, data: data }
         : { success: false, error: 'failed to sync data to db' };
@@ -328,7 +328,7 @@ export const Fulfill = async (
     const data = resp?.Envelope?.Body?.FulfillResponse?.FulfillResult;
     const error = resp?.Envelope?.Body?.FulfillResponse?.FulfillResult?.ErrorResponse;
     if (responseType.toLowerCase() === 'success') {
-      const synced = await sync.syncData({ id: variables.id }, data);
+      const synced = await sync.syncData({ id: variables.id }, data, dispute);
       return synced
         ? { success: true, error: null, data: data }
         : { success: false, error: 'failed to sync data to db' };
