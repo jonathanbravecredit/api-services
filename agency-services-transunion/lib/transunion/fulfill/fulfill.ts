@@ -150,6 +150,7 @@ export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
         // two decodes, because comes in encoded, and our defualt parser options encode it again.
         let clean = he.decode(he.decode(prodObj));
         const parsed = fastXml.parse(clean, options);
+        console.log('fulfill parsed ====> ', parsed);
         return {
           ...prod,
           ServiceProductObject: parsed,
