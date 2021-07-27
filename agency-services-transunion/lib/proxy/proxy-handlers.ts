@@ -30,16 +30,11 @@ import {
   IGetInvestigationResultsRequest,
   IGetInvestigationResultsResponse,
   IGenericRequest,
-  IGetInvestigationResultsPayload,
-  IGetDisputeHistoryPayload,
   IGetDisputeHistoryResponse,
   IErrorResponse,
   INil,
   IStartDisputeResponse,
-  IGetDisputeStatusPayload,
   IGetServiceProductResponse,
-  IFulfillPayload,
-  IEnrollPayload,
   IVerifyAuthenticationQuestionsResponse,
   IGetAuthenticationQuestionsResponse,
   IIndicativeEnrichmentResponse,
@@ -591,7 +586,7 @@ export const GetDisputeHistory = async (
       agent,
       auth,
       prepayload.data,
-      'Fulfill',
+      'GetDisputeHistory',
       parserOptions,
     );
 
@@ -650,7 +645,7 @@ export const GetInvestigationResults = async (
     //   agent,
     //   auth,
     //   payload,
-    //   'Fulfill',
+    //   'GetInvestigationResults',
     //   parserOptions,
     // );
 
