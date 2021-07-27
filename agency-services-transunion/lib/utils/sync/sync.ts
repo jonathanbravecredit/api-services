@@ -21,8 +21,8 @@ export class Sync {
       const app = await getAppData(variables);
       const appData: IGetAppDataResponse = app.data;
       if (appData?.errors?.length > 0) return false; // gql error;
-      const clean: UpdateAppDataInput = this.cleanBackendData(appData.data.getAppData);
-      const enriched: UpdateAppDataInput | undefined = this.enricher(clean, updated, dispute);
+      const clean = this.cleanBackendData(appData.data.getAppData);
+      const enriched = this.enricher(clean, updated, dispute);
       if (enriched === undefined) return false; // enrichment error
       const sync = await updateAppData({ input: enriched });
       const syncData: IGetAppDataResponse = sync.data; // gql error

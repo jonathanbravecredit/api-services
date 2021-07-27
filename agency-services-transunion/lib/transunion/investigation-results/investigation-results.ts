@@ -18,12 +18,12 @@ import { XmlFormatter } from 'lib/utils/xml-formatter/xml-formatter';
  * @param data
  * @returns IEnrollPayload
  */
-export const createGetInvestigationResultsPayload = (
-  data: IGetInvestigationResultsGraphQLResponse,
-  disputeId?: string,
-): IGetInvestigationResultsPayload => {
-  const id = data.data.getAppData.id?.split(':')?.pop();
-  const key = data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey;
+export const createGetInvestigationResultsPayload = (data: {
+  data: IGetInvestigationResultsGraphQLResponse;
+  disputeId?: string;
+}): IGetInvestigationResultsPayload => {
+  const id = data.data.data.getAppData.id?.split(':')?.pop();
+  const key = data.data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey;
 
   if (!id || !key) {
     console.log(`no id or enrollmentKey provided: id=${id}, key=${key}`);
@@ -34,7 +34,7 @@ export const createGetInvestigationResultsPayload = (
     RequestKey: '',
     ClientKey: id,
     EnrollmentKey: key,
-    DisputeId: disputeId,
+    DisputeId: data.disputeId,
   };
 };
 
@@ -140,8 +140,8 @@ export const enrichGetInvestigationResult = (
  */
 export const parseInvestigationResults = (xml: string, options: any): any => {
   const obj: IGetInvestigationResultsResponse = fastXml.parse(xml, options);
-  const investigationResults = returnNestedObject(obj, 'InvestigationResults');
-  const creditBureau = returnNestedObject(obj, 'CreditBureau');
+  const investigationResults = returnNestedObject<string>(obj, 'InvestigationResults');
+  const creditBureau = returnNestedObject<string>(obj, 'CreditBureau');
 
   let results = obj;
   if (typeof investigationResults === 'string') {

@@ -146,7 +146,7 @@ export const createEnroll = (msg: IEnroll): string => {
  */
 export const parseEnroll = (xml: string, options: any): IEnrollResponse => {
   const obj: IEnrollResponse = fastXml.parse(xml, options);
-  const resp = returnNestedObject(obj, 'ServiceProductResponse');
+  const resp = returnNestedObject<any>(obj, 'ServiceProductResponse');
   if (resp instanceof Array) {
     const mapped = resp.map((prod) => {
       let prodObj = prod['ServiceProductObject']['#text'];
@@ -154,7 +154,6 @@ export const parseEnroll = (xml: string, options: any): IEnrollResponse => {
         // two decodes, because comes in encoded, and our defualt parser options encode it again.
         let clean = he.decode(he.decode(prodObj));
         const parsed = fastXml.parse(clean, options);
-        console.log('parsed ===> ', parsed);
         return {
           ...prod,
           ServiceProductObject: parsed,

@@ -143,7 +143,7 @@ export const createFulfill = (msg: IFulfill): string => {
  */
 export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
   const obj: IFulfillResponse = fastXml.parse(xml, options);
-  const resp = returnNestedObject(obj, 'ServiceProductResponse');
+  const resp = returnNestedObject<any>(obj, 'ServiceProductResponse');
   if (resp instanceof Array) {
     const mapped = resp.map((prod) => {
       let prodObj = prod['ServiceProductObject']['#text'];
@@ -182,7 +182,7 @@ export const enrichFulfillData = (
   let fulfillMergeReport;
   let fulfillVantageScore;
   let fulfilledOn = new Date().toISOString();
-  const prodResponse = returnNestedObject(fulfill, 'ServiceProductResponse');
+  const prodResponse = returnNestedObject<any>(fulfill, 'ServiceProductResponse');
   const serviceBundleFulfillmentKey = fulfill.ServiceBundleFulfillmentKey;
 
   if (!prodResponse) return;

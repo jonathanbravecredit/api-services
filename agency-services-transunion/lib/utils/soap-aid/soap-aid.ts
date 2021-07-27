@@ -24,7 +24,9 @@ export class SoapAid {
     ) => any = fastXml.parse,
     cbMsg: (code: string, username: string, message: string) => any,
     cbXml: (msg: any) => string,
-    cbPayload: (data: any, disputeId?: string) => any = (a, b): void => {},
+    cbPayload: (data: any, disputeId?: string) => any = (a): any => {
+      return a;
+    },
   ) {
     this.parser = parser;
     this.cbMsg = cbMsg;
@@ -135,12 +137,16 @@ export class SoapAid {
     prepayload: any,
     action: string,
     parserOptions: Partial<fastXml.X2jOptions>,
-    message?: any,
   ): Promise<T> {
-    const payload = message ? message : this.createPayload(prepayload);
+    const payload = this.createPayload(prepayload);
     const { msg, xml } = this.createPackage(accountCode, username, JSON.stringify(payload));
     const request = this.createRequestPayload(agent, auth, xml, action);
-    if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
-    return await this.processRequest<T>(request, parserOptions);
+    if (!msg || !xml || !request || !payload) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
+    try {
+      return await this.processRequest<T>(request, parserOptions);
+    } catch (err) {
+      console.log(`parseAndSendPayload error=${err}`);
+      throw `Uncaught error in parse and send`;
+    }
   }
 }
