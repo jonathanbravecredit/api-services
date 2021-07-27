@@ -261,10 +261,11 @@ export const Enroll = async (
     const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
     const request = soap.createRequestPayload(agent, auth, xml, 'Enroll');
     if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${request}`);
-    const enroll = await soap.processRequest<IEnrollResponse>(request, parserOptions);
-    const responseType = enroll?.Envelope?.Body?.EnrollResponse?.EnrollResult?.ResponseType;
-    const data = enroll?.Envelope?.Body?.EnrollResponse?.EnrollResult;
-    const error = enroll?.Envelope?.Body?.EnrollResponse?.EnrollResult?.ErrorResponse;
+    const resp = await soap.processRequest<IEnrollResponse>(request, parserOptions);
+    const responseType = resp?.Envelope?.Body?.EnrollResponse?.EnrollResult?.ResponseType;
+    const data = resp?.Envelope?.Body?.EnrollResponse?.EnrollResult;
+    const error = resp?.Envelope?.Body?.EnrollResponse?.EnrollResult?.ErrorResponse;
+    console.log('enroll respn ===> ', resp);
     if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: variables.id }, data);
       return synced
@@ -276,6 +277,7 @@ export const Enroll = async (
         : { success: false, error: error, data: null };
     }
   } catch (err) {
+    console.log('enroll error ===> ', err);
     return { success: false, error: err, data: null };
   }
 };
@@ -619,18 +621,27 @@ export const CompleteOnboardingEnrollments = async (
       error: enrollError,
       data: enrollData,
     } = await Enroll(accountCode, username, message, agent, auth, false); // report & score enroll
+    console.log('enrollment results:success ====> ', enrollSuccess);
+    console.log('enrollment results:error ====> ', enrollError);
+    console.log('enrollment results:enrollData ====> ', enrollData);
     if (!enrollSuccess) return { success: false, error: enrollError };
     const {
       success: disputeSuccess,
       error: disputeError,
       data: disputeEnroll,
     } = await Enroll(accountCode, username, message, agent, auth, true); // dispute enroll
+    console.log('enrollment disputes:success ====> ', disputeSuccess);
+    console.log('enrollment disputes:error ====> ', disputeError);
+    console.log('enrollment disputes:enrollData ====> ', disputeEnroll);
     if (!disputeSuccess) return { success: false, error: disputeError };
     const {
       success: fulfillSuccess,
       error: fulfillError,
       data: fulfill,
     } = await Fulfill(accountCode, username, message, agent, auth, true);
+    console.log('enrollment fulfill:success ====> ', fulfillSuccess);
+    console.log('enrollment fulfill:error ====> ', fulfillError);
+    console.log('enrollment fulfill:enrollData ====> ', fulfill);
     return fulfillSuccess ? { success: true, error: null, data: fulfill } : { success: false, error: fulfillError };
   } catch (err) {
     return { success: false, error: err, data: null };
