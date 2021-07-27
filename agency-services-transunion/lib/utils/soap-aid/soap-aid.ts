@@ -101,6 +101,7 @@ export class SoapAid {
     try {
       const res = await axios({ ...request });
       const results = this.parser(res.data, parserOptions);
+      console.log('soap-aid:parser results ===> ', results);
       return results;
     } catch (err) {
       console.log('processRequest:err ===> ', err);
@@ -124,5 +125,21 @@ export class SoapAid {
       console.log('processRequest:err ===> ', err);
       return err;
     }
+  }
+
+  async parseAndSendPayload<T>(
+    accountCode: string,
+    username: string,
+    agent: https.Agent,
+    auth: string,
+    prepayload: any,
+    parserOptions: Partial<fastXml.X2jOptions>,
+    message?: any,
+  ): Promise<T> {
+    const payload = message ? message : this.createPayload(prepayload);
+    const { msg, xml } = this.createPackage(accountCode, username, JSON.stringify(payload));
+    const request = this.createRequestPayload(agent, auth, xml, 'GetServiceProduct');
+    if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
+    return await this.processRequest<T>(request, parserOptions);
   }
 }

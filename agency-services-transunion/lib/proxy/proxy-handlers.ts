@@ -257,15 +257,22 @@ export const Enroll = async (
 
   try {
     const prepayload = await getDataForEnrollment(variables);
-    const payload = soap.createPayload<IEnrollPayload>({ data: prepayload.data, dispute: dispute });
-    const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
-    const request = soap.createRequestPayload(agent, auth, xml, 'Enroll');
-    if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or options:${request}`);
-    const resp = await soap.processRequest<IEnrollResponse>(request, parserOptions);
+    const payload = { data: prepayload.data, dispute: dispute };
+    const resp = await soap.parseAndSendPayload<IEnrollResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      payload,
+      parserOptions,
+    );
+
+    // get the specific response from parsed object
     const responseType = resp?.Envelope?.Body?.EnrollResponse?.EnrollResult?.ResponseType;
     const data = resp?.Envelope?.Body?.EnrollResponse?.EnrollResult;
     const error = resp?.Envelope?.Body?.EnrollResponse?.EnrollResult?.ErrorResponse;
     console.log('enroll respn ===> ', JSON.stringify(resp));
+
     if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: variables.id }, data, dispute);
       return synced
@@ -319,11 +326,17 @@ export const Fulfill = async (
   try {
     // get / parse data needed to process request
     const prepayload = await getDataForFulfill(variables);
-    const payload = soap.createPayload<IFulfillPayload>({ data: prepayload.data, dispute: dispute });
-    const { msg, xml } = soap.createPackage(accountCode, username, JSON.stringify(payload));
-    const request = soap.createRequestPayload(agent, auth, xml, 'Fulfill');
-    if (!msg || !xml || !request) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
-    const resp = await soap.processRequest<IFulfillResponse>(request, parserOptions);
+    const payload = { data: prepayload.data, dispute: dispute };
+    const resp = await soap.parseAndSendPayload<IFulfillResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      payload,
+      parserOptions,
+    );
+
+    // get the specific response from parsed object
     const responseType = resp?.Envelope?.Body?.FulfillResponse?.FulfillResult?.ResponseType;
     const data = resp?.Envelope?.Body?.FulfillResponse?.FulfillResult;
     const error = resp?.Envelope?.Body?.FulfillResponse?.FulfillResult?.ErrorResponse;
