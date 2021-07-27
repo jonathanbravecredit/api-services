@@ -64,18 +64,18 @@ export const createGetServiceProduct = (msg: IGetServiceProduct): string => {
   return xml;
 };
 
-/**
- * Parse the Fulfill response including the embedded Service Product Objects
- * @param xml
- * @returns
- */
-export const parseCreditBureau = (xml: string, options: any): any => {
-  const obj: any = returnNestedObject(fastXml.parse(xml, options), 'GetInvestigationResultsResponse');
-  const creditBureau = returnNestedObject(obj, 'CreditBureau');
-  if (typeof creditBureau === 'string') {
-    let clean = creditBureau.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
-    return updateNestedObject(obj, 'CreditBureau', clean);
-  } else {
-    return obj;
-  }
-};
+// /**
+//  * Parse the Fulfill response including the embedded Service Product Objects
+//  * @param xml
+//  * @returns
+//  */
+// export const parseCreditBureau = (xml: string, options: any): any => {
+//   const obj: any = returnNestedObject(fastXml.parse(xml, options), 'GetInvestigationResultsResponse');
+//   const creditBureau = returnNestedObject(obj, 'CreditBureau');
+//   if (typeof creditBureau === 'string') {
+//     let clean = creditBureau.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
+//     return updateNestedObject(obj, 'CreditBureau', clean);
+//   } else {
+//     return obj;
+//   }
+// };

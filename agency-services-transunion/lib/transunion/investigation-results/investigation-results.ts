@@ -8,6 +8,7 @@ import {
   IGetInvestigationResultsGraphQLResponse,
   IGetInvestigationResultsMsg,
   IGetInvestigationResultsPayload,
+  IGetInvestigationResultsResponse,
 } from 'lib/interfaces';
 import { DisputeInput, UpdateAppDataInput } from 'src/api/api.service';
 import { XmlFormatter } from 'lib/utils/xml-formatter/xml-formatter';
@@ -138,7 +139,7 @@ export const enrichGetInvestigationResult = (
  * @returns
  */
 export const parseInvestigationResults = (xml: string, options: any): any => {
-  const obj: any = returnNestedObject(fastXml.parse(xml, options), 'GetInvestigationResultsResponse');
+  const obj: IGetInvestigationResultsResponse = fastXml.parse(xml, options);
   const investigationResults = returnNestedObject(obj, 'InvestigationResults');
   const creditBureau = returnNestedObject(obj, 'CreditBureau');
 

@@ -140,7 +140,7 @@ export const createFulfill = (msg: IFulfill): string => {
  * @returns IFulfillResponse
  */
 export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
-  const obj: IFulfillResponse = returnNestedObject(fastXml.parse(xml, options), 'FulfillResponse');
+  const obj: IFulfillResponse = fastXml.parse(xml, options);
   const resp = returnNestedObject(obj, 'ServiceProductResponse');
   if (resp instanceof Array) {
     const mapped = resp.map((prod) => {

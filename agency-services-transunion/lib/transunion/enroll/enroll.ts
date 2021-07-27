@@ -144,7 +144,7 @@ export const createEnroll = (msg: IEnroll): string => {
  * @returns
  */
 export const parseEnroll = (xml: string, options: any): IEnrollResponse => {
-  const obj: IEnrollResponse = returnNestedObject(fastXml.parse(xml, options), 'EnrollResponse');
+  const obj: IEnrollResponse = fastXml.parse(xml, options);
   const resp = returnNestedObject(obj, 'ServiceProductResponse');
   if (resp instanceof Array) {
     const mapped = resp.map((prod) => {

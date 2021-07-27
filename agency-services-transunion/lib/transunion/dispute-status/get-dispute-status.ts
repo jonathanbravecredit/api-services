@@ -138,6 +138,6 @@ export const createGetDisputeStatus = (msg: IGetDisputeStatus): string => {
  * @returns IGetDisputeStatusResponse
  */
 export const parseGetDisputeStatus = (xml: string, options: any): IGetDisputeStatusResponse => {
-  const obj: IGetDisputeStatusResponse = returnNestedObject(fastXml.parse(xml, options), 'GetDisputeStatusResponse');
+  const obj: IGetDisputeStatusResponse = fastXml.parse(xml, options);
   return obj;
 };

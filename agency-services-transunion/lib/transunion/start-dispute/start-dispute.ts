@@ -380,7 +380,7 @@ export const createStartDispute = (msg: IStartDispute): string => {
  * @returns IStartDisputeResponse
  */
 export const parseStartDispute = (xml: string, options: any): IStartDisputeResponse => {
-  const obj: IStartDisputeResponse = returnNestedObject(fastXml.parse(xml, options), 'StartDisputeResponse');
+  const obj: IStartDisputeResponse = fastXml.parse(xml, options);
   return obj;
 };
 
