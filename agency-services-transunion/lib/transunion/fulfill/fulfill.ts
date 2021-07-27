@@ -158,6 +158,8 @@ export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
           ...prod,
           ServiceProductObject: parsed,
         };
+      } else {
+        return prod;
       }
     });
     const updated = updateNestedObject(obj, 'ServiceProductResponse', [...mapped.filter(Boolean)]);

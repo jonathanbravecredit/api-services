@@ -151,17 +151,20 @@ export const parseEnroll = (xml: string, options: any): IEnrollResponse => {
     const mapped = resp.map((prod) => {
       let prodObj = prod['ServiceProductObject']['#text'];
       if (typeof prodObj === 'string') {
-        let clean = he.decode(prodObj);
+        let clean = he.decode(he.decode(prodObj));
         console.log('cleaned ====> ', clean);
         // .replace(/&#x26;/g, '&')
         // .replace(/&lt;/g, '<')
         // .replace(/&gt;/g, '>')
         // .replace(/&#xD;/g, '');
         const parsed = fastXml.parse(clean, options);
+        console.log('parsed ===> ', parsed);
         return {
           ...prod,
           ServiceProductObject: parsed,
         };
+      } else {
+        return prod;
       }
     });
     const updated = updateNestedObject(obj, 'ServiceProductResponse', [...mapped.filter(Boolean)]);
