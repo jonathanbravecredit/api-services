@@ -1,48 +1,12 @@
-import { formatEnroll, createEnroll, parseEnroll, createEnrollPayload } from 'lib/transunion/enroll/enroll';
-import { formatFulfill, createFulfill, createFulfillPayload, enrichFulfillData } from 'lib/transunion/fulfill/fulfill';
-import {
-  formatGetAuthenticationQuestions,
-  createGetAuthenticationQuestions,
-} from 'lib/transunion/authentication-questions/get-authentication-questions';
-import {
-  formatGetDisputeStatus,
-  createGetDisputeStatus,
-  parseGetDisputeStatus,
-  createGetDisputeStatusPayload,
-} from 'lib/transunion/dispute-status/get-dispute-status';
-import { formatGetServiceProduct, createGetServiceProduct } from 'lib/transunion/service-product/get-service-product';
-import {
-  formatIndicativeEnrichment,
-  createIndicativeEnrichment,
-} from 'lib/transunion/indicative-enrichment/indicative-enrichment';
-import { createPing } from 'lib/transunion/ping/ping';
-import {
-  formatVerifyAuthenticationQuestions,
-  createVerifyAuthenticationQuestions,
-} from 'lib/transunion/authentication-questions-verify/verify-authentication-questions';
-import { returnNestedObject } from 'lib/utils/helpers/helpers';
+import * as he from 'he';
 import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
-import {
-  createStartDispute,
-  createStartDisputePayload,
-  enrichDisputeData,
-  formatStartDispute,
-  parseStartDispute,
-} from 'lib/transunion/start-dispute/start-dispute';
-import {
-  createGetDisputeHistory,
-  createGetDisputeHistoryPayload,
-  formatGetDisputeHistory,
-} from 'lib/transunion/dispute-history/get-dispute-history';
-import {
-  formatGetInvestigationResults,
-  createGetInvestigationResults,
-  createGetInvestigationResultsPayload,
-  enrichGetInvestigationResult,
-  parseInvestigationResults,
-} from 'lib/transunion/investigation-results/investigation-results';
 import { ajv } from 'lib/schema/validation';
+import { Sync } from 'lib/utils/sync/sync';
+import { SoapAid } from 'lib/utils/soap-aid/soap-aid';
+import { dateDiffInDays } from 'lib/utils/dates/dates';
+import { returnNestedObject } from 'lib/utils/helpers/helpers';
+import { GET_INVESTIGATION_RESULTS_RESPONSE } from 'lib/examples/mocks/GetInvestigationResultsResponse';
 import {
   getDataForEnrollment,
   getDataForFulfill,
@@ -53,7 +17,6 @@ import {
   getDataForGetDisputeHistory,
   getDataForGetInvestigationResults,
 } from 'lib/proxy/proxy-queries';
-import { dateDiffInDays } from 'lib/utils/dates/dates';
 import {
   IFulfillResponse,
   IFulfillResult,
@@ -81,10 +44,42 @@ import {
   IGetAuthenticationQuestionsResponse,
   IIndicativeEnrichmentResponse,
 } from 'lib/interfaces';
-import { GET_INVESTIGATION_RESULTS_RESPONSE } from 'lib/examples/mocks/GetInvestigationResultsResponse';
-import * as he from 'he';
-import { SoapAid } from 'lib/utils/soap-aid/soap-aid';
-import { Sync } from 'lib/utils/sync/sync';
+import {
+  createPing,
+  formatIndicativeEnrichment,
+  createIndicativeEnrichment,
+  formatGetAuthenticationQuestions,
+  createGetAuthenticationQuestions,
+  formatVerifyAuthenticationQuestions,
+  createVerifyAuthenticationQuestions,
+  parseEnroll,
+  formatEnroll,
+  createEnroll,
+  createEnrollPayload,
+  enrichFulfillData,
+  formatFulfill,
+  createFulfill,
+  createFulfillPayload,
+  formatGetServiceProduct,
+  createGetServiceProduct,
+  parseGetDisputeStatus,
+  formatGetDisputeStatus,
+  createGetDisputeStatus,
+  createGetDisputeStatusPayload,
+  parseStartDispute,
+  formatStartDispute,
+  createStartDispute,
+  createStartDisputePayload,
+  enrichDisputeData,
+  formatGetDisputeHistory,
+  createGetDisputeHistory,
+  createGetDisputeHistoryPayload,
+  parseInvestigationResults,
+  formatGetInvestigationResults,
+  createGetInvestigationResults,
+  createGetInvestigationResultsPayload,
+  enrichGetInvestigationResult,
+} from 'lib/transunion';
 
 const parserOptions = {
   attributeNamePrefix: '',

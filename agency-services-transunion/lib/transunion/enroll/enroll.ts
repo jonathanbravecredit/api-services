@@ -22,7 +22,7 @@ export const createEnrollPayload = (data: { data: IEnrollGraphQLResponse; disput
   const id = data.data.data.getAppData.id?.split(':')?.pop();
   const attrs = data.data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;
-  const serviceBundleCode = dispute ? 'CC2BraveCreditTUDispute' : 'CC2BraveCreditTUReportV3Score';
+  const serviceBundleCode = data.dispute ? 'CC2BraveCreditTUDispute' : 'CC2BraveCreditTUReportV3Score';
 
   if (!id || !attrs || !dob) {
     console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);

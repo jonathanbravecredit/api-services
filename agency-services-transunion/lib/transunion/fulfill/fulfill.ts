@@ -23,8 +23,8 @@ export const createFulfillPayload = (data: { data: IFulfillGraphQLResponse; disp
   const id = data.data.data.getAppData.id?.split(':')?.pop();
   const attrs = data.data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;
-  const serviceBundleCode = dispute ? 'CC2BraveCreditTUReport24Hour' : 'CC2BraveCreditTUReportV3Score';
-  const fulfillmentKey = dispute
+  const serviceBundleCode = data.dispute ? 'CC2BraveCreditTUReport24Hour' : 'CC2BraveCreditTUReportV3Score';
+  const fulfillmentKey = data.dispute
     ? data.data.data.getAppData.agencies?.transunion?.disputeServiceBundleFulfillmentKey
     : data.data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey;
 
