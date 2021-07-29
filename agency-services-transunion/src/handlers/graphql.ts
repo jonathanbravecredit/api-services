@@ -76,8 +76,14 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       case 'Enroll':
         results = await queries.Enroll(accountCode, username, message, httpsAgent, auth);
         return JSON.stringify(results);
+      case 'EnrollDisputes':
+        results = await queries.EnrollDisputes(accountCode, username, message, httpsAgent, auth);
+        return JSON.stringify(results);
       case 'Fulfill':
         results = await queries.Fulfill(accountCode, username, message, httpsAgent, auth);
+        return JSON.stringify(results);
+      case 'FulfillDisputes':
+        results = await queries.FulfillDisputes(accountCode, username, message, httpsAgent, auth);
         return JSON.stringify(results);
       case 'GetServiceProduct':
         results = await queries.GetServiceProduct(accountCode, username, message, httpsAgent, auth);

@@ -7,84 +7,9 @@ import { SoapAid } from 'lib/utils/soap-aid/soap-aid';
 import { dateDiffInDays } from 'lib/utils/dates/dates';
 import { returnNestedObject } from 'lib/utils/helpers/helpers';
 import { GET_INVESTIGATION_RESULTS_RESPONSE } from 'lib/examples/mocks/GetInvestigationResultsResponse';
-import {
-  getDataForEnrollment,
-  getDataForFulfill,
-  getFulfilledOn,
-  getDisputeEnrollment,
-  getDataForGetDisputeStatus,
-  getDataForStartDispute,
-  getDataForGetDisputeHistory,
-  getDataForGetInvestigationResults,
-} from 'lib/proxy/proxy-queries';
-import {
-  IFulfillResponse,
-  IFulfillResult,
-  IEnrollResponse,
-  IEnrollResult,
-  IGetAppDataRequest,
-  IGetDisputeStatusResponse,
-  IStartDisputeBundle,
-  IStartDisputeRequest,
-  IGetInvestigationEnrichPayload,
-  IGetInvestigationResultsRequest,
-  IGetInvestigationResultsResponse,
-  IGenericRequest,
-  IGetDisputeHistoryResponse,
-  IErrorResponse,
-  INil,
-  IStartDisputeResponse,
-  IGetServiceProductResponse,
-  IVerifyAuthenticationQuestionsResponse,
-  IGetAuthenticationQuestionsResponse,
-  IIndicativeEnrichmentResponse,
-  IVerifyAuthenticationQuestionsResult,
-  IGetAuthenticationQuestionsResult,
-  IIndicativeEnrichmentResult,
-  IGetServiceProductResult,
-  IGetDisputeStatusResult,
-  IStartDisputeResult,
-  IGetDisputeHistoryResult,
-  IGetInvestigationResultsResult,
-} from 'lib/interfaces';
-import {
-  createPing,
-  formatIndicativeEnrichment,
-  createIndicativeEnrichment,
-  formatGetAuthenticationQuestions,
-  createGetAuthenticationQuestions,
-  formatVerifyAuthenticationQuestions,
-  createVerifyAuthenticationQuestions,
-  parseEnroll,
-  formatEnroll,
-  createEnroll,
-  createEnrollPayload,
-  enrichFulfillData,
-  formatFulfill,
-  createFulfill,
-  createFulfillPayload,
-  formatGetServiceProduct,
-  createGetServiceProduct,
-  parseGetDisputeStatus,
-  formatGetDisputeStatus,
-  createGetDisputeStatus,
-  createGetDisputeStatusPayload,
-  parseStartDispute,
-  formatStartDispute,
-  createStartDispute,
-  createStartDisputePayload,
-  enrichDisputeData,
-  formatGetDisputeHistory,
-  createGetDisputeHistory,
-  createGetDisputeHistoryPayload,
-  parseInvestigationResults,
-  formatGetInvestigationResults,
-  createGetInvestigationResults,
-  createGetInvestigationResultsPayload,
-  enrichGetInvestigationResult,
-  enrichEnrollmentData,
-  parseFulfill,
-} from 'lib/transunion';
+import * as qrys from 'lib/proxy/proxy-queries';
+import * as itfs from 'lib/interfaces';
+import * as tu from 'lib/transunion';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -104,8 +29,8 @@ const parserOptions = {
 export const Ping = async (
   agent: https.Agent,
   auth: string,
-): Promise<{ success: boolean; error?: IErrorResponse | INil | string; data?: any }> => {
-  const soap = new SoapAid(fastXml.parse, () => {}, createPing);
+): Promise<{ success: boolean; error?: itfs.IErrorResponse | itfs.INil | string; data?: any }> => {
+  const soap = new SoapAid(fastXml.parse, () => {}, tu.createPing);
   try {
     const { xml } = soap.createPackage(null, null, null);
     const request = soap.createRequestPayload(agent, auth, xml, 'Ping');
@@ -132,11 +57,11 @@ export const IndicativeEnrichment = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: boolean; error: IErrorResponse | INil; data: any }> => {
+): Promise<{ success: boolean; error: itfs.IErrorResponse | itfs.INil; data: any }> => {
   //create helper
-  const soap = new SoapAid(fastXml.parse, formatIndicativeEnrichment, createIndicativeEnrichment);
+  const soap = new SoapAid(fastXml.parse, tu.formatIndicativeEnrichment, tu.createIndicativeEnrichment);
   try {
-    const resp = await soap.parseAndSendPayload<IIndicativeEnrichmentResponse>(
+    const resp = await soap.parseAndSendPayload<itfs.IIndicativeEnrichmentResponse>(
       accountCode,
       username,
       agent,
@@ -146,7 +71,7 @@ export const IndicativeEnrichment = async (
       parserOptions,
     );
 
-    const data = returnNestedObject<IIndicativeEnrichmentResult>(resp, 'IndicativeEnrichmentResult');
+    const data = returnNestedObject<itfs.IIndicativeEnrichmentResult>(resp, 'IndicativeEnrichmentResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -173,12 +98,12 @@ export const GetAuthenticationQuestions = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: boolean; error: IErrorResponse | INil; data: any }> => {
+): Promise<{ success: boolean; error: itfs.IErrorResponse | itfs.INil; data: any }> => {
   //create helper classes
-  const soap = new SoapAid(fastXml.parse, formatGetAuthenticationQuestions, createGetAuthenticationQuestions);
+  const soap = new SoapAid(fastXml.parse, tu.formatGetAuthenticationQuestions, tu.createGetAuthenticationQuestions);
 
   try {
-    const resp = await soap.parseAndSendPayload<IGetAuthenticationQuestionsResponse>(
+    const resp = await soap.parseAndSendPayload<itfs.IGetAuthenticationQuestionsResponse>(
       accountCode,
       username,
       agent,
@@ -188,7 +113,7 @@ export const GetAuthenticationQuestions = async (
       parserOptions,
     );
 
-    const data = returnNestedObject<IGetAuthenticationQuestionsResult>(resp, 'GetAuthenticationQuestionsResult');
+    const data = returnNestedObject<itfs.IGetAuthenticationQuestionsResult>(resp, 'GetAuthenticationQuestionsResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -215,12 +140,16 @@ export const VerifyAuthenticationQuestions = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: boolean; error: IErrorResponse | INil; data: any }> => {
+): Promise<{ success: boolean; error: itfs.IErrorResponse | itfs.INil; data: any }> => {
   //create helper classes
-  const soap = new SoapAid(fastXml.parse, formatVerifyAuthenticationQuestions, createVerifyAuthenticationQuestions);
+  const soap = new SoapAid(
+    fastXml.parse,
+    tu.formatVerifyAuthenticationQuestions,
+    tu.createVerifyAuthenticationQuestions,
+  );
 
   try {
-    const resp = await soap.parseAndSendPayload<IVerifyAuthenticationQuestionsResponse>(
+    const resp = await soap.parseAndSendPayload<itfs.IVerifyAuthenticationQuestionsResponse>(
       accountCode,
       username,
       agent,
@@ -230,7 +159,10 @@ export const VerifyAuthenticationQuestions = async (
       parserOptions,
     );
 
-    const data = returnNestedObject<IVerifyAuthenticationQuestionsResult>(resp, 'VerifyAuthenticationQuestionsResult');
+    const data = returnNestedObject<itfs.IVerifyAuthenticationQuestionsResult>(
+      resp,
+      'VerifyAuthenticationQuestionsResult',
+    );
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -259,12 +191,12 @@ export const Enroll = async (
   agent: https.Agent,
   auth: string,
   dispute: boolean = false,
-): Promise<{ success: boolean; error?: IErrorResponse | INil | string; data?: IEnrollResult }> => {
+): Promise<{ success: boolean; error?: itfs.IErrorResponse | itfs.INil | string; data?: itfs.IEnrollResult }> => {
   // validate incoming message
-  let variables: IGetAppDataRequest = {
+  let variables: itfs.IGetAppDataRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
+  const validate = ajv.getSchema<itfs.IGetAppDataRequest>('getAppDataRequest');
   if (!validate(variables)) {
     let id = returnNestedObject<string>(JSON.parse(message), 'ClientKey'); // try to remedy
     variables = {
@@ -274,24 +206,96 @@ export const Enroll = async (
   }
 
   //create helper classes
-  const soap = new SoapAid(parseEnroll, formatEnroll, createEnroll, createEnrollPayload);
-  const sync = new Sync(enrichEnrollmentData);
+  const soap = new SoapAid(tu.parseEnroll, tu.formatEnroll, tu.createEnroll, tu.createEnrollPayload);
+  const sync = new Sync(tu.enrichEnrollmentData);
 
   try {
-    const prepayload = await getDataForEnrollment(variables);
-    const payload = { data: prepayload.data, dispute: dispute };
-    const resp = await soap.parseAndSendPayload<IEnrollResponse>(
+    const prepayload = await qrys.getDataForEnrollment(variables);
+    const resp = await soap.parseAndSendPayload<itfs.IEnrollResponse>(
       accountCode,
       username,
       agent,
       auth,
-      payload,
+      prepayload,
       'Enroll',
       parserOptions,
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<IEnrollResult>(resp, 'EnrollResult');
+    const data = returnNestedObject<itfs.IEnrollResult>(resp, 'EnrollResult');
+    const responseType = data.ResponseType;
+    const error = data.ErrorResponse;
+
+    if (responseType.toLowerCase() === 'success') {
+      const synced = await sync.syncData({ id: variables.id }, data, dispute);
+      return synced
+        ? { success: true, error: null, data: data }
+        : { success: false, error: 'failed to sync data to db' };
+    } else {
+      return error.Code === '103045'
+        ? { success: true, error: null, data: null }
+        : { success: false, error: error, data: null };
+    }
+  } catch (err) {
+    console.log('enroll error ===> ', err);
+    return { success: false, error: err, data: null };
+  }
+};
+
+/**
+ * After verification the user is eligible to enroll.
+ * Enrolls user and returns merge report and vantage score
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Enrollment message format...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const EnrollDisputes = async (
+  accountCode: string,
+  username: string,
+  message: string,
+  agent: https.Agent,
+  auth: string,
+  dispute: boolean = false,
+): Promise<{ success: boolean; error?: itfs.IErrorResponse | itfs.INil | string; data?: itfs.IEnrollResult }> => {
+  // validate incoming message
+  let variables: itfs.IGetAppDataRequest = {
+    ...JSON.parse(message),
+  };
+  const validate = ajv.getSchema<itfs.IGetAppDataRequest>('getAppDataRequest');
+  if (!validate(variables)) {
+    let id = returnNestedObject<string>(JSON.parse(message), 'ClientKey'); // try to remedy
+    variables = {
+      id: `us-east-2:${id}`,
+    };
+    if (!validate(variables)) throw `Malformed message=${message}`;
+  }
+
+  //create helper classes
+  const soap = new SoapAid(
+    tu.parseEnrollDisputes,
+    tu.formatEnrollDisputes,
+    tu.createEnrollDisputes,
+    tu.createEnrollDisputesPayload,
+  );
+  const sync = new Sync(tu.enrichEnrollDisputesData);
+
+  try {
+    const prepayload = await qrys.getDataForEnrollment(variables);
+    const resp = await soap.parseAndSendPayload<itfs.IEnrollResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      prepayload,
+      'Enroll',
+      parserOptions,
+    );
+
+    // get the specific response from parsed object
+    const data = returnNestedObject<itfs.IEnrollResult>(resp, 'EnrollResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -327,12 +331,12 @@ export const Fulfill = async (
   agent: https.Agent,
   auth: string,
   dispute: boolean = false,
-): Promise<{ success: boolean; error?: IErrorResponse | INil | string; data?: IFulfillResult }> => {
+): Promise<{ success: boolean; error?: itfs.IErrorResponse | itfs.INil | string; data?: itfs.IFulfillResult }> => {
   // validate incoming message
-  let variables: IGetAppDataRequest = {
+  let variables: itfs.IGetAppDataRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
+  const validate = ajv.getSchema<itfs.IGetAppDataRequest>('getAppDataRequest');
   if (!validate(variables)) {
     let id = returnNestedObject<string>(JSON.parse(message), 'ClientKey'); // try to remedy
     variables = {
@@ -342,25 +346,94 @@ export const Fulfill = async (
   }
 
   //create helper classes
-  const soap = new SoapAid(parseFulfill, formatFulfill, createFulfill, createFulfillPayload);
-  const sync = new Sync(enrichFulfillData);
+  const soap = new SoapAid(tu.parseFulfill, tu.formatFulfill, tu.createFulfill, tu.createFulfillPayload);
+  const sync = new Sync(tu.enrichFulfillData);
 
   try {
     // get / parse data needed to process request
-    const prepayload = await getDataForFulfill(variables);
-    const payload = { data: prepayload.data, dispute: dispute };
-    const resp = await soap.parseAndSendPayload<IFulfillResponse>(
+    const prepayload = await qrys.getDataForFulfill(variables);
+    const resp = await soap.parseAndSendPayload<itfs.IFulfillResponse>(
       accountCode,
       username,
       agent,
       auth,
-      payload,
+      prepayload,
       'Fulfill',
       parserOptions,
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<IFulfillResult>(resp, 'FulfillResult');
+    const data = returnNestedObject<itfs.IFulfillResult>(resp, 'FulfillResult');
+    const responseType = data.ResponseType;
+    const error = data.ErrorResponse;
+
+    if (responseType.toLowerCase() === 'success') {
+      const synced = await sync.syncData({ id: variables.id }, data, dispute);
+      return synced
+        ? { success: true, error: null, data: data }
+        : { success: false, error: 'failed to sync data to db' };
+    } else {
+      return { success: false, error: error };
+    }
+  } catch (err) {
+    return { success: false, error: err };
+  }
+};
+
+/**
+ * A returning user can refresh their report by calling fulfill
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const FulfillDisputes = async (
+  accountCode: string,
+  username: string,
+  message: string,
+  agent: https.Agent,
+  auth: string,
+  dispute: boolean = false,
+): Promise<{ success: boolean; error?: itfs.IErrorResponse | itfs.INil | string; data?: itfs.IFulfillResult }> => {
+  // validate incoming message
+  let variables: itfs.IGetAppDataRequest = {
+    ...JSON.parse(message),
+  };
+  const validate = ajv.getSchema<itfs.IGetAppDataRequest>('getAppDataRequest');
+  if (!validate(variables)) {
+    let id = returnNestedObject<string>(JSON.parse(message), 'ClientKey'); // try to remedy
+    variables = {
+      id: `us-east-2:${id}`,
+    };
+    if (!validate(variables)) throw `Malformed message=${message}`;
+  }
+
+  //create helper classes
+  const soap = new SoapAid(
+    tu.parseFulfillDisputes,
+    tu.formatFulfillDisputes,
+    tu.createFulfillDisputes,
+    tu.createFulfillDisputesPayload,
+  );
+  const sync = new Sync(tu.enrichFulfillDisputesData);
+
+  try {
+    // get / parse data needed to process request
+    const prepayload = await qrys.getDataForFulfill(variables);
+    const resp = await soap.parseAndSendPayload<itfs.IFulfillResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      prepayload,
+      'Fulfill',
+      parserOptions,
+    );
+
+    // get the specific response from parsed object
+    const data = returnNestedObject<itfs.IFulfillResult>(resp, 'FulfillResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -392,13 +465,13 @@ export const GetServiceProduct = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: boolean; error: IErrorResponse | INil; data: any }> => {
+): Promise<{ success: boolean; error: itfs.IErrorResponse | itfs.INil; data: any }> => {
   // TODO add validation
-  const soap = new SoapAid(fastXml.parse, formatGetServiceProduct, createGetServiceProduct);
+  const soap = new SoapAid(fastXml.parse, tu.formatGetServiceProduct, tu.createGetServiceProduct);
 
   try {
     // create helper classes
-    const resp = await soap.parseAndSendPayload<IGetServiceProductResponse>(
+    const resp = await soap.parseAndSendPayload<itfs.IGetServiceProductResponse>(
       accountCode,
       username,
       agent,
@@ -409,7 +482,7 @@ export const GetServiceProduct = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<IGetServiceProductResult>(resp, 'GetServiceProductResult');
+    const data = returnNestedObject<itfs.IGetServiceProductResult>(resp, 'GetServiceProductResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -437,12 +510,12 @@ export const GetDisputeStatus = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: boolean; error?: IErrorResponse | INil; data?: any }> => {
+): Promise<{ success: boolean; error?: itfs.IErrorResponse | itfs.INil; data?: any }> => {
   // validate incoming message
-  let variables: IGetAppDataRequest = {
+  let variables: itfs.IGetAppDataRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
+  const validate = ajv.getSchema<itfs.IGetAppDataRequest>('getAppDataRequest');
   if (!validate(variables)) {
     let id = returnNestedObject<string>(JSON.parse(message), 'ClientKey'); // try to remedy
     variables = {
@@ -453,16 +526,16 @@ export const GetDisputeStatus = async (
 
   //create helper classes
   const soap = new SoapAid(
-    parseGetDisputeStatus,
-    formatGetDisputeStatus,
-    createGetDisputeStatus,
-    createGetDisputeStatusPayload,
+    tu.parseGetDisputeStatus,
+    tu.formatGetDisputeStatus,
+    tu.createGetDisputeStatus,
+    tu.createGetDisputeStatusPayload,
   );
 
   try {
     // get / parse data needed to process request
-    const prepayload = await getDataForGetDisputeStatus(variables);
-    const resp = await soap.parseAndSendPayload<IGetDisputeStatusResponse>(
+    const prepayload = await qrys.getDataForGetDisputeStatus(variables);
+    const resp = await soap.parseAndSendPayload<itfs.IGetDisputeStatusResponse>(
       accountCode,
       username,
       agent,
@@ -473,7 +546,7 @@ export const GetDisputeStatus = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<IGetDisputeStatusResult>(resp, 'GetDisputeStatusResult');
+    const data = returnNestedObject<itfs.IGetDisputeStatusResult>(resp, 'GetDisputeStatusResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -502,21 +575,26 @@ export const StartDispute = async (
   auth: string,
 ): Promise<{ success: boolean; error?: any }> => {
   // validate incoming message
-  let variables: IStartDisputeRequest = {
+  let variables: itfs.IStartDisputeRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<IStartDisputeRequest>('startDisputeRequest');
+  const validate = ajv.getSchema<itfs.IStartDisputeRequest>('startDisputeRequest');
   if (!validate(variables)) throw `Malformed message=${message}`;
 
   //create helper classes
-  const soap = new SoapAid(parseStartDispute, formatStartDispute, createStartDispute, createStartDisputePayload);
-  const sync = new Sync(enrichDisputeData);
+  const soap = new SoapAid(
+    tu.parseStartDispute,
+    tu.formatStartDispute,
+    tu.createStartDispute,
+    tu.createStartDisputePayload,
+  );
+  const sync = new Sync(tu.enrichDisputeData);
 
   try {
     console.log('*** IN START DISPUTE ***');
-    const prepayload = await getDataForStartDispute(variables);
+    const prepayload = await qrys.getDataForStartDispute(variables);
     const payload = { data: prepayload.data, disputes: variables.disputes };
-    const resp = await soap.parseAndSendPayload<IStartDisputeResponse>(
+    const resp = await soap.parseAndSendPayload<itfs.IStartDisputeResponse>(
       accountCode,
       username,
       agent,
@@ -527,10 +605,10 @@ export const StartDispute = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<IStartDisputeResult>(resp, 'StartDisputeResult');
+    const data = returnNestedObject<itfs.IStartDisputeResult>(resp, 'StartDisputeResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
-    const bundle: IStartDisputeBundle = {
+    const bundle: itfs.IStartDisputeBundle = {
       startDisputeResult: data,
       disputes: variables.disputes,
     };
@@ -565,26 +643,26 @@ export const GetDisputeHistory = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: boolean; error: IErrorResponse | INil; data: any }> => {
+): Promise<{ success: boolean; error: itfs.IErrorResponse | itfs.INil; data: any }> => {
   // validate incoming message
-  let variables: IGenericRequest = {
+  let variables: itfs.IGenericRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<IGenericRequest>('getRequest');
+  const validate = ajv.getSchema<itfs.IGenericRequest>('getRequest');
   if (!validate(variables)) throw `Malformed message=${message}`;
 
   //create helper classes
   const soap = new SoapAid(
     fastXml.parse,
-    formatGetDisputeHistory,
-    createGetDisputeHistory,
-    createGetDisputeHistoryPayload,
+    tu.formatGetDisputeHistory,
+    tu.createGetDisputeHistory,
+    tu.createGetDisputeHistoryPayload,
   );
 
   try {
     // get / parse data needed to process request
-    const prepayload = await getDataForGetDisputeHistory(variables); // same data
-    const resp = await soap.parseAndSendPayload<IGetDisputeHistoryResponse>(
+    const prepayload = await qrys.getDataForGetDisputeHistory(variables); // same data
+    const resp = await soap.parseAndSendPayload<itfs.IGetDisputeHistoryResponse>(
       accountCode,
       username,
       agent,
@@ -595,7 +673,7 @@ export const GetDisputeHistory = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<IGetDisputeHistoryResult>(resp, 'GetDisputeHistoryResult');
+    const data = returnNestedObject<itfs.IGetDisputeHistoryResult>(resp, 'GetDisputeHistoryResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -624,24 +702,24 @@ export const GetInvestigationResults = async (
   auth: string,
 ): Promise<{ success: boolean; error?: any; data?: any }> => {
   // validate incoming message
-  let variables: IGetInvestigationResultsRequest = {
+  let variables: itfs.IGetInvestigationResultsRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<IGetInvestigationResultsRequest>('getInvestigationResultsRequest');
+  const validate = ajv.getSchema<itfs.IGetInvestigationResultsRequest>('getInvestigationResultsRequest');
   if (!validate(variables)) throw `Malformed message=${message}`;
 
   //create helper classes
-  const sync = new Sync(enrichGetInvestigationResult);
+  const sync = new Sync(tu.enrichGetInvestigationResult);
   const soap = new SoapAid(
-    parseInvestigationResults,
-    formatGetInvestigationResults,
-    createGetInvestigationResults,
-    createGetInvestigationResultsPayload,
+    tu.parseInvestigationResults,
+    tu.formatGetInvestigationResults,
+    tu.createGetInvestigationResults,
+    tu.createGetInvestigationResultsPayload,
   );
 
   try {
     // get / parse data needed
-    const prepayload = await getDataForGetInvestigationResults(variables); // same data
+    const prepayload = await qrys.getDataForGetInvestigationResults(variables); // same data
     const payload = { data: prepayload.data, disputeId: variables.disputeId };
     // const resp = await soap.parseAndSendPayload<IGetInvestigationResultsResponse>(
     //   accountCode,
@@ -653,16 +731,16 @@ export const GetInvestigationResults = async (
     //   parserOptions,
     // );
 
-    const resp = await soap.processMockRequest<IGetInvestigationResultsResponse>(
+    const resp = await soap.processMockRequest<itfs.IGetInvestigationResultsResponse>(
       GET_INVESTIGATION_RESULTS_RESPONSE,
       parserOptions,
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<IGetInvestigationResultsResult>(resp, 'GetInvestigationResultsResult');
+    const data = returnNestedObject<itfs.IGetInvestigationResultsResult>(resp, 'GetInvestigationResultsResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
-    const bundle: IGetInvestigationEnrichPayload = {
+    const bundle: itfs.IGetInvestigationEnrichPayload = {
       disputeId: variables.disputeId,
       getInvestigationResult: data,
     };
@@ -684,11 +762,11 @@ export const CompleteOnboardingEnrollments = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: Boolean; error?: any; data?: IEnrollResult }> => {
-  let variables: IGetAppDataRequest = {
+): Promise<{ success: Boolean; error?: any; data?: itfs.IEnrollResult }> => {
+  let variables: itfs.IGetAppDataRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
+  const validate = ajv.getSchema<itfs.IGetAppDataRequest>('getAppDataRequest');
   if (!validate(variables)) throw `Malformed message=${message}`;
 
   try {
@@ -722,16 +800,16 @@ export const DisputePreflightCheck = async (
   agent: https.Agent,
   auth: string,
 ): Promise<{ success: boolean; error?: any }> => {
-  let variables: IGetAppDataRequest = {
+  let variables: itfs.IGetAppDataRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<IGetAppDataRequest>('getAppDataRequest');
+  const validate = ajv.getSchema<itfs.IGetAppDataRequest>('getAppDataRequest');
   if (!validate(variables)) throw `Malformed message=${message}`;
 
   let enrolled: boolean;
   try {
     console.log('*** IN GET ENROLL STATUS ***');
-    const { data } = await getDisputeEnrollment(variables);
+    const { data } = await qrys.getDisputeEnrollment(variables);
     enrolled = !data ? false : returnNestedObject<boolean>(data, 'disputeEnrolled');
     console.log('DisputePreflightCheck:enrolled ===> ', enrolled);
   } catch (err) {
@@ -741,7 +819,7 @@ export const DisputePreflightCheck = async (
   if (!enrolled) {
     console.log('*** IN ENROLL ***');
     try {
-      const { success, error, data } = await Enroll(accountCode, username, message, agent, auth, true);
+      const { success, error, data } = await EnrollDisputes(accountCode, username, message, agent, auth);
       if (!success) return { success: false, error: error };
     } catch (err) {
       return { success: false, error: err };
@@ -751,7 +829,7 @@ export const DisputePreflightCheck = async (
   let refresh: boolean;
   try {
     console.log('*** IN REFRESH ***');
-    const { data } = await getFulfilledOn(variables);
+    const { data } = await qrys.getFulfilledOn(variables);
     const fulfilledOn = !data ? false : returnNestedObject<string>(data, 'fulfilledOn');
     console.log('DisputePreflightCheck:fulfilledOn ===> ', fulfilledOn);
     if (!fulfilledOn) {
@@ -769,7 +847,7 @@ export const DisputePreflightCheck = async (
   if (refresh) {
     console.log('*** IN REFRESH:FULFILL ***');
     try {
-      const { success, error } = await Fulfill(accountCode, username, message, agent, auth, true);
+      const { success, error } = await FulfillDisputes(accountCode, username, message, agent, auth);
       if (!success) return { success: false, error: error };
     } catch (err) {
       return { success: false, error: err };

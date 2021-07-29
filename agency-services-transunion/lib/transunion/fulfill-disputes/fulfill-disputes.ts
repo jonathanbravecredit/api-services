@@ -20,12 +20,12 @@ import { UpdateAppDataInput } from 'src/api/api.service';
  * @param data
  * @returns IEnrollPayload
  */
-export const createFulfillPayload = (data: IFulfillGraphQLResponse): IFulfillPayload => {
+export const createFulfillDisputesPayload = (data: IFulfillGraphQLResponse): IFulfillPayload => {
   const id = data.data.getAppData.id?.split(':')?.pop();
   const attrs = data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;
-  const serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
-  const enrollmentKey = data.data.getAppData.agencies?.transunion?.enrollmentKey;
+  const serviceBundleCode = 'CC2BraveCreditTUReport24Hour';
+  const enrollmentKey = data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey;
 
   if (!id || !attrs || !dob) {
     console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
@@ -62,7 +62,7 @@ export const createFulfillPayload = (data: IFulfillGraphQLResponse): IFulfillPay
   };
 };
 
-export const formatFulfill = (accountCode: string, accountName: string, msg: string): IFulfill | undefined => {
+export const formatFulfillDisputes = (accountCode: string, accountName: string, msg: string): IFulfill | undefined => {
   let message: IFulfillMsg = JSON.parse(msg);
   return message
     ? {
@@ -82,7 +82,7 @@ export const formatFulfill = (accountCode: string, accountName: string, msg: str
  * @param {IEnroll} msg
  * @returns
  */
-export const createFulfill = (msg: IFulfill): string => {
+export const createFulfillDisputes = (msg: IFulfill): string => {
   const xmlObj = {
     'soapenv:Envelope': {
       _attributes: {
@@ -139,7 +139,7 @@ export const createFulfill = (msg: IFulfill): string => {
  * @param xml
  * @returns IFulfillResponse
  */
-export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
+export const parseFulfillDisputes = (xml: string, options: any): IFulfillResponse => {
   const obj: IFulfillResponse = fastXml.parse(xml, options);
   const resp = returnNestedObject<any>(obj, 'ServiceProductResponse');
   if (resp instanceof Array) {
@@ -170,52 +170,33 @@ export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
  * @param {IFulfillResult} enroll
  * @returns {UpdateAppDataInput | undefined }
  */
-export const enrichFulfillData = (
+export const enrichFulfillDisputesData = (
   data: UpdateAppDataInput | undefined,
   fulfill: IFulfillResult, // IFulfillResult
 ): UpdateAppDataInput | undefined => {
   if (!data) return;
-  let fulfillReport;
   let fulfillMergeReport;
-  let fulfillVantageScore;
   let fulfilledOn = new Date().toISOString();
   const prodResponse = returnNestedObject<any>(fulfill, 'ServiceProductResponse');
   const serviceBundleFulfillmentKey = fulfill.ServiceBundleFulfillmentKey;
 
   if (!prodResponse) return;
   if (prodResponse instanceof Array) {
-    fulfillReport = prodResponse.find((item: IFulfillServiceProductResponse) => {
-      return item['ServiceProduct'] === 'TUCReport';
-    });
     fulfillMergeReport = prodResponse.find((item: IFulfillServiceProductResponse) => {
       return item['ServiceProduct'] === 'MergeCreditReports';
     });
-    fulfillVantageScore = prodResponse.find((item: IFulfillServiceProductResponse) => {
-      return item['ServiceProduct'] === 'TUCVantageScore3';
-    });
   } else {
     switch (prodResponse['ServiceProduct']) {
-      case 'TUCReport':
-        fulfillReport = prodResponse || null;
-        break;
       case 'MergeCreditReports':
         fulfillMergeReport = prodResponse || null;
-        break;
-      case 'TUCVantageScore3':
-        fulfillVantageScore = prodResponse || null;
         break;
       default:
         break;
     }
   }
 
-  const priorReport = data.agencies?.transunion?.fulfillReport;
   const priorMergeReport = data.agencies?.transunion?.fulfillMergeReport;
-  const priorVantageScore = data.agencies?.transunion?.fulfillVantageScore;
-
-  const report = fulfillReport ? mapReportResponse(fulfillReport) : priorReport;
   const mergeReport = fulfillMergeReport ? mapReportResponse(fulfillMergeReport) : priorMergeReport;
-  const vantageScore = fulfillVantageScore ? mapReportResponse(fulfillVantageScore) : priorVantageScore;
 
   if (!mergeReport) return data; // don't overwrite report if there is an error mapping...the other two are less critical
   const mapped = {
@@ -225,9 +206,7 @@ export const enrichFulfillData = (
       transunion: {
         ...data.agencies?.transunion,
         fulfilledOn: fulfilledOn,
-        fulfillReport: report,
         fulfillMergeReport: mergeReport,
-        fulfillVantageScore: vantageScore,
         serviceBundleFulfillmentKey: serviceBundleFulfillmentKey, // this always has to be synced to the report in fulfill fields
       },
     },

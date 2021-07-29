@@ -19,11 +19,11 @@ import { UpdateAppDataInput } from 'src/api/api.service';
  * @param data
  * @returns IEnrollPayload
  */
-export const createEnrollPayload = (data: { data: IEnrollGraphQLResponse; dispute?: boolean }): IEnrollPayload => {
-  const id = data.data.data.getAppData.id?.split(':')?.pop();
-  const attrs = data.data.data.getAppData.user?.userAttributes;
+export const createEnrollPayload = (data: IEnrollGraphQLResponse): IEnrollPayload => {
+  const id = data.data.getAppData.id?.split(':')?.pop();
+  const attrs = data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;
-  const serviceBundleCode = data.dispute ? 'CC2BraveCreditTUDispute' : 'CC2BraveCreditTUReportV3Score';
+  const serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
 
   if (!id || !attrs || !dob) {
     console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
@@ -178,7 +178,6 @@ export const parseEnroll = (xml: string, options: any): IEnrollResponse => {
 export const enrichEnrollmentData = (
   data: UpdateAppDataInput | undefined,
   enroll: IEnrollResult,
-  dispute: boolean = false,
 ): UpdateAppDataInput | undefined => {
   if (!data) return;
   let enrollReport: IEnrollServiceProductResponse | undefined;
@@ -191,21 +190,6 @@ export const enrichEnrollmentData = (
   console.log('enroll enrollmentkey ===> ', JSON.stringify(enrollmentKey));
   console.log('enroll serviceBundleFulfillmentKey ===> ', JSON.stringify(serviceBundleFulfillmentKey));
   console.log('enroll prodResponse ===> ', JSON.stringify(prodResponse));
-  if (dispute) {
-    return {
-      ...data,
-      agencies: {
-        ...data.agencies,
-        transunion: {
-          ...data.agencies?.transunion,
-          disputeEnrolled: true,
-          disputeEnrolledOn: enrolledOn,
-          disputeEnrollmentKey: enrollmentKey,
-          disputeServiceBundleFulfillmentKey: serviceBundleFulfillmentKey,
-        },
-      },
-    };
-  }
   if (!prodResponse) return;
   if (prodResponse instanceof Array) {
     enrollReport = prodResponse.find((item: IEnrollServiceProductResponse) => {
