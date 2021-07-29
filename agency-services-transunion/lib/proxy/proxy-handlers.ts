@@ -211,12 +211,13 @@ export const Enroll = async (
 
   try {
     const prepayload = await qrys.getDataForEnrollment(variables);
+    console.log('prepayload ===> ', prepayload.data);
     const resp = await soap.parseAndSendPayload<itfs.IEnrollResponse>(
       accountCode,
       username,
       agent,
       auth,
-      prepayload,
+      prepayload.data,
       'Enroll',
       parserOptions,
     );
@@ -289,7 +290,7 @@ export const EnrollDisputes = async (
       username,
       agent,
       auth,
-      prepayload,
+      prepayload.data,
       'Enroll',
       parserOptions,
     );
@@ -357,7 +358,7 @@ export const Fulfill = async (
       username,
       agent,
       auth,
-      prepayload,
+      prepayload.data,
       'Fulfill',
       parserOptions,
     );
@@ -427,7 +428,7 @@ export const FulfillDisputes = async (
       username,
       agent,
       auth,
-      prepayload,
+      prepayload.data,
       'Fulfill',
       parserOptions,
     );
