@@ -20,7 +20,7 @@ custom:
     GRAPHQL_API:
       dev: 'rr5wtr4ev5exlbutrkih3r5lhq'
       qa: 'rr5wtr4ev5exlbutrkih3r5lhq'
-      pdor: '4tpaga7rzjayhk75opsmpeurme'
+      prod: '4tpaga7rzjayhk75opsmpeurme'
     GRAPHQL_ENDPOINT:
       dev: 'https://24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com/graphql'
       qa: 'https://24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com/graphql'
