@@ -1,0 +1,40 @@
+{
+  "AdditionalInputs": {
+    "Data": {
+      "Name": "CreditReportVersion",
+      "Value": 1
+    }
+  },
+  "RequestKey": "076b9ae3-9a5c-45ea-8b76-4377168e1650",
+  "ClientKey": "Customer123456",
+  "Customer": {
+    "CurrentAddress": {
+      "AddressLine1": "1071 101ST",
+      "AddressLine2": null,
+      "City": "HOLLYWOOD",
+      "State": "FL",
+      "Zipcode": "33025"
+    },
+    "PreviousAddress": {
+      "AddressLine1": null,
+      "AddressLine2": null,
+      "City": null,
+      "State": null,
+      "Zipcode": null
+    },
+    "DateOfBirth": "1957-09-01",
+    "FullName": {
+      "FirstName": "JACKSON",
+      "LastName": "TESTJ",
+      "MiddleName": null,
+      "Prefix": null,
+      "Suffix": null
+    },
+    "PhoneNumber": "4045049006",
+    "Ssn": "899010009"
+  },
+  "Email": "test@gmail.com",
+  "Language": null,
+  "ServiceBundleCode": "CC2BraveCreditAuthentication",
+  "TrustSessionId:": null
+}

@@ -1,0 +1,47 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <VerifyAuthenticationQuestionsResponse xmlns="https://consumerconnectws.tui.transunion.com/">
+      <VerifyAuthenticationQuestionsResult xmlns:a="https://consumerconnectws.tui.transunion.com/data"
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <a:AccountName>CC2PartnerTesting1</a:AccountName>
+        <a:ErrorResponse i:nil="true" />
+        <a:RequestKey>c9673141-f0b4-43f8-be23-475a074a6044</a:RequestKey>
+        <a:ResponseType>Success</a:ResponseType>
+        <a:ClientKey>Customer123456</a:ClientKey>
+        <a:AuthenticationDetails>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;VerifyChallengeAnswersResponseSuccess xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com/truelink/ds/sch/srv/iv/ccs"&gt;
+  &lt;ApplicantChallengeId&gt;874880628&lt;/ApplicantChallengeId&gt;
+  &lt;AnswerVerificationStatus&gt;InProgress&lt;/AnswerVerificationStatus&gt;
+  &lt;ChallengeConfiguration&gt;
+    &lt;RulesApp&gt;IDMA&lt;/RulesApp&gt;
+    &lt;RuleAppRevisionId&gt;3.2&lt;/RuleAppRevisionId&gt;
+    &lt;CorrectAnswersNeeded&gt;0&lt;/CorrectAnswersNeeded&gt;
+    &lt;AnswerAttemptsAllowed&gt;0&lt;/AnswerAttemptsAllowed&gt;
+    &lt;MultiChoiceQuestion&gt;
+      &lt;QuestionType&gt;IDMA&lt;/QuestionType&gt;
+      &lt;SequenceNumber&gt;1&lt;/SequenceNumber&gt;
+      &lt;LastChanceQuestion&gt;false&lt;/LastChanceQuestion&gt;
+      &lt;FakeQuestion&gt;false&lt;/FakeQuestion&gt;
+      &lt;FullQuestionText&gt;Enter the passcode you received&lt;/FullQuestionText&gt;
+      &lt;KeyQuestionText&gt;
+        &lt;PromptDate&gt;2019-01-28T00:00:00-08:00&lt;/PromptDate&gt;
+      &lt;/KeyQuestionText&gt;
+      &lt;AnswerChoice&gt;
+        &lt;SequenceNumber&gt;1&lt;/SequenceNumber&gt;
+        &lt;IsCorrectAnswer&gt;false&lt;/IsCorrectAnswer&gt;
+        &lt;AnswerChoiceText&gt;Enter the passcode you received&lt;/AnswerChoiceText&gt;
+        &lt;Key&gt;USER_TO_INPUT_PIN&lt;/Key&gt;
+        &lt;AnswerChoiceId&gt;3037844536&lt;/AnswerChoiceId&gt;
+      &lt;/AnswerChoice&gt;
+      &lt;Key&gt;IDM_PINVERIFY&lt;/Key&gt;
+      &lt;QuestionId&gt;40425342&lt;/QuestionId&gt;
+    &lt;/MultiChoiceQuestion&gt;
+    &lt;ApplicantChallengeId&gt;874880628&lt;/ApplicantChallengeId&gt;
+    &lt;ApplicantId&gt;32173268&lt;/ApplicantId&gt;
+  &lt;/ChallengeConfiguration&gt;
+&lt;/VerifyChallengeAnswersResponseSuccess&gt;</a:AuthenticationDetails>
+        <a:AuthenticationStatus>InProgress</a:AuthenticationStatus>
+      </VerifyAuthenticationQuestionsResult>
+    </VerifyAuthenticationQuestionsResponse>
+  </s:Body>
+</s:Envelope>

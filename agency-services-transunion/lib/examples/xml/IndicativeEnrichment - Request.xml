@@ -1,0 +1,37 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data">
+  <soapenv:Header />
+  <soapenv:Body>
+    <con:IndicativeEnrichment>
+      <con:request>
+        <data:AccountCode>123456789</data:AccountCode>
+        <data:AccountName>CC2PartnerTesting1</data:AccountName>
+        <data:RequestKey>bc4c96f0-1b08-4a01-95f0-92282be82213</data:RequestKey>
+        <data:ClientKey>cdedbb7d-caff-4cd0-8133-d20b7d3d9c02</data:ClientKey>
+        <data:Customer>
+          <data:CurrentAddress>
+            <data:AddressLine1>535 30 RD</data:AddressLine1>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">A</data:AddressLine2>
+            <data:City>GRAND JUNCTION</data:City>
+            <data:State>CO</data:State>
+            <data:Zipcode>81504</data:Zipcode>
+          </data:CurrentAddress>
+          <data:DateOfBirth>1975-01-01</data:DateOfBirth>
+          <data:FullName>
+            <data:FirstName>THOMAS</data:FirstName>
+            <data:LastName>FRIEDMAN</data:LastName>
+            <data:MiddleName>E</data:MiddleName>
+            <data:Prefix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:Prefix>
+            <data:Suffix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"></data:Suffix>
+          </data:FullName>
+          <data:Ssn>000004390</data:Ssn>
+        </data:Customer>
+        <data:ServiceBundleCode>CC2PartnerTesting1IndicativeEnrichment</data:ServiceBundleCode>
+      </con:request>
+    </con:IndicativeEnrichment>
+  </soapenv:Body>
+</soapenv:Envelope>

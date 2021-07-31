@@ -1,0 +1,8 @@
+<ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion xmlns="com/truelink/ds/sch/srv/iv/ccs">
+  <VerifyChallengeAnswersRequestMultiChoiceQuestion>
+    <QuestionId>40425340</QuestionId>
+    <SelectedAnswerChoice>
+      <AnswerChoiceId>3037844530</AnswerChoiceId>
+    </SelectedAnswerChoice>
+  </VerifyChallengeAnswersRequestMultiChoiceQuestion>
+</ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion>

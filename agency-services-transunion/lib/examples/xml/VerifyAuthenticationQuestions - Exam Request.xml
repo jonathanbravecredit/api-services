@@ -1,0 +1,24 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data">
+  <soapenv:Header />
+  <soapenv:Body>
+    <con:VerifyAuthenticationQuestions>
+      <con:request>
+        <data:AccountCode>123456789</data:AccountCode>
+        <data:AccountName>CC2PartnerTesting1</data:AccountName>
+        <data:AdditionalInputs>
+          <data:Data>
+            <data:Name></data:Name>
+            <data:Value></data:Value>
+          </data:Data>
+        </data:AdditionalInputs>
+        <data:RequestKey>bc4c96f0-1b08-4a01-95f0-92282be82213</data:RequestKey>
+        <data:ClientKey>352b44ab-1b25-4b63-a325-cc8ebfe06a58</data:ClientKey>
+        <data:Answers><![CDATA[<ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion xmlns="com/truelink/ds/sch/srv/iv/ccs"><VerifyChallengeAnswersRequestMultiChoiceQuestion><QuestionId>40115386</QuestionId><SelectedAnswerChoice><AnswerChoiceId>3036300248</AnswerChoiceId></SelectedAnswerChoice></VerifyChallengeAnswersRequestMultiChoiceQuestion><VerifyChallengeAnswersRequestMultiChoiceQuestion><QuestionId>40115384</QuestionId><SelectedAnswerChoice><AnswerChoiceId>3036300230</AnswerChoiceId></SelectedAnswerChoice></VerifyChallengeAnswersRequestMultiChoiceQuestion><VerifyChallengeAnswersRequestMultiChoiceQuestion><QuestionId>40115388</QuestionId><SelectedAnswerChoice><AnswerChoiceId>3036300254</AnswerChoiceId></SelectedAnswerChoice></VerifyChallengeAnswersRequestMultiChoiceQuestion><VerifyChallengeAnswersRequestMultiChoiceQuestion><QuestionId>40115390</QuestionId><SelectedAnswerChoice><AnswerChoiceId>3036300266</AnswerChoiceId></SelectedAnswerChoice></VerifyChallengeAnswersRequestMultiChoiceQuestion></ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion>]]></data:Answers>
+        <data:ServiceBundleFulfillmentKey>b63d067f-acd1-495c-bbe7-db8c73de1ab3</data:ServiceBundleFulfillmentKey>
+        <data:TrustSessionId>2341234-12341234-1234-1234-1234</data:TrustSessionId>
+      </con:request>
+    </con:VerifyAuthenticationQuestions>
+  </soapenv:Body>
+</soapenv:Envelope>

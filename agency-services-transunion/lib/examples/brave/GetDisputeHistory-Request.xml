@@ -1,0 +1,16 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:GetDisputeHistory>
+      <con:request>
+        <data:AccountCode>123456789</data:AccountCode>
+        <data:AccountName>CC2BraveCredit</data:AccountName>
+        <data:RequestKey>BC-0f679099-109a-4f96-adad-9c828d5cb4f2</data:RequestKey>
+        <data:ClientKey>25ab07bf-b9b2-49e7-97cf-093b8230211a</data:ClientKey>
+        <data:EnrollmentKey>e62b9e16-dac9-47ff-8fa0-d029b622d59d</data:EnrollmentKey>
+      </con:request>
+    </con:GetDisputeHistory>
+  </soapenv:Body>
+</soapenv:Envelope>

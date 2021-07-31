@@ -1,0 +1,20 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <VerifyAuthenticationQuestionsResponse xmlns="https://consumerconnectws.tui.transunion.com/">
+      <VerifyAuthenticationQuestionsResult xmlns:a="https://consumerconnectws.tui.transunion.com/data"
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <a:AccountName>CC2PartnerTesting1</a:AccountName>
+        <a:ErrorResponse i:nil="true" />
+        <a:RequestKey>bc4c96f0-1b08-4a01-95f0-92282be82213</a:RequestKey>
+        <a:ResponseType>Success</a:ResponseType>
+        <a:ClientKey>352b44ab-1b25-4b63-a325-cc8ebfe06a58</a:ClientKey>
+        <a:AuthenticationDetails>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;VerifyChallengeAnswersResponseSuccess xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com/truelink/ds/sch/srv/iv/ccs"&gt;
+  &lt;ApplicantChallengeId&gt;874765480&lt;/ApplicantChallengeId&gt;
+  &lt;AnswerVerificationStatus&gt;Correct&lt;/AnswerVerificationStatus&gt;
+&lt;/VerifyChallengeAnswersResponseSuccess&gt;</a:AuthenticationDetails>
+        <a:AuthenticationStatus>Correct</a:AuthenticationStatus>
+      </VerifyAuthenticationQuestionsResult>
+    </VerifyAuthenticationQuestionsResponse>
+  </s:Body>
+</s:Envelope>

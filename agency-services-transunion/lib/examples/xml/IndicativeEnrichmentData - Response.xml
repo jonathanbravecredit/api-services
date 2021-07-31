@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CustomerInfoType xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <FullName xmlns="com/truelink/ds/sch/srv/cr/ccs">
+    <FirstName>THOMAS</FirstName>
+    <MiddleName>E</MiddleName>
+    <LastName>FRIEDMAN</LastName>
+  </FullName>
+  <SocialSecurityNumber xmlns="com/truelink/ds/sch/srv/cr/ccs">666234390</SocialSecurityNumber>
+  <Address xmlns="com/truelink/ds/sch/srv/cr/ccs">
+    <StreetAddressLineOne>535 30 RD</StreetAddressLineOne>
+    <City>GRAND JUNCTION</City>
+    <Zip>81504</Zip>
+    <State>CO</State>
+  </Address>
+  <DateOfBirth xmlns="com/truelink/ds/sch/srv/cr/ccs">1975-01-01</DateOfBirth>
+</CustomerInfoType>

@@ -1,0 +1,37 @@
+{
+  "ClientKey": "3aefd237-6940-446a-9346-0174a0525f1b",
+  "Customer": {
+    "CurrentAddress": {
+      "AddressLine1": "101 2NS ST",
+      "AddressLine2": "",
+      "City": "BURT",
+      "State": "IA",
+      "Zipcode": "50522"
+    },
+    "DateOfBirth": "1956-02-01",
+    "FullName": {
+      "FirstName": "NEIL",
+      "LastName": "GIDDENS",
+      "MiddleName": ""
+    },
+    "Ssn": "666403077"
+  },
+  "EnrollmentKey": "c42ffa2b-288c-4558-b4cf-83f0c86f00a8",
+  "LineItems": [
+    {
+      "LineItem": {
+        "ClaimCodes": [
+          {
+            "ClaimCode": {
+              "Code": "F3"
+            }
+          }
+        ],
+        "CreditReportItem": "TR01_1291748319_804122595_82",
+        "LineItemComment": "Account Tradeline"
+      }
+    }
+  ],
+  "ServiceBundleFulfillmentKey": "6aaf7881-58e4-4ef5-b076-94d8be2520c5",
+  "ServiceProductFulfillmentKey": null
+}

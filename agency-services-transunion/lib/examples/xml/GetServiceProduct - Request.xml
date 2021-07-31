@@ -1,0 +1,21 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data"
+  xmlns:arr="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:GetServiceProduct>
+      <con:request>
+        <data:AccountCode>123456789</data:AccountCode>
+        <data:AccountName>CC2PartnerTesting1</data:AccountName>
+        <data:RequestKey>1234567890</data:RequestKey>
+        <data:ClientKey>cb3c3a15-8315-43af-885e-9d0b2f279a7c</data:ClientKey>
+        <data:CSRFToken />
+        <data:ClientBrowserType />
+        <data:IpAddress />
+        <data:ProductDisplay>false</data:ProductDisplay>
+        <data:ServiceBundleFulfillmentKey>86bea070-8040-40c4-9326-bc7c67222c23</data:ServiceBundleFulfillmentKey>
+      </con:request>
+    </con:GetServiceProduct>
+  </soapenv:Body>
+</soapenv:Envelope>

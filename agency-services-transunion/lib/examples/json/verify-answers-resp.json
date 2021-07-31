@@ -1,0 +1,23 @@
+{
+  "VerifyAuthenticationQuestions": {
+    "s:Envelope": {
+      "s:Body": {
+        "VerifyAuthenticationQuestionsResponse": {
+          "VerifyAuthenticationQuestionsResult": {
+            "a:AccountName": "CC2BraveCredit",
+            "a:ErrorResponse": {
+              "a:Code": 102027,
+              "a:Message": "No service bundle information provided for VerifyAuthenticationQuestions",
+              "a:Name": "VerifyAuthenticationQuestionsNoServiceBundle"
+            },
+            "a:RequestKey": "2b37d625-49ec-4307-bb16-b67784aad97f",
+            "a:ResponseType": "Failure",
+            "a:ClientKey": "352b44ab-1b25-4b63-a325-cc8ebfe06a58",
+            "a:AuthenticationDetails": "",
+            "a:AuthenticationStatus": "InProgress"
+          }
+        }
+      }
+    }
+  }
+}

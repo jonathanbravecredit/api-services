@@ -11,9 +11,20 @@ plugins:
   - serverless-dotenv-plugin # Load .env as environment variables
 
 custom:
-  snsProxy: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
   bundle:
+    external: all
     linting: false
+  snsProxy: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
+  settings:
+    GRAPHQL_APIENDPOINTOUTPUT: !ImportValue GraphQLAPIEndpointOutput
+    GRAPHQL_API:
+      dev: 'rr5wtr4ev5exlbutrkih3r5lhq'
+      qa: 'rr5wtr4ev5exlbutrkih3r5lhq'
+      pdor: '4tpaga7rzjayhk75opsmpeurme'
+    GRAPHQL_ENDPOINT:
+      dev: 'https://24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com/graphql'
+      qa: 'https://24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com/graphql'
+      prod: 'https://krybm5pc3nbgdk4zwgcva2i4va.appsync-api.us-east-2.amazonaws.com/graphql'
 
 provider:
   name: aws
@@ -23,58 +34,116 @@ provider:
   layers:
     - !Ref TuCertsLambdaLayer
   environment:
-    SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
+    NODE_ENV: ${opt:stage, 'dev'}
     TU_SECRET_LOCATION: '${self:provider.stage}/agency-services/transunion'
+    APPSYNC_ENDPOINT: '${self:custom.settings.GRAPHQL_ENDPOINT.${opt:stage}}'
+    APPSYNC_API: '${self:custom.settings.GRAPHQL_API.${opt:stage}}'
   vpc:
     securityGroupIds:
       - !GetAtt NatGatewayLambdaSecurityGroup.GroupId
     subnetIds:
       - !Ref SubnetAPrivate
       - !Ref SubnetBPrivate
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - secretsmanager:GetSecretValue
+      Resource:
+        - '*'
+    - Effect: Allow
+      Resource:
+        - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Query/*'
+        - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Mutation/*'
+        - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Subscription/*'
+      Action: 'appsync:GraphQL'
 
 layers:
   TuCerts:
     path: tucerts
 
 functions:
-  getReports:
-    handler: src/handlers/getReports.main
+  graphql:
+    handler: src/handlers/graphql.main
+    timeout: 30
     layers:
       - { Ref: TuCertsLambdaLayer }
-    events:
-      - sqs:
-          arn: !GetAtt
-            - TransunionQueue
-            - Arn
-          batchSize: 1
-  getReport:
-    handler: src/handlers/getReport.main
-    layers:
-      - { Ref: TuCertsLambdaLayer }
-    events:
-      - sns:
-          arn: ${self:provider.environment.SNS_PROXY_ARN}
-          topicName: SnsProxyTopic
-          integration: lambda-proxy
-          filterPolicy:
-            service:
-              - 'transunion'
+  # postRequests:
+  #   handler: src/handlers/postRequests.main
+  #   layers:
+  #     - { Ref: TuCertsLambdaLayer }
+  #   events:
+  #     - sns:
+  #         arn: ${self:provider.environment.SNS_PROXY_ARN}
+  #         topicName: SnsProxyTopic
+  #         integration: lambda-proxy
+  #         filterPolicy:
+  #           service:
+  #             - 'transunion'
+
+  # SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
 
 resources:
   Resources:
-    TransunionData:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: 'id'
-            AttributeType: 'S'
-        KeySchema:
-          - AttributeName: 'id'
-            KeyType: 'HASH'
-        BillingMode: PAY_PER_REQUEST
-        TableName: ${self:provider.environment.TABLENAME}
-        StreamSpecification:
-          StreamViewType: NEW_AND_OLD_IMAGES
+    # LambdaExecutionRole:
+    #   Type: AWS::IAM::Role
+    #   Properties:
+    #     RoleName: !Sub 'braveappAgencyLambdaRole-${opt:stage}'
+    #     AssumeRolePolicyDocument:
+    #       Version: '2012-10-17'
+    #       Statement:
+    #         - Effect: Allow
+    #           Principal:
+    #             Service: appsync.amazonaws.com
+    #           Action: sts:AssumeRole
+    # lambdaexecutionpolicy:
+    #   DependsOn:
+    #     - 'LambdaExecutionRole'
+    #   Type: AWS::IAM::Policy
+    #   Properties:
+    #     PolicyName: lambda-execution-policy
+    #     Roles:
+    #       - { Ref: LambdaExecutionRole }
+    #     PolicyDocument:
+    #       Version: '2012-10-17'
+    #       Statement:
+    #         - Effect: Allow
+    #           Action:
+    #             - logs:CreateLogGroup
+    #             - logs:CreateLogStream
+    #             - logs:PutLogEvents
+    #           Resource:
+    #             - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${self:service}-${opt:stage}-graphql:log-stream:*'
+    # AmplifyResourcesPolicy:
+    #   DependsOn:
+    #     - 'LambdaExecutionRole'
+    #   Type: AWS::IAM::Policy
+    #   Properties:
+    #     PolicyName: amplify-lambda-execution-policy
+    #     Roles:
+    #       - { Ref: LambdaExecutionRole }
+    #     PolicyDocument:
+    #       Version: '2012-10-17'
+    #       Statement:
+    #         - Effect: Allow
+    #           Action:
+    #             - appsync:GraphQL
+    #           Resource:
+    #             - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Query/*'
+    #             - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Mutation/*'
+    #             - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Subscription/*'
+    # TransunionData:
+    #   Type: AWS::DynamoDB::Table
+    #   Properties:
+    #     AttributeDefinitions:
+    #       - AttributeName: 'id'
+    #         AttributeType: 'S'
+    #     KeySchema:
+    #       - AttributeName: 'id'
+    #         KeyType: 'HASH'
+    #     BillingMode: PAY_PER_REQUEST
+    #     TableName: ${self:provider.environment.TABLENAME}
+    #     StreamSpecification:
+    #       StreamViewType: NEW_AND_OLD_IMAGES
 
     VPC:
       Type: 'AWS::EC2::VPC'
@@ -235,57 +304,57 @@ resources:
             CidrIp: 0.0.0.0/0
 
     # Create our 'TransunionQueue' SQS queue
-    TransunionQueue:
-      Type: 'AWS::SQS::Queue'
-      Properties:
-        QueueName: ${self:provider.stage}-${self:service}-sqs
-        ReceiveMessageWaitTimeSeconds: 20
-        RedrivePolicy:
-          deadLetterTargetArn: !GetAtt
-            - TransunionQueueDLQ
-            - Arn
-          maxReceiveCount: 3
+    # TransunionQueue:
+    #   Type: 'AWS::SQS::Queue'
+    #   Properties:
+    #     QueueName: ${self:provider.stage}-${self:service}-sqs
+    #     ReceiveMessageWaitTimeSeconds: 20
+    #     RedrivePolicy:
+    #       deadLetterTargetArn: !GetAtt
+    #         - TransunionQueueDLQ
+    #         - Arn
+    #       maxReceiveCount: 3
 
     # Create our 'TransunionQueue' Dead Letter Queue SQS queue
-    TransunionQueueDLQ:
-      Type: AWS::SQS::Queue
-      Properties:
-        QueueName: ${self:provider.stage}-${self:service}-dlq
-        ReceiveMessageWaitTimeSeconds: 20
+    # TransunionQueueDLQ:
+    #   Type: AWS::SQS::Queue
+    #   Properties:
+    #     QueueName: ${self:provider.stage}-${self:service}-dlq
+    #     ReceiveMessageWaitTimeSeconds: 20
 
     # Create our queue policy for the 'TransunionQueue'
-    SnsToTransunionQueueSqsPolicy:
-      Type: AWS::SQS::QueuePolicy
-      Properties:
-        PolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            - Sid: 'allow-sns-messages'
-              Effect: Allow
-              Principal: '*'
-              Resource: !GetAtt
-                - TransunionQueue
-                - Arn
-              Action: 'SQS:SendMessage'
-              Condition:
-                ArnEquals:
-                  'aws:SourceArn': ${self:provider.environment.SNS_PROXY_ARN}
-        Queues:
-          - Ref: TransunionQueue
+    # SnsToTransunionQueueSqsPolicy:
+    #   Type: AWS::SQS::QueuePolicy
+    #   Properties:
+    #     PolicyDocument:
+    #       Version: '2012-10-17'
+    #       Statement:
+    #         - Sid: 'allow-sns-messages'
+    #           Effect: Allow
+    #           Principal: '*'
+    #           Resource: !GetAtt
+    #             - TransunionQueue
+    #             - Arn
+    #           Action: 'SQS:SendMessage'
+    #           Condition:
+    #             ArnEquals:
+    #               'aws:SourceArn': ${self:provider.environment.SNS_PROXY_ARN}
+    #     Queues:
+    #       - Ref: TransunionQueue
 
     # Create the subscription from the transunion SQS to the SNS proxy'
-    TransunionQueueSubscription:
-      Type: 'AWS::SNS::Subscription'
-      Properties:
-        TopicArn: ${self:provider.environment.SNS_PROXY_ARN}
-        Endpoint: !GetAtt
-          - TransunionQueue
-          - Arn
-        Protocol: sqs
-        FilterPolicy:
-          service:
-            - 'transunion:batch'
-        RawMessageDelivery: 'true'
+    # TransunionQueueSubscription:
+    #   Type: 'AWS::SNS::Subscription'
+    #   Properties:
+    #     TopicArn: ${self:provider.environment.SNS_PROXY_ARN}
+    #     Endpoint: !GetAtt
+    #       - TransunionQueue
+    #       - Arn
+    #     Protocol: sqs
+    #     FilterPolicy:
+    #       service:
+    #         - 'transunion:batch'
+    #     RawMessageDelivery: 'true'
 
   Outputs:
     VPC:

@@ -1,0 +1,1131 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <EnrollResponse xmlns="https://consumerconnectws.tui.transunion.com/">
+      <EnrollResult xmlns:a="https://consumerconnectws.tui.transunion.com/data"
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <a:AccountName>CC2PartnerTesting1</a:AccountName>
+        <a:ErrorResponse i:nil="true"/>
+        <a:RequestKey>dd3d95b1-94ea-40a9-a3ec-7b5f85122630</a:RequestKey>
+        <a:ResponseType>Success</a:ResponseType>
+        <a:ClientKey>ND0711_v7SOreport</a:ClientKey>
+        <a:EnrollmentKey>6597140e-f023-40b1-bab6-70bf51276b9f</a:EnrollmentKey>
+        <a:ServiceBundleFulfillmentKey>b86cd142-4a95-400b-af60-ff60daf51fa8</a:ServiceBundleFulfillmentKey>
+        <a:ServiceProductFulfillments>
+          <a:ServiceProductResponse>
+            <a:Bureau>TransUnion</a:Bureau>
+            <a:ErrorResponse i:nil="true"/>
+            <a:ServiceBundleResponse>
+              <a:ServiceBundleCode>CC2PartnerTesting1_StandardOfferV</a:ServiceBundleCode>
+              <a:ServiceBundleFulfillmentKey>b86cd142-4a95-400b-af60-ff60daf51fa8</a:ServiceBundleFulfillmentKey>
+              <a:ServiceBundleFulfillmentStatus>Success</a:ServiceBundleFulfillmentStatus>
+            </a:ServiceBundleResponse>
+            <a:ServiceProduct>TUCReport</a:ServiceProduct>
+            <a:ServiceProductFulfillmentKey>c54d6794-e0fc-4175-8206-29f6b8869cc4</a:ServiceProductFulfillmentKey>
+            <a:ServiceProductObject i:type="b:string"
+              xmlns:b="http://www.w3.org/2001/XMLSchema"/>
+            <a:ServiceProductTypeId>CreditReport</a:ServiceProductTypeId>
+            <a:ServiceProductValue/>
+            <a:Status>Success</a:Status>
+          </a:ServiceProductResponse>
+          <a:ServiceProductResponse>
+            <a:Bureau>TransUnion</a:Bureau>
+            <a:ErrorResponse i:nil="true"/>
+            <a:ServiceBundleResponse>
+              <a:ServiceBundleCode>CC2PartnerTesting1_StandardOfferV</a:ServiceBundleCode>
+              <a:ServiceBundleFulfillmentKey>b86cd142-4a95-400b-af60-ff60daf51fa8</a:ServiceBundleFulfillmentKey>
+              <a:ServiceBundleFulfillmentStatus>Success</a:ServiceBundleFulfillmentStatus>
+            </a:ServiceBundleResponse>
+            <a:ServiceProduct>TUCVantageScore3</a:ServiceProduct>
+            <a:ServiceProductFulfillmentKey>5a6f1d64-267b-4066-92fe-ce422ba5e444</a:ServiceProductFulfillmentKey>
+            <a:ServiceProductObject i:type="b:string"
+              xmlns:b="http://www.w3.org/2001/XMLSchema">
+              &lt;?xml version="1.0" encoding="utf-8"?&gt;&#xD; &lt;CreditScoreType xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" riskScore="527" scoreName="VantageScore3" populationRank="16"&gt;&#xD;
+                            &lt;CreditScoreFactor bureauCode="34" FactorType="Negative" xmlns="com/truelink/ds/sch/report/truelink/v3"&gt;&#xD; &lt;Factor abbreviation="" description="" symbol="34" rank="100000" /&gt;&#xD;
+                            &lt;FactorText&gt;explain: Bankcard accounts include credit cards and
+                            charge cards from a bank and are frequently revolving accounts.
+                            Revolving accounts allow you to carry a balance and your monthly payment
+                            will vary, based on the amount of your balance. The total combined
+                            amount you owe on all of your bankcards and revolving accounts is high,
+                            a sign of increased risk. People who carry balances on multiple
+                            bankcards or other revolving accounts have reduced available credit to
+                            use if needed, creating a greater chance of becoming
+                            overextended.&lt;/FactorText&gt;&#xD; &lt;FactorText&gt;factor: Total of
+                            all balances on bankcard or revolving accounts is too
+                            high&lt;/FactorText&gt;&#xD; &lt;FactorText&gt;cando: Pay down the
+                            balances on your accounts. Ideally, the balance on any revolving account
+                            should be 30% or less of the total credit limit on that
+                            account.&lt;/FactorText&gt;&#xD; &lt;/CreditScoreFactor&gt;&#xD;
+                            &lt;CreditScoreFactor bureauCode="65" FactorType="Negative" xmlns="com/truelink/ds/sch/report/truelink/v3"&gt;&#xD; &lt;Factor abbreviation="" description="" symbol="65" rank="100000" /&gt;&#xD;
+                            &lt;FactorText&gt;explain: The VantageScore credit score model relies on
+                            information in your credit files at the three national credit reporting
+                            companies (Equifax, Experian and TransUnion) to generate your score.
+                            Your credit file does not contain enough credit behavior information
+                            about your first mortgage accounts. A mix of different types of open and
+                            active credit accounts, including first mortgage loans, can have a
+                            positive impact on your credit score.&lt;/FactorText&gt;&#xD;
+                            &lt;FactorText&gt;factor: Lack of sufficient relevant first mortgage
+                            account information&lt;/FactorText&gt;&#xD; &lt;FactorText&gt;cando:
+                            Maintaining open and active credit accounts in good standing can help
+                            improve your credit score.&lt;/FactorText&gt;&#xD;
+                            &lt;/CreditScoreFactor&gt;&#xD; &lt;CreditScoreFactor bureauCode="44" FactorType="Negative" xmlns="com/truelink/ds/sch/report/truelink/v3"&gt;&#xD; &lt;Factor abbreviation="" description="" symbol="44" rank="100000" /&gt;&#xD;
+                            &lt;FactorText&gt;explain: Bankcard accounts include credit cards and
+                            charge cards from a bank and are frequently revolving accounts.
+                            Revolving accounts allow you to carry a balance and your monthly payment
+                            will vary, based on the amount of your balance. You have had too many
+                            bankcard or revolving accounts with payments that are at least 30 days
+                            late and/or on which a lender has reported a derogatory status. People
+                            with late payments are at risk of being overextended, putting existing
+                            credit with lenders at risk.&lt;/FactorText&gt;&#xD;
+                            &lt;FactorText&gt;factor: Too many bankcard or revolving accounts with
+                            delinquent or derogatory status&lt;/FactorText&gt;&#xD;
+                            &lt;FactorText&gt;cando: Paying bills on time every month is important
+                            to maintaining a good credit score. If you remain behind with any
+                            payments, bring them current as soon as possible, and then make future
+                            payments on time. Over time this will have a positive impact on your
+                            score.&lt;/FactorText&gt;&#xD; &lt;/CreditScoreFactor&gt;&#xD;
+                            &lt;CreditScoreFactor bureauCode="07" FactorType="Negative" xmlns="com/truelink/ds/sch/report/truelink/v3"&gt;&#xD; &lt;Factor abbreviation="" description="" symbol="07" rank="100000" /&gt;&#xD;
+                            &lt;FactorText&gt;explain: You have had too many accounts with payments
+                            that are at least 30 days late and/or on which a lender has reported a
+                            derogatory status. Late payments are a proven indicator of increased
+                            risk. People with late payments are at risk of being overextended,
+                            putting existing credit with lenders at risk.&lt;/FactorText&gt;&#xD;
+                            &lt;FactorText&gt;factor: You have too many delinquent or derogatory
+                            accounts&lt;/FactorText&gt;&#xD; &lt;FactorText&gt;cando: Paying bills
+                            on time every month is important to maintaining a good credit score. If
+                            you remain behind with any payments, bring them current as soon as
+                            possible, and then make future payments on time. Over time, this will
+                            have a positive impact on your score.&lt;/FactorText&gt;&#xD;
+                            &lt;/CreditScoreFactor&gt;&#xD; &lt;CreditScoreFactor bureauCode="P32" FactorType="Positive" xmlns="com/truelink/ds/sch/report/truelink/v3"&gt;&#xD; &lt;Factor abbreviation="" description="" symbol="P32" rank="100000" /&gt;&#xD;
+                            &lt;FactorText&gt;explain: Bankcard accounts include credit cards and
+                            charge cards from a bank and are frequently revolving accounts.
+                            Revolving accounts allow you to carry a balance and your monthly payment
+                            will vary, based on the amount of your balance. Your balances on
+                            bankcard or revolving accounts are not too high compared to the credit
+                            limit amounts, which causes your score to
+                            improve.&lt;/FactorText&gt;&#xD; &lt;FactorText&gt;factor: Balances on
+                            bankcard or revolving accts not too high compared to
+                            limits&lt;/FactorText&gt;&#xD; &lt;FactorText&gt;cando: Keep low
+                            balances on your accounts; this will benefit your
+                            score.&lt;/FactorText&gt;&#xD; &lt;/CreditScoreFactor&gt;&#xD;
+                            &lt;CreditScoreFactor bureauCode="P05" FactorType="Positive" xmlns="com/truelink/ds/sch/report/truelink/v3"&gt;&#xD; &lt;Factor abbreviation="" description="" symbol="P05" rank="100000" /&gt;&#xD;
+                            &lt;FactorText&gt;explain: A delinquency is a payment that was made 30
+                            or more days late. You have had no or very few delinquencies recently
+                            which has caused your score to improve.&lt;/FactorText&gt;&#xD;
+                            &lt;FactorText&gt;factor: There are no or only a few recent
+                            delinquencies on your accounts&lt;/FactorText&gt;&#xD;
+                            &lt;FactorText&gt;cando: Keep paying bills on time every month since it
+                            is important for maintaining a good credit score. If you remain behind
+                            with any payments, bring them current as soon as possible, and then make
+                            future payments on time. Over time, this will have a positive impact on
+                            your score.&lt;/FactorText&gt;&#xD; &lt;/CreditScoreFactor&gt;&#xD;
+                            &lt;CreditScoreFactor bureauCode="P40" FactorType="Positive" xmlns="com/truelink/ds/sch/report/truelink/v3"&gt;&#xD; &lt;Factor abbreviation="" description="" symbol="P40" rank="100000" /&gt;&#xD;
+                            &lt;FactorText&gt;explain: Bankcard accounts include credit cards and
+                            charge cards from a bank and are frequently revolving accounts.
+                            Revolving accounts allow you to carry a balance and your monthly payment
+                            will vary, based on the amount of your balance. Your oldest bankcard or
+                            revolving account was not opened too recently. As a result, your history
+                            of credit management is enough to demonstrate responsible behavior which
+                            has improved your score.&lt;/FactorText&gt;&#xD;
+                            &lt;FactorText&gt;factor: Date your oldest bankcard or revolving account
+                            opened is not too recent&lt;/FactorText&gt;&#xD;
+                            &lt;FactorText&gt;cando: Don't open more accounts than you actually
+                            need. Research shows that new accounts indicate greater risk. Your score
+                            will benefit as your accounts get older.&lt;/FactorText&gt;&#xD;
+                            &lt;/CreditScoreFactor&gt;&#xD; &lt;CreditScoreFactor bureauCode="P63" FactorType="Positive" xmlns="com/truelink/ds/sch/report/truelink/v3"&gt;&#xD; &lt;Factor abbreviation="" description="" symbol="P63" rank="100000" /&gt;&#xD;
+                            &lt;FactorText&gt;explain: A real estate loan can be a first mortgage, a
+                            home equity loan, or home equity line of credit. The VantageScore credit
+                            score model relies on information in your credit files at the three
+                            national credit reporting companies (Equifax, Experian and TransUnion)
+                            to generate your score. A mix of different types of open and active
+                            credit accounts, including real estate accounts, can have a positive
+                            impact on your score.&lt;/FactorText&gt;&#xD; &lt;FactorText&gt;factor:
+                            Lack of sufficient relevant real estate account
+                            information&lt;/FactorText&gt;&#xD; &lt;FactorText&gt;cando: Maintaining
+                            open and active credit accounts in good standing can help improve your
+                            credit score.&lt;/FactorText&gt;&#xD; &lt;/CreditScoreFactor&gt;&#xD;
+                            &lt;CreditScoreModel abbreviation="" description="" symbol="00W40" rank="100000" xmlns="com/truelink/ds/sch/report/truelink/v3" /&gt;&#xD;
+                            &lt;NoScoreReason abbreviation="" description="" symbol="" rank="100000" xmlns="com/truelink/ds/sch/report/truelink/v3" /&gt;&#xD; &lt;Source xmlns="com/truelink/ds/sch/report/truelink/v3"&gt;&#xD; &lt;BorrowerKey
+                            /&gt;&#xD; &lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1" /&gt;&#xD;
+                            &lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&#xD;
+                            &lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&#xD;
+                            &lt;/Source&gt;&#xD; &lt;/CreditScoreType&gt;</a:ServiceProductObject>
+            <a:ServiceProductTypeId>VantageScore</a:ServiceProductTypeId>
+            <a:ServiceProductValue>527</a:ServiceProductValue>
+            <a:Status>Success</a:Status>
+          </a:ServiceProductResponse>
+          <a:ServiceProductResponse>
+            <a:Bureau>TransUnion</a:Bureau>
+            <a:ErrorResponse i:nil="true"/>
+            <a:ServiceBundleResponse>
+              <a:ServiceBundleCode>CC2PartnerTesting1_StandardOfferV</a:ServiceBundleCode>
+              <a:ServiceBundleFulfillmentKey>b86cd142-4a95-400b-af60-ff60daf51fa8</a:ServiceBundleFulfillmentKey>
+              <a:ServiceBundleFulfillmentStatus>Success</a:ServiceBundleFulfillmentStatus>
+            </a:ServiceBundleResponse>
+            <a:ServiceProduct>TUCAlertNotifications</a:ServiceProduct>
+            <a:ServiceProductFulfillmentKey>d94d4dbf-2207-47dc-8c49-24163e6af64a</a:ServiceProductFulfillmentKey>
+            <a:ServiceProductObject i:type="b:string"
+              xmlns:b="http://www.w3.org/2001/XMLSchema"/>
+            <a:ServiceProductTypeId>AlertNotifications</a:ServiceProductTypeId>
+            <a:ServiceProductValue/>
+            <a:Status>Success</a:Status>
+          </a:ServiceProductResponse>
+          <a:ServiceProductResponse>
+            <a:Bureau>TransUnion</a:Bureau>
+            <a:ErrorResponse i:nil="true"/>
+            <a:ServiceBundleResponse>
+              <a:ServiceBundleCode>CC2PartnerTesting1_StandardOfferV</a:ServiceBundleCode>
+              <a:ServiceBundleFulfillmentKey>b86cd142-4a95-400b-af60-ff60daf51fa8</a:ServiceBundleFulfillmentKey>
+              <a:ServiceBundleFulfillmentStatus>Success</a:ServiceBundleFulfillmentStatus>
+            </a:ServiceBundleResponse>
+            <a:ServiceProduct>TUCAlertDetails</a:ServiceProduct>
+            <a:ServiceProductFulfillmentKey>f29068a2-c90a-468e-af66-c1750e075dc4</a:ServiceProductFulfillmentKey>
+            <a:ServiceProductObject i:type="b:string"
+              xmlns:b="http://www.w3.org/2001/XMLSchema"/>
+            <a:ServiceProductTypeId>AlertDetails</a:ServiceProductTypeId>
+            <a:ServiceProductValue/>
+            <a:Status>Success</a:Status>
+          </a:ServiceProductResponse>
+          <a:ServiceProductResponse>
+            <a:Bureau>TransUnion</a:Bureau>
+            <a:ErrorResponse i:nil="true"/>
+            <a:ServiceBundleResponse>
+              <a:ServiceBundleCode>CC2PartnerTesting1_StandardOfferV</a:ServiceBundleCode>
+              <a:ServiceBundleFulfillmentKey>b86cd142-4a95-400b-af60-ff60daf51fa8</a:ServiceBundleFulfillmentKey>
+              <a:ServiceBundleFulfillmentStatus>Success</a:ServiceBundleFulfillmentStatus>
+            </a:ServiceBundleResponse>
+            <a:ServiceProduct>TUCVantageScoreSim</a:ServiceProduct>
+            <a:ServiceProductFulfillmentKey>92df4cd0-e9a4-4292-a2a5-c8c37de97171</a:ServiceProductFulfillmentKey>
+            <a:ServiceProductObject i:type="b:string"
+              xmlns:b="http://www.w3.org/2001/XMLSchema"/>
+            <a:ServiceProductTypeId>VantageScoreSim</a:ServiceProductTypeId>
+            <a:ServiceProductValue/>
+            <a:Status>Success</a:Status>
+          </a:ServiceProductResponse>
+          <a:ServiceProductResponse>
+            <a:Bureau>TransUnion</a:Bureau>
+            <a:ErrorResponse i:nil="true"/>
+            <a:ServiceBundleResponse i:nil="true"/>
+            <a:ServiceProduct>MergeCreditReports</a:ServiceProduct>
+            <a:ServiceProductFulfillmentKey/>
+            <a:ServiceProductObject i:type="b:string"
+              xmlns:b="http://www.w3.org/2001/XMLSchema">&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;TrueLinkCreditReportType FraudIndicator="false" DeceasedIndicator="false" xmlns="com/truelink/ds/sch/report/truelink/v3" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;&lt;SB168Frozen equifax="false" experian="false" transunion="false" /&gt;&lt;Borrower SocialSecurityNumber="666359515"&gt;&lt;BorrowerAddress dateReported="2009-09-01" addressOrder="0" partitionSet="0"&gt;&lt;CreditAddress city="FLUSHING" direction="" houseNumber="4376" postDirection="" stateCode="NY" streetName="163RD" streetType="ST" unit="1A" postalCode="11358" /&gt;&lt;Dwelling abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;Origin abbreviation="" description="" symbol="" rank="100000"
+                            /&gt;&lt;Ownership abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;Source&gt;&lt;BorrowerKey /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/BorrowerAddress&gt;&lt;PreviousAddress dateReported="2008-03-01" addressOrder="0" partitionSet="0"&gt;&lt;CreditAddress city="FLUSHING" direction="" houseNumber="34376" postDirection="" stateCode="NY" streetName="163RD" streetType="ST" unit="3A" postalCode="11358" /&gt;&lt;Dwelling abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;Origin abbreviation="" description="" symbol="" rank="100000"
+                            /&gt;&lt;Ownership abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;Source&gt;&lt;BorrowerKey /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/PreviousAddress&gt;&lt;PreviousAddress addressOrder="1" partitionSet="1"&gt;&lt;CreditAddress city="FAR
+                            ROCKAWAY" direction="" houseNumber="3101" postDirection="" stateCode="NY" streetName="HEALY" streetType="AV" unit="B" postalCode="11691" /&gt;&lt;Dwelling abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;Origin abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;Ownership abbreviation="" description="" symbol="" rank="100000"
+                            /&gt;&lt;Source&gt;&lt;BorrowerKey /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/PreviousAddress&gt;&lt;Birth age="0" date="1964-01-01" partitionSet="0"&gt;&lt;BirthDate year="1964" month="1" day="1" /&gt;&lt;Source&gt;&lt;BorrowerKey /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Birth&gt;&lt;CreditScore riskScore="936" scoreName="VantageScore" populationRank="93" qualitativeRank="A"&gt;&lt;CreditScoreFactor bureauCode="61" FactorType="Negative"&gt;&lt;Factor abbreviation="" description="" symbol="61" rank="100000" /&gt;&lt;FactorText&gt;You have no open retail
+                            revolving accounts.&lt;/FactorText&gt;&lt;FactorText&gt;Lenders may be
+                            able to better evaluate your creditworthiness if your report contains
+                            open
+                            accounts.&lt;/FactorText&gt;&lt;/CreditScoreFactor&gt;&lt;CreditScoreFactor bureauCode="05" FactorType="Negative"&gt;&lt;Factor abbreviation="" description="" symbol="05" rank="100000" /&gt;&lt;FactorText&gt;You have
+                            no accounts that show your payment
+                            status.&lt;/FactorText&gt;&lt;FactorText&gt;Lenders may be able to
+                            better evaluate your creditworthiness if there is more information about
+                            your payment behavior on your credit
+                            report.&lt;/FactorText&gt;&lt;/CreditScoreFactor&gt;&lt;CreditScoreFactor bureauCode="16" FactorType="Negative"&gt;&lt;Factor abbreviation="" description="" symbol="16" rank="100000" /&gt;&lt;FactorText&gt;You have
+                            no open installment accounts that show a payment
+                            status.&lt;/FactorText&gt;&lt;FactorText&gt;Lenders may be able to
+                            better evaluate your creditworthiness if there is more information about
+                            your payment behavior on your credit
+                            report.&lt;/FactorText&gt;&lt;/CreditScoreFactor&gt;&lt;CreditScoreFactor bureauCode="01" FactorType="Negative"&gt;&lt;Factor abbreviation="" description="" symbol="01" rank="100000" /&gt;&lt;FactorText&gt;You have
+                            no open accounts.&lt;/FactorText&gt;&lt;FactorText&gt;Lenders may be
+                            able to better evaluate your creditworthiness if your report contains
+                            open
+                            accounts.&lt;/FactorText&gt;&lt;/CreditScoreFactor&gt;&lt;CreditScoreModel abbreviation="VantageScore" description="VantageScore" symbol="00P94" rank="10000" /&gt;&lt;NoScoreReason abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/CreditScore&gt;&lt;CreditScore riskScore="803" scoreName="FicoScore"&gt;&lt;CreditScoreFactor bureauCode="09" FactorType="Negative"&gt;&lt;Factor abbreviation="" description="" symbol="09" rank="100000" /&gt;&lt;FactorText&gt;TOO MANY
+                            ACCOUNTS RECENTLY
+                            OPENED&lt;/FactorText&gt;&lt;/CreditScoreFactor&gt;&lt;CreditScoreFactor bureauCode="07" FactorType="Negative"&gt;&lt;Factor abbreviation="" description="" symbol="07" rank="100000" /&gt;&lt;FactorText&gt;ACCOUNT
+                            PAYMENT HISTORY TOO NEW TO
+                            RATE&lt;/FactorText&gt;&lt;/CreditScoreFactor&gt;&lt;CreditScoreFactor bureauCode="03" FactorType="Negative"&gt;&lt;Factor abbreviation="" description="" symbol="03" rank="100000"
+                            /&gt;&lt;FactorText&gt;PROPORTION OF LOAN BALANCES TO LOAN AMOUNTS IS
+                            TOO
+                            HIGH&lt;/FactorText&gt;&lt;/CreditScoreFactor&gt;&lt;CreditScoreFactor bureauCode="00" FactorType="Negative"&gt;&lt;Factor abbreviation="" description="" symbol="00" rank="100000" /&gt;&lt;FactorText&gt;NO
+                            ADVERSE
+                            FACTOR&lt;/FactorText&gt;&lt;/CreditScoreFactor&gt;&lt;CreditScoreModel abbreviation="" description="" symbol="00Q88" rank="100000"
+                            /&gt;&lt;NoScoreReason abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;Source&gt;&lt;BorrowerKey /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/CreditScore&gt;&lt;CreditScore riskScore="527" scoreName="VantageScore3" populationRank="16"&gt;&lt;CreditScoreFactor bureauCode="34" FactorType="Negative"&gt;&lt;Factor abbreviation="" description="" symbol="34" rank="100000" /&gt;&lt;FactorText&gt;explain: Bankcard
+                            accounts include credit cards and charge cards from a bank and are
+                            frequently revolving accounts. Revolving accounts allow you to carry a
+                            balance and your monthly payment will vary, based on the amount of your
+                            balance. The total combined amount you owe on all of your bankcards and
+                            revolving accounts is high, a sign of increased risk. People who carry
+                            balances on multiple bankcards or other revolving accounts have reduced
+                            available credit to use if needed, creating a greater chance of becoming
+                            overextended.&lt;/FactorText&gt;&lt;FactorText&gt;factor: Total of all
+                            balances on bankcard or revolving accounts is too
+                            high&lt;/FactorText&gt;&lt;FactorText&gt;cando: Pay down the balances on
+                            your accounts. Ideally, the balance on any revolving account should be
+                            30% or less of the total credit limit on that
+                            account.&lt;/FactorText&gt;&lt;/CreditScoreFactor&gt;&lt;CreditScoreFactor bureauCode="65" FactorType="Negative"&gt;&lt;Factor abbreviation="" description="" symbol="65" rank="100000" /&gt;&lt;FactorText&gt;explain:
+                            The VantageScore credit score model relies on information in your credit
+                            files at the three national credit reporting companies (Equifax,
+                            Experian and TransUnion) to generate your score. Your credit file does
+                            not contain enough credit behavior information about your first mortgage
+                            accounts. A mix of different types of open and active credit accounts,
+                            including first mortgage loans, can have a positive impact on your
+                            credit score.&lt;/FactorText&gt;&lt;FactorText&gt;factor: Lack of
+                            sufficient relevant first mortgage account
+                            information&lt;/FactorText&gt;&lt;FactorText&gt;cando: Maintaining open
+                            and active credit accounts in good standing can help improve your credit
+                            score.&lt;/FactorText&gt;&lt;/CreditScoreFactor&gt;&lt;CreditScoreFactor bureauCode="44" FactorType="Negative"&gt;&lt;Factor abbreviation="" description="" symbol="44" rank="100000" /&gt;&lt;FactorText&gt;explain:
+                            Bankcard accounts include credit cards and charge cards from a bank and
+                            are frequently revolving accounts. Revolving accounts allow you to carry
+                            a balance and your monthly payment will vary, based on the amount of
+                            your balance. You have had too many bankcard or revolving accounts with
+                            payments that are at least 30 days late and/or on which a lender has
+                            reported a derogatory status. People with late payments are at risk of
+                            being overextended, putting existing credit with lenders at
+                            risk.&lt;/FactorText&gt;&lt;FactorText&gt;factor: Too many bankcard or
+                            revolving accounts with delinquent or derogatory
+                            status&lt;/FactorText&gt;&lt;FactorText&gt;cando: Paying bills on time
+                            every month is important to maintaining a good credit score. If you
+                            remain behind with any payments, bring them current as soon as possible,
+                            and then make future payments on time. Over time this will have a
+                            positive impact on your
+                            score.&lt;/FactorText&gt;&lt;/CreditScoreFactor&gt;&lt;CreditScoreFactor bureauCode="07" FactorType="Negative"&gt;&lt;Factor abbreviation="" description="" symbol="07" rank="100000" /&gt;&lt;FactorText&gt;explain:
+                            You have had too many accounts with payments that are at least 30 days
+                            late and/or on which a lender has reported a derogatory status. Late
+                            payments are a proven indicator of increased risk. People with late
+                            payments are at risk of being overextended, putting existing credit with
+                            lenders at risk.&lt;/FactorText&gt;&lt;FactorText&gt;factor: You have
+                            too many delinquent or derogatory
+                            accounts&lt;/FactorText&gt;&lt;FactorText&gt;cando: Paying bills on time
+                            every month is important to maintaining a good credit score. If you
+                            remain behind with any payments, bring them current as soon as possible,
+                            and then make future payments on time. Over time, this will have a
+                            positive impact on your
+                            score.&lt;/FactorText&gt;&lt;/CreditScoreFactor&gt;&lt;CreditScoreFactor bureauCode="P32" FactorType="Positive"&gt;&lt;Factor abbreviation="" description="" symbol="P32" rank="100000"
+                            /&gt;&lt;FactorText&gt;explain: Bankcard accounts include credit cards
+                            and charge cards from a bank and are frequently revolving accounts.
+                            Revolving accounts allow you to carry a balance and your monthly payment
+                            will vary, based on the amount of your balance. Your balances on
+                            bankcard or revolving accounts are not too high compared to the credit
+                            limit amounts, which causes your score to
+                            improve.&lt;/FactorText&gt;&lt;FactorText&gt;factor: Balances on
+                            bankcard or revolving accts not too high compared to
+                            limits&lt;/FactorText&gt;&lt;FactorText&gt;cando: Keep low balances on
+                            your accounts; this will benefit your
+                            score.&lt;/FactorText&gt;&lt;/CreditScoreFactor&gt;&lt;CreditScoreFactor bureauCode="P05" FactorType="Positive"&gt;&lt;Factor abbreviation="" description="" symbol="P05" rank="100000"
+                            /&gt;&lt;FactorText&gt;explain: A delinquency is a payment that was made
+                            30 or more days late. You have had no or very few delinquencies recently
+                            which has caused your score to
+                            improve.&lt;/FactorText&gt;&lt;FactorText&gt;factor: There are no or
+                            only a few recent delinquencies on your
+                            accounts&lt;/FactorText&gt;&lt;FactorText&gt;cando: Keep paying bills on
+                            time every month since it is important for maintaining a good credit
+                            score. If you remain behind with any payments, bring them current as
+                            soon as possible, and then make future payments on time. Over time, this
+                            will have a positive impact on your
+                            score.&lt;/FactorText&gt;&lt;/CreditScoreFactor&gt;&lt;CreditScoreFactor bureauCode="P40" FactorType="Positive"&gt;&lt;Factor abbreviation="" description="" symbol="P40" rank="100000"
+                            /&gt;&lt;FactorText&gt;explain: Bankcard accounts include credit cards
+                            and charge cards from a bank and are frequently revolving accounts.
+                            Revolving accounts allow you to carry a balance and your monthly payment
+                            will vary, based on the amount of your balance. Your oldest bankcard or
+                            revolving account was not opened too recently. As a result, your history
+                            of credit management is enough to demonstrate responsible behavior which
+                            has improved your score.&lt;/FactorText&gt;&lt;FactorText&gt;factor:
+                            Date your oldest bankcard or revolving account opened is not too
+                            recent&lt;/FactorText&gt;&lt;FactorText&gt;cando: Don't open more
+                            accounts than you actually need. Research shows that new accounts
+                            indicate greater risk. Your score will benefit as your accounts get
+                            older.&lt;/FactorText&gt;&lt;/CreditScoreFactor&gt;&lt;CreditScoreFactor bureauCode="P63" FactorType="Positive"&gt;&lt;Factor abbreviation="" description="" symbol="P63" rank="100000"
+                            /&gt;&lt;FactorText&gt;explain: A real estate loan can be a first
+                            mortgage, a home equity loan, or home equity line of credit. The
+                            VantageScore credit score model relies on information in your credit
+                            files at the three national credit reporting companies (Equifax,
+                            Experian and TransUnion) to generate your score. A mix of different
+                            types of open and active credit accounts, including real estate
+                            accounts, can have a positive impact on your
+                            score.&lt;/FactorText&gt;&lt;FactorText&gt;factor: Lack of sufficient
+                            relevant real estate account
+                            information&lt;/FactorText&gt;&lt;FactorText&gt;cando: Maintaining open
+                            and active credit accounts in good standing can help improve your credit
+                            score.&lt;/FactorText&gt;&lt;/CreditScoreFactor&gt;&lt;CreditScoreModel abbreviation="" description="" symbol="00W40" rank="100000"
+                            /&gt;&lt;NoScoreReason abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;Source&gt;&lt;BorrowerKey /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/CreditScore&gt;&lt;Employer dateUpdated="2006-08-01" name="EMPLOYER X" partitionSet="0"&gt;&lt;CreditAddress city="" stateCode="" unparsedStreet="" postalCode="" /&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Employer&gt;&lt;BorrowerName partitionSet="0"&gt;&lt;Name first="ANNE" middle="E" last="MARKOWITZ"
+                            /&gt;&lt;NameType abbreviation="Primary" description="Primary" symbol="1" rank="199" /&gt;&lt;Source&gt;&lt;BorrowerKey /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/BorrowerName&gt;&lt;BorrowerName partitionSet="1"&gt;&lt;Name first="" middle="" last="MARKOWITZ,ANNE,ELIZABETH" /&gt;&lt;NameType abbreviation="Also
+                            Known As" description="Also Known As" symbol="A" rank="199"
+                            /&gt;&lt;Source&gt;&lt;BorrowerKey /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/BorrowerName&gt;&lt;BorrowerName partitionSet="2"&gt;&lt;Name first="ANNE" middle="" last="SITTER"
+                            /&gt;&lt;NameType abbreviation="Also Known As" description="Also Known
+                            As" symbol="A" rank="199" /&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/BorrowerName&gt;&lt;SocialPartition&gt;&lt;Social&gt;&lt;SocialSecurityNumber&gt;666359515&lt;/SocialSecurityNumber&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Social&gt;&lt;/SocialPartition&gt;&lt;/Borrower&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="06331059" highBalance="73989" dateVerified="2015-03-13" dateReported="2015-03-13" dateOpened="2005-05-23" accountNumber="2675" dateAccountStatus="2011-01-27" currentBalance="48223" creditorName="BK
+                            OF AMER" position="0" dateClosed="2011-01-27" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Derog" description="Derogatory" symbol="F" rank="20" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" /&gt;&lt;PayStatus abbreviation="Coll/Chargeoff" description="Collection/Chargeoff" symbol="9" rank="2" /&gt;&lt;VerificationIndicator abbreviation="Account
+                            not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;Remark customRemark=""&gt;&lt;RemarkCode abbreviation="Charged
+                            off as bad debt" description="Charged off as bad debt" symbol="TM009" rank="10000" /&gt;&lt;/Remark&gt;&lt;Remark customRemark=""&gt;&lt;RemarkCode abbreviation="Profit and loss
+                            write-off" description="Profit and loss write-off" symbol="T00PRL" rank="199" /&gt;&lt;/Remark&gt;&lt;GrantedTrade monthsReviewed="0" monthlyPayment="0" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2014-07-24" termMonths="0" collateral="" amountPastDue="5882" worstPatStatusCount="0"&gt;&lt;AccountType abbreviation="Credit Card" description="Credit Card" symbol="CC" rank="50" /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50"
+                            /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Unk" description="Unknown" symbol="U" rank="10000"
+                            /&gt;&lt;PayStatusHistory
+                            /&gt;&lt;CreditLimit&gt;69500&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="07421105" highBalance="4724" dateVerified="2015-05-17" dateReported="2015-05-17" dateOpened="2009-11-15" accountNumber="524033860" dateAccountStatus="2015-05-17" currentBalance="2553" creditorName="CITIZENS CC" position="1" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;GrantedTrade monthsReviewed="48" monthlyPayment="40" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2015-05-13" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="48"&gt;&lt;AccountType abbreviation="Credit Card" description="Credit Card" symbol="CC" rank="50" /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50"
+                            /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;PayStatusHistory status="CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2015-04-17"&gt;&lt;MonthlyPayStatus date="2015-04-17" status="C" /&gt;&lt;MonthlyPayStatus date="2015-03-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-02-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-01-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-12-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-11-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-10-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-09-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-08-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-07-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-17" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;2800&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="021WB001" highBalance="3460" dateVerified="2015-05-16" dateReported="2015-05-16" dateOpened="1996-09-30" accountNumber="3499926671598233" dateAccountStatus="2015-05-16" currentBalance="3148" creditorName="AMEX" position="2" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;GrantedTrade monthsReviewed="48" monthlyPayment="0" late90Count="0" late60Count="0" late30Count="0" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="48"&gt;&lt;AccountType abbreviation="Credit Card" description="Credit Card" symbol="CC" rank="50" /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50" /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;PayStatusHistory status="CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2015-04-16"&gt;&lt;MonthlyPayStatus date="2015-04-16" status="C" /&gt;&lt;MonthlyPayStatus date="2015-03-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-02-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-01-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-12-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-11-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-10-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-09-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-08-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-07-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-16" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;3400&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="026QK001" highBalance="1641" dateVerified="2015-05-16" dateReported="2015-05-16" dateOpened="2011-08-23" accountNumber="414729398787" dateAccountStatus="2015-05-16" currentBalance="1233" creditorName="CHASE" position="3" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;GrantedTrade monthsReviewed="43" monthlyPayment="32" late90Count="0" late60Count="0" late30Count="4" dateLastPayment="2015-05-12" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="43"&gt;&lt;AccountType abbreviation="Flexible spending credit card" description="Flexible
+                            spending credit card" symbol="FX" rank="50" /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50" /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="30 Delinq" description="Late 30 Days" symbol="1" rank="105" /&gt;&lt;PayStatusHistory status="CCCC1111CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2015-04-16"&gt;&lt;MonthlyPayStatus date="2015-04-16" status="C" /&gt;&lt;MonthlyPayStatus date="2015-03-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-02-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-01-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-12-16" status="1"
+                            /&gt;&lt;MonthlyPayStatus date="2014-11-16" status="1"
+                            /&gt;&lt;MonthlyPayStatus date="2014-10-16" status="1"
+                            /&gt;&lt;MonthlyPayStatus date="2014-09-16" status="1"
+                            /&gt;&lt;MonthlyPayStatus date="2014-08-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-07-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-16" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-16" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;1400&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="026QK001" highBalance="31351" dateVerified="2015-05-15" dateReported="2015-05-15" dateOpened="2003-12-11" accountNumber="549105456449" dateAccountStatus="2015-05-15" currentBalance="18306" creditorName="CHASE" position="4" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;Remark customRemark=""&gt;&lt;RemarkCode abbreviation="Canceled by credit
+                            grantor" description="Canceled by credit grantor" symbol="T00CBG" rank="199" /&gt;&lt;/Remark&gt;&lt;GrantedTrade monthsReviewed="48" monthlyPayment="296" late90Count="0" late60Count="3" late30Count="1" dateLastPayment="2015-05-10" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="48"&gt;&lt;AccountType abbreviation="Credit Card" description="Credit Card" symbol="CC" rank="50" /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50"
+                            /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="60 Delinq" description="Late 60 Days" symbol="2" rank="104" /&gt;&lt;PayStatusHistory status="CCCC2221CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2015-04-15"&gt;&lt;MonthlyPayStatus date="2015-04-15" status="C" /&gt;&lt;MonthlyPayStatus date="2015-03-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-02-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-01-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-12-15" status="2"
+                            /&gt;&lt;MonthlyPayStatus date="2014-11-15" status="2"
+                            /&gt;&lt;MonthlyPayStatus date="2014-10-15" status="2"
+                            /&gt;&lt;MonthlyPayStatus date="2014-09-15" status="1"
+                            /&gt;&lt;MonthlyPayStatus date="2014-08-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-07-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-15" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;19800&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="026QK004" highBalance="7646" dateVerified="2015-05-15" dateReported="2015-05-15" dateOpened="2001-12-16" accountNumber="518445084612" dateAccountStatus="2015-05-15" currentBalance="3484" creditorName="CHASE" position="5" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;GrantedTrade monthsReviewed="48" monthlyPayment="87" late90Count="0" late60Count="0" late30Count="4" dateLastPayment="2015-05-10" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="48"&gt;&lt;AccountType abbreviation="Credit Card" description="Credit Card" symbol="CC" rank="50" /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50"
+                            /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="30 Delinq" description="Late 30 Days" symbol="1" rank="105" /&gt;&lt;PayStatusHistory status="CCCC1111CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2015-04-15"&gt;&lt;MonthlyPayStatus date="2015-04-15" status="C" /&gt;&lt;MonthlyPayStatus date="2015-03-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-02-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-01-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-12-15" status="1"
+                            /&gt;&lt;MonthlyPayStatus date="2014-11-15" status="1"
+                            /&gt;&lt;MonthlyPayStatus date="2014-10-15" status="1"
+                            /&gt;&lt;MonthlyPayStatus date="2014-09-15" status="1"
+                            /&gt;&lt;MonthlyPayStatus date="2014-08-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-07-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-15" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;3800&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="026QK001" highBalance="3729" dateVerified="2015-05-15" dateReported="2015-05-15" dateOpened="2012-01-23" accountNumber="426686295020" dateAccountStatus="2015-05-15" currentBalance="3388" creditorName="CHASE" position="6" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;GrantedTrade monthsReviewed="38" monthlyPayment="72" late90Count="0" late60Count="0" late30Count="4" dateLastPayment="2015-05-11" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="38"&gt;&lt;AccountType abbreviation="Credit Card" description="Credit Card" symbol="CC" rank="50" /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50"
+                            /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="30 Delinq" description="Late 30 Days" symbol="1" rank="105" /&gt;&lt;PayStatusHistory status="CCCC1111CCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2015-04-15"&gt;&lt;MonthlyPayStatus date="2015-04-15" status="C" /&gt;&lt;MonthlyPayStatus date="2015-03-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-02-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-01-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-12-15" status="1"
+                            /&gt;&lt;MonthlyPayStatus date="2014-11-15" status="1"
+                            /&gt;&lt;MonthlyPayStatus date="2014-10-15" status="1"
+                            /&gt;&lt;MonthlyPayStatus date="2014-09-15" status="1"
+                            /&gt;&lt;MonthlyPayStatus date="2014-08-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-07-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-15" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-15" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;3700&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Installment Account" accountTypeSymbol="I" accountTypeAbbreviation="Installment"&gt;&lt;Tradeline subscriberCode="040ZM002" highBalance="9887" dateVerified="2015-05-13" dateReported="2015-05-13" dateOpened="2013-05-25" accountNumber="1X6X6X6X0X" dateAccountStatus="2015-05-13" currentBalance="8005" creditorName="SHEFFIELD FN" position="7" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Finance" description="Finance" symbol="F" rank="199" /&gt;&lt;OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;GrantedTrade monthsReviewed="23" monthlyPayment="229" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2015-04-26" termMonths="64" collateral="" amountPastDue="0" worstPatStatusCount="23"&gt;&lt;AccountType abbreviation="Recreational merchandise" description="Recreational
+                            merchandise" symbol="RD" rank="50" /&gt;&lt;CreditType abbreviation="Installment" description="Installment Account" symbol="I" rank="20" /&gt;&lt;PaymentFrequency abbreviation="Monthly (every month)" description="Monthly (every month)" symbol="M" rank="199"
+                            /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110" /&gt;&lt;PayStatusHistory status="CCCCCCCCCCCCCCCCCCCCCCC" startDate="2015-04-13"&gt;&lt;MonthlyPayStatus date="2015-04-13" status="C" /&gt;&lt;MonthlyPayStatus date="2015-03-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-02-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-01-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-12-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-11-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-10-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-09-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-08-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-07-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-13" status=" "
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;0&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="021WB001" highBalance="6497" dateVerified="2015-05-12" dateReported="2015-05-12" dateOpened="1996-11-08" accountNumber="3499912582993023" dateAccountStatus="2015-05-12" currentBalance="5936" creditorName="AMEX" position="8" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;GrantedTrade monthsReviewed="48" monthlyPayment="0" late90Count="0" late60Count="0" late30Count="0" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="48"&gt;&lt;AccountType abbreviation="Credit Card" description="Credit Card" symbol="CC" rank="50" /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50" /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;PayStatusHistory status="CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2015-04-12"&gt;&lt;MonthlyPayStatus date="2015-04-12" status="C" /&gt;&lt;MonthlyPayStatus date="2015-03-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-02-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-01-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-12-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-11-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-10-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-09-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-08-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-07-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-12" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-12" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;6100&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="08194051" highBalance="0" dateVerified="2015-05-09" dateReported="2015-05-09" dateOpened="2001-08-19" accountNumber="549115089138" dateAccountStatus="2015-05-09" currentBalance="8822" creditorName="UNVL/CITI" position="9" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;GrantedTrade monthsReviewed="48" monthlyPayment="160" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2015-04-06" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="48"&gt;&lt;AccountType abbreviation="Credit Card" description="Credit Card" symbol="CC" rank="50" /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50"
+                            /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;PayStatusHistory status="CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2015-04-09"&gt;&lt;MonthlyPayStatus date="2015-04-09" status="C" /&gt;&lt;MonthlyPayStatus date="2015-03-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-02-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-01-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-12-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-11-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-10-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-09-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-08-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-07-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-09" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-09" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;9740&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="0282E045" highBalance="2264" dateVerified="2015-05-07" dateReported="2015-05-07" dateOpened="1993-06-11" accountNumber="730287303883" dateAccountStatus="2015-05-07" currentBalance="2081" creditorName="EXXMBLCITI" position="10" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;GrantedTrade monthsReviewed="48" monthlyPayment="62" late90Count="0" late60Count="0" late30Count="1" dateLastPayment="2015-05-04" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="48"&gt;&lt;AccountType abbreviation="Credit Card" description="Credit Card" symbol="CC" rank="50" /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50"
+                            /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="30 Delinq" description="Late 30 Days" symbol="1" rank="105" /&gt;&lt;PayStatusHistory status="CCCCCC1CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2015-04-07"&gt;&lt;MonthlyPayStatus date="2015-04-07" status="C" /&gt;&lt;MonthlyPayStatus date="2015-03-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-02-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-01-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-12-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-11-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-10-07" status="1"
+                            /&gt;&lt;MonthlyPayStatus date="2014-09-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-08-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-07-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-07" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-07" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;2100&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="064DB002" highBalance="0" dateVerified="2015-05-03" dateReported="2015-05-03" dateOpened="2005-11-14" accountNumber="542419886734" dateAccountStatus="2015-05-03" currentBalance="151" creditorName="CITI" position="11" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;GrantedTrade monthsReviewed="48" monthlyPayment="20" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2015-04-27" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="48"&gt;&lt;AccountType abbreviation="Credit Card" description="Credit Card" symbol="CC" rank="50" /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50"
+                            /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;PayStatusHistory status="CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2015-04-03"&gt;&lt;MonthlyPayStatus date="2015-04-03" status="C" /&gt;&lt;MonthlyPayStatus date="2015-03-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-02-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-01-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-12-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-11-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-10-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-09-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-08-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-07-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-03" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-03" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;300&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Installment Account" accountTypeSymbol="I" accountTypeAbbreviation="Installment"&gt;&lt;Tradeline subscriberCode="02030003" highBalance="23500" dateVerified="2015-05-01" dateReported="2015-05-01" dateOpened="2009-11-30" accountNumber="7X5X8X0X0X" dateAccountStatus="2015-05-01" currentBalance="820" creditorName="MUNCPL CR UN" position="12" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Credit Union" description="Credit
+                            Union" symbol="Q" rank="199" /&gt;&lt;OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;GrantedTrade monthsReviewed="48" monthlyPayment="418" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2015-04-30" termMonths="66" collateral="" amountPastDue="0" worstPatStatusCount="48"&gt;&lt;AccountType abbreviation="Unsecured loan" description="Unsecured loan" symbol="US" rank="50" /&gt;&lt;CreditType abbreviation="Installment" description="Installment Account" symbol="I" rank="20"
+                            /&gt;&lt;PaymentFrequency abbreviation="Monthly (every month)" description="Monthly (every month)" symbol="M" rank="199"
+                            /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110" /&gt;&lt;PayStatusHistory status="CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCUCCCCCCCCCCCCCC" startDate="2015-04-01"&gt;&lt;MonthlyPayStatus date="2015-04-01" status="C" /&gt;&lt;MonthlyPayStatus date="2015-03-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-02-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-01-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-12-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-11-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-10-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-09-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-08-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-07-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-01" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;0&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Line of credit" accountTypeSymbol="C" accountTypeAbbreviation="Credit Line"&gt;&lt;Tradeline subscriberCode="03871024" highBalance="2907" dateVerified="2015-04-30" dateReported="2015-04-30" dateOpened="2007-05-21" accountNumber="3X4X0X" dateAccountStatus="2015-04-30" currentBalance="2680" creditorName="CAP
+                            ONE NA" position="13" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60"
+                            /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199" /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199"
+                            /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;GrantedTrade monthsReviewed="48" monthlyPayment="67" late90Count="0" late60Count="1" late30Count="1" dateLastPayment="2015-04-30" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="48"&gt;&lt;AccountType abbreviation="Line of credit" description="Line of credit" symbol="LC" rank="50" /&gt;&lt;CreditType abbreviation="Credit Line" description="Line of credit" symbol="C" rank="30"
+                            /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="60 Delinq" description="Late 60 Days" symbol="2" rank="104" /&gt;&lt;PayStatusHistory status="CCCCC21CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2015-03-30"&gt;&lt;MonthlyPayStatus date="2015-03-30" status="C" /&gt;&lt;MonthlyPayStatus date="2015-02-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-01-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-12-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-11-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-10-28" status="2"
+                            /&gt;&lt;MonthlyPayStatus date="2014-09-28" status="1"
+                            /&gt;&lt;MonthlyPayStatus date="2014-08-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-07-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-28" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-04-28" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;3000&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="0282E022" highBalance="363" dateVerified="2015-04-27" dateReported="2015-04-27" dateOpened="2014-06-30" accountNumber="3X9" dateAccountStatus="2015-04-27" currentBalance="252" creditorName="CITI-SHELL" position="14" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;GrantedTrade monthsReviewed="8" monthlyPayment="25" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2015-04-22" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="8"&gt;&lt;AccountType abbreviation="Credit Card" description="Credit Card" symbol="CC" rank="50" /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50"
+                            /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;PayStatusHistory status="CCCCCCCC" startDate="2015-03-27"&gt;&lt;MonthlyPayStatus date="2015-03-27" status="C" /&gt;&lt;MonthlyPayStatus date="2015-02-27" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-01-27" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-12-27" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-11-27" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-10-27" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-09-27" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-08-27" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-07-27" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-27" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-27" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-27" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-27" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-27" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-27" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-27" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-27" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-27" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-27" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-27" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-27" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-27" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-27" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-04-27" status=" "
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;600&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="02A5T001" highBalance="0" dateVerified="2015-04-17" dateReported="2015-04-17" dateOpened="1988-02-01" accountNumber="14099994" dateAccountStatus="2015-04-17" currentBalance="1441" creditorName="DSNB MACYS" position="15" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Open" description="Open" symbol="O" rank="60" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Department &amp;amp; Variety Stores" description="Department &amp;amp; Variety Stores" symbol="D" rank="199"
+                            /&gt;&lt;OpenClosed abbreviation="Open" description="Open" symbol="O" rank="199" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;GrantedTrade monthsReviewed="48" monthlyPayment="47" late90Count="0" late60Count="0" late30Count="1" dateLastPayment="2015-04-16" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="48"&gt;&lt;AccountType abbreviation="Charge account" description="Charge account" symbol="CH" rank="50" /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50"
+                            /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="30 Delinq" description="Late 30 Days" symbol="1" rank="105" /&gt;&lt;PayStatusHistory status="CCCCCC1CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2015-03-17"&gt;&lt;MonthlyPayStatus date="2015-03-17" status="C" /&gt;&lt;MonthlyPayStatus date="2015-02-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2015-01-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-12-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-11-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-10-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-09-17" status="1"
+                            /&gt;&lt;MonthlyPayStatus date="2014-08-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-07-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-17" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-04-17" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;0&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="0235198U" highBalance="12623" dateVerified="2015-03-13" dateReported="2015-03-13" dateOpened="2012-07-11" accountNumber="17667809063" dateAccountStatus="2012-11-19" currentBalance="19" creditorName="HSBC/YAMAHA" position="16" dateClosed="2012-11-19" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50"
+                            /&gt;&lt;AccountDesignator abbreviation="Joint" description="Joint" symbol="J" rank="199" /&gt;&lt;DisputeFlag abbreviation="Account not
+                            disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;Remark customRemark=""&gt;&lt;RemarkCode abbreviation="Account closed by
+                            consumer" description="Account closed by consumer" symbol="T00CBC" rank="199" /&gt;&lt;/Remark&gt;&lt;GrantedTrade monthsReviewed="31" monthlyPayment="19" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2015-03-04" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="31"&gt;&lt;AccountType abbreviation="Charge account" description="Charge account" symbol="CH" rank="50" /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50"
+                            /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;PayStatusHistory status="CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2015-02-13"&gt;&lt;MonthlyPayStatus date="2015-02-13" status="C" /&gt;&lt;MonthlyPayStatus date="2015-01-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-12-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-11-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-10-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-09-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-08-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-07-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-04-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2013-03-13" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;17500&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="02A5T002" highBalance="0" dateVerified="2014-09-22" dateReported="2014-09-22" dateOpened="2010-11-21" accountNumber="430850101939" dateAccountStatus="2011-01-02" currentBalance="0" creditorName="VISA DSNB" position="17" dateClosed="2011-01-02" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50"
+                            /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199" /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198"
+                            /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;Remark customRemark=""&gt;&lt;RemarkCode abbreviation="Account closed by consumer" description="Account closed by
+                            consumer" symbol="T00CBC" rank="199"
+                            /&gt;&lt;/Remark&gt;&lt;GrantedTrade monthsReviewed="4" monthlyPayment="0" late90Count="0" late60Count="0" late30Count="0" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="4"&gt;&lt;AccountType abbreviation="Credit Card" description="Credit Card" symbol="CC" rank="50" /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50" /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;PayStatusHistory status="CCCC" startDate="2014-08-22"&gt;&lt;MonthlyPayStatus date="2014-08-22" status="C" /&gt;&lt;MonthlyPayStatus date="2014-07-22" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-06-22" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-05-22" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2014-04-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2014-03-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2014-02-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2014-01-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-12-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-11-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-10-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-09-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-08-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-07-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-06-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-05-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-04-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-03-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-02-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2013-01-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2012-12-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2012-11-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2012-10-22" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2012-09-22" status=" "
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;0&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="01NZ8090" highBalance="0" dateVerified="2010-09-02" dateReported="2010-09-02" dateOpened="2009-07-23" accountNumber="585633304699" dateAccountStatus="2009-11-15" currentBalance="0" creditorName="CB/NPRTNWS" position="18" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Clothing" description="Clothing" symbol="C" rank="199" /&gt;&lt;OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;Remark customRemark=""&gt;&lt;RemarkCode abbreviation="Account closed by
+                            consumer" description="Account closed by consumer" symbol="T00CBC" rank="199" /&gt;&lt;/Remark&gt;&lt;GrantedTrade monthsReviewed="13" monthlyPayment="0" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2009-11-15" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="13"&gt;&lt;AccountType abbreviation="Charge account" description="Charge account" symbol="CH" rank="50" /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving Account" symbol="R" rank="50"
+                            /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;PayStatusHistory status="CCCCCCCCCCCCC" startDate="2010-08-02"&gt;&lt;MonthlyPayStatus date="2010-08-02" status="C" /&gt;&lt;MonthlyPayStatus date="2010-07-02" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2010-06-02" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2010-05-02" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2010-04-02" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2010-03-02" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2010-02-02" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2010-01-02" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-12-02" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-11-02" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-10-02" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-09-02" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-08-02" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-07-02" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2009-06-02" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2009-05-02" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2009-04-02" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2009-03-02" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2009-02-02" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2009-01-02" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2008-12-02" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2008-11-02" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2008-10-02" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2008-09-02" status=" "
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;750&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Revolving Account" accountTypeSymbol="R" accountTypeAbbreviation="Revolving"&gt;&lt;Tradeline subscriberCode="01597029" highBalance="0" dateVerified="2010-05-23" dateReported="2010-05-23" dateOpened="2009-06-05" accountNumber="76" dateAccountStatus="2010-05-23" currentBalance="0" creditorName="BK OF
+                            AMER" position="19" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50"
+                            /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199" /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198"
+                            /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;Remark customRemark=""&gt;&lt;RemarkCode abbreviation="Account closed by consumer" description="Account closed by
+                            consumer" symbol="T00CBC" rank="199"
+                            /&gt;&lt;/Remark&gt;&lt;GrantedTrade monthsReviewed="10" monthlyPayment="0" late90Count="0" late60Count="0" late30Count="0" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="10"&gt;&lt;AccountType abbreviation="Line of
+                            credit" description="Line of credit" symbol="LC" rank="50"
+                            /&gt;&lt;CreditType abbreviation="Revolving" description="Revolving
+                            Account" symbol="R" rank="50" /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199"
+                            /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110" /&gt;&lt;PayStatusHistory status="UUUUUUUUUC" startDate="2010-04-23"&gt;&lt;MonthlyPayStatus date="2010-04-23" status="U" /&gt;&lt;MonthlyPayStatus date="2010-03-23" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2010-02-23" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2010-01-23" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2009-12-23" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2009-11-23" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2009-10-23" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2009-09-23" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2009-08-23" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2009-07-23" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-06-23" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2009-05-23" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2009-04-23" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2009-03-23" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2009-02-23" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2009-01-23" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2008-12-23" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2008-11-23" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2008-10-23" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2008-09-23" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2008-08-23" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2008-07-23" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2008-06-23" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2008-05-23" status=" "
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;53000&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Installment Account" accountTypeSymbol="I" accountTypeAbbreviation="Installment"&gt;&lt;Tradeline subscriberCode="0507T085" highBalance="17346" dateVerified="2010-01-13" dateReported="2010-01-13" dateOpened="2006-07-26" accountNumber="2X0X5X4X9X5" dateAccountStatus="2010-01-13" currentBalance="0" creditorName="NISSN INF LT" position="20" dateClosed="2010-01-13" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50"
+                            /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199" /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;IndustryCode abbreviation="Credit Union" description="Credit Union" symbol="Q" rank="199" /&gt;&lt;OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198"
+                            /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;Remark customRemark=""&gt;&lt;RemarkCode abbreviation="Early termination; obligation satisfied" description="Early termination; obligation satisfied" symbol="T00ETO" rank="199" /&gt;&lt;/Remark&gt;&lt;GrantedTrade monthsReviewed="41" monthlyPayment="413" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2010-01-13" termMonths="42" collateral="" amountPastDue="0" worstPatStatusCount="41"&gt;&lt;AccountType abbreviation="Auto Lease" description="Auto Lease" symbol="AL" rank="50"
+                            /&gt;&lt;CreditType abbreviation="Installment" description="Installment
+                            Account" symbol="I" rank="20" /&gt;&lt;PaymentFrequency abbreviation="Monthly (every month)" description="Monthly (every month)" symbol="M" rank="199" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;PayStatusHistory status="CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" startDate="2009-12-13"&gt;&lt;MonthlyPayStatus date="2009-12-13" status="C" /&gt;&lt;MonthlyPayStatus date="2009-11-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-10-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-09-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-08-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-07-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-06-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-05-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-04-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-03-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-02-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-01-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-12-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-11-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-10-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-09-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-08-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-07-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-06-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-05-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-04-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-03-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-02-13" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-01-13" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;0&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Installment Account" accountTypeSymbol="I" accountTypeAbbreviation="Installment"&gt;&lt;Tradeline subscriberCode="09507009" highBalance="25000" dateVerified="2009-07-14" dateReported="2009-07-14" dateOpened="2006-10-20" accountNumber="4X1X0X0X4X1X0X" dateAccountStatus="2009-07-14" currentBalance="0" creditorName="BK OF NY" position="21" dateClosed="2009-07-14" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50"
+                            /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199" /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198"
+                            /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;Remark customRemark=""&gt;&lt;RemarkCode abbreviation="Closed" description="Closed" symbol="T00CLO" rank="199"
+                            /&gt;&lt;/Remark&gt;&lt;GrantedTrade monthsReviewed="33" monthlyPayment="514" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2009-07-14" termMonths="60" collateral="" amountPastDue="0" worstPatStatusCount="33"&gt;&lt;AccountType abbreviation="Unsecured loan" description="Unsecured loan" symbol="US" rank="50" /&gt;&lt;CreditType abbreviation="Installment" description="Installment Account" symbol="I" rank="20"
+                            /&gt;&lt;PaymentFrequency abbreviation="Monthly (every month)" description="Monthly (every month)" symbol="M" rank="199"
+                            /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110" /&gt;&lt;PayStatusHistory status="CCCCCCCCCUCCCCCCCCCCCCCCCCCCCCCUC" startDate="2009-06-14"&gt;&lt;MonthlyPayStatus date="2009-06-14" status="C" /&gt;&lt;MonthlyPayStatus date="2009-05-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-04-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-03-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-02-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2009-01-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-12-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-11-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-10-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-09-14" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2008-08-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-07-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-06-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-05-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-04-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-03-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-02-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2008-01-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2007-12-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2007-11-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2007-10-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2007-09-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2007-08-14" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2007-07-14" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;0&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Line of credit" accountTypeSymbol="C" accountTypeAbbreviation="Credit Line"&gt;&lt;Tradeline subscriberCode="0650Q004" highBalance="1500" dateVerified="2007-10-01" dateReported="2007-10-01" dateOpened="2001-12-31" accountNumber="8X0X0" dateAccountStatus="2006-10-31" currentBalance="0" creditorName="NY COMM
+                            BANK" position="22" dateClosed="2007-09-12" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Paid" description="Paid" symbol="P" rank="10" /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199"
+                            /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199"
+                            /&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199" /&gt;&lt;OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198" /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;Remark customRemark=""&gt;&lt;RemarkCode abbreviation="Closed" description="Closed" symbol="T00CLO" rank="199"
+                            /&gt;&lt;/Remark&gt;&lt;GrantedTrade monthsReviewed="48" monthlyPayment="0" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2007-09-12" termMonths="0" collateral="" amountPastDue="0" worstPatStatusCount="48"&gt;&lt;AccountType abbreviation="Line of credit" description="Line of credit" symbol="LC" rank="50" /&gt;&lt;CreditType abbreviation="Credit Line" description="Line of credit" symbol="C" rank="30"
+                            /&gt;&lt;PaymentFrequency abbreviation="" description="" symbol="" rank="100000" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;PayStatusHistory status="CCCCCUUCUUUUUUCCCCCCCCCCCCCCUCCCCCCCUCCCCCUUUUUC" startDate="2007-09-01"&gt;&lt;MonthlyPayStatus date="2007-09-01" status="C" /&gt;&lt;MonthlyPayStatus date="2007-08-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2007-07-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2007-06-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2007-05-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2007-04-01" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2007-03-01" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2007-02-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2007-01-01" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2006-12-01" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2006-11-01" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2006-10-01" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2006-09-01" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2006-08-01" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2006-07-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2006-06-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2006-05-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2006-04-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2006-03-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2006-02-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2006-01-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-12-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-11-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-10-01" status="C"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;1500&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Installment Account" accountTypeSymbol="I" accountTypeAbbreviation="Installment"&gt;&lt;Tradeline subscriberCode="03796016" highBalance="16968" dateVerified="2006-09-01" dateReported="2006-09-01" dateOpened="2003-02-21" accountNumber="1X3X8X6X" dateAccountStatus="2006-09-01" currentBalance="0" creditorName="VOLVO FINANC" position="23" dateClosed="2006-09-01" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50"
+                            /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199" /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;IndustryCode abbreviation="Finance" description="Finance" symbol="F" rank="199" /&gt;&lt;OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198"
+                            /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;Remark customRemark=""&gt;&lt;RemarkCode abbreviation="Closed" description="Closed" symbol="T00CLO" rank="199"
+                            /&gt;&lt;/Remark&gt;&lt;GrantedTrade monthsReviewed="40" monthlyPayment="0" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2006-11-07" termMonths="42" collateral="" amountPastDue="0" worstPatStatusCount="40"&gt;&lt;AccountType abbreviation="Lease" description="Lease" symbol="LE" rank="50"
+                            /&gt;&lt;CreditType abbreviation="Installment" description="Installment
+                            Account" symbol="I" rank="20" /&gt;&lt;PaymentFrequency abbreviation="Monthly (every month)" description="Monthly (every month)" symbol="M" rank="199" /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110"
+                            /&gt;&lt;PayStatusHistory status="UUCCCCCCCCCCCCCCCCCCCCCUCCCCCCCCCCCCCCCC" startDate="2006-08-01"&gt;&lt;MonthlyPayStatus date="2006-08-01" status="U" /&gt;&lt;MonthlyPayStatus date="2006-07-01" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2006-06-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2006-05-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2006-04-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2006-03-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2006-02-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2006-01-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-12-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-11-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-10-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-09-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-08-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-07-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-06-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-05-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-04-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-03-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-02-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-01-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2004-12-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2004-11-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2004-10-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2004-09-01" status="U"
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;0&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;TradeLinePartition accountTypeDescription="Installment Account" accountTypeSymbol="I" accountTypeAbbreviation="Installment"&gt;&lt;Tradeline subscriberCode="02030003" highBalance="25000" dateVerified="2005-11-01" dateReported="2005-11-01" dateOpened="2004-08-01" accountNumber="1X0X0X1X2X4X2" dateAccountStatus="2005-11-01" currentBalance="0" creditorName="MUNCPL CR UN" position="24" dateClosed="2005-11-01" bureau="TransUnion"&gt;&lt;AccountCondition abbreviation="Closed" description="Closed" symbol="C" rank="50"
+                            /&gt;&lt;AccountDesignator abbreviation="Individual" description="Individual" symbol="I" rank="199" /&gt;&lt;DisputeFlag abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;IndustryCode abbreviation="Credit Union" description="Credit Union" symbol="Q" rank="199" /&gt;&lt;OpenClosed abbreviation="Closed" description="Closed" symbol="C" rank="198"
+                            /&gt;&lt;PayStatus abbreviation="Current" description="Current" symbol="C" rank="110" /&gt;&lt;VerificationIndicator abbreviation="Account not disputed" description="Account not disputed" symbol="F" rank="199" /&gt;&lt;Remark customRemark=""&gt;&lt;RemarkCode abbreviation="Closed" description="Closed" symbol="T00CLO" rank="199"
+                            /&gt;&lt;/Remark&gt;&lt;GrantedTrade monthsReviewed="14" monthlyPayment="629" late90Count="0" late60Count="0" late30Count="0" dateLastPayment="2005-11-01" termMonths="48" collateral="" amountPastDue="0" worstPatStatusCount="14"&gt;&lt;AccountType abbreviation="Unsecured loan" description="Unsecured loan" symbol="US" rank="50" /&gt;&lt;CreditType abbreviation="Installment" description="Installment Account" symbol="I" rank="20"
+                            /&gt;&lt;PaymentFrequency abbreviation="Monthly (every month)" description="Monthly (every month)" symbol="M" rank="199"
+                            /&gt;&lt;TermType abbreviation="Provided" description="Provided" symbol="P" rank="199" /&gt;&lt;WorstPayStatus abbreviation="Current" description="Current" symbol="C" rank="110" /&gt;&lt;PayStatusHistory status="UCCCCCUCCCCUCC" startDate="2005-10-01"&gt;&lt;MonthlyPayStatus date="2005-10-01" status="U" /&gt;&lt;MonthlyPayStatus date="2005-09-01" status="C" /&gt;&lt;MonthlyPayStatus date="2005-08-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-07-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-06-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-05-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-04-01" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2005-03-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-02-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2005-01-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2004-12-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2004-11-01" status="U"
+                            /&gt;&lt;MonthlyPayStatus date="2004-10-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2004-09-01" status="C"
+                            /&gt;&lt;MonthlyPayStatus date="2004-08-01" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2004-07-01" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2004-06-01" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2004-05-01" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2004-04-01" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2004-03-01" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2004-02-01" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2004-01-01" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2003-12-01" status=" "
+                            /&gt;&lt;MonthlyPayStatus date="2003-11-01" status=" "
+                            /&gt;&lt;/PayStatusHistory&gt;&lt;CreditLimit&gt;0&lt;/CreditLimit&gt;&lt;/GrantedTrade&gt;&lt;Source&gt;&lt;BorrowerKey
+                            /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Tradeline&gt;&lt;/TradeLinePartition&gt;&lt;InquiryPartition&gt;&lt;Inquiry inquiryDate="2015-02-19" subscriberName="NORTHSTAR LO" subscriberNumber="09168205" bureau="TransUnion" inquiryType="I"&gt;&lt;IndustryCode abbreviation="Collection Services" description="Collection Services" symbol="Y" rank="199"
+                            /&gt;&lt;Source&gt;&lt;BorrowerKey /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Inquiry&gt;&lt;/InquiryPartition&gt;&lt;InquiryPartition&gt;&lt;Inquiry inquiryDate="2014-12-15" subscriberName="NCB MGMT" subscriberNumber="00007201" bureau="TransUnion" inquiryType="I"&gt;&lt;IndustryCode abbreviation="Collection Services" description="Collection Services" symbol="Y" rank="199"
+                            /&gt;&lt;Source&gt;&lt;BorrowerKey /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Inquiry&gt;&lt;/InquiryPartition&gt;&lt;InquiryPartition&gt;&lt;Inquiry inquiryDate="2014-11-02" subscriberName="CAP ONE" subscriberNumber="02699824" bureau="TransUnion" inquiryType="I"&gt;&lt;IndustryCode abbreviation="Bank" description="Bank" symbol="B" rank="199"
+                            /&gt;&lt;Source&gt;&lt;BorrowerKey /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Inquiry&gt;&lt;/InquiryPartition&gt;&lt;InquiryPartition&gt;&lt;Inquiry inquiryDate="2013-09-01" subscriberName="CBNA/EXXON" subscriberNumber="04950429" bureau="TransUnion" inquiryType="I"&gt;&lt;IndustryCode abbreviation="Oil Companies" description="Oil Companies" symbol="O" rank="199"
+                            /&gt;&lt;Source&gt;&lt;BorrowerKey /&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;Reference&gt;ND0711_v7SOreport&lt;/Reference&gt;&lt;/Source&gt;&lt;/Inquiry&gt;&lt;/InquiryPartition&gt;&lt;Summary&gt;&lt;TradelineSummary&gt;&lt;TransUnion TotalAccounts="25" OpenAccounts="14" CloseAccounts="11" DelinquentAccounts="0" DerogatoryAccounts="1" TotalBalances="110542" TotalMonthlyPayments="1574"
+                            /&gt;&lt;/TradelineSummary&gt;&lt;InquirySummary&gt;&lt;TransUnion NumberInLast2Years="4"
+                            /&gt;&lt;/InquirySummary&gt;&lt;PublicRecordSummary&gt;&lt;TransUnion NumberOfRecords="0"
+                            /&gt;&lt;/PublicRecordSummary&gt;&lt;/Summary&gt;&lt;Sources&gt;&lt;Source&gt;&lt;Bureau abbreviation="TransUnion" description="TransUnion" symbol="TUC" rank="1"
+                            /&gt;&lt;InquiryDate&gt;2015-06-09&lt;/InquiryDate&gt;&lt;OriginalData&gt;VFU0UjA2MjAxMU5EMDcxMV92N1NPcmVwb3J0ICAgICAgIDA2VFJaIDAyMTY5Nzg3MjAxNTA2MDkxMjQzMjNQSDAxMDEyMDcwMDBTSDAxMDI3MTAxWTA1TjQ1SUlOMTk4NzExMDFOTTAxMDcwRjFNQVJLT1dJVFogICAgICAgICAgICAgICAgQU5ORSAgICAgICAgICAgRSAgICAgICAgICAgICAgICAgICAgTk0wMTA3MEYzTUFSS09XSVRaLEFOTkUsRUxJWkFCRVRIICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIE5NMDEwNzBGM1NJVFRFUixBTk5FICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBQSTAxMDI5RjY2NjM1OTUxNTE5NjQwMTAxICAgIEFEMDExMDVGMTE0Mzc2ICAgICAgICAxNjNSRCAgICAgICAgICAgICAgICAgICAgICAgIFNUMUEgICBGTFVTSElORyAgICAgICAgICAgICAgICAgICBOWTExMzU4ICAgICAyMDA5MDkwMUFEMDExMDVGMTEzNDM3NiAgICAgICAxNjNSRCAgICAgICAgICAgICAgICAgICAgICAgIFNUM0EgICBGTFVTSElORyAgICAgICAgICAgICAgICAgICBOWTExMzU4ICAgICAyMDA4MDMwMUFEMDExMDVGMTEzMTAxICAgICAgICBIRUFMWSAgICAgICAgICAgICAgICAgICAgICAgIEFWQiAgICBGQVIgUk9DS0FXQVkgICAgICAgICAgICAgICBOWTExNjkxICAgICAgICAgICAgIEVNMDExMDBFTVBMT1lFUiBYICAgICAgICAgICAgICAgICAgICAgICAgIEYgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDIwMDYwODAxUiAgICAgICAgICBTTTAxMDQxMTAwMDAwMDAwMTAwNzAyMDAyNTAxOTAwNjAwMDAwMDAwNFNEMDEwNTZSMDAwMDY0NTgyMDAwMTEwNDkwMDAwMDUzNDc1MDAwMDAwMDAwMDAwMDAwOTA4MDUyU0QwMTA1NkkwMDAwMzMzODcwMDAwMDAwMDAwMDAwMDg4MjUwMDAwMDAwMDAwMDAwMDA2NDcgICBTRDAxMDU2QiAgICAgICAgICAgICAgICAgIDAwMDA0ODI0MjAwMDAwNTg4MjAwMDAwMDAxOSAgIFNEMDEwNTZUMDAwMDk3OTY5MDAwMTEwNDkwMDAwMTEwNTQyMDAwMDA1ODgyMDAwMDAxNTc0ICAgVFIwMTI4OEIgMDYzMzEwNTlCSyBPRiBBTUVSICAgICAgICAgICAgICBSMjY3NSAgICAgICAgICAgICAgICAgICAgSTIwMDUwNTIzMjAxNTAzMTNBMjAxMTAxMjdGICAgICAgICAyMDE0MDcyNDA5MTAwMDA0ODIyMzAwMDA3Mzk4OTAwMDA2OTUwMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQ1BSTDAwMDAwNTg4MiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgVFIwMTI4OEIgMDc0MjExMDVDSVRJWkVOUyBDQyAgICAgICAgICAgICBSNTI0MDMzODYwICAgICAgICAgICAgICAgSTIwMDkxMTE1MjAxNTA1MTdBICAgICAgICAgICAgICAgICAyMDE1MDUxMzAxMTAwMDAwMjU1MzAwMDAwNDcyNDAwMDAwMjgwME1JTiAwMDAwMDAwNDAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQyAgIDAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTUwNDE3MTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExNDgwMDAwMDAyVFIwMTI4OEIgMDIxV0IwMDFBTUVYICAgICAgICAgICAgICAgICAgICBSMzQ5OTkyNjY3MTU5ODIzMyAgICAgICAgSTE5OTYwOTMwMjAxNTA1MTZBICAgICAgICAgICAgICAgICAgICAgICAgIDAxMTAwMDAwMzE0ODAwMDAwMzQ2MDAwMDAwMzQwMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQyAgIDAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTUwNDE2MTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExNDgwMDAwMDAyVFIwMTI4OEIgMDI2UUswMDFDSEFTRSAgICAgICAgICAgICAgICAgICBSNDE0NzI5Mzk4Nzg3ICAgICAgICAgICAgSTIwMTEwODIzMjAxNTA1MTZBICAgICAgICAgICAgICAgICAyMDE1MDUxMjAxMTAwMDAwMTIzMzAwMDAwMTY0MTAwMDAwMTQwME1JTiAwMDAwMDAwMzIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBGWCAgIDAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTUwNDE2MTExMTIyMjIxMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMSAgICAgNDMwNDAwMDAyVFIwMTI4OEIgMDI2UUswMDFDSEFTRSAgICAgICAgICAgICAgICAgICBSNTQ5MTA1NDU2NDQ5ICAgICAgICAgICAgSTIwMDMxMjExMjAxNTA1MTVBICAgICAgICAgICAgICAgICAyMDE1MDUxMDAxMTAwMDAxODMwNjAwMDAzMTM1MTAwMDAxOTgwME1JTiAwMDAwMDAyOTYgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQ0NCRzAwMDAwMDAwMCAgICAgICAgICAgMjAxNDA5MDEwMzIwMTUwNDE1MTExMTMzMzIxMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExNDgwMTAzMDAyVFIwMTI4OEIgMDI2UUswMDRDSEFTRSAgICAgICAgICAgICAgICAgICBSNTE4NDQ1MDg0NjEyICAgICAgICAgICAgSTIwMDExMjE2MjAxNTA1MTVBICAgICAgICAgICAgICAgICAyMDE1MDUxMDAxMTAwMDAwMzQ4NDAwMDAwNzY0NjAwMDAwMzgwME1JTiAwMDAwMDAwODcgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQyAgIDAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTUwNDE1MTExMTIyMjIxMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExNDgwNDAwMDAyVFIwMTI4OEIgMDI2UUswMDFDSEFTRSAgICAgICAgICAgICAgICAgICBSNDI2Njg2Mjk1MDIwICAgICAgICAgICAgSTIwMTIwMTIzMjAxNTA1MTVBICAgICAgICAgICAgICAgICAyMDE1MDUxMTAxMTAwMDAwMzM4ODAwMDAwMzcyOTAwMDAwMzcwME1JTiAwMDAwMDAwNzIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQyAgIDAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTUwNDE1MTExMTIyMjIxMTExMTExMTExMTExMTExMTExMTExMTExMTExMTEgICAgICAgICAgMzgwNDAwMDAyVFIwMTI4OEYgMDQwWk0wMDJTSEVGRklFTEQgRk4gICAgICAgICAgICBJMVg2WDZYNlgwWCAgICAgICAgICAgICAgSTIwMTMwNTI1MjAxNTA1MTNBICAgICAgICAgICAgICAgICAyMDE1MDQyNjAxMTAwMDAwODAwNTAwMDAwOTg4NyAgICAgICAgICA2NE0wMDAwMDAyMjkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBSRCAgIDAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTUwNDEzMTExMTExMTExMTExMTExMTExMTExMTEgICAgICAgICAgICAgICAgICAgICAgICAgMjMwMDAwMDAyVFIwMTI4OEIgMDIxV0IwMDFBTUVYICAgICAgICAgICAgICAgICAgICBSMzQ5OTkxMjU4Mjk5MzAyMyAgICAgICAgSTE5OTYxMTA4MjAxNTA1MTJBICAgICAgICAgICAgICAgICAgICAgICAgIDAxMTAwMDAwNTkzNjAwMDAwNjQ5NzAwMDAwNjEwMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQyAgIDAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTUwNDEyMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExNDgwMDAwMDAyVFIwMTI4OEIgMDgxOTQwNTFVTlZML0NJVEkgICAgICAgICAgICAgICBSNTQ5MTE1MDg5MTM4ICAgICAgICAgICAgSTIwMDEwODE5MjAxNTA1MDlBICAgICAgICAgICAgICAgICAyMDE1MDQwNjAxMTAwMDAwODgyMiAgICAgICAgIDAwMDAwOTc0ME1JTiAwMDAwMDAxNjAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQyAgIDAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTUwNDA5MTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExNDgwMDAwMDAyVFIwMTI4OEIgMDI4MkUwNDVFWFhNQkxDSVRJICAgICAgICAgICAgICBSNzMwMjg3MzAzODgzICAgICAgICAgICAgSTE5OTMwNjExMjAxNTA1MDdBICAgICAgICAgICAgICAgICAyMDE1MDUwNDAxMTAwMDAwMjA4MTAwMDAwMjI2NDAwMDAwMjEwME1JTiAwMDAwMDAwNjIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQyAgIDAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTUwNDA3MTExMTExMjExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExNDgwMTAwMDAyVFIwMTI4OEIgMDY0REIwMDJDSVRJICAgICAgICAgICAgICAgICAgICBSNTQyNDE5ODg2NzM0ICAgICAgICAgICAgSTIwMDUxMTE0MjAxNTA1MDNBICAgICAgICAgICAgICAgICAyMDE1MDQyNzAxMTAwMDAwMDE1MSAgICAgICAgIDAwMDAwMDMwME1JTiAwMDAwMDAwMjAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQyAgIDAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTUwNDAzMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExNDgwMDAwMDAyVFIwMTI4OFEgMDIwMzAwMDNNVU5DUEwgQ1IgVU4gICAgICAgICAgICBJN1g1WDhYMFgwWCAgICAgICAgICAgICAgSTIwMDkxMTMwMjAxNTA1MDFBICAgICAgICAgICAgICAgICAyMDE1MDQzMDAxMTAwMDAwMDgyMDAwMDAyMzUwMCAgICAgICAgICA2Nk0wMDAwMDA0MTggICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBVUyAgIDAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTUwNDAxMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExWDExMTExMTExMTExMTExNDgwMDAwMDAyVFIwMTI4OEIgMDM4NzEwMjRDQVAgT05FIE5BICAgICAgICAgICAgICBDM1g0WDBYICAgICAgICAgICAgICAgICAgSTIwMDcwNTIxMjAxNTA0MzBBICAgICAgICAgICAgICAgICAyMDE1MDQzMDAxMTAwMDAwMjY4MDAwMDAwMjkwNzAwMDAwMzAwME1JTiAwMDAwMDAwNjcgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBMQyAgIDAwMDAwMDAwMCAgICAgICAgICAgMjAxNDA5MDEwMzIwMTUwMzMwMTExMTEzMjExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExNDgwMTAxMDAyVFIwMTI4OEIgMDI4MkUwMjJDSVRJLVNIRUxMICAgICAgICAgICAgICBSM1g5ICAgICAgICAgICAgICAgICAgICAgSTIwMTQwNjMwMjAxNTA0MjdBICAgICAgICAgICAgICAgICAyMDE1MDQyMjAxMTAwMDAwMDI1MjAwMDAwMDM2MzAwMDAwMDYwME1JTiAwMDAwMDAwMjUgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQyAgIDAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTUwMzI3MTExMTExMTEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMDgwMDAwMDAyVFIwMTI4OEQgMDJBNVQwMDFEU05CIE1BQ1lTICAgICAgICAgICAgICBSMTQwOTk5OTQgICAgICAgICAgICAgICAgSTE5ODgwMjAxMjAxNTA0MTdBICAgICAgICAgICAgICAgICAyMDE1MDQxNjAxMTAwMDAwMTQ0MSAgICAgICAgICAgICAgICAgIE1JTiAwMDAwMDAwNDcgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDSCAgIDAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTUwMzE3MTExMTExMjExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExNDgwMTAwMDAyVFIwMTI4OEIgMDIzNTE5OFVIU0JDL1lBTUFIQSAgICAgICAgICAgICBSMTc2Njc4MDkwNjMgICAgICAgICAgICAgQzIwMTIwNzExMjAxNTAzMTNBMjAxMjExMTlDICAgICAgICAyMDE1MDMwNDAxMTAwMDAwMDAxOTAwMDAxMjYyMzAwMDAxNzUwME1JTiAwMDAwMDAwMTkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDSENCQzAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTUwMjEzMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMSAgICAgICAgICAgICAgICAgMzEwMDAwMDAyVFIwMTI4OEIgMDJBNVQwMDJWSVNBIERTTkIgICAgICAgICAgICAgICBSNDMwODUwMTAxOTM5ICAgICAgICAgICAgSTIwMTAxMTIxMjAxNDA5MjJBMjAxMTAxMDJDICAgICAgICAgICAgICAgIDAxMTAwMDAwMDAwMDAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQ0NCQzAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTQwODIyMTExMSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMDQwMDAwMDAyVFIwMTI4OEMgMDFOWjgwOTBDQi9OUFJUTldTICAgICAgICAgICAgICBSNTg1NjMzMzA0Njk5ICAgICAgICAgICAgSTIwMDkwNzIzMjAxMDA5MDJBICAgICAgICAgMjAwOTExMTUyMDA5MTExNTAxMTAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDc1MCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDSENCQzAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTAwODAyMTExMTExMTExMTExMSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMTMwMDAwMDAyVFIwMTI4OEIgMDE1OTcwMjlCSyBPRiBBTUVSICAgICAgICAgICAgICBSNzYgICAgICAgICAgICAgICAgICAgICAgSTIwMDkwNjA1MjAxMDA1MjNBICAgICAgICAgICAgICAgICAgICAgICAgIDAxMTAwMDAwMDAwMDAwMDAwMDAwMDAwMDA1MzAwMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBMQ0NCQzAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMTAwNDIzWFhYWFhYWFhYMSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMTAwMDAwMDAyVFIwMTI4OFEgMDUwN1QwODVOSVNTTiBJTkYgTFQgICAgICAgICAgICBJMlgwWDVYNFg5WDUgICAgICAgICAgICAgSTIwMDYwNzI2MjAxMDAxMTNBMjAxMDAxMTNDICAgICAgICAyMDEwMDExMzAxMTAwMDAwMDAwMDAwMDAxNzM0NiAgICAgICAgICA0Mk0wMDAwMDA0MTMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBBTEVUTzAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMDkxMjEzMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTEgICAgICAgNDEwMDAwMDAyVFIwMTI4OEIgMDk1MDcwMDlCSyBPRiBOWSAgICAgICAgICAgICAgICBJNFgxWDBYMFg0WDFYMFggICAgICAgICAgSTIwMDYxMDIwMjAwOTA3MTRBMjAwOTA3MTRDICAgICAgICAyMDA5MDcxNDAxMTAwMDAwMDAwMDAwMDAyNTAwMCAgICAgICAgICA2ME0wMDAwMDA1MTQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBVU0NMTzAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMDkwNjE0MTExMTExMTExWDExMTExMTExMTExMTExMTExMTExMVgxICAgICAgICAgICAgICAgMzMwMDAwMDAyVFIwMTI4OEIgMDY1MFEwMDROWSBDT01NIEJBTksgICAgICAgICAgICBDOFgwWDAgICAgICAgICAgICAgICAgICAgSTIwMDExMjMxMjAwNzEwMDFBMjAwNzA5MTJDMjAwNjEwMzEyMDA3MDkxMjAxMTAwMDAwMDAwMDAwMDAwMTUwMDAwMDAwMTUwMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBMQ0NMTzAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMDcwOTAxMTExMTFYWDFYWFhYWFgxMTExMTExMTExMTExMVgxMTExMTExWDExMTExWFhYWFgxNDgwMDAwMDAyVFIwMTI4OEYgMDM3OTYwMTZWT0xWTyBGSU5BTkMgICAgICAgICAgICBJMVgzWDhYNlggICAgICAgICAgICAgICAgSTIwMDMwMjIxMjAwNjA5MDFBMjAwNjA5MDFDICAgICAgICAyMDA2MTEwNzAxMTAwMDAwMDAwMDAwMDAxNjk2OCAgICAgICAgICA0Mk0wMDAwMDAwMDAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBMRUNMTzAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMDYwODAxWFgxMTExMTExMTExMTExMTExMTExMTFYMTExMTExMTExMTExMTExMSAgICAgICAgNDAwMDAwMDAyVFIwMTI4OFEgMDIwMzAwMDNNVU5DUEwgQ1IgVU4gICAgICAgICAgICBJMVgwWDBYMVgyWDRYMiAgICAgICAgICAgSTIwMDQwODAxMjAwNTExMDFBMjAwNTExMDFDICAgICAgICAyMDA1MTEwMTAxMTAwMDAwMDAwMDAwMDAyNTAwMCAgICAgICAgICA0OE0wMDAwMDA2MjkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBVU0NMTzAwMDAwMDAwMCAgICAgICAgICAgICAgICAgICAgIDIwMDUxMDAxWDExMTExWDExMTFYMTEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMTQwMDAwMDAySU4wMTA2NTEzUFRZIDA5MTY4MjA1Tk9SVEhTVEFSIExPICAgICAgICAgICAgSSAgICAgICAgICAgMjAxNTAyMTlJTjAxMDY1MTdQSFkgMDAwMDcyMDFOQ0IgTUdNVCAgICAgICAgICAgICAgICBJICAgICAgICAgICAyMDE0MTIxNUlOMDEwNjUzM1BDQiAwMjY5OTgyNENBUCBPTkUgICAgICAgICAgICAgICAgIEkgICAgICAgICAgIDIwMTQxMTAySU4wMTA2NTE3TllPIDA0OTUwNDI5Q0JOQS9FWFhPTiAgICAgICAgICAgICAgSSAgICAgICAgICAgMjAxMzA5MDFBTzAxMDE3MDBQOTQwMSAgIFNDMDEwMzQwMFA5NCs5MzYgICBONjEgMDUgMTYgMDEgMDBBTzAxMDE3MDBRODgwMSAgIFNDMDEwMzQwMFE4OCs4MDMgICBOMDkgMDcgMDMgMDAgMDBBTzAxMDE3MDBXNDAwMSAgIFNDMDEwMzQwMFc0MCs1MjcgICAgMzQgNjUgNDQgMDcgMDVDSDAxMDMwMDBXNDBQT1NSRUExIFAzMiAgICAgICBDSDAxMDMwMDBXNDBQT1NSRUEyIFAwNSAgICAgICBDSDAxMDMwMDBXNDBQT1NSRUEzIFA0MCAgICAgICBDSDAxMDMwMDBXNDBQT1NSRUE0IFA2MyAgICAgICBFTkRTMDEwMDUy&lt;/OriginalData&gt;&lt;/Source&gt;&lt;/Sources&gt;&lt;SafetyCheckPassed&gt;true&lt;/SafetyCheckPassed&gt;&lt;/TrueLinkCreditReportType&gt;&lt;Snapshot&gt;&lt;CreditDataSuppressed&gt;false&lt;/CreditDataSuppressed&gt;&lt;TotalAccounts&gt;25&lt;/TotalAccounts&gt;&lt;totalClosedAccounts&gt;11&lt;/totalClosedAccounts&gt;&lt;DelinquentAccounts&gt;0&lt;/DelinquentAccounts&gt;&lt;DerogatoryAccounts&gt;1&lt;/DerogatoryAccounts&gt;&lt;OpenAccounts&gt;14&lt;/OpenAccounts&gt;&lt;TotalBalances&gt;110542.00&lt;/TotalBalances&gt;&lt;TotalMonthlyPayments&gt;1574&lt;/TotalMonthlyPayments&gt;&lt;NumberOfInquiries&gt;4&lt;/NumberOfInquiries&gt;&lt;totalPublicRecords&gt;0&lt;/totalPublicRecords&gt;&lt;RecentInquiries&gt;4&lt;/RecentInquiries&gt;&lt;BalanceOpenRevolvingAccounts&gt;32489&lt;/BalanceOpenRevolvingAccounts&gt;&lt;TotalOpenRevolvingAccounts&gt;11&lt;/TotalOpenRevolvingAccounts&gt;&lt;BalanceOpenInstallmentAccounts&gt;8825&lt;/BalanceOpenInstallmentAccounts&gt;&lt;TotalOpenInstallmentAccounts&gt;2&lt;/TotalOpenInstallmentAccounts&gt;&lt;BalanceOpenMortgageAccounts&gt;0&lt;/BalanceOpenMortgageAccounts&gt;&lt;TotalOpenMortgageAccounts&gt;0&lt;/TotalOpenMortgageAccounts&gt;&lt;BalanceOpenCollectionAccounts&gt;0&lt;/BalanceOpenCollectionAccounts&gt;&lt;TotalOpenCollectionAccounts&gt;0&lt;/TotalOpenCollectionAccounts&gt;&lt;BalanceOpenOtherAccounts&gt;2680&lt;/BalanceOpenOtherAccounts&gt;&lt;TotalOpenOtherAccounts&gt;1&lt;/TotalOpenOtherAccounts&gt;&lt;AvailableCredit&gt;1451.00&lt;/AvailableCredit&gt;&lt;Utilization&gt;.957&lt;/Utilization&gt;&lt;OnTimePaymentPercentage&gt;72%&lt;/OnTimePaymentPercentage&gt;&lt;LatePaymentPercentage&gt;28%&lt;/LatePaymentPercentage&gt;&lt;RecentTradelinesOpened&gt;0&lt;/RecentTradelinesOpened&gt;&lt;DateOfOldestTrade&gt;1988-02-01&lt;/DateOfOldestTrade&gt;&lt;AgeOfCredit&gt;28.5&lt;/AgeOfCredit&gt;&lt;PaymentHistory&gt;.72&lt;/PaymentHistory&gt;&lt;SecurityFreeze&gt;false&lt;/SecurityFreeze&gt;&lt;FraudAlert&gt;false&lt;/FraudAlert&gt;&lt;/Snapshot&gt;</a:ServiceProductObject>
+            <a:ServiceProductTypeId>CreditReport</a:ServiceProductTypeId>
+            <a:ServiceProductValue/>
+            <a:Status>Success</a:Status>
+          </a:ServiceProductResponse>
+        </a:ServiceProductFulfillments>
+      </EnrollResult>
+    </EnrollResponse>
+  </s:Body>
+</s:Envelope>

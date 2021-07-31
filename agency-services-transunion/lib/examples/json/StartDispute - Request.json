@@ -1,0 +1,122 @@
+{
+  "Envelope": {
+    "Header": "",
+    "Body": {
+      "StartDispute": {
+        "request": {
+          "AccountCode": "4pGebVt5s",
+          "AccountName": "CCSIntegration",
+          "RequestKey": "f8958f94-4842-4142-a9a7-ff05523ec414",
+          "ClientKey": "SR_2018-03-09_13-33-18_DORA",
+          "ConsumerStatement": {
+            "Codes": {
+              "string": [
+                {
+                  "nil": true
+                },
+                12345
+              ]
+            },
+            "Comment": "Testing for OCP changes",
+            "Delete": false,
+            "ExpirationDate": "2018-04-13"
+          },
+          "Customer": {
+            "CurrentAddress": {
+              "AddressLine1": "384 PO BOX 384",
+              "AddressLine2": {
+                "nil": true
+              },
+              "City": "BRAHAM",
+              "State": "MN",
+              "Zipcode": 55006
+            },
+            "DateOfBirth": "1973-11-01",
+            "FullName": {
+              "FirstName": "DORA",
+              "LastName": "JULIEN",
+              "MiddleName": "G",
+              "Prefix": {
+                "nil": true
+              },
+              "Suffix": {
+                "nil": true
+              }
+            },
+            "PhoneNumber": 5053923096,
+            "Ssn": 471866871,
+            "DisputePhoneNumber": {
+              "Extension": {
+                "nil": true
+              },
+              "Number": 3923096,
+              "AreaCode": 505,
+              "CountryCode": 1
+            },
+            "Gender": "Male",
+            "Identifier": {
+              "CustomerIdentifier": {
+                "Id": 471866871,
+                "IdentifierType": "SocialId"
+              }
+            }
+          },
+          "EnrollmentKey": "7d80a773-9183-412a-a982-fe4f7cac4d6f",
+          "IndicativeDisputes": {
+            "Address": {
+              "AddressLine1": "123 Cross Street",
+              "AddressLine2": {
+                "nil": true
+              },
+              "City": "Chicago",
+              "State": "IL",
+              "Zipcode": 60662
+            },
+            "DeleteAddress": false,
+            "PreviousAddress": {
+              "nil": true
+            },
+            "PhoneNumber": {
+              "ValueData": {
+                "Delete": false,
+                "Value": 987654321
+              }
+            }
+          },
+          "LineItems": {
+            "LineItem": [
+              {
+                "ClaimCodes": {
+                  "ClaimCode": {
+                    "Balance": {
+                      "nil": true
+                    },
+                    "Code": "A3"
+                  }
+                },
+                "CreditReportItem": "TR01_922340180_-22249854_82",
+                "LineItemComment": "Account Tradeline",
+                "UploadDocumentId": {
+                  "nil": true
+                }
+              },
+              {
+                "ClaimCodes": {
+                  "ClaimCode": {
+                    "Code": "P3"
+                  }
+                },
+                "CreditReportItem": "PR01_1618166926_-1683362106",
+                "LineItemComment": "Public TradeLine"
+              }
+            ]
+          },
+          "ServiceBundleFulfillmentKey": "7acf666a-2b7f-4ab2-a2f6-2f00b6c6914a",
+          "ServiceProductFulfillmentKey": {
+            "nil": true
+          }
+        }
+      }
+    }
+  }
+}

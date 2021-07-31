@@ -1,0 +1,39 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:Enroll>
+      <con:request>
+        <data:AccountCode>123456789</data:AccountCode>
+        <data:AccountName>CC2PartnerTesting1</data:AccountName>
+        <data:AdditionalInputs>
+          <data:Data>
+            <data:Name>CreditReportVersion</data:Name>
+            <data:Value>7</data:Value>
+          </data:Data>
+        </data:AdditionalInputs>
+        <data:RequestKey>dd3d95b1-94ea-40a9-a3ec-7b5f85122630</data:RequestKey>
+        <data:ClientKey>ND0711_v7SOreport</data:ClientKey>
+        <data:Customer>
+          <data:CurrentAddress>
+            <data:AddressLine1>163rd ST</data:AddressLine1>
+            <data:City>FLUSHING</data:City>
+            <data:State>NY</data:State>
+            <data:Zipcode>11358</data:Zipcode>
+          </data:CurrentAddress>
+          <data:DateOfBirth>1964-01-01</data:DateOfBirth>
+          <data:FullName>
+            <data:FirstName>Anne</data:FirstName>
+            <data:LastName>E</data:LastName>
+            <data:MiddleName>Markowitz</data:MiddleName>
+          </data:FullName>
+          <data:Ssn>666359515</data:Ssn>
+        </data:Customer>
+        <data:Language xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        <data:ServiceBundleCode>CC2PartnerTesting1_StandardOfferV</data:ServiceBundleCode>
+      </con:request>
+    </con:Enroll>
+  </soapenv:Body>
+</soapenv:Envelope>

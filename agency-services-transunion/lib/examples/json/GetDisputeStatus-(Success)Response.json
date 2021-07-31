@@ -1,0 +1,18 @@
+{
+  "Envelope": {
+    "Body": {
+      "GetDisputeStatusResponse": {
+        "GetDisputeStatusResult": {
+          "AccountName": "CCSIntegration",
+          "ErrorResponse": {
+            "nil": true
+          },
+          "RequestKey": "816e1fc1-0096-4c2b-8fd7-013daea4fc07",
+          "ResponseType": "Success",
+          "ClientKey": "SR_2018-03-09_13-33-18_DORA",
+          "DisputeStatus": ""
+        }
+      }
+    }
+  }
+}
