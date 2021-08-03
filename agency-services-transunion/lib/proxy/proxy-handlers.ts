@@ -4,7 +4,7 @@ import * as fastXml from 'fast-xml-parser';
 import { ajv } from 'lib/schema/validation';
 import { Sync } from 'lib/utils/sync/sync';
 import { SoapAid } from 'lib/utils/soap-aid/soap-aid';
-import { dateDiffInDays } from 'lib/utils/dates/dates';
+import { dateDiffInDays, dateDiffInHours } from 'lib/utils/dates/dates';
 import { returnNestedObject } from 'lib/utils/helpers/helpers';
 import { GET_INVESTIGATION_RESULTS_RESPONSE } from 'lib/examples/mocks/GetInvestigationResultsResponse';
 import * as qrys from 'lib/proxy/proxy-queries';
@@ -838,7 +838,7 @@ export const DisputePreflightCheck = async (
     } else {
       const now = new Date();
       const last = new Date(fulfilledOn);
-      refresh = dateDiffInDays(last, now) > 0 ? true : false;
+      refresh = dateDiffInHours(last, now) > 24 ? true : false;
     }
     console.log('DisputePreflightCheck:refresh ===> ', refresh);
   } catch (err) {
