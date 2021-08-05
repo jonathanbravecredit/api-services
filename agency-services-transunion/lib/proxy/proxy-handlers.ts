@@ -603,6 +603,7 @@ export const StartDispute = async (
   const publicitem = ajv.getSchema<interfaces.IProcessDisputePublicResult>('disputePublicitem');
   const personalitem = ajv.getSchema<interfaces.IProcessDisputePersonalResult>('disputePersonalitem');
 
+  console.log('variables ===> ', variables, JSON.stringify(variables.disputes[0]));
   if (!validate(variables)) throw `Malformed message=${message}`;
   let payloadMethod: (data: any, disputeId?: string) => any;
   if (tradeline(variables.disputes[0])) {

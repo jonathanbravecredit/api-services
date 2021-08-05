@@ -1,0 +1,66 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data"
+  xmlns:arr="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:StartDispute>
+      <con:request>
+        <data:AccountCode>123456789</data:AccountCode>
+        <data:AccountName>CC2BraveCredit</data:AccountName>
+        <data:RequestKey>BC-c960ee0e-a1af-441e-b323-b5a2b72ca280</data:RequestKey>
+        <data:ClientKey>27f7ff41-9229-4224-857a-d24ecb8804fd</data:ClientKey>
+        <data:Customer>
+          <data:CurrentAddress>
+            <data:AddressLine1>5112 Walnut Ridge Dr</data:AddressLine1>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:City>Des Moines</data:City>
+            <data:State>IA</data:State>
+            <data:Zipcode>50317</data:Zipcode>
+          </data:CurrentAddress>
+          <data:DateOfBirth>1944-02-01</data:DateOfBirth>
+          <data:FullName>
+            <data:FirstName>Jennifer</data:FirstName>
+            <data:LastName>Reintjes</data:LastName>
+            <data:MiddleName>Jane</data:MiddleName>
+            <data:Prefix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Suffix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:FullName>
+          <data:PhoneNumber xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          <data:Ssn>666305050</data:Ssn>
+          <data:Identifier>
+            <data:CustomerIdentifier>
+              <data:Id>666305050</data:Id>
+              <data:IdentifierType>SocialId</data:IdentifierType>
+            </data:CustomerIdentifier>
+          </data:Identifier>
+        </data:Customer>
+        <data:Employers xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <data:EnrollmentKey>4736c410-f9c7-42e3-9fb4-6eb71eff567c</data:EnrollmentKey>
+        <data:IndicativeDisputes xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <data:LineItems>
+          <data:LineItem>
+            <data:ClaimCodes>
+              <data:ClaimCode>
+                <data:Code>P8</data:Code>
+              </data:ClaimCode>
+            </data:ClaimCodes>
+            <data:CreditReportItem>PR01_1514392682_-1031353275</data:CreditReportItem>
+            <data:LineItemComment>Public Tradeline</data:LineItemComment>
+            <data:LineItemCommentType xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:UploadDocumentId xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:LineItem>
+        </data:LineItems>
+        <data:ServiceBundleFulfillmentKey>6c67e360-e622-41c0-b31d-6c578ee3c70a</data:ServiceBundleFulfillmentKey>
+      </con:request>
+    </con:StartDispute>
+  </soapenv:Body>
+</soapenv:Envelope>
