@@ -1,0 +1,74 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data"
+  xmlns:arr="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:StartDispute>
+      <con:request>
+        <data:AccountCode>12345777</data:AccountCode>
+        <data:AccountName>CCSIntegration</data:AccountName>
+        <data:RequestKey>a8ab2086-ae3e-4c08-b81a-ca60ee791dfa</data:RequestKey>
+        <data:ClientKey>DNTest_BRENDA</data:ClientKey>
+        <data:Attachment xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <data:Customer>
+          <data:CurrentAddress>
+            <data:AddressLine1>209 SACKETT</data:AddressLine1>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:City>PROVIDENCE</data:City>
+            <data:State>RI</data:State>
+            <data:Zipcode>02907</data:Zipcode>
+          </data:CurrentAddress>
+          <data:DateOfBirth>1973-11-01</data:DateOfBirth>
+          <data:FullName>
+            <data:FirstName>BRENDA</data:FirstName>
+            <data:LastName>JULIEN</data:LastName>
+            <data:MiddleName>G</data:MiddleName>
+            <data:Prefix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Suffix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:FullName>
+          <data:PhoneNumber xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          <data:Ssn xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          <data:DisputePhoneNumber>
+            <data:Extension xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Number>3923096</data:Number>
+            <data:AreaCode>505</data:AreaCode>
+            <data:CountryCode>1</data:CountryCode>
+          </data:DisputePhoneNumber>
+          <data:Gender>Male</data:Gender>
+          <data:Identifier>
+            <data:CustomerIdentifier>
+              <data:Id>471862989</data:Id>
+              <data:IdentifierType>SocialId</data:IdentifierType>
+            </data:CustomerIdentifier>
+          </data:Identifier>
+        </data:Customer>
+        <data:Employers>
+          <data:Employer>
+            <data:City xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Delete>false</data:Delete>
+            <data:Name>Buena Vista Realty Service</data:Name>
+            <data:Occupation xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:State xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:ZipCode xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:Employer>
+        </data:Employers>
+        <data:EnrollmentKey>3924ede1-2769-4e0c-91e8-0e35d88d92de</data:EnrollmentKey>
+        <data:ServiceBundleFulfillmentKey>6800cdc0-6661-46c0-9bfa-16ffcac36a25</data:ServiceBundleFulfillmentKey>
+        <data:ServiceProductFulfillmentKey xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+      </con:request>
+    </con:StartDispute>
+  </soapenv:Body>
+</soapenv:Envelope>

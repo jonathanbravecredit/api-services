@@ -8,7 +8,7 @@ import { dateDiffInDays, dateDiffInHours } from 'lib/utils/dates/dates';
 import { returnNestedObject } from 'lib/utils/helpers/helpers';
 import { GET_INVESTIGATION_RESULTS_RESPONSE } from 'lib/examples/mocks/GetInvestigationResultsResponse';
 import * as qrys from 'lib/proxy/proxy-queries';
-import * as itfs from 'lib/interfaces';
+import * as interfaces from 'lib/interfaces';
 import * as tu from 'lib/transunion';
 
 const parserOptions = {
@@ -29,7 +29,7 @@ const parserOptions = {
 export const Ping = async (
   agent: https.Agent,
   auth: string,
-): Promise<{ success: boolean; error?: itfs.IErrorResponse | itfs.INil | string; data?: any }> => {
+): Promise<{ success: boolean; error?: interfaces.IErrorResponse | interfaces.INil | string; data?: any }> => {
   const soap = new SoapAid(fastXml.parse, () => {}, tu.createPing);
   try {
     const { xml } = soap.createPackage(null, null, null);
@@ -57,11 +57,11 @@ export const IndicativeEnrichment = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: boolean; error: itfs.IErrorResponse | itfs.INil; data: any }> => {
+): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
   //create helper
   const soap = new SoapAid(fastXml.parse, tu.formatIndicativeEnrichment, tu.createIndicativeEnrichment);
   try {
-    const resp = await soap.parseAndSendPayload<itfs.IIndicativeEnrichmentResponse>(
+    const resp = await soap.parseAndSendPayload<interfaces.IIndicativeEnrichmentResponse>(
       accountCode,
       username,
       agent,
@@ -71,7 +71,7 @@ export const IndicativeEnrichment = async (
       parserOptions,
     );
 
-    const data = returnNestedObject<itfs.IIndicativeEnrichmentResult>(resp, 'IndicativeEnrichmentResult');
+    const data = returnNestedObject<interfaces.IIndicativeEnrichmentResult>(resp, 'IndicativeEnrichmentResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -98,12 +98,12 @@ export const GetAuthenticationQuestions = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: boolean; error: itfs.IErrorResponse | itfs.INil; data: any }> => {
+): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
   //create helper classes
   const soap = new SoapAid(fastXml.parse, tu.formatGetAuthenticationQuestions, tu.createGetAuthenticationQuestions);
 
   try {
-    const resp = await soap.parseAndSendPayload<itfs.IGetAuthenticationQuestionsResponse>(
+    const resp = await soap.parseAndSendPayload<interfaces.IGetAuthenticationQuestionsResponse>(
       accountCode,
       username,
       agent,
@@ -113,7 +113,10 @@ export const GetAuthenticationQuestions = async (
       parserOptions,
     );
 
-    const data = returnNestedObject<itfs.IGetAuthenticationQuestionsResult>(resp, 'GetAuthenticationQuestionsResult');
+    const data = returnNestedObject<interfaces.IGetAuthenticationQuestionsResult>(
+      resp,
+      'GetAuthenticationQuestionsResult',
+    );
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -140,7 +143,7 @@ export const VerifyAuthenticationQuestions = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: boolean; error: itfs.IErrorResponse | itfs.INil; data: any }> => {
+): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
   //create helper classes
   const soap = new SoapAid(
     fastXml.parse,
@@ -149,7 +152,7 @@ export const VerifyAuthenticationQuestions = async (
   );
 
   try {
-    const resp = await soap.parseAndSendPayload<itfs.IVerifyAuthenticationQuestionsResponse>(
+    const resp = await soap.parseAndSendPayload<interfaces.IVerifyAuthenticationQuestionsResponse>(
       accountCode,
       username,
       agent,
@@ -159,7 +162,7 @@ export const VerifyAuthenticationQuestions = async (
       parserOptions,
     );
 
-    const data = returnNestedObject<itfs.IVerifyAuthenticationQuestionsResult>(
+    const data = returnNestedObject<interfaces.IVerifyAuthenticationQuestionsResult>(
       resp,
       'VerifyAuthenticationQuestionsResult',
     );
@@ -191,12 +194,16 @@ export const Enroll = async (
   agent: https.Agent,
   auth: string,
   dispute: boolean = false,
-): Promise<{ success: boolean; error?: itfs.IErrorResponse | itfs.INil | string; data?: itfs.IEnrollResult }> => {
+): Promise<{
+  success: boolean;
+  error?: interfaces.IErrorResponse | interfaces.INil | string;
+  data?: interfaces.IEnrollResult;
+}> => {
   // validate incoming message
-  let variables: itfs.IGetAppDataRequest = {
+  let variables: interfaces.IGetAppDataRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<itfs.IGetAppDataRequest>('getAppDataRequest');
+  const validate = ajv.getSchema<interfaces.IGetAppDataRequest>('getAppDataRequest');
   if (!validate(variables)) {
     let id = returnNestedObject<string>(JSON.parse(message), 'ClientKey'); // try to remedy
     variables = {
@@ -212,7 +219,7 @@ export const Enroll = async (
   try {
     const prepayload = await qrys.getDataForEnrollment(variables);
     console.log('prepayload ===> ', prepayload.data);
-    const resp = await soap.parseAndSendPayload<itfs.IEnrollResponse>(
+    const resp = await soap.parseAndSendPayload<interfaces.IEnrollResponse>(
       accountCode,
       username,
       agent,
@@ -223,7 +230,7 @@ export const Enroll = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<itfs.IEnrollResult>(resp, 'EnrollResult');
+    const data = returnNestedObject<interfaces.IEnrollResult>(resp, 'EnrollResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -260,12 +267,16 @@ export const EnrollDisputes = async (
   agent: https.Agent,
   auth: string,
   dispute: boolean = false,
-): Promise<{ success: boolean; error?: itfs.IErrorResponse | itfs.INil | string; data?: itfs.IEnrollResult }> => {
+): Promise<{
+  success: boolean;
+  error?: interfaces.IErrorResponse | interfaces.INil | string;
+  data?: interfaces.IEnrollResult;
+}> => {
   // validate incoming message
-  let variables: itfs.IGetAppDataRequest = {
+  let variables: interfaces.IGetAppDataRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<itfs.IGetAppDataRequest>('getAppDataRequest');
+  const validate = ajv.getSchema<interfaces.IGetAppDataRequest>('getAppDataRequest');
   if (!validate(variables)) {
     let id = returnNestedObject<string>(JSON.parse(message), 'ClientKey'); // try to remedy
     variables = {
@@ -285,7 +296,7 @@ export const EnrollDisputes = async (
 
   try {
     const prepayload = await qrys.getDataForEnrollment(variables);
-    const resp = await soap.parseAndSendPayload<itfs.IEnrollResponse>(
+    const resp = await soap.parseAndSendPayload<interfaces.IEnrollResponse>(
       accountCode,
       username,
       agent,
@@ -296,7 +307,7 @@ export const EnrollDisputes = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<itfs.IEnrollResult>(resp, 'EnrollResult');
+    const data = returnNestedObject<interfaces.IEnrollResult>(resp, 'EnrollResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -332,12 +343,16 @@ export const Fulfill = async (
   agent: https.Agent,
   auth: string,
   dispute: boolean = false,
-): Promise<{ success: boolean; error?: itfs.IErrorResponse | itfs.INil | string; data?: itfs.IFulfillResult }> => {
+): Promise<{
+  success: boolean;
+  error?: interfaces.IErrorResponse | interfaces.INil | string;
+  data?: interfaces.IFulfillResult;
+}> => {
   // validate incoming message
-  let variables: itfs.IGetAppDataRequest = {
+  let variables: interfaces.IGetAppDataRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<itfs.IGetAppDataRequest>('getAppDataRequest');
+  const validate = ajv.getSchema<interfaces.IGetAppDataRequest>('getAppDataRequest');
   if (!validate(variables)) {
     let id = returnNestedObject<string>(JSON.parse(message), 'ClientKey'); // try to remedy
     variables = {
@@ -353,7 +368,7 @@ export const Fulfill = async (
   try {
     // get / parse data needed to process request
     const prepayload = await qrys.getDataForFulfill(variables);
-    const resp = await soap.parseAndSendPayload<itfs.IFulfillResponse>(
+    const resp = await soap.parseAndSendPayload<interfaces.IFulfillResponse>(
       accountCode,
       username,
       agent,
@@ -364,7 +379,7 @@ export const Fulfill = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<itfs.IFulfillResult>(resp, 'FulfillResult');
+    const data = returnNestedObject<interfaces.IFulfillResult>(resp, 'FulfillResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -397,12 +412,16 @@ export const FulfillDisputes = async (
   agent: https.Agent,
   auth: string,
   dispute: boolean = false,
-): Promise<{ success: boolean; error?: itfs.IErrorResponse | itfs.INil | string; data?: itfs.IFulfillResult }> => {
+): Promise<{
+  success: boolean;
+  error?: interfaces.IErrorResponse | interfaces.INil | string;
+  data?: interfaces.IFulfillResult;
+}> => {
   // validate incoming message
-  let variables: itfs.IGetAppDataRequest = {
+  let variables: interfaces.IGetAppDataRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<itfs.IGetAppDataRequest>('getAppDataRequest');
+  const validate = ajv.getSchema<interfaces.IGetAppDataRequest>('getAppDataRequest');
   if (!validate(variables)) {
     let id = returnNestedObject<string>(JSON.parse(message), 'ClientKey'); // try to remedy
     variables = {
@@ -423,7 +442,7 @@ export const FulfillDisputes = async (
   try {
     // get / parse data needed to process request
     const prepayload = await qrys.getDataForFulfill(variables);
-    const resp = await soap.parseAndSendPayload<itfs.IFulfillResponse>(
+    const resp = await soap.parseAndSendPayload<interfaces.IFulfillResponse>(
       accountCode,
       username,
       agent,
@@ -434,7 +453,7 @@ export const FulfillDisputes = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<itfs.IFulfillResult>(resp, 'FulfillResult');
+    const data = returnNestedObject<interfaces.IFulfillResult>(resp, 'FulfillResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -466,13 +485,13 @@ export const GetServiceProduct = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: boolean; error: itfs.IErrorResponse | itfs.INil; data: any }> => {
+): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
   // TODO add validation
   const soap = new SoapAid(fastXml.parse, tu.formatGetServiceProduct, tu.createGetServiceProduct);
 
   try {
     // create helper classes
-    const resp = await soap.parseAndSendPayload<itfs.IGetServiceProductResponse>(
+    const resp = await soap.parseAndSendPayload<interfaces.IGetServiceProductResponse>(
       accountCode,
       username,
       agent,
@@ -483,7 +502,7 @@ export const GetServiceProduct = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<itfs.IGetServiceProductResult>(resp, 'GetServiceProductResult');
+    const data = returnNestedObject<interfaces.IGetServiceProductResult>(resp, 'GetServiceProductResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -511,12 +530,12 @@ export const GetDisputeStatus = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: boolean; error?: itfs.IErrorResponse | itfs.INil; data?: any }> => {
+): Promise<{ success: boolean; error?: interfaces.IErrorResponse | interfaces.INil; data?: any }> => {
   // validate incoming message
-  let variables: itfs.IGetAppDataRequest = {
+  let variables: interfaces.IGetAppDataRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<itfs.IGetAppDataRequest>('getAppDataRequest');
+  const validate = ajv.getSchema<interfaces.IGetAppDataRequest>('getAppDataRequest');
   if (!validate(variables)) {
     let id = returnNestedObject<string>(JSON.parse(message), 'ClientKey'); // try to remedy
     variables = {
@@ -536,7 +555,7 @@ export const GetDisputeStatus = async (
   try {
     // get / parse data needed to process request
     const prepayload = await qrys.getDataForGetDisputeStatus(variables);
-    const resp = await soap.parseAndSendPayload<itfs.IGetDisputeStatusResponse>(
+    const resp = await soap.parseAndSendPayload<interfaces.IGetDisputeStatusResponse>(
       accountCode,
       username,
       agent,
@@ -547,7 +566,7 @@ export const GetDisputeStatus = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<itfs.IGetDisputeStatusResult>(resp, 'GetDisputeStatusResult');
+    const data = returnNestedObject<interfaces.IGetDisputeStatusResult>(resp, 'GetDisputeStatusResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -576,26 +595,38 @@ export const StartDispute = async (
   auth: string,
 ): Promise<{ success: boolean; error?: any }> => {
   // validate incoming message
-  let variables: itfs.IStartDisputeRequest = {
+  let variables: interfaces.IStartDisputeRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<itfs.IStartDisputeRequest>('startDisputeRequest');
-  if (!validate(variables)) throw `Malformed message=${message}`;
+  const validate = ajv.getSchema<interfaces.IStartDisputeRequest>('startDisputeRequest');
+  const tradeline = ajv.getSchema<interfaces.IProcessDisputeTradelineResult>('disputeTradeline');
+  const publicitem = ajv.getSchema<interfaces.IProcessDisputePublicResult>('disputePublicitem');
+  const personalitem = ajv.getSchema<interfaces.IProcessDisputePersonalResult>('disputePersonalitem');
 
+  if (!validate(variables)) throw `Malformed message=${message}`;
+  let payloadMethod: (data: any, disputeId?: string) => any;
+  if (tradeline(variables.disputes[0])) {
+    console.log('setting payloadmethod to tradeline');
+    payloadMethod = tu.createStartDisputeTradelinePayload;
+  }
+  if (publicitem(variables.disputes[0])) {
+    console.log('setting payloadmethod to public');
+    payloadMethod = tu.createStartDisputePublicPayload;
+  }
+  if (personalitem(variables.disputes[0])) {
+    console.log('setting payloadmethod to personal');
+    payloadMethod = tu.createStartDisputePersonalPayload;
+  }
   //create helper classes
-  const soap = new SoapAid(
-    tu.parseStartDispute,
-    tu.formatStartDispute,
-    tu.createStartDispute,
-    tu.createStartDisputePayload,
-  );
+  const soap = new SoapAid(tu.parseStartDispute, tu.formatStartDispute, tu.createStartDispute, payloadMethod);
+
   const sync = new Sync(tu.enrichDisputeData);
 
   try {
     console.log('*** IN START DISPUTE ***');
     const prepayload = await qrys.getDataForStartDispute(variables);
     const payload = { data: prepayload.data, disputes: variables.disputes };
-    const resp = await soap.parseAndSendPayload<itfs.IStartDisputeResponse>(
+    const resp = await soap.parseAndSendPayload<interfaces.IStartDisputeResponse>(
       accountCode,
       username,
       agent,
@@ -606,10 +637,10 @@ export const StartDispute = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<itfs.IStartDisputeResult>(resp, 'StartDisputeResult');
+    const data = returnNestedObject<interfaces.IStartDisputeResult>(resp, 'StartDisputeResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
-    const bundle: itfs.IStartDisputeBundle = {
+    const bundle: interfaces.IStartDisputeBundle = {
       startDisputeResult: data,
       disputes: variables.disputes,
     };
@@ -644,12 +675,12 @@ export const GetDisputeHistory = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: boolean; error: itfs.IErrorResponse | itfs.INil; data: any }> => {
+): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
   // validate incoming message
-  let variables: itfs.IGenericRequest = {
+  let variables: interfaces.IGenericRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<itfs.IGenericRequest>('getRequest');
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(variables)) throw `Malformed message=${message}`;
 
   //create helper classes
@@ -663,7 +694,7 @@ export const GetDisputeHistory = async (
   try {
     // get / parse data needed to process request
     const prepayload = await qrys.getDataForGetDisputeHistory(variables); // same data
-    const resp = await soap.parseAndSendPayload<itfs.IGetDisputeHistoryResponse>(
+    const resp = await soap.parseAndSendPayload<interfaces.IGetDisputeHistoryResponse>(
       accountCode,
       username,
       agent,
@@ -674,7 +705,7 @@ export const GetDisputeHistory = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<itfs.IGetDisputeHistoryResult>(resp, 'GetDisputeHistoryResult');
+    const data = returnNestedObject<interfaces.IGetDisputeHistoryResult>(resp, 'GetDisputeHistoryResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
@@ -703,10 +734,10 @@ export const GetInvestigationResults = async (
   auth: string,
 ): Promise<{ success: boolean; error?: any; data?: any }> => {
   // validate incoming message
-  let variables: itfs.IGetInvestigationResultsRequest = {
+  let variables: interfaces.IGetInvestigationResultsRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<itfs.IGetInvestigationResultsRequest>('getInvestigationResultsRequest');
+  const validate = ajv.getSchema<interfaces.IGetInvestigationResultsRequest>('getInvestigationResultsRequest');
   if (!validate(variables)) throw `Malformed message=${message}`;
 
   //create helper classes
@@ -732,16 +763,16 @@ export const GetInvestigationResults = async (
     //   parserOptions,
     // );
 
-    const resp = await soap.processMockRequest<itfs.IGetInvestigationResultsResponse>(
+    const resp = await soap.processMockRequest<interfaces.IGetInvestigationResultsResponse>(
       GET_INVESTIGATION_RESULTS_RESPONSE,
       parserOptions,
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<itfs.IGetInvestigationResultsResult>(resp, 'GetInvestigationResultsResult');
+    const data = returnNestedObject<interfaces.IGetInvestigationResultsResult>(resp, 'GetInvestigationResultsResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
-    const bundle: itfs.IGetInvestigationEnrichPayload = {
+    const bundle: interfaces.IGetInvestigationEnrichPayload = {
       disputeId: variables.disputeId,
       getInvestigationResult: data,
     };
@@ -763,11 +794,11 @@ export const CompleteOnboardingEnrollments = async (
   message: string,
   agent: https.Agent,
   auth: string,
-): Promise<{ success: Boolean; error?: any; data?: itfs.IEnrollResult }> => {
-  let variables: itfs.IGetAppDataRequest = {
+): Promise<{ success: Boolean; error?: any; data?: interfaces.IEnrollResult }> => {
+  let variables: interfaces.IGetAppDataRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<itfs.IGetAppDataRequest>('getAppDataRequest');
+  const validate = ajv.getSchema<interfaces.IGetAppDataRequest>('getAppDataRequest');
   if (!validate(variables)) throw `Malformed message=${message}`;
 
   try {
@@ -801,10 +832,10 @@ export const DisputePreflightCheck = async (
   agent: https.Agent,
   auth: string,
 ): Promise<{ success: boolean; error?: any }> => {
-  let variables: itfs.IGetAppDataRequest = {
+  let variables: interfaces.IGetAppDataRequest = {
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<itfs.IGetAppDataRequest>('getAppDataRequest');
+  const validate = ajv.getSchema<interfaces.IGetAppDataRequest>('getAppDataRequest');
   if (!validate(variables)) throw `Malformed message=${message}`;
 
   let enrolled: boolean;

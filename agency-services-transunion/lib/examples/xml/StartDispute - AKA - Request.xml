@@ -1,0 +1,95 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data"
+  xmlns:arr="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:StartDispute>
+      <con:request>
+        <data:AccountCode>12345777</data:AccountCode>
+        <data:AccountName>CCSIntegration</data:AccountName>
+        <data:RequestKey>0fb32b52-9c50-4460-bfe9-783ecee81eb8</data:RequestKey>
+        <data:ClientKey>MJ_2018-04-30_09-10-04_MARY</data:ClientKey>
+        <data:ConsumerStatement>
+          <data:Codes>
+            <!--Zero or more repetitions:-->
+            <arr:string xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <arr:string>12345</arr:string>
+          </data:Codes>
+          <data:Comment>Testing for OCP changes</data:Comment>
+          <data:Delete>false</data:Delete>
+          <data:ExpirationDate>2018-04-13</data:ExpirationDate>
+        </data:ConsumerStatement>
+        <data:Customer>
+          <data:CurrentAddress>
+            <data:AddressLine1>25945 NIGHT SHADE</data:AddressLine1>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:City>MENIFEE</data:City>
+            <data:State>CA</data:State>
+            <data:Zipcode>92584</data:Zipcode>
+          </data:CurrentAddress>
+          <data:DateOfBirth>1952-06-30</data:DateOfBirth>
+          <data:FullName>
+            <data:FirstName>MARY</data:FirstName>
+            <data:LastName>PIROLLO</data:LastName>
+            <data:MiddleName>K</data:MiddleName>
+            <data:Prefix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Suffix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:FullName>
+          <data:PhoneNumber>5053923096</data:PhoneNumber>
+          <data:Ssn xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          <data:DisputePhoneNumber>
+            <data:Extension xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Number>3923096</data:Number>
+            <data:AreaCode>505</data:AreaCode>
+            <data:CountryCode>1</data:CountryCode>
+          </data:DisputePhoneNumber>
+          <data:Gender xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          <data:Identifier>
+            <data:CustomerIdentifier>
+              <data:Id>451552833</data:Id>
+              <data:IdentifierType>SocialId</data:IdentifierType>
+            </data:CustomerIdentifier>
+          </data:Identifier>
+        </data:Customer>
+        <data:EnrollmentKey>229af966-5c14-4a14-94cd-a24c9a0756b7</data:EnrollmentKey>
+        <data:IndicativeDisputes>
+          <data:Address>
+            <data:AddressLine1>123 Cross Street</data:AddressLine1>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:City>Chicago</data:City>
+            <data:State>IL</data:State>
+            <data:Zipcode>60662</data:Zipcode>
+          </data:Address>
+          <data:DeleteAddress>false</data:DeleteAddress>
+          <data:Aka>
+            <data:ValueData>
+              <data:Delete>true</data:Delete>
+              <data:Value>MARY KATE PIROLLO</data:Value>
+            </data:ValueData>
+          </data:Aka>
+          <data:PreviousAddress xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          <data:PhoneNumber>
+            <!--Zero or more repetitions:-->
+            <data:ValueData>
+              <data:Delete>false</data:Delete>
+              <data:Value>987654321</data:Value>
+            </data:ValueData>
+          </data:PhoneNumber>
+        </data:IndicativeDisputes>
+        <data:ServiceBundleFulfillmentKey>10065ce8-f814-4e89-8ea8-d0a15224cf36</data:ServiceBundleFulfillmentKey>
+        <data:ServiceProductFulfillmentKey xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+      </con:request>
+    </con:StartDispute>
+  </soapenv:Body>
+</soapenv:Envelope>

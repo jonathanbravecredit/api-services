@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "nullable": false
+    },
+    "tradeline": {
+      "type": "object",
+      "nullable": false
+    }
+  },
+  "required": [
+    "result",
+    "tradeline"
+  ],
+  "additionalProperties": false
+}
