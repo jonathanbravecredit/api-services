@@ -412,52 +412,58 @@ export const mapEmployers = (employers: IEmployers | IEmployers[] | undefined): 
 export const mapIndicativeDisputes = (disputes: IIndicativeDisputes) => {
   console.log('startDispute:mapIndicativeEnrichment ===> ', disputes);
   if (!disputes) return textConstructor(null, true);
-  return disputes instanceof Array
-    ? disputes.map((d: IIndicativeDisputes) => {
-        const mappedAka = mapAka(d.Aka);
-        return {
-          'data:Aka': mappedAka,
-          'data:DeleteAddress': textConstructor(d.DeleteAddress, true),
+  const results =
+    disputes instanceof Array
+      ? disputes.map((d: IIndicativeDisputes) => {
+          const mappedAka = mapAka(d.Aka);
+          return {
+            'data:Aka': mappedAka,
+            'data:DeleteAddress': textConstructor(d.DeleteAddress, true),
+            'data:Address': {
+              'data:AddressLine1': textConstructor(d.Address.AddressLine1, true),
+              'data:AddressLine2': textConstructor(d.Address.AddressLine2, true),
+              'data:City': textConstructor(d.Address.City, true),
+              'data:State': textConstructor(d.Address.State, true),
+              'data:Zipcode': textConstructor(d.Address.Zipcode, true),
+            },
+          };
+        })
+      : {
+          'data:Aka': mapAka(disputes.Aka),
+          'data:DeleteAddress': textConstructor(disputes.DeleteAddress, true),
           'data:Address': {
-            'data:AddressLine1': textConstructor(d.Address.AddressLine1, true),
-            'data:AddressLine2': textConstructor(d.Address.AddressLine2, true),
-            'data:City': textConstructor(d.Address.City, true),
-            'data:State': textConstructor(d.Address.State, true),
-            'data:Zipcode': textConstructor(d.Address.Zipcode, true),
+            'data:AddressLine1': textConstructor(disputes.Address.AddressLine1, true),
+            'data:AddressLine2': textConstructor(disputes.Address.AddressLine2, true),
+            'data:City': textConstructor(disputes.Address.City, true),
+            'data:State': textConstructor(disputes.Address.State, true),
+            'data:Zipcode': textConstructor(disputes.Address.Zipcode, true),
           },
         };
-      })
-    : {
-        'data:Aka': mapAka(disputes.Aka),
-        'data:DeleteAddress': textConstructor(disputes.DeleteAddress, true),
-        'data:Address': {
-          'data:AddressLine1': textConstructor(disputes.Address.AddressLine1, true),
-          'data:AddressLine2': textConstructor(disputes.Address.AddressLine2, true),
-          'data:City': textConstructor(disputes.Address.City, true),
-          'data:State': textConstructor(disputes.Address.State, true),
-          'data:Zipcode': textConstructor(disputes.Address.Zipcode, true),
-        },
-      };
+  console.log('results in mapIndicativeDispute ===> ', results);
+  return results;
 };
 
 export const mapAka = (aka: IAka | IAka[]) => {
   console.log('startDispute:mapAka ===> ', aka);
   if (!aka) return textConstructor(null, true);
-  return aka instanceof Array
-    ? aka.map((a: IAka) => {
-        return {
+  const results =
+    aka instanceof Array
+      ? aka.map((a: IAka) => {
+          return {
+            'data:ValueData': {
+              'data:Delete': textConstructor(a.ValueData?.Delete, true),
+              'data:Value': textConstructor(a.ValueData?.Value, true),
+            },
+          };
+        })
+      : {
           'data:ValueData': {
-            'data:Delete': textConstructor(a.ValueData?.Delete, true),
-            'data:Value': textConstructor(a.ValueData?.Value, true),
+            'data:Delete': textConstructor(aka.ValueData?.Delete, true),
+            'data:Value': textConstructor(aka.ValueData?.Value, true),
           },
         };
-      })
-    : {
-        'data:ValueData': {
-          'data:Delete': textConstructor(aka.ValueData?.Delete, true),
-          'data:Value': textConstructor(aka.ValueData?.Value, true),
-        },
-      };
+  console.log('results in mapAka ===> ', results);
+  return results;
 };
 
 export const mapLineItems = (items: ILineItem | ILineItem[]) => {
