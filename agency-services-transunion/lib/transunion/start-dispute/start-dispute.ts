@@ -47,7 +47,7 @@ export const createStartDisputeTradelinePayload = ({
     console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
     return;
   }
-  console.log('id in StartDispute', id);
+  console.log('id in Tradeline StartDispute', id);
   return {
     AccountCode: '123456789',
     AccountName: 'CC2BraveCredit',
@@ -99,7 +99,7 @@ export const createStartDisputePublicPayload = ({
     console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
     return;
   }
-  console.log('id in StartDispute', id);
+  console.log('id in Public StartDispute', id);
   return {
     AccountCode: '123456789',
     AccountName: 'CC2BraveCredit',
@@ -145,7 +145,7 @@ export const createStartDisputePersonalPayload = ({
     console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
     return;
   }
-  console.log('id in StartDispute', id);
+  console.log('id in Personal StartDispute', id);
 
   let msg: IStartDisputeMsg = {
     AccountCode: '123456789',
@@ -179,9 +179,16 @@ export const createStartDisputePersonalPayload = ({
   const haveAddress = disputes.findIndex((dispute) => dispute.personalItem.key === 'address') > -1;
   const haveName = disputes.findIndex((dispute) => dispute.personalItem.key === 'name') > -1;
 
+  console.log('layer checks:employers ===> ', haveEmployers);
+  console.log('layer checks:haveAddress ===> ', haveEmployers);
+  console.log('layer checks:haveName ===> ', haveEmployers);
+  console.log('msg before ===> ', msg);
+
   if (haveEmployers && !(haveAddress || haveName)) msg = layerInEmployers(msg, disputes);
   if (haveAddress && !(haveEmployers || haveName)) msg = layerInAddress(msg, disputes);
   if (haveName && !(haveEmployers || haveAddress)) msg = layerInAka(msg, disputes);
+
+  console.log('msg after ====> ', msg);
   return msg;
 };
 
