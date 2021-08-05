@@ -233,7 +233,7 @@ export const parseDisputePublicToLineItem = (
   return disputes
     .map((item) => {
       const reason = item?.result?.data?.reasons;
-      const handle = item?.publicitem?.PublicRecord.handle;
+      const handle = item?.publicItem?.PublicRecord.handle;
       console.log('parseDisputeToLineItem:reason ===> ', reason);
       console.log('parseDisputeToLineItem:handle ===> ', handle);
       if (reason !== undefined) {
