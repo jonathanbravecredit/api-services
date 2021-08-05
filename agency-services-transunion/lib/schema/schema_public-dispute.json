@@ -5,14 +5,14 @@
       "type": "object",
       "nullable": false
     },
-    "publicitem": {
+    "publicItem": {
       "type": "object",
       "nullable": false
     }
   },
   "required": [
     "result",
-    "publicitem"
+    "publicItem"
   ],
   "additionalProperties": false
 }

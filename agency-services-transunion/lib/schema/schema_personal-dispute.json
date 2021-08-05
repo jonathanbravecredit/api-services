@@ -5,14 +5,14 @@
       "type": "object",
       "nullable": false
     },
-    "personalitem": {
+    "personalItem": {
       "type": "object",
       "nullable": false
     }
   },
   "required": [
     "result",
-    "personalitem"
+    "personalItem"
   ],
   "additionalProperties": false
 }
