@@ -174,14 +174,14 @@ export const createStartDisputePersonalPayload = ({
     ServiceBundleFulfillmentKey: data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey,
     ServiceProductFulfillmentKey: null,
   };
-  console.log('disputes ===> ', JSON.stringify(disputes));
-  const haveEmployers = disputes.findIndex((dispute) => dispute.personalItem.key === 'employer') > -1;
-  const haveAddress = disputes.findIndex((dispute) => dispute.personalItem.key === 'address') > -1;
-  const haveName = disputes.findIndex((dispute) => dispute.personalItem.key === 'name') > -1;
+
+  const haveEmployers = disputes.findIndex((dispute) => dispute.personalItem.key == 'employer') > -1;
+  const haveAddress = disputes.findIndex((dispute) => dispute.personalItem.key == 'address') > -1;
+  const haveName = disputes.findIndex((dispute) => dispute.personalItem.key == 'name') > -1;
 
   console.log('layer checks:employers ===> ', haveEmployers);
-  console.log('layer checks:haveAddress ===> ', haveEmployers);
-  console.log('layer checks:haveName ===> ', haveEmployers);
+  console.log('layer checks:haveAddress ===> ', haveAddress);
+  console.log('layer checks:haveName ===> ', haveName);
   console.log('msg before ===> ', msg);
 
   if (haveEmployers && !(haveAddress || haveName)) msg = layerInEmployers(msg, disputes);
@@ -410,6 +410,7 @@ export const mapEmployers = (employers: IEmployers | IEmployers[] | undefined): 
 };
 
 export const mapIndicativeDisputes = (disputes: IIndicativeDisputes) => {
+  console.log('startDispute:mapIndicativeEnrichment ===> ', disputes);
   if (!disputes) return textConstructor(null, true);
   return disputes instanceof Array
     ? disputes.map((d: IIndicativeDisputes) => {
@@ -440,6 +441,7 @@ export const mapIndicativeDisputes = (disputes: IIndicativeDisputes) => {
 };
 
 export const mapAka = (aka: IAka | IAka[]) => {
+  console.log('startDispute:mapAka ===> ', aka);
   if (!aka) return textConstructor(null, true);
   return aka instanceof Array
     ? aka.map((a: IAka) => {
