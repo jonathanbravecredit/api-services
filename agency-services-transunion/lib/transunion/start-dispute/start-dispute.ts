@@ -234,7 +234,7 @@ export const parseDisputePublicToLineItem = (
           LineItem: {
             ClaimCodes: parseReasonsToClaimCodes(reason),
             CreditReportItem: handle,
-            LineItemComment: 'Account Tradeline',
+            LineItemComment: 'Public Tradeline',
           },
         };
       }
