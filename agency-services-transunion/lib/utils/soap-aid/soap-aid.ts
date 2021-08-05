@@ -166,4 +166,40 @@ export class SoapAid {
       throw `Uncaught error in parse and send`;
     }
   }
+
+  /**
+   * !!!!IMPORTANT!!! For mocking only.
+   * @param accountCode
+   * @param username
+   * @param agent
+   * @param auth
+   * @param prepayload
+   * @param action
+   * @param parserOptions
+   * @returns
+   */
+  async parseAndDontSendPayload<T>(
+    accountCode: string,
+    username: string,
+    agent: https.Agent,
+    auth: string,
+    prepayload: any,
+    action: string,
+    parserOptions: Partial<fastXml.X2jOptions>,
+  ): Promise<any> {
+    const payload = this.createPayload(prepayload);
+    const { msg, xml } = this.createPackage(accountCode, username, JSON.stringify(payload));
+    const request = this.createRequestPayload(agent, auth, xml, action);
+    if (!msg || !xml || !request || !payload) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
+    console.log('your MOCK payload is ===> ', payload);
+    console.log('your MOCK message is ===> ', msg);
+    console.log('your MOCK xml is ===> ', xml);
+    console.log('your MOCK request is ===> ', request);
+    try {
+      return;
+    } catch (err) {
+      console.log(`parseAndSendPayload error=${err}`);
+      throw `Uncaught error in parse and send`;
+    }
+  }
 }

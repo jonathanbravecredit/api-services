@@ -619,14 +619,13 @@ export const StartDispute = async (
   }
   //create helper classes
   const soap = new SoapAid(tu.parseStartDispute, tu.formatStartDispute, tu.createStartDispute, payloadMethod);
-
   const sync = new Sync(tu.enrichDisputeData);
 
   try {
     console.log('*** IN START DISPUTE ***');
     const prepayload = await qrys.getDataForStartDispute(variables);
     const payload = { data: prepayload.data, disputes: variables.disputes };
-    const resp = await soap.parseAndSendPayload<interfaces.IStartDisputeResponse>(
+    const resp = await soap.parseAndDontSendPayload<interfaces.IStartDisputeResponse>(
       accountCode,
       username,
       agent,
@@ -636,25 +635,27 @@ export const StartDispute = async (
       parserOptions,
     );
 
-    // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IStartDisputeResult>(resp, 'StartDisputeResult');
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
-    const bundle: interfaces.IStartDisputeBundle = {
-      startDisputeResult: data,
-      disputes: variables.disputes,
-    };
+    return { success: false, error: 'mock request' };
 
-    console.log('start dispute response data ===> ', JSON.stringify(data));
-    console.log('start dispute response type ===> ', JSON.stringify(responseType));
-    console.log('start dispute response error ===> ', JSON.stringify(error));
+    // // get the specific response from parsed object
+    // const data = returnNestedObject<interfaces.IStartDisputeResult>(resp, 'StartDisputeResult');
+    // const responseType = data.ResponseType;
+    // const error = data.ErrorResponse;
+    // const bundle: interfaces.IStartDisputeBundle = {
+    //   startDisputeResult: data,
+    //   disputes: variables.disputes,
+    // };
 
-    if (responseType.toLowerCase() === 'success') {
-      const synced = await sync.syncData({ id: variables.id }, bundle);
-      return synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
-    } else {
-      return { success: false, error: error };
-    }
+    // console.log('start dispute response data ===> ', JSON.stringify(data));
+    // console.log('start dispute response type ===> ', JSON.stringify(responseType));
+    // console.log('start dispute response error ===> ', JSON.stringify(error));
+
+    // if (responseType.toLowerCase() === 'success') {
+    //   const synced = await sync.syncData({ id: variables.id }, bundle);
+    //   return synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
+    // } else {
+    //   return { success: false, error: error };
+    // }
   } catch (err) {
     return { success: false, error: err };
   }
