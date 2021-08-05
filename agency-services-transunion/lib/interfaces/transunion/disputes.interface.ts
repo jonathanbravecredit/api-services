@@ -16,7 +16,7 @@ export interface IProcessDisputeTradelineResult {
 
 export interface IProcessDisputePublicResult {
   result: IDisputeProcessResult;
-  publicitem: IPublicPartition | undefined;
+  publicItem: IPublicPartition | undefined;
 }
 
 export interface IProcessDisputePersonalResult {

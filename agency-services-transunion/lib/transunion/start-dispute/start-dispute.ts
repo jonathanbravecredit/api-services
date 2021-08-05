@@ -174,7 +174,7 @@ export const createStartDisputePersonalPayload = ({
     ServiceBundleFulfillmentKey: data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey,
     ServiceProductFulfillmentKey: null,
   };
-
+  console.log('disputes ===> ', JSON.stringify(disputes));
   const haveEmployers = disputes.findIndex((dispute) => dispute.personalItem.key === 'employer') > -1;
   const haveAddress = disputes.findIndex((dispute) => dispute.personalItem.key === 'address') > -1;
   const haveName = disputes.findIndex((dispute) => dispute.personalItem.key === 'name') > -1;
