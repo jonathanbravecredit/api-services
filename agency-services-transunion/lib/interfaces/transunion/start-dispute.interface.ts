@@ -194,22 +194,18 @@ export interface IEmployers {
 }
 export interface IIndicativeDisputes {
   Aka?: IAka | IAka[];
-  Address?: {
-    AddressLine1?: string;
-    AddressLine2?: string;
-    City?: string;
-    State?: string;
-    Zipcode?: string;
-  };
+  Address?: IIndicativeDisputesAddress;
   DeleteAddress?: string;
-  PreviousAddress?: {
-    AddressLine1?: string;
-    AddressLine2?: string;
-    City?: string;
-    State?: string;
-    Zipcode?: string;
-  };
+  PreviousAddress?: IIndicativeDisputesAddress;
   DeletePreviousAddress?: string;
+}
+
+export interface IIndicativeDisputesAddress {
+  AddressLine1?: string;
+  AddressLine2?: string;
+  City?: string;
+  State?: string;
+  Zipcode?: string;
 }
 
 export interface IAka {

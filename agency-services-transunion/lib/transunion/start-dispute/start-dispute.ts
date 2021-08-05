@@ -17,6 +17,7 @@ import {
   IEmployer,
   IBorrowerAddress,
   IBorrowerName,
+  IIndicativeDisputesAddress,
 } from 'lib/interfaces';
 import { textConstructor } from 'lib/utils/helpers/helpers';
 import * as fastXml from 'fast-xml-parser';
@@ -415,29 +416,14 @@ export const mapIndicativeDisputes = (disputes: IIndicativeDisputes) => {
   const results =
     disputes instanceof Array
       ? disputes.map((d: IIndicativeDisputes) => {
-          const mappedAka = mapAka(d.Aka);
           return {
-            'data:Aka': mappedAka,
-            'data:DeleteAddress': textConstructor(d.DeleteAddress, true),
-            'data:Address': {
-              'data:AddressLine1': textConstructor(d.Address.AddressLine1, true),
-              'data:AddressLine2': textConstructor(d.Address.AddressLine2, true),
-              'data:City': textConstructor(d.Address.City, true),
-              'data:State': textConstructor(d.Address.State, true),
-              'data:Zipcode': textConstructor(d.Address.Zipcode, true),
-            },
+            ...mapAka(d.Aka),
+            ...mapAddress(d.Address),
           };
         })
       : {
-          'data:Aka': mapAka(disputes.Aka),
-          'data:DeleteAddress': textConstructor(disputes.DeleteAddress, true),
-          'data:Address': {
-            'data:AddressLine1': textConstructor(disputes.Address.AddressLine1, true),
-            'data:AddressLine2': textConstructor(disputes.Address.AddressLine2, true),
-            'data:City': textConstructor(disputes.Address.City, true),
-            'data:State': textConstructor(disputes.Address.State, true),
-            'data:Zipcode': textConstructor(disputes.Address.Zipcode, true),
-          },
+          ...mapAka(disputes.Aka),
+          ...mapAddress(disputes.Address),
         };
   console.log('results in mapIndicativeDispute ===> ', results);
   return results;
@@ -445,7 +431,7 @@ export const mapIndicativeDisputes = (disputes: IIndicativeDisputes) => {
 
 export const mapAka = (aka: IAka | IAka[]) => {
   console.log('startDispute:mapAka ===> ', aka);
-  if (!aka) return textConstructor(null, true);
+  if (!aka) return { 'data:Aka': textConstructor(null, true) };
   const results =
     aka instanceof Array
       ? aka.map((a: IAka) => {
@@ -463,6 +449,41 @@ export const mapAka = (aka: IAka | IAka[]) => {
           },
         };
   console.log('results in mapAka ===> ', results);
+  return { 'data:Aka': results };
+};
+
+export const mapAddress = (address: IIndicativeDisputesAddress | IIndicativeDisputesAddress[]) => {
+  console.log('startDispute:mapAddress ===> ', address);
+  if (!address)
+    return {
+      'data:DeleteAddress': textConstructor('false', true),
+      'data:Address': textConstructor(null, true),
+    };
+  const results =
+    address instanceof Array
+      ? address.map((a: IIndicativeDisputesAddress) => {
+          return {
+            'data:DeleteAddress': textConstructor('true', false),
+            'data:Address': {
+              'data:AddressLine1': textConstructor(a.AddressLine1, true),
+              'data:AddressLine2': textConstructor(a.AddressLine2, true),
+              'data:City': textConstructor(a.City, true),
+              'data:State': textConstructor(a.State, true),
+              'data:Zipcode': textConstructor(a.Zipcode, true),
+            },
+          };
+        })
+      : {
+          'data:DeleteAddress': textConstructor('true', false),
+          'data:Address': {
+            'data:AddressLine1': textConstructor(address.AddressLine1, true),
+            'data:AddressLine2': textConstructor(address.AddressLine2, true),
+            'data:City': textConstructor(address.City, true),
+            'data:State': textConstructor(address.State, true),
+            'data:Zipcode': textConstructor(address.Zipcode, true),
+          },
+        };
+  console.log('results in mapAddress ===> ', results);
   return results;
 };
 
