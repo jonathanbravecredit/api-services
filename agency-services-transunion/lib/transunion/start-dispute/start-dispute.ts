@@ -517,6 +517,7 @@ export const createStartDispute = (msg: IStartDispute): string => {
 
   let indicativeDisputes = msg.request.IndicativeDisputes;
   let mappedIndicativeDisputes = mapIndicativeDisputes(indicativeDisputes);
+  console.log('mapped mappedIndicativeDisputes ==> ', JSON.stringify(mappedIndicativeDisputes));
 
   let lineItems = msg.request.LineItems;
   let mappedLineItems = mapLineItems(lineItems);
