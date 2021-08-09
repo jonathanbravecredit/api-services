@@ -753,23 +753,23 @@ export const GetInvestigationResults = async (
     // get / parse data needed
     const prepayload = await qrys.getDataForGetInvestigationResults(variables); // same data
     const payload = { data: prepayload.data, disputeId: variables.disputeId };
-    // const resp = await soap.parseAndSendPayload<IGetInvestigationResultsResponse>(
-    //   accountCode,
-    //   username,
-    //   agent,
-    //   auth,
-    //   payload,
-    //   'GetInvestigationResults',
-    //   parserOptions,
-    // );
-
-    const resp = await soap.processMockRequest<interfaces.IGetInvestigationResultsResponse>(
-      GET_INVESTIGATION_RESULTS_RESPONSE,
+    const resp = await soap.parseAndSendPayload<interfaces.IGetInvestigationResultsResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      payload,
+      'GetInvestigationResults',
       parserOptions,
     );
 
+    // const resp = await soap.processMockRequest<interfaces.IGetInvestigationResultsResponse>(
+    //   GET_INVESTIGATION_RESULTS_RESPONSE,
+    //   parserOptions,
+    // );
+
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IGetInvestigationResultsResult>(resp, 'GetInvestigationResultsResult');
+    const data = resp.Envelope.Body.GetInvestigationResultsResponse.GetInvestigationResultsResult;
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
     const bundle: interfaces.IGetInvestigationEnrichPayload = {
@@ -778,8 +778,9 @@ export const GetInvestigationResults = async (
     };
 
     if (responseType.toLowerCase() === 'success') {
-      const synced = await sync.syncData({ id: variables.id }, bundle);
-      return synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
+      // const synced = await sync.syncData({ id: variables.id }, bundle);
+      // return synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
+      return { success: true, error: null, data: bundle };
     } else {
       return { success: false, error: error };
     }
