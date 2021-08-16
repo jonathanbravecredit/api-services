@@ -17,6 +17,9 @@
           "nullable": true
         }
       },
+      "required": [
+        "fromDate"
+      ],
       "nullable": false
     }
   },
