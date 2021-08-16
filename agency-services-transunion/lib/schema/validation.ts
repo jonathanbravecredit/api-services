@@ -6,6 +6,7 @@ import * as schemaGetInvestigationRequest from './schema_get-investigation-resul
 import * as schemaTradelineDispute from './schema_tradeline-dispute.json';
 import * as schemaPublicitemDispute from './schema_public-dispute.json';
 import * as schemaPersonalitemDispute from './schema_personal-dispute.json';
+import * as schemaGetTrendingDataRequest from './schema_get-trending-data-request.json';
 export const ajv = new Ajv();
 ajv.addSchema(schemaGenericRequest, 'getRequest');
 ajv.addSchema(schemaGetAppDataRequest, 'getAppDataRequest');
@@ -14,3 +15,4 @@ ajv.addSchema(schemaGetInvestigationRequest, 'getInvestigationResultsRequest');
 ajv.addSchema(schemaTradelineDispute, 'disputeTradeline');
 ajv.addSchema(schemaPublicitemDispute, 'disputePublicitem');
 ajv.addSchema(schemaPersonalitemDispute, 'disputePersonalitem');
+ajv.addSchema(schemaGetTrendingDataRequest, 'getTrendingDataRequest');

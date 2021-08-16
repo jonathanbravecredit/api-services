@@ -18,12 +18,15 @@ import { XmlFormatter } from 'lib/utils/xml-formatter/xml-formatter';
  * @param data
  * @returns IEnrollPayload
  */
-export const createGetInvestigationResultsPayload = (data: {
+export const createGetInvestigationResultsPayload = ({
+  data,
+  params,
+}: {
   data: IGetInvestigationResultsGraphQLResponse;
-  disputeId?: string;
+  params?: any;
 }): IGetInvestigationResultsPayload => {
-  const id = data.data.data.getAppData.id?.split(':')?.pop();
-  const key = data.data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey;
+  const id = data.data.getAppData.id?.split(':')?.pop();
+  const key = data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey;
 
   if (!id || !key) {
     console.log(`no id or enrollmentKey provided: id=${id}, key=${key}`);
@@ -34,7 +37,7 @@ export const createGetInvestigationResultsPayload = (data: {
     RequestKey: '',
     ClientKey: id,
     EnrollmentKey: key,
-    DisputeId: data.disputeId,
+    DisputeId: params,
   };
 };
 

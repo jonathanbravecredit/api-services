@@ -2,6 +2,7 @@ import { IRequestOptions } from 'lib/interfaces';
 import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
 import axios from 'axios';
+import { AnyValidateFunction } from 'ajv/dist/core';
 
 /**
  * Class to help create and parse payloads for requests to Transunion SOAP service
@@ -17,7 +18,7 @@ export class SoapAid {
   ) => any;
   cbMsg: (code: string, username: string, message: string) => string;
   cbXml: (msg: any) => string;
-  cbPayload: (data: any, disputeId: string) => any | undefined;
+  cbPayload: (data: any, params: any) => any | undefined;
   requestPayload: IRequestOptions;
   msg: string;
   xml: string;
@@ -30,7 +31,7 @@ export class SoapAid {
     ) => any = fastXml.parse,
     cbMsg: (code: string, username: string, message: string) => any,
     cbXml: (msg: any) => string,
-    cbPayload: (data: any, disputeId?: string) => any = (a): any => {
+    cbPayload: (data: any, params?: any) => any = (a): any => {
       return a;
     },
   ) {
@@ -44,11 +45,11 @@ export class SoapAid {
    * Generic method to create payloads by type
    * @param cbPayload
    * @param data
-   * @param disputeId
+   * @param params
    * @returns
    */
-  createPayload<T>(data: any, disputeId?: string): T {
-    return this.cbPayload(data, disputeId);
+  createPayload<T>(data: any, params?: any): T {
+    return this.cbPayload(data, params);
   }
 
   /**

@@ -605,7 +605,7 @@ export const StartDispute = async (
 
   console.log('variables ===> ', variables, JSON.stringify(variables.disputes[0]));
   if (!validate(variables)) throw `Malformed message=${message}`;
-  let payloadMethod: (data: any, disputeId?: string) => any;
+  let payloadMethod: (data: any, params?: any) => any;
   if (tradeline(variables.disputes[0])) {
     console.log('setting payloadmethod to tradeline');
     payloadMethod = tu.createStartDisputeTradelinePayload;
@@ -625,7 +625,7 @@ export const StartDispute = async (
   try {
     console.log('*** IN START DISPUTE ***');
     const prepayload = await qrys.getDataForStartDispute(variables);
-    const payload = { data: prepayload.data, disputes: variables.disputes };
+    const payload = { data: prepayload.data, params: variables.disputes };
     const resp = await soap.parseAndSendPayload<interfaces.IStartDisputeResponse>(
       accountCode,
       username,
@@ -752,7 +752,7 @@ export const GetInvestigationResults = async (
   try {
     // get / parse data needed
     const prepayload = await qrys.getDataForGetInvestigationResults(variables); // same data
-    const payload = { data: prepayload.data, disputeId: variables.disputeId };
+    const payload = { data: prepayload.data, params: variables.disputeId };
     // const resp = await soap.parseAndSendPayload<interfaces.IGetInvestigationResultsResponse>(
     //   accountCode,
     //   username,
@@ -893,5 +893,61 @@ export const DisputePreflightCheck = async (
     return success ? { success: true } : { success: false, error: error };
   } catch (err) {
     return { success: false, error: err };
+  }
+};
+
+/**
+ * Return the dispute history
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const GetTrendingData = async (
+  accountCode: string,
+  username: string,
+  message: string,
+  agent: https.Agent,
+  auth: string,
+): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
+  // validate incoming message
+  let variables: interfaces.IGetTrendingDataRequest = {
+    ...JSON.parse(message),
+  };
+  const validate = ajv.getSchema<interfaces.IGetTrendingDataRequest>('getTrendingDataRequest');
+  if (!validate(variables)) throw `Malformed message=${message}`;
+
+  //create helper classes
+  const soap = new SoapAid(
+    fastXml.parse,
+    tu.formatGetTrendingData,
+    tu.createGetTrendingData,
+    tu.createGetTrendingDataPayload,
+  );
+
+  try {
+    const payload = { ...variables };
+    const resp = await soap.parseAndSendPayload<interfaces.IGetTrendingDataResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      payload,
+      'GetTrendingData',
+      parserOptions,
+    );
+
+    // get the specific response from parsed object
+    const data = returnNestedObject<interfaces.IGetTrendingDataResult>(resp, 'GetTrendingDataResult');
+    const responseType = data.ResponseType;
+    const error = data.ErrorResponse;
+
+    return responseType.toLowerCase() === 'success'
+      ? { success: true, error: error, data: data }
+      : { success: false, error: error, data: null };
+  } catch (err) {
+    return { success: false, error: err, data: null };
   }
 };

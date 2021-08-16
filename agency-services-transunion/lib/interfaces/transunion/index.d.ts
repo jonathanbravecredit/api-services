@@ -15,3 +15,4 @@ export * from './merge-report.interface';
 export * from './start-dispute.interface';
 export * from './verify-authentication-answers.interface';
 export * from './verify-authentication-questions.interface';
+export * from './get-trending-data.interface';

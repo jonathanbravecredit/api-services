@@ -1,0 +1,26 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data"
+  xmlns:arr="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:GetTrendingData>
+      <con:request>
+        <data:AccountCode>123456789</data:AccountCode>
+        <data:AccountName>CC2PartnerTesting1</data:AccountName>
+        <data:AdditionalInputs>
+          <data:Data>
+            <data:Name>CreditReportVersion</data:Name>
+            <data:Value>7</data:Value>
+          </data:Data>
+        </data:AdditionalInputs>
+        <data:RequestKey>NDd0decc3-5195-4d0a-ba83-4f779019cade</data:RequestKey>
+        <data:ClientKey>3fe5d04c-b935-4257-8fbb-7f898bd3b84d</data:ClientKey>
+        <data:FromDate>2018-11-08T00:00:00.000-05:00</data:FromDate>
+        <data:GetPartnerTrendingData>false</data:GetPartnerTrendingData>
+        <data:GetProductTrendingData>true</data:GetProductTrendingData>
+        <data:ProductDisplay>false</data:ProductDisplay>
+      </con:request>
+    </con:GetTrendingData>
+  </soapenv:Body>
+</soapenv:Envelope>

@@ -1,0 +1,44 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <GetTrendingDataResponse xmlns="https://consumerconnectws.tui.transunion.com/">
+      <GetTrendingDataResult xmlns:a="https://consumerconnectws.tui.transunion.com/data"
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <a:AccountName>CC2PartnerTesting1</a:AccountName>
+        <a:ErrorResponse i:nil="true"/>
+        <a:RequestKey>NDd0decc3-5195-4d0a-ba83-4f779019cade</a:RequestKey>
+        <a:ResponseType>Success</a:ResponseType>
+        <a:ClientKey>3fe5d04c-b935-4257-8fbb-7f898bd3b84d</a:ClientKey>
+        <a:PartnerAttributes i:nil="true"/>
+        <a:ProductAttributes>
+          <a:ProductTrendingAttribute>
+            <a:AttributeName>TUCVantageScore3V6</a:AttributeName>
+            <a:Bureau>TransUnion</a:Bureau>
+            <a:ProductAttributeData>
+              <a:ProductTrendingData>
+                <a:AttributeDate>2018-12-13T09:32:59</a:AttributeDate>
+                <a:AttributeStatus>Success</a:AttributeStatus>
+                <a:AttributeValue>716</a:AttributeValue>
+                <a:ServiceProductFulfillmentKey>cb0c0317-d09c-455c-a42c-88e7022d3ca4</a:ServiceProductFulfillmentKey>
+              </a:ProductTrendingData>
+              <a:ProductTrendingData>
+                <a:AttributeDate>2018-12-13T09:34:10</a:AttributeDate>
+                <a:AttributeStatus>Success</a:AttributeStatus>
+                <a:AttributeValue>716</a:AttributeValue>
+                <a:ServiceProductFulfillmentKey>efffec68-ec80-424a-bb73-a0a652c4bff6</a:ServiceProductFulfillmentKey>
+              </a:ProductTrendingData>
+              <a:ProductTrendingData>
+                <a:AttributeDate>2018-12-13T09:34:12</a:AttributeDate>
+                <a:AttributeStatus>Success</a:AttributeStatus>
+                <a:AttributeValue>716</a:AttributeValue>
+                <a:ServiceProductFulfillmentKey>0b8dc14d-9909-4748-9a61-5128331ea230</a:ServiceProductFulfillmentKey>
+              </a:ProductTrendingData>
+            </a:ProductAttributeData>
+            <a:ServiceBundleCode>CC2PartnerTesting1StandardOffer</a:ServiceBundleCode>
+            <a:ServiceProduct>TUCVantageScore3</a:ServiceProduct>
+          </a:ProductTrendingAttribute>
+        </a:ProductAttributes>
+        <a:ProductDisplayToken/>
+      </GetTrendingDataResult>
+    </GetTrendingDataResponse>
+  </s:Body>
+</s:Envelope>

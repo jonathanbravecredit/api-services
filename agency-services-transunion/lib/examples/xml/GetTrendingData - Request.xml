@@ -1,0 +1,41 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data"
+  xmlns:arr="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <soap:Header/>
+  <soap:Body>
+    <con:GetTrendingData>
+      <con:request>
+        <data:AccountCode>?</data:AccountCode>
+        <data:AccountName>?</data:AccountName>
+        <data:AdditionalInputs>
+          <data:Data>
+            <data:Name>?</data:Name>
+            <data:Value>?</data:Value>
+          </data:Data>
+        </data:AdditionalInputs>
+        <data:RequestKey>?</data:RequestKey>
+        <data:ClientKey>?</data:ClientKey>
+        <data:AttributeStatus>?</data:AttributeStatus>
+        <data:CSRFToken>?</data:CSRFToken>
+        <data:ClientBrowserType>?</data:ClientBrowserType>
+        <data:FromDate>?</data:FromDate>
+        <data:GetPartnerTrendingData>?</data:GetPartnerTrendingData>
+        <data:GetProductTrendingData>?</data:GetProductTrendingData>
+        <data:IpAddress>?</data:IpAddress>
+        <data:PartnerTrendingAttributes>
+          <!--Zero or more repetitions:-->
+          <arr:string>?</arr:string>
+        </data:PartnerTrendingAttributes>
+        <data:ProductDisplay>?</data:ProductDisplay>
+        <!--Optional:-->
+        <data:ProductTrendingAttributes>
+          <!--Zero or more repetitions:-->
+          <arr:string>?</arr:string>
+        </data:ProductTrendingAttributes>
+        <data:ServiceBundleCode>?</data:ServiceBundleCode>
+        <data:ToDate>?</data:ToDate>
+      </con:request>
+    </con:GetTrendingData>
+  </soap:Body>
+</soap:Envelope>

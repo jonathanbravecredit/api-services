@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "nullable": false
+    },
+    "params": {
+      "type": "object",
+      "properties": {
+        "fromDate": {
+          "type": "string",
+          "nullable": false
+        },
+        "toDate": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "nullable": false
+    }
+  },
+  "required": [
+    "id",
+    "params"
+  ],
+  "additionalProperties": false
+}
