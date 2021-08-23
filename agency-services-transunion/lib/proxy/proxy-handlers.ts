@@ -74,12 +74,15 @@ export const IndicativeEnrichment = async (
     const data = returnNestedObject<interfaces.IIndicativeEnrichmentResult>(resp, 'IndicativeEnrichmentResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
-
-    return responseType.toLowerCase() === 'success'
-      ? { success: true, error: error, data: data }
-      : { success: false, error: error, data: null };
+    const response =
+      responseType.toLowerCase() === 'success'
+        ? { success: true, error: error, data: data }
+        : { success: false, error: error, data: null };
+    console.log('response ===> ', response);
+    return response;
   } catch (err) {
-    return err;
+    console.log('error ===> ', err);
+    return { success: false, error: err, data: null };
   }
 };
 
@@ -119,11 +122,14 @@ export const GetAuthenticationQuestions = async (
     );
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
-
-    return responseType.toLowerCase() === 'success'
-      ? { success: true, error: error, data: data }
-      : { success: false, error: error, data: null };
+    const response =
+      responseType.toLowerCase() === 'success'
+        ? { success: true, error: error, data: data }
+        : { success: false, error: error, data: null };
+    console.log('response ===> ', response);
+    return response;
   } catch (err) {
+    console.log('error ===> ', err);
     return { success: false, error: err, data: null };
   }
 };
@@ -168,11 +174,14 @@ export const VerifyAuthenticationQuestions = async (
     );
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
-
-    return responseType.toLowerCase() === 'success'
-      ? { success: true, error: error, data: data }
-      : { success: false, error: error, data: null };
+    const response =
+      responseType.toLowerCase() === 'success'
+        ? { success: true, error: error, data: data }
+        : { success: false, error: error, data: null };
+    console.log('response ===> ', response);
+    return response;
   } catch (err) {
+    console.log('error ===> ', err);
     return { success: false, error: err, data: null };
   }
 };
@@ -234,16 +243,20 @@ export const Enroll = async (
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
+    let response;
     if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: variables.id }, data, dispute);
-      return synced
+      response = synced
         ? { success: true, error: null, data: data }
         : { success: false, error: 'failed to sync data to db' };
     } else {
-      return error.Code === '103045'
-        ? { success: true, error: null, data: null }
-        : { success: false, error: error, data: null };
+      response =
+        error.Code === '103045'
+          ? { success: true, error: null, data: null }
+          : { success: false, error: error, data: null };
     }
+    console.log('response ===> ', response);
+    return response;
   } catch (err) {
     console.log('enroll error ===> ', err);
     return { success: false, error: err, data: null };
@@ -311,16 +324,20 @@ export const EnrollDisputes = async (
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
+    let response;
     if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: variables.id }, data, dispute);
-      return synced
+      response = synced
         ? { success: true, error: null, data: data }
         : { success: false, error: 'failed to sync data to db' };
     } else {
-      return error.Code === '103045'
-        ? { success: true, error: null, data: null }
-        : { success: false, error: error, data: null };
+      response =
+        error.Code === '103045'
+          ? { success: true, error: null, data: null }
+          : { success: false, error: error, data: null };
     }
+    console.log('response ===> ', response);
+    return response;
   } catch (err) {
     console.log('enroll error ===> ', err);
     return { success: false, error: err, data: null };
@@ -383,15 +400,19 @@ export const Fulfill = async (
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
+    let response;
     if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: variables.id }, data, dispute);
-      return synced
+      response = synced
         ? { success: true, error: null, data: data }
         : { success: false, error: 'failed to sync data to db' };
     } else {
-      return { success: false, error: error };
+      response = { success: false, error: error };
     }
+    console.log('response ===> ', response);
+    return response;
   } catch (err) {
+    console.log('error ===> ', err);
     return { success: false, error: err };
   }
 };
@@ -457,15 +478,19 @@ export const FulfillDisputes = async (
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
+    let response;
     if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: variables.id }, data, dispute);
-      return synced
+      response = synced
         ? { success: true, error: null, data: data }
         : { success: false, error: 'failed to sync data to db' };
     } else {
-      return { success: false, error: error };
+      response = { success: false, error: error };
     }
+    console.log('response ===> ', response);
+    return response;
   } catch (err) {
+    console.log('error ===> ', err);
     return { success: false, error: err };
   }
 };
@@ -506,10 +531,13 @@ export const GetServiceProduct = async (
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
-    return responseType.toLowerCase() === 'success'
-      ? { success: true, error: error, data: data }
-      : { success: false, error: error, data: null };
+    const response =
+      responseType.toLowerCase() === 'success'
+        ? { success: true, error: error, data: data }
+        : { success: false, error: error, data: null };
+    console.log('response ===> ', response);
   } catch (err) {
+    console.log('error ===> ', err);
     return { success: false, error: err, data: null };
   }
 };
@@ -570,10 +598,14 @@ export const GetDisputeStatus = async (
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
-    return responseType.toLowerCase() === 'success'
-      ? { success: true, error: error, data: data }
-      : { success: false, error: error, data: null };
+    const response =
+      responseType.toLowerCase() === 'success'
+        ? { success: true, error: error, data: data }
+        : { success: false, error: error, data: null };
+    console.log('response ===> ', response);
+    return response;
   } catch (err) {
+    console.log('error ===> ', err);
     return { success: false, error: err, data: null };
   }
 };
@@ -649,13 +681,17 @@ export const StartDispute = async (
     console.log('start dispute response type ===> ', JSON.stringify(responseType));
     console.log('start dispute response error ===> ', JSON.stringify(error));
 
+    let response;
     if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: variables.id }, bundle);
-      return synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
+      response = synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
     } else {
-      return { success: false, error: error };
+      response = { success: false, error: error };
     }
+    console.log('response ===> ', response);
+    return response;
   } catch (err) {
+    console.log('error ===> ', err);
     return { success: false, error: err };
   }
 };
@@ -709,10 +745,14 @@ export const GetDisputeHistory = async (
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
-    return responseType.toLowerCase() === 'success'
-      ? { success: true, error: error, data: data }
-      : { success: false, error: error, data: null };
+    const response =
+      responseType.toLowerCase() === 'success'
+        ? { success: true, error: error, data: data }
+        : { success: false, error: error, data: null };
+    console.log('response ===> ', response);
+    return response;
   } catch (err) {
+    console.log('error ===> ', err);
     return { success: false, error: err, data: null };
   }
 };
@@ -777,15 +817,18 @@ export const GetInvestigationResults = async (
       getInvestigationResult: data,
     };
 
+    let response;
     if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: variables.id }, bundle);
-      return synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
-      return { success: true, error: null, data: bundle };
+      response = synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
     } else {
-      return { success: false, error: error };
+      response = { success: false, error: error };
     }
+    console.log('response ===> ', response);
+    return response;
   } catch (err) {
-    return { success: false, error: err };
+    console.log('error ===> ', err);
+    return { success: false, error: err, data: null };
   }
 };
 
@@ -811,8 +854,13 @@ export const CompleteOnboardingEnrollments = async (
     console.log('enrollment results:success ====> ', enrollSuccess);
     console.log('enrollment results:error ====> ', enrollError);
     console.log('enrollment results:enrollData ====> ', enrollData);
-    return enrollSuccess ? { success: true, error: null, data: enrollData } : { success: false, error: enrollError };
+    const response = enrollSuccess
+      ? { success: true, error: null, data: enrollData }
+      : { success: false, error: enrollError };
+    console.log('response ===> ', response);
+    return response;
   } catch (err) {
+    console.log('error ===> ', err);
     return { success: false, error: err, data: null };
   }
 };
@@ -890,8 +938,11 @@ export const DisputePreflightCheck = async (
   try {
     console.log('*** IN GETDISPUTESTATUS ***');
     const { success, error } = await GetDisputeStatus(accountCode, username, message, agent, auth);
-    return success ? { success: true } : { success: false, error: error };
+    const response = success ? { success: true } : { success: false, error: error };
+    console.log('response ===> ', response);
+    return response;
   } catch (err) {
+    console.log('error ===> ', err);
     return { success: false, error: err };
   }
 };
