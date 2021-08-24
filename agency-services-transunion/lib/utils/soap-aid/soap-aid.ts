@@ -2,13 +2,17 @@ import { IRequestOptions } from 'lib/interfaces';
 import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
 import axios from 'axios';
-import { AnyValidateFunction } from 'ajv/dist/core';
 
 /**
  * Class to help create and parse payloads for requests to Transunion SOAP service
- * - Takes in unique parsers, formatters(messages, and xml), and payload generators
- * - Each method provided is unique to the transunion service called but this class
- *   standards the invocations needed to successfully send the request
+ * 1. Takes in unique parsers, formatters(messages, and xml), and payload generators (optional)
+ * 2. Each method provided is unique to the transunion service called but this class
+ *    standards the invocations needed to successfully send the request
+ *   - Payload Generator (cbPayload): Takes the GQL request and parses it to the proper schema.
+ *        * if none specified, just passes the object through
+ *   - Message Packager (cbMsg): Wraps the payload in the appropriate account code, name values
+ *   - Xml Generator (cbXml): Converts the JSON object message to an XML string
+ *   - Parser (parser): Takes the designated parser library with options to parse the xml string response
  */
 export class SoapAid {
   parser: (
@@ -29,7 +33,7 @@ export class SoapAid {
       options?: Partial<fastXml.X2jOptions>,
       validationOptions?: boolean | Partial<fastXml.validationOptions>,
     ) => any = fastXml.parse,
-    cbMsg: (code: string, username: string, message: string) => any,
+    cbMsg: (code: string, username: string, message: any) => any,
     cbXml: (msg: any) => string,
     cbPayload: (data: any, params?: any) => any = (a): any => {
       return a;

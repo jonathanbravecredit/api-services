@@ -3,25 +3,25 @@ import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import {
   IVerifyAuthenticationQuestions,
-  IVerifyAuthenticationQuestionsMsg,
   IVerifyAuthenticationAnswer,
+  IVerifyAuthenticationQuestionsPayload,
 } from 'lib/interfaces';
 
 export const formatVerifyAuthenticationQuestions = (
   accountCode: string,
   accountName: string,
-  msg: string,
+  msg: IVerifyAuthenticationQuestionsPayload,
 ): IVerifyAuthenticationQuestions | undefined => {
-  let message: IVerifyAuthenticationQuestionsMsg = JSON.parse(msg);
-  return message
-    ? {
-        request: {
-          AccountCode: accountCode,
-          AccountName: accountName,
-          ...message,
-        },
-      }
-    : undefined;
+  return {
+    request: {
+      AccountCode: accountCode,
+      AccountName: accountName,
+      RequestKey: '',
+      ClientKey: msg.id,
+      Answers: msg.answers,
+      ServiceBundleFulfillmentKey: msg.key,
+    },
+  };
 };
 
 /**

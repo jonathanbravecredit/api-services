@@ -11,7 +11,8 @@
     }
   },
   "required": [
-    "id"
+    "id",
+    "disputes"
   ],
   "additionalProperties": false
 }

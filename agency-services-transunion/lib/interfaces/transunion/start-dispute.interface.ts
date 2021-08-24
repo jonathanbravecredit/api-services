@@ -72,10 +72,12 @@ export interface IDisputeUserAttributes {
 }
 
 export interface IStartDisputeRequest {
-  id: string;
   disputes: IProcessDisputeTradelineResult[];
 }
 
+export interface IStartDisputePayload extends IStartDisputeRequest {
+  id: string;
+}
 export interface IStartDispute {
   request: IStartDisputeMsg;
 }

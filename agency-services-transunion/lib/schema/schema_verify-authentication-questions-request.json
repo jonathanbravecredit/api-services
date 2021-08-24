@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "nullable": false
+    },
+    "answers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "VerifyChallengeAnswersRequestMultiChoiceQuestion": {
+            "type": "object",
+            "properties": {
+              "QuestionId": {
+                "type": "string",
+                "nullable": false
+              },
+              "SelectedAnswerChoice": {
+                "type": "object",
+                "properties": {
+                  "AnswerChoiceId": {
+                    "type": "string",
+                    "nullable": false
+                  },
+                  "UserInputAnswer": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                },
+                "required": [
+                  "AnswerChoiceId"
+                ]
+              }
+            },
+            "required": [
+              "QuestionId",
+              "SelectedAnswerChoice"
+            ]
+          }
+        },
+        "required": [
+          "VerifyChallengeAnswersRequestMultiChoiceQuestion"
+        ]
+      }
+    },
+    "key": {
+      "type": "string",
+      "nullable": false
+    }
+  },
+  "required": [
+    "id",
+    "answers",
+    "key"
+  ],
+  "additionalProperties": false
+}

@@ -1,5 +1,17 @@
 import { IStandardResponse } from 'lib/interfaces';
 import { IErrorResponse } from 'lib/interfaces/transunion/errors.interface';
+import { DobInput, SsnInput, NameInput, AddressInput } from 'src/api/api.service';
+
+export interface IIndicativeEnrichmentRequest {
+  dob: DobInput;
+  ssn: SsnInput;
+  name: NameInput;
+  address: AddressInput;
+}
+
+export interface IIndicativeEnrichmentPayload extends IIndicativeEnrichmentRequest {
+  id: string;
+}
 
 export interface IEnrichedIndicativeEnrichment {
   request: {
@@ -21,12 +33,12 @@ export interface IEnrichedIndicativeEnrichment {
         State: string;
         Zipcode: string;
       };
-      PreviousAddress: {
-        AddressLine1: string;
+      PreviousAddress?: {
+        AddressLine1?: string;
         AddressLine2?: string;
-        City: string;
-        State: string;
-        Zipcode: string;
+        City?: string;
+        State?: string;
+        Zipcode?: string;
       };
       DateOfBirth: string;
       FullName: {

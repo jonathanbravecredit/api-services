@@ -1,7 +1,8 @@
-import { IGetAuthenticationQuestions, IGetAuthenticationQuestionsMsg } from 'lib/interfaces';
+import { IGetAuthenticationQuestions, IGetAuthenticationQuestionsPayload } from 'lib/interfaces';
 import { textConstructor } from 'lib/utils/helpers/helpers';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
+import { MONTH_MAP } from 'lib/data/constants';
 
 /**
  * This method packages the message in a request body and adds account information
@@ -13,18 +14,43 @@ import * as uuid from 'uuid';
 export const formatGetAuthenticationQuestions = (
   accountCode: string,
   accountName: string,
-  msg: string,
+  msg: IGetAuthenticationQuestionsPayload,
 ): IGetAuthenticationQuestions | undefined => {
-  let message: IGetAuthenticationQuestionsMsg = JSON.parse(msg);
-  return message
-    ? {
-        request: {
-          AccountCode: message.AccountCode || accountCode,
-          AccountName: message.AccountName || accountName,
-          ...message,
+  return {
+    request: {
+      AccountCode: accountCode,
+      AccountName: accountName,
+      AdditionalInputs: {
+        Data: {
+          Name: 'CreditReportVersion',
+          Value: '7.1',
         },
-      }
-    : undefined;
+      },
+      RequestKey: '',
+      ClientKey: msg.id,
+      Customer: {
+        CurrentAddress: {
+          AddressLine1: msg.address.addressOne || '',
+          AddressLine2: msg.address.addressTwo || '',
+          City: msg.address.city || '',
+          State: msg.address.state || '',
+          Zipcode: msg.address.zip || '',
+        },
+        PreviousAddress: {},
+        DateOfBirth: `${msg.dob.year}-${MONTH_MAP[msg.dob.month.toLowerCase()]}-${`0${msg.dob.day}`.slice(-2)}` || '',
+        FullName: {
+          FirstName: msg.name.first || '',
+          LastName: msg.name.last || '',
+          MiddleName: msg.name.middle || '',
+          Prefix: null,
+          Suffix: null,
+        },
+        PhoneNumber: msg.phone.primary || '',
+        Ssn: msg.ssn.full || '',
+      },
+      ServiceBundleCode: 'CC2BraveCreditAuthentication',
+    },
+  };
 };
 
 /**
