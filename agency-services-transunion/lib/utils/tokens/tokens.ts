@@ -10,11 +10,12 @@ export const validateToken = async (token: string | undefined): Promise<string |
     if (token) {
       const decodedToken = jwt.decode(token, { complete: true });
       console.log('decoded token ===> ', decodedToken);
-      const { data } = await axios({
+      const res = await axios({
         method: 'GET',
         url: `https://cognito-idp.${process.env.AWS_REGION}.amazonaws.com/${process.env.POOL_ID}/.well-known/jwks.json`,
       });
-      const jwks: IJwks = JSON.parse(data);
+      console.log('response ===> ', res, res.data);
+      const jwks: IJwks = res.data;
       console.log('parsed jwks ===> ', jwks);
       const keyObject = jwks.keys.find((key) => key.kid == decodedToken.header.kid);
       pem = jwkToPem(keyObject); //convert jwk to pem
