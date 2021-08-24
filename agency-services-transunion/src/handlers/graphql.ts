@@ -1,5 +1,4 @@
 import { AppSyncResolverEvent } from 'aws-lambda';
-import { response } from 'lib/utils/response/response';
 import * as https from 'https';
 import * as fs from 'fs';
 import * as queries from 'lib/proxy';
@@ -37,10 +36,11 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
   let tokenUser;
   try {
     const token = event['token'];
-    const user = await tokens.validateToken(token);
-    if (user === undefined) throw user;
-    tokenUser = user;
-    console.log('token user ==> ', tokenUser);
+    // const user = await tokens.validateToken(token);
+    const identityId = await tokens.getCognitoIdentityId(token);
+    if (identityId === undefined) throw user;
+    tokenUser = identityId;
+    console.log('token user ==> ', identityId);
   } catch (err) {
     console.log('error ===> ', err);
     // return { success: false, error: `Invalid token parsed to user` };
