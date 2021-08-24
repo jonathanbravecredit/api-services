@@ -42,6 +42,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     tokenUser = user;
     console.log('token user ==> ', tokenUser);
   } catch (err) {
+    console.log('error ===> ', err);
     // return { success: false, error: `Invalid token parsed to user` };
   }
 
