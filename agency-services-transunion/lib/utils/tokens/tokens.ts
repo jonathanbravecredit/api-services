@@ -1,8 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
-import * as jwt from 'jsonwebtoken';
-import * as jwkToPem from 'jwk-to-pem';
 import { IJwks } from 'lib/interfaces';
 import * as AWS from 'aws-sdk';
+import * as jwt from 'jsonwebtoken';
+import * as jwkToPem from 'jwk-to-pem';
 
 export const validateToken = async (token: string | undefined): Promise<string | undefined> => {
   let user: string;
@@ -39,10 +39,13 @@ export const getCognitoIdentityId = async (jwtToken: string): Promise<string | u
   console.log('token ===> ', jwtToken);
   const params = getCognitoIdentityIdParams(jwtToken);
   const cognitoIdentity = new AWS.CognitoIdentity();
+  const cognitoIdentityId = new AWS.CognitoIdentityCredentials(params);
   console.log('params ===> ', params);
   try {
     const data = await cognitoIdentity.getId(params).promise();
     console.log('data new appraoch ==> ', data);
+    const data2 = await cognitoIdentityId.identityId;
+    console.log('data 2 ===>', data2);
     if (data.IdentityId) return data.IdentityId;
     console.log('data identity id new appraoch ==> ', data.IdentityId);
     throw new Error('Invalid authorization token.');
