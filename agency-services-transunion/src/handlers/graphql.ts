@@ -36,8 +36,9 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
   let tokenUser;
   try {
     const token = event['token'];
-    // const user = await tokens.validateToken(token);
-    const identityId = await tokens.getCognitoIdentityId(token);
+    const identityId = await tokens.validateToken(token);
+    // const identityId = await tokens.getCognitoIdentityId(token);
+    console.log('decoded user ===> ', identityId);
     if (identityId === undefined) throw user;
     tokenUser = identityId;
   } catch (err) {
