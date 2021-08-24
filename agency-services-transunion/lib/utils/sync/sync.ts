@@ -2,7 +2,13 @@ import axios, { AxiosResponse } from 'axios';
 import * as aws4 from 'aws4';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
-import { IEnrollServiceProductResponse, IGetAppDataRequest, IGetAppDataResponse } from 'lib/interfaces';
+import {
+  IEnrollServiceProductResponse,
+  IGetAppDataRequest,
+  IGetAppDataResponse,
+  IJwks,
+  IRequestOptions,
+} from 'lib/interfaces';
 import { getAppData, updateAppData } from 'lib/proxy';
 import { deleteKeyNestedObject } from 'lib/utils';
 import { GetAppDataQuery, TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';

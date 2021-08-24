@@ -25,3 +25,16 @@ export interface IRequestOptions {
 export interface IGenericRequest {
   id: string;
 }
+
+export interface IJwks {
+  keys: IKey[];
+}
+
+export interface IKey {
+  alg: string;
+  e: string;
+  kid: string;
+  kty: string;
+  n: string;
+  use: string;
+}

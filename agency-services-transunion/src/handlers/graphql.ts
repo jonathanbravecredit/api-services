@@ -4,6 +4,7 @@ import * as https from 'https';
 import * as fs from 'fs';
 import * as queries from 'lib/proxy';
 import * as secrets from 'lib/utils/secrets/secrets';
+import * as tokens from 'lib/utils/tokens/tokens';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
@@ -33,6 +34,17 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
   console.log('action', action);
   console.log('message', message);
 
+  let tokenUser;
+  try {
+    const token = event['token'];
+    const user = await tokens.validateToken(token);
+    if (user === undefined) throw user;
+    tokenUser = user;
+    console.log('token user ==> ', tokenUser);
+  } catch (err) {
+    // return { success: false, error: `Invalid token parsed to user` };
+  }
+
   try {
     const secretJSON = await secrets.getSecretKey(transunionSKLoc);
     const { tuKeyPassphrase, tuPassword } = JSON.parse(secretJSON);
@@ -51,6 +63,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
   } catch (err) {
     return { success: false, error: { error: `Error gathering/reading cert=${err}` } };
   }
+
   try {
     const httpsAgent = new https.Agent({
       key,

@@ -36,7 +36,7 @@ export const Ping = async (
     const request = soap.createRequestPayload(agent, auth, xml, 'Ping');
     if (!xml || !request) throw new Error(`Missing xml:${xml}, or request:${request}`);
     await soap.processRequest(request, parserOptions);
-    return { success: true, error: 'ping failed' };
+    return { success: true, error: 'ping succeeded' };
   } catch (err) {
     return { success: false, error: err };
   }
