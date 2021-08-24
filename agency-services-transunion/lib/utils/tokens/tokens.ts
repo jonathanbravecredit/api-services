@@ -36,9 +36,10 @@ export const validateToken = async (token: string | undefined): Promise<string |
 };
 
 export const getCognitoIdentityId = async (jwtToken: string): Promise<string | undefined> => {
+  console.log('token ===> ', jwtToken);
   const params = getCognitoIdentityIdParams(jwtToken);
   const cognitoIdentity = new AWS.CognitoIdentity();
-
+  console.log('params ===> ', params);
   try {
     const data = await cognitoIdentity.getId(params).promise();
     console.log('data new appraoch ==> ', data);
@@ -46,6 +47,7 @@ export const getCognitoIdentityId = async (jwtToken: string): Promise<string | u
     console.log('data identity id new appraoch ==> ', data.IdentityId);
     throw new Error('Invalid authorization token.');
   } catch (err) {
+    console.log('token error ===> ', err);
     throw err;
   }
 };
