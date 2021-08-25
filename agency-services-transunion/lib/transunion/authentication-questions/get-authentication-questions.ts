@@ -14,8 +14,9 @@ import { MONTH_MAP } from 'lib/data/constants';
 export const formatGetAuthenticationQuestions = (
   accountCode: string,
   accountName: string,
-  msg: IGetAuthenticationQuestionsPayload,
+  msg: string,
 ): IGetAuthenticationQuestions | undefined => {
+  const parsed: IGetAuthenticationQuestionsPayload = JSON.parse(msg);
   return {
     request: {
       AccountCode: accountCode,
@@ -27,26 +28,27 @@ export const formatGetAuthenticationQuestions = (
         },
       },
       RequestKey: '',
-      ClientKey: msg.id,
+      ClientKey: parsed.id,
       Customer: {
         CurrentAddress: {
-          AddressLine1: msg.address.addressOne || '',
-          AddressLine2: msg.address.addressTwo || '',
-          City: msg.address.city || '',
-          State: msg.address.state || '',
-          Zipcode: msg.address.zip || '',
+          AddressLine1: parsed.address.addressOne || '',
+          AddressLine2: parsed.address.addressTwo || '',
+          City: parsed.address.city || '',
+          State: parsed.address.state || '',
+          Zipcode: parsed.address.zip || '',
         },
         PreviousAddress: {},
-        DateOfBirth: `${msg.dob.year}-${MONTH_MAP[msg.dob.month.toLowerCase()]}-${`0${msg.dob.day}`.slice(-2)}` || '',
+        DateOfBirth:
+          `${parsed.dob.year}-${MONTH_MAP[parsed.dob.month.toLowerCase()]}-${`0${parsed.dob.day}`.slice(-2)}` || '',
         FullName: {
-          FirstName: msg.name.first || '',
-          LastName: msg.name.last || '',
-          MiddleName: msg.name.middle || '',
+          FirstName: parsed.name.first || '',
+          LastName: parsed.name.last || '',
+          MiddleName: parsed.name.middle || '',
           Prefix: null,
           Suffix: null,
         },
-        PhoneNumber: msg.phone.primary || '',
-        Ssn: msg.ssn.full || '',
+        PhoneNumber: parsed.phone.primary || '',
+        Ssn: parsed.ssn.full || '',
       },
       ServiceBundleCode: 'CC2BraveCreditAuthentication',
     },

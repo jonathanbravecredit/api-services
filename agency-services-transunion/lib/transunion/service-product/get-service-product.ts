@@ -14,7 +14,7 @@ import { IGetServiceProduct, IGetServiceProductMsg } from 'lib/interfaces';
 export const formatGetServiceProduct = (
   accountCode: string,
   accountName: string,
-  msg: any,
+  msg: string,
 ): IGetServiceProduct | undefined => {
   let message: IGetServiceProductMsg = JSON.parse(msg);
   return message

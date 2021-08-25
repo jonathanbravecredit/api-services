@@ -10,16 +10,17 @@ import {
 export const formatVerifyAuthenticationQuestions = (
   accountCode: string,
   accountName: string,
-  msg: IVerifyAuthenticationQuestionsPayload,
+  msg: string,
 ): IVerifyAuthenticationQuestions | undefined => {
+  const parsed: IVerifyAuthenticationQuestionsPayload = JSON.parse(msg);
   return {
     request: {
       AccountCode: accountCode,
       AccountName: accountName,
       RequestKey: '',
-      ClientKey: msg.id,
-      Answers: msg.answers,
-      ServiceBundleFulfillmentKey: msg.key,
+      ClientKey: parsed.id,
+      Answers: parsed.answers,
+      ServiceBundleFulfillmentKey: parsed.key,
     },
   };
 };

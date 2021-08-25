@@ -7,8 +7,9 @@ import * as convert from 'xml-js';
 export const formatIndicativeEnrichment = (
   accountCode: string,
   accountName: string,
-  msg: IIndicativeEnrichmentPayload,
+  msg: string,
 ): IEnrichedIndicativeEnrichment | undefined => {
+  const parsed: IIndicativeEnrichmentPayload = JSON.parse(msg);
   return {
     request: {
       AccountCode: accountCode,
@@ -20,25 +21,26 @@ export const formatIndicativeEnrichment = (
         },
       },
       RequestKey: '',
-      ClientKey: msg.id,
+      ClientKey: parsed.id,
       Customer: {
         CurrentAddress: {
-          AddressLine1: msg.address.addressOne || '',
-          AddressLine2: msg.address.addressTwo || '',
-          City: msg.address.city || '',
-          State: msg.address.state || '',
-          Zipcode: msg.address.zip || '',
+          AddressLine1: parsed.address.addressOne || '',
+          AddressLine2: parsed.address.addressTwo || '',
+          City: parsed.address.city || '',
+          State: parsed.address.state || '',
+          Zipcode: parsed.address.zip || '',
         },
         PreviousAddress: {},
-        DateOfBirth: `${msg.dob.year}-${MONTH_MAP[msg.dob.month.toLowerCase()]}-${`0${msg.dob.day}`.slice(-2)}` || '',
+        DateOfBirth:
+          `${parsed.dob.year}-${MONTH_MAP[parsed.dob.month.toLowerCase()]}-${`0${parsed.dob.day}`.slice(-2)}` || '',
         FullName: {
-          FirstName: msg.name.first || '',
-          LastName: msg.name.last || '',
-          MiddleName: msg.name.middle || '',
+          FirstName: parsed.name.first || '',
+          LastName: parsed.name.last || '',
+          MiddleName: parsed.name.middle || '',
           Prefix: null,
           Suffix: null,
         },
-        Ssn: `000000000${msg.ssn.lastfour}`.slice(-9) || '',
+        Ssn: `000000000${parsed.ssn.lastfour}`.slice(-9) || '',
       },
       ServiceBundleCode: 'CC2BraveCreditIndicativeEnrichment',
     },
