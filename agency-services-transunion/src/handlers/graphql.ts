@@ -36,12 +36,10 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
   let tokenUser;
   try {
     const token = event['token'];
-    // const test = await tokens.validateToken(token);
-    const identityId = await tokens.getCognitoIdentityId(token);
-    console.log('decoded test ===> ', test);
-    console.log('decoded user ===> ', identityId);
-    if (identityId === undefined) throw user;
-    tokenUser = identityId;
+    const sub = await tokens.validateToken(token);
+    console.log('decoded user ===> ', sub);
+    if (sub === undefined) throw user;
+    tokenUser = sub;
   } catch (err) {
     return { success: false, error: `Invalid token parsed to user` };
   }
