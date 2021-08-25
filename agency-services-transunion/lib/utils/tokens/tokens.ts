@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
-import { IJwks } from 'lib/interfaces';
+import { IAccessToken, IJwks } from 'lib/interfaces';
 import * as AWS from 'aws-sdk';
 import * as jwt from 'jsonwebtoken';
 import * as jwkToPem from 'jwk-to-pem';
 
-export const validateToken = async (token: string | undefined): Promise<string | undefined> => {
-  let user: string;
+export const validateToken = async (token: string | undefined): Promise<IAccessToken | undefined> => {
+  let user: IAccessToken;
   let pem: string;
   try {
     if (token) {

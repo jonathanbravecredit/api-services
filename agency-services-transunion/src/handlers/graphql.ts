@@ -36,7 +36,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
   let tokenUser;
   try {
     const token = event['token'];
-    const sub = await tokens.validateToken(token);
+    const { sub } = await tokens.validateToken(token);
     console.log('decoded user ===> ', sub);
     if (sub === undefined) throw user;
     tokenUser = sub;
