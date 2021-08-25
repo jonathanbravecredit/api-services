@@ -4,9 +4,9 @@ export interface IVerifyAuthenticationAnswersArray {
 
 export interface IVerifyAuthenticationAnswer {
   VerifyChallengeAnswersRequestMultiChoiceQuestion: {
-    QuestionId: string;
+    QuestionId: number;
     SelectedAnswerChoice: {
-      AnswerChoiceId: string;
+      AnswerChoiceId: number;
       UserInputAnswer?: string;
     };
   };

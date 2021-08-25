@@ -14,14 +14,14 @@
             "type": "object",
             "properties": {
               "QuestionId": {
-                "type": "uint32",
+                "type": "integer",
                 "nullable": false
               },
               "SelectedAnswerChoice": {
                 "type": "object",
                 "properties": {
                   "AnswerChoiceId": {
-                    "type": "uint32",
+                    "type": "integer",
                     "nullable": false
                   },
                   "UserInputAnswer": {
