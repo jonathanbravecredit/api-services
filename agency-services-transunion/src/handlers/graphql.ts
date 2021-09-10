@@ -11,7 +11,7 @@ let key: Buffer;
 let cert: Buffer;
 let cacert: Buffer;
 let username = 'CC2BraveCredit';
-let accountCode = '123456789';
+let accountCode = 'M2RVc0ZZM0Rwd2FmZA';
 let url = 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc?singleWsdl';
 let user;
 let auth;
