@@ -56,9 +56,10 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
   }
 
   try {
-    key = fs.readFileSync('/opt/tubravecredit.key');
-    cert = fs.readFileSync('/opt/brave.credit.crt');
-    cacert = fs.readFileSync('/opt/Root-CA-Bundle.crt');
+    const subfolder = process.env.NODE_ENV === 'dev' ? 'dev' : 'prod';
+    key = fs.readFileSync(`/opt/${subfolder}/tubravecredit.key`);
+    cert = fs.readFileSync(`/opt/${subfolder}/brave.credit.crt`);
+    cacert = fs.readFileSync(`/opt/${subfolder}/Root-CA-Bundle.crt`);
   } catch (err) {
     return { success: false, error: { error: `Error gathering/reading cert=${err}` } };
   }
