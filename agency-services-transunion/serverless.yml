@@ -43,6 +43,7 @@ provider:
     - !Ref TuCertsLambdaLayer
   environment:
     NODE_ENV: ${opt:stage, 'dev'}
+    TU_ENV: ${self:provider.stage}
     TU_SECRET_LOCATION: '${self:provider.stage}/agency-services/transunion'
     ACCOUNT_ID: !Sub '${AWS::AccountId}'
     IDENTITY_ID: '${self:custom.settings.IDENTITY_IDS.${opt:stage}}'

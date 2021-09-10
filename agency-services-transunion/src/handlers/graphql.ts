@@ -7,7 +7,7 @@ import * as tokens from 'lib/utils/tokens/tokens';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
-const nodeEnv = process.env.NODE_ENV;
+const tuEnv = process.env.TU_ENV;
 let key: Buffer;
 let cert: Buffer;
 let cacert: Buffer;
@@ -57,8 +57,8 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
   }
 
   try {
-    const prefix = nodeEnv === 'dev' ? 'dev' : 'prod';
-    console.log('nodeEnv ===> ', nodeEnv);
+    const prefix = tuEnv === 'dev' ? 'dev' : 'prod';
+    console.log('nodeEnv ===> ', tuEnv);
     console.log('subfolder ===> ', prefix);
     key = fs.readFileSync(`/opt/${prefix}-tubravecredit.key`);
     cert = fs.readFileSync(`/opt/${prefix}-brave.credit.crt`);
