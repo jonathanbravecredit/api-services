@@ -3,8 +3,8 @@ import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import {
   IVerifyAuthenticationQuestions,
-  IVerifyAuthenticationQuestionsMsg,
   IVerifyAuthenticationAnswer,
+  IVerifyAuthenticationQuestionsPayload,
 } from 'lib/interfaces';
 
 export const formatVerifyAuthenticationQuestions = (
@@ -12,16 +12,17 @@ export const formatVerifyAuthenticationQuestions = (
   accountName: string,
   msg: string,
 ): IVerifyAuthenticationQuestions | undefined => {
-  let message: IVerifyAuthenticationQuestionsMsg = JSON.parse(msg);
-  return message
-    ? {
-        request: {
-          AccountCode: accountCode,
-          AccountName: accountName,
-          ...message,
-        },
-      }
-    : undefined;
+  const parsed: IVerifyAuthenticationQuestionsPayload = JSON.parse(msg);
+  return {
+    request: {
+      AccountCode: accountCode,
+      AccountName: accountName,
+      RequestKey: '',
+      ClientKey: parsed.id,
+      Answers: parsed.answers,
+      ServiceBundleFulfillmentKey: parsed.key,
+    },
+  };
 };
 
 /**

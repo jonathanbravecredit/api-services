@@ -1,18 +1,18 @@
 {
   "type": "object",
   "properties": {
-    "id": {
-      "type": "string",
+    "result": {
+      "type": "object",
       "nullable": false
     },
-    "disputes": {
-      "type": "array",
+    "tradeline": {
+      "type": "object",
       "nullable": false
     }
   },
   "required": [
-    "id",
-    "disputes"
+    "result",
+    "tradeline"
   ],
   "additionalProperties": false
 }

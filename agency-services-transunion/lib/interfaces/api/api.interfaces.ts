@@ -25,3 +25,30 @@ export interface IRequestOptions {
 export interface IGenericRequest {
   id: string;
 }
+
+export interface IJwks {
+  keys: IKey[];
+}
+
+export interface IKey {
+  alg: string;
+  e: string;
+  kid: string;
+  kty: string;
+  n: string;
+  use: string;
+}
+
+export interface IAccessToken {
+  sub: string;
+  event_id: string;
+  token_use: string;
+  scope: string;
+  auth_time: number;
+  iss: string;
+  exp: number;
+  iat: number;
+  jti: string;
+  client_id: string;
+  username: string;
+}

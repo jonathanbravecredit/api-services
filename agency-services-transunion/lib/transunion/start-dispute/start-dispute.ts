@@ -12,13 +12,20 @@ import {
   IStartDisputeResponse,
   IDisputeReason,
   IProcessDisputeTradelineResult,
+  IProcessDisputePersonalResult,
+  IProcessDisputePublicResult,
+  IEmployer,
+  IBorrowerAddress,
+  IBorrowerName,
+  IIndicativeDisputesAddress,
 } from 'lib/interfaces';
-import { returnNestedObject, textConstructor } from 'lib/utils/helpers/helpers';
+import { textConstructor } from 'lib/utils/helpers/helpers';
 import * as fastXml from 'fast-xml-parser';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import { MONTH_MAP } from 'lib/data/constants';
 import { DisputeInput, UpdateAppDataInput } from 'src/api/api.service';
+import { TransunionUtil } from 'lib/utils/transunion/transunion';
 
 /**
  * Genarates the message payload for TU Fulfill request
@@ -26,19 +33,22 @@ import { DisputeInput, UpdateAppDataInput } from 'src/api/api.service';
  * @param { UpdateAppDataInput} data
  * @returns {IGetDisputeStatusRequest | undefined }
  */
-export const createStartDisputePayload = (data: {
+export const createStartDisputeTradelinePayload = ({
+  data,
+  disputes,
+}: {
   data: IStartDisputeGraphQLResponse;
   disputes: IProcessDisputeTradelineResult[];
 }): IStartDisputeMsg | undefined => {
-  const id = data.data.data.getAppData.id?.split(':')?.pop();
-  const attrs = data.data.data.getAppData.user?.userAttributes;
+  const id = data.data.getAppData.id?.split(':')?.pop();
+  const attrs = data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;
 
   if (!id || !attrs || !dob) {
     console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
     return;
   }
-  console.log('id in StartDispute', id);
+  console.log('id in Tradeline StartDispute', id);
   return {
     AccountCode: '123456789',
     AccountName: 'CC2BraveCredit',
@@ -60,13 +70,127 @@ export const createStartDisputePayload = (data: {
       },
       Ssn: attrs.ssn?.full || '',
     },
-    EnrollmentKey: data.data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey,
-    LineItems: parseDisputeToLineItem(data.disputes),
+    EnrollmentKey: data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey,
+    LineItems: parseDisputeTradelineToLineItem(disputes),
     //not the disputeServiceBundleKey...needs to be the bundle key return with the report returned on
     // either fulfill or enroll calls on the fulfill or enroll report key
-    ServiceBundleFulfillmentKey: data.data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey,
+    ServiceBundleFulfillmentKey: data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey,
     ServiceProductFulfillmentKey: null,
   };
+};
+
+/**
+ * Genarates the message payload for TU Fulfill request
+ * TODO: need to incorporate Personal and Public items
+ * @param { UpdateAppDataInput} data
+ * @returns {IGetDisputeStatusRequest | undefined }
+ */
+export const createStartDisputePublicPayload = ({
+  data,
+  disputes,
+}: {
+  data: IStartDisputeGraphQLResponse;
+  disputes: IProcessDisputePublicResult[];
+}): IStartDisputeMsg | undefined => {
+  const id = data.data.getAppData.id?.split(':')?.pop();
+  const attrs = data.data.getAppData.user?.userAttributes;
+  const dob = attrs?.dob;
+
+  if (!id || !attrs || !dob) {
+    console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
+    return;
+  }
+  console.log('id in Public StartDispute', id);
+  return {
+    AccountCode: '123456789',
+    AccountName: 'CC2BraveCredit',
+    RequestKey: '',
+    ClientKey: id,
+    Customer: {
+      CurrentAddress: {
+        AddressLine1: attrs.address?.addressOne || '',
+        AddressLine2: attrs.address?.addressTwo || '',
+        City: attrs.address?.city || '',
+        State: attrs.address?.state || '',
+        Zipcode: attrs.address?.zip || '',
+      },
+      DateOfBirth: `${attrs.dob?.year}-${MONTH_MAP[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
+      FullName: {
+        FirstName: attrs.name?.first || '',
+        LastName: attrs.name?.last || '',
+        MiddleName: attrs.name?.middle || '',
+      },
+      Ssn: attrs.ssn?.full || '',
+    },
+    EnrollmentKey: data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey,
+    LineItems: parseDisputePublicToLineItem(disputes),
+    //not the disputeServiceBundleKey...needs to be the bundle key return with the report returned on
+    // either fulfill or enroll calls on the fulfill or enroll report key
+    ServiceBundleFulfillmentKey: data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey,
+    ServiceProductFulfillmentKey: null,
+  };
+};
+
+export const createStartDisputePersonalPayload = ({
+  data,
+  disputes,
+}: {
+  data: IStartDisputeGraphQLResponse;
+  disputes: IProcessDisputePersonalResult[];
+}): IStartDisputeMsg | undefined => {
+  const id = data.data.getAppData.id?.split(':')?.pop();
+  const attrs = data.data.getAppData.user?.userAttributes;
+  const dob = attrs?.dob;
+
+  if (!id || !attrs || !dob) {
+    console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
+    return;
+  }
+  console.log('id in Personal StartDispute', id);
+
+  let msg: IStartDisputeMsg = {
+    AccountCode: '123456789',
+    AccountName: 'CC2BraveCredit',
+    RequestKey: '',
+    ClientKey: id,
+    Customer: {
+      CurrentAddress: {
+        AddressLine1: attrs.address?.addressOne || '',
+        AddressLine2: attrs.address?.addressTwo || '',
+        City: attrs.address?.city || '',
+        State: attrs.address?.state || '',
+        Zipcode: attrs.address?.zip || '',
+      },
+      DateOfBirth: `${attrs.dob?.year}-${MONTH_MAP[dob?.month?.toLowerCase() || '']}-${`0${dob.day}`.slice(-2)}` || '',
+      FullName: {
+        FirstName: attrs.name?.first || '',
+        LastName: attrs.name?.last || '',
+        MiddleName: attrs.name?.middle || '',
+      },
+      Ssn: attrs.ssn?.full || '',
+    },
+    EnrollmentKey: data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey,
+    //not the disputeServiceBundleKey...needs to be the bundle key return with the report returned on
+    // either fulfill or enroll calls on the fulfill or enroll report key
+    ServiceBundleFulfillmentKey: data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey,
+    ServiceProductFulfillmentKey: null,
+  };
+
+  const haveEmployers = disputes.findIndex((dispute) => dispute.personalItem.key == 'employer') > -1;
+  const haveAddress = disputes.findIndex((dispute) => dispute.personalItem.key == 'address') > -1;
+  const haveName = disputes.findIndex((dispute) => dispute.personalItem.key == 'name') > -1;
+
+  console.log('layer checks:employers ===> ', haveEmployers);
+  console.log('layer checks:haveAddress ===> ', haveAddress);
+  console.log('layer checks:haveName ===> ', haveName);
+  console.log('msg before ===> ', msg);
+
+  if (haveEmployers && !(haveAddress || haveName)) msg = layerInEmployers(msg, disputes);
+  if (haveAddress && !(haveEmployers || haveName)) msg = layerInAddress(msg, disputes);
+  if (haveName && !(haveEmployers || haveAddress)) msg = layerInAka(msg, disputes);
+
+  console.log('msg after ====> ', msg);
+  return msg;
 };
 
 /**
@@ -74,7 +198,9 @@ export const createStartDisputePayload = (data: {
  * @param {IProcessDisputeTradelineResult[]} disputes
  * @returns {ILineItem[] | ILineItem}
  */
-export const parseDisputeToLineItem = (disputes: IProcessDisputeTradelineResult[]): ILineItem[] | ILineItem | null => {
+export const parseDisputeTradelineToLineItem = (
+  disputes: IProcessDisputeTradelineResult[],
+): ILineItem[] | ILineItem | null => {
   if (!disputes.length) return null;
   return disputes
     .map((item) => {
@@ -96,6 +222,90 @@ export const parseDisputeToLineItem = (disputes: IProcessDisputeTradelineResult[
     .filter(Boolean);
 };
 
+/**
+ * Helper function to parse the disputes to Line Items
+ * @param {IProcessDisputePublicResult[]} disputes
+ * @returns {ILineItem[] | ILineItem}
+ */
+export const parseDisputePublicToLineItem = (
+  disputes: IProcessDisputePublicResult[],
+): ILineItem[] | ILineItem | null => {
+  if (!disputes.length) return null;
+  return disputes
+    .map((item) => {
+      const reason = item?.result?.data?.reasons;
+      const handle = item?.publicItem?.PublicRecord.handle;
+      console.log('parseDisputeToLineItem:reason ===> ', reason);
+      console.log('parseDisputeToLineItem:handle ===> ', handle);
+      if (reason !== undefined) {
+        return {
+          LineItem: {
+            ClaimCodes: parseReasonsToClaimCodes(reason),
+            CreditReportItem: handle,
+            LineItemComment: 'Public Tradeline',
+          },
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
+};
+
+/**
+ * Helper function to parse the disputes to Line Items
+ * @param disputes
+ * @returns
+ */
+export const parseDisputeToEmployer = (disputes: IProcessDisputePersonalResult[]): IEmployers[] => {
+  if (!disputes.length) return null;
+  return disputes
+    .map((item) => {
+      const employer: IEmployer = item.personalItem.key === 'employer' ? item.personalItem.value : {};
+      return {
+        Employer: {
+          City: employer?.CreditAddress?.city,
+          Delete: 'true',
+          Name: employer?.name,
+          Occupation: null,
+          State: employer?.CreditAddress?.stateCode,
+          ZipCode: employer?.CreditAddress?.postalCode,
+        },
+      };
+    })
+    .filter(Boolean);
+};
+
+export const parseDisputeToAddress = (disputes: IProcessDisputePersonalResult[]): IIndicativeDisputes => {
+  if (!disputes.length) return null;
+  return disputes.map((item) => {
+    const address: IBorrowerAddress = item.personalItem.key === 'address' ? item.personalItem.value : {};
+    return {
+      Address: {
+        AddressLine1: `${address.CreditAddress?.houseNumber || ''} ${address.CreditAddress?.streetName || ''}`,
+        AddressLline2: `${address.CreditAddress?.unit || ''}`,
+        City: `${address.CreditAddress?.city || ''}`,
+        State: `${address.CreditAddress?.stateCode || ''}`,
+        Zipcode: `${address.CreditAddress?.postalCode || ''}`,
+      },
+      DeleteAddress: 'true',
+    };
+  })[0];
+};
+
+export const parseDisputeToAka = (disputes: IProcessDisputePersonalResult[]): any => {
+  if (!disputes.length) return null;
+  return disputes.map((item) => {
+    const name: IBorrowerName = item.personalItem.key === 'name' ? item.personalItem.value : {};
+    return {
+      Aka: {
+        ValueData: {
+          Delete: 'true',
+          Value: TransunionUtil.nameUnparser(name) || null,
+        },
+      },
+    };
+  })[0];
+};
 /**
  * Helper function to parse the reasons to Claim Codes
  * @param {[(IDisputeReason | undefined), (IDisputeReason | undefined)]} reasons
@@ -201,52 +411,80 @@ export const mapEmployers = (employers: IEmployers | IEmployers[] | undefined): 
 };
 
 export const mapIndicativeDisputes = (disputes: IIndicativeDisputes) => {
+  console.log('startDispute:mapIndicativeEnrichment ===> ', disputes);
   if (!disputes) return textConstructor(null, true);
-  return disputes instanceof Array
-    ? disputes.map((d: IIndicativeDisputes) => {
-        const mappedAka = mapAka(d.Aka);
-        return {
-          'data:Aka': mappedAka,
-          'data:DeletePreviousAddress': textConstructor(d.DeletePreviousAddress, true),
-          'data:PreviousAddress': {
-            'data:AddressLine1': textConstructor(d.PreviousAddress.AddressLine1, true),
-            'data:AddressLine2': textConstructor(d.PreviousAddress.AddressLine2, true),
-            'data:City': textConstructor(d.PreviousAddress.City, true),
-            'data:State': textConstructor(d.PreviousAddress.State, true),
-            'data:Zipcode': textConstructor(d.PreviousAddress.Zipcode, true),
-          },
+  const results =
+    disputes instanceof Array
+      ? disputes.map((d: IIndicativeDisputes) => {
+          return {
+            ...mapAka(d.Aka),
+            ...mapAddress(d.Address),
+          };
+        })
+      : {
+          ...mapAka(disputes.Aka),
+          ...mapAddress(disputes.Address),
         };
-      })
-    : {
-        'data:Aka': mapAka(disputes.Aka),
-        'data:DeletePreviousAddress': textConstructor(disputes.DeletePreviousAddress, true),
-        'data:PreviousAddress': {
-          'data:AddressLine1': textConstructor(disputes.PreviousAddress.AddressLine1, true),
-          'data:AddressLine2': textConstructor(disputes.PreviousAddress.AddressLine2, true),
-          'data:City': textConstructor(disputes.PreviousAddress.City, true),
-          'data:State': textConstructor(disputes.PreviousAddress.State, true),
-          'data:Zipcode': textConstructor(disputes.PreviousAddress.Zipcode, true),
-        },
-      };
+  console.log('results in mapIndicativeDispute ===> ', results);
+  return results;
 };
 
 export const mapAka = (aka: IAka | IAka[]) => {
-  if (!aka) return textConstructor(null, true);
-  return aka instanceof Array
-    ? aka.map((a: IAka) => {
-        return {
+  console.log('startDispute:mapAka ===> ', aka);
+  if (!aka) return { 'data:Aka': textConstructor(null, true) };
+  const results =
+    aka instanceof Array
+      ? aka.map((a: IAka) => {
+          return {
+            'data:ValueData': {
+              'data:Delete': textConstructor(a.ValueData?.Delete, true),
+              'data:Value': textConstructor(a.ValueData?.Value, true),
+            },
+          };
+        })
+      : {
           'data:ValueData': {
-            'data:Delete': textConstructor(a.ValueData?.Delete, true),
-            'data:Value': textConstructor(a.ValueData?.Value, true),
+            'data:Delete': textConstructor(aka.ValueData?.Delete, true),
+            'data:Value': textConstructor(aka.ValueData?.Value, true),
           },
         };
-      })
-    : {
-        'data:ValueData': {
-          'data:Delete': textConstructor(aka.ValueData?.Delete, true),
-          'data:Value': textConstructor(aka.ValueData?.Value, true),
-        },
-      };
+  console.log('results in mapAka ===> ', results);
+  return { 'data:Aka': results };
+};
+
+export const mapAddress = (address: IIndicativeDisputesAddress | IIndicativeDisputesAddress[]) => {
+  console.log('startDispute:mapAddress ===> ', address);
+  if (!address)
+    return {
+      'data:DeleteAddress': textConstructor('false', true),
+      'data:Address': textConstructor(null, true),
+    };
+  const results =
+    address instanceof Array
+      ? address.map((a: IIndicativeDisputesAddress) => {
+          return {
+            'data:DeleteAddress': textConstructor('true', false),
+            'data:Address': {
+              'data:AddressLine1': textConstructor(a.AddressLine1, true),
+              'data:AddressLine2': textConstructor(a.AddressLine2, true),
+              'data:City': textConstructor(a.City, true),
+              'data:State': textConstructor(a.State, true),
+              'data:Zipcode': textConstructor(a.Zipcode, true),
+            },
+          };
+        })
+      : {
+          'data:DeleteAddress': textConstructor('true', false),
+          'data:Address': {
+            'data:AddressLine1': textConstructor(address.AddressLine1, true),
+            'data:AddressLine2': textConstructor(address.AddressLine2, true),
+            'data:City': textConstructor(address.City, true),
+            'data:State': textConstructor(address.State, true),
+            'data:Zipcode': textConstructor(address.Zipcode, true),
+          },
+        };
+  console.log('results in mapAddress ===> ', results);
+  return results;
 };
 
 export const mapLineItems = (items: ILineItem | ILineItem[]) => {
@@ -301,11 +539,12 @@ export const createStartDispute = (msg: IStartDispute): string => {
   // let attachments = msg.request.Attachment;
   // let mappedAttachments = mapAttachments(attachments);
 
-  // let employers = msg.request.Employers;
-  // let mappedEmployers = mapEmployers(employers);
+  let employers = msg.request.Employers;
+  let mappedEmployers = mapEmployers(employers);
 
-  // let indicativeDisputes = msg.request.IndicativeDisputes;
-  // let mappedIndicativeDisputes = mapIndicativeDisputes(indicativeDisputes);
+  let indicativeDisputes = msg.request.IndicativeDisputes;
+  let mappedIndicativeDisputes = mapIndicativeDisputes(indicativeDisputes);
+  console.log('mapped mappedIndicativeDisputes ==> ', JSON.stringify(mappedIndicativeDisputes));
 
   let lineItems = msg.request.LineItems;
   let mappedLineItems = mapLineItems(lineItems);
@@ -360,9 +599,9 @@ export const createStartDispute = (msg: IStartDispute): string => {
                 },
               },
             },
-            // 'data:Employers': mappedEmployers,
+            'data:Employers': mappedEmployers,
             'data:EnrollmentKey': textConstructor(msg.request.EnrollmentKey),
-            // 'data:IndicativeDisputes': mappedIndicativeDisputes,
+            'data:IndicativeDisputes': mappedIndicativeDisputes,
             'data:LineItems': mappedLineItems,
             'data:ServiceBundleFulfillmentKey': textConstructor(msg.request.ServiceBundleFulfillmentKey),
             // 'data:ServiceProductFulfillmentKey': textConstructor(msg.request.ServiceProductFulfillmentKey, true),
@@ -373,6 +612,7 @@ export const createStartDispute = (msg: IStartDispute): string => {
   };
   console.log('xmlObj ===> ', JSON.stringify(xmlObj));
   const xml = convert.json2xml(JSON.stringify(xmlObj), { compact: true, spaces: 4 });
+  console.log('xmlrequest ===> ', xml);
   return xml;
 };
 
@@ -456,4 +696,46 @@ export const enrichDisputeData = (
   };
   console.log('mapped', mapped);
   return mapped;
+};
+
+const layerInEmployers = (msg: IStartDisputeMsg, disputes: IProcessDisputePersonalResult[]): IStartDisputeMsg => {
+  return {
+    AccountCode: msg.AccountCode,
+    AccountName: msg.AccountName,
+    RequestKey: msg.RequestKey,
+    ClientKey: msg.ClientKey,
+    Customer: msg.Customer,
+    Employers: parseDisputeToEmployer(disputes) || null,
+    EnrollmentKey: msg.EnrollmentKey,
+    ServiceBundleFulfillmentKey: msg.ServiceBundleFulfillmentKey,
+    ServiceProductFulfillmentKey: msg.ServiceProductFulfillmentKey,
+  };
+};
+
+const layerInAddress = (msg: IStartDisputeMsg, disputes: IProcessDisputePersonalResult[]): IStartDisputeMsg => {
+  return {
+    AccountCode: msg.AccountCode,
+    AccountName: msg.AccountName,
+    RequestKey: msg.RequestKey,
+    ClientKey: msg.ClientKey,
+    Customer: msg.Customer,
+    IndicativeDisputes: parseDisputeToAddress(disputes) || null,
+    EnrollmentKey: msg.EnrollmentKey,
+    ServiceBundleFulfillmentKey: msg.ServiceBundleFulfillmentKey,
+    ServiceProductFulfillmentKey: msg.ServiceProductFulfillmentKey,
+  };
+};
+
+const layerInAka = (msg: IStartDisputeMsg, disputes: IProcessDisputePersonalResult[]): IStartDisputeMsg => {
+  return {
+    AccountCode: msg.AccountCode,
+    AccountName: msg.AccountName,
+    RequestKey: msg.RequestKey,
+    ClientKey: msg.ClientKey,
+    Customer: msg.Customer,
+    IndicativeDisputes: parseDisputeToAka(disputes) || null,
+    EnrollmentKey: msg.EnrollmentKey,
+    ServiceBundleFulfillmentKey: msg.ServiceBundleFulfillmentKey,
+    ServiceProductFulfillmentKey: msg.ServiceProductFulfillmentKey,
+  };
 };

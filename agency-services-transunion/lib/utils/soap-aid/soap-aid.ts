@@ -3,11 +3,22 @@ import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
 import axios from 'axios';
 
+const tuEnv = process.env.TU_ENV;
+const tuUrl =
+  tuEnv === 'dev'
+    ? 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc'
+    : 'https://consumerconnectws.tui.transunion.com/wcf/CC2.svc';
+const tuHost = tuEnv === 'dev' ? 'cc2ws-live.sd.demo.truelink.com' : 'consumerconnectws.tui.transunion.com';
 /**
  * Class to help create and parse payloads for requests to Transunion SOAP service
- * - Takes in unique parsers, formatters(messages, and xml), and payload generators
- * - Each method provided is unique to the transunion service called but this class
- *   standards the invocations needed to successfully send the request
+ * 1. Takes in unique parsers, formatters(messages, and xml), and payload generators (optional)
+ * 2. Each method provided is unique to the transunion service called but this class
+ *    standards the invocations needed to successfully send the request
+ *   - Payload Generator (cbPayload): Takes the GQL request and parses it to the proper schema.
+ *        * if none specified, just passes the object through
+ *   - Message Packager (cbMsg): Wraps the payload in the appropriate account code, name values
+ *   - Xml Generator (cbXml): Converts the JSON object message to an XML string
+ *   - Parser (parser): Takes the designated parser library with options to parse the xml string response
  */
 export class SoapAid {
   parser: (
@@ -17,7 +28,7 @@ export class SoapAid {
   ) => any;
   cbMsg: (code: string, username: string, message: string) => string;
   cbXml: (msg: any) => string;
-  cbPayload: (data: any, disputeId: string) => any | undefined;
+  cbPayload: (data: any, params: any) => any | undefined;
   requestPayload: IRequestOptions;
   msg: string;
   xml: string;
@@ -28,9 +39,9 @@ export class SoapAid {
       options?: Partial<fastXml.X2jOptions>,
       validationOptions?: boolean | Partial<fastXml.validationOptions>,
     ) => any = fastXml.parse,
-    cbMsg: (code: string, username: string, message: string) => any,
+    cbMsg: (code: string, username: string, message: any) => any,
     cbXml: (msg: any) => string,
-    cbPayload: (data: any, disputeId?: string) => any = (a): any => {
+    cbPayload: (data: any, params?: any) => any = (a): any => {
       return a;
     },
   ) {
@@ -44,11 +55,11 @@ export class SoapAid {
    * Generic method to create payloads by type
    * @param cbPayload
    * @param data
-   * @param disputeId
+   * @param params
    * @returns
    */
-  createPayload<T>(data: any, disputeId?: string): T {
-    return this.cbPayload(data, disputeId);
+  createPayload<T>(data: any, params?: any): T {
+    return this.cbPayload(data, params);
   }
 
   /**
@@ -79,7 +90,7 @@ export class SoapAid {
    */
   createRequestPayload(httpsAgent: https.Agent, auth: string, data: string, SOAPAction: string): IRequestOptions {
     this.requestPayload = {
-      url: 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc',
+      url: tuUrl,
       method: 'POST',
       data: data,
       httpsAgent,
@@ -89,7 +100,7 @@ export class SoapAid {
         SOAPAction: `https://consumerconnectws.tui.transunion.com/ICC2/${SOAPAction}`,
         Authorization: auth,
         'Content-Length': data.length,
-        Host: 'cc2ws-live.sd.demo.truelink.com',
+        Host: tuHost,
         Connection: 'Keep-Alive',
         'User-Agent': 'Apache-HttpClient/4.5.2 (Java/1.8.0_181)',
       },
@@ -161,6 +172,42 @@ export class SoapAid {
     if (!msg || !xml || !request || !payload) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
     try {
       return await this.processRequest<T>(request, parserOptions);
+    } catch (err) {
+      console.log(`parseAndSendPayload error=${err}`);
+      throw `Uncaught error in parse and send`;
+    }
+  }
+
+  /**
+   * !!!!IMPORTANT!!! For mocking only.
+   * @param accountCode
+   * @param username
+   * @param agent
+   * @param auth
+   * @param prepayload
+   * @param action
+   * @param parserOptions
+   * @returns
+   */
+  async parseAndDontSendPayload<T>(
+    accountCode: string,
+    username: string,
+    agent: https.Agent,
+    auth: string,
+    prepayload: any,
+    action: string,
+    parserOptions: Partial<fastXml.X2jOptions>,
+  ): Promise<any> {
+    const payload = this.createPayload(prepayload);
+    const { msg, xml } = this.createPackage(accountCode, username, JSON.stringify(payload));
+    const request = this.createRequestPayload(agent, auth, xml, action);
+    if (!msg || !xml || !request || !payload) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
+    console.log('your MOCK payload is ===> ', payload);
+    console.log('your MOCK message is ===> ', msg);
+    console.log('your MOCK xml is ===> ', xml);
+    console.log('your MOCK request is ===> ', request);
+    try {
+      return;
     } catch (err) {
       console.log(`parseAndSendPayload error=${err}`);
       throw `Uncaught error in parse and send`;

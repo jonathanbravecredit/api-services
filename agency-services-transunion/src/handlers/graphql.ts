@@ -1,18 +1,18 @@
 import { AppSyncResolverEvent } from 'aws-lambda';
-import { response } from 'lib/utils/response/response';
 import * as https from 'https';
 import * as fs from 'fs';
 import * as queries from 'lib/proxy';
 import * as secrets from 'lib/utils/secrets/secrets';
+import * as tokens from 'lib/utils/tokens/tokens';
 
 // request.debug = true; import * as request from 'request';
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
+const tuEnv = process.env.TU_ENV;
 let key: Buffer;
 let cert: Buffer;
 let cacert: Buffer;
 let username = 'CC2BraveCredit';
-let accountCode = '123456789';
-let url = 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc?singleWsdl';
+let accountCode = 'M2RVc0ZZM0Rwd2FmZA';
 let user;
 let auth;
 let passphrase;
@@ -33,6 +33,17 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
   console.log('action', action);
   console.log('message', message);
 
+  let tokenUser;
+  try {
+    const token = event['token'];
+    const { sub } = await tokens.validateToken(token);
+    console.log('decoded user ===> ', sub);
+    if (sub === undefined) throw user;
+    tokenUser = sub;
+  } catch (err) {
+    return { success: false, error: `Invalid token parsed to user` };
+  }
+
   try {
     const secretJSON = await secrets.getSecretKey(transunionSKLoc);
     const { tuKeyPassphrase, tuPassword } = JSON.parse(secretJSON);
@@ -45,12 +56,14 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
   }
 
   try {
-    key = fs.readFileSync('/opt/tubravecredit.key');
-    cert = fs.readFileSync('/opt/brave.credit.crt');
-    cacert = fs.readFileSync('/opt/Root-CA-Bundle.crt');
+    const prefix = tuEnv === 'dev' ? 'dev' : 'prod';
+    key = fs.readFileSync(`/opt/${prefix}-tubravecredit.key`);
+    cert = fs.readFileSync(`/opt/${prefix}-brave.credit.crt`);
+    cacert = fs.readFileSync(`/opt/${prefix}-Root-CA-Bundle.crt`);
   } catch (err) {
     return { success: false, error: { error: `Error gathering/reading cert=${err}` } };
   }
+
   try {
     const httpsAgent = new https.Agent({
       key,
@@ -62,49 +75,66 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     // do something
     switch (action) {
       case 'Ping':
-        results = await queries.Ping(httpsAgent, auth);
+        results = await queries.Ping(httpsAgent, auth, tokenUser);
         return JSON.stringify(results);
       case 'IndicativeEnrichment':
-        results = await queries.IndicativeEnrichment(accountCode, username, message, httpsAgent, auth);
+        results = await queries.IndicativeEnrichment(accountCode, username, message, httpsAgent, auth, tokenUser);
         return JSON.stringify(results);
       case 'GetAuthenticationQuestions':
-        results = await queries.GetAuthenticationQuestions(accountCode, username, message, httpsAgent, auth);
+        results = await queries.GetAuthenticationQuestions(accountCode, username, message, httpsAgent, auth, tokenUser);
         return JSON.stringify(results);
       case 'VerifyAuthenticationQuestions':
-        results = await queries.VerifyAuthenticationQuestions(accountCode, username, message, httpsAgent, auth);
+        results = await queries.VerifyAuthenticationQuestions(
+          accountCode,
+          username,
+          message,
+          httpsAgent,
+          auth,
+          tokenUser,
+        );
         return JSON.stringify(results);
       case 'Enroll':
-        results = await queries.Enroll(accountCode, username, message, httpsAgent, auth);
+        results = await queries.Enroll(accountCode, username, message, httpsAgent, auth, tokenUser);
         return JSON.stringify(results);
       case 'EnrollDisputes':
-        results = await queries.EnrollDisputes(accountCode, username, message, httpsAgent, auth);
+        results = await queries.EnrollDisputes(accountCode, username, message, httpsAgent, auth, tokenUser);
         return JSON.stringify(results);
       case 'Fulfill':
-        results = await queries.Fulfill(accountCode, username, message, httpsAgent, auth);
+        results = await queries.Fulfill(accountCode, username, message, httpsAgent, auth, tokenUser);
         return JSON.stringify(results);
       case 'FulfillDisputes':
-        results = await queries.FulfillDisputes(accountCode, username, message, httpsAgent, auth);
+        results = await queries.FulfillDisputes(accountCode, username, message, httpsAgent, auth, tokenUser);
         return JSON.stringify(results);
       case 'GetServiceProduct':
-        results = await queries.GetServiceProduct(accountCode, username, message, httpsAgent, auth);
+        results = await queries.GetServiceProduct(accountCode, username, message, httpsAgent, auth, tokenUser);
         return JSON.stringify(results);
       case 'GetDisputeStatus':
-        results = await queries.GetDisputeStatus(accountCode, username, message, httpsAgent, auth);
+        results = await queries.GetDisputeStatus(accountCode, username, message, httpsAgent, auth, tokenUser);
         return JSON.stringify(results);
       case 'StartDispute':
-        results = await queries.StartDispute(accountCode, username, message, httpsAgent, auth);
+        results = await queries.StartDispute(accountCode, username, message, httpsAgent, auth, tokenUser);
         return JSON.stringify(results);
       case 'GetDisputeHistory':
-        results = await queries.GetDisputeHistory(accountCode, username, message, httpsAgent, auth);
+        results = await queries.GetDisputeHistory(accountCode, username, message, httpsAgent, auth, tokenUser);
         return JSON.stringify(results);
       case 'CompleteOnboardingEnrollments':
-        results = await queries.CompleteOnboardingEnrollments(accountCode, username, message, httpsAgent, auth);
+        results = await queries.CompleteOnboardingEnrollments(
+          accountCode,
+          username,
+          message,
+          httpsAgent,
+          auth,
+          tokenUser,
+        );
         return JSON.stringify(results);
       case 'DisputePreflightCheck':
-        results = await queries.DisputePreflightCheck(accountCode, username, message, httpsAgent, auth);
+        results = await queries.DisputePreflightCheck(accountCode, username, message, httpsAgent, auth, tokenUser);
         return JSON.stringify(results);
       case 'GetInvestigationResults':
-        results = await queries.GetInvestigationResults(accountCode, username, message, httpsAgent, auth);
+        results = await queries.GetInvestigationResults(accountCode, username, message, httpsAgent, auth, tokenUser);
+        return JSON.stringify(results);
+      case 'GetTrendingData':
+        results = await queries.GetTrendingData(accountCode, username, message, httpsAgent, auth, tokenUser);
         return JSON.stringify(results);
       default:
         return JSON.stringify({ success: false, error: 'Action not found', data: action });

@@ -44,11 +44,40 @@ export interface IStartDisputeGraphQLResponse {
   };
 }
 
+export interface IDisputeUserAttributes {
+  name?: {
+    first?: string;
+    middle?: string;
+    last?: string;
+  };
+  address?: {
+    addressOne?: string;
+    addressTwo?: string;
+    city?: string;
+    state?: string;
+    zip?: string;
+  };
+  phone?: {
+    primary?: string;
+  };
+  dob?: {
+    year?: string;
+    month?: string;
+    day?: string;
+  };
+  ssn?: {
+    lastfour?: string;
+    full?: string;
+  };
+}
+
 export interface IStartDisputeRequest {
-  id: string;
   disputes: IProcessDisputeTradelineResult[];
 }
 
+export interface IStartDisputePayload extends IStartDisputeRequest {
+  id: string;
+}
 export interface IStartDispute {
   request: IStartDisputeMsg;
 }
@@ -167,14 +196,18 @@ export interface IEmployers {
 }
 export interface IIndicativeDisputes {
   Aka?: IAka | IAka[];
+  Address?: IIndicativeDisputesAddress;
+  DeleteAddress?: string;
+  PreviousAddress?: IIndicativeDisputesAddress;
   DeletePreviousAddress?: string;
-  PreviousAddress?: {
-    AddressLine1?: string;
-    AddressLine2?: string;
-    City?: string;
-    State?: string;
-    Zipcode?: string;
-  };
+}
+
+export interface IIndicativeDisputesAddress {
+  AddressLine1?: string;
+  AddressLine2?: string;
+  City?: string;
+  State?: string;
+  Zipcode?: string;
 }
 
 export interface IAka {

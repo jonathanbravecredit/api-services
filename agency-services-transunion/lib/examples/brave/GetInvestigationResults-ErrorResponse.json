@@ -1,0 +1,8 @@
+{
+  "success": false,
+  "error": {
+    "Code": 310,
+    "Message": "Ineligible for online disputes, file maintenance needed",
+    "Name": "MULTIPLE_FINS_FOUND"
+  }
+}

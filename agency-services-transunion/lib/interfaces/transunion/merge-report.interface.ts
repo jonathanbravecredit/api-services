@@ -11,7 +11,7 @@ export interface IMergeReport {
 export interface ITrueLinkCreditReportType {
   SB168Frozen?: string;
   Borrower?: IBorrower | IBorrower[];
-  TradeLinePartition?: ITradeLinePartition[] | ITradeLinePartition;
+  TradeLinePartition?: ITradeLinePartition | ITradeLinePartition[];
   InquiryPartition?: IInquiryPartition | IInquiryPartition[];
   BankingRecordPartition?: IBankingPartition | IBankingPartition[];
   PulblicRecordPartition?: IPublicPartition | IPublicPartition[];
@@ -273,7 +273,7 @@ export interface IBankingRecord {
 /*    Public Elements    */
 /*=======================*/
 export interface IPublicPartition {
-  PublicRecord?: IPublicRecord | IPublicRecord[];
+  PublicRecord?: IPublicRecord;
 }
 export interface IPublicRecord {
   AccountDesignator?: ICodeRef;

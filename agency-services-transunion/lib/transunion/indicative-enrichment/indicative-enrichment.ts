@@ -1,4 +1,5 @@
-import { IEnrichedIndicativeEnrichment, IIndicativeEnrichmentMsg } from 'lib/interfaces';
+import { MONTH_MAP } from 'lib/data/constants';
+import { IEnrichedIndicativeEnrichment, IIndicativeEnrichmentPayload } from 'lib/interfaces';
 import { textConstructor } from 'lib/utils/helpers/helpers';
 import * as uuid from 'uuid';
 import * as convert from 'xml-js';
@@ -8,16 +9,42 @@ export const formatIndicativeEnrichment = (
   accountName: string,
   msg: string,
 ): IEnrichedIndicativeEnrichment | undefined => {
-  let message: IIndicativeEnrichmentMsg = JSON.parse(msg);
-  return message
-    ? {
-        request: {
-          AccountCode: accountCode,
-          AccountName: accountName,
-          ...message,
+  const parsed: IIndicativeEnrichmentPayload = JSON.parse(msg);
+  return {
+    request: {
+      AccountCode: accountCode,
+      AccountName: accountName,
+      AdditionalInputs: {
+        Data: {
+          Name: 'CreditReportVersion',
+          Value: '7.1',
         },
-      }
-    : undefined;
+      },
+      RequestKey: '',
+      ClientKey: parsed.id,
+      Customer: {
+        CurrentAddress: {
+          AddressLine1: parsed.address.addressOne || '',
+          AddressLine2: parsed.address.addressTwo || '',
+          City: parsed.address.city || '',
+          State: parsed.address.state || '',
+          Zipcode: parsed.address.zip || '',
+        },
+        PreviousAddress: {},
+        DateOfBirth:
+          `${parsed.dob.year}-${MONTH_MAP[parsed.dob.month.toLowerCase()]}-${`0${parsed.dob.day}`.slice(-2)}` || '',
+        FullName: {
+          FirstName: parsed.name.first || '',
+          LastName: parsed.name.last || '',
+          MiddleName: parsed.name.middle || '',
+          Prefix: null,
+          Suffix: null,
+        },
+        Ssn: `000000000${parsed.ssn.lastfour}`.slice(-9) || '',
+      },
+      ServiceBundleCode: 'CC2BraveCreditIndicativeEnrichment',
+    },
+  };
 };
 
 // TODO may want to keep this fresh with the WSDL
@@ -61,11 +88,11 @@ export const createIndicativeEnrichment = (msg: IEnrichedIndicativeEnrichment): 
                 'data:Suffix': textConstructor(msg.request.Customer.FullName.Suffix, true),
               },
               'data:PreviousAddress': {
-                'data:AddressLine1': textConstructor(msg.request.Customer.PreviousAddress.AddressLine1, true),
-                'data:AddressLine2': textConstructor(msg.request.Customer.PreviousAddress.AddressLine2, true),
-                'data:City': textConstructor(msg.request.Customer.PreviousAddress.City, true),
-                'data:State': textConstructor(msg.request.Customer.PreviousAddress.State, true),
-                'data:Zipcode': textConstructor(msg.request.Customer.PreviousAddress.Zipcode, true),
+                'data:AddressLine1': textConstructor(msg.request.Customer.PreviousAddress?.AddressLine1, true),
+                'data:AddressLine2': textConstructor(msg.request.Customer.PreviousAddress?.AddressLine2, true),
+                'data:City': textConstructor(msg.request.Customer.PreviousAddress?.City, true),
+                'data:State': textConstructor(msg.request.Customer.PreviousAddress?.State, true),
+                'data:Zipcode': textConstructor(msg.request.Customer.PreviousAddress?.Zipcode, true),
               },
               'data:Ssn': textConstructor(msg.request.Customer.Ssn),
             },

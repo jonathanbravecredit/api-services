@@ -17,6 +17,14 @@ custom:
   snsProxy: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
   settings:
     GRAPHQL_APIENDPOINTOUTPUT: !ImportValue GraphQLAPIEndpointOutput
+    IDENTITY_IDS:
+      dev: 'us-east-2:69169c15-c0c4-4e0b-886c-4afab307e612'
+      qa: 'us-east-2:69169c15-c0c4-4e0b-886c-4afab307e612'
+      prod: 'us-east-2:ea31caf7-0945-4607-a3c4-0c9942967a32'
+    POOL_IDS:
+      dev: 'us-east-2_beTcykTM9'
+      qa: 'us-east-2_beTcykTM9'
+      prod: 'us-east-2_R22DawoAR'
     GRAPHQL_API:
       dev: 'rr5wtr4ev5exlbutrkih3r5lhq'
       qa: 'rr5wtr4ev5exlbutrkih3r5lhq'
@@ -35,7 +43,11 @@ provider:
     - !Ref TuCertsLambdaLayer
   environment:
     NODE_ENV: ${opt:stage, 'dev'}
+    TU_ENV: ${self:provider.stage}
     TU_SECRET_LOCATION: '${self:provider.stage}/agency-services/transunion'
+    ACCOUNT_ID: !Sub '${AWS::AccountId}'
+    IDENTITY_ID: '${self:custom.settings.IDENTITY_IDS.${opt:stage}}'
+    POOL_ID: '${self:custom.settings.POOL_IDS.${opt:stage}}'
     APPSYNC_ENDPOINT: '${self:custom.settings.GRAPHQL_ENDPOINT.${opt:stage}}'
     APPSYNC_API: '${self:custom.settings.GRAPHQL_API.${opt:stage}}'
   vpc:

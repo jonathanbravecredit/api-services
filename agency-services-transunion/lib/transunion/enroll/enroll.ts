@@ -20,8 +20,8 @@ import { UpdateAppDataInput } from 'src/api/api.service';
  * @returns IEnrollPayload
  */
 export const createEnrollPayload = (data: IEnrollGraphQLResponse): IEnrollPayload => {
-  const id = data.data.getAppData.id?.split(':')?.pop();
-  const attrs = data.data.getAppData.user?.userAttributes;
+  const id = data.data.getAppData?.id?.split(':')?.pop();
+  const attrs = data.data.getAppData?.user?.userAttributes;
   const dob = attrs?.dob;
   const serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
 

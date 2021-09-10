@@ -12,3 +12,4 @@ export * from './last-active/get-last-active';
 export * from './ping/ping';
 export * from './service-product/get-service-product';
 export * from './start-dispute/start-dispute';
+export * from './get-trending-data/get-trending-data';
