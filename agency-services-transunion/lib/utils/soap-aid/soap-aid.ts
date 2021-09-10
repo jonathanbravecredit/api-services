@@ -3,6 +3,12 @@ import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
 import axios from 'axios';
 
+const tuEnv = process.env.TU_ENV;
+const tuUrl =
+  tuEnv === 'dev'
+    ? 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc'
+    : 'https://consumerconnectws.tui.transunion.com/wcf/CC2.svc';
+const tuHost = tuEnv === 'dev' ? 'cc2ws-live.sd.demo.truelink.com' : 'consumerconnectws.tui.transunion.com';
 /**
  * Class to help create and parse payloads for requests to Transunion SOAP service
  * 1. Takes in unique parsers, formatters(messages, and xml), and payload generators (optional)
@@ -84,7 +90,7 @@ export class SoapAid {
    */
   createRequestPayload(httpsAgent: https.Agent, auth: string, data: string, SOAPAction: string): IRequestOptions {
     this.requestPayload = {
-      url: 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc',
+      url: tuUrl,
       method: 'POST',
       data: data,
       httpsAgent,
@@ -94,7 +100,7 @@ export class SoapAid {
         SOAPAction: `https://consumerconnectws.tui.transunion.com/ICC2/${SOAPAction}`,
         Authorization: auth,
         'Content-Length': data.length,
-        Host: 'cc2ws-live.sd.demo.truelink.com',
+        Host: tuHost,
         Connection: 'Keep-Alive',
         'User-Agent': 'Apache-HttpClient/4.5.2 (Java/1.8.0_181)',
       },

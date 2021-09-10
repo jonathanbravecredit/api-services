@@ -13,7 +13,6 @@ let cert: Buffer;
 let cacert: Buffer;
 let username = 'CC2BraveCredit';
 let accountCode = 'M2RVc0ZZM0Rwd2FmZA';
-let url = 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc?singleWsdl';
 let user;
 let auth;
 let passphrase;
@@ -58,8 +57,6 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
 
   try {
     const prefix = tuEnv === 'dev' ? 'dev' : 'prod';
-    console.log('nodeEnv ===> ', tuEnv);
-    console.log('subfolder ===> ', prefix);
     key = fs.readFileSync(`/opt/${prefix}-tubravecredit.key`);
     cert = fs.readFileSync(`/opt/${prefix}-brave.credit.crt`);
     cacert = fs.readFileSync(`/opt/${prefix}-Root-CA-Bundle.crt`);
