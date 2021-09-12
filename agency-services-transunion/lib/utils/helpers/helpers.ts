@@ -16,7 +16,7 @@ export const postGraphQLRequest = async (query: string, variables: any): Promise
   // create the options for the sync up
   let opts = {
     method: 'POST',
-    host: '24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com',
+    host: appsyncUrl,
     region: region,
     path: 'graphql',
     body: JSON.stringify(payload),
@@ -26,7 +26,7 @@ export const postGraphQLRequest = async (query: string, variables: any): Promise
   try {
     const headers = aws4.sign(opts).headers;
     const resp: AxiosResponse<any> = await axios({
-      url: appsyncUrl,
+      url: `https://${appsyncUrl}/graphql`,
       method: 'post',
       headers: headers,
       data: payload,

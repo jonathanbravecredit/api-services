@@ -30,9 +30,9 @@ custom:
       qa: 'rr5wtr4ev5exlbutrkih3r5lhq'
       prod: '4tpaga7rzjayhk75opsmpeurme'
     GRAPHQL_ENDPOINT:
-      dev: 'https://24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com/graphql'
-      qa: 'https://24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com/graphql'
-      prod: 'https://krybm5pc3nbgdk4zwgcva2i4va.appsync-api.us-east-2.amazonaws.com/graphql'
+      dev: '24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com'
+      qa: '24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com'
+      prod: 'krybm5pc3nbgdk4zwgcva2i4va.appsync-api.us-east-2.amazonaws.com'
 
 provider:
   name: aws
