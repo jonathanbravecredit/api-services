@@ -52,6 +52,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     user = `${username}:${password}`;
     auth = 'Basic ' + Buffer.from(user).toString('base64');
   } catch (err) {
+    console.log('secret error ===> ', err);
     return { success: false, error: { error: `Error gathering/reading secrets=${err}` } };
   }
 
@@ -61,6 +62,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     cert = fs.readFileSync(`/opt/${prefix}-brave.credit.crt`);
     cacert = fs.readFileSync(`/opt/${prefix}-Root-CA-Bundle.crt`);
   } catch (err) {
+    console.log('cert error ===> ', err);
     return { success: false, error: { error: `Error gathering/reading cert=${err}` } };
   }
 
