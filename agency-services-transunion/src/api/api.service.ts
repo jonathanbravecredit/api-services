@@ -4,10 +4,18 @@ export type Transunion = {
   __typename: "Transunion";
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
+  indicativeEnrichmentStatus?: TUStatusRef;
   getAuthenticationQuestionsSuccess?: boolean | null;
+  getAuthenticationQuestionsStatus?: TUStatusRef;
   serviceBundleFulfillmentKey?: string | null;
   currentRawQuestions?: string | null;
   currentRawAuthDetails?: string | null;
+  authAttempt?: number | null;
+  pinRequests?: number | null;
+  pinAttempts?: number | null;
+  pinCurrentAge?: number | null;
+  kbaAttempts?: number | null;
+  kbaCurrentAge?: number | null;
   enrollmentKey?: string | null;
   enrollReport?: TUReportResponse;
   enrollMergeReport?: TUReportResponse;
@@ -26,6 +34,15 @@ export type Transunion = {
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
   disputes?: Array<Dispute | null> | null;
+};
+
+export type TUStatusRef = {
+  __typename: "TUStatusRef";
+  id?: number | null;
+  status?: string | null;
+  statusDescription?: string | null;
+  statusModifiedOn?: string | null;
+  statusCode?: string | null;
 };
 
 export type TUReportResponse = {
@@ -85,6 +102,11 @@ export type CreateAppDataInput = {
   user: UserInput;
   agencies: AgenciesInput;
   preferences: PreferencesInput;
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
 };
 
 export type UserInput = {
@@ -134,6 +156,14 @@ export type OnboardingInput = {
   lastActive: number;
   lastComplete: number;
   started?: boolean | null;
+  display?: Array<OnboardingStepInput | null> | null;
+};
+
+export type OnboardingStepInput = {
+  id?: number | null;
+  active?: boolean | null;
+  complete?: boolean | null;
+  name?: string | null;
 };
 
 export type AgenciesInput = {
@@ -145,10 +175,18 @@ export type AgenciesInput = {
 export type TransunionInput = {
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
+  indicativeEnrichmentStatus?: TUStatusRefInput | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
+  getAuthenticationQuestionsStatus?: TUStatusRefInput | null;
   serviceBundleFulfillmentKey?: string | null;
   currentRawQuestions?: string | null;
   currentRawAuthDetails?: string | null;
+  authAttempt?: number | null;
+  pinRequests?: number | null;
+  pinAttempts?: number | null;
+  pinCurrentAge?: number | null;
+  kbaAttempts?: number | null;
+  kbaCurrentAge?: number | null;
   enrollmentKey?: string | null;
   enrollReport?: TUReportResponseInput | null;
   enrollMergeReport?: TUReportResponseInput | null;
@@ -167,6 +205,14 @@ export type TransunionInput = {
   disputeEnrolledOn?: string | null;
   disputeStatus?: string | null;
   disputes?: Array<DisputeInput | null> | null;
+};
+
+export type TUStatusRefInput = {
+  id?: number | null;
+  status?: string | null;
+  statusDescription?: string | null;
+  statusModifiedOn?: string | null;
+  statusCode?: string | null;
 };
 
 export type TUReportResponseInput = {
@@ -237,9 +283,53 @@ export type ShowAccountsPreferenceInput = {
 };
 
 export type ModelAppDataConditionInput = {
+  status?: ModelStringInput | null;
+  statusReason?: ModelStringInput | null;
+  statusReasonDescription?: ModelStringInput | null;
+  lastStatusModifiedOn?: ModelStringInput | null;
+  nextStatusModifiedOn?: ModelStringInput | null;
   and?: Array<ModelAppDataConditionInput | null> | null;
   or?: Array<ModelAppDataConditionInput | null> | null;
   not?: ModelAppDataConditionInput | null;
+};
+
+export type ModelStringInput = {
+  ne?: string | null;
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
+  notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+  size?: ModelSizeInput | null;
+};
+
+export enum ModelAttributeTypes {
+  Binary = "binary",
+  BinarySet = "binarySet",
+  Bool = "bool",
+  List = "list",
+  Map = "map",
+  Number = "number",
+  NumberSet = "numberSet",
+  String = "string",
+  StringSet = "stringSet",
+  _null = "_null"
+}
+
+export type ModelSizeInput = {
+  ne?: number | null;
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  between?: Array<number | null> | null;
 };
 
 export type AppData = {
@@ -248,6 +338,11 @@ export type AppData = {
   user?: User;
   agencies?: Agencies;
   preferences?: Preferences;
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
   createdAt?: string;
   updatedAt?: string;
   owner?: string | null;
@@ -308,6 +403,15 @@ export type Onboarding = {
   lastActive?: number;
   lastComplete?: number;
   started?: boolean | null;
+  display?: Array<OnboardingStep | null> | null;
+};
+
+export type OnboardingStep = {
+  __typename: "OnboardingStep";
+  id?: number | null;
+  active?: boolean | null;
+  complete?: boolean | null;
+  name?: string | null;
 };
 
 export type Agencies = {
@@ -345,6 +449,11 @@ export type UpdateAppDataInput = {
   user?: UserInput | null;
   agencies?: AgenciesInput | null;
   preferences?: PreferencesInput | null;
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
 };
 
 export type DeleteAppDataInput = {
@@ -353,6 +462,11 @@ export type DeleteAppDataInput = {
 
 export type ModelAppDataFilterInput = {
   id?: ModelIDInput | null;
+  status?: ModelStringInput | null;
+  statusReason?: ModelStringInput | null;
+  statusReasonDescription?: ModelStringInput | null;
+  lastStatusModifiedOn?: ModelStringInput | null;
+  nextStatusModifiedOn?: ModelStringInput | null;
   and?: Array<ModelAppDataFilterInput | null> | null;
   or?: Array<ModelAppDataFilterInput | null> | null;
   not?: ModelAppDataFilterInput | null;
@@ -374,29 +488,6 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null;
 };
 
-export enum ModelAttributeTypes {
-  Binary = "binary",
-  BinarySet = "binarySet",
-  Bool = "bool",
-  List = "list",
-  Map = "map",
-  Number = "number",
-  NumberSet = "numberSet",
-  String = "string",
-  StringSet = "stringSet",
-  _null = "_null"
-}
-
-export type ModelSizeInput = {
-  ne?: number | null;
-  eq?: number | null;
-  le?: number | null;
-  lt?: number | null;
-  ge?: number | null;
-  gt?: number | null;
-  between?: Array<number | null> | null;
-};
-
 export type ModelAppDataConnection = {
   __typename: "ModelAppDataConnection";
   items?: Array<AppData | null> | null;
@@ -407,10 +498,32 @@ export type PatchTransunionMutation = {
   __typename: "Transunion";
   authenticated?: boolean | null;
   indicativeEnrichmentSuccess?: boolean | null;
+  indicativeEnrichmentStatus?: {
+    __typename: "TUStatusRef";
+    id?: number | null;
+    status?: string | null;
+    statusDescription?: string | null;
+    statusModifiedOn?: string | null;
+    statusCode?: string | null;
+  } | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
+  getAuthenticationQuestionsStatus?: {
+    __typename: "TUStatusRef";
+    id?: number | null;
+    status?: string | null;
+    statusDescription?: string | null;
+    statusModifiedOn?: string | null;
+    statusCode?: string | null;
+  } | null;
   serviceBundleFulfillmentKey?: string | null;
   currentRawQuestions?: string | null;
   currentRawAuthDetails?: string | null;
+  authAttempt?: number | null;
+  pinRequests?: number | null;
+  pinAttempts?: number | null;
+  pinCurrentAge?: number | null;
+  kbaAttempts?: number | null;
+  kbaCurrentAge?: number | null;
   enrollmentKey?: string | null;
   enrollReport?: {
     __typename: "TUReportResponse";
@@ -578,6 +691,13 @@ export type CreateAppDataMutation = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      display?: Array<{
+        __typename: "OnboardingStep";
+        id?: number | null;
+        active?: boolean | null;
+        complete?: boolean | null;
+        name?: string | null;
+      } | null> | null;
     } | null;
   };
   agencies: {
@@ -586,10 +706,32 @@ export type CreateAppDataMutation = {
       __typename: "Transunion";
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
+      indicativeEnrichmentStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      authAttempt?: number | null;
+      pinRequests?: number | null;
+      pinAttempts?: number | null;
+      pinCurrentAge?: number | null;
+      kbaAttempts?: number | null;
+      kbaCurrentAge?: number | null;
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
@@ -732,6 +874,11 @@ export type CreateAppDataMutation = {
       mortgages?: boolean | null;
     } | null;
   };
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -780,6 +927,13 @@ export type UpdateAppDataMutation = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      display?: Array<{
+        __typename: "OnboardingStep";
+        id?: number | null;
+        active?: boolean | null;
+        complete?: boolean | null;
+        name?: string | null;
+      } | null> | null;
     } | null;
   };
   agencies: {
@@ -788,10 +942,32 @@ export type UpdateAppDataMutation = {
       __typename: "Transunion";
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
+      indicativeEnrichmentStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      authAttempt?: number | null;
+      pinRequests?: number | null;
+      pinAttempts?: number | null;
+      pinCurrentAge?: number | null;
+      kbaAttempts?: number | null;
+      kbaCurrentAge?: number | null;
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
@@ -934,6 +1110,11 @@ export type UpdateAppDataMutation = {
       mortgages?: boolean | null;
     } | null;
   };
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -982,6 +1163,13 @@ export type DeleteAppDataMutation = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      display?: Array<{
+        __typename: "OnboardingStep";
+        id?: number | null;
+        active?: boolean | null;
+        complete?: boolean | null;
+        name?: string | null;
+      } | null> | null;
     } | null;
   };
   agencies: {
@@ -990,10 +1178,32 @@ export type DeleteAppDataMutation = {
       __typename: "Transunion";
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
+      indicativeEnrichmentStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      authAttempt?: number | null;
+      pinRequests?: number | null;
+      pinAttempts?: number | null;
+      pinCurrentAge?: number | null;
+      kbaAttempts?: number | null;
+      kbaCurrentAge?: number | null;
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
@@ -1136,6 +1346,11 @@ export type DeleteAppDataMutation = {
       mortgages?: boolean | null;
     } | null;
   };
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -1184,6 +1399,13 @@ export type GetAppDataQuery = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      display?: Array<{
+        __typename: "OnboardingStep";
+        id?: number | null;
+        active?: boolean | null;
+        complete?: boolean | null;
+        name?: string | null;
+      } | null> | null;
     } | null;
   };
   agencies: {
@@ -1192,10 +1414,32 @@ export type GetAppDataQuery = {
       __typename: "Transunion";
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
+      indicativeEnrichmentStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      authAttempt?: number | null;
+      pinRequests?: number | null;
+      pinAttempts?: number | null;
+      pinCurrentAge?: number | null;
+      kbaAttempts?: number | null;
+      kbaCurrentAge?: number | null;
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
@@ -1338,6 +1582,11 @@ export type GetAppDataQuery = {
       mortgages?: boolean | null;
     } | null;
   };
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -1388,6 +1637,13 @@ export type ListAppDatasQuery = {
         lastActive: number;
         lastComplete: number;
         started?: boolean | null;
+        display?: Array<{
+          __typename: "OnboardingStep";
+          id?: number | null;
+          active?: boolean | null;
+          complete?: boolean | null;
+          name?: string | null;
+        } | null> | null;
       } | null;
     };
     agencies: {
@@ -1396,10 +1652,32 @@ export type ListAppDatasQuery = {
         __typename: "Transunion";
         authenticated?: boolean | null;
         indicativeEnrichmentSuccess?: boolean | null;
+        indicativeEnrichmentStatus?: {
+          __typename: "TUStatusRef";
+          id?: number | null;
+          status?: string | null;
+          statusDescription?: string | null;
+          statusModifiedOn?: string | null;
+          statusCode?: string | null;
+        } | null;
         getAuthenticationQuestionsSuccess?: boolean | null;
+        getAuthenticationQuestionsStatus?: {
+          __typename: "TUStatusRef";
+          id?: number | null;
+          status?: string | null;
+          statusDescription?: string | null;
+          statusModifiedOn?: string | null;
+          statusCode?: string | null;
+        } | null;
         serviceBundleFulfillmentKey?: string | null;
         currentRawQuestions?: string | null;
         currentRawAuthDetails?: string | null;
+        authAttempt?: number | null;
+        pinRequests?: number | null;
+        pinAttempts?: number | null;
+        pinCurrentAge?: number | null;
+        kbaAttempts?: number | null;
+        kbaCurrentAge?: number | null;
         enrollmentKey?: string | null;
         enrollReport?: {
           __typename: "TUReportResponse";
@@ -1542,6 +1820,11 @@ export type ListAppDatasQuery = {
         mortgages?: boolean | null;
       } | null;
     };
+    status?: string | null;
+    statusReason?: string | null;
+    statusReasonDescription?: string | null;
+    lastStatusModifiedOn?: string | null;
+    nextStatusModifiedOn?: string | null;
     createdAt: string;
     updatedAt: string;
     owner?: string | null;
@@ -1592,6 +1875,13 @@ export type OnCreateAppDataSubscription = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      display?: Array<{
+        __typename: "OnboardingStep";
+        id?: number | null;
+        active?: boolean | null;
+        complete?: boolean | null;
+        name?: string | null;
+      } | null> | null;
     } | null;
   };
   agencies: {
@@ -1600,10 +1890,32 @@ export type OnCreateAppDataSubscription = {
       __typename: "Transunion";
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
+      indicativeEnrichmentStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      authAttempt?: number | null;
+      pinRequests?: number | null;
+      pinAttempts?: number | null;
+      pinCurrentAge?: number | null;
+      kbaAttempts?: number | null;
+      kbaCurrentAge?: number | null;
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
@@ -1746,6 +2058,11 @@ export type OnCreateAppDataSubscription = {
       mortgages?: boolean | null;
     } | null;
   };
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -1794,6 +2111,13 @@ export type OnUpdateAppDataSubscription = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      display?: Array<{
+        __typename: "OnboardingStep";
+        id?: number | null;
+        active?: boolean | null;
+        complete?: boolean | null;
+        name?: string | null;
+      } | null> | null;
     } | null;
   };
   agencies: {
@@ -1802,10 +2126,32 @@ export type OnUpdateAppDataSubscription = {
       __typename: "Transunion";
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
+      indicativeEnrichmentStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      authAttempt?: number | null;
+      pinRequests?: number | null;
+      pinAttempts?: number | null;
+      pinCurrentAge?: number | null;
+      kbaAttempts?: number | null;
+      kbaCurrentAge?: number | null;
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
@@ -1948,6 +2294,11 @@ export type OnUpdateAppDataSubscription = {
       mortgages?: boolean | null;
     } | null;
   };
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
@@ -1996,6 +2347,13 @@ export type OnDeleteAppDataSubscription = {
       lastActive: number;
       lastComplete: number;
       started?: boolean | null;
+      display?: Array<{
+        __typename: "OnboardingStep";
+        id?: number | null;
+        active?: boolean | null;
+        complete?: boolean | null;
+        name?: string | null;
+      } | null> | null;
     } | null;
   };
   agencies: {
@@ -2004,10 +2362,32 @@ export type OnDeleteAppDataSubscription = {
       __typename: "Transunion";
       authenticated?: boolean | null;
       indicativeEnrichmentSuccess?: boolean | null;
+      indicativeEnrichmentStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
+      getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
+      authAttempt?: number | null;
+      pinRequests?: number | null;
+      pinAttempts?: number | null;
+      pinCurrentAge?: number | null;
+      kbaAttempts?: number | null;
+      kbaCurrentAge?: number | null;
       enrollmentKey?: string | null;
       enrollReport?: {
         __typename: "TUReportResponse";
@@ -2150,6 +2530,11 @@ export type OnDeleteAppDataSubscription = {
       mortgages?: boolean | null;
     } | null;
   };
+  status?: string | null;
+  statusReason?: string | null;
+  statusReasonDescription?: string | null;
+  lastStatusModifiedOn?: string | null;
+  nextStatusModifiedOn?: string | null;
   createdAt: string;
   updatedAt: string;
   owner?: string | null;
