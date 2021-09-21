@@ -7,6 +7,10 @@ export type Transunion = {
   indicativeEnrichmentStatus?: TUStatusRef;
   getAuthenticationQuestionsSuccess?: boolean | null;
   getAuthenticationQuestionsStatus?: TUStatusRef;
+  verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+  verifyAuthenticationQuestionsOTPStatus?: TUStatusRef;
+  verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+  verifyAuthenticationQuestionsKBAStatus?: TUStatusRef;
   serviceBundleFulfillmentKey?: string | null;
   currentRawQuestions?: string | null;
   currentRawAuthDetails?: string | null;
@@ -178,6 +182,10 @@ export type TransunionInput = {
   indicativeEnrichmentStatus?: TUStatusRefInput | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
   getAuthenticationQuestionsStatus?: TUStatusRefInput | null;
+  verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+  verifyAuthenticationQuestionsOTPStatus?: TUStatusRefInput | null;
+  verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+  verifyAuthenticationQuestionsKBAStatus?: TUStatusRefInput | null;
   serviceBundleFulfillmentKey?: string | null;
   currentRawQuestions?: string | null;
   currentRawAuthDetails?: string | null;
@@ -515,6 +523,24 @@ export type PatchTransunionMutation = {
     statusModifiedOn?: string | null;
     statusCode?: string | null;
   } | null;
+  verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+  verifyAuthenticationQuestionsOTPStatus?: {
+    __typename: "TUStatusRef";
+    id?: number | null;
+    status?: string | null;
+    statusDescription?: string | null;
+    statusModifiedOn?: string | null;
+    statusCode?: string | null;
+  } | null;
+  verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+  verifyAuthenticationQuestionsKBAStatus?: {
+    __typename: "TUStatusRef";
+    id?: number | null;
+    status?: string | null;
+    statusDescription?: string | null;
+    statusModifiedOn?: string | null;
+    statusCode?: string | null;
+  } | null;
   serviceBundleFulfillmentKey?: string | null;
   currentRawQuestions?: string | null;
   currentRawAuthDetails?: string | null;
@@ -716,6 +742,24 @@ export type CreateAppDataMutation = {
       } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
       getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+      verifyAuthenticationQuestionsOTPStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+      verifyAuthenticationQuestionsKBAStatus?: {
         __typename: "TUStatusRef";
         id?: number | null;
         status?: string | null;
@@ -959,6 +1003,24 @@ export type UpdateAppDataMutation = {
         statusModifiedOn?: string | null;
         statusCode?: string | null;
       } | null;
+      verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+      verifyAuthenticationQuestionsOTPStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+      verifyAuthenticationQuestionsKBAStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
@@ -1195,6 +1257,24 @@ export type DeleteAppDataMutation = {
         statusModifiedOn?: string | null;
         statusCode?: string | null;
       } | null;
+      verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+      verifyAuthenticationQuestionsOTPStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+      verifyAuthenticationQuestionsKBAStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
@@ -1424,6 +1504,24 @@ export type GetAppDataQuery = {
       } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
       getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+      verifyAuthenticationQuestionsOTPStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+      verifyAuthenticationQuestionsKBAStatus?: {
         __typename: "TUStatusRef";
         id?: number | null;
         status?: string | null;
@@ -1669,6 +1767,24 @@ export type ListAppDatasQuery = {
           statusModifiedOn?: string | null;
           statusCode?: string | null;
         } | null;
+        verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+        verifyAuthenticationQuestionsOTPStatus?: {
+          __typename: "TUStatusRef";
+          id?: number | null;
+          status?: string | null;
+          statusDescription?: string | null;
+          statusModifiedOn?: string | null;
+          statusCode?: string | null;
+        } | null;
+        verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+        verifyAuthenticationQuestionsKBAStatus?: {
+          __typename: "TUStatusRef";
+          id?: number | null;
+          status?: string | null;
+          statusDescription?: string | null;
+          statusModifiedOn?: string | null;
+          statusCode?: string | null;
+        } | null;
         serviceBundleFulfillmentKey?: string | null;
         currentRawQuestions?: string | null;
         currentRawAuthDetails?: string | null;
@@ -1900,6 +2016,24 @@ export type OnCreateAppDataSubscription = {
       } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
       getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+      verifyAuthenticationQuestionsOTPStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+      verifyAuthenticationQuestionsKBAStatus?: {
         __typename: "TUStatusRef";
         id?: number | null;
         status?: string | null;
@@ -2143,6 +2277,24 @@ export type OnUpdateAppDataSubscription = {
         statusModifiedOn?: string | null;
         statusCode?: string | null;
       } | null;
+      verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+      verifyAuthenticationQuestionsOTPStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+      verifyAuthenticationQuestionsKBAStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
       serviceBundleFulfillmentKey?: string | null;
       currentRawQuestions?: string | null;
       currentRawAuthDetails?: string | null;
@@ -2372,6 +2524,24 @@ export type OnDeleteAppDataSubscription = {
       } | null;
       getAuthenticationQuestionsSuccess?: boolean | null;
       getAuthenticationQuestionsStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsOTPSuccess?: boolean | null;
+      verifyAuthenticationQuestionsOTPStatus?: {
+        __typename: "TUStatusRef";
+        id?: number | null;
+        status?: string | null;
+        statusDescription?: string | null;
+        statusModifiedOn?: string | null;
+        statusCode?: string | null;
+      } | null;
+      verifyAuthenticationQuestionsKBASuccess?: boolean | null;
+      verifyAuthenticationQuestionsKBAStatus?: {
         __typename: "TUStatusRef";
         id?: number | null;
         status?: string | null;

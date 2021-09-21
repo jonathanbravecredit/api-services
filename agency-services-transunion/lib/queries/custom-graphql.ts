@@ -78,6 +78,24 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
           statusModifiedOn
           statusCode
         }
+        verifyAuthenticationQuestionsOTPSuccess
+        verifyAuthenticationQuestionsOTPStatus {
+          __typename
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsKBASuccess
+        verifyAuthenticationQuestionsKBAStatus {
+          __typename
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
@@ -239,7 +257,6 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
     owner
   }
 }`;
-
 /**
  * Gets the last active task for onboarding
  * @param {ID!} id user identity id
@@ -552,6 +569,24 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
         }
         getAuthenticationQuestionsSuccess
         getAuthenticationQuestionsStatus {
+          __typename
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsOTPSuccess
+        verifyAuthenticationQuestionsOTPStatus {
+          __typename
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsKBASuccess
+        verifyAuthenticationQuestionsKBAStatus {
           __typename
           id
           status
