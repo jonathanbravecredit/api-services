@@ -46,11 +46,13 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
         lastActive
         lastComplete
         started
+        abandoned
         display {
           __typename
           id
           active
           complete
+          abandoned
           name
         }
       }
@@ -544,11 +546,13 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
         lastActive
         lastComplete
         started
+        abandoned
         display {
           __typename
           id
           active
           complete
+          abandoned
           name
         }
       }
