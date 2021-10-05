@@ -52,7 +52,6 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
           id
           active
           complete
-          abandoned
           name
         }
       }
@@ -552,7 +551,6 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
           id
           active
           complete
-          abandoned
           name
         }
       }
