@@ -46,6 +46,14 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
         lastActive
         lastComplete
         started
+        abandoned
+        display {
+          __typename
+          id
+          active
+          complete
+          name
+        }
       }
     }
     agencies {
@@ -54,10 +62,50 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
         __typename
         authenticated
         indicativeEnrichmentSuccess
+        indicativeEnrichmentStatus {
+          __typename
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         getAuthenticationQuestionsSuccess
+        getAuthenticationQuestionsStatus {
+          __typename
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsOTPSuccess
+        verifyAuthenticationQuestionsOTPStatus {
+          __typename
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsKBASuccess
+        verifyAuthenticationQuestionsKBAStatus {
+          __typename
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        authAttempt
+        pinRequests
+        pinAttempts
+        pinCurrentAge
+        kbaAttempts
+        kbaCurrentAge
         enrollmentKey
         enrollReport {
           __typename
@@ -165,6 +213,11 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
             totalOpenDisputedItems
             totalPVDisputedItemCount
           }
+          pvDisputedItems {
+            __typename
+            pvTradelines
+            pvPublicRecords
+          }
           agencyName
           openedOn
           closedOn
@@ -195,12 +248,16 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
         mortgages
       }
     }
+    status
+    statusReason
+    statusReasonDescription
+    lastStatusModifiedOn
+    nextStatusModifiedOn
     createdAt
     updatedAt
     owner
   }
 }`;
-
 /**
  * Gets the last active task for onboarding
  * @param {ID!} id user identity id
@@ -488,6 +545,14 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
         lastActive
         lastComplete
         started
+        abandoned
+        display {
+          __typename
+          id
+          active
+          complete
+          name
+        }
       }
     }
     agencies {
@@ -496,10 +561,50 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
         __typename
         authenticated
         indicativeEnrichmentSuccess
+        indicativeEnrichmentStatus {
+          __typename
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         getAuthenticationQuestionsSuccess
+        getAuthenticationQuestionsStatus {
+          __typename
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsOTPSuccess
+        verifyAuthenticationQuestionsOTPStatus {
+          __typename
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
+        verifyAuthenticationQuestionsKBASuccess
+        verifyAuthenticationQuestionsKBAStatus {
+          __typename
+          id
+          status
+          statusDescription
+          statusModifiedOn
+          statusCode
+        }
         serviceBundleFulfillmentKey
         currentRawQuestions
         currentRawAuthDetails
+        authAttempt
+        pinRequests
+        pinAttempts
+        pinCurrentAge
+        kbaAttempts
+        kbaCurrentAge
         enrollmentKey
         enrollReport {
           __typename
@@ -607,6 +712,11 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
             totalOpenDisputedItems
             totalPVDisputedItemCount
           }
+          pvDisputedItems {
+            __typename
+            pvTradelines
+            pvPublicRecords
+          }
           agencyName
           openedOn
           closedOn
@@ -637,11 +747,17 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
         mortgages
       }
     }
+    status
+    statusReason
+    statusReasonDescription
+    lastStatusModifiedOn
+    nextStatusModifiedOn
     createdAt
     updatedAt
     owner
   }
 }`;
+
 /**
  * Gets the transunion disputes preflight status
  * @param {ID!} id user identity id
