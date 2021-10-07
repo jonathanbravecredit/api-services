@@ -248,11 +248,37 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
         mortgages
       }
     }
+    dashboard {
+      __typename
+      isLoaded
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCards {
+        __typename
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
+    }
     status
     statusReason
     statusReasonDescription
     lastStatusModifiedOn
     nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner
@@ -747,17 +773,42 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
         mortgages
       }
     }
+    dashboard {
+      __typename
+      isLoaded
+      negativeFlagged
+      negativeCardCount
+      negativeCardStatus
+      negativeReviewed
+      negativeStatus
+      forbearanceFlagged
+      forbearanceCardStatus
+      forbearanceReviewed
+      forbearanceStatus
+      databreachFlagged
+      databreachCards {
+        __typename
+        reason
+        reviewed
+        condition
+        subscriber
+        paragraphs
+      }
+      databreachCardStatus
+      databreachReviewed
+      databreachStatus
+    }
     status
     statusReason
     statusReasonDescription
     lastStatusModifiedOn
     nextStatusModifiedOn
+    isLoaded
     createdAt
     updatedAt
     owner
   }
 }`;
-
 /**
  * Gets the transunion disputes preflight status
  * @param {ID!} id user identity id
