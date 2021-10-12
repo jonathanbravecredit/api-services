@@ -314,7 +314,7 @@ export type DataBreachCardInput = {
   reviewed?: boolean | null;
   condition?: string | null;
   subscriber?: string | null;
-  paragraphs?: string | null;
+  paragraphs?: Array<string | null> | null;
 };
 
 export type ModelAppDataConditionInput = {
@@ -515,7 +515,7 @@ export type DataBreachCard = {
   reviewed?: boolean | null;
   condition?: string | null;
   subscriber?: string | null;
-  paragraphs?: string | null;
+  paragraphs?: Array<string | null> | null;
 };
 
 export type UpdateAppDataInput = {
@@ -1007,7 +1007,7 @@ export type CreateAppDataMutation = {
       reviewed?: boolean | null;
       condition?: string | null;
       subscriber?: string | null;
-      paragraphs?: string | null;
+      paragraphs?: Array<string | null> | null;
     } | null> | null;
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
@@ -1288,7 +1288,7 @@ export type UpdateAppDataMutation = {
       reviewed?: boolean | null;
       condition?: string | null;
       subscriber?: string | null;
-      paragraphs?: string | null;
+      paragraphs?: Array<string | null> | null;
     } | null> | null;
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
@@ -1569,7 +1569,7 @@ export type DeleteAppDataMutation = {
       reviewed?: boolean | null;
       condition?: string | null;
       subscriber?: string | null;
-      paragraphs?: string | null;
+      paragraphs?: Array<string | null> | null;
     } | null> | null;
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
@@ -1850,7 +1850,7 @@ export type GetAppDataQuery = {
       reviewed?: boolean | null;
       condition?: string | null;
       subscriber?: string | null;
-      paragraphs?: string | null;
+      paragraphs?: Array<string | null> | null;
     } | null> | null;
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
@@ -2133,7 +2133,7 @@ export type ListAppDatasQuery = {
         reviewed?: boolean | null;
         condition?: string | null;
         subscriber?: string | null;
-        paragraphs?: string | null;
+        paragraphs?: Array<string | null> | null;
       } | null> | null;
       databreachCardStatus?: string | null;
       databreachReviewed?: boolean | null;
@@ -2416,7 +2416,7 @@ export type OnCreateAppDataSubscription = {
       reviewed?: boolean | null;
       condition?: string | null;
       subscriber?: string | null;
-      paragraphs?: string | null;
+      paragraphs?: Array<string | null> | null;
     } | null> | null;
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
@@ -2697,7 +2697,7 @@ export type OnUpdateAppDataSubscription = {
       reviewed?: boolean | null;
       condition?: string | null;
       subscriber?: string | null;
-      paragraphs?: string | null;
+      paragraphs?: Array<string | null> | null;
     } | null> | null;
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
@@ -2978,7 +2978,7 @@ export type OnDeleteAppDataSubscription = {
       reviewed?: boolean | null;
       condition?: string | null;
       subscriber?: string | null;
-      paragraphs?: string | null;
+      paragraphs?: Array<string | null> | null;
     } | null> | null;
     databreachCardStatus?: string | null;
     databreachReviewed?: boolean | null;
