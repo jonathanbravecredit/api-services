@@ -653,7 +653,7 @@ export const StartDispute = async (
     console.log('*** IN START DISPUTE ***');
     const prepped = await qrys.getDataForStartDispute(payload);
     const reprepped = { data: prepped.data, params: payload.disputes };
-    const resp = await soap.parseAndSendPayload<interfaces.IStartDisputeResponse>(
+    const resp = await soap.parseAndDontSendPayload<interfaces.IStartDisputeResponse>(
       accountCode,
       username,
       agent,
