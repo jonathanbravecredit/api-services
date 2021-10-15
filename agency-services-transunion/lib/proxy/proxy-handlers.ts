@@ -622,7 +622,7 @@ export const StartDispute = async (
   auth: string,
   identityId: string,
 ): Promise<{ success: boolean; error?: any }> => {
-  const live = false;
+  const live = false; // !!! IMPORTANT FLAG TO DISABLE MOCKS !!!
   const payload: interfaces.IStartDisputePayload = {
     id: identityId,
     ...JSON.parse(message),
@@ -816,6 +816,7 @@ export const GetInvestigationResults = async (
   auth: string,
   identityId: string,
 ): Promise<{ success: boolean; error?: any; data?: any }> => {
+  const live = false; // !!! IMPORTANT FLAG TO DISABLE MOCKS !!!
   // validate incoming message
   const payload: interfaces.IGetInvestigationResultsRequest = {
     id: identityId,
@@ -837,20 +838,20 @@ export const GetInvestigationResults = async (
     // get / parse data needed
     const prepped = await qrys.getDataForGetInvestigationResults(payload); // same data
     const reprepped = { data: prepped.data, params: payload.disputeId };
-    // const resp = await soap.parseAndSendPayload<interfaces.IGetInvestigationResultsResponse>(
-    //   accountCode,
-    //   username,
-    //   agent,
-    //   auth,
-    //   payload,
-    //   'GetInvestigationResults',
-    //   parserOptions,
-    // );
-
-    const resp = await soap.processMockRequest<interfaces.IGetInvestigationResultsResponse>(
-      GET_INVESTIGATION_RESULTS_RESPONSE,
-      parserOptions,
-    );
+    let resp = live
+      ? await soap.parseAndSendPayload<interfaces.IGetInvestigationResultsResponse>(
+          accountCode,
+          username,
+          agent,
+          auth,
+          reprepped,
+          'GetInvestigationResults',
+          parserOptions,
+        )
+      : await soap.processMockRequest<interfaces.IGetInvestigationResultsResponse>(
+          GET_INVESTIGATION_RESULTS_RESPONSE,
+          parserOptions,
+        );
 
     // get the specific response from parsed object
     const data = resp.Envelope.Body.GetInvestigationResultsResponse.GetInvestigationResultsResult;
