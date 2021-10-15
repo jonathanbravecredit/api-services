@@ -201,7 +201,7 @@ export const createStartDisputePersonalPayload = ({
 export const parseDisputeTradelineToLineItem = (
   disputes: IProcessDisputeTradelineResult[],
 ): ILineItem[] | ILineItem | null => {
-  if (!disputes.length) return null;
+  if (!disputes?.length) return null;
   return disputes
     .map((item) => {
       const reason = item?.result?.data?.reasons;
