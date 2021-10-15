@@ -10,6 +10,7 @@ import { GET_INVESTIGATION_RESULTS_RESPONSE } from 'lib/examples/mocks/GetInvest
 import * as qrys from 'lib/proxy/proxy-queries';
 import * as interfaces from 'lib/interfaces';
 import * as tu from 'lib/transunion';
+import { START_DISPUTE_RESPONSE } from 'lib/examples/mocks/StartDisputeResponse';
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -621,6 +622,7 @@ export const StartDispute = async (
   auth: string,
   identityId: string,
 ): Promise<{ success: boolean; error?: any }> => {
+  const live = false;
   const payload: interfaces.IStartDisputePayload = {
     id: identityId,
     ...JSON.parse(message),
@@ -649,45 +651,89 @@ export const StartDispute = async (
   const soap = new SoapAid(tu.parseStartDispute, tu.formatStartDispute, tu.createStartDispute, payloadMethod);
   const sync = new Sync(tu.enrichDisputeData);
 
-  try {
-    console.log('*** IN START DISPUTE ***');
-    const prepped = await qrys.getDataForStartDispute(payload);
-    const reprepped = { data: prepped.data, disputes: payload.disputes };
-    const resp = await soap.parseAndDontSendPayload<interfaces.IStartDisputeResponse>(
-      accountCode,
-      username,
-      agent,
-      auth,
-      reprepped,
-      'StartDispute',
-      parserOptions,
-    );
+  if (live) {
+    try {
+      console.log('*** IN START DISPUTE ***');
+      const prepped = await qrys.getDataForStartDispute(payload);
+      const reprepped = { data: prepped.data, disputes: payload.disputes };
+      const resp = await soap.parseAndSendPayload<interfaces.IStartDisputeResponse>(
+        accountCode,
+        username,
+        agent,
+        auth,
+        reprepped,
+        'StartDispute',
+        parserOptions,
+      );
 
-    // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IStartDisputeResult>(resp, 'StartDisputeResult');
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
-    const bundle: interfaces.IStartDisputeBundle = {
-      startDisputeResult: data,
-      disputes: payload.disputes,
-    };
+      // get the specific response from parsed object
+      const data = returnNestedObject<interfaces.IStartDisputeResult>(resp, 'StartDisputeResult');
+      const responseType = data.ResponseType;
+      const error = data.ErrorResponse;
+      const bundle: interfaces.IStartDisputeBundle = {
+        startDisputeResult: data,
+        disputes: payload.disputes,
+      };
 
-    console.log('start dispute response data ===> ', JSON.stringify(data));
-    console.log('start dispute response type ===> ', JSON.stringify(responseType));
-    console.log('start dispute response error ===> ', JSON.stringify(error));
+      console.log('start dispute response data ===> ', JSON.stringify(data));
+      console.log('start dispute response type ===> ', JSON.stringify(responseType));
+      console.log('start dispute response error ===> ', JSON.stringify(error));
 
-    let response;
-    if (responseType.toLowerCase() === 'success') {
-      const synced = await sync.syncData({ id: payload.id }, bundle);
-      response = synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
-    } else {
-      response = { success: false, error: error };
+      let response;
+      if (responseType.toLowerCase() === 'success') {
+        const synced = await sync.syncData({ id: payload.id }, bundle);
+        response = synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
+      } else {
+        response = { success: false, error: error };
+      }
+      console.log('response ===> ', response);
+      return response;
+    } catch (err) {
+      console.log('error ===> ', err);
+      return { success: false, error: err };
     }
-    console.log('response ===> ', response);
-    return response;
-  } catch (err) {
-    console.log('error ===> ', err);
-    return { success: false, error: err };
+  } else {
+    try {
+      console.log('*** IN START DISPUTE ***');
+      const prepped = await qrys.getDataForStartDispute(payload);
+      const reprepped = { data: prepped.data, disputes: payload.disputes };
+      const resp = await soap.parseAndDontSendPayload<interfaces.IStartDisputeResponse>(
+        accountCode,
+        username,
+        agent,
+        auth,
+        reprepped,
+        'StartDispute',
+        parserOptions,
+      );
+
+      // get the specific response from parsed object
+      const mockResp = tu.parseStartDispute(START_DISPUTE_RESPONSE, parserOptions);
+      const data = returnNestedObject<interfaces.IStartDisputeResult | undefined>(mockResp, 'StartDisputeResult');
+      const responseType = data?.ResponseType;
+      const error = data?.ErrorResponse;
+      const bundle: interfaces.IStartDisputeBundle = {
+        startDisputeResult: data,
+        disputes: payload.disputes,
+      };
+
+      console.log('start dispute response data ===> ', JSON.stringify(data));
+      console.log('start dispute response type ===> ', JSON.stringify(responseType));
+      console.log('start dispute response error ===> ', JSON.stringify(error));
+
+      let response;
+      if (responseType.toLowerCase() === 'success') {
+        const synced = await sync.syncData({ id: payload.id }, bundle);
+        response = synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
+      } else {
+        response = { success: false, error: error };
+      }
+      console.log('response ===> ', response);
+      return response;
+    } catch (err) {
+      console.log('error ===> ', err);
+      return { success: false, error: err };
+    }
   }
 };
 
