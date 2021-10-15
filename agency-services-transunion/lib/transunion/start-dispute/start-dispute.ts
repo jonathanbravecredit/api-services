@@ -568,6 +568,12 @@ export const createStartDispute = (msg: IStartDispute): string => {
             'data:RequestKey': textConstructor(`BC-${uuid.v4()}`),
             'data:ClientKey': textConstructor(msg.request.ClientKey),
             // 'data:Attachment': mappedAttachments,
+            'data:AdditionalInputs': {
+              'data:Data': {
+                'data:Name': textConstructor('DisputeVersion'),
+                'data:Value': textConstructor('2'),
+              },
+            },
             'data:Customer': {
               'data:CurrentAddress': {
                 'data:AddressLine1': textConstructor(msg.request.Customer.CurrentAddress.AddressLine1),
