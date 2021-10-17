@@ -66,6 +66,7 @@ export interface IGetDisputeStatusPayload {
     };
     Ssn: string;
   };
+  DisputeId?: string;
   EnrollmentKey: string;
 }
 
@@ -124,4 +125,13 @@ export interface IGetDisputeStatusResponse {
 
 export interface IGetDisputeStatusResult extends IStandardResponse {
   DisputeStatus: string;
+}
+
+// By ID specific
+export interface IGetDisputeStatusByIdRequest {
+  disputeId: string;
+}
+
+export interface IGetDisputeStatusByIdPayload extends IGetDisputeStatusByIdRequest {
+  id: string;
 }

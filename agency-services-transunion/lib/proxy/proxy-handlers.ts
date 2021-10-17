@@ -11,6 +11,7 @@ import * as qrys from 'lib/proxy/proxy-queries';
 import * as interfaces from 'lib/interfaces';
 import * as tu from 'lib/transunion';
 import { START_DISPUTE_RESPONSE } from 'lib/examples/mocks/StartDisputeResponse';
+import { GET_ALERT_NOTIFICATIONS_RESPONSE } from 'lib/examples/mocks/GetAlertNotificationsResponse';
 
 const GO_LIVE = false;
 
@@ -563,11 +564,83 @@ export const GetDisputeStatus = async (
   agent: https.Agent,
   auth: string,
   identityId: string,
-): Promise<{ success: boolean; error?: interfaces.IErrorResponse | interfaces.INil; data?: any }> => {
+): Promise<{
+  success: boolean;
+  error?: interfaces.IErrorResponse | interfaces.INil;
+  data?: interfaces.IGetDisputeStatusResult | null;
+}> => {
   // validate incoming message
   const payload: interfaces.IGenericRequest = { id: identityId };
   const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
-  if (!validate(payload)) throw `Malformed message=${message}`;
+  if (!validate(payload)) throw `Malformed payload=${payload}`;
+
+  //create helper classes
+  const soap = new SoapAid(
+    tu.parseGetDisputeStatus,
+    tu.formatGetDisputeStatus,
+    tu.createGetDisputeStatus,
+    tu.createGetDisputeStatusPayload,
+  );
+
+  try {
+    // get / parse data needed to process request
+    const prepped = await qrys.getDataForGetDisputeStatus(payload);
+    const resp = await soap.parseAndSendPayload<interfaces.IGetDisputeStatusResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      prepped.data,
+      'GetDisputeStatus',
+      parserOptions,
+    );
+
+    // get the specific response from parsed object
+    const data = returnNestedObject<interfaces.IGetDisputeStatusResult>(resp, 'GetDisputeStatusResult');
+    const responseType = data.ResponseType;
+    const error = data.ErrorResponse;
+
+    const response =
+      responseType.toLowerCase() === 'success'
+        ? { success: true, error: error, data: data }
+        : { success: false, error: error, data: null };
+    console.log('response ===> ', response);
+    return response;
+  } catch (err) {
+    console.log('error ===> ', err);
+    return { success: false, error: err, data: null };
+  }
+};
+
+/**
+ * Confirms eligibility to open a dispute
+ *  (Optional) ID can be passsed to check status of open dispute
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const GetDisputeStatusByID = async (
+  accountCode: string,
+  username: string,
+  message: string,
+  agent: https.Agent,
+  auth: string,
+  identityId: string,
+): Promise<{
+  success: boolean;
+  error?: interfaces.IErrorResponse | interfaces.INil;
+  data?: interfaces.IGetDisputeStatusResult | null;
+}> => {
+  // validate incoming message
+  const payload: interfaces.IGetDisputeStatusByIdPayload = {
+    id: identityId,
+    ...JSON.parse(message),
+  };
+  const validate = ajv.getSchema<interfaces.IGetDisputeStatusByIdPayload>('getDisputeStatusById');
+  if (!validate(payload)) throw `Malformed payload=${payload}`;
 
   //create helper classes
   const soap = new SoapAid(
@@ -991,7 +1064,7 @@ export const DisputeInflightCheck = async (
   //   if status complete, then call GetInvestigationResults
   //    - send notification to the user that their disputes are ready
   // other wise it is cancelled and send notification that the dispute was calncelled
-  const live = true; //GO_LIVE;
+  const live = GO_LIVE;
 
   // const sync = new Sync(() => { });// need to create the enricher
   const soap = new SoapAid(
@@ -1002,9 +1075,11 @@ export const DisputeInflightCheck = async (
   );
 
   // call GetAlertsNotificationsForAllUsers
+  let notifications: interfaces.IAlertNotification[] = [];
   try {
-    let resp = live
-      ? await soap.parseAndSendPayload<any>(
+    console.log('*** IN GET ALERT NOTIFICATIONS ***');
+    let resp: interfaces.IGetAlertNotificationsResponse = live
+      ? await soap.parseAndSendPayload<interfaces.IGetAlertNotificationsResponse>(
           accountCode,
           username,
           agent,
@@ -1013,7 +1088,7 @@ export const DisputeInflightCheck = async (
           'GetAlertNotificationsForAllUsers',
           parserOptions,
         )
-      : await soap.parseAndDontSendPayload<any>(
+      : await soap.parseAndDontSendPayload<interfaces.IGetAlertNotificationsResponse>(
           accountCode,
           username,
           agent,
@@ -1022,13 +1097,62 @@ export const DisputeInflightCheck = async (
           'GetAlertNotificationsForAllUsers',
           parserOptions,
         );
+
+    if (!live) {
+      resp = GET_ALERT_NOTIFICATIONS_RESPONSE; // already parsed
+    }
     console.log('get alerts resp ===> ', JSON.stringify(resp));
-    return { success: true, error: false, data: resp };
+    const data = returnNestedObject<interfaces.IGetAlertNotificationsForAllUsersResult>(
+      resp,
+      'GetAlertNotificationsForAllUsersResult',
+    );
+    const responseType = data.ResponseType;
+    const error = data.ErrorResponse;
+    if (responseType.toLowerCase() !== 'success') {
+      throw error;
+    }
+    notifications = data?.AlertNotifications?.AlertNotification;
   } catch (err) {
     return { success: false, error: err };
   }
 
-  // loop through and update results status to complete
+  // loop through and check the status of each result
+  let allDisputeStatusUpdates: {
+    success: boolean;
+    error?: interfaces.IErrorResponse | interfaces.INil;
+    data?: interfaces.IGetDisputeStatusResult | null;
+  }[];
+  if (notifications?.length) {
+    try {
+      console.log('*** IN GET DISPUTE STATUS ***');
+      // alerts come with client keys which are also our keys
+      allDisputeStatusUpdates = await Promise.all(
+        notifications.map(async (alert) => {
+          const message = JSON.stringify({ disputeId: `${alert.AlertId}` });
+          return await GetDisputeStatusByID(accountCode, username, message, agent, auth, alert.ClientKey);
+        }),
+      );
+      console.log('all status ===> ', JSON.stringify(allDisputeStatusUpdates));
+    } catch (err) {
+      return { success: false, error: err };
+    }
+  }
+
+  // // loop through and update the status of each result
+  // if (notifications?.length) {
+  //   try {
+  //     console.log('*** IN GET DISPUTE STATUS ***');
+  //     // alerts come with client keys which are also our keys
+  //     allDisputeStatusUpdates = await Promise.all(
+  //       notifications.map(async (alert) => {
+  //         return await GetDisputeStatus(accountCode, username, '', agent, auth, alert.ClientKey);
+  //       }),
+  //     );
+  //     console.log('all status ===> ', JSON.stringify(allDisputeStatusUpdates));
+  //   } catch (err) {
+  //     return { success: false, error: err };
+  //   }
+  // }
 };
 
 /**

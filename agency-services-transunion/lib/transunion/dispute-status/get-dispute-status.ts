@@ -17,7 +17,10 @@ import { MONTH_MAP } from 'lib/data/constants';
  * @param data
  * @returns IEnrollPayload
  */
-export const createGetDisputeStatusPayload = (data: IGetDisputeStatusGraphQLResponse): IGetDisputeStatusPayload => {
+export const createGetDisputeStatusPayload = (
+  data: IGetDisputeStatusGraphQLResponse,
+  disputeId?: string,
+): IGetDisputeStatusPayload => {
   const id = data.data.getAppData.id?.split(':')?.pop();
   const attrs = data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;
@@ -52,15 +55,16 @@ export const createGetDisputeStatusPayload = (data: IGetDisputeStatusGraphQLResp
       },
       Ssn: attrs.ssn?.full || '',
     },
+    DisputeId: disputeId,
     EnrollmentKey: data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey,
   };
 };
 
 /**
  * This method packages the message in a request body and adds account information
- * @param {string} accountCode Brave TU account code (can be overriden if passed as part of message)
- * @param {string} accountName Brave TU account name (can be overriden if passed as part of message)
- * @param {IIGetDisputeStatusMsg} msg
+ * @param accountCode Brave TU account code (can be overriden if passed as part of message)
+ * @param accountName Brave TU account name (can be overriden if passed as part of message)
+ * @param msg
  * @returns
  */
 export const formatGetDisputeStatus = (
@@ -82,7 +86,7 @@ export const formatGetDisputeStatus = (
 
 /**
  * This method transforms the JSON message to the XML request
- * @param {IGetDisputeStatus} msg The packaged message to send in XML format to TU
+ * @param msg The packaged message to send in XML format to TU
  * @returns
  */
 export const createGetDisputeStatus = (msg: IGetDisputeStatus): string => {

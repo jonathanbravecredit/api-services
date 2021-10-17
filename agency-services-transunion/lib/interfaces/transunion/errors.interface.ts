@@ -27,5 +27,5 @@ export interface IErrorCode {
 }
 
 export interface INil {
-  nil: true;
+  nil: boolean;
 }
