@@ -183,6 +183,96 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
+        disputeCurrent {
+          __typename
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            __typename
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            __typename
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          pvDisputedItems {
+            __typename
+            pvTradelines
+            pvPublicRecords
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
+        disputeHistorical {
+          __typename
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            __typename
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            __typename
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          pvDisputedItems {
+            __typename
+            pvTradelines
+            pvPublicRecords
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
         disputes {
           __typename
           id
@@ -708,6 +798,96 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
         disputeEnrolled
         disputeEnrolledOn
         disputeStatus
+        disputeCurrent {
+          __typename
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            __typename
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            __typename
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          pvDisputedItems {
+            __typename
+            pvTradelines
+            pvPublicRecords
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
+        disputeHistorical {
+          __typename
+          id
+          appDataId
+          disputeId
+          disputeStatus
+          disputeLetterCode
+          disputeLetterContent
+          openDisputes {
+            __typename
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          closedDisputes {
+            __typename
+            estimatedCompletionDate
+            lastUpdatedDate
+            openDate
+            requestedDate
+            totalClosedDisputedItems
+            totalDisputedItems
+            totalOpenDisputedItems
+            totalPVDisputedItemCount
+          }
+          pvDisputedItems {
+            __typename
+            pvTradelines
+            pvPublicRecords
+          }
+          agencyName
+          openedOn
+          closedOn
+          disputeItems
+          disputeInvestigationResults
+          disputeCreditBureau
+          notificationStatus
+          notificationMessage
+          notificationSentOn
+        }
         disputes {
           __typename
           id

@@ -648,92 +648,61 @@ export const StartDispute = async (
     payloadMethod = tu.createStartDisputePersonalPayload;
   }
   //create helper classes
-  const soap = new SoapAid(tu.parseStartDispute, tu.formatStartDispute, tu.createStartDispute, payloadMethod);
   const sync = new Sync(tu.enrichDisputeData);
+  const soap = new SoapAid(tu.parseStartDispute, tu.formatStartDispute, tu.createStartDispute, payloadMethod);
+  try {
+    console.log('*** IN START DISPUTE ***');
+    const prepped = await qrys.getDataForStartDispute(payload);
+    const reprepped = { data: prepped.data, disputes: payload.disputes };
+    let resp = live
+      ? await soap.parseAndSendPayload<interfaces.IStartDisputeResponse>(
+          accountCode,
+          username,
+          agent,
+          auth,
+          reprepped,
+          'StartDispute',
+          parserOptions,
+        )
+      : await soap.parseAndDontSendPayload<interfaces.IStartDisputeResponse>(
+          accountCode,
+          username,
+          agent,
+          auth,
+          reprepped,
+          'StartDispute',
+          parserOptions,
+        );
 
-  if (live) {
-    try {
-      console.log('*** IN START DISPUTE ***');
-      const prepped = await qrys.getDataForStartDispute(payload);
-      const reprepped = { data: prepped.data, disputes: payload.disputes };
-      const resp = await soap.parseAndSendPayload<interfaces.IStartDisputeResponse>(
-        accountCode,
-        username,
-        agent,
-        auth,
-        reprepped,
-        'StartDispute',
-        parserOptions,
-      );
-
-      // get the specific response from parsed object
-      const data = returnNestedObject<interfaces.IStartDisputeResult>(resp, 'StartDisputeResult');
-      const responseType = data.ResponseType;
-      const error = data.ErrorResponse;
-      const bundle: interfaces.IStartDisputeBundle = {
-        startDisputeResult: data,
-        disputes: payload.disputes,
-      };
-
-      console.log('start dispute response data ===> ', JSON.stringify(data));
-      console.log('start dispute response type ===> ', JSON.stringify(responseType));
-      console.log('start dispute response error ===> ', JSON.stringify(error));
-
-      let response;
-      if (responseType.toLowerCase() === 'success') {
-        const synced = await sync.syncData({ id: payload.id }, bundle);
-        response = synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
-      } else {
-        response = { success: false, error: error };
-      }
-      console.log('response ===> ', response);
-      return response;
-    } catch (err) {
-      console.log('error ===> ', err);
-      return { success: false, error: err };
+    // get the specific response from parsed object
+    if (!live) {
+      resp = tu.parseStartDispute(START_DISPUTE_RESPONSE, parserOptions);
     }
-  } else {
-    try {
-      console.log('*** IN START DISPUTE ***');
-      const prepped = await qrys.getDataForStartDispute(payload);
-      const reprepped = { data: prepped.data, disputes: payload.disputes };
-      const resp = await soap.parseAndDontSendPayload<interfaces.IStartDisputeResponse>(
-        accountCode,
-        username,
-        agent,
-        auth,
-        reprepped,
-        'StartDispute',
-        parserOptions,
-      );
 
-      // get the specific response from parsed object
-      const mockResp = tu.parseStartDispute(START_DISPUTE_RESPONSE, parserOptions);
-      const data = returnNestedObject<interfaces.IStartDisputeResult | undefined>(mockResp, 'StartDisputeResult');
-      const responseType = data?.ResponseType;
-      const error = data?.ErrorResponse;
-      const bundle: interfaces.IStartDisputeBundle = {
-        startDisputeResult: data,
-        disputes: payload.disputes,
-      };
+    const data = returnNestedObject<interfaces.IStartDisputeResult>(resp, 'StartDisputeResult');
+    const responseType = data.ResponseType;
+    const error = data.ErrorResponse;
+    const bundle: interfaces.IStartDisputeBundle = {
+      startDisputeResult: data,
+      disputes: payload.disputes,
+    };
 
-      console.log('start dispute response data ===> ', JSON.stringify(data));
-      console.log('start dispute response type ===> ', JSON.stringify(responseType));
-      console.log('start dispute response error ===> ', JSON.stringify(error));
+    console.log('start dispute response data ===> ', JSON.stringify(data));
+    console.log('start dispute response type ===> ', JSON.stringify(responseType));
+    console.log('start dispute response error ===> ', JSON.stringify(error));
 
-      let response;
-      if (responseType.toLowerCase() === 'success') {
-        const synced = await sync.syncData({ id: payload.id }, bundle);
-        response = synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
-      } else {
-        response = { success: false, error: error };
-      }
-      console.log('response ===> ', response);
-      return response;
-    } catch (err) {
-      console.log('error ===> ', err);
-      return { success: false, error: err };
+    let response;
+    if (responseType.toLowerCase() === 'success') {
+      const synced = await sync.syncData({ id: payload.id }, bundle);
+      response = synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
+    } else {
+      response = { success: false, error: error };
     }
+    console.log('response ===> ', response);
+    return response;
+  } catch (err) {
+    console.log('error ===> ', err);
+    return { success: false, error: err };
   }
 };
 
@@ -848,10 +817,22 @@ export const GetInvestigationResults = async (
           'GetInvestigationResults',
           parserOptions,
         )
-      : await soap.processMockRequest<interfaces.IGetInvestigationResultsResponse>(
-          GET_INVESTIGATION_RESULTS_RESPONSE,
+      : await soap.parseAndDontSendPayload<interfaces.IGetInvestigationResultsResponse>(
+          accountCode,
+          username,
+          agent,
+          auth,
+          reprepped,
+          'GetInvestigationResults',
           parserOptions,
         );
+
+    if (!live) {
+      resp = await soap.processMockRequest<interfaces.IGetInvestigationResultsResponse>(
+        GET_INVESTIGATION_RESULTS_RESPONSE,
+        parserOptions,
+      );
+    }
 
     // get the specific response from parsed object
     const data = resp.Envelope.Body.GetInvestigationResultsResponse.GetInvestigationResultsResult;

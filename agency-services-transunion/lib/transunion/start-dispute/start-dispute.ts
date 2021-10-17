@@ -696,6 +696,8 @@ export const enrichDisputeData = (
       ...state.agencies,
       transunion: {
         ...state.agencies?.transunion,
+        disputeStatus: dispute.disputeStatus,
+        disputeCurrent: dispute,
         disputes: [...oldDisutes, dispute].filter(Boolean),
       },
     },
