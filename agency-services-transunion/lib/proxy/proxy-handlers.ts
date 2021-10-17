@@ -12,6 +12,7 @@ import * as interfaces from 'lib/interfaces';
 import * as tu from 'lib/transunion';
 import { START_DISPUTE_RESPONSE } from 'lib/examples/mocks/StartDisputeResponse';
 import { GET_ALERT_NOTIFICATIONS_RESPONSE } from 'lib/examples/mocks/GetAlertNotificationsResponse';
+import { IGetDisputeStatusGraphQLResponse } from 'lib/interfaces';
 
 const GO_LIVE = false;
 
@@ -652,7 +653,14 @@ export const GetDisputeStatusByID = async (
 
   try {
     // get / parse data needed to process request
-    const prepped = await qrys.getDataForGetDisputeStatus(payload);
+    const prepped: { data: interfaces.IGetDisputeStatusGraphQLResponse } = await qrys.getDataForGetDisputeStatus(
+      payload,
+    );
+    if (!prepped.data?.data?.getAppData?.id) {
+      console.log('error db query ===> ', prepped.data);
+      throw 'No record in db';
+    }
+
     const resp = await soap.parseAndSendPayload<interfaces.IGetDisputeStatusResponse>(
       accountCode,
       username,
