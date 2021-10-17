@@ -79,18 +79,13 @@ functions:
     timeout: 30
     layers:
       - { Ref: TuCertsLambdaLayer }
-  # postRequests:
-  #   handler: src/handlers/postRequests.main
-  #   layers:
-  #     - { Ref: TuCertsLambdaLayer }
-  #   events:
-  #     - sns:
-  #         arn: ${self:provider.environment.SNS_PROXY_ARN}
-  #         topicName: SnsProxyTopic
-  #         integration: lambda-proxy
-  #         filterPolicy:
-  #           service:
-  #             - 'transunion'
+  alertNotificationService:
+    handler: src/handlers/transunion/alertNotificationService.main
+    timeout: 30
+    layers:
+      - { Ref: TuCertsLambdaLayer }
+    # events:
+    #   - schedule: cron(0 16 * * ? *)
 
   # SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
 

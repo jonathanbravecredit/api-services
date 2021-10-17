@@ -12,6 +12,8 @@ import * as interfaces from 'lib/interfaces';
 import * as tu from 'lib/transunion';
 import { START_DISPUTE_RESPONSE } from 'lib/examples/mocks/StartDisputeResponse';
 
+const GO_LIVE = false;
+
 const parserOptions = {
   attributeNamePrefix: '',
   ignoreAttributes: false,
@@ -622,7 +624,7 @@ export const StartDispute = async (
   auth: string,
   identityId: string,
 ): Promise<{ success: boolean; error?: any }> => {
-  const live = false; // !!! IMPORTANT FLAG TO DISABLE MOCKS !!!
+  const live = GO_LIVE; // !!! IMPORTANT FLAG TO DISABLE MOCKS !!!
   const payload: interfaces.IStartDisputePayload = {
     id: identityId,
     ...JSON.parse(message),
@@ -785,7 +787,7 @@ export const GetInvestigationResults = async (
   auth: string,
   identityId: string,
 ): Promise<{ success: boolean; error?: any; data?: any }> => {
-  const live = false; // !!! IMPORTANT FLAG TO DISABLE MOCKS !!!
+  const live = GO_LIVE; // !!! IMPORTANT FLAG TO DISABLE MOCKS !!!
   // validate incoming message
   const payload: interfaces.IGetInvestigationResultsRequest = {
     id: identityId,
@@ -969,6 +971,64 @@ export const DisputePreflightCheck = async (
     console.log('error ===> ', err);
     return { success: false, error: err };
   }
+};
+
+/**
+ * This performs the inflight check nightly and returns disputes that have been updated
+ */
+export const DisputeInflightCheck = async (
+  accountCode: string,
+  username: string,
+  message: string,
+  agent: https.Agent,
+  auth: string,
+  identityId: string,
+): Promise<{ success: boolean; error?: any; data?: any }> => {
+  // no payload is needed
+  // call GetAlertsNotificationsForAlLUsers
+  //  returns all incremental changes since last call
+  // loop through and call GetDisputeStatus
+  //   if status complete, then call GetInvestigationResults
+  //    - send notification to the user that their disputes are ready
+  // other wise it is cancelled and send notification that the dispute was calncelled
+  const live = true; //GO_LIVE;
+
+  // const sync = new Sync(() => { });// need to create the enricher
+  const soap = new SoapAid(
+    tu.parseGetAlertNotifications,
+    tu.formatGetAlertsNotifications,
+    tu.createGetAlertsNotification,
+    tu.createGetAlerNotificationsPaylod,
+  );
+
+  // call GetAlertsNotificationsForAllUsers
+  try {
+    let resp = live
+      ? await soap.parseAndSendPayload<any>(
+          accountCode,
+          username,
+          agent,
+          auth,
+          {},
+          'GetAlertNotificationsForAllUsers',
+          parserOptions,
+        )
+      : await soap.parseAndDontSendPayload<any>(
+          accountCode,
+          username,
+          agent,
+          auth,
+          {},
+          'GetAlertNotificationsForAllUsers',
+          parserOptions,
+        );
+    console.log('get alerts resp ===> ', JSON.stringify(resp));
+    return { success: true, error: false, data: resp };
+  } catch (err) {
+    return { success: false, error: err };
+  }
+
+  // loop through and update results status to complete
 };
 
 /**
