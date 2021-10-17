@@ -656,6 +656,7 @@ export const GetDisputeStatusByID = async (
     const prepped: { data: interfaces.IGetDisputeStatusGraphQLResponse } = await qrys.getDataForGetDisputeStatus(
       payload,
     );
+
     if (!prepped.data?.data?.getAppData?.id) {
       console.log('error db query ===> ', prepped.data);
       throw 'No record in db';

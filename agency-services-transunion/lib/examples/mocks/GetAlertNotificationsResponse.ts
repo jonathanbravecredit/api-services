@@ -12,12 +12,12 @@ export const GET_ALERT_NOTIFICATIONS_RESPONSE = {
           AlertNotifications: {
             AlertNotification: [
               {
-                AlertId: 6796,
+                AlertId: 4606,
                 Bureau: 'TransUnion',
                 Channel: {
                   nil: true,
                 },
-                ClientKey: 'f8f12125-6686-4431-9f70-991da2b39f40',
+                ClientKey: 'b85871fd-9d4e-48cc-a18a-d0f2a09d2429',
                 TrackingUUID: 'c113e082-24c9-406e-9d77-170f3e42d792',
                 Type: 'Dispute',
                 WatchAlerts: {
