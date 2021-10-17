@@ -1093,7 +1093,7 @@ export const DisputeInflightCheck = async (
           username,
           agent,
           auth,
-          {},
+          '',
           'GetAlertNotificationsForAllUsers',
           parserOptions,
         )
@@ -1102,7 +1102,7 @@ export const DisputeInflightCheck = async (
           username,
           agent,
           auth,
-          {},
+          '',
           'GetAlertNotificationsForAllUsers',
           parserOptions,
         );
@@ -1118,6 +1118,7 @@ export const DisputeInflightCheck = async (
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
     if (responseType.toLowerCase() !== 'success') {
+      // does the TU api respond
       throw error;
     }
     notifications = data?.AlertNotifications?.AlertNotification;
@@ -1165,7 +1166,7 @@ export const DisputeInflightCheck = async (
     try {
       console.log('*** IN UPDATE DATABASE WITH NEW STATUS ***');
       // alerts come with client keys which are also our keys
-      await Promise.all(
+      const updates = await Promise.all(
         allDisputeStatusUpdates.map(async (item) => {
           // I need the dispute id, the client key (id), and the dispute status
           const id = item.data?.ClientKey;
@@ -1191,10 +1192,12 @@ export const DisputeInflightCheck = async (
           return response;
         }),
       );
+      return { success: true, error: false, data: JSON.stringify(updates) };
     } catch (err) {
       return { success: false, error: err };
     }
   }
+  return { success: true, error: false, data: 'Fall through success' };
 };
 
 /**

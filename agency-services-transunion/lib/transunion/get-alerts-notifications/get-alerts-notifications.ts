@@ -12,9 +12,9 @@ import {
 } from 'lib/interfaces/transunion/get-alerts-notifications.interface';
 
 /**
- * Genarates the message payload for TU get dispute history
+ * Genarates the message payload for TU get alerts notification
  * @param data
- * @returns IEnrollPayload
+ * @returns IGetAlertsNotificationPayload
  */
 export const createGetAlerNotificationsPaylod = (): IGetAlertsNotificationPayload => {
   return {
