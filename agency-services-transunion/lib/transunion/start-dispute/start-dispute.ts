@@ -642,8 +642,13 @@ export const enrichDisputeData = (
   data: IStartDisputeBundle | undefined,
 ): UpdateAppDataInput | undefined => {
   if (!state) return;
-  let openedOn = new Date().toISOString();
   const { startDisputeResult, disputes } = data;
+  let status = startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.Status;
+  let openedOn = new Date().toISOString();
+  let closedOn = (status.toLowerCase() === 'cancelleddispute', status.toLowerCase() === 'completedispute')
+    ? openedOn
+    : null;
+
   const dispute: DisputeInput = {
     id: uuid.v4(),
     appDataId: state.id,
@@ -681,7 +686,7 @@ export const enrichDisputeData = (
     },
     agencyName: 'TU',
     openedOn: openedOn,
-    closedOn: null,
+    closedOn: closedOn,
     disputeItems: JSON.stringify(disputes),
     disputeInvestigationResults: null,
     disputeCreditBureau: null,
