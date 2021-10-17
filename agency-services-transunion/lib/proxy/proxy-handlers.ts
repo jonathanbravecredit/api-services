@@ -679,7 +679,7 @@ export const GetDisputeStatusByID = async (
 
     const response =
       responseType.toLowerCase() === 'success'
-        ? { success: true, error: error, data: data }
+        ? { success: true, error: error, data: { ...data, DisputeId: payload.disputeId } }
         : { success: false, error: error, data: null };
     console.log('response ===> ', response);
     return response;
@@ -1075,7 +1075,7 @@ export const DisputeInflightCheck = async (
   // other wise it is cancelled and send notification that the dispute was calncelled
   const live = GO_LIVE;
 
-  // const sync = new Sync(() => { });// need to create the enricher
+  const sync = new Sync(tu.enrichUpdatedDisputeData);
   const soap = new SoapAid(
     tu.parseGetAlertNotifications,
     tu.formatGetAlertsNotifications,
@@ -1147,21 +1147,54 @@ export const DisputeInflightCheck = async (
     }
   }
 
-  // // loop through and update the status of each result
-  // if (notifications?.length) {
-  //   try {
-  //     console.log('*** IN GET DISPUTE STATUS ***');
-  //     // alerts come with client keys which are also our keys
-  //     allDisputeStatusUpdates = await Promise.all(
-  //       notifications.map(async (alert) => {
-  //         return await GetDisputeStatus(accountCode, username, '', agent, auth, alert.ClientKey);
-  //       }),
-  //     );
-  //     console.log('all status ===> ', JSON.stringify(allDisputeStatusUpdates));
-  //   } catch (err) {
-  //     return { success: false, error: err };
-  //   }
-  // }
+  // filter failures and disputes that are still open
+  allDisputeStatusUpdates = [
+    ...allDisputeStatusUpdates.filter((d) => {
+      return (
+        d.success ||
+        d.data?.DisputeStatus.toLowerCase() === 'completedispute' ||
+        d.data?.DisputeStatus.toLowerCase() === 'cancelleddispute'
+      );
+    }),
+  ];
+
+  console.log('all disputes filtered ===> ', JSON.stringify(allDisputeStatusUpdates));
+
+  // loop through and update the status of each result
+  if (allDisputeStatusUpdates.length) {
+    try {
+      console.log('*** IN UPDATE DATABASE WITH NEW STATUS ***');
+      // alerts come with client keys which are also our keys
+      await Promise.all(
+        allDisputeStatusUpdates.map(async (item) => {
+          // I need the dispute id, the client key (id), and the dispute status
+          const id = item.data?.ClientKey;
+          const disputeId = item.data?.DisputeId;
+          const disputeStatus = item.data?.DisputeStatus;
+          if (!id || !disputeId || !disputeStatus)
+            return {
+              success: false,
+              error: `Missing id:=${id} or disputeId:=${disputeId} or disputeStatus:=${disputeStatus}`,
+            };
+
+          const bundle: interfaces.IUpdateDisputeBundle = {
+            updateDisputeResult: {
+              ...item.data,
+            },
+          };
+
+          const synced = await sync.syncData({ id: id }, bundle);
+          let response = synced
+            ? { success: true, error: null }
+            : { success: false, error: 'failed to sync data to db' };
+          console.log('response ===> ', response);
+          return response;
+        }),
+      );
+    } catch (err) {
+      return { success: false, error: err };
+    }
+  }
 };
 
 /**

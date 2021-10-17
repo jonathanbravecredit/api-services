@@ -1,4 +1,5 @@
-import { IStandardResponse } from 'lib/interfaces';
+import { IProcessDisputeTradelineResult, IStandardResponse } from 'lib/interfaces';
+import { DisputeInput } from 'src/api/api.service';
 
 export interface IGetDisputeStatusGraphQLResponse {
   data: {
@@ -125,6 +126,7 @@ export interface IGetDisputeStatusResponse {
 
 export interface IGetDisputeStatusResult extends IStandardResponse {
   DisputeStatus: string;
+  DisputeId?: string | number;
 }
 
 // By ID specific
@@ -134,4 +136,9 @@ export interface IGetDisputeStatusByIdRequest {
 
 export interface IGetDisputeStatusByIdPayload extends IGetDisputeStatusByIdRequest {
   id: string;
+}
+
+// I need to bundle our dispute package with the dispute resp from TU
+export interface IUpdateDisputeBundle {
+  updateDisputeResult: IGetDisputeStatusResult;
 }

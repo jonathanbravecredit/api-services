@@ -4,12 +4,16 @@ import {
   IGetDisputeStatusMsg,
   IGetDisputeStatusPayload,
   IGetDisputeStatusResponse,
+  IGetDisputeStatusResult,
+  IStartDisputeBundle,
+  IUpdateDisputeBundle,
 } from 'lib/interfaces';
 import { returnNestedObject, textConstructor } from 'lib/utils';
 import * as fastXml from 'fast-xml-parser';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import { MONTH_MAP } from 'lib/data/constants';
+import { UpdateAppDataInput, DisputeInput } from 'src/api/api.service';
 
 // IGetDisputeStatusGraphQLResponse
 /**
@@ -144,4 +148,48 @@ export const createGetDisputeStatus = (msg: IGetDisputeStatus): string => {
 export const parseGetDisputeStatus = (xml: string, options: any): IGetDisputeStatusResponse => {
   const obj: IGetDisputeStatusResponse = fastXml.parse(xml, options);
   return obj;
+};
+
+/**
+ * Take the results from TU and save to db
+ * @param data
+ * @returns
+ */
+export const enrichUpdatedDisputeData = (
+  state: UpdateAppDataInput,
+  data: IUpdateDisputeBundle | undefined,
+): UpdateAppDataInput | undefined => {
+  if (!state) return;
+  const { updateDisputeResult } = data;
+  let closedOn = new Date().toISOString();
+  const id = data.updateDisputeResult.DisputeId;
+  if (!id) throw `Missing dispute id:=${id}`;
+  const dispute: Partial<DisputeInput> = {
+    disputeStatus: updateDisputeResult?.DisputeStatus,
+    closedOn: closedOn,
+  };
+  const oldDisputes = (state.agencies?.transunion?.disputes || []).map((item) => {
+    if (item.id !== id) return item;
+    return {
+      ...item,
+      ...dispute,
+    };
+  });
+  const mapped = {
+    ...state,
+    agencies: {
+      ...state.agencies,
+      transunion: {
+        ...state.agencies?.transunion,
+        disputeStatus: dispute.disputeStatus,
+        disputeCurrent: {
+          ...state.agencies?.transunion?.disputeCurrent,
+          dispute,
+        },
+        disputes: [...oldDisputes].filter(Boolean),
+      },
+    },
+  };
+  console.log('mapped', mapped);
+  return mapped;
 };
