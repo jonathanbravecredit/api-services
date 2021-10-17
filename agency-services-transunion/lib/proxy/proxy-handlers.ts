@@ -1148,17 +1148,6 @@ export const DisputeInflightCheck = async (
     }
   }
 
-  // filter failures and disputes that are still open
-  allDisputeStatusUpdates = [
-    ...allDisputeStatusUpdates.filter((d) => {
-      return (
-        d.success &&
-        (d.data?.DisputeStatus.toLowerCase() === 'completedispute' ||
-          d.data?.DisputeStatus.toLowerCase() === 'cancelleddispute')
-      );
-    }),
-  ];
-
   // for mock only, set the dispute status to 'completeDispute'
   if (!live) {
     allDisputeStatusUpdates = allDisputeStatusUpdates.map((i) => {
@@ -1172,6 +1161,17 @@ export const DisputeInflightCheck = async (
       };
     });
   }
+
+  // filter failures and disputes that are still open
+  allDisputeStatusUpdates = [
+    ...allDisputeStatusUpdates.filter((d) => {
+      return (
+        d.success &&
+        (d.data?.DisputeStatus.toLowerCase() === 'completedispute' ||
+          d.data?.DisputeStatus.toLowerCase() === 'cancelleddispute')
+      );
+    }),
+  ];
 
   console.log('all disputes filtered ===> ', JSON.stringify(allDisputeStatusUpdates));
 

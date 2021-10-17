@@ -32,6 +32,7 @@ export class Sync {
       if (enriched === undefined) return false; // enrichment error
       const sync = await updateAppData({ input: enriched });
       const syncData: IGetAppDataResponse = sync.data; // gql error
+      if (syncData?.errors?.length > 0) throw syncData?.errors;
       return syncData?.errors?.length > 0 ? false : true;
     } catch (err) {
       console.log('syncData:err ===> ', err);
