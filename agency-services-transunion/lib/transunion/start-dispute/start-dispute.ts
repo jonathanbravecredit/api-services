@@ -287,7 +287,7 @@ export const parseDisputeToAddress = (disputes: IProcessDisputePersonalResult[])
         State: `${address.CreditAddress?.stateCode || ''}`,
         Zipcode: `${address.CreditAddress?.postalCode || ''}`,
       },
-      DeleteAddress: 'true',
+      DeletePreviousAddress: 'true',
     };
   })[0];
 };
@@ -456,15 +456,15 @@ export const mapAddress = (address: IIndicativeDisputesAddress | IIndicativeDisp
   console.log('startDispute:mapAddress ===> ', address);
   if (!address)
     return {
-      'data:DeleteAddress': textConstructor('false', true),
-      'data:Address': textConstructor(null, true),
+      'data:DeletePreviousAddress': textConstructor('false', true),
+      'data:PreviousAddress': textConstructor(null, true),
     };
   const results =
     address instanceof Array
       ? address.map((a: IIndicativeDisputesAddress) => {
           return {
-            'data:DeleteAddress': textConstructor('true', false),
-            'data:Address': {
+            'data:DeletePreviousAddress': textConstructor('true', false),
+            'data:PreviousAddress': {
               'data:AddressLine1': textConstructor(a.AddressLine1, true),
               'data:AddressLine2': textConstructor(a.AddressLine2, true),
               'data:City': textConstructor(a.City, true),
@@ -474,8 +474,8 @@ export const mapAddress = (address: IIndicativeDisputesAddress | IIndicativeDisp
           };
         })
       : {
-          'data:DeleteAddress': textConstructor('true', false),
-          'data:Address': {
+          'data:DeletePreviousAddress': textConstructor('true', false),
+          'data:PreviousAddress': {
             'data:AddressLine1': textConstructor(address.AddressLine1, true),
             'data:AddressLine2': textConstructor(address.AddressLine2, true),
             'data:City': textConstructor(address.City, true),
@@ -565,15 +565,15 @@ export const createStartDispute = (msg: IStartDispute): string => {
           'con:request': {
             'data:AccountCode': textConstructor(msg.request.AccountCode),
             'data:AccountName': textConstructor(msg.request.AccountName),
-            'data:RequestKey': textConstructor(`BC-${uuid.v4()}`),
-            'data:ClientKey': textConstructor(msg.request.ClientKey),
-            // 'data:Attachment': mappedAttachments,
             'data:AdditionalInputs': {
               'data:Data': {
                 'data:Name': textConstructor('DisputeVersion'),
                 'data:Value': textConstructor('2'),
               },
             },
+            'data:RequestKey': textConstructor(`BC-${uuid.v4()}`),
+            'data:ClientKey': textConstructor(msg.request.ClientKey),
+            // 'data:Attachment': mappedAttachments,
             'data:Customer': {
               'data:CurrentAddress': {
                 'data:AddressLine1': textConstructor(msg.request.Customer.CurrentAddress.AddressLine1),
