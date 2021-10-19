@@ -12,8 +12,9 @@ import * as interfaces from 'lib/interfaces';
 import * as tu from 'lib/transunion';
 import { START_DISPUTE_RESPONSE } from 'lib/examples/mocks/StartDisputeResponse';
 import { GET_ALERT_NOTIFICATIONS_RESPONSE } from 'lib/examples/mocks/GetAlertNotificationsResponse';
+import { ALL_GET_INVESTIGATION_MOCKS } from 'lib/examples/mocks/AllGetInvestigationMocks';
 
-const GO_LIVE = true;
+const GO_LIVE = false;
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -916,7 +917,7 @@ export const GetInvestigationResults = async (
 
     if (!live) {
       resp = await soap.processMockRequest<interfaces.IGetInvestigationResultsResponse>(
-        GET_INVESTIGATION_RESULTS_RESPONSE,
+        ALL_GET_INVESTIGATION_MOCKS[0],
         parserOptions,
       );
     }
