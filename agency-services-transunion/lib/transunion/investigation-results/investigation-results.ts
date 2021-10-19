@@ -143,19 +143,22 @@ export const enrichGetInvestigationResult = (
  */
 export const parseInvestigationResults = (xml: string, options: any): any => {
   const obj: IGetInvestigationResultsResponse = fastXml.parse(xml, options);
-  console.log('parsed investigation results ===> ', JSON.stringify(obj));
   const investigationResults = returnNestedObject<string>(obj, 'InvestigationResults');
   const creditBureau = returnNestedObject<string>(obj, 'CreditBureau');
 
   let results = obj;
   if (typeof investigationResults === 'string') {
     const parsed = fastXml.parse(investigationResults, options);
+    console.log('MOCK parsed IR response ==> ', JSON.stringify(parsed));
     results = updateNestedObject(obj, 'InvestigationResults', parsed);
+    console.log('MOCK parsed results ==> ', JSON.stringify(results));
   }
 
   if (typeof creditBureau === 'string') {
     const parsed = fastXml.parse(creditBureau, options);
+    console.log('MOCK parsed CB response ==> ', JSON.stringify(parsed));
     results = updateNestedObject(obj, 'CreditBureau', parsed);
+    console.log('MOCK parsed results ==> ', JSON.stringify(results));
   }
   return results;
 };
