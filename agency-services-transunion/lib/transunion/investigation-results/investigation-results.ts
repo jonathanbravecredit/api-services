@@ -143,7 +143,7 @@ export const enrichGetInvestigationResult = (
  */
 export const parseInvestigationResults = (xml: string, options: any): any => {
   const obj: IGetInvestigationResultsResponse = fastXml.parse(xml, options);
-  console.log('parsed investigation results ===> ', obj);
+  console.log('parsed investigation results ===> ', JSON.stringify(obj));
   const investigationResults = returnNestedObject<string>(obj, 'InvestigationResults');
   const creditBureau = returnNestedObject<string>(obj, 'CreditBureau');
 
