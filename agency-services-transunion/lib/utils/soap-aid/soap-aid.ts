@@ -139,6 +139,7 @@ export class SoapAid {
   async processMockRequest<T>(mock: string, parserOptions: Partial<fastXml.X2jOptions>): Promise<T> {
     try {
       const results = this.parser(mock, parserOptions);
+      console.log('MOCK parsed response ==> ', JSON.stringify(results));
       return results;
     } catch (err) {
       console.log('processRequest:err ===> ', err);
