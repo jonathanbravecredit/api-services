@@ -916,6 +916,13 @@ export const GetInvestigationResults = async (
         );
 
     if (!live) {
+      // 0 - dispute info updated
+      // 1 - dispute info update andother info
+      // 2 - info updated
+      // 3 - verified and updated
+      // 4 - verified as accuraed
+      // 5 - verified as accurate and updated
+      // 6 - deleted
       resp = await soap.processMockRequest<interfaces.IGetInvestigationResultsResponse>(
         ALL_GET_INVESTIGATION_MOCKS[0],
         parserOptions,
