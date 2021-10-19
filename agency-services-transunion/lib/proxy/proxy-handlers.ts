@@ -13,7 +13,7 @@ import * as tu from 'lib/transunion';
 import { START_DISPUTE_RESPONSE } from 'lib/examples/mocks/StartDisputeResponse';
 import { GET_ALERT_NOTIFICATIONS_RESPONSE } from 'lib/examples/mocks/GetAlertNotificationsResponse';
 
-const GO_LIVE = false;
+const GO_LIVE = true;
 
 const parserOptions = {
   attributeNamePrefix: '',
