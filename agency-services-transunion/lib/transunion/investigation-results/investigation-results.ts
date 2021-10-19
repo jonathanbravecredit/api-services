@@ -160,7 +160,7 @@ export const parseInvestigationResults = (xml: string, options: any): any => {
           GetInvestigationResultsResponse: {
             GetInvestigationResultsResult: {
               ...resultsResults,
-              InvestigationResults: JSON.stringify(parsed),
+              InvestigationResults: parsed,
             },
           },
         },
@@ -180,7 +180,7 @@ export const parseInvestigationResults = (xml: string, options: any): any => {
           GetInvestigationResultsResponse: {
             GetInvestigationResultsResult: {
               ...resultsResults,
-              CreditBureau: JSON.stringify(parsed),
+              CreditBureau: parsed,
             },
           },
         },
