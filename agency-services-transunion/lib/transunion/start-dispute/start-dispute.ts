@@ -623,6 +623,94 @@ export const createStartDispute = (msg: IStartDispute): string => {
 };
 
 /**
+ * This method transforms the JSON message to the XML request
+ *  - does not contain tradeline/public line items
+ * @param {IStartDispute} msg The packaged message to send in XML format to TU
+ * @returns
+ */
+export const createStartDisputePersonal = (msg: IStartDispute): string => {
+  // let attachments = msg.request.Attachment;
+  // let mappedAttachments = mapAttachments(attachments);
+
+  let employers = msg.request.Employers;
+  let mappedEmployers = mapEmployers(employers);
+
+  let indicativeDisputes = msg.request.IndicativeDisputes;
+  let mappedIndicativeDisputes = mapIndicativeDisputes(indicativeDisputes);
+  console.log('mapped mappedIndicativeDisputes ==> ', JSON.stringify(mappedIndicativeDisputes));
+
+  // !!!! May need to add array schema back....see get dispute status
+  const xmlObj = {
+    'soapenv:Envelope': {
+      _attributes: {
+        'xmlns:soapenv': 'http://schemas.xmlsoap.org/soap/envelope/',
+        'xmlns:con': 'https://consumerconnectws.tui.transunion.com/',
+        'xmlns:data': 'https://consumerconnectws.tui.transunion.com/data',
+        'xmlns:arr': 'http://schemas.microsoft.com/2003/10/Serialization/Arrays',
+      },
+      'soapenv:Header': {},
+      'soapenv:Body': {
+        'con:StartDispute': {
+          'con:request': {
+            'data:AccountCode': textConstructor(msg.request.AccountCode),
+            'data:AccountName': textConstructor(msg.request.AccountName),
+            'data:AdditionalInputs': {
+              'data:Data': {
+                'data:Name': textConstructor('DisputeVersion'),
+                'data:Value': textConstructor('2'),
+              },
+            },
+            'data:RequestKey': textConstructor(`BC-${uuid.v4()}`),
+            'data:ClientKey': textConstructor(msg.request.ClientKey),
+            // 'data:Attachment': mappedAttachments,
+            'data:Customer': {
+              'data:CurrentAddress': {
+                'data:AddressLine1': textConstructor(msg.request.Customer.CurrentAddress.AddressLine1),
+                'data:AddressLine2': textConstructor(msg.request.Customer.CurrentAddress.AddressLine2, true),
+                'data:City': textConstructor(msg.request.Customer.CurrentAddress.City),
+                'data:State': textConstructor(msg.request.Customer.CurrentAddress.State),
+                'data:Zipcode': textConstructor(msg.request.Customer.CurrentAddress.Zipcode),
+              },
+              'data:DateOfBirth': textConstructor(msg.request.Customer.DateOfBirth),
+              'data:FullName': {
+                'data:FirstName': textConstructor(msg.request.Customer.FullName.FirstName),
+                'data:LastName': textConstructor(msg.request.Customer.FullName.LastName),
+                'data:MiddleName': textConstructor(msg.request.Customer.FullName.MiddleName, true),
+                'data:Prefix': textConstructor(msg.request.Customer.FullName.Prefix, true),
+                'data:Suffix': textConstructor(msg.request.Customer.FullName.Suffix, true),
+              },
+              'data:PhoneNumber': textConstructor(msg.request.Customer.PhoneNumber, true),
+              'data:Ssn': textConstructor(msg.request.Customer.Ssn),
+              // 'data:DisputePhoneNumber': {
+              //   'data:Extension': textConstructor(null, true),
+              //   'data:Number': textConstructor(msg.request.Customer.PhoneNumber.slice(-7), true),
+              //   'data:AreaCode': textConstructor(msg.request.Customer.PhoneNumber.substring(0, 3), true),
+              //   'data:CountryCode': textConstructor('1', true),
+              // },
+              'data:Identifier': {
+                'data:CustomerIdentifier': {
+                  'data:Id': textConstructor(msg.request.Customer.Ssn, true),
+                  'data:IdentifierType': textConstructor('SocialId', true),
+                },
+              },
+            },
+            'data:Employers': mappedEmployers,
+            'data:EnrollmentKey': textConstructor(msg.request.EnrollmentKey),
+            'data:IndicativeDisputes': mappedIndicativeDisputes,
+            'data:ServiceBundleFulfillmentKey': textConstructor(msg.request.ServiceBundleFulfillmentKey),
+            // 'data:ServiceProductFulfillmentKey': textConstructor(msg.request.ServiceProductFulfillmentKey, true),
+          },
+        },
+      },
+    },
+  };
+  console.log('xmlObj ===> ', JSON.stringify(xmlObj));
+  const xml = convert.json2xml(JSON.stringify(xmlObj), { compact: true, spaces: 4 });
+  console.log('xmlrequest ===> ', xml);
+  return xml;
+};
+
+/**
  * Parse the StartDispute response
  * @param xml
  * @returns IStartDisputeResponse

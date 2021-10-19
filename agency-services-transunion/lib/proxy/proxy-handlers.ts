@@ -718,21 +718,25 @@ export const StartDispute = async (
   console.log('variables ===> ', payload, JSON.stringify(payload.disputes[0]));
   if (!validate(payload)) throw `Malformed message=${message}`;
   let payloadMethod: (data: any, params?: any) => any;
+  let startDisputeMethod: (msg: interfaces.IStartDispute) => string;
   if (tradeline(payload.disputes[0])) {
     console.log('setting payloadmethod to tradeline');
     payloadMethod = tu.createStartDisputeTradelinePayload;
+    startDisputeMethod = tu.createStartDispute;
   }
   if (publicitem(payload.disputes[0])) {
     console.log('setting payloadmethod to public');
     payloadMethod = tu.createStartDisputePublicPayload;
+    startDisputeMethod = tu.createStartDispute;
   }
   if (personalitem(payload.disputes[0])) {
     console.log('setting payloadmethod to personal');
     payloadMethod = tu.createStartDisputePersonalPayload;
+    startDisputeMethod = tu.createStartDisputePersonal;
   }
   //create helper classes
   const sync = new Sync(tu.enrichDisputeData);
-  const soap = new SoapAid(tu.parseStartDispute, tu.formatStartDispute, tu.createStartDispute, payloadMethod);
+  const soap = new SoapAid(tu.parseStartDispute, tu.formatStartDispute, startDisputeMethod, payloadMethod);
   try {
     console.log('*** IN START DISPUTE ***');
     const prepped = await qrys.getDataForStartDispute(payload);
