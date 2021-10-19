@@ -152,16 +152,41 @@ export const parseInvestigationResults = (xml: string, options: any): any => {
     let clean = he.decode(he.decode(investigationResults));
     const parsed = fastXml.parse(clean, options);
     console.log('MOCK parsed IR response ==> ', JSON.stringify(parsed));
-    results = updateNestedObject(obj, 'InvestigationResults', parsed);
-    console.log('MOCK parsed results ==> ', JSON.stringify(results));
+    const resultsResults = obj.Envelope?.Body?.GetInvestigationResultsResponse?.GetInvestigationResultsResult;
+    results = {
+      ...results,
+      Envelope: {
+        Body: {
+          GetInvestigationResultsResponse: {
+            GetInvestigationResultsResult: {
+              ...resultsResults,
+              InvestigationResults: parsed,
+            },
+          },
+        },
+      },
+    };
   }
 
   if (typeof creditBureau === 'string') {
     let clean = he.decode(he.decode(creditBureau));
     const parsed = fastXml.parse(clean, options);
     console.log('MOCK parsed CB response ==> ', JSON.stringify(parsed));
-    results = updateNestedObject(obj, 'CreditBureau', parsed);
-    console.log('MOCK parsed results ==> ', JSON.stringify(results));
+    const resultsResults = obj.Envelope?.Body?.GetInvestigationResultsResponse?.GetInvestigationResultsResult;
+    results = {
+      ...results,
+      Envelope: {
+        Body: {
+          GetInvestigationResultsResponse: {
+            GetInvestigationResultsResult: {
+              ...resultsResults,
+              CreditBureau: parsed,
+            },
+          },
+        },
+      },
+    };
   }
+  console.log('MOCK parsed results ==> ', JSON.stringify(results));
   return results;
 };
