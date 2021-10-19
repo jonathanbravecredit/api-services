@@ -927,6 +927,7 @@ export const GetInvestigationResults = async (
         ALL_GET_INVESTIGATION_MOCKS[0],
         parserOptions,
       );
+      console.log('MOCK response data ==> ', JSON.stringify(resp));
     }
 
     // get the specific response from parsed object
