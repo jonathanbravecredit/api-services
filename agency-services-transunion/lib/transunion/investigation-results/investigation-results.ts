@@ -152,7 +152,7 @@ export const parseInvestigationResults = (xml: string, options: any): any => {
     let clean = he.decode(he.decode(investigationResults));
     const parsed = fastXml.parse(clean, options);
     console.log('MOCK parsed IR response ==> ', JSON.stringify(parsed));
-    const resultsResults = obj.Envelope?.Body?.GetInvestigationResultsResponse?.GetInvestigationResultsResult;
+    const resultsResults = results.Envelope?.Body?.GetInvestigationResultsResponse?.GetInvestigationResultsResult;
     results = {
       ...results,
       Envelope: {
@@ -172,7 +172,7 @@ export const parseInvestigationResults = (xml: string, options: any): any => {
     let clean = he.decode(he.decode(creditBureau));
     const parsed = fastXml.parse(clean, options);
     console.log('MOCK parsed CB response ==> ', JSON.stringify(parsed));
-    const resultsResults = obj.Envelope?.Body?.GetInvestigationResultsResponse?.GetInvestigationResultsResult;
+    const resultsResults = results.Envelope?.Body?.GetInvestigationResultsResponse?.GetInvestigationResultsResult;
     results = {
       ...results,
       Envelope: {
