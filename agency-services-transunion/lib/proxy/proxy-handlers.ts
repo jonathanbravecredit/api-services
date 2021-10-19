@@ -13,7 +13,7 @@ import * as tu from 'lib/transunion';
 import { START_DISPUTE_RESPONSE } from 'lib/examples/mocks/StartDisputeResponse';
 import { GET_ALERT_NOTIFICATIONS_RESPONSE } from 'lib/examples/mocks/GetAlertNotificationsResponse';
 
-const GO_LIVE = true;
+const GO_LIVE = false;
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -1130,7 +1130,7 @@ export const DisputeInflightCheck = async (
     success: boolean;
     error?: interfaces.IErrorResponse | interfaces.INil;
     data?: interfaces.IGetDisputeStatusResult | null;
-  }[];
+  }[] = [];
   if (notifications?.length) {
     try {
       console.log('*** IN GET DISPUTE STATUS ***');
