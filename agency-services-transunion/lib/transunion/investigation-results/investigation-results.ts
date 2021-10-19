@@ -1,5 +1,6 @@
 import { returnNestedObject, updateNestedObject } from 'lib/utils/helpers/helpers';
 import * as convert from 'xml-js';
+import * as he from 'he';
 import * as uuid from 'uuid';
 import * as fastXml from 'fast-xml-parser';
 import {
@@ -148,14 +149,16 @@ export const parseInvestigationResults = (xml: string, options: any): any => {
 
   let results = obj;
   if (typeof investigationResults === 'string') {
-    const parsed = fastXml.parse(investigationResults, options);
+    let clean = he.decode(he.decode(investigationResults));
+    const parsed = fastXml.parse(clean, options);
     console.log('MOCK parsed IR response ==> ', JSON.stringify(parsed));
     results = updateNestedObject(obj, 'InvestigationResults', parsed);
     console.log('MOCK parsed results ==> ', JSON.stringify(results));
   }
 
   if (typeof creditBureau === 'string') {
-    const parsed = fastXml.parse(creditBureau, options);
+    let clean = he.decode(he.decode(creditBureau));
+    const parsed = fastXml.parse(clean, options);
     console.log('MOCK parsed CB response ==> ', JSON.stringify(parsed));
     results = updateNestedObject(obj, 'CreditBureau', parsed);
     console.log('MOCK parsed results ==> ', JSON.stringify(results));
