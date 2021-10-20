@@ -10,7 +10,7 @@ export const START_DISPUTE_RESPONSE = `<s:Envelope xmlns:s="http://schemas.xmlso
             <a:ClientKey>SR_2018-03-09_13-33-18_DORA</a:ClientKey>
             <a:DisputeStatus>
                 <a:DisputeStatusDetail>
-                    <a:DisputeId>4606</a:DisputeId>
+                    <a:DisputeId>4607</a:DisputeId>
                     <a:LetterStatus>
                         <a:DisputeLetterCode>FIN 000300010987 - Dispute Status DORA G
                             JULIEN</a:DisputeLetterCode>

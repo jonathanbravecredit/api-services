@@ -925,7 +925,7 @@ export const GetInvestigationResults = async (
       // 4 - verified as accuraed
       // 5 - verified as accurate and updated
       // 6 - deleted
-      resp = tu.parseInvestigationResults(ALL_GET_INVESTIGATION_MOCKS[0], parserOptions);
+      resp = tu.parseInvestigationResults(ALL_GET_INVESTIGATION_MOCKS[2], parserOptions);
       console.log('MOCK response data ==> ', JSON.stringify(resp));
     }
 
