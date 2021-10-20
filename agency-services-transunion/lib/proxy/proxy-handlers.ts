@@ -1309,7 +1309,7 @@ export const GetInvestigationResultsByID = async (
     userId: identityId,
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<interfaces.IGetInvestigationResultsByIdRequest>('getInvestigationResultsById');
+  const validate = ajv.getSchema<interfaces.IGetInvestigationResultsByIdRequest>('getInvestigationResultsRequestById');
   if (!validate(payload)) throw `Malformed message=${message}`;
 
   const db = DB;
