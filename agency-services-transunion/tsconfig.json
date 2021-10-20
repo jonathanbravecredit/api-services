@@ -4,6 +4,9 @@
     "target": "es6",
     "sourceMap": true,
     "moduleResolution": "node",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "types": ["reflect-metadata"]
   }
 }
