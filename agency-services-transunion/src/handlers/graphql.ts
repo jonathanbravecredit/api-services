@@ -149,6 +149,9 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
           tokenUser,
         );
         return JSON.stringify(results);
+      case 'GetCreditBureauResultsByID':
+        results = await queries.GetCreditBureauResultsByID(accountCode, username, message, httpsAgent, auth, tokenUser);
+        return JSON.stringify(results);
       default:
         return JSON.stringify({ success: false, error: 'Action not found', data: action });
     }

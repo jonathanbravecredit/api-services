@@ -1321,3 +1321,38 @@ export const GetInvestigationResultsByID = async (
     return { success: false, error: err, data: null };
   }
 };
+
+/**
+ * Return the dispute history
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const GetCreditBureauResultsByID = async (
+  accountCode: string,
+  username: string,
+  message: string,
+  agent: https.Agent,
+  auth: string,
+  identityId: string,
+): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
+  // validate incoming message
+  const payload: interfaces.IGetInvestigationResultsByIdRequest = {
+    userId: identityId,
+    ...JSON.parse(message),
+  };
+  const validate = ajv.getSchema<interfaces.IGetInvestigationResultsByIdRequest>('getInvestigationResultsRequestById');
+  if (!validate(payload)) throw `Malformed message=${message}`;
+
+  const db = DB;
+
+  try {
+    const resp = await db.creditBureauResults.get(payload.id, payload.userId);
+    return { success: true, error: null, data: resp };
+  } catch (err) {
+    return { success: false, error: err, data: null };
+  }
+};
