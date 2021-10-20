@@ -139,6 +139,16 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       case 'GetTrendingData':
         results = await queries.GetTrendingData(accountCode, username, message, httpsAgent, auth, tokenUser);
         return JSON.stringify(results);
+      case 'GetInvestigationResultsByID':
+        results = await queries.GetInvestigationResultsByID(
+          accountCode,
+          username,
+          message,
+          httpsAgent,
+          auth,
+          tokenUser,
+        );
+        return JSON.stringify(results);
       default:
         return JSON.stringify({ success: false, error: 'Action not found', data: action });
     }
