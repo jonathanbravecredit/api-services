@@ -4,6 +4,7 @@ import { GET_INVESTIGATION_RESULTS_INFORMATION_UPDATED_RESPONSE } from 'lib/exam
 import { GET_INVESTIGATION_RESULTS_VERIFIEDANDUPDATED } from 'lib/examples/mocks/GetInvestigationResults-VerifiedAndUpdated';
 import { GET_INVESTIGATION_RESULTS_VERIFIEDASACCURATE } from 'lib/examples/mocks/GetInvestigationResults-VerifiedAsAccurate';
 import { GET_INVESTIGATION_RESULTS_VERIFIEDASACCURATEANDUPATED } from 'lib/examples/mocks/GetInvestigationResults-VerifiedAsAccurateAndUpdated';
+import { GET_INVESTIGATION_RESULTS_RESPONSE } from 'lib/examples/mocks/GetInvestigationResultsResponse';
 import { GET_INVESTIGATION_RESULTS_DELETED } from 'lib/examples/mocks/GetInvestigationResultsResponse-Deleted';
 
 export const ALL_GET_INVESTIGATION_MOCKS = [
@@ -14,4 +15,5 @@ export const ALL_GET_INVESTIGATION_MOCKS = [
   GET_INVESTIGATION_RESULTS_VERIFIEDASACCURATE,
   GET_INVESTIGATION_RESULTS_VERIFIEDASACCURATEANDUPATED,
   GET_INVESTIGATION_RESULTS_DELETED,
+  GET_INVESTIGATION_RESULTS_RESPONSE,
 ];
