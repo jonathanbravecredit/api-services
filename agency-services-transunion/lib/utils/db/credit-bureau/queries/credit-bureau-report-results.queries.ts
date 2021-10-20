@@ -1,16 +1,20 @@
 import * as AWS from 'aws-sdk';
 import { PutItemOutput, DeleteItemOutput } from 'aws-sdk/clients/dynamodb';
 import { DynamoStore } from '@shiftcoders/dynamo-easy';
-import { InvestigationResult } from 'lib/utils/db/models/investigation-results.model';
+import { CreditBureauReportResult } from 'lib/utils/db/credit-bureau/model/credit-bureau.model';
 
 const db = new AWS.DynamoDB();
-const store = new DynamoStore(InvestigationResult);
+const store = new DynamoStore(CreditBureauReportResult);
 
-export const getInvestigationResult = (id: string, userId: string): Promise<InvestigationResult> => {
-  return store.get(id, userId).exec();
+export const getCreditBureauReportResult = (id: string, userId: string): Promise<CreditBureauReportResult> => {
+  return store
+    .get(id, userId)
+    .exec()
+    .then((res) => res)
+    .catch((err) => err);
 };
 
-export const createInvestigationResult = (report: InvestigationResult): Promise<PutItemOutput> => {
+export const createCreditBureauReportResult = (report: CreditBureauReportResult): Promise<PutItemOutput> => {
   const createdOn = new Date().toISOString();
   const newReport = {
     ...report,
@@ -25,7 +29,7 @@ export const createInvestigationResult = (report: InvestigationResult): Promise<
     .catch((err) => err);
 };
 
-export const updateInvestigationResult = (report: InvestigationResult): Promise<PutItemOutput> => {
+export const updateCreditBureauReportResult = (report: CreditBureauReportResult): Promise<PutItemOutput> => {
   const modifiedOn = new Date().toISOString();
   const newReport = {
     ...report,
@@ -38,7 +42,7 @@ export const updateInvestigationResult = (report: InvestigationResult): Promise<
     .catch((err) => err);
 };
 
-export const deleteInvestigationResult = (id: string, userId: string): Promise<DeleteItemOutput> => {
+export const deleteCreditBureauReportResult = (id: string, userId: string): Promise<DeleteItemOutput> => {
   return store
     .delete(id, userId)
     .exec()
@@ -46,9 +50,9 @@ export const deleteInvestigationResult = (id: string, userId: string): Promise<D
     .catch((err) => err);
 };
 
-export const describeInvestigationResults = (): Promise<number> => {
+export const describeCreditBureauReportResults = (): Promise<number> => {
   const params = {
-    TableName: 'InvestigationResults',
+    TableName: 'CreditBureauReportResults',
   };
 
   return db

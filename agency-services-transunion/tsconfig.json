@@ -7,6 +7,6 @@
     "resolveJsonModule": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "types": ["reflect-metadata", "node"]
+    "types": ["reflect-metadata", "node", "jest"]
   }
 }
