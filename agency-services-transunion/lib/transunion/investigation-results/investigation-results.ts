@@ -141,8 +141,8 @@ export const enrichGetInvestigationResult = (
     if (dispute.disputeId == getInvestigationResult.disputeId) {
       return {
         ...dispute,
-        disputeCreditBureau: cbID,
-        disputeInvestigationResults: irID,
+        disputeCreditBureau: JSON.stringify({ id: cbID }),
+        disputeInvestigationResults: JSON.stringify({ id: irID }),
       };
     } else {
       return dispute;
