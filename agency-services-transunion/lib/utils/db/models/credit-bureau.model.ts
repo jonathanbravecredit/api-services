@@ -1,7 +1,7 @@
 import { Model, PartitionKey, SortKey } from '@shiftcoders/dynamo-easy';
 
-@Model({ tableName: 'InvestigationResults' })
-export class InvestigationResult {
+@Model({ tableName: 'CreditBureauReportResults' })
+export class CreditBureauReportResult {
   @PartitionKey()
   id: string;
 
