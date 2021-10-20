@@ -10,7 +10,7 @@ export class InvestigationResult {
 
   record: string;
 
-  createdOn: string;
+  createdOn: string | null;
 
-  modifiedOn: string;
+  modifiedOn: string | null;
 }

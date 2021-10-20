@@ -13,6 +13,7 @@ import {
 } from 'lib/interfaces';
 import { DisputeInput, UpdateAppDataInput } from 'src/api/api.service';
 import { XmlFormatter } from 'lib/utils/xml-formatter/xml-formatter';
+import { DB as db } from 'lib/utils/db/db';
 
 /**
  * Genarates the message payload for TU get dispute history
@@ -112,12 +113,36 @@ export const enrichGetInvestigationResult = (
   if (!data) return;
   const disputes = data.agencies?.transunion?.disputes;
   if (!disputes?.length) return; // no disputes saved to find
+  // now only going to save the id's
+  const sub = data.id;
+  const cbID = uuid.v4();
+  const irID = uuid.v4();
+  const irReport = getInvestigationResult.getInvestigationResult.InvestigationResults;
+  const cbReport = getInvestigationResult.getInvestigationResult.CreditBureau;
+  const newIR = {
+    id: irID,
+    userId: sub,
+    record: JSON.stringify(irReport),
+    createdOn: null,
+    modifiedOn: null,
+  };
+  db.investigationResults.create(newIR);
+
+  const newCB = {
+    id: cbID,
+    userId: sub,
+    record: JSON.stringify(cbReport),
+    createdOn: null,
+    modifiedOn: null,
+  };
+  db.creditBureauResults.create(newCB);
+
   const updated: DisputeInput[] = disputes.map((dispute) => {
     if (dispute.disputeId == getInvestigationResult.disputeId) {
       return {
         ...dispute,
-        disputeCreditBureau: JSON.stringify(getInvestigationResult.getInvestigationResult.CreditBureau),
-        disputeInvestigationResults: JSON.stringify(getInvestigationResult.getInvestigationResult.InvestigationResults),
+        disputeCreditBureau: cbID,
+        disputeInvestigationResults: irID,
       };
     } else {
       return dispute;

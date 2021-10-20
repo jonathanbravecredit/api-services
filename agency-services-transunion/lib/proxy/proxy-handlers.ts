@@ -13,6 +13,7 @@ import * as tu from 'lib/transunion';
 import { START_DISPUTE_RESPONSE } from 'lib/examples/mocks/StartDisputeResponse';
 import { GET_ALERT_NOTIFICATIONS_RESPONSE } from 'lib/examples/mocks/GetAlertNotificationsResponse';
 import { ALL_GET_INVESTIGATION_MOCKS } from 'lib/examples/mocks/AllGetInvestigationMocks';
+import { DB } from 'lib/utils/db/db';
 
 const GO_LIVE = false;
 
@@ -884,6 +885,7 @@ export const GetInvestigationResults = async (
 
   //create helper classes
   const sync = new Sync(tu.enrichGetInvestigationResult);
+  const db = DB;
   const soap = new SoapAid(
     tu.parseInvestigationResults,
     tu.formatGetInvestigationResults,
