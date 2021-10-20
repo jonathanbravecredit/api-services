@@ -151,6 +151,40 @@ resources:
     #     TableName: ${self:provider.environment.TABLENAME}
     #     StreamSpecification:
     #       StreamViewType: NEW_AND_OLD_IMAGES
+    # InvestigationResults:
+    #   Type: AWS::DynamoDB::Table
+    #   Properties:
+    #     AttributeDefinitions:
+    #       - AttributeName: 'id'
+    #         AttributeType: 'S'
+    #       - AttributeName: 'userId'
+    #         AttributeType: 'S'
+    #     KeySchema:
+    #       - AttributeName: 'id'
+    #         KeyType: 'HASH'
+    #       - AttributeName: 'userId'
+    #         KeyType: 'RANGE'
+    #     BillingMode: PAY_PER_REQUEST
+    #     TableName: InvestigationResults
+    #     StreamSpecification:
+    #       StreamViewType: NEW_AND_OLD_IMAGES
+    # CreditBureauReportResults:
+    #   Type: AWS::DynamoDB::Table
+    #   Properties:
+    #     AttributeDefinitions:
+    #       - AttributeName: 'id'
+    #         AttributeType: 'S'
+    #       - AttributeName: 'userId'
+    #         AttributeType: 'S'
+    #     KeySchema:
+    #       - AttributeName: 'id'
+    #         KeyType: 'HASH'
+    #       - AttributeName: 'userId'
+    #         KeyType: 'RANGE'
+    #     BillingMode: PAY_PER_REQUEST
+    #     TableName: CreditBureauReportResults
+    #     StreamSpecification:
+    #       StreamViewType: NEW_AND_OLD_IMAGES
 
     VPC:
       Type: 'AWS::EC2::VPC'
