@@ -15,7 +15,7 @@ import { GET_ALERT_NOTIFICATIONS_RESPONSE } from 'lib/examples/mocks/GetAlertNot
 import { ALL_GET_INVESTIGATION_MOCKS } from 'lib/examples/mocks/AllGetInvestigationMocks';
 import { DB } from 'lib/utils/db/db';
 
-const GO_LIVE = false;
+const GO_LIVE = true;
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -1209,10 +1209,18 @@ export const DisputeInflightCheck = async (
             },
           };
 
-          const synced = await sync.syncData({ id: id }, bundle);
+          // const synced = await sync.syncData({ id: id }, bundle);
+          const synced = await GetInvestigationResults(
+            accountCode,
+            username,
+            JSON.stringify({ disputeId: disputeId }),
+            agent,
+            auth,
+            identityId,
+          );
           let response = synced
             ? { success: true, error: null }
-            : { success: false, error: 'failed to sync data to db' };
+            : { success: false, error: 'failed to get investigation results' };
           console.log('response ===> ', response);
           return response;
         }),
