@@ -200,6 +200,23 @@ resources:
         TableName: CreditBureauReportResults
         StreamSpecification:
           StreamViewType: NEW_AND_OLD_IMAGES
+    HistoricalDisputes:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: 'id'
+            AttributeType: 'S'
+          - AttributeName: 'disputeId'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'id'
+            KeyType: 'HASH'
+          - AttributeName: 'disputeId'
+            KeyType: 'RANGE'
+        BillingMode: PAY_PER_REQUEST
+        TableName: HistoricalDisputes
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
 
     VPC:
       Type: 'AWS::EC2::VPC'
