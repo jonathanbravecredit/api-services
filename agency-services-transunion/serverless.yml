@@ -47,6 +47,7 @@ provider:
     TU_SECRET_LOCATION: '${self:provider.stage}/agency-services/transunion'
     CREDIT_BUREAU_TABLE: 'CreditBureauReportResults'
     INVESTIGATION_RESULTS_TABLE: 'InvestigationResults'
+    DISPUTES_TABLE: 'Disputes'
     ACCOUNT_ID: !Sub '${AWS::AccountId}'
     IDENTITY_ID: '${self:custom.settings.IDENTITY_IDS.${opt:stage}}'
     POOL_ID: '${self:custom.settings.POOL_IDS.${opt:stage}}'
@@ -83,6 +84,7 @@ provider:
       Resource:
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_BUREAU_TABLE}'
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.INVESTIGATION_RESULTS_TABLE}'
+        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.DISPUTES}'
 
 layers:
   TuCerts:
@@ -200,7 +202,7 @@ resources:
         TableName: CreditBureauReportResults
         StreamSpecification:
           StreamViewType: NEW_AND_OLD_IMAGES
-    HistoricalDisputes:
+    Disputes:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
@@ -214,7 +216,7 @@ resources:
           - AttributeName: 'disputeId'
             KeyType: 'RANGE'
         BillingMode: PAY_PER_REQUEST
-        TableName: HistoricalDisputes
+        TableName: Disputes
         StreamSpecification:
           StreamViewType: NEW_AND_OLD_IMAGES
 

@@ -26,6 +26,9 @@ import * as uuid from 'uuid';
 import { MONTH_MAP } from 'lib/data/constants';
 import { DisputeInput, UpdateAppDataInput } from 'src/api/api.service';
 import { TransunionUtil } from 'lib/utils/transunion/transunion';
+import { DB as db } from 'lib/utils/db/db';
+import { Dispute } from 'lib/utils/db/disputes/model/dispute.model';
+import { createDisputeDBRecord } from 'lib/utils/db/disputes/generators/disputes.generators';
 
 /**
  * Genarates the message payload for TU Fulfill request
@@ -737,51 +740,23 @@ export const enrichDisputeData = (
     ? openedOn
     : null;
 
-  const dispute: DisputeInput = {
-    id: uuid.v4(),
-    appDataId: state.id,
-    disputeId: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.DisputeId,
-    disputeStatus: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.Status,
-    disputeLetterCode: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterCode,
-    disputeLetterContent: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterContent,
-    openDisputes: {
-      estimatedCompletionDate:
-        startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.EstimatedCompletionDate,
-      lastUpdatedDate: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate,
-      openDate: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.OpenDate,
-      requestedDate: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.RequestedDate,
-      totalClosedDisputedItems:
-        startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalClosedDisputedItems,
-      totalDisputedItems: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalDisputedItems,
-      totalOpenDisputedItems:
-        startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalOpenDisputedItems,
-      totalPVDisputedItemCount:
-        startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalPVDisputedItemCount,
-    },
-    closedDisputes: {
-      estimatedCompletionDate:
-        startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.EstimatedCompletionDate,
-      lastUpdatedDate: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate,
-      openDate: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.OpenDate,
-      requestedDate: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.RequestedDate,
-      totalClosedDisputedItems:
-        startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalClosedDisputedItems,
-      totalDisputedItems: startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalDisputedItems,
-      totalOpenDisputedItems:
-        startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalOpenDisputedItems,
-      totalPVDisputedItemCount:
-        startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalPVDisputedItemCount,
-    },
-    agencyName: 'TU',
-    openedOn: openedOn,
-    closedOn: closedOn,
-    disputeItems: JSON.stringify(disputes),
-    disputeInvestigationResults: null,
-    disputeCreditBureau: null,
-    notificationStatus: null,
-    notificationMessage: null,
-    notificationSentOn: null,
-  };
+  const dispute: DisputeInput = db.disputes.generators.createDisputeInputRecord(
+    state.id,
+    startDisputeResult,
+    JSON.stringify(disputes),
+    openedOn,
+    closedOn,
+  );
+  const dbDispute = db.disputes.generators.createDisputeDBRecord(
+    state.id,
+    startDisputeResult,
+    JSON.stringify(disputes),
+    openedOn,
+    closedOn,
+  );
+
+  db.disputes.create(dbDispute);
+
   const oldDisutes = state.agencies?.transunion?.disputes || [];
   const mapped = {
     ...state,

@@ -782,6 +782,7 @@ export const StartDispute = async (
 
     let response;
     if (responseType.toLowerCase() === 'success') {
+      // need to add to the app database, and to the disputes database
       const synced = await sync.syncData({ id: payload.id }, bundle);
       response = synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
     } else {
@@ -885,7 +886,6 @@ export const GetInvestigationResults = async (
 
   //create helper classes
   const sync = new Sync(tu.enrichGetInvestigationResult);
-  const db = DB;
   const soap = new SoapAid(
     tu.parseInvestigationResults,
     tu.formatGetInvestigationResults,
