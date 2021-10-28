@@ -1171,6 +1171,7 @@ export const DisputeInflightCheck = async (
     }
     notifications = data?.AlertNotifications?.AlertNotification;
   } catch (err) {
+    console.log('get dispute status error ===> ', err);
     return { success: false, error: err };
   }
 
@@ -1192,6 +1193,7 @@ export const DisputeInflightCheck = async (
       );
       console.log('all status ===> ', JSON.stringify(allDisputeStatusUpdates));
     } catch (err) {
+      console.log('get dispute status error ===> ', err);
       return { success: false, error: err };
     }
   }
@@ -1246,6 +1248,7 @@ export const DisputeInflightCheck = async (
           // update it with the new results
           // save back to dispute table and to current dispute
           const currentDispute = await DB.disputes.get(id, `${disputeId}`);
+          console.log('currentDispute', currentDispute);
           const { openedOn } = currentDispute;
           const closedOn =
             item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || currentDispute.closedOn;
@@ -1254,12 +1257,14 @@ export const DisputeInflightCheck = async (
             ...currentDispute,
             ...mappedDispute,
           };
+          console.log('updatedDispute', updatedDispute);
           await DB.disputes.update(updatedDispute); // updates the dispute table
           // need to update the current dispute too
         }),
       );
       console.log('dispute updates ===> ', JSON.stringify(updates));
     } catch (err) {
+      console.log('in update database error ===> ', err);
       return { success: false, error: err };
     }
   }
@@ -1271,6 +1276,7 @@ export const DisputeInflightCheck = async (
   console.log('completed disputes ===> ', JSON.stringify(completed));
   if (completed.length) {
     try {
+      console.log('*** IN GET INVESTIGATION RESULTS ***');
       const alerted = await Promise.all(
         completed.map(async (item) => {
           // I need the dispute id, the client key (id), and the dispute status
@@ -1300,6 +1306,7 @@ export const DisputeInflightCheck = async (
       );
       return { success: true, error: false, data: JSON.stringify(alerted) };
     } catch (err) {
+      console.log('in get investigation error ===> ', err);
       return { success: false, error: err };
     }
   }
