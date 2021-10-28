@@ -12,7 +12,7 @@ export const createDisputeDBRecord = (
 ): Dispute => {
   return {
     id: id,
-    disputeId: dispute?.DisputeStatus?.DisputeStatusDetail?.DisputeId,
+    disputeId: `${dispute?.DisputeStatus?.DisputeStatusDetail?.DisputeId}`,
     disputeStatus: dispute?.DisputeStatus?.DisputeStatusDetail?.Status,
     disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterCode,
     disputeLetterContent: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterContent,
@@ -61,7 +61,7 @@ export const createDisputeInputRecord = (
   return {
     id: uuid.v4(),
     appDataId: id,
-    disputeId: dispute?.DisputeStatus?.DisputeStatusDetail?.DisputeId,
+    disputeId: `${dispute?.DisputeStatus?.DisputeStatusDetail?.DisputeId}`,
     disputeStatus: dispute?.DisputeStatus?.DisputeStatusDetail?.Status,
     disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterCode,
     disputeLetterContent: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterContent,
