@@ -935,6 +935,7 @@ export const GetInvestigationResults = async (
   try {
     // get / parse data needed
     const prepped = await qrys.getDataForGetInvestigationResults(payload); // same data
+    console.log('prepped get investigation results ==> ', prepped);
     const reprepped = { data: prepped.data, params: payload.disputeId };
     let resp = live
       ? await soap.parseAndSendPayload<interfaces.IGetInvestigationResultsResponse>(
