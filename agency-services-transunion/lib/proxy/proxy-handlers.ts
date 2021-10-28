@@ -1236,11 +1236,10 @@ export const DisputeInflightCheck = async (
           // I need the dispute id, the client key (id), and the dispute status
           const id = item.data?.ClientKey;
           const disputeId = item.data?.DisputeId;
-          const disputeStatus = item.data?.DisputeStatus;
-          if (item.data || !id || !disputeId || !disputeStatus)
+          if (item.data || !id || !disputeId)
             return {
               success: false,
-              error: `Missing id:=${id} or disputeId:=${disputeId} or disputeStatus:=${disputeStatus}`,
+              error: `Missing id:=${id} or disputeId:=${disputeId}`,
             };
 
           // get the current dispute from the dispute table
@@ -1249,7 +1248,7 @@ export const DisputeInflightCheck = async (
           const currentDispute = await DB.disputes.get(id, `${disputeId}`);
           const { openedOn } = currentDispute;
           const closedOn =
-            disputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || currentDispute.closedOn;
+            item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || currentDispute.closedOn;
           const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, openedOn, closedOn);
           const updatedDispute = {
             ...currentDispute,
