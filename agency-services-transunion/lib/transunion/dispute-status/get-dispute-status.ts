@@ -162,7 +162,7 @@ export const enrichUpdatedDisputeData = (
   if (!state) return;
   const { updateDisputeResult } = data;
   let closedOn = data.updateDisputeResult.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || null;
-  const id = data.updateDisputeResult.DisputeId;
+  const id = data.updateDisputeResult.DisputeStatus?.DisputeStatusDetail?.DisputeId;
   if (!id) throw `Missing dispute id:=${id}`;
   const dispute: Partial<DisputeInput> = {
     disputeStatus: updateDisputeResult?.DisputeStatus.DisputeStatusDetail.Status,

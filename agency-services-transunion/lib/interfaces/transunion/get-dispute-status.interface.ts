@@ -126,7 +126,7 @@ export interface IGetDisputeStatusResponse {
 
 export interface IGetDisputeStatusResult extends IStandardResponse {
   DisputeStatus: null | IDisputeStatus;
-  DisputeId?: string | number;
+  // DisputeId?: string | number;
 }
 
 // By ID specific

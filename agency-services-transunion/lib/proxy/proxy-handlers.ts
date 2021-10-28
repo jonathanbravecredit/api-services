@@ -702,14 +702,7 @@ export const GetDisputeStatusByID = async (
     if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: payload.id }, bundle);
       response = synced
-        ? {
-            success: true,
-            error: null,
-            data: {
-              ...data,
-              DisputeId: payload.disputeId,
-            },
-          }
+        ? { success: true, error: null, data: data }
         : { success: false, error: 'failed to sync data to db' };
       console.log('response ===> ', response);
     } else {
@@ -1244,7 +1237,7 @@ export const DisputeInflightCheck = async (
         successfull.map(async (item) => {
           // I need the dispute id, the client key (id), and the dispute status
           const id = item.data?.ClientKey;
-          const disputeId = item.data?.DisputeId;
+          const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
           if (!item.data || !id || !disputeId)
             return {
               success: false,
@@ -1288,7 +1281,7 @@ export const DisputeInflightCheck = async (
         completed.map(async (item) => {
           // I need the dispute id, the client key (id), and the dispute status
           const id = item.data?.ClientKey;
-          const disputeId = item.data?.DisputeId;
+          const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
           if (!item.data || !id || !disputeId)
             return {
               success: false,
