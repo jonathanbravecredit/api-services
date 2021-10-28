@@ -1108,6 +1108,7 @@ export const DisputePreflightCheck = async (
 
 /**
  * This performs the inflight check nightly and returns disputes that have been updated
+ * -- DO NOT user identityId param as this is called by backend services and now ID is available
  */
 export const DisputeInflightCheck = async (
   accountCode: string,
@@ -1115,7 +1116,6 @@ export const DisputeInflightCheck = async (
   message: string,
   agent: https.Agent,
   auth: string,
-  identityId: string,
 ): Promise<{ success: boolean; error?: any; data?: any }> => {
   // no payload is needed
   // call GetAlertsNotificationsForAlLUsers
@@ -1294,7 +1294,7 @@ export const DisputeInflightCheck = async (
             JSON.stringify({ disputeId: `${disputeId}` }),
             agent,
             auth,
-            identityId,
+            id,
           );
           let response = synced
             ? { success: true, error: null, data: synced.data }
