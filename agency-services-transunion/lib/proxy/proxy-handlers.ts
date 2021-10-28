@@ -806,6 +806,20 @@ export const StartDispute = async (
     let response;
     if (responseType.toLowerCase() === 'success') {
       // need to add to the app database, and to the disputes database
+      let status = data?.DisputeStatus?.DisputeStatusDetail?.Status;
+      let openedOn = new Date().toISOString();
+      let closedOn =
+        status.toLowerCase() === 'cancelleddispute' || status.toLowerCase() === 'completedispute' ? openedOn : null;
+      const dbDispute = DB.disputes.generators.createDisputeDBRecord(
+        identityId,
+        data,
+        JSON.stringify(payload.disputes),
+        openedOn,
+        closedOn,
+      );
+      console.log('dbDispute ====> ', JSON.stringify(dbDispute));
+      const newDispute = await DB.disputes.create(dbDispute);
+      console.log('newDispute ====> ', JSON.stringify(newDispute));
       const synced = await sync.syncData({ id: payload.id }, bundle);
       response = synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
     } else {

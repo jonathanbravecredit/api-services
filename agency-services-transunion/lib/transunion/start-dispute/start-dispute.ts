@@ -746,15 +746,6 @@ export const enrichDisputeData = (
     openedOn,
     closedOn,
   );
-  const dbDispute = db.disputes.generators.createDisputeDBRecord(
-    state.id,
-    startDisputeResult,
-    JSON.stringify(disputes),
-    openedOn,
-    closedOn,
-  );
-
-  db.disputes.create(dbDispute);
 
   const oldDisputes = state.agencies?.transunion?.disputes || [];
   const mapped = {
