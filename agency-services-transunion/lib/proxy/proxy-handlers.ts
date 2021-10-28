@@ -647,6 +647,7 @@ export const GetDisputeStatusByID = async (
   if (!validate(payload)) throw `Malformed payload=${payload}`;
 
   //create helper classes
+  const sync = new Sync(tu.enrichUpdatedDisputeData);
   const soap = new SoapAid(
     tu.parseGetDisputeStatus,
     tu.formatGetDisputeStatus,
@@ -692,20 +693,27 @@ export const GetDisputeStatusByID = async (
     const data = returnNestedObject<interfaces.IGetDisputeStatusResult>(resp, 'GetDisputeStatusResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
+    const bundle: interfaces.IUpdateDisputeBundle = {
+      updateDisputeResult: data,
+    };
 
-    const response =
-      responseType.toLowerCase() === 'success'
+    let response;
+    if (responseType.toLowerCase() === 'success') {
+      const synced = await sync.syncData({ id: payload.id }, bundle);
+      response = synced
         ? {
             success: true,
-            error: error,
+            error: null,
             data: {
               ...data,
-              DisputeStatus: data.DisputeStatus || null,
               DisputeId: payload.disputeId,
             },
           }
-        : { success: false, error: error, data: null };
-    console.log('response ===> ', response);
+        : { success: false, error: 'failed to sync data to db' };
+      console.log('response ===> ', response);
+    } else {
+      response = { success: false, error: error };
+    }
     return response;
   } catch (err) {
     console.log('error ===> ', err);
