@@ -55,6 +55,8 @@ export const updateDisputeResults = (
     .set(disputeCreditBureau)
     .updateAttribute('disputeInvestigationResults')
     .set(disputeInvestigationResults)
+    .updateAttribute('modifiedOn')
+    .set(modifiedOn)
     .exec()
     .then((res) => res)
     .catch((err) => err);

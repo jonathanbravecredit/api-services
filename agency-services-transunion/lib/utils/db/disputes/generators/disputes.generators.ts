@@ -112,7 +112,6 @@ export const createDisputeInputRecord = (
 };
 
 export const createUpdateDisputeDBRecord = (dispute: IStartDisputeResult, closedOn: string): Partial<Dispute> => {
-  const modifiedOn = new Date().toISOString();
   return {
     disputeStatus: dispute?.DisputeStatus?.DisputeStatusDetail?.Status || null,
     disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterCode || null,
@@ -145,6 +144,5 @@ export const createUpdateDisputeDBRecord = (dispute: IStartDisputeResult, closed
         dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalPVDisputedItemCount || null,
     },
     closedOn: closedOn,
-    modifiedOn: modifiedOn,
   };
 };
