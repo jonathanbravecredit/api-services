@@ -1282,13 +1282,11 @@ export const DisputeInflightCheck = async (
           // I need the dispute id, the client key (id), and the dispute status
           const id = item.data?.ClientKey;
           const disputeId = item.data?.DisputeId;
-          const disputeStatus = item.data?.DisputeStatus;
-          if (item.data || !id || !disputeId || !disputeStatus)
+          if (!item.data || !id || !disputeId)
             return {
               success: false,
-              error: `Missing id:=${id} or disputeId:=${disputeId} or disputeStatus:=${disputeStatus}`,
+              error: `Missing dispute data:=${item.data} or id:=${id} or disputeId:=${disputeId}`,
             };
-          // const synced = await sync.syncData({ id: id }, bundle);
           const synced = await GetInvestigationResults(
             accountCode,
             username,

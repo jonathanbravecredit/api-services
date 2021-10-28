@@ -14,8 +14,8 @@ export const createDisputeDBRecord = (
     id: id,
     disputeId: `${dispute?.DisputeStatus?.DisputeStatusDetail?.DisputeId}`,
     disputeStatus: dispute?.DisputeStatus?.DisputeStatusDetail?.Status,
-    disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterCode,
-    disputeLetterContent: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterContent,
+    disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterCode,
+    disputeLetterContent: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterContent,
     openDisputes: {
       estimatedCompletionDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.EstimatedCompletionDate,
       lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate,
@@ -63,8 +63,8 @@ export const createDisputeInputRecord = (
     appDataId: id,
     disputeId: `${dispute?.DisputeStatus?.DisputeStatusDetail?.DisputeId}`,
     disputeStatus: dispute?.DisputeStatus?.DisputeStatusDetail?.Status,
-    disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterCode,
-    disputeLetterContent: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterContent,
+    disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterCode,
+    disputeLetterContent: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterContent,
     openDisputes: {
       estimatedCompletionDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.EstimatedCompletionDate,
       lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate,
@@ -104,8 +104,8 @@ export const createUpdateDisputeDBRecord = (
 ): Partial<Dispute> => {
   return {
     disputeStatus: dispute?.DisputeStatus?.DisputeStatusDetail?.Status,
-    disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterCode,
-    disputeLetterContent: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterContent,
+    disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterCode,
+    disputeLetterContent: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterContent,
     openDisputes: {
       estimatedCompletionDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.EstimatedCompletionDate,
       lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate,
