@@ -1290,7 +1290,7 @@ export const DisputeInflightCheck = async (
           const synced = await GetInvestigationResults(
             accountCode,
             username,
-            JSON.stringify({ disputeId: disputeId }),
+            JSON.stringify({ disputeId: `${disputeId}` }),
             agent,
             auth,
             identityId,

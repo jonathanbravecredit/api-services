@@ -163,18 +163,21 @@ export const enrichUpdatedDisputeData = (
   if (!state) return;
   const { updateDisputeResult } = data;
   let closedOn = data.updateDisputeResult.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || null;
-  const id = data.updateDisputeResult.DisputeStatus?.DisputeStatusDetail?.DisputeId;
-  if (!id) throw `Missing dispute id:=${id}`;
+  const disputeId = data.updateDisputeResult.DisputeStatus?.DisputeStatusDetail?.DisputeId;
+  if (!disputeId) throw `Missing dispute id:=${disputeId}`;
   const dispute: Partial<DisputeInput> = DB.disputes.generators.createUpdateDisputeDBRecord(
     updateDisputeResult,
     closedOn,
   );
   const oldDisputes = (state.agencies?.transunion?.disputes || []).map((item) => {
-    if (item.id !== id) return item;
-    return {
-      ...item,
-      ...dispute,
-    };
+    if (item.disputeId == disputeId) {
+      return {
+        ...item,
+        ...dispute,
+      };
+    } else {
+      return item;
+    }
   });
   const mapped = {
     ...state,
