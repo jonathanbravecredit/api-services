@@ -160,13 +160,13 @@ export const enrichGetInvestigationResult = (
     // until there is a new dispute created...in which case the next time a dispute
     // has investigation results it will be for the new current dispute
     // db.disputes.update()
-    const mapped = {
+    const mapped: UpdateAppDataInput = {
       ...data,
       agencies: {
         ...data.agencies,
         transunion: {
           ...data.agencies?.transunion,
-          currentDispute: {
+          disputeCurrent: {
             ...currentDispute,
             disputeCreditBureau: JSON.stringify({ id: cbID }),
             disputeInvestigationResults: JSON.stringify({ id: irID }),
@@ -178,7 +178,7 @@ export const enrichGetInvestigationResult = (
     console.log('mapped', mapped.agencies?.transunion.disputes);
     return mapped;
   } else {
-    const mapped = {
+    const mapped: UpdateAppDataInput = {
       ...data,
       agencies: {
         ...data.agencies,
