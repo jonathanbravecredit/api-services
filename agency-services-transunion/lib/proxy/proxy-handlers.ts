@@ -1236,10 +1236,10 @@ export const DisputeInflightCheck = async (
           // I need the dispute id, the client key (id), and the dispute status
           const id = item.data?.ClientKey;
           const disputeId = item.data?.DisputeId;
-          if (item.data || !id || !disputeId)
+          if (!item.data || !id || !disputeId)
             return {
               success: false,
-              error: `Missing id:=${id} or disputeId:=${disputeId}`,
+              error: `Missing dispute data:=${item.data} or id:=${id} or disputeId:=${disputeId}`,
             };
 
           // get the current dispute from the dispute table
