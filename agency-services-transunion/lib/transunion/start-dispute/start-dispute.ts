@@ -736,9 +736,8 @@ export const enrichDisputeData = (
   const { startDisputeResult, disputes } = data;
   let status = startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.Status;
   let openedOn = new Date().toISOString();
-  let closedOn = (status.toLowerCase() === 'cancelleddispute', status.toLowerCase() === 'completedispute')
-    ? openedOn
-    : null;
+  let closedOn =
+    status.toLowerCase() === 'cancelleddispute' || status.toLowerCase() === 'completedispute' ? openedOn : null;
 
   const dispute: DisputeInput = db.disputes.generators.createDisputeInputRecord(
     state.id,
@@ -757,7 +756,7 @@ export const enrichDisputeData = (
 
   db.disputes.create(dbDispute);
 
-  const oldDisutes = state.agencies?.transunion?.disputes || [];
+  const oldDisputes = state.agencies?.transunion?.disputes || [];
   const mapped = {
     ...state,
     agencies: {
@@ -766,7 +765,7 @@ export const enrichDisputeData = (
         ...state.agencies?.transunion,
         disputeStatus: dispute.disputeStatus,
         disputeCurrent: dispute,
-        disputes: [...oldDisutes, dispute].filter(Boolean),
+        disputes: [...oldDisputes, dispute].filter(Boolean),
       },
     },
   };

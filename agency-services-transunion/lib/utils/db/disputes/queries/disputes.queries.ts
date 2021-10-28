@@ -1,5 +1,5 @@
 import * as AWS from 'aws-sdk';
-import { PutItemOutput, DeleteItemOutput } from 'aws-sdk/clients/dynamodb';
+import { PutItemOutput, DeleteItemOutput, UpdateItemOutput } from 'aws-sdk/clients/dynamodb';
 import { DynamoStore } from '@shiftcoders/dynamo-easy';
 import { Dispute } from 'lib/utils/db/disputes/model/dispute.model';
 
@@ -37,6 +37,24 @@ export const updateDispute = (dispute: Dispute): Promise<PutItemOutput> => {
   };
   return store
     .put(newDispute)
+    .exec()
+    .then((res) => res)
+    .catch((err) => err);
+};
+
+export const updateDisputeResults = (
+  id: string,
+  disputeId: string,
+  disputeCreditBureau: string,
+  disputeInvestigationResults: string,
+): Promise<UpdateItemOutput> => {
+  const modifiedOn = new Date().toISOString();
+  return store
+    .update(id, disputeId)
+    .updateAttribute('disputeCreditBureau')
+    .set(disputeCreditBureau)
+    .updateAttribute('disputeInvestigationResults')
+    .set(disputeInvestigationResults)
     .exec()
     .then((res) => res)
     .catch((err) => err);

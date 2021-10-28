@@ -137,6 +137,11 @@ export const enrichGetInvestigationResult = (
   };
   db.creditBureauResults.create(newCB);
 
+  // get investigation results, should be only on the current dispute...this will be the new process
+  const currentDispute = data.agencies?.transunion?.disputeCurrent;
+  // update the disputes table
+  db.disputes.updateResults(sub, currentDispute.disputeId, JSON.stringify({ id: cbID }), JSON.stringify({ id: irID }));
+  // this goes through and finds the matching dispute in the dispute list...it should be the current dispute, but not 100% on this.
   const updated: DisputeInput[] = disputes.map((dispute) => {
     if (dispute.disputeId == getInvestigationResult.disputeId) {
       return {
@@ -148,18 +153,44 @@ export const enrichGetInvestigationResult = (
       return dispute;
     }
   });
-  const mapped = {
-    ...data,
-    agencies: {
-      ...data.agencies,
-      transunion: {
-        ...data.agencies?.transunion,
-        disputes: updated,
+  const disputeId = getInvestigationResult.disputeId;
+  if (currentDispute && currentDispute.disputeId === disputeId) {
+    // the current dispute is the same one with investigation results
+    // ...this should always be the case...and the current dispute should not move out
+    // until there is a new dispute created...in which case the next time a dispute
+    // has investigation results it will be for the new current dispute
+    // db.disputes.update()
+    const mapped = {
+      ...data,
+      agencies: {
+        ...data.agencies,
+        transunion: {
+          ...data.agencies?.transunion,
+          currentDispute: {
+            ...currentDispute,
+            disputeCreditBureau: JSON.stringify({ id: cbID }),
+            disputeInvestigationResults: JSON.stringify({ id: irID }),
+          },
+          disputes: updated,
+        },
       },
-    },
-  };
-  console.log('mapped', mapped.agencies?.transunion.disputes);
-  return mapped;
+    };
+    console.log('mapped', mapped.agencies?.transunion.disputes);
+    return mapped;
+  } else {
+    const mapped = {
+      ...data,
+      agencies: {
+        ...data.agencies,
+        transunion: {
+          ...data.agencies?.transunion,
+          disputes: updated,
+        },
+      },
+    };
+    console.log('mapped', mapped.agencies?.transunion.disputes);
+    return mapped;
+  }
 };
 
 /**

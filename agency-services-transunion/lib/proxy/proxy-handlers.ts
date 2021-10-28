@@ -13,9 +13,10 @@ import * as tu from 'lib/transunion';
 import { START_DISPUTE_RESPONSE } from 'lib/examples/mocks/StartDisputeResponse';
 import { GET_ALERT_NOTIFICATIONS_RESPONSE } from 'lib/examples/mocks/GetAlertNotificationsResponse';
 import { ALL_GET_INVESTIGATION_MOCKS } from 'lib/examples/mocks/AllGetInvestigationMocks';
+import { GET_DISPUTE_STATUS_RESPONSE_WITHID } from 'lib/examples/mocks/GetDisputeStatusResponse-Complete';
 import { DB } from 'lib/utils/db/db';
 
-const GO_LIVE = true;
+const GO_LIVE = false;
 
 const parserOptions = {
   attributeNamePrefix: '',
@@ -636,6 +637,7 @@ export const GetDisputeStatusByID = async (
   error?: interfaces.IErrorResponse | interfaces.INil;
   data?: interfaces.IGetDisputeStatusResult | null;
 }> => {
+  const live = GO_LIVE; // !!! IMPORTANT FLAG TO DISABLE MOCKS !!!
   // validate incoming message
   const payload: interfaces.IGetDisputeStatusByIdPayload = {
     id: identityId,
@@ -663,16 +665,29 @@ export const GetDisputeStatusByID = async (
       throw 'No record in db';
     }
 
-    const resp = await soap.parseAndSendPayload<interfaces.IGetDisputeStatusResponse>(
-      accountCode,
-      username,
-      agent,
-      auth,
-      prepped.data,
-      'GetDisputeStatus',
-      parserOptions,
-    );
+    let resp = live
+      ? await soap.parseAndSendPayload<interfaces.IGetDisputeStatusResponse>(
+          accountCode,
+          username,
+          agent,
+          auth,
+          prepped.data,
+          'GetDisputeStatus',
+          parserOptions,
+        )
+      : await soap.parseAndDontSendPayload<interfaces.IGetDisputeStatusResponse>(
+          accountCode,
+          username,
+          agent,
+          auth,
+          prepped.data,
+          'GetDisputeStatus',
+          parserOptions,
+        );
 
+    if (!live) {
+      resp = tu.parseGetDisputeStatus(GET_DISPUTE_STATUS_RESPONSE_WITHID, parserOptions);
+    }
     // get the specific response from parsed object
     const data = returnNestedObject<interfaces.IGetDisputeStatusResult>(resp, 'GetDisputeStatusResult');
     const responseType = data.ResponseType;
@@ -680,7 +695,15 @@ export const GetDisputeStatusByID = async (
 
     const response =
       responseType.toLowerCase() === 'success'
-        ? { success: true, error: error, data: { ...data, DisputeId: payload.disputeId } }
+        ? {
+            success: true,
+            error: error,
+            data: {
+              ...data,
+              DisputeStatus: data.DisputeStatus || null,
+              DisputeId: payload.disputeId,
+            },
+          }
         : { success: false, error: error, data: null };
     console.log('response ===> ', response);
     return response;
@@ -1086,7 +1109,7 @@ export const DisputeInflightCheck = async (
   // other wise it is cancelled and send notification that the dispute was calncelled
   const live = GO_LIVE;
 
-  const sync = new Sync(tu.enrichUpdatedDisputeData);
+  // const sync = new Sync(tu.enrichUpdatedDisputeData);
   const soap = new SoapAid(
     tu.parseGetAlertNotifications,
     tu.formatGetAlertsNotifications,
@@ -1160,27 +1183,30 @@ export const DisputeInflightCheck = async (
   }
 
   // for mock only, set the dispute status to 'completeDispute'
-  if (!live) {
-    allDisputeStatusUpdates = allDisputeStatusUpdates.map((i) => {
-      if (!i.data) return i;
-      return {
-        ...i,
-        data: {
-          ...i.data,
-          DisputeStatus: 'completeDispute',
-        },
-      };
-    });
-  }
+  // if (!live) {
+  //   allDisputeStatusUpdates = allDisputeStatusUpdates.map((i) => {
+  //     if (!i.data) return i;
+  //     return {
+  //       ...i,
+  //       data: {
+  //         ...i.data,
+  //         DisputeStatus: i.data?.DisputeStatus,
+  //       },
+  //     };
+  //   });
+  // }
 
-  // filter failures and disputes that are still open
+  // filter failures...need to do something with this to re-request
+  // ...should not have any errors, but should log and resolve in case
   allDisputeStatusUpdates = [
     ...allDisputeStatusUpdates.filter((d) => {
-      return (
-        d.success &&
-        (d.data?.DisputeStatus.toLowerCase() === 'completedispute' ||
-          d.data?.DisputeStatus.toLowerCase() === 'cancelleddispute')
-      );
+      return d.success;
+      // return (
+      //   d.success
+      //   // &&
+      //   // (d.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'completedispute' ||
+      //   //   d.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'cancelleddispute')
+      // );
     }),
   ];
 
@@ -1197,18 +1223,52 @@ export const DisputeInflightCheck = async (
           const id = item.data?.ClientKey;
           const disputeId = item.data?.DisputeId;
           const disputeStatus = item.data?.DisputeStatus;
-          if (!id || !disputeId || !disputeStatus)
+          if (item.data || !id || !disputeId || !disputeStatus)
             return {
               success: false,
               error: `Missing id:=${id} or disputeId:=${disputeId} or disputeStatus:=${disputeStatus}`,
             };
 
-          const bundle: interfaces.IUpdateDisputeBundle = {
-            updateDisputeResult: {
-              ...item.data,
-            },
+          // get the current dispute from the dispute table
+          // update it with the new results
+          // save back to dispute table and to current dispute
+          const currentDispute = await DB.disputes.get(id, `${disputeId}`);
+          const { openedOn } = currentDispute;
+          const closedOn =
+            disputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || currentDispute.closedOn;
+          const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, openedOn, closedOn);
+          const updatedDispute = {
+            ...currentDispute,
+            ...mappedDispute,
           };
+          await DB.disputes.update(updatedDispute); // updates the dispute table
+          // need to update the current dispute too
+        }),
+      );
+      console.log('dispute updates ===> ', JSON.stringify(updates));
+    } catch (err) {
+      return { success: false, error: err };
+    }
+  }
 
+  // Only want to get investigation results for completed disputes
+  const completed = allDisputeStatusUpdates.filter(
+    (item) => item.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'completeDispute',
+  );
+  console.log('completed disputes ===> ', JSON.stringify(completed));
+  if (completed.length) {
+    try {
+      const alerted = await Promise.all(
+        completed.map(async (item) => {
+          // I need the dispute id, the client key (id), and the dispute status
+          const id = item.data?.ClientKey;
+          const disputeId = item.data?.DisputeId;
+          const disputeStatus = item.data?.DisputeStatus;
+          if (item.data || !id || !disputeId || !disputeStatus)
+            return {
+              success: false,
+              error: `Missing id:=${id} or disputeId:=${disputeId} or disputeStatus:=${disputeStatus}`,
+            };
           // const synced = await sync.syncData({ id: id }, bundle);
           const synced = await GetInvestigationResults(
             accountCode,
@@ -1219,13 +1279,13 @@ export const DisputeInflightCheck = async (
             identityId,
           );
           let response = synced
-            ? { success: true, error: null }
+            ? { success: true, error: null, data: synced.data }
             : { success: false, error: 'failed to get investigation results' };
           console.log('response ===> ', response);
           return response;
         }),
       );
-      return { success: true, error: false, data: JSON.stringify(updates) };
+      return { success: true, error: false, data: JSON.stringify(alerted) };
     } catch (err) {
       return { success: false, error: err };
     }

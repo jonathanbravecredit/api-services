@@ -165,7 +165,7 @@ export const enrichUpdatedDisputeData = (
   const id = data.updateDisputeResult.DisputeId;
   if (!id) throw `Missing dispute id:=${id}`;
   const dispute: Partial<DisputeInput> = {
-    disputeStatus: updateDisputeResult?.DisputeStatus,
+    disputeStatus: updateDisputeResult?.DisputeStatus.DisputeStatusDetail.Status,
     closedOn: closedOn,
   };
   const oldDisputes = (state.agencies?.transunion?.disputes || []).map((item) => {

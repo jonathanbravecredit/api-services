@@ -1,3 +1,5 @@
+import { MOCK_CONFIG } from 'lib/examples/mocks/Config';
+
 export const GET_INVESTIGATION_RESULTS_INFORMATION_UPDATED_RESPONSE = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
 <s:Header>
   <Action s:mustUnderstand="1" xmlns="http://schemas.microsoft.com/ws/2005/05/addressing/none">https://consumerconnectws.tui.transunion.com/ICC2/GetInvestigationResultsResponse</Action>
@@ -9,7 +11,7 @@ export const GET_INVESTIGATION_RESULTS_INFORMATION_UPDATED_RESPONSE = `<s:Envelo
       <d4p1:ErrorResponse i:nil="true" />
       <d4p1:RequestKey>f214bb46-e1db-47a0-9e12-8aa90e5a922b</d4p1:RequestKey>
       <d4p1:ResponseType>Success</d4p1:ResponseType>
-      <d4p1:ClientKey>VR_2019-04-30_16-10-34_MOSES</d4p1:ClientKey>
+      <d4p1:ClientKey>${MOCK_CONFIG.userId}</d4p1:ClientKey>
       <d4p1:CreditBureau>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;ns0:creditBureau xmlns:ns1="com.tuc.common" xmlns:ns0="http://www.transunion.com/disclosure"&gt;
  &lt;ns0:version&gt;2&lt;/ns0:version&gt;

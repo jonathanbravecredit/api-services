@@ -1,4 +1,4 @@
-import { IProcessDisputeTradelineResult, IStandardResponse } from 'lib/interfaces';
+import { IDisputeStatus, IProcessDisputeTradelineResult, IStandardResponse } from 'lib/interfaces';
 import { DisputeInput } from 'src/api/api.service';
 
 export interface IGetDisputeStatusGraphQLResponse {
@@ -125,7 +125,7 @@ export interface IGetDisputeStatusResponse {
 }
 
 export interface IGetDisputeStatusResult extends IStandardResponse {
-  DisputeStatus: string;
+  DisputeStatus: null | IDisputeStatus;
   DisputeId?: string | number;
 }
 

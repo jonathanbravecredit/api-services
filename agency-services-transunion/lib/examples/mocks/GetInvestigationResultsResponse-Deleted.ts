@@ -1,3 +1,5 @@
+import { MOCK_CONFIG } from 'lib/examples/mocks/Config';
+
 export const GET_INVESTIGATION_RESULTS_DELETED = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
 <s:Header>
   <Action s:mustUnderstand="1" xmlns="http://schemas.microsoft.com/ws/2005/05/addressing/none">https://consumerconnectws.tui.transunion.com/ICC2/GetInvestigationResultsResponse</Action>
@@ -9,7 +11,7 @@ export const GET_INVESTIGATION_RESULTS_DELETED = `<s:Envelope xmlns:s="http://sc
       <d4p1:ErrorResponse i:nil="true" />
       <d4p1:RequestKey>6070d33c-62fd-4f0a-a226-dd7ac7e9a9f2</d4p1:RequestKey>
       <d4p1:ResponseType>Success</d4p1:ResponseType>
-      <d4p1:ClientKey>VR_2019-05-02_09-51-51_KATRINA</d4p1:ClientKey>
+      <d4p1:ClientKey>${MOCK_CONFIG.userId}</d4p1:ClientKey>
       <d4p1:CreditBureau>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;ns0:creditBureau xmlns:ns1="com.tuc.common" xmlns:ns0="http://www.transunion.com/disclosure"&gt;
  &lt;ns0:version&gt;2&lt;/ns0:version&gt;

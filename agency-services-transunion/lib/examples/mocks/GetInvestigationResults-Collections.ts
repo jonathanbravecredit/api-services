@@ -1,3 +1,5 @@
+import { MOCK_CONFIG } from 'lib/examples/mocks/Config';
+
 export const GET_INVESTIGATION_RESULTS_COLLECTIONS = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
 <s:Body>
   <GetInvestigationResultsResponse xmlns="https://consumerconnectws.tui.transunion.com/">
@@ -6,7 +8,7 @@ export const GET_INVESTIGATION_RESULTS_COLLECTIONS = `<s:Envelope xmlns:s="http:
       <a:ErrorResponse i:nil="true" />
       <a:RequestKey>f214bb46-e1db-47a0-9e12-8aa90e5a922b</a:RequestKey>
       <a:ResponseType>Success</a:ResponseType>
-      <a:ClientKey>VR_2019-04-30_16-10-34_MOSES</a:ClientKey>
+      <a:ClientKey>${MOCK_CONFIG.userId}</a:ClientKey>
       <a:CreditBureau>&lt;ns0:fileSummary&gt;
       &lt;ns0:inFileSinceDate&gt;01/01/1990&lt;/ns0:inFileSinceDate&gt;
       &lt;ns0:disclosureCoverInfo&gt;

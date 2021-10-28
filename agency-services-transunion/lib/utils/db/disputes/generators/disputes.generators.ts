@@ -96,3 +96,39 @@ export const createDisputeInputRecord = (
     notificationSentOn: null,
   };
 };
+
+export const createUpdateDisputeDBRecord = (
+  dispute: IStartDisputeResult,
+  openedOn: string,
+  closedOn: string,
+): Partial<Dispute> => {
+  return {
+    disputeStatus: dispute?.DisputeStatus?.DisputeStatusDetail?.Status,
+    disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterCode,
+    disputeLetterContent: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus.DisputeLetterContent,
+    openDisputes: {
+      estimatedCompletionDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.EstimatedCompletionDate,
+      lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate,
+      openDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.OpenDate,
+      requestedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.RequestedDate,
+      totalClosedDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalClosedDisputedItems,
+      totalDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalDisputedItems,
+      totalOpenDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalOpenDisputedItems,
+      totalPVDisputedItemCount: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalPVDisputedItemCount,
+    },
+    closedDisputes: {
+      estimatedCompletionDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.EstimatedCompletionDate,
+      lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate,
+      openDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.OpenDate,
+      requestedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.RequestedDate,
+      totalClosedDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalClosedDisputedItems,
+      totalDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalDisputedItems,
+      totalOpenDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalOpenDisputedItems,
+      totalPVDisputedItemCount: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalPVDisputedItemCount,
+    },
+    openedOn: openedOn,
+    closedOn: closedOn,
+    createdOn: openedOn,
+    modifiedOn: openedOn,
+  };
+};
