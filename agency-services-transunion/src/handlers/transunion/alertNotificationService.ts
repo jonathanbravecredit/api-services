@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { AppSyncResolverEvent } from 'aws-lambda';
 import * as https from 'https';
 import * as fs from 'fs';
