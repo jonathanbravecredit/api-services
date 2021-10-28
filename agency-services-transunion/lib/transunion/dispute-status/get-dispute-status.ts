@@ -14,6 +14,7 @@ import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import { MONTH_MAP } from 'lib/data/constants';
 import { UpdateAppDataInput, DisputeInput } from 'src/api/api.service';
+import { DB } from 'lib/utils/db/db';
 
 // IGetDisputeStatusGraphQLResponse
 /**
@@ -164,10 +165,10 @@ export const enrichUpdatedDisputeData = (
   let closedOn = data.updateDisputeResult.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || null;
   const id = data.updateDisputeResult.DisputeStatus?.DisputeStatusDetail?.DisputeId;
   if (!id) throw `Missing dispute id:=${id}`;
-  const dispute: Partial<DisputeInput> = {
-    disputeStatus: updateDisputeResult?.DisputeStatus.DisputeStatusDetail.Status,
-    closedOn: closedOn,
-  };
+  const dispute: Partial<DisputeInput> = DB.disputes.generators.createUpdateDisputeDBRecord(
+    updateDisputeResult,
+    closedOn,
+  );
   const oldDisputes = (state.agencies?.transunion?.disputes || []).map((item) => {
     if (item.id !== id) return item;
     return {

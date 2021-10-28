@@ -1252,7 +1252,7 @@ export const DisputeInflightCheck = async (
           const { openedOn } = currentDispute;
           const closedOn =
             item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || currentDispute.closedOn;
-          const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, openedOn, closedOn);
+          const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
           const updatedDispute = {
             ...currentDispute,
             ...mappedDispute,

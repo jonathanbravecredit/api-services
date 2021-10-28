@@ -111,11 +111,8 @@ export const createDisputeInputRecord = (
   };
 };
 
-export const createUpdateDisputeDBRecord = (
-  dispute: IStartDisputeResult,
-  openedOn: string,
-  closedOn: string,
-): Partial<Dispute> => {
+export const createUpdateDisputeDBRecord = (dispute: IStartDisputeResult, closedOn: string): Partial<Dispute> => {
+  const modifiedOn = new Date().toISOString();
   return {
     disputeStatus: dispute?.DisputeStatus?.DisputeStatusDetail?.Status || null,
     disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterCode || null,
@@ -147,9 +144,7 @@ export const createUpdateDisputeDBRecord = (
       totalPVDisputedItemCount:
         dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalPVDisputedItemCount || null,
     },
-    openedOn: openedOn,
     closedOn: closedOn,
-    createdOn: openedOn,
-    modifiedOn: openedOn,
+    modifiedOn: modifiedOn,
   };
 };
