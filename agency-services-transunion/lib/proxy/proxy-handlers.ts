@@ -1214,27 +1214,25 @@ export const DisputeInflightCheck = async (
 
   // filter failures...need to do something with this to re-request
   // ...should not have any errors, but should log and resolve in case
-  allDisputeStatusUpdates = [
-    ...allDisputeStatusUpdates.filter((d) => {
-      return d.success;
-      // return (
-      //   d.success
-      //   // &&
-      //   // (d.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'completedispute' ||
-      //   //   d.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'cancelleddispute')
-      // );
-    }),
-  ];
+  const successfull = allDisputeStatusUpdates.filter((d) => {
+    return d.success;
+    // return (
+    //   d.success
+    //   // &&
+    //   // (d.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'completedispute' ||
+    //   //   d.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'cancelleddispute')
+    // );
+  });
 
-  console.log('all disputes filtered ===> ', JSON.stringify(allDisputeStatusUpdates));
+  console.log('all disputes filtered ===> ', JSON.stringify(successfull));
 
   // loop through and update the status of each result
-  if (allDisputeStatusUpdates.length) {
+  if (successfull.length) {
     try {
       console.log('*** IN UPDATE DATABASE WITH NEW STATUS ***');
       // alerts come with client keys which are also our keys
       const updates = await Promise.all(
-        allDisputeStatusUpdates.map(async (item) => {
+        successfull.map(async (item) => {
           // I need the dispute id, the client key (id), and the dispute status
           const id = item.data?.ClientKey;
           const disputeId = item.data?.DisputeId;
@@ -1271,7 +1269,7 @@ export const DisputeInflightCheck = async (
 
   // Only want to get investigation results for completed disputes
   const completed = allDisputeStatusUpdates.filter(
-    (item) => item.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'completeDispute',
+    (d) => d.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'completedispute',
   );
   console.log('completed disputes ===> ', JSON.stringify(completed));
   if (completed.length) {

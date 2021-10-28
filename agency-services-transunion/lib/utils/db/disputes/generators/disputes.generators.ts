@@ -13,28 +13,35 @@ export const createDisputeDBRecord = (
   return {
     id: id,
     disputeId: `${dispute?.DisputeStatus?.DisputeStatusDetail?.DisputeId}`,
-    disputeStatus: dispute?.DisputeStatus?.DisputeStatusDetail?.Status,
-    disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterCode,
-    disputeLetterContent: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterContent,
+    disputeStatus: dispute?.DisputeStatus?.DisputeStatusDetail?.Status || null,
+    disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterCode || null,
+    disputeLetterContent: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterContent || null,
     openDisputes: {
-      estimatedCompletionDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.EstimatedCompletionDate,
-      lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate,
-      openDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.OpenDate,
-      requestedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.RequestedDate,
-      totalClosedDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalClosedDisputedItems,
-      totalDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalDisputedItems,
-      totalOpenDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalOpenDisputedItems,
-      totalPVDisputedItemCount: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalPVDisputedItemCount,
+      estimatedCompletionDate:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.EstimatedCompletionDate || null,
+      lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate || null,
+      openDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.OpenDate || null,
+      requestedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.RequestedDate || null,
+      totalClosedDisputedItems:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalClosedDisputedItems || null,
+      totalDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalDisputedItems || null,
+      totalOpenDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalOpenDisputedItems || null,
+      totalPVDisputedItemCount:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalPVDisputedItemCount || null,
     },
     closedDisputes: {
-      estimatedCompletionDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.EstimatedCompletionDate,
-      lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate,
-      openDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.OpenDate,
-      requestedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.RequestedDate,
-      totalClosedDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalClosedDisputedItems,
-      totalDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalDisputedItems,
-      totalOpenDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalOpenDisputedItems,
-      totalPVDisputedItemCount: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalPVDisputedItemCount,
+      estimatedCompletionDate:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.EstimatedCompletionDate || null,
+      lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || null,
+      openDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.OpenDate || null,
+      requestedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.RequestedDate || null,
+      totalClosedDisputedItems:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalClosedDisputedItems || null,
+      totalDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalDisputedItems || null,
+      totalOpenDisputedItems:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalOpenDisputedItems || null,
+      totalPVDisputedItemCount:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalPVDisputedItemCount || null,
     },
     pvDisputedItems: null,
     agencyName: 'TU',
@@ -62,28 +69,35 @@ export const createDisputeInputRecord = (
     id: uuid.v4(),
     appDataId: id,
     disputeId: `${dispute?.DisputeStatus?.DisputeStatusDetail?.DisputeId}`,
-    disputeStatus: dispute?.DisputeStatus?.DisputeStatusDetail?.Status,
-    disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterCode,
-    disputeLetterContent: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterContent,
+    disputeStatus: dispute?.DisputeStatus?.DisputeStatusDetail?.Status || null,
+    disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterCode || null,
+    disputeLetterContent: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterContent || null,
     openDisputes: {
-      estimatedCompletionDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.EstimatedCompletionDate,
-      lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate,
-      openDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.OpenDate,
-      requestedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.RequestedDate,
-      totalClosedDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalClosedDisputedItems,
-      totalDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalDisputedItems,
-      totalOpenDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalOpenDisputedItems,
-      totalPVDisputedItemCount: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalPVDisputedItemCount,
+      estimatedCompletionDate:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.EstimatedCompletionDate || null,
+      lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate || null,
+      openDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.OpenDate || null,
+      requestedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.RequestedDate || null,
+      totalClosedDisputedItems:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalClosedDisputedItems || null,
+      totalDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalDisputedItems || null,
+      totalOpenDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalOpenDisputedItems || null,
+      totalPVDisputedItemCount:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalPVDisputedItemCount || null,
     },
     closedDisputes: {
-      estimatedCompletionDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.EstimatedCompletionDate,
-      lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate,
-      openDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.OpenDate,
-      requestedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.RequestedDate,
-      totalClosedDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalClosedDisputedItems,
-      totalDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalDisputedItems,
-      totalOpenDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalOpenDisputedItems,
-      totalPVDisputedItemCount: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalPVDisputedItemCount,
+      estimatedCompletionDate:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.EstimatedCompletionDate || null,
+      lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || null,
+      openDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.OpenDate || null,
+      requestedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.RequestedDate || null,
+      totalClosedDisputedItems:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalClosedDisputedItems || null,
+      totalDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalDisputedItems || null,
+      totalOpenDisputedItems:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalOpenDisputedItems || null,
+      totalPVDisputedItemCount:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalPVDisputedItemCount || null,
     },
     agencyName: 'TU',
     openedOn: openedOn,
@@ -103,28 +117,35 @@ export const createUpdateDisputeDBRecord = (
   closedOn: string,
 ): Partial<Dispute> => {
   return {
-    disputeStatus: dispute?.DisputeStatus?.DisputeStatusDetail?.Status,
-    disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterCode,
-    disputeLetterContent: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterContent,
+    disputeStatus: dispute?.DisputeStatus?.DisputeStatusDetail?.Status || null,
+    disputeLetterCode: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterCode || null,
+    disputeLetterContent: dispute?.DisputeStatus?.DisputeStatusDetail?.LetterStatus?.DisputeLetterContent || null,
     openDisputes: {
-      estimatedCompletionDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.EstimatedCompletionDate,
-      lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate,
-      openDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.OpenDate,
-      requestedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.RequestedDate,
-      totalClosedDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalClosedDisputedItems,
-      totalDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalDisputedItems,
-      totalOpenDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalOpenDisputedItems,
-      totalPVDisputedItemCount: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalPVDisputedItemCount,
+      estimatedCompletionDate:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.EstimatedCompletionDate || null,
+      lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate || null,
+      openDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.OpenDate || null,
+      requestedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.RequestedDate || null,
+      totalClosedDisputedItems:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalClosedDisputedItems || null,
+      totalDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalDisputedItems || null,
+      totalOpenDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalOpenDisputedItems || null,
+      totalPVDisputedItemCount:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.OpenDisputes?.TotalPVDisputedItemCount || null,
     },
     closedDisputes: {
-      estimatedCompletionDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.EstimatedCompletionDate,
-      lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate,
-      openDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.OpenDate,
-      requestedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.RequestedDate,
-      totalClosedDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalClosedDisputedItems,
-      totalDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalDisputedItems,
-      totalOpenDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalOpenDisputedItems,
-      totalPVDisputedItemCount: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalPVDisputedItemCount,
+      estimatedCompletionDate:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.EstimatedCompletionDate || null,
+      lastUpdatedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || null,
+      openDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.OpenDate || null,
+      requestedDate: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.RequestedDate || null,
+      totalClosedDisputedItems:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalClosedDisputedItems || null,
+      totalDisputedItems: dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalDisputedItems || null,
+      totalOpenDisputedItems:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalOpenDisputedItems || null,
+      totalPVDisputedItemCount:
+        dispute?.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.TotalPVDisputedItemCount || null,
     },
     openedOn: openedOn,
     closedOn: closedOn,
