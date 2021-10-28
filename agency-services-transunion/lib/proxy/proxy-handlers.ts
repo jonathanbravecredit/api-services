@@ -16,7 +16,7 @@ import { ALL_GET_INVESTIGATION_MOCKS } from 'lib/examples/mocks/AllGetInvestigat
 import { GET_DISPUTE_STATUS_RESPONSE_WITHID } from 'lib/examples/mocks/GetDisputeStatusResponse-Complete';
 import { DB } from 'lib/utils/db/db';
 
-const GO_LIVE = false;
+const GO_LIVE = true;
 
 const parserOptions = {
   attributeNamePrefix: '',
