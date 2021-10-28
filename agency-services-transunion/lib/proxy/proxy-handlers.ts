@@ -696,6 +696,7 @@ export const GetDisputeStatusByID = async (
     const bundle: interfaces.IUpdateDisputeBundle = {
       updateDisputeResult: data,
     };
+    console.log('dispute status resp ===> ', data);
 
     let response;
     if (responseType.toLowerCase() === 'success') {
