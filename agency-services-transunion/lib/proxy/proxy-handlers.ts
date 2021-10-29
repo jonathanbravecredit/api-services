@@ -4,9 +4,8 @@ import * as fastXml from 'fast-xml-parser';
 import { ajv } from 'lib/schema/validation';
 import { Sync } from 'lib/utils/sync/sync';
 import { SoapAid } from 'lib/utils/soap-aid/soap-aid';
-import { dateDiffInDays, dateDiffInHours } from 'lib/utils/dates/dates';
+import { dateDiffInHours } from 'lib/utils/dates/dates';
 import { returnNestedObject } from 'lib/utils/helpers/helpers';
-import { GET_INVESTIGATION_RESULTS_RESPONSE } from 'lib/examples/mocks/GetInvestigationResultsResponse';
 import * as qrys from 'lib/proxy/proxy-queries';
 import * as interfaces from 'lib/interfaces';
 import * as tu from 'lib/transunion';
@@ -276,7 +275,7 @@ export const Enroll = async (
         : { success: false, error: 'failed to sync data to db' };
     } else {
       response =
-        error.Code === '103045'
+        `${error.Code}` == '103045'
           ? { success: true, error: null, data: null }
           : { success: false, error: error, data: null };
     }
@@ -350,7 +349,7 @@ export const EnrollDisputes = async (
         : { success: false, error: 'failed to sync data to db' };
     } else {
       response =
-        error.Code === '103045'
+        `${error.Code}` == '103045'
           ? { success: true, error: null, data: null }
           : { success: false, error: error, data: null };
     }
@@ -553,6 +552,7 @@ export const GetServiceProduct = async (
 /**
  * Confirms eligibility to open a dispute
  *  (Optional) ID can be passsed to check status of open dispute
+ *  IMPORTANT - This is a non-syncing operation and only returns success or not
  * @param {string} accountCode Brave account code
  * @param {string} username Brave user ID (Identity ID)
  * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
@@ -618,6 +618,7 @@ export const GetDisputeStatus = async (
 /**
  * Confirms eligibility to open a dispute
  *  (Optional) ID can be passsed to check status of open dispute
+ *  IMPORTANT - This is a sync operation and updates the disputes with the latest status
  * @param {string} accountCode Brave account code
  * @param {string} username Brave user ID (Identity ID)
  * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
@@ -657,10 +658,7 @@ export const GetDisputeStatusByID = async (
 
   try {
     // get / parse data needed to process request
-    const prepped: { data: interfaces.IGetDisputeStatusGraphQLResponse } = await qrys.getDataForGetDisputeStatus(
-      payload,
-    );
-
+    const prepped = await qrys.getDataForGetDisputeStatus(payload);
     if (!prepped.data?.data?.getAppData?.id) {
       console.log('error db query ===> ', prepped.data);
       throw 'No record in db';

@@ -8,6 +8,7 @@ export interface IGetDisputeStatusGraphQLResponse {
       agencies?: {
         transunion?: {
           disputeEnrollmentKey?: string;
+          disputeCurrent?: DisputeInput;
         };
       };
       user?: {

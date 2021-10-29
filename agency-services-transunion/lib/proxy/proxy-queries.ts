@@ -1,5 +1,10 @@
 import { AxiosResponse } from 'axios';
-import { IGetAppDataRequest, IGetDisputeRequest } from 'lib/interfaces';
+import {
+  IGetAppDataRequest,
+  IGetDataForGetDisputeStatus,
+  IGetDisputeRequest,
+  IProxyQueryGetAppData,
+} from 'lib/interfaces';
 import * as qry from 'lib/queries';
 import { postGraphQLRequest } from 'lib/utils/helpers/helpers';
 import { UpdateAppDataInput } from 'src/api/api.service';
@@ -60,7 +65,9 @@ export const getDataForFulfill = async (msg: IGetAppDataRequest): Promise<AxiosR
   }
 };
 
-export const getDataForGetDisputeStatus = async (msg: IGetAppDataRequest): Promise<AxiosResponse<any>> => {
+export const getDataForGetDisputeStatus = async (
+  msg: IGetAppDataRequest,
+): Promise<AxiosResponse<IProxyQueryGetAppData<IGetDataForGetDisputeStatus>>> => {
   try {
     return await postGraphQLRequest(qry.qryGetDataForGetDisputeStatus, msg);
   } catch (err) {

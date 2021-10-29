@@ -221,7 +221,7 @@ export interface ILineItem {
   LineItem: {
     ClaimCodes: IClaimCode | IClaimCode[];
     CreditReportItem: string;
-    LineItemComment: string;
+    LineItemComment?: string;
     LineItemCommentType?: string;
     UploadDocumentId?: string;
   };

@@ -207,20 +207,11 @@ export const parseDisputeTradelineToLineItem = (
   if (!disputes?.length) return null;
   return disputes
     .map((item) => {
-      const reason = item?.result?.data?.reasons;
+      const reasons = item?.result?.data?.reasons;
       const handle = item?.tradeline?.Tradeline?.handle;
-      console.log('parseDisputeToLineItem:reason ===> ', reason);
-      console.log('parseDisputeToLineItem:handle ===> ', handle);
-      if (reason !== undefined) {
-        return {
-          LineItem: {
-            ClaimCodes: parseReasonsToClaimCodes(reason),
-            CreditReportItem: handle,
-            LineItemComment: 'Account Tradeline',
-          },
-        };
-      }
-      return null;
+      const hasCustomInput = item?.result?.data?.hasCustomInput;
+      const customInput = item?.result?.data?.customInput;
+      return parserDisputeToLineItem(reasons, handle, hasCustomInput, customInput);
     })
     .filter(Boolean);
 };
@@ -236,22 +227,44 @@ export const parseDisputePublicToLineItem = (
   if (!disputes.length) return null;
   return disputes
     .map((item) => {
-      const reason = item?.result?.data?.reasons;
+      const reasons = item?.result?.data?.reasons;
       const handle = item?.publicItem?.PublicRecord.handle;
-      console.log('parseDisputeToLineItem:reason ===> ', reason);
-      console.log('parseDisputeToLineItem:handle ===> ', handle);
-      if (reason !== undefined) {
-        return {
-          LineItem: {
-            ClaimCodes: parseReasonsToClaimCodes(reason),
-            CreditReportItem: handle,
-            LineItemComment: 'Public Tradeline',
-          },
-        };
-      }
-      return null;
+      const hasCustomInput = item?.result?.data?.hasCustomInput;
+      const customInput = item?.result?.data?.customInput;
+      return parserDisputeToLineItem(reasons, handle, hasCustomInput, customInput);
     })
     .filter(Boolean);
+};
+
+export const parserDisputeToLineItem = (
+  reasons: [IDisputeReason, IDisputeReason],
+  handle: string,
+  hasCustomInput: boolean,
+  customInput: string,
+) => {
+  console.log('parseDisputeToLineItem:reasons ===> ', reasons);
+  console.log('parseDisputeToLineItem:handle ===> ', handle);
+  console.log('parseDisputeToLineItem:hasCustomInput ===> ', reasons);
+  console.log('parseDisputeToLineItem:customInput ===> ', handle);
+  if (reasons !== undefined) {
+    if (hasCustomInput) {
+      return {
+        LineItem: {
+          ClaimCodes: parseReasonsToClaimCodes(reasons),
+          CreditReportItem: handle,
+          LineItemComment: customInput || '', // only for C9 disputes
+        },
+      };
+    } else {
+      return {
+        LineItem: {
+          ClaimCodes: parseReasonsToClaimCodes(reasons),
+          CreditReportItem: handle,
+        },
+      };
+    }
+  }
+  return null;
 };
 
 /**
@@ -493,26 +506,30 @@ export const mapAddress = (address: IIndicativeDisputesAddress | IIndicativeDisp
 export const mapLineItems = (items: ILineItem | ILineItem[]) => {
   console.log('startDispute:mapLineItems ===> ', items);
   if (!items) return textConstructor(null, true);
-  return items instanceof Array
-    ? items.map((item) => {
-        const mappedCodes = mapClaimCodes(item.LineItem.ClaimCodes);
-        return {
-          'data:LineItem': {
-            'data:ClaimCodes': mappedCodes,
-            'data:CreditReportItem': textConstructor(item.LineItem.CreditReportItem, true),
-            'data:LineItemComment': textConstructor(item.LineItem.LineItemComment, true),
-            'data:LineItemCommentType': textConstructor(item.LineItem.LineItemCommentType, true),
-            'data:UploadDocumentId': textConstructor(item.LineItem.UploadDocumentId, true),
-          },
-        };
-      })
+  return items instanceof Array ? items.map((i) => mapLineItem(i)) : mapLineItem(items);
+};
+
+export const mapLineItem = (item: ILineItem) => {
+  const codes = item.LineItem.ClaimCodes;
+  const hasCustom =
+    codes instanceof Array
+      ? codes.find((c) => c.ClaimCode.Code.toUpperCase() === 'C9')
+      : codes.ClaimCode.Code.toUpperCase() === 'C9';
+  return hasCustom
+    ? {
+        'data:LineItem': {
+          'data:ClaimCodes': mapClaimCodes(item.LineItem.ClaimCodes),
+          'data:CreditReportItem': textConstructor(item.LineItem.CreditReportItem, true),
+          'data:LineItemComment': textConstructor(item.LineItem.LineItemComment, true),
+          'data:LineItemCommentType': textConstructor(item.LineItem.LineItemCommentType, true),
+          'data:UploadDocumentId': textConstructor(item.LineItem.UploadDocumentId, true),
+        },
+      }
     : {
         'data:LineItem': {
-          'data:ClaimCodes': mapClaimCodes(items.LineItem.ClaimCodes),
-          'data:CreditReportItem': textConstructor(items.LineItem.CreditReportItem, true),
-          'data:LineItemComment': textConstructor(items.LineItem.LineItemComment, true),
-          'data:LineItemCommentType': textConstructor(items.LineItem.LineItemCommentType, true),
-          'data:UploadDocumentId': textConstructor(items.LineItem.UploadDocumentId, true),
+          'data:ClaimCodes': mapClaimCodes(item.LineItem.ClaimCodes),
+          'data:CreditReportItem': textConstructor(item.LineItem.CreditReportItem, true),
+          'data:UploadDocumentId': textConstructor(item.LineItem.UploadDocumentId, true),
         },
       };
 };

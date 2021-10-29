@@ -501,6 +501,7 @@ export const qryGetDataForGetDisputeStatus = `query GetAppData($id: ID!) {
     agencies {
       transunion {
         disputeEnrollmentKey
+        disputeCurrent
       }
     }
     user {
