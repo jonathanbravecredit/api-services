@@ -75,82 +75,75 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     });
 
     let results: any;
+    const payload = {
+      accountCode,
+      username,
+      message,
+      agent: httpsAgent,
+      auth,
+      identityId: tokenUser,
+    };
     // do something
     switch (action) {
       case 'Ping':
-        results = await queries.Ping(httpsAgent, auth, tokenUser);
+        results = await queries.Ping(payload);
         return JSON.stringify(results);
       case 'IndicativeEnrichment':
-        results = await queries.IndicativeEnrichment(accountCode, username, message, httpsAgent, auth, tokenUser);
+        results = await queries.IndicativeEnrichment(payload);
         return JSON.stringify(results);
       case 'GetAuthenticationQuestions':
-        results = await queries.GetAuthenticationQuestions(accountCode, username, message, httpsAgent, auth, tokenUser);
+        results = await queries.GetAuthenticationQuestions(payload);
         return JSON.stringify(results);
       case 'VerifyAuthenticationQuestions':
-        results = await queries.VerifyAuthenticationQuestions(
-          accountCode,
-          username,
-          message,
-          httpsAgent,
-          auth,
-          tokenUser,
-        );
+        results = await queries.VerifyAuthenticationQuestions(payload);
         return JSON.stringify(results);
       case 'Enroll':
-        results = await queries.Enroll(accountCode, username, message, httpsAgent, auth, tokenUser);
+        results = await queries.Enroll(payload);
         return JSON.stringify(results);
       case 'EnrollDisputes':
-        results = await queries.EnrollDisputes(accountCode, username, message, httpsAgent, auth, tokenUser);
+        results = await queries.EnrollDisputes(payload);
         return JSON.stringify(results);
       case 'Fulfill':
-        results = await queries.Fulfill(accountCode, username, message, httpsAgent, auth, tokenUser);
+        results = await queries.Fulfill(payload);
         return JSON.stringify(results);
       case 'FulfillDisputes':
-        results = await queries.FulfillDisputes(accountCode, username, message, httpsAgent, auth, tokenUser);
+        results = await queries.FulfillDisputes(payload);
         return JSON.stringify(results);
       case 'GetServiceProduct':
-        results = await queries.GetServiceProduct(accountCode, username, message, httpsAgent, auth, tokenUser);
+        results = await queries.GetServiceProduct(payload);
         return JSON.stringify(results);
       case 'GetDisputeStatus':
-        results = await queries.GetDisputeStatus(accountCode, username, message, httpsAgent, auth, tokenUser);
+        results = await queries.GetDisputeStatus(payload);
         return JSON.stringify(results);
       case 'StartDispute':
-        results = await queries.StartDispute(accountCode, username, message, httpsAgent, auth, tokenUser);
+        results = await queries.StartDispute(payload);
+        return JSON.stringify(results);
+      case 'GetAllUserDisputes':
+        results = await queries.GetAllUserDisputes(payload);
+        return JSON.stringify(results);
+      case 'GetCurrentUserDispute':
+        results = await queries.GetCurrentUserDispute(payload);
         return JSON.stringify(results);
       case 'GetDisputeHistory':
-        results = await queries.GetDisputeHistory(accountCode, username, message, httpsAgent, auth, tokenUser);
+        results = await queries.GetDisputeHistory(payload);
         return JSON.stringify(results);
       case 'CompleteOnboardingEnrollments':
-        results = await queries.CompleteOnboardingEnrollments(
-          accountCode,
-          username,
-          message,
-          httpsAgent,
-          auth,
-          tokenUser,
-        );
+        results = await queries.CompleteOnboardingEnrollments(payload);
         return JSON.stringify(results);
       case 'DisputePreflightCheck':
-        results = await queries.DisputePreflightCheck(accountCode, username, message, httpsAgent, auth, tokenUser);
+        results = await queries.DisputePreflightCheck(payload);
         return JSON.stringify(results);
       case 'GetInvestigationResults':
-        results = await queries.GetInvestigationResults(accountCode, username, message, httpsAgent, auth, tokenUser);
+        results = await queries.GetInvestigationResults(payload);
         return JSON.stringify(results);
       case 'GetTrendingData':
-        results = await queries.GetTrendingData(accountCode, username, message, httpsAgent, auth, tokenUser);
+        results = await queries.GetTrendingData(payload);
         return JSON.stringify(results);
       case 'GetInvestigationResultsByID':
-        results = await queries.GetInvestigationResultsByID(
-          accountCode,
-          username,
-          message,
-          httpsAgent,
-          auth,
-          tokenUser,
-        );
+        results = await queries.GetInvestigationResultsByID(payload);
         return JSON.stringify(results);
       case 'GetCreditBureauResultsByID':
-        results = await queries.GetCreditBureauResultsByID(accountCode, username, message, httpsAgent, auth, tokenUser);
+        results = await queries.GetCreditBureauResultsByID(payload);
         return JSON.stringify(results);
       default:
         return JSON.stringify({ success: false, error: 'Action not found', data: action });

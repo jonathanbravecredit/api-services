@@ -3,6 +3,7 @@ import {
   deleteDispute,
   describeDisputes,
   getDispute,
+  listDisputesById,
   updateDispute,
   updateDisputeResults,
 } from 'lib/utils/db/disputes/queries/disputes.queries';
@@ -16,7 +17,7 @@ export class DisputesUtil {
   static get = getDispute;
   static update = updateDispute;
   static delete = deleteDispute;
-  static list = getDispute;
+  static list = listDisputesById;
   static describe = describeDisputes;
   // dispute results specific
   static updateResults = updateDisputeResults;

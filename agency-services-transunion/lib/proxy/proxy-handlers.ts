@@ -14,6 +14,7 @@ import { GET_ALERT_NOTIFICATIONS_RESPONSE } from 'lib/examples/mocks/GetAlertNot
 import { ALL_GET_INVESTIGATION_MOCKS } from 'lib/examples/mocks/AllGetInvestigationMocks';
 import { GET_DISPUTE_STATUS_RESPONSE_WITHID } from 'lib/examples/mocks/GetDisputeStatusResponse-Complete';
 import { DB } from 'lib/utils/db/db';
+import { Dispute } from 'lib/utils/db/disputes/model/dispute.model';
 
 const GO_LIVE = true;
 
@@ -32,11 +33,21 @@ const parserOptions = {
  * @param {string} auth
  * @returns
  */
-export const Ping = async (
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
-): Promise<{ success: boolean; error?: interfaces.IErrorResponse | interfaces.INil | string; data?: any }> => {
+export const Ping = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: boolean; error?: interfaces.IErrorResponse | interfaces.INil | string; data?: any }> => {
   const soap = new SoapAid(fastXml.parse, () => {}, tu.createPing);
   try {
     const { xml } = soap.createPackage(null, null, null);
@@ -58,14 +69,21 @@ export const Ping = async (
  * @param {string} auth
  * @returns full ssn for verification
  */
-export const IndicativeEnrichment = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
-): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
+export const IndicativeEnrichment = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
   // validate incoming message
   const payload: interfaces.IIndicativeEnrichmentPayload = {
     id: identityId,
@@ -110,14 +128,21 @@ export const IndicativeEnrichment = async (
  * @param {string} auth
  * @returns
  */
-export const GetAuthenticationQuestions = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
-): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
+export const GetAuthenticationQuestions = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
   const payload: interfaces.IGetAuthenticationQuestionsPayload = {
     id: identityId,
     ...JSON.parse(message),
@@ -165,14 +190,21 @@ export const GetAuthenticationQuestions = async (
  * @param {string} auth
  * @returns
  */
-export const VerifyAuthenticationQuestions = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
-): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
+export const VerifyAuthenticationQuestions = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
   const payload: interfaces.IVerifyAuthenticationQuestionsPayload = {
     id: identityId,
     ...JSON.parse(message),
@@ -228,12 +260,21 @@ export const VerifyAuthenticationQuestions = async (
  * @returns
  */
 export const Enroll = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
+  {
+    accountCode,
+    username,
+    message,
+    agent,
+    auth,
+    identityId,
+  }: {
+    accountCode: string;
+    username: string;
+    message: string;
+    agent: https.Agent;
+    auth: string;
+    identityId: string;
+  },
   dispute: boolean = false,
 ): Promise<{
   success: boolean;
@@ -298,12 +339,21 @@ export const Enroll = async (
  * @returns
  */
 export const EnrollDisputes = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
+  {
+    accountCode,
+    username,
+    message,
+    agent,
+    auth,
+    identityId,
+  }: {
+    accountCode: string;
+    username: string;
+    message: string;
+    agent: https.Agent;
+    auth: string;
+    identityId: string;
+  },
   dispute: boolean = false,
 ): Promise<{
   success: boolean;
@@ -371,12 +421,21 @@ export const EnrollDisputes = async (
  * @returns
  */
 export const Fulfill = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
+  {
+    accountCode,
+    username,
+    message,
+    agent,
+    auth,
+    identityId,
+  }: {
+    accountCode: string;
+    username: string;
+    message: string;
+    agent: https.Agent;
+    auth: string;
+    identityId: string;
+  },
   dispute: boolean = false,
 ): Promise<{
   success: boolean;
@@ -437,12 +496,21 @@ export const Fulfill = async (
  * @returns
  */
 export const FulfillDisputes = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
+  {
+    accountCode,
+    username,
+    message,
+    agent,
+    auth,
+    identityId,
+  }: {
+    accountCode: string;
+    username: string;
+    message: string;
+    agent: https.Agent;
+    auth: string;
+    identityId: string;
+  },
   dispute: boolean = false,
 ): Promise<{
   success: boolean;
@@ -507,14 +575,21 @@ export const FulfillDisputes = async (
  * @param {string} auth
  * @returns
  */
-export const GetServiceProduct = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
-): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
+export const GetServiceProduct = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
   // validate incoming message
   const payload: interfaces.IGenericRequest = { id: identityId };
   const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
@@ -560,14 +635,21 @@ export const GetServiceProduct = async (
  * @param {string} auth
  * @returns
  */
-export const GetDisputeStatus = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
-): Promise<{
+export const GetDisputeStatus = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{
   success: boolean;
   error?: interfaces.IErrorResponse | interfaces.INil;
   data?: interfaces.IGetDisputeStatusResult | null;
@@ -626,14 +708,21 @@ export const GetDisputeStatus = async (
  * @param {string} auth
  * @returns
  */
-export const GetDisputeStatusByID = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
-): Promise<{
+export const GetDisputeStatusByID = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{
   success: boolean;
   error?: interfaces.IErrorResponse | interfaces.INil;
   data?: interfaces.IGetDisputeStatusResult | null;
@@ -722,14 +811,21 @@ export const GetDisputeStatusByID = async (
  * @param {string} auth
  * @returns
  */
-export const StartDispute = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
-): Promise<{ success: boolean; error?: any }> => {
+export const StartDispute = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: boolean; error?: any }> => {
   const live = GO_LIVE; // !!! IMPORTANT FLAG TO DISABLE MOCKS !!!
   const payload: interfaces.IStartDisputePayload = {
     id: identityId,
@@ -842,14 +938,21 @@ export const StartDispute = async (
  * @param {string} auth
  * @returns
  */
-export const GetDisputeHistory = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
-): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
+export const GetDisputeHistory = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
   // validate incoming message
   const payload: interfaces.IGenericRequest = {
     id: identityId,
@@ -904,14 +1007,21 @@ export const GetDisputeHistory = async (
  * @param {string} auth
  * @returns
  */
-export const GetInvestigationResults = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
-): Promise<{ success: boolean; error?: any; data?: any }> => {
+export const GetInvestigationResults = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: boolean; error?: any; data?: any }> => {
   const live = GO_LIVE; // !!! IMPORTANT FLAG TO DISABLE MOCKS !!!
   // validate incoming message
   const payload: interfaces.IGetInvestigationResultsRequest = {
@@ -991,24 +1101,35 @@ export const GetInvestigationResults = async (
   }
 };
 
-export const CompleteOnboardingEnrollments = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
-): Promise<{ success: Boolean; error?: any; data?: interfaces.IEnrollResult }> => {
+export const CompleteOnboardingEnrollments = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: Boolean; error?: any; data?: interfaces.IEnrollResult }> => {
   const payload: interfaces.IGenericRequest = { id: identityId };
   const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed message=${message}`;
 
   try {
-    const {
-      success: enrollSuccess,
-      error: enrollError,
-      data: enrollData,
-    } = await Enroll(accountCode, username, message, agent, auth, identityId, false); // report & score enroll
+    const payload = {
+      accountCode,
+      username,
+      message,
+      agent,
+      auth,
+      identityId,
+    };
+    const { success: enrollSuccess, error: enrollError, data: enrollData } = await Enroll(payload, false); // report & score enroll
     console.log('enrollment results:success ====> ', enrollSuccess);
     console.log('enrollment results:error ====> ', enrollError);
     console.log('enrollment results:enrollData ====> ', enrollData);
@@ -1032,14 +1153,21 @@ export const CompleteOnboardingEnrollments = async (
  * @param {string} auth
  * @returns
  */
-export const DisputePreflightCheck = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
-): Promise<{ success: boolean; error?: any }> => {
+export const DisputePreflightCheck = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: boolean; error?: any }> => {
   const payload: interfaces.IGenericRequest = { id: identityId };
   const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed message=${message}`;
@@ -1057,7 +1185,15 @@ export const DisputePreflightCheck = async (
   if (!enrolled) {
     console.log('*** IN ENROLL ***');
     try {
-      const { success, error, data } = await EnrollDisputes(accountCode, username, message, agent, auth, identityId);
+      const payload = {
+        accountCode,
+        username,
+        message,
+        agent,
+        auth,
+        identityId,
+      };
+      const { success, error, data } = await EnrollDisputes(payload);
       if (!success) return { success: false, error: error };
     } catch (err) {
       return { success: false, error: err };
@@ -1085,7 +1221,15 @@ export const DisputePreflightCheck = async (
   if (refresh) {
     console.log('*** IN REFRESH:FULFILL ***');
     try {
-      const { success, error } = await FulfillDisputes(accountCode, username, message, agent, auth, identityId);
+      const payload = {
+        accountCode,
+        username,
+        message,
+        agent,
+        auth,
+        identityId,
+      };
+      const { success, error } = await FulfillDisputes(payload);
       if (!success) return { success: false, error: error };
     } catch (err) {
       return { success: false, error: err };
@@ -1094,7 +1238,15 @@ export const DisputePreflightCheck = async (
 
   try {
     console.log('*** IN GETDISPUTESTATUS ***');
-    const { success, error } = await GetDisputeStatus(accountCode, username, message, agent, auth, identityId);
+    const payload = {
+      accountCode,
+      username,
+      message,
+      agent,
+      auth,
+      identityId,
+    };
+    const { success, error } = await GetDisputeStatus(payload);
     const response = success ? { success: true } : { success: false, error: error };
     console.log('response ===> ', response);
     return response;
@@ -1108,13 +1260,21 @@ export const DisputePreflightCheck = async (
  * This performs the inflight check nightly and returns disputes that have been updated
  * -- DO NOT user identityId param as this is called by backend services and now ID is available
  */
-export const DisputeInflightCheck = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-): Promise<{ success: boolean; error?: any; data?: any }> => {
+export const DisputeInflightCheck = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: boolean; error?: any; data?: any }> => {
   // no payload is needed
   // call GetAlertsNotificationsForAlLUsers
   //  returns all incremental changes since last call
@@ -1189,7 +1349,15 @@ export const DisputeInflightCheck = async (
       allDisputeStatusUpdates = await Promise.all(
         notifications.map(async (alert) => {
           const message = JSON.stringify({ disputeId: `${alert.AlertId}` });
-          return await GetDisputeStatusByID(accountCode, username, message, agent, auth, alert.ClientKey);
+          const payload = {
+            accountCode,
+            username,
+            message,
+            agent,
+            auth,
+            identityId: alert.ClientKey,
+          };
+          return await GetDisputeStatusByID(payload);
         }),
       );
       console.log('all status ===> ', JSON.stringify(allDisputeStatusUpdates));
@@ -1286,14 +1454,15 @@ export const DisputeInflightCheck = async (
               success: false,
               error: `Missing dispute data:=${item.data} or id:=${id} or disputeId:=${disputeId}`,
             };
-          const synced = await GetInvestigationResults(
+          const payload = {
             accountCode,
             username,
-            JSON.stringify({ disputeId: `${disputeId}` }),
+            message: JSON.stringify({ disputeId: `${disputeId}` }),
             agent,
             auth,
-            id,
-          );
+            identityId: id,
+          };
+          const synced = await GetInvestigationResults(payload);
           let response = synced
             ? { success: true, error: null, data: synced.data }
             : { success: false, error: 'failed to get investigation results' };
@@ -1319,14 +1488,21 @@ export const DisputeInflightCheck = async (
  * @param {string} auth
  * @returns
  */
-export const GetTrendingData = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
-): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
+export const GetTrendingData = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
   // validate incoming message
   let request: interfaces.IGetTrendingDataRequest = {
     ...JSON.parse(message),
@@ -1381,14 +1557,21 @@ export const GetTrendingData = async (
  * @param {string} auth
  * @returns
  */
-export const GetInvestigationResultsByID = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
-): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
+export const GetInvestigationResultsByID = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
   // validate incoming message
   const payload: interfaces.IGetInvestigationResultsByIdRequest = {
     userId: identityId,
@@ -1416,14 +1599,21 @@ export const GetInvestigationResultsByID = async (
  * @param {string} auth
  * @returns
  */
-export const GetCreditBureauResultsByID = async (
-  accountCode: string,
-  username: string,
-  message: string,
-  agent: https.Agent,
-  auth: string,
-  identityId: string,
-): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
+export const GetCreditBureauResultsByID = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: any }> => {
   // validate incoming message
   const payload: interfaces.IGetInvestigationResultsByIdRequest = {
     userId: identityId,
@@ -1436,6 +1626,85 @@ export const GetCreditBureauResultsByID = async (
 
   try {
     const resp = await db.creditBureauResults.get(payload.id, payload.userId);
+    return { success: true, error: null, data: resp };
+  } catch (err) {
+    return { success: false, error: err, data: null };
+  }
+};
+
+/**
+ * Return the dispute history
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const GetAllUserDisputes = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: Dispute[] }> => {
+  const payload: interfaces.IGenericRequest = { id: identityId };
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
+  if (!validate(payload)) throw `Malformed message=${message}`;
+
+  const db = DB;
+
+  try {
+    const resp = await db.disputes.list(payload.id);
+    return { success: true, error: null, data: resp };
+  } catch (err) {
+    return { success: false, error: err, data: null };
+  }
+};
+
+/**
+ * Return the dispute history
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const GetCurrentUserDispute = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: Dispute }> => {
+  const payload: interfaces.IGenericRequest = { id: identityId };
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
+  if (!validate(payload)) throw `Malformed message=${message}`;
+
+  const db = DB;
+
+  try {
+    const disputes = await db.disputes.list(payload.id);
+    const resp = disputes.sort((a, b) => {
+      return new Date(b.createdOn).valueOf() - new Date(a.createdOn).valueOf();
+    })[0];
     return { success: true, error: null, data: resp };
   } catch (err) {
     return { success: false, error: err, data: null };

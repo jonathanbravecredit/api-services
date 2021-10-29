@@ -70,7 +70,7 @@ export const deleteDispute = (id: string, disputeId: string): Promise<DeleteItem
     .catch((err) => err);
 };
 
-export const listDisputesById = (id: string): Promise<DeleteItemOutput> => {
+export const listDisputesById = (id: string): Promise<Dispute[]> => {
   return store
     .query()
     .wherePartitionKey(id)
