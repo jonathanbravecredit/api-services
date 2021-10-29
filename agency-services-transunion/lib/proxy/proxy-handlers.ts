@@ -16,7 +16,7 @@ import { GET_DISPUTE_STATUS_RESPONSE_WITHID } from 'lib/examples/mocks/GetDisput
 import { DB } from 'lib/utils/db/db';
 import { Dispute } from 'lib/utils/db/disputes/model/dispute.model';
 
-const GO_LIVE = true;
+const GO_LIVE = false;
 
 const parserOptions = {
   attributeNamePrefix: '',
