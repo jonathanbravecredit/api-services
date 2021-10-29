@@ -118,11 +118,11 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       case 'StartDispute':
         results = await queries.StartDispute(payload);
         return JSON.stringify(results);
-      case 'GetAllUserDisputes':
-        results = await queries.GetAllUserDisputes(payload);
+      case 'GetAllDisputesByUser':
+        results = await queries.GetAllDisputesByUser(payload);
         return JSON.stringify(results);
-      case 'GetCurrentUserDispute':
-        results = await queries.GetCurrentUserDispute(payload);
+      case 'GetCurrentDisputeByUser':
+        results = await queries.GetCurrentDisputeByUser(payload);
         return JSON.stringify(results);
       case 'GetDisputeHistory':
         results = await queries.GetDisputeHistory(payload);

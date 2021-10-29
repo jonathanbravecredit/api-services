@@ -1641,7 +1641,7 @@ export const GetCreditBureauResultsByID = async ({
  * @param {string} auth
  * @returns
  */
-export const GetAllUserDisputes = async ({
+export const GetAllDisputesByUser = async ({
   accountCode,
   username,
   message,
@@ -1679,7 +1679,7 @@ export const GetAllUserDisputes = async ({
  * @param {string} auth
  * @returns
  */
-export const GetCurrentUserDispute = async ({
+export const GetCurrentDisputeByUser = async ({
   accountCode,
   username,
   message,

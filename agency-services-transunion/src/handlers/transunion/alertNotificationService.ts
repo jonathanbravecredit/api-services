@@ -61,8 +61,15 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       cert,
       passphrase,
     });
-
-    const results: any = await queries.DisputeInflightCheck(accountCode, username, message, httpsAgent, auth);
+    const payload = {
+      accountCode,
+      username,
+      message,
+      agent: httpsAgent,
+      auth,
+      identityId: '',
+    };
+    const results: any = await queries.DisputeInflightCheck(payload);
 
     return JSON.stringify(results);
   } catch (err) {
