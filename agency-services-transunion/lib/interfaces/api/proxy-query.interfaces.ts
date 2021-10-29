@@ -11,7 +11,6 @@ export interface IGetDataForGetDisputeStatus {
   agencies: {
     transunion: {
       disputeEnrollmentKey: string;
-      disputeCurrent: DisputeInput;
     };
   };
   user: {
