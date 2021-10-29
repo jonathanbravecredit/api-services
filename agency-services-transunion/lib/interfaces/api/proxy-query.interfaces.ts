@@ -10,7 +10,7 @@ export interface IGetDataForGetDisputeStatus {
   id: string;
   agencies: {
     transunion: {
-      dipsuteEnrollmentKey: string;
+      disputeEnrollmentKey: string;
       disputeCurrent: DisputeInput;
     };
   };

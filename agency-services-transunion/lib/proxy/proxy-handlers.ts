@@ -670,6 +670,11 @@ export const GetDisputeStatus = async ({
   try {
     // get / parse data needed to process request
     const prepped = await qrys.getDataForGetDisputeStatus(payload);
+    console.log('prepped ===> ', prepped);
+    if (!prepped.data?.data?.getAppData?.id) {
+      console.log('error db query ===> ', prepped.data);
+      throw 'No record in db';
+    }
     const resp = await soap.parseAndSendPayload<interfaces.IGetDisputeStatusResponse>(
       accountCode,
       username,

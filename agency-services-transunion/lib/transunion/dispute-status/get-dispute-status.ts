@@ -1,10 +1,12 @@
 import {
+  IGetDataForGetDisputeStatus,
   IGetDisputeStatus,
   IGetDisputeStatusGraphQLResponse,
   IGetDisputeStatusMsg,
   IGetDisputeStatusPayload,
   IGetDisputeStatusResponse,
   IGetDisputeStatusResult,
+  IProxyQueryGetAppData,
   IStartDisputeBundle,
   IUpdateDisputeBundle,
 } from 'lib/interfaces';
@@ -23,7 +25,7 @@ import { DB } from 'lib/utils/db/db';
  * @returns IEnrollPayload
  */
 export const createGetDisputeStatusPayload = (
-  data: IGetDisputeStatusGraphQLResponse,
+  data: IProxyQueryGetAppData<IGetDataForGetDisputeStatus>, //IGetDisputeStatusGraphQLResponse,
   disputeId?: string,
 ): IGetDisputeStatusPayload => {
   const id = data.data.getAppData.id?.split(':')?.pop();
