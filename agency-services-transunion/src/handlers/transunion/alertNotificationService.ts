@@ -4,8 +4,13 @@ import * as https from 'https';
 import * as fs from 'fs';
 import * as queries from 'lib/proxy';
 import * as secrets from 'lib/utils/secrets/secrets';
+import ErrorLogger from 'lib/utils/db/logger/logger-errors';
+import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 
 // request.debug = true; import * as request from 'request';
+const errorLogger = new ErrorLogger();
+const transactionLogger = new TransactionLogger();
+
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
 const tuEnv = process.env.TU_ENV;
 let key: Buffer;
@@ -26,12 +31,8 @@ let password;
  * @returns Lambda proxy response
  */
 export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> => {
-  console.log('event ====> ', event);
   const action: string = event?.arguments?.action;
   const message: string = event?.arguments?.message;
-
-  console.log('action', action);
-  console.log('message', message);
 
   try {
     const secretJSON = await secrets.getSecretKey(transunionSKLoc);
@@ -41,7 +42,8 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     user = `${username}:${password}`;
     auth = 'Basic ' + Buffer.from(user).toString('base64');
   } catch (err) {
-    console.log('secret error ===> ', err);
+    const error = errorLogger.createError('alert_notification_operation', 'get_secrets_failure', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: { error: `Error gathering/reading secrets=${err}` } };
   }
 
@@ -51,7 +53,12 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     cert = fs.readFileSync(`/opt/${prefix}-brave.credit.crt`);
     cacert = fs.readFileSync(`/opt/${prefix}-Root-CA-Bundle.crt`);
   } catch (err) {
-    console.log('cert error ===> ', err);
+    const error = errorLogger.createError(
+      'alert_notification_operation',
+      'get_certificates_failure',
+      JSON.stringify(err),
+    );
+    errorLogger.logger.create(error);
     return { success: false, error: { error: `Error gathering/reading cert=${err}` } };
   }
 
@@ -73,7 +80,8 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
 
     return JSON.stringify(results);
   } catch (err) {
-    console.log('error ===>', err);
+    const error = errorLogger.createError('alert_notification_operation', 'unknown_server_error', JSON.stringify(err));
+    await errorLogger.logger.create(error);
     return { success: false, error: { error: `Unknown server error=${err}` } };
   }
 };

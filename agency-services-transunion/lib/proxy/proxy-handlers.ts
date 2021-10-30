@@ -1545,7 +1545,7 @@ export const DisputeInflightCheck = async ({
     notifications = data?.AlertNotifications?.AlertNotification;
   } catch (err) {
     const error = errorLogger.createError(
-      'internal_system_operation',
+      'alert_notification_operation',
       'DisputeInflightCheck:GetAlertNotifications',
       JSON.stringify(err),
     );
@@ -1580,7 +1580,7 @@ export const DisputeInflightCheck = async ({
       console.log('all status ===> ', JSON.stringify(allDisputeStatusUpdates));
     } catch (err) {
       const error = errorLogger.createError(
-        'internal_system_operation',
+        'alert_notification_operation',
         'DisputeInflightCheck:GetDisputeStatus',
         JSON.stringify(err),
       );
@@ -1641,7 +1641,7 @@ export const DisputeInflightCheck = async ({
       console.log('dispute updates ===> ', JSON.stringify(updates));
     } catch (err) {
       const error = errorLogger.createError(
-        'internal_system_operation',
+        'alert_notification_operation',
         'DisputeInflightCheck:UpdateDisputeDB',
         JSON.stringify(err),
       );
@@ -1685,7 +1685,7 @@ export const DisputeInflightCheck = async ({
       return { success: true, error: false, data: JSON.stringify(alerted) };
     } catch (err) {
       const error = errorLogger.createError(
-        'internal_system_operation',
+        'alert_notification_operation',
         'DisputeInflightCheck:GetInvestigationResults',
         JSON.stringify(err),
       );
