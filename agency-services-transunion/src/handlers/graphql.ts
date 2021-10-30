@@ -43,14 +43,14 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     tokenUser = sub;
   } catch (err) {
     const error = errorLogger.createError('invalid_token_user', 'ValidateToken', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: `Invalid token parsed to user, token:=${err}` };
   }
 
   const l1 = transactionLogger.createTransaction(tokenUser, `${action}:action`, JSON.stringify(action));
   const l2 = transactionLogger.createTransaction(tokenUser, `${action}:message`, JSON.stringify(message));
-  transactionLogger.logger.create(l1);
-  transactionLogger.logger.create(l2);
+  await transactionLogger.logger.create(l1);
+  await transactionLogger.logger.create(l2);
 
   try {
     const secretJSON = await secrets.getSecretKey(transunionSKLoc);
@@ -61,7 +61,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     auth = 'Basic ' + Buffer.from(user).toString('base64');
   } catch (err) {
     const error = errorLogger.createError(tokenUser, 'get_secrets_failure', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: { error: `Error gathering/reading secrets=${err}` } };
   }
 
@@ -72,7 +72,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     cacert = fs.readFileSync(`/opt/${prefix}-Root-CA-Bundle.crt`);
   } catch (err) {
     const error = errorLogger.createError(tokenUser, 'get_certificates_failure', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: { error: `Error gathering/reading cert=${err}` } };
   }
 

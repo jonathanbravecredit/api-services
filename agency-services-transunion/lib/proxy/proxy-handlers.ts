@@ -60,11 +60,11 @@ export const Ping = async ({
     await soap.processRequest(request, parserOptions);
     const response = { success: true, error: null, data: 'Ping succeeded' };
     const l1 = transactionLogger.createTransaction(identityId, 'Ping', JSON.stringify(response));
-    transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l1);
     return response;
   } catch (err) {
     const error = errorLogger.createError(identityId, 'Ping', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 };
@@ -125,9 +125,9 @@ export const IndicativeEnrichment = async ({
       JSON.stringify(responseType),
     );
     const l3 = transactionLogger.createTransaction(identityId, 'IndicativeEnrichment:error', JSON.stringify(error));
-    transactionLogger.logger.create(l1);
-    transactionLogger.logger.create(l2);
-    transactionLogger.logger.create(l3);
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
 
     const response =
       responseType.toLowerCase() === 'success'
@@ -140,12 +140,12 @@ export const IndicativeEnrichment = async ({
       'IndicativeEnrichment:response',
       JSON.stringify(response),
     );
-    transactionLogger.logger.create(l4);
+    await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     const error = errorLogger.createError(identityId, 'IndicativeEnrichment', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -213,9 +213,9 @@ export const GetAuthenticationQuestions = async ({
       'GetAuthenticationQuestions:error',
       JSON.stringify(error),
     );
-    transactionLogger.logger.create(l1);
-    transactionLogger.logger.create(l2);
-    transactionLogger.logger.create(l3);
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
 
     const response =
       responseType.toLowerCase() === 'success'
@@ -228,12 +228,12 @@ export const GetAuthenticationQuestions = async ({
       'GetAuthenticationQuestions:response',
       JSON.stringify(response),
     );
-    transactionLogger.logger.create(l4);
+    await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     const error = errorLogger.createError(identityId, 'GetAuthenticationQuestions', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -311,9 +311,9 @@ export const VerifyAuthenticationQuestions = async ({
       'VerifyAuthenticationQuestions:error',
       JSON.stringify(error),
     );
-    transactionLogger.logger.create(l1);
-    transactionLogger.logger.create(l2);
-    transactionLogger.logger.create(l3);
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
 
     const response =
       responseType.toLowerCase() === 'success'
@@ -326,13 +326,13 @@ export const VerifyAuthenticationQuestions = async ({
       'VerifyAuthenticationQuestions:response',
       JSON.stringify(response),
     );
-    transactionLogger.logger.create(l4);
+    await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
     const error = errorLogger.createError(identityId, 'VerifyAuthenticationQuestions', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -400,9 +400,9 @@ export const Enroll = async (
     const l1 = transactionLogger.createTransaction(identityId, 'Enroll:data', JSON.stringify(data));
     const l2 = transactionLogger.createTransaction(identityId, 'Enroll:type', JSON.stringify(responseType));
     const l3 = transactionLogger.createTransaction(identityId, 'Enroll:error', JSON.stringify(error));
-    transactionLogger.logger.create(l1);
-    transactionLogger.logger.create(l2);
-    transactionLogger.logger.create(l3);
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
 
     let response;
     if (responseType.toLowerCase() === 'success') {
@@ -419,13 +419,13 @@ export const Enroll = async (
 
     // log success response
     const l4 = transactionLogger.createTransaction(identityId, 'Enroll:response', JSON.stringify(response));
-    transactionLogger.logger.create(l4);
+    await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
     const error = errorLogger.createError(identityId, 'Enroll', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -497,9 +497,9 @@ export const EnrollDisputes = async (
     const l1 = transactionLogger.createTransaction(identityId, 'EnrollDisputes:data', JSON.stringify(data));
     const l2 = transactionLogger.createTransaction(identityId, 'EnrollDisputes:type', JSON.stringify(responseType));
     const l3 = transactionLogger.createTransaction(identityId, 'EnrollDisputes:error', JSON.stringify(error));
-    transactionLogger.logger.create(l1);
-    transactionLogger.logger.create(l2);
-    transactionLogger.logger.create(l3);
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
 
     let response;
     if (responseType.toLowerCase() === 'success') {
@@ -516,13 +516,13 @@ export const EnrollDisputes = async (
 
     // log success response
     const l4 = transactionLogger.createTransaction(identityId, 'EnrollDisputes:response', JSON.stringify(response));
-    transactionLogger.logger.create(l4);
+    await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
     const error = errorLogger.createError(identityId, 'EnrollDisputes', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -589,9 +589,9 @@ export const Fulfill = async (
     const l1 = transactionLogger.createTransaction(identityId, 'Fulfill:data', JSON.stringify(data));
     const l2 = transactionLogger.createTransaction(identityId, 'Fulfill:type', JSON.stringify(responseType));
     const l3 = transactionLogger.createTransaction(identityId, 'Fulfill:error', JSON.stringify(error));
-    transactionLogger.logger.create(l1);
-    transactionLogger.logger.create(l2);
-    transactionLogger.logger.create(l3);
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
 
     let response;
     if (responseType.toLowerCase() === 'success') {
@@ -605,13 +605,13 @@ export const Fulfill = async (
 
     // log success response
     const l4 = transactionLogger.createTransaction(identityId, 'Fulfill:response', JSON.stringify(response));
-    transactionLogger.logger.create(l4);
+    await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
     const error = errorLogger.createError(identityId, 'Fulfill', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 };
@@ -683,9 +683,9 @@ export const FulfillDisputes = async (
     const l1 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:data', JSON.stringify(data));
     const l2 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:type', JSON.stringify(responseType));
     const l3 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:error', JSON.stringify(error));
-    transactionLogger.logger.create(l1);
-    transactionLogger.logger.create(l2);
-    transactionLogger.logger.create(l3);
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
 
     let response;
     if (responseType.toLowerCase() === 'success') {
@@ -698,13 +698,13 @@ export const FulfillDisputes = async (
     }
     // log success response
     const l4 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:response', JSON.stringify(response));
-    transactionLogger.logger.create(l4);
+    await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
     const error = errorLogger.createError(identityId, 'FulfillDisputes', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 };
@@ -760,9 +760,9 @@ export const GetServiceProduct = async ({
     const l1 = transactionLogger.createTransaction(identityId, 'GetServiceProduct:data', JSON.stringify(data));
     const l2 = transactionLogger.createTransaction(identityId, 'GetServiceProduct:type', JSON.stringify(responseType));
     const l3 = transactionLogger.createTransaction(identityId, 'GetServiceProduct:error', JSON.stringify(error));
-    transactionLogger.logger.create(l1);
-    transactionLogger.logger.create(l2);
-    transactionLogger.logger.create(l3);
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
 
     const response =
       responseType.toLowerCase() === 'success'
@@ -771,13 +771,13 @@ export const GetServiceProduct = async ({
 
     // log success response
     const l4 = transactionLogger.createTransaction(identityId, 'GetServiceProduct:response', JSON.stringify(response));
-    transactionLogger.logger.create(l4);
+    await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
     const error = errorLogger.createError(identityId, 'GetServiceProduct', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -850,9 +850,9 @@ export const GetDisputeStatus = async ({
     const l1 = transactionLogger.createTransaction(identityId, 'GetDisputeStatus:data', JSON.stringify(data));
     const l2 = transactionLogger.createTransaction(identityId, 'GetDisputeStatus:type', JSON.stringify(responseType));
     const l3 = transactionLogger.createTransaction(identityId, 'GetDisputeStatus:error', JSON.stringify(error));
-    transactionLogger.logger.create(l1);
-    transactionLogger.logger.create(l2);
-    transactionLogger.logger.create(l3);
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
 
     const response =
       responseType.toLowerCase() === 'success'
@@ -861,13 +861,13 @@ export const GetDisputeStatus = async ({
 
     // log success response
     const l4 = transactionLogger.createTransaction(identityId, 'GetDisputeStatus:response', JSON.stringify(response));
-    transactionLogger.logger.create(l4);
+    await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
     const error = errorLogger.createError(identityId, 'GetDisputeStatus', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -963,9 +963,9 @@ export const GetDisputeStatusByID = async ({
       JSON.stringify(responseType),
     );
     const l3 = transactionLogger.createTransaction(identityId, 'GetDisputeStatusByID:error', JSON.stringify(error));
-    transactionLogger.logger.create(l1);
-    transactionLogger.logger.create(l2);
-    transactionLogger.logger.create(l3);
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
 
     const response =
       responseType.toLowerCase() === 'success'
@@ -978,13 +978,13 @@ export const GetDisputeStatusByID = async ({
       'GetDisputeStatusByID:response',
       JSON.stringify(response),
     );
-    transactionLogger.logger.create(l4);
+    await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
     const error = errorLogger.createError(identityId, 'GetDisputeStatusByID', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -1081,9 +1081,9 @@ export const StartDispute = async ({
     const l1 = transactionLogger.createTransaction(identityId, 'StartDispute:data', JSON.stringify(data));
     const l2 = transactionLogger.createTransaction(identityId, 'StartDispute:type', JSON.stringify(responseType));
     const l3 = transactionLogger.createTransaction(identityId, 'StartDispute:error', JSON.stringify(error));
-    transactionLogger.logger.create(l1);
-    transactionLogger.logger.create(l2);
-    transactionLogger.logger.create(l3);
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
 
     let response;
     if (responseType.toLowerCase() === 'success') {
@@ -1110,7 +1110,7 @@ export const StartDispute = async ({
   } catch (err) {
     // log error response
     const error = errorLogger.createError(identityId, 'StartDispute', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 };
@@ -1180,7 +1180,7 @@ export const GetDisputeHistory = async ({
     return response;
   } catch (err) {
     const error = errorLogger.createError(identityId, 'GetDisputeHistory', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -1283,7 +1283,7 @@ export const GetInvestigationResults = async ({
     return response;
   } catch (err) {
     const error = errorLogger.createError(identityId, 'GetInvestigationResults', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -1332,9 +1332,9 @@ export const CompleteOnboardingEnrollments = async ({
       'CompleteOnboardingEnrollments:enrollData',
       JSON.stringify(enrollData),
     );
-    transactionLogger.logger.create(l1);
-    transactionLogger.logger.create(l2);
-    transactionLogger.logger.create(l3);
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
     const response = enrollSuccess
       ? { success: true, error: null, data: enrollData }
       : { success: false, error: enrollError };
@@ -1342,7 +1342,7 @@ export const CompleteOnboardingEnrollments = async ({
     return response;
   } catch (err) {
     const error = errorLogger.createError(identityId, 'CompleteOnboardingEnrollments', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -1383,7 +1383,7 @@ export const DisputePreflightCheck = async ({
     console.log('DisputePreflightCheck:enrolled ===> ', enrolled);
   } catch (err) {
     const error = errorLogger.createError(identityId, 'DisputePreflightCheck:EnrollStatus', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 
@@ -1402,7 +1402,7 @@ export const DisputePreflightCheck = async ({
       if (!success) return { success: false, error: error };
     } catch (err) {
       const error = errorLogger.createError(identityId, 'DisputePreflightCheck:EnrollDisputes', JSON.stringify(err));
-      errorLogger.logger.create(error);
+      await errorLogger.logger.create(error);
       return { success: false, error: err };
     }
   }
@@ -1423,7 +1423,7 @@ export const DisputePreflightCheck = async ({
     console.log('DisputePreflightCheck:refresh ===> ', refresh);
   } catch (err) {
     const error = errorLogger.createError(identityId, 'DisputePreflightCheck:Refresh', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 
@@ -1442,7 +1442,7 @@ export const DisputePreflightCheck = async ({
       if (!success) return { success: false, error: error };
     } catch (err) {
       const error = errorLogger.createError(identityId, 'DisputePreflightCheck:FulfillDisputes', JSON.stringify(err));
-      errorLogger.logger.create(error);
+      await errorLogger.logger.create(error);
       return { success: false, error: err };
     }
   }
@@ -1463,7 +1463,7 @@ export const DisputePreflightCheck = async ({
     return response;
   } catch (err) {
     const error = errorLogger.createError(identityId, 'DisputePreflightCheck:GetDisputeStatus', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 };
@@ -1549,7 +1549,7 @@ export const DisputeInflightCheck = async ({
       'DisputeInflightCheck:GetAlertNotifications',
       JSON.stringify(err),
     );
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 
@@ -1584,7 +1584,7 @@ export const DisputeInflightCheck = async ({
         'DisputeInflightCheck:GetDisputeStatus',
         JSON.stringify(err),
       );
-      errorLogger.logger.create(error);
+      await errorLogger.logger.create(error);
       return { success: false, error: err };
     }
   }
@@ -1645,7 +1645,7 @@ export const DisputeInflightCheck = async ({
         'DisputeInflightCheck:UpdateDisputeDB',
         JSON.stringify(err),
       );
-      errorLogger.logger.create(error);
+      await errorLogger.logger.create(error);
       return { success: false, error: err };
     }
   }
@@ -1689,7 +1689,7 @@ export const DisputeInflightCheck = async ({
         'DisputeInflightCheck:GetInvestigationResults',
         JSON.stringify(err),
       );
-      errorLogger.logger.create(error);
+      await errorLogger.logger.create(error);
       return { success: false, error: err };
     }
   }
@@ -1762,7 +1762,7 @@ export const GetTrendingData = async ({
       : { success: false, error: error, data: null };
   } catch (err) {
     const error = errorLogger.createError(identityId, 'GetTrendingData', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -1806,7 +1806,7 @@ export const GetInvestigationResultsByID = async ({
     return { success: true, error: null, data: resp };
   } catch (err) {
     const error = errorLogger.createError(identityId, 'GetInvestigationResultsByID', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -1850,7 +1850,7 @@ export const GetCreditBureauResultsByID = async ({
     return { success: true, error: null, data: resp };
   } catch (err) {
     const error = errorLogger.createError(identityId, 'GetCreditBureauResultsByID', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -1890,7 +1890,7 @@ export const GetAllDisputesByUser = async ({
     return { success: true, error: null, data: resp };
   } catch (err) {
     const error = errorLogger.createError(identityId, 'GetAllDisputesByUser', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -1933,7 +1933,7 @@ export const GetCurrentDisputeByUser = async ({
     return { success: true, error: null, data: resp };
   } catch (err) {
     const error = errorLogger.createError(identityId, 'GetCurrentDisputeByUser', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
