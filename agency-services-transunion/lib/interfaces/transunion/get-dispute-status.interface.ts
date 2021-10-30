@@ -1,43 +1,39 @@
 import { IDisputeStatus, IProcessDisputeTradelineResult, IStandardResponse } from 'lib/interfaces';
 import { DisputeInput } from 'src/api/api.service';
 
-export interface IGetDisputeStatusGraphQLResponse {
-  data: {
-    getAppData: {
-      id?: string;
-      agencies?: {
-        transunion?: {
-          disputeEnrollmentKey?: string;
-          disputeCurrent?: DisputeInput;
-        };
+export interface IGetDataForGetDisputeStatus {
+  id?: string;
+  agencies?: {
+    transunion?: {
+      disputeEnrollmentKey?: string;
+      disputeCurrent?: DisputeInput;
+    };
+  };
+  user?: {
+    userAttributes?: {
+      name?: {
+        first?: string;
+        middle?: string;
+        last?: string;
       };
-      user?: {
-        userAttributes?: {
-          name?: {
-            first?: string;
-            middle?: string;
-            last?: string;
-          };
-          address?: {
-            addressOne?: string;
-            addressTwo?: string;
-            city?: string;
-            state?: string;
-            zip?: string;
-          };
-          phone?: {
-            primary?: string;
-          };
-          dob?: {
-            year?: string;
-            month?: string;
-            day?: string;
-          };
-          ssn?: {
-            lastfour?: string;
-            full?: string;
-          };
-        };
+      address?: {
+        addressOne?: string;
+        addressTwo?: string;
+        city?: string;
+        state?: string;
+        zip?: string;
+      };
+      phone?: {
+        primary?: string;
+      };
+      dob?: {
+        year?: string;
+        month?: string;
+        day?: string;
+      };
+      ssn?: {
+        lastfour?: string;
+        full?: string;
       };
     };
   };

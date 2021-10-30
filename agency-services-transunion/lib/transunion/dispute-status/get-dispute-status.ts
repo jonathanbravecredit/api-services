@@ -1,13 +1,10 @@
 import {
   IGetDataForGetDisputeStatus,
   IGetDisputeStatus,
-  IGetDisputeStatusGraphQLResponse,
   IGetDisputeStatusMsg,
   IGetDisputeStatusPayload,
   IGetDisputeStatusResponse,
-  IGetDisputeStatusResult,
   IProxyQueryGetAppData,
-  IStartDisputeBundle,
   IUpdateDisputeBundle,
 } from 'lib/interfaces';
 import { returnNestedObject, textConstructor } from 'lib/utils';
@@ -18,14 +15,13 @@ import { MONTH_MAP } from 'lib/data/constants';
 import { UpdateAppDataInput, DisputeInput } from 'src/api/api.service';
 import { DB } from 'lib/utils/db/db';
 
-// IGetDisputeStatusGraphQLResponse
 /**
  * Genarates the message payload for TU Enroll service
  * @param data
  * @returns IEnrollPayload
  */
 export const createGetDisputeStatusPayload = (
-  data: IProxyQueryGetAppData<IGetDataForGetDisputeStatus>, //IGetDisputeStatusGraphQLResponse,
+  data: IProxyQueryGetAppData<IGetDataForGetDisputeStatus>,
   disputeId?: string,
 ): IGetDisputeStatusPayload => {
   const id = data.data.getAppData.id?.split(':')?.pop();
