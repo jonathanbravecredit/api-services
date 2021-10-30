@@ -43,7 +43,7 @@ export class Dispute {
   modifiedOn: string | null;
 }
 
-type DisputeSummary = {
+export type DisputeSummary = {
   estimatedCompletionDate: string;
   lastUpdatedDate: string;
   openDate: string;
@@ -54,7 +54,7 @@ type DisputeSummary = {
   totalPVDisputedItemCount: string;
 };
 
-type PVDisputedItems = {
+export type PVDisputedItems = {
   pvTradelines: string;
   pvPublicRecords: string;
 };

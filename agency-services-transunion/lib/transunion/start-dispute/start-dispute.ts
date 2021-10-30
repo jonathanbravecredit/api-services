@@ -18,18 +18,17 @@ import {
   IBorrowerAddress,
   IBorrowerName,
   IIndicativeDisputesAddress,
+  IDisputePersonalItem,
+  IDispute,
 } from 'lib/interfaces';
 import { textConstructor } from 'lib/utils/helpers/helpers';
 import * as fastXml from 'fast-xml-parser';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import { MONTH_MAP } from 'lib/data/constants';
-import { DisputeInput, UpdateAppDataInput } from 'src/api/api.service';
 import { TransunionUtil } from 'lib/utils/transunion/transunion';
 import { DB as db } from 'lib/utils/db/db';
-import { Dispute } from 'lib/utils/db/disputes/model/dispute.model';
-import { createDisputeDBRecord } from 'lib/utils/db/disputes/generators/disputes.generators';
-
+import { UpdateAppDataInput } from 'src/api/api.service';
 /**
  * Genarates the message payload for TU Fulfill request
  * TODO: need to incorporate Personal and Public items
@@ -749,36 +748,37 @@ export const enrichDisputeData = (
   state: UpdateAppDataInput,
   data: IStartDisputeBundle | undefined,
 ): UpdateAppDataInput | undefined => {
-  if (!state) return;
-  const { startDisputeResult, disputes } = data;
-  let status = startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.Status;
-  let openedOn = new Date().toISOString();
-  let closedOn =
-    status.toLowerCase() === 'cancelleddispute' || status.toLowerCase() === 'completedispute' ? openedOn : null;
+  // if (!state) return;
+  // const { startDisputeResult, disputes } = data;
+  // let status = startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.Status;
+  // let openedOn = new Date().toISOString();
+  // let closedOn =
+  //   status.toLowerCase() === 'cancelleddispute' || status.toLowerCase() === 'completedispute' ? openedOn : null;
 
-  const dispute: DisputeInput = db.disputes.generators.createDisputeInputRecord(
-    state.id,
-    startDisputeResult,
-    JSON.stringify(disputes),
-    openedOn,
-    closedOn,
-  );
+  // const dispute: IDispute = db.disputes.generators.createDisputeInputRecord(
+  //   state.id,
+  //   startDisputeResult,
+  //   JSON.stringify(disputes),
+  //   openedOn,
+  //   closedOn,
+  // );
 
-  const oldDisputes = state.agencies?.transunion?.disputes || [];
-  const mapped = {
-    ...state,
-    agencies: {
-      ...state.agencies,
-      transunion: {
-        ...state.agencies?.transunion,
-        disputeStatus: dispute.disputeStatus,
-        disputeCurrent: dispute,
-        disputes: [...oldDisputes, dispute].filter(Boolean),
-      },
-    },
-  };
-  console.log('mapped', mapped);
-  return mapped;
+  // const oldDisputes = state.agencies?.transunion?.disputes || [];
+  // const mapped = {
+  //   ...state,
+  //   agencies: {
+  //     ...state.agencies,
+  //     transunion: {
+  //       ...state.agencies?.transunion,
+  //       disputeStatus: dispute.disputeStatus,
+  //       disputeCurrent: dispute,
+  //       disputes: [...oldDisputes, dispute].filter(Boolean),
+  //     },
+  //   },
+  // };
+  // console.log('mapped', mapped);
+  // return mapped;
+  return;
 };
 
 const layerInEmployers = (msg: IStartDisputeMsg, disputes: IProcessDisputePersonalResult[]): IStartDisputeMsg => {

@@ -6,6 +6,7 @@ import {
   IPublicPartition,
   ITradeLinePartition,
 } from 'lib/interfaces';
+import { Dispute, DisputeSummary, PVDisputedItems } from 'lib/utils/db/disputes/model/dispute.model';
 
 export type PersonalDisputeTypes = 'name' | 'address' | 'employer' | 'unknown';
 
@@ -50,3 +51,7 @@ export interface IPersonalItemsDetailsConfig {
   borrower: IBorrower;
   transformed: any;
 }
+
+export interface IDispute extends Dispute {}
+export interface IDisputeSummary extends DisputeSummary {}
+export interface IPVDisputedItems extends PVDisputedItems {}

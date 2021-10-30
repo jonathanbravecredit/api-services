@@ -1,12 +1,10 @@
 import { IDisputeStatus, IProcessDisputeTradelineResult, IStandardResponse } from 'lib/interfaces';
-import { DisputeInput } from 'src/api/api.service';
 
 export interface IGetDataForGetDisputeStatus {
   id?: string;
   agencies?: {
     transunion?: {
       disputeEnrollmentKey?: string;
-      disputeCurrent?: DisputeInput;
     };
   };
   user?: {

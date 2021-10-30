@@ -1,5 +1,4 @@
 import { Dispute } from 'lib/utils/db/disputes/model/dispute.model';
-import { DisputeInput } from 'src/api/api.service';
 
 // export const mapDisputeInputToDBRecord = (dispute: DisputeInput): Dispute => {
 //   const modifiedOn = new Date().toISOString();

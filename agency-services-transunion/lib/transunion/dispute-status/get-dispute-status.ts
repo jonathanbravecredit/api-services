@@ -1,4 +1,5 @@
 import {
+  IDispute,
   IGetDataForGetDisputeStatus,
   IGetDisputeStatus,
   IGetDisputeStatusMsg,
@@ -12,7 +13,7 @@ import * as fastXml from 'fast-xml-parser';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import { MONTH_MAP } from 'lib/data/constants';
-import { UpdateAppDataInput, DisputeInput } from 'src/api/api.service';
+import { UpdateAppDataInput } from 'src/api/api.service';
 import { DB } from 'lib/utils/db/db';
 
 /**
@@ -147,51 +148,4 @@ export const createGetDisputeStatus = (msg: IGetDisputeStatus): string => {
 export const parseGetDisputeStatus = (xml: string, options: any): IGetDisputeStatusResponse => {
   const obj: IGetDisputeStatusResponse = fastXml.parse(xml, options);
   return obj;
-};
-
-/**
- * Take the results from TU and save to db
- * @param data
- * @returns
- */
-export const enrichUpdatedDisputeData = (
-  state: UpdateAppDataInput,
-  data: IUpdateDisputeBundle | undefined,
-): UpdateAppDataInput | undefined => {
-  if (!state) return;
-  const { updateDisputeResult } = data;
-  let closedOn = data.updateDisputeResult.DisputeStatus?.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || null;
-  const disputeId = data.updateDisputeResult.DisputeStatus?.DisputeStatusDetail?.DisputeId;
-  if (!disputeId) throw `Missing dispute id:=${disputeId}`;
-  const dispute: Partial<DisputeInput> = DB.disputes.generators.createUpdateDisputeDBRecord(
-    updateDisputeResult,
-    closedOn,
-  );
-  const oldDisputes = (state.agencies?.transunion?.disputes || []).map((item) => {
-    if (item.disputeId == disputeId) {
-      return {
-        ...item,
-        ...dispute,
-      };
-    } else {
-      return item;
-    }
-  });
-  const mapped = {
-    ...state,
-    agencies: {
-      ...state.agencies,
-      transunion: {
-        ...state.agencies?.transunion,
-        disputeStatus: dispute.disputeStatus,
-        disputeCurrent: {
-          ...state.agencies?.transunion?.disputeCurrent,
-          ...dispute,
-        },
-        disputes: [...oldDisputes].filter(Boolean),
-      },
-    },
-  };
-  console.log('mapped', mapped);
-  return mapped;
 };

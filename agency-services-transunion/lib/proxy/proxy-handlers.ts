@@ -742,7 +742,7 @@ export const GetDisputeStatusByID = async ({
   if (!validate(payload)) throw `Malformed payload=${payload}`;
 
   //create helper classes
-  const sync = new Sync(tu.enrichUpdatedDisputeData);
+  // const sync = new Sync(tu.enrichUpdatedDisputeData);
   const soap = new SoapAid(
     tu.parseGetDisputeStatus,
     tu.formatGetDisputeStatus,
@@ -789,17 +789,11 @@ export const GetDisputeStatusByID = async ({
       updateDisputeResult: data,
     };
     console.log('dispute status resp ===> ', data);
-
-    let response;
-    if (responseType.toLowerCase() === 'success') {
-      const synced = await sync.syncData({ id: payload.id }, bundle);
-      response = synced
-        ? { success: true, error: null, data: data }
-        : { success: false, error: 'failed to sync data to db' };
-      console.log('response ===> ', response);
-    } else {
-      response = { success: false, error: error };
-    }
+    const response =
+      responseType.toLowerCase() === 'success'
+        ? { success: true, error: error, data: data }
+        : { success: false, error: error, data: null };
+    console.log('response ===> ', response);
     return response;
   } catch (err) {
     console.log('error ===> ', err);
@@ -830,7 +824,7 @@ export const StartDispute = async ({
   agent: https.Agent;
   auth: string;
   identityId: string;
-}): Promise<{ success: boolean; error?: any }> => {
+}): Promise<{ success: boolean; error?: any; data?: any }> => {
   const live = GO_LIVE; // !!! IMPORTANT FLAG TO DISABLE MOCKS !!!
   const payload: interfaces.IStartDisputePayload = {
     id: identityId,
@@ -920,9 +914,7 @@ export const StartDispute = async ({
       );
       console.log('dbDispute ====> ', JSON.stringify(dbDispute));
       const newDispute = await DB.disputes.create(dbDispute);
-      console.log('newDispute ====> ', JSON.stringify(newDispute));
-      const synced = await sync.syncData({ id: payload.id }, bundle);
-      response = synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
+      response = { success: true, error: null, data: newDispute };
     } else {
       response = { success: false, error: error };
     }
