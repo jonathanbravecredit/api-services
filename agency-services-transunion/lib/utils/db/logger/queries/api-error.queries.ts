@@ -1,7 +1,7 @@
 import * as AWS from 'aws-sdk';
 import { PutItemOutput } from 'aws-sdk/clients/dynamodb';
 import { DynamoStore } from '@shiftcoders/dynamo-easy';
-import { APIErrorLog } from 'lib/utils/db/logs/model/api-error.model';
+import { APIErrorLog } from 'lib/utils/db/logger/model/api-error.model';
 
 const db = new AWS.DynamoDB();
 const store = new DynamoStore(APIErrorLog);

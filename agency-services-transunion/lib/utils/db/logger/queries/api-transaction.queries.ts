@@ -1,7 +1,7 @@
 import * as AWS from 'aws-sdk';
 import { PutItemOutput } from 'aws-sdk/clients/dynamodb';
 import { DynamoStore } from '@shiftcoders/dynamo-easy';
-import { APITransactionLog } from 'lib/utils/db/logs/model/api-transaction.model';
+import { APITransactionLog } from 'lib/utils/db/logger/model/api-transaction.model';
 
 const db = new AWS.DynamoDB();
 const store = new DynamoStore(APITransactionLog);

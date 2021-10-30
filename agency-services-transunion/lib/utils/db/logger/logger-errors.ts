@@ -1,9 +1,9 @@
-import Logger from 'lib/utils/db/logs/logger';
-import { APIErrorLog } from 'lib/utils/db/logs/model/api-error.model';
-import { createErrorLog, getErrorLog, listErrorLog } from 'lib/utils/db/logs/queries/api-error.queries';
+import Logger from 'lib/utils/db/logger/logger';
+import { APIErrorLog } from 'lib/utils/db/logger/model/api-error.model';
+import { createErrorLog, getErrorLog, listErrorLog } from 'lib/utils/db/logger/queries/api-error.queries';
 import * as uuid from 'uuid';
 
-export default class ErrorLog {
+export default class ErrorLogger {
   constructor() {}
   logger = new Logger<APIErrorLog>(getErrorLog, listErrorLog, createErrorLog);
 

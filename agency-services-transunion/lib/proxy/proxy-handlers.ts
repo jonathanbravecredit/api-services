@@ -16,12 +16,12 @@ import { GET_DISPUTE_STATUS_RESPONSE_WITHID } from 'lib/examples/mocks/GetDisput
 import { DB } from 'lib/utils/db/db';
 import { Dispute } from 'lib/utils/db/disputes/model/dispute.model';
 import { updateInvestigationResultsDB } from 'lib/transunion';
-import ErrorLog from 'lib/utils/db/logs/error-log';
-import TransactionLog from 'lib/utils/db/logs/transaction-log';
+import ErrorLogger from 'lib/utils/db/logger/logger-errors';
+import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 
 const GO_LIVE = true;
-const errorLogs = new ErrorLog();
-const transactionLogs = new TransactionLog();
+const errorLogger = new ErrorLogger();
+const transactionLogger = new TransactionLogger();
 const parserOptions = {
   attributeNamePrefix: '',
   ignoreAttributes: false,
@@ -59,12 +59,12 @@ export const Ping = async ({
     if (!xml || !request) throw new Error(`Missing xml:${xml}, or request:${request}`);
     await soap.processRequest(request, parserOptions);
     const response = { success: true, error: null, data: 'Ping succeeded' };
-    const l1 = transactionLogs.createTransaction(identityId, 'ping', JSON.stringify(response));
-    transactionLogs.logger.create(l1);
+    const l1 = transactionLogger.createTransaction(identityId, 'ping', JSON.stringify(response));
+    transactionLogger.logger.create(l1);
     return response;
   } catch (err) {
-    const error = errorLogs.createError(identityId, 'Ping', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'Ping', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 };
@@ -118,12 +118,16 @@ export const IndicativeEnrichment = async ({
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogs.createTransaction(identityId, 'IndicativeEnrichment:data', JSON.stringify(data));
-    const l2 = transactionLogs.createTransaction(identityId, 'IndicativeEnrichment:type', JSON.stringify(responseType));
-    const l3 = transactionLogs.createTransaction(identityId, 'IndicativeEnrichment:error', JSON.stringify(error));
-    transactionLogs.logger.create(l1);
-    transactionLogs.logger.create(l2);
-    transactionLogs.logger.create(l3);
+    const l1 = transactionLogger.createTransaction(identityId, 'IndicativeEnrichment:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(
+      identityId,
+      'IndicativeEnrichment:type',
+      JSON.stringify(responseType),
+    );
+    const l3 = transactionLogger.createTransaction(identityId, 'IndicativeEnrichment:error', JSON.stringify(error));
+    transactionLogger.logger.create(l1);
+    transactionLogger.logger.create(l2);
+    transactionLogger.logger.create(l3);
 
     const response =
       responseType.toLowerCase() === 'success'
@@ -131,13 +135,17 @@ export const IndicativeEnrichment = async ({
         : { success: false, error: error, data: null };
 
     // log success response
-    const l4 = transactionLogs.createTransaction(identityId, 'IndicativeEnrichment:response', JSON.stringify(response));
-    transactionLogs.logger.create(l4);
+    const l4 = transactionLogger.createTransaction(
+      identityId,
+      'IndicativeEnrichment:response',
+      JSON.stringify(response),
+    );
+    transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
-    const error = errorLogs.createError(identityId, 'IndicativeEnrichment', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'IndicativeEnrichment', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -194,16 +202,20 @@ export const GetAuthenticationQuestions = async ({
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogs.createTransaction(identityId, 'GetAuthenticationQuestions:data', JSON.stringify(data));
-    const l2 = transactionLogs.createTransaction(
+    const l1 = transactionLogger.createTransaction(identityId, 'GetAuthenticationQuestions:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(
       identityId,
       'GetAuthenticationQuestions:type',
       JSON.stringify(responseType),
     );
-    const l3 = transactionLogs.createTransaction(identityId, 'GetAuthenticationQuestions:error', JSON.stringify(error));
-    transactionLogs.logger.create(l1);
-    transactionLogs.logger.create(l2);
-    transactionLogs.logger.create(l3);
+    const l3 = transactionLogger.createTransaction(
+      identityId,
+      'GetAuthenticationQuestions:error',
+      JSON.stringify(error),
+    );
+    transactionLogger.logger.create(l1);
+    transactionLogger.logger.create(l2);
+    transactionLogger.logger.create(l3);
 
     const response =
       responseType.toLowerCase() === 'success'
@@ -211,17 +223,17 @@ export const GetAuthenticationQuestions = async ({
         : { success: false, error: error, data: null };
 
     // log success response
-    const l4 = transactionLogs.createTransaction(
+    const l4 = transactionLogger.createTransaction(
       identityId,
       'GetAuthenticationQuestions:response',
       JSON.stringify(response),
     );
-    transactionLogs.logger.create(l4);
+    transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
-    const error = errorLogs.createError(identityId, 'GetAuthenticationQuestions', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'GetAuthenticationQuestions', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -284,24 +296,24 @@ export const VerifyAuthenticationQuestions = async ({
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogs.createTransaction(
+    const l1 = transactionLogger.createTransaction(
       identityId,
       'VerifyAuthenticationQuestions:data',
       JSON.stringify(data),
     );
-    const l2 = transactionLogs.createTransaction(
+    const l2 = transactionLogger.createTransaction(
       identityId,
       'VerifyAuthenticationQuestions:type',
       JSON.stringify(responseType),
     );
-    const l3 = transactionLogs.createTransaction(
+    const l3 = transactionLogger.createTransaction(
       identityId,
       'VerifyAuthenticationQuestions:error',
       JSON.stringify(error),
     );
-    transactionLogs.logger.create(l1);
-    transactionLogs.logger.create(l2);
-    transactionLogs.logger.create(l3);
+    transactionLogger.logger.create(l1);
+    transactionLogger.logger.create(l2);
+    transactionLogger.logger.create(l3);
 
     const response =
       responseType.toLowerCase() === 'success'
@@ -309,18 +321,18 @@ export const VerifyAuthenticationQuestions = async ({
         : { success: false, error: error, data: null };
 
     // log success response
-    const l4 = transactionLogs.createTransaction(
+    const l4 = transactionLogger.createTransaction(
       identityId,
       'VerifyAuthenticationQuestions:response',
       JSON.stringify(response),
     );
-    transactionLogs.logger.create(l4);
+    transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogs.createError(identityId, 'VerifyAuthenticationQuestions', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'VerifyAuthenticationQuestions', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -385,12 +397,12 @@ export const Enroll = async (
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogs.createTransaction(identityId, 'Enroll:data', JSON.stringify(data));
-    const l2 = transactionLogs.createTransaction(identityId, 'Enroll:type', JSON.stringify(responseType));
-    const l3 = transactionLogs.createTransaction(identityId, 'Enroll:error', JSON.stringify(error));
-    transactionLogs.logger.create(l1);
-    transactionLogs.logger.create(l2);
-    transactionLogs.logger.create(l3);
+    const l1 = transactionLogger.createTransaction(identityId, 'Enroll:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'Enroll:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'Enroll:error', JSON.stringify(error));
+    transactionLogger.logger.create(l1);
+    transactionLogger.logger.create(l2);
+    transactionLogger.logger.create(l3);
 
     let response;
     if (responseType.toLowerCase() === 'success') {
@@ -406,14 +418,14 @@ export const Enroll = async (
     }
 
     // log success response
-    const l4 = transactionLogs.createTransaction(identityId, 'Enroll:response', JSON.stringify(response));
-    transactionLogs.logger.create(l4);
+    const l4 = transactionLogger.createTransaction(identityId, 'Enroll:response', JSON.stringify(response));
+    transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogs.createError(identityId, 'Enroll', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'Enroll', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -482,12 +494,12 @@ export const EnrollDisputes = async (
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogs.createTransaction(identityId, 'EnrollDisputes:data', JSON.stringify(data));
-    const l2 = transactionLogs.createTransaction(identityId, 'EnrollDisputes:type', JSON.stringify(responseType));
-    const l3 = transactionLogs.createTransaction(identityId, 'EnrollDisputes:error', JSON.stringify(error));
-    transactionLogs.logger.create(l1);
-    transactionLogs.logger.create(l2);
-    transactionLogs.logger.create(l3);
+    const l1 = transactionLogger.createTransaction(identityId, 'EnrollDisputes:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'EnrollDisputes:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'EnrollDisputes:error', JSON.stringify(error));
+    transactionLogger.logger.create(l1);
+    transactionLogger.logger.create(l2);
+    transactionLogger.logger.create(l3);
 
     let response;
     if (responseType.toLowerCase() === 'success') {
@@ -503,14 +515,14 @@ export const EnrollDisputes = async (
     }
 
     // log success response
-    const l4 = transactionLogs.createTransaction(identityId, 'EnrollDisputes:response', JSON.stringify(response));
-    transactionLogs.logger.create(l4);
+    const l4 = transactionLogger.createTransaction(identityId, 'EnrollDisputes:response', JSON.stringify(response));
+    transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogs.createError(identityId, 'EnrollDisputes', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'EnrollDisputes', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -574,12 +586,12 @@ export const Fulfill = async (
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogs.createTransaction(identityId, 'Fulfill:data', JSON.stringify(data));
-    const l2 = transactionLogs.createTransaction(identityId, 'Fulfill:type', JSON.stringify(responseType));
-    const l3 = transactionLogs.createTransaction(identityId, 'Fulfill:error', JSON.stringify(error));
-    transactionLogs.logger.create(l1);
-    transactionLogs.logger.create(l2);
-    transactionLogs.logger.create(l3);
+    const l1 = transactionLogger.createTransaction(identityId, 'Fulfill:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'Fulfill:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'Fulfill:error', JSON.stringify(error));
+    transactionLogger.logger.create(l1);
+    transactionLogger.logger.create(l2);
+    transactionLogger.logger.create(l3);
 
     let response;
     if (responseType.toLowerCase() === 'success') {
@@ -592,14 +604,14 @@ export const Fulfill = async (
     }
 
     // log success response
-    const l4 = transactionLogs.createTransaction(identityId, 'Fulfill:response', JSON.stringify(response));
-    transactionLogs.logger.create(l4);
+    const l4 = transactionLogger.createTransaction(identityId, 'Fulfill:response', JSON.stringify(response));
+    transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogs.createError(identityId, 'Fulfill', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'Fulfill', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 };
@@ -668,12 +680,12 @@ export const FulfillDisputes = async (
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogs.createTransaction(identityId, 'FulfillDisputes:data', JSON.stringify(data));
-    const l2 = transactionLogs.createTransaction(identityId, 'FulfillDisputes:type', JSON.stringify(responseType));
-    const l3 = transactionLogs.createTransaction(identityId, 'FulfillDisputes:error', JSON.stringify(error));
-    transactionLogs.logger.create(l1);
-    transactionLogs.logger.create(l2);
-    transactionLogs.logger.create(l3);
+    const l1 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:error', JSON.stringify(error));
+    transactionLogger.logger.create(l1);
+    transactionLogger.logger.create(l2);
+    transactionLogger.logger.create(l3);
 
     let response;
     if (responseType.toLowerCase() === 'success') {
@@ -685,14 +697,14 @@ export const FulfillDisputes = async (
       response = { success: false, error: error };
     }
     // log success response
-    const l4 = transactionLogs.createTransaction(identityId, 'FulfillDisputes:response', JSON.stringify(response));
-    transactionLogs.logger.create(l4);
+    const l4 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:response', JSON.stringify(response));
+    transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogs.createError(identityId, 'FulfillDisputes', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'FulfillDisputes', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 };
@@ -745,12 +757,12 @@ export const GetServiceProduct = async ({
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogs.createTransaction(identityId, 'GetServiceProduct:data', JSON.stringify(data));
-    const l2 = transactionLogs.createTransaction(identityId, 'GetServiceProduct:type', JSON.stringify(responseType));
-    const l3 = transactionLogs.createTransaction(identityId, 'GetServiceProduct:error', JSON.stringify(error));
-    transactionLogs.logger.create(l1);
-    transactionLogs.logger.create(l2);
-    transactionLogs.logger.create(l3);
+    const l1 = transactionLogger.createTransaction(identityId, 'GetServiceProduct:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'GetServiceProduct:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'GetServiceProduct:error', JSON.stringify(error));
+    transactionLogger.logger.create(l1);
+    transactionLogger.logger.create(l2);
+    transactionLogger.logger.create(l3);
 
     const response =
       responseType.toLowerCase() === 'success'
@@ -758,14 +770,14 @@ export const GetServiceProduct = async ({
         : { success: false, error: error, data: null };
 
     // log success response
-    const l4 = transactionLogs.createTransaction(identityId, 'GetServiceProduct:response', JSON.stringify(response));
-    transactionLogs.logger.create(l4);
+    const l4 = transactionLogger.createTransaction(identityId, 'GetServiceProduct:response', JSON.stringify(response));
+    transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogs.createError(identityId, 'GetServiceProduct', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'GetServiceProduct', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -835,12 +847,12 @@ export const GetDisputeStatus = async ({
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogs.createTransaction(identityId, 'GetDisputeStatus:data', JSON.stringify(data));
-    const l2 = transactionLogs.createTransaction(identityId, 'GetDisputeStatus:type', JSON.stringify(responseType));
-    const l3 = transactionLogs.createTransaction(identityId, 'GetDisputeStatus:error', JSON.stringify(error));
-    transactionLogs.logger.create(l1);
-    transactionLogs.logger.create(l2);
-    transactionLogs.logger.create(l3);
+    const l1 = transactionLogger.createTransaction(identityId, 'GetDisputeStatus:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'GetDisputeStatus:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'GetDisputeStatus:error', JSON.stringify(error));
+    transactionLogger.logger.create(l1);
+    transactionLogger.logger.create(l2);
+    transactionLogger.logger.create(l3);
 
     const response =
       responseType.toLowerCase() === 'success'
@@ -848,14 +860,14 @@ export const GetDisputeStatus = async ({
         : { success: false, error: error, data: null };
 
     // log success response
-    const l4 = transactionLogs.createTransaction(identityId, 'GetDisputeStatus:response', JSON.stringify(response));
-    transactionLogs.logger.create(l4);
+    const l4 = transactionLogger.createTransaction(identityId, 'GetDisputeStatus:response', JSON.stringify(response));
+    transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogs.createError(identityId, 'GetDisputeStatus', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'GetDisputeStatus', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -944,12 +956,16 @@ export const GetDisputeStatusByID = async ({
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogs.createTransaction(identityId, 'GetDisputeStatusByID:data', JSON.stringify(data));
-    const l2 = transactionLogs.createTransaction(identityId, 'GetDisputeStatusByID:type', JSON.stringify(responseType));
-    const l3 = transactionLogs.createTransaction(identityId, 'GetDisputeStatusByID:error', JSON.stringify(error));
-    transactionLogs.logger.create(l1);
-    transactionLogs.logger.create(l2);
-    transactionLogs.logger.create(l3);
+    const l1 = transactionLogger.createTransaction(identityId, 'GetDisputeStatusByID:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(
+      identityId,
+      'GetDisputeStatusByID:type',
+      JSON.stringify(responseType),
+    );
+    const l3 = transactionLogger.createTransaction(identityId, 'GetDisputeStatusByID:error', JSON.stringify(error));
+    transactionLogger.logger.create(l1);
+    transactionLogger.logger.create(l2);
+    transactionLogger.logger.create(l3);
 
     const response =
       responseType.toLowerCase() === 'success'
@@ -957,14 +973,18 @@ export const GetDisputeStatusByID = async ({
         : { success: false, error: error, data: null };
 
     // log success response
-    const l4 = transactionLogs.createTransaction(identityId, 'GetDisputeStatusByID:response', JSON.stringify(response));
-    transactionLogs.logger.create(l4);
+    const l4 = transactionLogger.createTransaction(
+      identityId,
+      'GetDisputeStatusByID:response',
+      JSON.stringify(response),
+    );
+    transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogs.createError(identityId, 'GetDisputeStatusByID', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'GetDisputeStatusByID', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -1058,12 +1078,12 @@ export const StartDispute = async ({
       disputes: payload.disputes,
     };
 
-    const l1 = transactionLogs.createTransaction(identityId, 'StartDispute:data', JSON.stringify(data));
-    const l2 = transactionLogs.createTransaction(identityId, 'StartDispute:type', JSON.stringify(responseType));
-    const l3 = transactionLogs.createTransaction(identityId, 'StartDispute:error', JSON.stringify(error));
-    transactionLogs.logger.create(l1);
-    transactionLogs.logger.create(l2);
-    transactionLogs.logger.create(l3);
+    const l1 = transactionLogger.createTransaction(identityId, 'StartDispute:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'StartDispute:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'StartDispute:error', JSON.stringify(error));
+    transactionLogger.logger.create(l1);
+    transactionLogger.logger.create(l2);
+    transactionLogger.logger.create(l3);
 
     let response;
     if (responseType.toLowerCase() === 'success') {
@@ -1085,12 +1105,12 @@ export const StartDispute = async ({
       response = { success: false, error: error };
     }
     // log success response
-    const l4 = transactionLogs.createTransaction(identityId, 'StartDispute:response', JSON.stringify(response));
+    const l4 = transactionLogger.createTransaction(identityId, 'StartDispute:response', JSON.stringify(response));
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogs.createError(identityId, 'StartDispute', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'StartDispute', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 };
@@ -1159,8 +1179,8 @@ export const GetDisputeHistory = async ({
     console.log('response ===> ', response);
     return response;
   } catch (err) {
-    const error = errorLogs.createError(identityId, 'GetDisputeHistory', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'GetDisputeHistory', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -1262,8 +1282,8 @@ export const GetInvestigationResults = async ({
     console.log('response ===> ', response);
     return response;
   } catch (err) {
-    const error = errorLogs.createError(identityId, 'GetInvestigationResults', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'GetInvestigationResults', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -1297,32 +1317,32 @@ export const CompleteOnboardingEnrollments = async ({
       identityId,
     };
     const { success: enrollSuccess, error: enrollError, data: enrollData } = await Enroll(payload, false); // report & score enroll
-    const l1 = transactionLogs.createTransaction(
+    const l1 = transactionLogger.createTransaction(
       identityId,
       'CompleteOnboardingEnrollments:success',
       JSON.stringify(enrollSuccess),
     );
-    const l2 = transactionLogs.createTransaction(
+    const l2 = transactionLogger.createTransaction(
       identityId,
       'CompleteOnboardingEnrollments:err',
       JSON.stringify(enrollError),
     );
-    const l3 = transactionLogs.createTransaction(
+    const l3 = transactionLogger.createTransaction(
       identityId,
       'CompleteOnboardingEnrollments:enrollData',
       JSON.stringify(enrollData),
     );
-    transactionLogs.logger.create(l1);
-    transactionLogs.logger.create(l2);
-    transactionLogs.logger.create(l3);
+    transactionLogger.logger.create(l1);
+    transactionLogger.logger.create(l2);
+    transactionLogger.logger.create(l3);
     const response = enrollSuccess
       ? { success: true, error: null, data: enrollData }
       : { success: false, error: enrollError };
     console.log('response ===> ', response);
     return response;
   } catch (err) {
-    const error = errorLogs.createError(identityId, 'CompleteOnboardingEnrollments', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'CompleteOnboardingEnrollments', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -1362,8 +1382,8 @@ export const DisputePreflightCheck = async ({
     enrolled = !data ? false : returnNestedObject<boolean>(data, 'disputeEnrolled');
     console.log('DisputePreflightCheck:enrolled ===> ', enrolled);
   } catch (err) {
-    const error = errorLogs.createError(identityId, 'DisputePreflightCheck:EnrollStatus', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'DisputePreflightCheck:EnrollStatus', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 
@@ -1381,8 +1401,8 @@ export const DisputePreflightCheck = async ({
       const { success, error, data } = await EnrollDisputes(payload);
       if (!success) return { success: false, error: error };
     } catch (err) {
-      const error = errorLogs.createError(identityId, 'DisputePreflightCheck:EnrollDisputes', JSON.stringify(err));
-      errorLogs.logger.create(error);
+      const error = errorLogger.createError(identityId, 'DisputePreflightCheck:EnrollDisputes', JSON.stringify(err));
+      errorLogger.logger.create(error);
       return { success: false, error: err };
     }
   }
@@ -1402,8 +1422,8 @@ export const DisputePreflightCheck = async ({
     }
     console.log('DisputePreflightCheck:refresh ===> ', refresh);
   } catch (err) {
-    const error = errorLogs.createError(identityId, 'DisputePreflightCheck:Refresh', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'DisputePreflightCheck:Refresh', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 
@@ -1421,8 +1441,8 @@ export const DisputePreflightCheck = async ({
       const { success, error } = await FulfillDisputes(payload);
       if (!success) return { success: false, error: error };
     } catch (err) {
-      const error = errorLogs.createError(identityId, 'DisputePreflightCheck:FulfillDisputes', JSON.stringify(err));
-      errorLogs.logger.create(error);
+      const error = errorLogger.createError(identityId, 'DisputePreflightCheck:FulfillDisputes', JSON.stringify(err));
+      errorLogger.logger.create(error);
       return { success: false, error: err };
     }
   }
@@ -1442,8 +1462,8 @@ export const DisputePreflightCheck = async ({
     console.log('response ===> ', response);
     return response;
   } catch (err) {
-    const error = errorLogs.createError(identityId, 'DisputePreflightCheck:GetDisputeStatus', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'DisputePreflightCheck:GetDisputeStatus', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 };
@@ -1524,12 +1544,12 @@ export const DisputeInflightCheck = async ({
     }
     notifications = data?.AlertNotifications?.AlertNotification;
   } catch (err) {
-    const error = errorLogs.createError(
+    const error = errorLogger.createError(
       'internal_system_operation',
       'DisputeInflightCheck:GetAlertNotifications',
       JSON.stringify(err),
     );
-    errorLogs.logger.create(error);
+    errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 
@@ -1559,12 +1579,12 @@ export const DisputeInflightCheck = async ({
       );
       console.log('all status ===> ', JSON.stringify(allDisputeStatusUpdates));
     } catch (err) {
-      const error = errorLogs.createError(
+      const error = errorLogger.createError(
         'internal_system_operation',
         'DisputeInflightCheck:GetDisputeStatus',
         JSON.stringify(err),
       );
-      errorLogs.logger.create(error);
+      errorLogger.logger.create(error);
       return { success: false, error: err };
     }
   }
@@ -1620,12 +1640,12 @@ export const DisputeInflightCheck = async ({
       );
       console.log('dispute updates ===> ', JSON.stringify(updates));
     } catch (err) {
-      const error = errorLogs.createError(
+      const error = errorLogger.createError(
         'internal_system_operation',
         'DisputeInflightCheck:UpdateDisputeDB',
         JSON.stringify(err),
       );
-      errorLogs.logger.create(error);
+      errorLogger.logger.create(error);
       return { success: false, error: err };
     }
   }
@@ -1664,12 +1684,12 @@ export const DisputeInflightCheck = async ({
       );
       return { success: true, error: false, data: JSON.stringify(alerted) };
     } catch (err) {
-      const error = errorLogs.createError(
+      const error = errorLogger.createError(
         'internal_system_operation',
         'DisputeInflightCheck:GetInvestigationResults',
         JSON.stringify(err),
       );
-      errorLogs.logger.create(error);
+      errorLogger.logger.create(error);
       return { success: false, error: err };
     }
   }
@@ -1741,8 +1761,8 @@ export const GetTrendingData = async ({
       ? { success: true, error: error, data: data }
       : { success: false, error: error, data: null };
   } catch (err) {
-    const error = errorLogs.createError(identityId, 'GetTrendingData', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'GetTrendingData', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -1785,8 +1805,8 @@ export const GetInvestigationResultsByID = async ({
     const resp = await db.investigationResults.get(payload.id, payload.userId);
     return { success: true, error: null, data: resp };
   } catch (err) {
-    const error = errorLogs.createError(identityId, 'GetInvestigationResultsByID', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'GetInvestigationResultsByID', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -1829,8 +1849,8 @@ export const GetCreditBureauResultsByID = async ({
     const resp = await db.creditBureauResults.get(payload.id, payload.userId);
     return { success: true, error: null, data: resp };
   } catch (err) {
-    const error = errorLogs.createError(identityId, 'GetCreditBureauResultsByID', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'GetCreditBureauResultsByID', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -1869,8 +1889,8 @@ export const GetAllDisputesByUser = async ({
     const resp = await db.disputes.list(payload.id);
     return { success: true, error: null, data: resp };
   } catch (err) {
-    const error = errorLogs.createError(identityId, 'GetAllDisputesByUser', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'GetAllDisputesByUser', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };
@@ -1912,8 +1932,8 @@ export const GetCurrentDisputeByUser = async ({
     })[0];
     return { success: true, error: null, data: resp };
   } catch (err) {
-    const error = errorLogs.createError(identityId, 'GetCurrentDisputeByUser', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(identityId, 'GetCurrentDisputeByUser', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
 };

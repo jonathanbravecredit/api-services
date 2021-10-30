@@ -5,12 +5,12 @@ import * as fs from 'fs';
 import * as queries from 'lib/proxy';
 import * as secrets from 'lib/utils/secrets/secrets';
 import * as tokens from 'lib/utils/tokens/tokens';
-import ErrorLog from 'lib/utils/db/logs/error-log';
-import TransactionLog from 'lib/utils/db/logs/transaction-log';
+import ErrorLogger from 'lib/utils/db/logger/logger-errors';
+import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 
 // request.debug = true; import * as request from 'request';
-const errorLogs = new ErrorLog();
-const transactionLogs = new TransactionLog();
+const errorLogger = new ErrorLogger();
+const transactionLogger = new TransactionLogger();
 
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
 const tuEnv = process.env.TU_ENV;
@@ -42,15 +42,15 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     if (sub === undefined) throw token;
     tokenUser = sub;
   } catch (err) {
-    const error = errorLogs.createError('invalid_token_user', 'ValidateToken', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError('invalid_token_user', 'ValidateToken', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: `Invalid token parsed to user, token:=${err}` };
   }
 
-  const l1 = transactionLogs.createTransaction(tokenUser, `${action}:action`, JSON.stringify(action));
-  const l2 = transactionLogs.createTransaction(tokenUser, `${action}:message`, JSON.stringify(message));
-  transactionLogs.logger.create(l1);
-  transactionLogs.logger.create(l2);
+  const l1 = transactionLogger.createTransaction(tokenUser, `${action}:action`, JSON.stringify(action));
+  const l2 = transactionLogger.createTransaction(tokenUser, `${action}:message`, JSON.stringify(message));
+  transactionLogger.logger.create(l1);
+  transactionLogger.logger.create(l2);
 
   try {
     const secretJSON = await secrets.getSecretKey(transunionSKLoc);
@@ -60,8 +60,8 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     user = `${username}:${password}`;
     auth = 'Basic ' + Buffer.from(user).toString('base64');
   } catch (err) {
-    const error = errorLogs.createError(tokenUser, 'get_secrets_failure', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(tokenUser, 'get_secrets_failure', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: { error: `Error gathering/reading secrets=${err}` } };
   }
 
@@ -71,8 +71,8 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     cert = fs.readFileSync(`/opt/${prefix}-brave.credit.crt`);
     cacert = fs.readFileSync(`/opt/${prefix}-Root-CA-Bundle.crt`);
   } catch (err) {
-    const error = errorLogs.createError(tokenUser, 'get_certificates_failure', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(tokenUser, 'get_certificates_failure', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: { error: `Error gathering/reading cert=${err}` } };
   }
 
@@ -155,13 +155,13 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await queries.GetCreditBureauResultsByID(payload);
         return JSON.stringify(results);
       default:
-        const error = errorLogs.createError(tokenUser, 'action_not_found', JSON.stringify(action));
-        errorLogs.logger.create(error);
+        const error = errorLogger.createError(tokenUser, 'action_not_found', JSON.stringify(action));
+        errorLogger.logger.create(error);
         return JSON.stringify({ success: false, error: 'Action not found', data: action });
     }
   } catch (err) {
-    const error = errorLogs.createError(tokenUser, 'unknown_server_error', JSON.stringify(err));
-    errorLogs.logger.create(error);
+    const error = errorLogger.createError(tokenUser, 'unknown_server_error', JSON.stringify(err));
+    errorLogger.logger.create(error);
     return { success: false, error: { error: `Unknown server error=${err}` } };
   }
 };
