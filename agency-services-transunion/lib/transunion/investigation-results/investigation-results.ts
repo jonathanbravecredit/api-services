@@ -137,6 +137,49 @@ export const enrichGetInvestigationResult = (
   db.creditBureauResults.create(newCB);
   // update the disputes table with IR and CB ids.
   db.disputes.updateResults(sub, disputeId, cbID, irID);
+  return data;
+};
+
+/**
+ * Update the investigation and credity bureau tables directly with the results
+ * - Replaces the enricher as this no longer holds the disputes
+ * @param id
+ * @param data
+ * @returns
+ */
+export const updateInvestigationResultsDB = async (id: string, data: IGetInvestigationEnrichPayload): Promise<any> => {
+  if (!data) return;
+  const sub = id;
+  const cbID = uuid.v4();
+  const irID = uuid.v4();
+  const irReport = data.getInvestigationResult.InvestigationResults;
+  const cbReport = data.getInvestigationResult.CreditBureau;
+  const disputeId = data.disputeId;
+  const newIR = {
+    id: irID,
+    userId: sub,
+    record: JSON.stringify(irReport),
+    createdOn: null,
+    modifiedOn: null,
+  };
+
+  const newCB = {
+    id: cbID,
+    userId: sub,
+    record: JSON.stringify(cbReport),
+    createdOn: null,
+    modifiedOn: null,
+  };
+
+  try {
+    await db.investigationResults.create(newIR);
+    await db.creditBureauResults.create(newCB);
+    await db.disputes.updateResults(sub, disputeId, cbID, irID);
+    return true;
+  } catch (err) {
+    console.log('updateInvestigationResultsDB error ===> ', err);
+    return false;
+  }
 };
 
 /**

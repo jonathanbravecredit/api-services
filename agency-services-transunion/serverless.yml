@@ -45,9 +45,11 @@ provider:
     NODE_ENV: ${opt:stage, 'dev'}
     TU_ENV: ${self:provider.stage}
     TU_SECRET_LOCATION: '${self:provider.stage}/agency-services/transunion'
+    API_ERROR_LOG_TABLE: 'APIErrorLog'
+    API_TRANSACTION_LOG_TABLE: 'APITransactionLog'
+    DISPUTES_TABLE: 'Disputes'
     CREDIT_BUREAU_TABLE: 'CreditBureauReportResults'
     INVESTIGATION_RESULTS_TABLE: 'InvestigationResults'
-    DISPUTES_TABLE: 'Disputes'
     ACCOUNT_ID: !Sub '${AWS::AccountId}'
     IDENTITY_ID: '${self:custom.settings.IDENTITY_IDS.${opt:stage}}'
     POOL_ID: '${self:custom.settings.POOL_IDS.${opt:stage}}'
@@ -82,9 +84,11 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource:
+        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.API_ERROR_LOG_TABLE}'
+        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.API_TRANSACTION_LOG_TABLE}'
+        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.DISPUTES_TABLE}'
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_BUREAU_TABLE}'
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.INVESTIGATION_RESULTS_TABLE}'
-        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.DISPUTES_TABLE}'
 
 layers:
   TuCerts:
@@ -217,6 +221,40 @@ resources:
             KeyType: 'RANGE'
         BillingMode: PAY_PER_REQUEST
         TableName: Disputes
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+    APIErrorLog:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: 'userId'
+            AttributeType: 'S'
+          - AttributeName: 'errorId'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'userId'
+            KeyType: 'HASH'
+          - AttributeName: 'errorId'
+            KeyType: 'RANGE'
+        BillingMode: PAY_PER_REQUEST
+        TableName: APIErrorLog
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+    APITransactionLog:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: 'userId'
+            AttributeType: 'S'
+          - AttributeName: 'transactionId'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'userId'
+            KeyType: 'HASH'
+          - AttributeName: 'transactionId'
+            KeyType: 'RANGE'
+        BillingMode: PAY_PER_REQUEST
+        TableName: APITransactionLog
         StreamSpecification:
           StreamViewType: NEW_AND_OLD_IMAGES
 

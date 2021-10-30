@@ -2,7 +2,11 @@ import { IRequestOptions } from 'lib/interfaces';
 import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
 import axios from 'axios';
+import { ErrorLog } from 'lib/utils/db/logs/error-log';
+import { TransactionLog } from 'lib/utils/db/logs/transaction-log';
 
+const errorLogs = new ErrorLog();
+const transactionLogs = new TransactionLog();
 const tuEnv = process.env.TU_ENV;
 const tuUrl =
   tuEnv === 'dev'
