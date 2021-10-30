@@ -161,7 +161,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     }
   } catch (err) {
     const error = errorLogger.createError(tokenUser, 'unknown_server_error', JSON.stringify(err));
-    errorLogger.logger.create(error);
+    await errorLogger.logger.create(error);
     return { success: false, error: { error: `Unknown server error=${err}` } };
   }
 };

@@ -59,7 +59,7 @@ export const Ping = async ({
     if (!xml || !request) throw new Error(`Missing xml:${xml}, or request:${request}`);
     await soap.processRequest(request, parserOptions);
     const response = { success: true, error: null, data: 'Ping succeeded' };
-    const l1 = transactionLogger.createTransaction(identityId, 'ping', JSON.stringify(response));
+    const l1 = transactionLogger.createTransaction(identityId, 'Ping', JSON.stringify(response));
     transactionLogger.logger.create(l1);
     return response;
   } catch (err) {
