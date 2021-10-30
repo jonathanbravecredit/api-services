@@ -156,7 +156,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         return JSON.stringify(results);
       default:
         const error = errorLogger.createError(tokenUser, 'action_not_found', JSON.stringify(action));
-        errorLogger.logger.create(error);
+        await errorLogger.logger.create(error);
         return JSON.stringify({ success: false, error: 'Action not found', data: action });
     }
   } catch (err) {
