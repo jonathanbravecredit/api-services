@@ -11,6 +11,7 @@ import { TransactionLog } from 'lib/utils/db/logs/transaction-log';
 // request.debug = true; import * as request from 'request';
 const errorLogs = new ErrorLog();
 const transactionLogs = new TransactionLog();
+
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
 const tuEnv = process.env.TU_ENV;
 let key: Buffer;
