@@ -5,8 +5,8 @@ import * as fs from 'fs';
 import * as queries from 'lib/proxy';
 import * as secrets from 'lib/utils/secrets/secrets';
 import * as tokens from 'lib/utils/tokens/tokens';
-import { ErrorLog } from 'lib/utils/db/logs/error-log';
-import { TransactionLog } from 'lib/utils/db/logs/transaction-log';
+import ErrorLog from 'lib/utils/db/logs/error-log';
+import TransactionLog from 'lib/utils/db/logs/transaction-log';
 
 // request.debug = true; import * as request from 'request';
 const errorLogs = new ErrorLog();

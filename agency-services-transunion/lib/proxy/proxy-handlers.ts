@@ -16,8 +16,8 @@ import { GET_DISPUTE_STATUS_RESPONSE_WITHID } from 'lib/examples/mocks/GetDisput
 import { DB } from 'lib/utils/db/db';
 import { Dispute } from 'lib/utils/db/disputes/model/dispute.model';
 import { updateInvestigationResultsDB } from 'lib/transunion';
-import { ErrorLog } from 'lib/utils/db/logs/error-log';
-import { TransactionLog } from 'lib/utils/db/logs/transaction-log';
+import ErrorLog from 'lib/utils/db/logs/error-log';
+import TransactionLog from 'lib/utils/db/logs/transaction-log';
 
 const GO_LIVE = true;
 const errorLogs = new ErrorLog();
