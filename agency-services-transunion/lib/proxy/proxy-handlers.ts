@@ -1538,6 +1538,18 @@ export const DisputeInflightCheck = async ({
     );
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
+
+    const l1 = transactionLogger.createTransaction(identityId, 'GetAlertNotifications:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(
+      identityId,
+      'GetAlertNotifications:response',
+      JSON.stringify(responseType),
+    );
+    const l3 = transactionLogger.createTransaction(identityId, 'GetAlertNotifications:error', JSON.stringify(error));
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
+
     if (responseType.toLowerCase() !== 'success') {
       // does the TU api respond
       throw error;
