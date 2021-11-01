@@ -475,16 +475,22 @@ resources:
       Value: !Ref Disputes
       Export:
         Name: !Sub '${self:service}-disputes'
+    DisputesTableStreamArn:
+      Value: { 'Fn::GetAtt': ['Disputes', 'StreamArn'] }
     InvestigationResults:
       Description: 'InvestigationResults'
       Value: !Ref InvestigationResults
       Export:
         Name: !Sub '${self:service}-investigationresults'
+    InvestigationResultsTableStreamArn:
+      Value: { 'Fn::GetAtt': ['InvestigationResults', 'StreamArn'] }
     CreditBureauReportResults:
       Description: 'CreditBureauReportResults'
       Value: !Ref CreditBureauReportResults
       Export:
         Name: !Sub '${self:service}-creditbureaureportresults'
+    CreditBureauReportResultsTableStreamArn:
+      Value: { 'Fn::GetAtt': ['CreditBureauReportResults', 'StreamArn'] }
     VPC:
       Description: 'VPC'
       Value: !Ref VPC
