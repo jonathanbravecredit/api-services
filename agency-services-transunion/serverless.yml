@@ -470,6 +470,21 @@ resources:
     #     RawMessageDelivery: 'true'
 
   Outputs:
+    Disputes:
+      Description: 'Disputes'
+      Value: !Ref Disputes
+      Export:
+        Name: !Sub '${self:service}-disputes'
+    InvestigationResults:
+      Description: 'InvestigationResults'
+      Value: !Ref InvestigationResults
+      Export:
+        Name: !Sub '${self:service}-investigationresults'
+    CreditBureauReportResults:
+      Description: 'CreditBureauReportResults'
+      Value: !Ref CreditBureauReportResults
+      Export:
+        Name: !Sub '${self:service}-creditbureaureportresults'
     VPC:
       Description: 'VPC'
       Value: !Ref VPC
