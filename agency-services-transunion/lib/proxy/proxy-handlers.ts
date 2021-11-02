@@ -1099,7 +1099,20 @@ export const StartDispute = async ({
         openedOn,
         closedOn,
       );
+
       const newDispute = await DB.disputes.create(dbDispute);
+      if (status.toLowerCase() === 'completedispute') {
+        // auto closed
+        const payload = {
+          accountCode,
+          username,
+          message: JSON.stringify({ disputeId: dbDispute.disputeId }),
+          agent,
+          auth,
+          identityId,
+        };
+        await GetInvestigationResults(payload);
+      }
       response = { success: true, error: null, data: newDispute };
     } else {
       response = { success: false, error: error };
