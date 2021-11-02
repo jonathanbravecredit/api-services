@@ -478,7 +478,6 @@ export const mapAddress = (address: IIndicativeDisputesAddress | IIndicativeDisp
     address instanceof Array
       ? address.map((a: IIndicativeDisputesAddress) => {
           return {
-            'data:DeletePreviousAddress': textConstructor('true', false),
             'data:PreviousAddress': {
               'data:AddressLine1': textConstructor(a.AddressLine1, true),
               'data:AddressLine2': textConstructor(a.AddressLine2, true),
@@ -486,10 +485,10 @@ export const mapAddress = (address: IIndicativeDisputesAddress | IIndicativeDisp
               'data:State': textConstructor(a.State, true),
               'data:Zipcode': textConstructor(a.Zipcode, true),
             },
+            'data:DeletePreviousAddress': textConstructor('true', false),
           };
         })
       : {
-          'data:DeletePreviousAddress': textConstructor('true', false),
           'data:PreviousAddress': {
             'data:AddressLine1': textConstructor(address.AddressLine1, true),
             'data:AddressLine2': textConstructor(address.AddressLine2, true),
@@ -497,6 +496,7 @@ export const mapAddress = (address: IIndicativeDisputesAddress | IIndicativeDisp
             'data:State': textConstructor(address.State, true),
             'data:Zipcode': textConstructor(address.Zipcode, true),
           },
+          'data:DeletePreviousAddress': textConstructor('true', false),
         };
   console.log('results in mapAddress ===> ', results);
   return results;
