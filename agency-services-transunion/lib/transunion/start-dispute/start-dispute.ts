@@ -472,7 +472,6 @@ export const mapAddress = (address: IIndicativeDisputesAddress | IIndicativeDisp
   if (!address)
     return {
       'data:PreviousAddress': textConstructor(null, true),
-      'data:DeletePreviousAddress': textConstructor('false', true),
     };
   const results =
     address instanceof Array
