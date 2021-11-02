@@ -172,6 +172,7 @@ export const createStartDisputePersonalPayload = ({
       Ssn: attrs.ssn?.full || '',
     },
     EnrollmentKey: data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey,
+    LineItems: { LineItem: null }, //parseDisputePublicToLineItem(disputes),
     //not the disputeServiceBundleKey...needs to be the bundle key return with the report returned on
     // either fulfill or enroll calls on the fulfill or enroll report key
     ServiceBundleFulfillmentKey: data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey,
@@ -657,6 +658,9 @@ export const createStartDisputePersonal = (msg: IStartDispute): string => {
   let mappedIndicativeDisputes = mapIndicativeDisputes(indicativeDisputes);
   console.log('mapped mappedIndicativeDisputes ==> ', JSON.stringify(mappedIndicativeDisputes));
 
+  let lineItems = msg.request.LineItems;
+  let mappedLineItems = mapLineItems(lineItems);
+
   // !!!! May need to add array schema back....see get dispute status
   const xmlObj = {
     'soapenv:Envelope': {
@@ -715,6 +719,7 @@ export const createStartDisputePersonal = (msg: IStartDispute): string => {
             'data:Employers': mappedEmployers,
             'data:EnrollmentKey': textConstructor(msg.request.EnrollmentKey),
             'data:IndicativeDisputes': mappedIndicativeDisputes,
+            'data:LineItems': mappedLineItems,
             'data:ServiceBundleFulfillmentKey': textConstructor(msg.request.ServiceBundleFulfillmentKey),
             // 'data:ServiceProductFulfillmentKey': textConstructor(msg.request.ServiceProductFulfillmentKey, true),
           },
