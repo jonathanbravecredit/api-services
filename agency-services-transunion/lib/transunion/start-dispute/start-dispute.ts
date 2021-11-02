@@ -719,7 +719,9 @@ export const createStartDisputePersonal = (msg: IStartDispute): string => {
             'data:Employers': mappedEmployers,
             'data:EnrollmentKey': textConstructor(msg.request.EnrollmentKey),
             'data:IndicativeDisputes': mappedIndicativeDisputes,
-            'data:LineItems': mappedLineItems,
+            'data:LineItems': {
+              'data"LineItem': textConstructor(null, true),
+            },
             'data:ServiceBundleFulfillmentKey': textConstructor(msg.request.ServiceBundleFulfillmentKey),
             // 'data:ServiceProductFulfillmentKey': textConstructor(msg.request.ServiceProductFulfillmentKey, true),
           },
