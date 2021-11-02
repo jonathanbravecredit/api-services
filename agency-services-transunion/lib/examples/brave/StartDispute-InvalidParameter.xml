@@ -1,0 +1,67 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data"
+  xmlns:arr="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:StartDispute>
+      <con:request>
+        <data:AccountCode>123456789</data:AccountCode>
+        <data:AccountName>CC2BraveCredit</data:AccountName>
+        <data:AdditionalInputs>
+          <data:Data>
+            <data:Name>DisputeVersion</data:Name>
+            <data:Value>2</data:Value>
+          </data:Data>
+        </data:AdditionalInputs>
+        <data:RequestKey>BC-233613eb-5cfd-4574-aa9c-e3763c78e7b6</data:RequestKey>
+        <data:ClientKey>9e578094-42a1-43f1-819e-29436fdd00d5</data:ClientKey>
+        <data:Customer>
+          <data:CurrentAddress>
+            <data:AddressLine1>1710 Whitcher Ave</data:AddressLine1>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:City>Sioux City</data:City>
+            <data:State>IA</data:State>
+            <data:Zipcode>51109</data:Zipcode>
+          </data:CurrentAddress>
+          <data:DateOfBirth>1967-03-01</data:DateOfBirth>
+          <data:FullName>
+            <data:FirstName>Lauren</data:FirstName>
+            <data:LastName>Walborn</data:LastName>
+            <data:MiddleName xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Prefix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Suffix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:FullName>
+          <data:PhoneNumber xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          <data:Ssn>666197455</data:Ssn>
+          <data:Identifier>
+            <data:CustomerIdentifier>
+              <data:Id>666197455</data:Id>
+              <data:IdentifierType>SocialId</data:IdentifierType>
+            </data:CustomerIdentifier>
+          </data:Identifier>
+        </data:Customer>
+        <data:Employers xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <data:EnrollmentKey>5699214d-2af5-4035-a4c9-166c59c5f6fa</data:EnrollmentKey>
+        <data:IndicativeDisputes>
+          <data:Aka>
+            <data:ValueData>
+              <data:Delete>true</data:Delete>
+              <data:Value>LAUREN A WALBORN </data:Value>
+            </data:ValueData>
+          </data:Aka>
+          <data:DeletePreviousAddress>false</data:DeletePreviousAddress>
+          <data:PreviousAddress xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        </data:IndicativeDisputes>
+        <data:ServiceBundleFulfillmentKey>1691d9be-3854-41b0-bfeb-b2d464fe17b4</data:ServiceBundleFulfillmentKey>
+      </con:request>
+    </con:StartDispute>
+  </soapenv:Body>
+</soapenv:Envelope>

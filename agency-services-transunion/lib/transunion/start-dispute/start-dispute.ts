@@ -302,7 +302,7 @@ export const parseDisputeToAddress = (disputes: IProcessDisputePersonalResult[])
         State: `${address.CreditAddress?.stateCode || ''}`,
         Zipcode: `${address.CreditAddress?.postalCode || ''}`,
       },
-      DeletePreviousAddress: 'true',
+      DeleteAddress: 'true',
     };
   })[0];
 };
@@ -471,8 +471,8 @@ export const mapAddress = (address: IIndicativeDisputesAddress | IIndicativeDisp
   console.log('startDispute:mapAddress ===> ', address);
   if (!address)
     return {
-      'data:DeletePreviousAddress': textConstructor('false', true),
       'data:PreviousAddress': textConstructor(null, true),
+      'data:DeletePreviousAddress': textConstructor('false', true),
     };
   const results =
     address instanceof Array
