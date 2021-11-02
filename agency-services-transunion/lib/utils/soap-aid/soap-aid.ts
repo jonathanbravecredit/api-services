@@ -2,7 +2,9 @@ import { IRequestOptions } from 'lib/interfaces';
 import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
 import axios from 'axios';
+import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 
+const transactionLogger = new TransactionLogger();
 const tuEnv = process.env.TU_ENV;
 const tuUrl =
   tuEnv === 'dev'
@@ -120,7 +122,8 @@ export class SoapAid {
     try {
       const res = await axios({ ...request });
       const results = this.parser(res.data, parserOptions);
-      console.log('soap-aid:parser results ===> ', results);
+      const l1 = transactionLogger.createTransaction('soap_aid', 'parser_results', JSON.stringify(results));
+      await transactionLogger.logger.create(l1);
       return results;
     } catch (err) {
       console.log('processRequest:err ===> ', err);
