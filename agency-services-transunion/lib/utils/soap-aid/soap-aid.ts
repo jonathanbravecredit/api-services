@@ -121,6 +121,7 @@ export class SoapAid {
   async processRequest<T>(request: IRequestOptions, parserOptions: Partial<fastXml.X2jOptions>): Promise<T> {
     try {
       const res = await axios({ ...request });
+      console.log('request data ===> ', JSON.stringify(res.data));
       const results = this.parser(res.data, parserOptions);
       const l1 = transactionLogger.createTransaction('soap_aid', 'parser_results', JSON.stringify(results));
       await transactionLogger.logger.create(l1);
