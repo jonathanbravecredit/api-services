@@ -561,7 +561,7 @@ export const Fulfill = async (
   // validate incoming message
   const payload: interfaces.IGenericRequest = { id: identityId };
   const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
-  if (!validate(payload)) throw `Malformed message=${message}`;
+  if (!validate(payload)) throw `Malformed message=${payload}`;
 
   //create helper classes
   const soap = new SoapAid(tu.parseFulfill, tu.formatFulfill, tu.createFulfill, tu.createFulfillPayload);
@@ -1700,7 +1700,8 @@ export const DisputeInflightCheck = async ({
             auth,
             identityId: id,
           };
-          const synced = await GetInvestigationResults(payload);
+          const fulfilled = await FulfillDisputes(payload);
+          const synced = await GetInvestigationResults({ ...payload, message: JSON.stringify({}) });
           let response = synced
             ? { success: true, error: null, data: synced.data }
             : { success: false, error: 'failed to get investigation results' };
