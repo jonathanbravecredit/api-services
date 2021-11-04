@@ -105,8 +105,8 @@ functions:
     timeout: 30
     layers:
       - { Ref: TuCertsLambdaLayer }
-    # events:
-    #   - schedule: cron(0 16 * * ? *)
+    events:
+      - schedule: cron(0 16 * * ? *)
 
   # SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
 
