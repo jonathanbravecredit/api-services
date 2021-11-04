@@ -196,7 +196,7 @@ export const parseInvestigationResults = (xml: string, options: any): any => {
   if (typeof investigationResults === 'string') {
     let clean = he.decode(he.decode(investigationResults));
     const parsed = fastXml.parse(clean, options);
-    console.log('MOCK parsed IR response ==> ', JSON.stringify(parsed));
+    console.log('parsed IR response ==> ', JSON.stringify(parsed));
     const resultsResults = results.Envelope?.Body?.GetInvestigationResultsResponse?.GetInvestigationResultsResult;
     results = {
       ...results,
@@ -216,7 +216,7 @@ export const parseInvestigationResults = (xml: string, options: any): any => {
   if (typeof creditBureau === 'string') {
     let clean = he.decode(he.decode(creditBureau));
     const parsed = fastXml.parse(clean, options);
-    console.log('MOCK parsed CB response ==> ', JSON.stringify(parsed));
+    console.log('parsed CB response ==> ', JSON.stringify(parsed));
     const resultsResults = results.Envelope?.Body?.GetInvestigationResultsResponse?.GetInvestigationResultsResult;
     results = {
       ...results,
@@ -232,6 +232,6 @@ export const parseInvestigationResults = (xml: string, options: any): any => {
       },
     };
   }
-  console.log('MOCK parsed results ==> ', JSON.stringify(results));
+  console.log('parsed results ==> ', JSON.stringify(results));
   return results;
 };
