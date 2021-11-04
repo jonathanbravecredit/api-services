@@ -1,0 +1,77 @@
+{
+  "Envelope": {
+    "Header": "",
+    "Body": {
+      "StartDispute": {
+        "request": {
+          "AccountCode": 123456789,
+          "AccountName": "CC2BraveCredit",
+          "AdditionalInputs": {
+            "Data": {
+              "Name": "DisputeVersion",
+              "Value": 2
+            }
+          },
+          "RequestKey": "BC-e06b7577-6ba8-4b06-8d8f-07cbb1d58d29",
+          "ClientKey": "31a426ca-9b19-4796-9b44-91d0ef1eb836",
+          "Customer": {
+            "CurrentAddress": {
+              "AddressLine1": "2923 avenue c",
+              "AddressLine2": {
+                "nil": true
+              },
+              "City": "Council bluffs",
+              "State": "IA",
+              "Zipcode": 50522
+            },
+            "DateOfBirth": "1936-03-01",
+            "FullName": {
+              "FirstName": "Denver",
+              "LastName": "Haynes",
+              "MiddleName": {
+                "nil": true
+              },
+              "Prefix": {
+                "nil": true
+              },
+              "Suffix": {
+                "nil": true
+              }
+            },
+            "PhoneNumber": {
+              "nil": true
+            },
+            "Ssn": 666387303,
+            "Identifier": {
+              "CustomerIdentifier": {
+                "Id": 666387303,
+                "IdentifierType": "SocialId"
+              }
+            }
+          },
+          "Employers": {
+            "nil": true
+          },
+          "EnrollmentKey": "44bb85f8-4400-41b7-aee0-0b0a8a26cff7",
+          "IndicativeDisputes": {
+            "nil": true
+          },
+          "LineItems": {
+            "LineItem": {
+              "ClaimCodes": {
+                "ClaimCode": {
+                  "Code": "P8"
+                }
+              },
+              "CreditReportItem": "PR01_-1190595074_-1031353275",
+              "UploadDocumentId": {
+                "nil": true
+              }
+            }
+          },
+          "ServiceBundleFulfillmentKey": "f4a0cfd1-193a-4a36-85e0-90ef75832a35"
+        }
+      }
+    }
+  }
+}

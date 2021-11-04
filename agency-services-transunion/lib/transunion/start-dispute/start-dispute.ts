@@ -244,8 +244,8 @@ export const parserDisputeToLineItem = (
 ) => {
   console.log('parseDisputeToLineItem:reasons ===> ', reasons);
   console.log('parseDisputeToLineItem:handle ===> ', handle);
-  console.log('parseDisputeToLineItem:hasCustomInput ===> ', reasons);
-  console.log('parseDisputeToLineItem:customInput ===> ', handle);
+  console.log('parseDisputeToLineItem:hasCustomInput ===> ', hasCustomInput);
+  console.log('parseDisputeToLineItem:customInput ===> ', customInput);
   if (reasons !== undefined) {
     if (hasCustomInput) {
       return {

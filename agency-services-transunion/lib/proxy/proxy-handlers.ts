@@ -1119,6 +1119,7 @@ export const StartDispute = async ({
     }
     // log success response
     const l4 = transactionLogger.createTransaction(identityId, 'StartDispute:response', JSON.stringify(response));
+    await transactionLogger.logger.create(l4);
     return response;
   } catch (err) {
     // log error response
