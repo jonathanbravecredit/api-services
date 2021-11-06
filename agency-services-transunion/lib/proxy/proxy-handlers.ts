@@ -19,7 +19,7 @@ import { updateInvestigationResultsDB } from 'lib/transunion';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 
-const GO_LIVE = true;
+const GO_LIVE = false;
 const errorLogger = new ErrorLogger();
 const transactionLogger = new TransactionLogger();
 const parserOptions = {
