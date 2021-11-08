@@ -8,7 +8,7 @@ import {
 } from 'lib/interfaces';
 import { Dispute, DisputeSummary, PVDisputedItems } from 'lib/utils/db/disputes/model/dispute.model';
 
-export type PersonalDisputeTypes = 'name' | 'address' | 'employer' | 'unknown';
+export type PersonalDisputeTypes = 'name' | 'aka' | 'prevaddress' | 'curraddress' | 'employer' | 'unknown';
 
 export interface IProcessDisputeTradelineResult {
   result: IDisputeProcessResult;

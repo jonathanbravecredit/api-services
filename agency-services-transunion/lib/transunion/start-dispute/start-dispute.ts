@@ -172,7 +172,7 @@ export const createStartDisputePersonalPayload = ({
       Ssn: attrs.ssn?.full || '',
     },
     EnrollmentKey: data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey,
-    LineItems: { LineItem: null }, //parseDisputePublicToLineItem(disputes),
+    LineItems: null, //parseDisputePublicToLineItem(disputes),
     //not the disputeServiceBundleKey...needs to be the bundle key return with the report returned on
     // either fulfill or enroll calls on the fulfill or enroll report key
     ServiceBundleFulfillmentKey: data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey,
@@ -180,8 +180,8 @@ export const createStartDisputePersonalPayload = ({
   };
 
   const haveEmployers = disputes.findIndex((dispute) => dispute.personalItem.key == 'employer') > -1;
-  const haveAddress = disputes.findIndex((dispute) => dispute.personalItem.key == 'address') > -1;
-  const haveName = disputes.findIndex((dispute) => dispute.personalItem.key == 'name') > -1;
+  const haveAddress = disputes.findIndex((dispute) => dispute.personalItem.key == 'prevaddress') > -1;
+  const haveName = disputes.findIndex((dispute) => dispute.personalItem.key == 'aka') > -1;
 
   console.log('layer checks:employers ===> ', haveEmployers);
   console.log('layer checks:haveAddress ===> ', haveAddress);
@@ -294,7 +294,7 @@ export const parseDisputeToEmployer = (disputes: IProcessDisputePersonalResult[]
 export const parseDisputeToAddress = (disputes: IProcessDisputePersonalResult[]): IIndicativeDisputes => {
   if (!disputes.length) return null;
   return disputes.map((item) => {
-    const address: IBorrowerAddress = item.personalItem.key === 'address' ? item.personalItem.value : {};
+    const address: IBorrowerAddress = item.personalItem.key === 'prevaddress' ? item.personalItem.value : {};
     return {
       Address: {
         AddressLine1: `${address.CreditAddress?.houseNumber || ''} ${address.CreditAddress?.streetName || ''}`,
@@ -311,7 +311,7 @@ export const parseDisputeToAddress = (disputes: IProcessDisputePersonalResult[])
 export const parseDisputeToAka = (disputes: IProcessDisputePersonalResult[]): any => {
   if (!disputes.length) return null;
   return disputes.map((item) => {
-    const name: IBorrowerName = item.personalItem.key === 'name' ? item.personalItem.value : {};
+    const name: IBorrowerName = item.personalItem.key === 'aka' ? item.personalItem.value : {};
     return {
       Aka: {
         ValueData: {
@@ -391,18 +391,10 @@ export const mapEmployers = (employers: IEmployers | IEmployers[] | undefined): 
           'data:Employer': {
             'data:City': textConstructor(e.Employer?.City, true),
             'data:Delete': textConstructor(e.Employer?.Delete, true),
-            'data:Directional': textConstructor(e.Employer?.Directional, true),
-            'data:EndDate': textConstructor(e.Employer?.EndDate, true),
-            'data:HouseNumber': textConstructor(e.Employer?.HouseNumber, true),
             'data:Name': textConstructor(e.Employer?.Name, true),
-            'data:Number': textConstructor(e.Employer?.Number, true),
             'data:Occupation': textConstructor(e.Employer?.Occupation, true),
-            'data:StartDate': textConstructor(e.Employer?.StartDate, true),
             'data:State': textConstructor(e.Employer?.State, true),
-            'data:StreetName': textConstructor(e.Employer?.StreetName, true),
-            'data:ThoroughFare': textConstructor(e.Employer?.ThoroughFare, true),
             'data:ZipCode': textConstructor(e.Employer?.ZipCode, true),
-            'data:ZipCodeExt': textConstructor(e.Employer?.ZipCodeExt, true),
           },
         };
       })
@@ -410,18 +402,10 @@ export const mapEmployers = (employers: IEmployers | IEmployers[] | undefined): 
         'data:Employer': {
           'data:City': textConstructor(employers.Employer?.City, true),
           'data:Delete': textConstructor(employers.Employer?.Delete, true),
-          'data:Directional': textConstructor(employers.Employer?.Directional, true),
-          'data:EndDate': textConstructor(employers.Employer?.EndDate, true),
-          'data:HouseNumber': textConstructor(employers.Employer?.HouseNumber, true),
           'data:Name': textConstructor(employers.Employer?.Name, true),
-          'data:Number': textConstructor(employers.Employer?.Number, true),
           'data:Occupation': textConstructor(employers.Employer?.Occupation, true),
-          'data:StartDate': textConstructor(employers.Employer?.StartDate, true),
           'data:State': textConstructor(employers.Employer?.State, true),
-          'data:StreetName': textConstructor(employers.Employer?.StreetName, true),
-          'data:ThoroughFare': textConstructor(employers.Employer?.ThoroughFare, true),
           'data:ZipCode': textConstructor(employers.Employer?.ZipCode, true),
-          'data:ZipCodeExt': textConstructor(employers.Employer?.ZipCodeExt, true),
         },
       };
 };
@@ -653,6 +637,7 @@ export const createStartDisputePersonal = (msg: IStartDispute): string => {
 
   let employers = msg.request.Employers;
   let mappedEmployers = mapEmployers(employers);
+  console.log('mapped mappedEmployers ==> ', JSON.stringify(mappedEmployers));
 
   let indicativeDisputes = msg.request.IndicativeDisputes;
   let mappedIndicativeDisputes = mapIndicativeDisputes(indicativeDisputes);
@@ -660,6 +645,7 @@ export const createStartDisputePersonal = (msg: IStartDispute): string => {
 
   let lineItems = msg.request.LineItems;
   let mappedLineItems = mapLineItems(lineItems);
+  console.log('mapped mappedLineItems ==> ', JSON.stringify(mappedLineItems));
 
   // !!!! May need to add array schema back....see get dispute status
   const xmlObj = {
