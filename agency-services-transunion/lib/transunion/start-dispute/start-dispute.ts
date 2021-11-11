@@ -172,7 +172,7 @@ export const createStartDisputePersonalPayload = ({
       Ssn: attrs.ssn?.full || '',
     },
     EnrollmentKey: data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey,
-    // LineItems: null, //parseDisputePublicToLineItem(disputes),
+    LineItems: null, //parseDisputePublicToLineItem(disputes),
     //not the disputeServiceBundleKey...needs to be the bundle key return with the report returned on
     // either fulfill or enroll calls on the fulfill or enroll report key
     ServiceBundleFulfillmentKey: data.data.getAppData.agencies?.transunion?.serviceBundleFulfillmentKey,
