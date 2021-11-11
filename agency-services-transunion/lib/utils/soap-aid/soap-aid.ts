@@ -52,6 +52,7 @@ export class SoapAid {
     this.cbMsg = cbMsg;
     this.cbXml = cbXml;
     this.cbPayload = cbPayload; // can send preformed payload
+    this.envUrl = envUrl;
   }
 
   /**
