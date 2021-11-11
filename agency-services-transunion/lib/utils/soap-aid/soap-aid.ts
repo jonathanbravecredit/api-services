@@ -35,6 +35,7 @@ export class SoapAid {
   msg: string;
   xml: string;
   envUrl: string;
+  host: string;
   constructor(
     parser: (
       xmlData: string,
@@ -47,12 +48,14 @@ export class SoapAid {
       return a;
     },
     envUrl: string = tuUrl,
+    host: string = tuHost,
   ) {
     this.parser = parser;
     this.cbMsg = cbMsg;
     this.cbXml = cbXml;
     this.cbPayload = cbPayload; // can send preformed payload
     this.envUrl = envUrl;
+    this.host = host;
   }
 
   /**
@@ -104,7 +107,7 @@ export class SoapAid {
         SOAPAction: `https://consumerconnectws.tui.transunion.com/ICC2/${SOAPAction}`,
         Authorization: auth,
         'Content-Length': data.length,
-        Host: tuHost,
+        Host: this.host,
         Connection: 'Keep-Alive',
         'User-Agent': 'Apache-HttpClient/4.5.2 (Java/1.8.0_181)',
       },
