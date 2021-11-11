@@ -1784,9 +1784,24 @@ export const GetTrendingData = async ({
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
-    return responseType.toLowerCase() === 'success'
-      ? { success: true, error: error, data: data }
-      : { success: false, error: error, data: null };
+    // log tu responses
+    const l1 = transactionLogger.createTransaction(identityId, 'GetTrendingData:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'GetTrendingData:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'GetTrendingData:error', JSON.stringify(error));
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
+
+    const response =
+      responseType.toLowerCase() === 'success'
+        ? { success: true, error: error, data: data }
+        : { success: false, error: error, data: null };
+
+    // log success response
+    const l4 = transactionLogger.createTransaction(identityId, 'GetTrendingData:response', JSON.stringify(response));
+    await transactionLogger.logger.create(l4);
+
+    return response;
   } catch (err) {
     const error = errorLogger.createError(identityId, 'GetTrendingData', JSON.stringify(err));
     await errorLogger.logger.create(error);

@@ -36,3 +36,5 @@ const test1 = {
   id: 'b85871fd-9d4e-48cc-a18a-d0f2a09d2429',
   openedOn: '2021-10-28T02:26:51.471Z',
 };
+
+{ "params": { "fromDate": "2021-09-11T00:00:00.000Z20" }}
