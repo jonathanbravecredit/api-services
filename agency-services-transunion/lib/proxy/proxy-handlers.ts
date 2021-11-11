@@ -1766,6 +1766,7 @@ export const GetTrendingData = async ({
     tu.formatGetTrendingData,
     tu.createGetTrendingData,
     tu.createGetTrendingDataPayload,
+    'https://cc2ws-test.sd.demo.truelink.com/wcf/CC2.svc',
   );
 
   try {

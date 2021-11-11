@@ -34,7 +34,7 @@ export class SoapAid {
   requestPayload: IRequestOptions;
   msg: string;
   xml: string;
-
+  envUrl: string;
   constructor(
     parser: (
       xmlData: string,
@@ -46,6 +46,7 @@ export class SoapAid {
     cbPayload: (data: any, params?: any) => any = (a): any => {
       return a;
     },
+    envUrl: string = tuUrl,
   ) {
     this.parser = parser;
     this.cbMsg = cbMsg;
@@ -92,7 +93,7 @@ export class SoapAid {
    */
   createRequestPayload(httpsAgent: https.Agent, auth: string, data: string, SOAPAction: string): IRequestOptions {
     this.requestPayload = {
-      url: tuUrl,
+      url: this.envUrl,
       method: 'POST',
       data: data,
       httpsAgent,
