@@ -1,0 +1,4491 @@
+{
+  "TrueLinkCreditReportType": {
+    "Subscriber": [
+      {
+        "CreditAddress": {
+          "unparsedStreet": "110 COURT AVE                  SUITE 300",
+          "city": "DES MOINES",
+          "postalCode": 50309,
+          "stateCode": "IA"
+        },
+        "IndustryCode": {
+          "symbol": "ZP",
+          "description": "Public Records",
+          "rank": 199,
+          "abbreviation": "Public Records"
+        },
+        "name": "USBK COURT SOUTHERN IOWA",
+        "telephone": 5152846230,
+        "subscriberCode": 5001694,
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "C/O ACS                        501 BLEECKER STREET",
+          "city": "UTICA",
+          "postalCode": 13501,
+          "stateCode": "NY"
+        },
+        "IndustryCode": {
+          "symbol": "EL",
+          "description": "Student Loans",
+          "rank": 199,
+          "abbreviation": "Student Loans"
+        },
+        "name": "SUNTRUST BANK",
+        "telephone": 8008354611,
+        "subscriberCode": 1066041,
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "PO BOX 5609",
+          "city": "GREENVILLE",
+          "postalCode": 75403,
+          "stateCode": "TX"
+        },
+        "IndustryCode": {
+          "symbol": "VZ",
+          "description": "Miscellaneous Government",
+          "rank": 199,
+          "abbreviation": "Miscellaneous Government"
+        },
+        "name": "U.S. DEPT OF ED - DIRECT",
+        "telephone": 8008480979,
+        "subscriberCode": "01BTP001",
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "PO BOX 31293",
+          "city": "SALT LAKE CITY",
+          "postalCode": 84131,
+          "stateCode": "UT"
+        },
+        "IndustryCode": {
+          "symbol": "BC",
+          "description": "Bank Credit Cards",
+          "rank": 199,
+          "abbreviation": "Bank Credit Cards"
+        },
+        "name": "CAPITAL ONE BANK USA NA",
+        "telephone": 8009557070,
+        "subscriberCode": "01DTV001",
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "6805 VISTA DRIVE               ASHFORD I BUILDING",
+          "city": "WEST DES MOINES",
+          "postalCode": 50266,
+          "stateCode": "IA"
+        },
+        "IndustryCode": {
+          "symbol": "EL",
+          "description": "Student Loans",
+          "rank": 199,
+          "abbreviation": "Student Loans"
+        },
+        "name": "ISL/IA STDT LN",
+        "telephone": 8002437552,
+        "subscriberCode": "01XQ3001",
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "PO BOX 15369",
+          "city": "WILMINGTON",
+          "postalCode": 19850,
+          "stateCode": "DE"
+        },
+        "IndustryCode": {
+          "symbol": "BC",
+          "description": "Bank Credit Cards",
+          "rank": 199,
+          "abbreviation": "Bank Credit Cards"
+        },
+        "name": "JPMCB CARD SERVICES",
+        "telephone": 8009452000,
+        "subscriberCode": "026QK001",
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "2500 BROADWAY                  POB 5209",
+          "city": "HELENA",
+          "postalCode": 59604,
+          "stateCode": "MT"
+        },
+        "IndustryCode": {
+          "symbol": "EL",
+          "description": "Student Loans",
+          "rank": 199,
+          "abbreviation": "Student Loans"
+        },
+        "name": "STUDENT ASSISTANCE FOUND",
+        "telephone": 8008522761,
+        "subscriberCode": "063YQ079",
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "PO BOX 15369",
+          "city": "WILMINGTON",
+          "postalCode": 19850,
+          "stateCode": "DE"
+        },
+        "IndustryCode": {
+          "symbol": "BC",
+          "description": "Bank Credit Cards",
+          "rank": 199,
+          "abbreviation": "Bank Credit Cards"
+        },
+        "name": "CHASE CARD",
+        "telephone": 8009452000,
+        "subscriberCode": "0701N134",
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "PO BOX 5253",
+          "city": "CAROL STREAM",
+          "postalCode": 60197,
+          "stateCode": "IL"
+        },
+        "IndustryCode": {
+          "symbol": "BC",
+          "description": "Bank Credit Cards",
+          "rank": 199,
+          "abbreviation": "Bank Credit Cards"
+        },
+        "name": "HSBC BANK",
+        "telephone": 8004776000,
+        "subscriberCode": 7991189,
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "5320 22ND AVE",
+          "city": "MOLINE",
+          "postalCode": 61265,
+          "stateCode": "IL"
+        },
+        "IndustryCode": {
+          "symbol": "YC",
+          "description": "Other Collection Agencies",
+          "rank": 199,
+          "abbreviation": "Other Collection Agencies"
+        },
+        "name": "H&#x26;amp;R ACCOUNTS",
+        "telephone": 3097362255,
+        "subscriberCode": "0256C001",
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "321 19TH STREET SW",
+          "city": "FOREST LAKE",
+          "postalCode": 55025,
+          "stateCode": "MN"
+        },
+        "IndustryCode": {
+          "symbol": "A",
+          "description": "Automotive",
+          "rank": 199,
+          "abbreviation": "Automotive"
+        },
+        "name": "ODE/WILCOX AUTOMOTIVE",
+        "telephone": 6514644212,
+        "subscriberCode": 6412829,
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "7075 FLYING CLOUD",
+          "city": "EDEN PRAIRIE",
+          "postalCode": 55344,
+          "stateCode": "MN"
+        },
+        "IndustryCode": {
+          "symbol": "D",
+          "description": "Department/Variety and Other Retail",
+          "rank": 199,
+          "abbreviation": "Department/Variety and Other Retail"
+        },
+        "name": "METABANK/FINGERHUT",
+        "telephone": 8003562347,
+        "subscriberCode": 3764143,
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "FKA CHRYSLER FINAN             PO BOX 9223  (1132",
+          "city": "FARMINGTON HIL",
+          "postalCode": 48333,
+          "stateCode": "MI"
+        },
+        "IndustryCode": {
+          "symbol": "N",
+          "description": "Travel/Entertainment",
+          "rank": 199,
+          "abbreviation": "Travel/Entertainment"
+        },
+        "name": "TD AUTO FINANCE",
+        "telephone": 8005568172,
+        "subscriberCode": 1008315,
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "PO BOX 380901",
+          "city": "BLOOMINGTON",
+          "postalCode": 55438,
+          "stateCode": "MN"
+        },
+        "IndustryCode": {
+          "symbol": "N",
+          "description": "Travel/Entertainment",
+          "rank": 199,
+          "abbreviation": "Travel/Entertainment"
+        },
+        "name": "ALLY FINANCIAL, INC",
+        "telephone": 8889252559,
+        "subscriberCode": 1203543,
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "801 CHERRY ST                  SUITE 3900",
+          "city": "FT WORTH",
+          "postalCode": 76102,
+          "stateCode": "TX"
+        },
+        "IndustryCode": {
+          "symbol": "F",
+          "description": "Finance/Personal",
+          "rank": 199,
+          "abbreviation": "Finance/Personal"
+        },
+        "name": "AMERICREDIT",
+        "telephone": 8002842271,
+        "subscriberCode": 27016,
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "P.O. BOX 901003",
+          "city": "FT. WORTH",
+          "postalCode": 76101,
+          "stateCode": "TX"
+        },
+        "IndustryCode": {
+          "symbol": "F",
+          "description": "Finance/Personal",
+          "rank": 199,
+          "abbreviation": "Finance/Personal"
+        },
+        "name": "CHASE AUTO",
+        "telephone": 8003366675,
+        "subscriberCode": 5919634,
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "PO BOX  30281",
+          "city": "SALT LAKE CITY",
+          "postalCode": 84130,
+          "stateCode": "UT"
+        },
+        "IndustryCode": {
+          "symbol": "B",
+          "description": "Bank",
+          "rank": 199,
+          "abbreviation": "Bank"
+        },
+        "name": "CAPITAL ONE BANK USA NA",
+        "telephone": 8009557070,
+        "subscriberCode": 2699824,
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      {
+        "CreditAddress": {
+          "unparsedStreet": "3905 N DALLAS PARK",
+          "city": "PLANO",
+          "postalCode": 75093,
+          "stateCode": "TX"
+        },
+        "IndustryCode": {
+          "symbol": "F",
+          "description": "Finance/Personal",
+          "rank": 199,
+          "abbreviation": "Finance/Personal"
+        },
+        "name": "CAPITAL ONE AUTO FINANCE",
+        "telephone": 8009460332,
+        "subscriberCode": 1246538,
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      }
+    ],
+    "Borrower": {
+      "BorrowerAddress": {
+        "CreditAddress": {
+          "postDirection": "",
+          "streetName": "2ND",
+          "streetType": "ST",
+          "unit": "",
+          "city": "BURT",
+          "postalCode": 50522,
+          "houseNumber": 101,
+          "stateCode": "IA",
+          "direction": ""
+        },
+        "Origin": {
+          "symbol": "",
+          "description": "",
+          "rank": 100000,
+          "abbreviation": ""
+        },
+        "Ownership": {
+          "symbol": "",
+          "description": "",
+          "rank": 100000,
+          "abbreviation": ""
+        },
+        "Dwelling": {
+          "symbol": "",
+          "description": "",
+          "rank": 100000,
+          "abbreviation": ""
+        },
+        "addressOrder": 0,
+        "dateReported": "2013-11-08",
+        "partitionSet": 0,
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      },
+      "PreviousAddress": [
+        {
+          "CreditAddress": {
+            "streetName": "PO BOX 166",
+            "streetType": "",
+            "unit": "",
+            "city": "BURT",
+            "postalCode": 50522,
+            "houseNumber": 166,
+            "stateCode": "IA",
+            "direction": ""
+          },
+          "Origin": {
+            "symbol": "",
+            "description": "",
+            "rank": 100000,
+            "abbreviation": ""
+          },
+          "Ownership": {
+            "symbol": "",
+            "description": "",
+            "rank": 100000,
+            "abbreviation": ""
+          },
+          "Dwelling": {
+            "symbol": "",
+            "description": "",
+            "rank": 100000,
+            "abbreviation": ""
+          },
+          "addressOrder": 0,
+          "dateReported": "2013-07-11",
+          "partitionSet": 0,
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          }
+        },
+        {
+          "CreditAddress": {
+            "streetName": "4TH",
+            "streetType": "ST",
+            "unit": "",
+            "city": "BURT",
+            "postalCode": 50522,
+            "houseNumber": 407,
+            "stateCode": "IA",
+            "direction": ""
+          },
+          "Origin": {
+            "symbol": "",
+            "description": "",
+            "rank": 100000,
+            "abbreviation": ""
+          },
+          "Ownership": {
+            "symbol": "",
+            "description": "",
+            "rank": 100000,
+            "abbreviation": ""
+          },
+          "Dwelling": {
+            "symbol": "",
+            "description": "",
+            "rank": 100000,
+            "abbreviation": ""
+          },
+          "addressOrder": 1,
+          "partitionSet": 1,
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          }
+        }
+      ],
+      "SocialSecurityNumber": 666403077,
+      "Employer": {
+        "CreditAddress": {
+          "unparsedStreet": "",
+          "city": "",
+          "postalCode": "",
+          "stateCode": ""
+        },
+        "dateReported": "2010-08-01",
+        "name": "EMPLOYER X",
+        "partitionSet": 0,
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        },
+        "dateUpdated": "2020-09-18"
+      },
+      "SocialPartition": {
+        "Social": {
+          "SocialSecurityNumber": 666403077,
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          }
+        }
+      },
+      "Birth": {
+        "date": "1956-02-01",
+        "partitionSet": 0,
+        "age": 0,
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        },
+        "BirthDate": {
+          "month": 2,
+          "year": 1956,
+          "day": 1
+        }
+      },
+      "CreditScore": {
+        "NoScoreReason": {
+          "symbol": "",
+          "description": "",
+          "rank": 100000,
+          "abbreviation": ""
+        },
+        "inquiriesAffectedScore": true,
+        "CreditScoreModel": {
+          "symbol": "00W40",
+          "description": "VantageScore 3.0 with Positive Score Factors",
+          "rank": 10000,
+          "abbreviation": "VantageScore 3.0 with Positive Score Factors"
+        },
+        "riskScore": 653,
+        "populationRank": 43,
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        },
+        "scoreName": "VantageScore3",
+        "CreditScoreFactor": [
+          {
+            "bureauCode": 98,
+            "Factor": {
+              "symbol": 98,
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "FactorType": "Negative",
+            "FactorText": [
+              "explain: Bankruptcy is a proven indicator of risk with future payments and causes a significant drop to your credit score over an extended period of time.",
+              "factor: There is a bankruptcy on your credit report",
+              "cando: Make all future payments on time. The impact on your credit score from the bankruptcy will diminish over time."
+            ]
+          },
+          {
+            "bureauCode": 14,
+            "Factor": {
+              "symbol": 14,
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "FactorType": "Negative",
+            "FactorText": [
+              "explain: Your credit file does not contain enough information about your use of credit. A credit file with older accounts and/or more accounts reflects more experience with handling credit and can have a positive impact on your credit score.",
+              "factor: Lack of sufficient credit history",
+              "cando: Maintaining open and active credit accounts in good standing can help improve your credit score."
+            ]
+          },
+          {
+            "bureauCode": 12,
+            "Factor": {
+              "symbol": 12,
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "FactorType": "Negative",
+            "FactorText": [
+              "explain: Your oldest account is still too recent. A credit file containing older accounts will have a positive impact on your credit score because it demonstrates that you are experienced managing credit.",
+              "factor: The date that you opened your oldest account is too recent",
+              "cando: Don&#x27;t open more accounts than you actually need. Research shows that new accounts indicate greater risk. Your score will benefit as your accounts get older."
+            ]
+          },
+          {
+            "bureauCode": 30,
+            "Factor": {
+              "symbol": 30,
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "FactorType": "Negative",
+            "FactorText": [
+              "explain: Bankcard accounts include credit cards and charge cards from a bank and are frequently revolving accounts. Revolving accounts allow you to carry a balance and your monthly payment will vary, based on the amount of your balance. Having too few accounts with high credit limits is an indicator that you lack available credit. Having higher limits gives you access to credit without seeking new loans or becoming overextended _ which are triggers for higher risk.",
+              "factor: Too few of your bankcard or other revolving accounts have high limits",
+              "cando: Use credit responsibly and always make payments on time with your existing accounts. After a period of successfully managing your accounts, you can seek increases to your credit limit."
+            ]
+          },
+          {
+            "bureauCode": "P08",
+            "Factor": {
+              "symbol": "P08",
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "FactorType": "Positive",
+            "FactorText": [
+              "explain: Paying your bills on time improves your score. Recently at least one of your accounts was paid on time.",
+              "factor: One or more of your accounts were paid on time in recent months",
+              "cando: Keep paying bills on time every month since it is important to maintaining a good credit score. If you remain behind with any payments, bring them current as soon as possible, and then make future payments on time."
+            ]
+          },
+          {
+            "bureauCode": "P34",
+            "Factor": {
+              "symbol": "P34",
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "FactorType": "Positive",
+            "FactorText": [
+              "explain: Bankcard accounts include credit cards and charge cards from a bank and are frequently revolving accounts. Revolving accounts allow you to carry a balance and your monthly payment will vary, based on the amount of your balance. The total of your balances on your open bankcard or revolving accounts, compared to the credit limit amounts, is not too high which has caused your score to improve.",
+              "factor: Total of all balances on bankcard or revolving accounts is not too high",
+              "cando: Keep low balances on your accounts; this will benefit your score."
+            ]
+          },
+          {
+            "bureauCode": "P07",
+            "Factor": {
+              "symbol": "P07",
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "FactorType": "Positive",
+            "FactorText": [
+              "explain: Paying your bills on time improves your score. You have paid all or nearly all of your bills on time.",
+              "factor: You have either no or few delinquent or derogatory accounts",
+              "cando: Keep paying bills on time every month since it is important to maintaining a good credit score. If you remain behind with any payments, bring them current as soon as possible, and then make future payments on time."
+            ]
+          },
+          {
+            "bureauCode": "P32",
+            "Factor": {
+              "symbol": "P32",
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "FactorType": "Positive",
+            "FactorText": [
+              "explain: Bankcard accounts include credit cards and charge cards from a bank and are frequently revolving accounts. Revolving accounts allow you to carry a balance and your monthly payment will vary, based on the amount of your balance. Your balances on bankcard or revolving accounts are not too high compared to the credit limit amounts, which causes your score to improve.",
+              "factor: Balances on bankcard or revolving accts not too high compared to limits",
+              "cando: Keep low balances on your accounts; this will benefit your score."
+            ]
+          }
+        ]
+      },
+      "BorrowerName": {
+        "partitionSet": 0,
+        "NameType": {
+          "symbol": 1,
+          "description": "Primary",
+          "rank": 199,
+          "abbreviation": "Primary"
+        },
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        },
+        "Name": {
+          "middle": "",
+          "last": "GIDDENS",
+          "first": "NEIL"
+        }
+      }
+    },
+    "TradeLinePartition": [
+      {
+        "accountTypeAbbreviation": "Collection",
+        "accountTypeDescription": "Collection Account",
+        "accountTypeSymbol": "Y",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": 9,
+            "description": "Collection/Chargeoff",
+            "rank": 2,
+            "abbreviation": "Coll/Chargeoff"
+          },
+          "creditorName": "H&#x26;amp;R ACCOUNTS",
+          "IndustryCode": {
+            "symbol": "Y",
+            "description": "Collection Services",
+            "rank": 199,
+            "abbreviation": "Collection Services"
+          },
+          "currentBalance": 156,
+          "subscriberCode": "0256C001",
+          "handle": "TR01_585340615_750320049_89",
+          "CollectionTrade": {
+            "actualPaymentAmount": 0,
+            "originalCreditor": "NORTH IOWA MERCY CLINICS R22",
+            "creditType": {
+              "symbol": "Y",
+              "description": "Collection Account",
+              "rank": 5,
+              "abbreviation": "Collection"
+            }
+          },
+          "dateAccountStatus": "2018-02-28",
+          "accountNumber": "3X1X5X6",
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "O",
+            "description": "Open",
+            "rank": 199,
+            "abbreviation": "Open"
+          },
+          "Remark": {
+            "RemarkCode": {
+              "symbol": "T00CLA",
+              "description": "Placed for collection",
+              "rank": 199,
+              "abbreviation": "Placed for collection"
+            },
+            "customRemark": ""
+          },
+          "highBalance": 156,
+          "dateOpened": "2017-12-25",
+          "dateReported": "2018-02-28",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 0,
+          "dateVerified": "2018-02-28",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "F",
+            "description": "Derogatory",
+            "rank": 20,
+            "abbreviation": "Derog"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Collection",
+        "accountTypeDescription": "Collection Account",
+        "accountTypeSymbol": "Y",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": 9,
+            "description": "Collection/Chargeoff",
+            "rank": 2,
+            "abbreviation": "Coll/Chargeoff"
+          },
+          "creditorName": "H&#x26;amp;R ACCOUNTS",
+          "IndustryCode": {
+            "symbol": "Y",
+            "description": "Collection Services",
+            "rank": 199,
+            "abbreviation": "Collection Services"
+          },
+          "currentBalance": 0,
+          "subscriberCode": "0256C001",
+          "handle": "TR01_587190536_750320049_89",
+          "CollectionTrade": {
+            "actualPaymentAmount": 0,
+            "originalCreditor": "NORTH IOWA MERCY CLINICS R22",
+            "creditType": {
+              "symbol": "Y",
+              "description": "Collection Account",
+              "rank": 5,
+              "abbreviation": "Collection"
+            }
+          },
+          "dateAccountStatus": "2016-08-18",
+          "accountNumber": "3X3X8X2",
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 198,
+            "abbreviation": "Closed"
+          },
+          "Remark": {
+            "RemarkCode": {
+              "symbol": "T00CBL",
+              "description": "Chapter 7 bankruptcy",
+              "rank": 199,
+              "abbreviation": "Chapter 7 bankruptcy"
+            },
+            "customRemark": ""
+          },
+          "highBalance": 378,
+          "dateOpened": "2016-09-03",
+          "dateReported": "2016-11-30",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 1,
+          "dateVerified": "2016-11-30",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "P",
+            "description": "Paid",
+            "rank": 10,
+            "abbreviation": "Paid"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Collection",
+        "accountTypeDescription": "Collection Account",
+        "accountTypeSymbol": "Y",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": 9,
+            "description": "Collection/Chargeoff",
+            "rank": 2,
+            "abbreviation": "Coll/Chargeoff"
+          },
+          "creditorName": "H&#x26;amp;R ACCOUNTS",
+          "IndustryCode": {
+            "symbol": "Y",
+            "description": "Collection Services",
+            "rank": 199,
+            "abbreviation": "Collection Services"
+          },
+          "currentBalance": 0,
+          "subscriberCode": "0256C001",
+          "handle": "TR01_585340609_750320049_89",
+          "CollectionTrade": {
+            "actualPaymentAmount": 0,
+            "originalCreditor": "NORTH IOWA MERCY CLINICS R2",
+            "creditType": {
+              "symbol": "Y",
+              "description": "Collection Account",
+              "rank": 5,
+              "abbreviation": "Collection"
+            }
+          },
+          "dateAccountStatus": "2015-12-31",
+          "accountNumber": "3X1X5X0",
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 198,
+            "abbreviation": "Closed"
+          },
+          "Remark": {
+            "RemarkCode": {
+              "symbol": "T00CBL",
+              "description": "Chapter 7 bankruptcy",
+              "rank": 199,
+              "abbreviation": "Chapter 7 bankruptcy"
+            },
+            "customRemark": ""
+          },
+          "highBalance": 397,
+          "dateOpened": "2015-10-06",
+          "dateReported": "2015-12-31",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 2,
+          "dateVerified": "2015-12-31",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "P",
+            "description": "Paid",
+            "rank": 10,
+            "abbreviation": "Paid"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Revolving",
+        "accountTypeDescription": "Revolving Account",
+        "accountTypeSymbol": "R",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": 9,
+            "description": "Collection/Chargeoff",
+            "rank": 2,
+            "abbreviation": "Coll/Chargeoff"
+          },
+          "creditorName": "JPMCB CARD",
+          "IndustryCode": {
+            "symbol": "B",
+            "description": "Bank",
+            "rank": 199,
+            "abbreviation": "Bank"
+          },
+          "GrantedTrade": {
+            "PayStatusHistory": "",
+            "CreditLimit": 950,
+            "worstPatStatusCount": 0,
+            "PaymentFrequency": {
+              "symbol": "",
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "late90Count": 0,
+            "late60Count": 0,
+            "dateLastPayment": "2016-03-31",
+            "AccountType": {
+              "symbol": "CC",
+              "description": "Credit Card",
+              "rank": 50,
+              "abbreviation": "Credit Card"
+            },
+            "TermType": {
+              "symbol": "P",
+              "description": "Provided",
+              "rank": 199,
+              "abbreviation": "Provided"
+            },
+            "monthlyPayment": 0,
+            "termMonths": 0,
+            "WorstPayStatus": {
+              "symbol": "U",
+              "description": "Unknown",
+              "rank": 10000,
+              "abbreviation": "Unk"
+            },
+            "monthsReviewed": 0,
+            "collateral": "",
+            "amountPastDue": 0,
+            "CreditType": {
+              "symbol": "R",
+              "description": "Revolving Account",
+              "rank": 50,
+              "abbreviation": "Revolving"
+            },
+            "late30Count": 0
+          },
+          "currentBalance": 0,
+          "subscriberCode": "026QK001",
+          "handle": "TR01_1291748319_804122595_82",
+          "dateAccountStatus": "2016-03-31",
+          "dateClosed": "2016-08-22",
+          "accountNumber": 4266821712882431,
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 198,
+            "abbreviation": "Closed"
+          },
+          "Remark": [
+            {
+              "RemarkCode": {
+                "symbol": "TM009",
+                "description": "Charged off as bad debt",
+                "rank": 10000,
+                "abbreviation": "Charged off as bad debt"
+              },
+              "customRemark": ""
+            },
+            {
+              "RemarkCode": {
+                "symbol": "T00CBG",
+                "description": "Canceled by credit grantor",
+                "rank": 199,
+                "abbreviation": "Canceled by credit grantor"
+              },
+              "customRemark": ""
+            }
+          ],
+          "highBalance": 1432,
+          "dateOpened": "2012-12-02",
+          "dateReported": "2016-08-22",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 3,
+          "dateVerified": "2016-08-22",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "T",
+            "description": "Terminated",
+            "rank": 199,
+            "abbreviation": "Terminated"
+          },
+          "AccountCondition": {
+            "symbol": "P",
+            "description": "Paid",
+            "rank": 10,
+            "abbreviation": "Paid"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Installment",
+        "accountTypeDescription": "Installment Account",
+        "accountTypeSymbol": "I",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": 4,
+            "description": "Late 120 Days",
+            "rank": 102,
+            "abbreviation": "120 Delinq"
+          },
+          "creditorName": "SUNTRUST BK",
+          "IndustryCode": {
+            "symbol": "E",
+            "description": "Education/Employment",
+            "rank": 199,
+            "abbreviation": "Education/Employment"
+          },
+          "GrantedTrade": {
+            "PayStatusHistory": {
+              "MonthlyPayStatus": [
+                {
+                  "date": "2017-09-10",
+                  "status": 4
+                },
+                {
+                  "date": "2017-08-10",
+                  "status": 4
+                },
+                {
+                  "date": "2017-07-10",
+                  "status": 4
+                },
+                {
+                  "date": "2017-06-10",
+                  "status": 4
+                },
+                {
+                  "date": "2017-05-10",
+                  "status": 4
+                },
+                {
+                  "date": "2017-04-10",
+                  "status": 4
+                },
+                {
+                  "date": "2017-03-09",
+                  "status": 4
+                },
+                {
+                  "date": "2017-02-09",
+                  "status": 3
+                },
+                {
+                  "date": "2017-01-09",
+                  "status": 2
+                },
+                {
+                  "date": "2016-12-09",
+                  "status": "C"
+                },
+                {
+                  "date": "2016-11-09",
+                  "status": "C"
+                },
+                {
+                  "date": "2016-10-10",
+                  "status": "C"
+                },
+                {
+                  "date": "2016-09-10",
+                  "status": ""
+                },
+                {
+                  "date": "2016-08-10",
+                  "status": ""
+                },
+                {
+                  "date": "2016-07-10",
+                  "status": ""
+                },
+                {
+                  "date": "2016-06-10",
+                  "status": ""
+                },
+                {
+                  "date": "2016-05-10",
+                  "status": ""
+                },
+                {
+                  "date": "2016-04-10",
+                  "status": ""
+                },
+                {
+                  "date": "2016-03-09",
+                  "status": ""
+                },
+                {
+                  "date": "2016-02-09",
+                  "status": ""
+                },
+                {
+                  "date": "2016-01-09",
+                  "status": ""
+                },
+                {
+                  "date": "2015-12-09",
+                  "status": ""
+                },
+                {
+                  "date": "2015-11-09",
+                  "status": ""
+                },
+                {
+                  "date": "2015-10-10",
+                  "status": ""
+                }
+              ],
+              "startDate": "2017-09-10",
+              "status": "444444432CCC"
+            },
+            "CreditLimit": 0,
+            "worstPatStatusCount": 12,
+            "PaymentFrequency": {
+              "symbol": "M",
+              "description": "Monthly (every month)",
+              "rank": 199,
+              "abbreviation": "Monthly (every month)"
+            },
+            "late90Count": 8,
+            "late60Count": 1,
+            "AccountType": {
+              "symbol": "ST",
+              "description": "Educational",
+              "rank": 50,
+              "abbreviation": "Educational"
+            },
+            "TermType": {
+              "symbol": "P",
+              "description": "Provided",
+              "rank": 199,
+              "abbreviation": "Provided"
+            },
+            "monthlyPayment": 200,
+            "termMonths": 120,
+            "WorstPayStatus": {
+              "symbol": 4,
+              "description": "Late 120 Days",
+              "rank": 102,
+              "abbreviation": "120 Delinq"
+            },
+            "monthsReviewed": 12,
+            "collateral": "07 SUNTRUST BANKS INC",
+            "amountPastDue": 0,
+            "CreditType": {
+              "symbol": "I",
+              "description": "Installment Account",
+              "rank": 20,
+              "abbreviation": "Installment"
+            },
+            "late30Count": 0
+          },
+          "currentBalance": 0,
+          "subscriberCode": 1066041,
+          "handle": "TR01_147211983_-280716546_73",
+          "dateAccountStatus": "2017-10-10",
+          "dateClosed": "2017-10-10",
+          "accountNumber": "4X1X6X5X9X",
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 198,
+            "abbreviation": "Closed"
+          },
+          "Remark": {
+            "RemarkCode": {
+              "symbol": "T00SLP",
+              "description": "Student loan permanently assigned to government",
+              "rank": 199,
+              "abbreviation": "Student loan permanently assigned to government"
+            },
+            "customRemark": ""
+          },
+          "highBalance": 10314,
+          "dateOpened": "2011-09-22",
+          "dateReported": "2017-10-10",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 4,
+          "dateVerified": "2017-10-10",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 50,
+            "abbreviation": "Closed"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Installment",
+        "accountTypeDescription": "Installment Account",
+        "accountTypeSymbol": "I",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": 4,
+            "description": "Late 120 Days",
+            "rank": 102,
+            "abbreviation": "120 Delinq"
+          },
+          "creditorName": "IOWA STDT LN",
+          "IndustryCode": {
+            "symbol": "E",
+            "description": "Education/Employment",
+            "rank": 199,
+            "abbreviation": "Education/Employment"
+          },
+          "GrantedTrade": {
+            "PayStatusHistory": {
+              "MonthlyPayStatus": [
+                {
+                  "date": "2015-08-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-07-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-06-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-05-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-04-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-03-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-02-27",
+                  "status": 4
+                },
+                {
+                  "date": "2015-01-27",
+                  "status": 3
+                },
+                {
+                  "date": "2014-12-27",
+                  "status": 2
+                },
+                {
+                  "date": "2014-11-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-10-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-09-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-08-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-07-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-06-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-05-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-04-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-03-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-02-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-01-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-12-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-11-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-10-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-09-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-08-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-07-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-06-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-05-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-04-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-03-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-02-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-01-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-12-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-11-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-10-28",
+                  "status": "C"
+                }
+              ],
+              "startDate": "2015-08-30",
+              "status": "444444432CCCCCCCCCCCCCCCCCCCCCCCCCC"
+            },
+            "CreditLimit": 0,
+            "worstPatStatusCount": 35,
+            "PaymentFrequency": {
+              "symbol": "M",
+              "description": "Monthly (every month)",
+              "rank": 199,
+              "abbreviation": "Monthly (every month)"
+            },
+            "late90Count": 8,
+            "late60Count": 1,
+            "dateLastPayment": "2015-09-14",
+            "AccountType": {
+              "symbol": "ST",
+              "description": "Educational",
+              "rank": 50,
+              "abbreviation": "Educational"
+            },
+            "TermType": {
+              "symbol": "P",
+              "description": "Provided",
+              "rank": 199,
+              "abbreviation": "Provided"
+            },
+            "monthlyPayment": 42,
+            "termMonths": 101,
+            "WorstPayStatus": {
+              "symbol": 4,
+              "description": "Late 120 Days",
+              "rank": 102,
+              "abbreviation": "120 Delinq"
+            },
+            "monthsReviewed": 35,
+            "collateral": "DEFERRED TO 12142013",
+            "amountPastDue": 0,
+            "CreditType": {
+              "symbol": "I",
+              "description": "Installment Account",
+              "rank": 20,
+              "abbreviation": "Installment"
+            },
+            "late30Count": 0
+          },
+          "currentBalance": 0,
+          "subscriberCode": "01XQ3001",
+          "handle": "TR01_1303680425_889295064_73",
+          "dateAccountStatus": "2015-09-30",
+          "dateClosed": "2015-09-30",
+          "accountNumber": "8X9X3X6X3XIX0X0X3",
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 198,
+            "abbreviation": "Closed"
+          },
+          "Remark": {
+            "RemarkCode": {
+              "symbol": "T00SLP",
+              "description": "Student loan permanently assigned to government",
+              "rank": 199,
+              "abbreviation": "Student loan permanently assigned to government"
+            },
+            "customRemark": ""
+          },
+          "highBalance": 3500,
+          "dateOpened": "2012-09-30",
+          "dateReported": "2015-09-30",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 5,
+          "dateVerified": "2015-09-30",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 50,
+            "abbreviation": "Closed"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Installment",
+        "accountTypeDescription": "Installment Account",
+        "accountTypeSymbol": "I",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": 4,
+            "description": "Late 120 Days",
+            "rank": 102,
+            "abbreviation": "120 Delinq"
+          },
+          "creditorName": "IOWA STDT LN",
+          "IndustryCode": {
+            "symbol": "E",
+            "description": "Education/Employment",
+            "rank": 199,
+            "abbreviation": "Education/Employment"
+          },
+          "GrantedTrade": {
+            "PayStatusHistory": {
+              "MonthlyPayStatus": [
+                {
+                  "date": "2015-08-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-07-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-06-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-05-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-04-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-03-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-02-27",
+                  "status": 4
+                },
+                {
+                  "date": "2015-01-27",
+                  "status": 3
+                },
+                {
+                  "date": "2014-12-27",
+                  "status": 2
+                },
+                {
+                  "date": "2014-11-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-10-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-09-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-08-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-07-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-06-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-05-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-04-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-03-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-02-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-01-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-12-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-11-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-10-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-09-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-08-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-07-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-06-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-05-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-04-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-03-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-02-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-01-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-12-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-11-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-10-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-09-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-08-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-07-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-06-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-05-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-04-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-03-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-02-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-01-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2011-12-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2011-11-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2011-10-28",
+                  "status": "C"
+                }
+              ],
+              "startDate": "2015-08-30",
+              "status": "444444432CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
+            },
+            "CreditLimit": 0,
+            "worstPatStatusCount": 47,
+            "PaymentFrequency": {
+              "symbol": "M",
+              "description": "Monthly (every month)",
+              "rank": 199,
+              "abbreviation": "Monthly (every month)"
+            },
+            "late90Count": 8,
+            "late60Count": 1,
+            "dateLastPayment": "2015-09-14",
+            "AccountType": {
+              "symbol": "ST",
+              "description": "Educational",
+              "rank": 50,
+              "abbreviation": "Educational"
+            },
+            "TermType": {
+              "symbol": "P",
+              "description": "Provided",
+              "rank": 199,
+              "abbreviation": "Provided"
+            },
+            "monthlyPayment": 2,
+            "termMonths": 101,
+            "WorstPayStatus": {
+              "symbol": 4,
+              "description": "Late 120 Days",
+              "rank": 102,
+              "abbreviation": "120 Delinq"
+            },
+            "monthsReviewed": 47,
+            "collateral": "DEFERRED TO 12142013",
+            "amountPastDue": 0,
+            "CreditType": {
+              "symbol": "I",
+              "description": "Installment Account",
+              "rank": 20,
+              "abbreviation": "Installment"
+            },
+            "late30Count": 0
+          },
+          "currentBalance": 0,
+          "subscriberCode": "01XQ3001",
+          "handle": "TR01_1303680424_889295064_73",
+          "dateAccountStatus": "2015-09-30",
+          "dateClosed": "2015-09-30",
+          "accountNumber": "8X9X3X6X3XIX0X0X2",
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 198,
+            "abbreviation": "Closed"
+          },
+          "Remark": {
+            "RemarkCode": {
+              "symbol": "T00SLP",
+              "description": "Student loan permanently assigned to government",
+              "rank": 199,
+              "abbreviation": "Student loan permanently assigned to government"
+            },
+            "customRemark": ""
+          },
+          "highBalance": 3390,
+          "dateOpened": "2011-09-22",
+          "dateReported": "2015-09-30",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 6,
+          "dateVerified": "2015-09-30",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 50,
+            "abbreviation": "Closed"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Installment",
+        "accountTypeDescription": "Installment Account",
+        "accountTypeSymbol": "I",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": 4,
+            "description": "Late 120 Days",
+            "rank": 102,
+            "abbreviation": "120 Delinq"
+          },
+          "creditorName": "IOWA STDT LN",
+          "IndustryCode": {
+            "symbol": "E",
+            "description": "Education/Employment",
+            "rank": 199,
+            "abbreviation": "Education/Employment"
+          },
+          "GrantedTrade": {
+            "PayStatusHistory": {
+              "MonthlyPayStatus": [
+                {
+                  "date": "2015-08-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-07-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-06-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-05-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-04-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-03-30",
+                  "status": 4
+                },
+                {
+                  "date": "2015-02-27",
+                  "status": 4
+                },
+                {
+                  "date": "2015-01-27",
+                  "status": 3
+                },
+                {
+                  "date": "2014-12-27",
+                  "status": 2
+                },
+                {
+                  "date": "2014-11-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-10-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-09-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-08-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-07-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-06-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-05-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-04-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-03-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-02-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2014-01-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-12-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-11-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-10-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-09-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-08-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-07-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-06-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-05-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-04-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-03-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-02-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2013-01-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-12-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-11-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-10-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-09-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-08-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-07-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-06-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-05-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-04-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-03-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-02-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2012-01-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2011-12-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2011-11-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2011-10-28",
+                  "status": "C"
+                }
+              ],
+              "startDate": "2015-08-30",
+              "status": "444444432CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
+            },
+            "CreditLimit": 0,
+            "worstPatStatusCount": 47,
+            "PaymentFrequency": {
+              "symbol": "M",
+              "description": "Monthly (every month)",
+              "rank": 199,
+              "abbreviation": "Monthly (every month)"
+            },
+            "late90Count": 8,
+            "late60Count": 1,
+            "dateLastPayment": "2015-09-14",
+            "AccountType": {
+              "symbol": "ST",
+              "description": "Educational",
+              "rank": 50,
+              "abbreviation": "Educational"
+            },
+            "TermType": {
+              "symbol": "P",
+              "description": "Provided",
+              "rank": 199,
+              "abbreviation": "Provided"
+            },
+            "monthlyPayment": 21,
+            "termMonths": 101,
+            "WorstPayStatus": {
+              "symbol": 4,
+              "description": "Late 120 Days",
+              "rank": 102,
+              "abbreviation": "120 Delinq"
+            },
+            "monthsReviewed": 47,
+            "collateral": "DEFERRED TO 12142013",
+            "amountPastDue": 0,
+            "CreditType": {
+              "symbol": "I",
+              "description": "Installment Account",
+              "rank": 20,
+              "abbreviation": "Installment"
+            },
+            "late30Count": 0
+          },
+          "currentBalance": 0,
+          "subscriberCode": "01XQ3001",
+          "handle": "TR01_1303680423_889295064_73",
+          "dateAccountStatus": "2015-09-30",
+          "dateClosed": "2015-09-30",
+          "accountNumber": "8X9X3X6X3XIX0X0X1",
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 198,
+            "abbreviation": "Closed"
+          },
+          "Remark": {
+            "RemarkCode": {
+              "symbol": "T00SLP",
+              "description": "Student loan permanently assigned to government",
+              "rank": 199,
+              "abbreviation": "Student loan permanently assigned to government"
+            },
+            "customRemark": ""
+          },
+          "highBalance": 2625,
+          "dateOpened": "2011-09-22",
+          "dateReported": "2015-09-30",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 7,
+          "dateVerified": "2015-09-30",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 50,
+            "abbreviation": "Closed"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Revolving",
+        "accountTypeDescription": "Revolving Account",
+        "accountTypeSymbol": "R",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": "C",
+            "description": "Current",
+            "rank": 110,
+            "abbreviation": "Current"
+          },
+          "creditorName": "HSBC BANK",
+          "IndustryCode": {
+            "symbol": "B",
+            "description": "Bank",
+            "rank": 199,
+            "abbreviation": "Bank"
+          },
+          "GrantedTrade": {
+            "PayStatusHistory": {
+              "MonthlyPayStatus": [
+                {
+                  "date": "2021-04-20",
+                  "status": "C"
+                },
+                {
+                  "date": "2021-03-20",
+                  "status": "C"
+                },
+                {
+                  "date": "2021-02-19",
+                  "status": "C"
+                },
+                {
+                  "date": "2021-01-19",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-12-19",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-11-19",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-10-20",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-09-20",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-08-20",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-07-20",
+                  "status": ""
+                },
+                {
+                  "date": "2020-06-20",
+                  "status": ""
+                },
+                {
+                  "date": "2020-05-20",
+                  "status": ""
+                },
+                {
+                  "date": "2020-04-20",
+                  "status": ""
+                },
+                {
+                  "date": "2020-03-20",
+                  "status": ""
+                },
+                {
+                  "date": "2020-02-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-01-19",
+                  "status": ""
+                },
+                {
+                  "date": "2019-12-19",
+                  "status": ""
+                },
+                {
+                  "date": "2019-11-19",
+                  "status": ""
+                },
+                {
+                  "date": "2019-10-20",
+                  "status": ""
+                },
+                {
+                  "date": "2019-09-20",
+                  "status": ""
+                },
+                {
+                  "date": "2019-08-20",
+                  "status": ""
+                },
+                {
+                  "date": "2019-07-20",
+                  "status": ""
+                },
+                {
+                  "date": "2019-06-20",
+                  "status": ""
+                },
+                {
+                  "date": "2019-05-20",
+                  "status": ""
+                }
+              ],
+              "startDate": "2021-04-20",
+              "status": "CCCCCCCCC"
+            },
+            "CreditLimit": 300,
+            "worstPatStatusCount": 9,
+            "PaymentFrequency": {
+              "symbol": "",
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "late90Count": 0,
+            "late60Count": 0,
+            "dateLastPayment": "2021-05-11",
+            "AccountType": {
+              "symbol": "CC",
+              "description": "Credit Card",
+              "rank": 50,
+              "abbreviation": "Credit Card"
+            },
+            "TermType": {
+              "symbol": "P",
+              "description": "Provided",
+              "rank": 199,
+              "abbreviation": "Provided"
+            },
+            "monthlyPayment": 0,
+            "termMonths": 0,
+            "WorstPayStatus": {
+              "symbol": "C",
+              "description": "Current",
+              "rank": 110,
+              "abbreviation": "Current"
+            },
+            "monthsReviewed": 9,
+            "collateral": "",
+            "amountPastDue": 0,
+            "CreditType": {
+              "symbol": "R",
+              "description": "Revolving Account",
+              "rank": 50,
+              "abbreviation": "Revolving"
+            },
+            "late30Count": 0
+          },
+          "currentBalance": 0,
+          "subscriberCode": 7991189,
+          "handle": "TR01_461051713_1009623304_82",
+          "dateAccountStatus": "2021-05-11",
+          "accountNumber": 5155961252980605,
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "O",
+            "description": "Open",
+            "rank": 199,
+            "abbreviation": "Open"
+          },
+          "highBalance": 202,
+          "dateOpened": "2020-06-07",
+          "dateReported": "2021-05-20",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 8,
+          "dateVerified": "2021-05-20",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "O",
+            "description": "Open",
+            "rank": 60,
+            "abbreviation": "Open"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Installment",
+        "accountTypeDescription": "Installment Account",
+        "accountTypeSymbol": "I",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": "C",
+            "description": "Current",
+            "rank": 110,
+            "abbreviation": "Current"
+          },
+          "creditorName": "US DEP ED",
+          "IndustryCode": {
+            "symbol": "V",
+            "description": "Government",
+            "rank": 199,
+            "abbreviation": "Government"
+          },
+          "GrantedTrade": {
+            "PayStatusHistory": {
+              "MonthlyPayStatus": [
+                {
+                  "date": "2021-04-19",
+                  "status": "C"
+                },
+                {
+                  "date": "2021-03-19",
+                  "status": "C"
+                },
+                {
+                  "date": "2021-02-18",
+                  "status": "C"
+                },
+                {
+                  "date": "2021-01-18",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-12-18",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-11-18",
+                  "status": ""
+                },
+                {
+                  "date": "2020-10-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-09-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-08-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-07-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-06-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-05-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-04-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-03-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-02-18",
+                  "status": ""
+                },
+                {
+                  "date": "2020-01-18",
+                  "status": ""
+                },
+                {
+                  "date": "2019-12-18",
+                  "status": ""
+                },
+                {
+                  "date": "2019-11-18",
+                  "status": ""
+                },
+                {
+                  "date": "2019-10-19",
+                  "status": ""
+                },
+                {
+                  "date": "2019-09-19",
+                  "status": ""
+                },
+                {
+                  "date": "2019-08-19",
+                  "status": ""
+                },
+                {
+                  "date": "2019-07-19",
+                  "status": ""
+                },
+                {
+                  "date": "2019-06-19",
+                  "status": ""
+                },
+                {
+                  "date": "2019-05-19",
+                  "status": ""
+                }
+              ],
+              "startDate": "2021-04-19",
+              "status": "CCCCC"
+            },
+            "CreditLimit": 0,
+            "worstPatStatusCount": 5,
+            "PaymentFrequency": {
+              "symbol": "M",
+              "description": "Monthly (every month)",
+              "rank": 199,
+              "abbreviation": "Monthly (every month)"
+            },
+            "late90Count": 0,
+            "late60Count": 0,
+            "dateLastPayment": "2021-05-14",
+            "AccountType": {
+              "symbol": "ST",
+              "description": "Educational",
+              "rank": 50,
+              "abbreviation": "Educational"
+            },
+            "TermType": {
+              "symbol": "P",
+              "description": "Provided",
+              "rank": 199,
+              "abbreviation": "Provided"
+            },
+            "monthlyPayment": 32,
+            "termMonths": 120,
+            "WorstPayStatus": {
+              "symbol": "C",
+              "description": "Current",
+              "rank": 110,
+              "abbreviation": "Current"
+            },
+            "monthsReviewed": 5,
+            "collateral": "",
+            "amountPastDue": 0,
+            "CreditType": {
+              "symbol": "I",
+              "description": "Installment Account",
+              "rank": 20,
+              "abbreviation": "Installment"
+            },
+            "late30Count": 0
+          },
+          "currentBalance": 2863,
+          "subscriberCode": "01BTP001",
+          "handle": "TR01_-620920067_263088244_73",
+          "dateAccountStatus": "2021-05-19",
+          "accountNumber": "7X0X0X9X2X5X8X6",
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "O",
+            "description": "Open",
+            "rank": 199,
+            "abbreviation": "Open"
+          },
+          "highBalance": 3387,
+          "dateOpened": "2018-08-27",
+          "dateReported": "2021-05-19",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 9,
+          "dateVerified": "2021-05-19",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "O",
+            "description": "Open",
+            "rank": 60,
+            "abbreviation": "Open"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Installment",
+        "accountTypeDescription": "Installment Account",
+        "accountTypeSymbol": "I",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": "C",
+            "description": "Current",
+            "rank": 110,
+            "abbreviation": "Current"
+          },
+          "creditorName": "US DEP ED",
+          "IndustryCode": {
+            "symbol": "V",
+            "description": "Government",
+            "rank": 199,
+            "abbreviation": "Government"
+          },
+          "GrantedTrade": {
+            "PayStatusHistory": {
+              "MonthlyPayStatus": [
+                {
+                  "date": "2021-04-19",
+                  "status": "C"
+                },
+                {
+                  "date": "2021-03-19",
+                  "status": "C"
+                },
+                {
+                  "date": "2021-02-18",
+                  "status": "C"
+                },
+                {
+                  "date": "2021-01-18",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-12-18",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-11-18",
+                  "status": ""
+                },
+                {
+                  "date": "2020-10-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-09-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-08-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-07-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-06-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-05-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-04-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-03-19",
+                  "status": ""
+                },
+                {
+                  "date": "2020-02-18",
+                  "status": ""
+                },
+                {
+                  "date": "2020-01-18",
+                  "status": ""
+                },
+                {
+                  "date": "2019-12-18",
+                  "status": ""
+                },
+                {
+                  "date": "2019-11-18",
+                  "status": ""
+                },
+                {
+                  "date": "2019-10-19",
+                  "status": ""
+                },
+                {
+                  "date": "2019-09-19",
+                  "status": ""
+                },
+                {
+                  "date": "2019-08-19",
+                  "status": ""
+                },
+                {
+                  "date": "2019-07-19",
+                  "status": ""
+                },
+                {
+                  "date": "2019-06-19",
+                  "status": ""
+                },
+                {
+                  "date": "2019-05-19",
+                  "status": ""
+                }
+              ],
+              "startDate": "2021-04-19",
+              "status": "CCCCC"
+            },
+            "CreditLimit": 0,
+            "worstPatStatusCount": 5,
+            "PaymentFrequency": {
+              "symbol": "M",
+              "description": "Monthly (every month)",
+              "rank": 199,
+              "abbreviation": "Monthly (every month)"
+            },
+            "late90Count": 0,
+            "late60Count": 0,
+            "dateLastPayment": "2021-05-14",
+            "AccountType": {
+              "symbol": "ST",
+              "description": "Educational",
+              "rank": 50,
+              "abbreviation": "Educational"
+            },
+            "TermType": {
+              "symbol": "P",
+              "description": "Provided",
+              "rank": 199,
+              "abbreviation": "Provided"
+            },
+            "monthlyPayment": 18,
+            "termMonths": 120,
+            "WorstPayStatus": {
+              "symbol": "C",
+              "description": "Current",
+              "rank": 110,
+              "abbreviation": "Current"
+            },
+            "monthsReviewed": 5,
+            "collateral": "",
+            "amountPastDue": 0,
+            "CreditType": {
+              "symbol": "I",
+              "description": "Installment Account",
+              "rank": 20,
+              "abbreviation": "Installment"
+            },
+            "late30Count": 0
+          },
+          "currentBalance": 1600,
+          "subscriberCode": "01BTP001",
+          "handle": "TR01_-620919106_263088244_73",
+          "dateAccountStatus": "2021-05-19",
+          "accountNumber": "7X0X0X9X2X5X9X6",
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "O",
+            "description": "Open",
+            "rank": 199,
+            "abbreviation": "Open"
+          },
+          "highBalance": 1892,
+          "dateOpened": "2018-08-27",
+          "dateReported": "2021-05-19",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 10,
+          "dateVerified": "2021-05-19",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "O",
+            "description": "Open",
+            "rank": 60,
+            "abbreviation": "Open"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Revolving",
+        "accountTypeDescription": "Revolving Account",
+        "accountTypeSymbol": "R",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": "C",
+            "description": "Current",
+            "rank": 110,
+            "abbreviation": "Current"
+          },
+          "creditorName": "CAPITAL ONE",
+          "IndustryCode": {
+            "symbol": "B",
+            "description": "Bank",
+            "rank": 199,
+            "abbreviation": "Bank"
+          },
+          "GrantedTrade": {
+            "PayStatusHistory": {
+              "MonthlyPayStatus": [
+                {
+                  "date": "2021-04-16",
+                  "status": "C"
+                },
+                {
+                  "date": "2021-03-16",
+                  "status": "C"
+                },
+                {
+                  "date": "2021-02-15",
+                  "status": "C"
+                },
+                {
+                  "date": "2021-01-15",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-12-15",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-11-15",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-10-16",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-09-16",
+                  "status": ""
+                },
+                {
+                  "date": "2020-08-16",
+                  "status": ""
+                },
+                {
+                  "date": "2020-07-16",
+                  "status": ""
+                },
+                {
+                  "date": "2020-06-16",
+                  "status": ""
+                },
+                {
+                  "date": "2020-05-16",
+                  "status": ""
+                },
+                {
+                  "date": "2020-04-16",
+                  "status": ""
+                },
+                {
+                  "date": "2020-03-16",
+                  "status": ""
+                },
+                {
+                  "date": "2020-02-15",
+                  "status": ""
+                },
+                {
+                  "date": "2020-01-15",
+                  "status": ""
+                },
+                {
+                  "date": "2019-12-15",
+                  "status": ""
+                },
+                {
+                  "date": "2019-11-15",
+                  "status": ""
+                },
+                {
+                  "date": "2019-10-16",
+                  "status": ""
+                },
+                {
+                  "date": "2019-09-16",
+                  "status": ""
+                },
+                {
+                  "date": "2019-08-16",
+                  "status": ""
+                },
+                {
+                  "date": "2019-07-16",
+                  "status": ""
+                },
+                {
+                  "date": "2019-06-16",
+                  "status": ""
+                },
+                {
+                  "date": "2019-05-16",
+                  "status": ""
+                }
+              ],
+              "startDate": "2021-04-16",
+              "status": "CCCCCCC"
+            },
+            "CreditLimit": 750,
+            "worstPatStatusCount": 7,
+            "PaymentFrequency": {
+              "symbol": "",
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "late90Count": 0,
+            "late60Count": 0,
+            "dateLastPayment": "2021-05-11",
+            "AccountType": {
+              "symbol": "CC",
+              "description": "Credit Card",
+              "rank": 50,
+              "abbreviation": "Credit Card"
+            },
+            "TermType": {
+              "symbol": "P",
+              "description": "Provided",
+              "rank": 199,
+              "abbreviation": "Provided"
+            },
+            "monthlyPayment": 15,
+            "termMonths": 0,
+            "WorstPayStatus": {
+              "symbol": "C",
+              "description": "Current",
+              "rank": 110,
+              "abbreviation": "Current"
+            },
+            "monthsReviewed": 7,
+            "collateral": "",
+            "amountPastDue": 0,
+            "CreditType": {
+              "symbol": "R",
+              "description": "Revolving Account",
+              "rank": 50,
+              "abbreviation": "Revolving"
+            },
+            "late30Count": 0
+          },
+          "currentBalance": 192,
+          "subscriberCode": "01DTV001",
+          "handle": "TR01_1187236835_320525292_82",
+          "dateAccountStatus": "2021-05-16",
+          "accountNumber": 5178019326438907,
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "O",
+            "description": "Open",
+            "rank": 199,
+            "abbreviation": "Open"
+          },
+          "highBalance": 396,
+          "dateOpened": "2020-09-30",
+          "dateReported": "2021-05-16",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 11,
+          "dateVerified": "2021-05-16",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "O",
+            "description": "Open",
+            "rank": 60,
+            "abbreviation": "Open"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Installment",
+        "accountTypeDescription": "Installment Account",
+        "accountTypeSymbol": "I",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": "C",
+            "description": "Current",
+            "rank": 110,
+            "abbreviation": "Current"
+          },
+          "creditorName": "US DEP ED",
+          "IndustryCode": {
+            "symbol": "V",
+            "description": "Government",
+            "rank": 199,
+            "abbreviation": "Government"
+          },
+          "GrantedTrade": {
+            "PayStatusHistory": {
+              "MonthlyPayStatus": [
+                {
+                  "date": "2020-10-30",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-09-30",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-08-30",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-07-30",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-06-30",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-05-30",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-04-30",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-03-30",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-02-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2020-01-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2019-12-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2019-11-28",
+                  "status": "C"
+                },
+                {
+                  "date": "2019-10-29",
+                  "status": "C"
+                },
+                {
+                  "date": "2019-09-29",
+                  "status": "C"
+                },
+                {
+                  "date": "2019-08-29",
+                  "status": "C"
+                },
+                {
+                  "date": "2019-07-29",
+                  "status": "C"
+                },
+                {
+                  "date": "2019-06-29",
+                  "status": "U"
+                },
+                {
+                  "date": "2019-05-29",
+                  "status": "C"
+                },
+                {
+                  "date": "2019-04-29",
+                  "status": 4
+                },
+                {
+                  "date": "2019-03-29",
+                  "status": 4
+                },
+                {
+                  "date": "2019-02-27",
+                  "status": 3
+                },
+                {
+                  "date": "2019-01-27",
+                  "status": 2
+                },
+                {
+                  "date": "2018-12-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2018-11-27",
+                  "status": "C"
+                },
+                {
+                  "date": "2018-10-28",
+                  "status": "C"
+                }
+              ],
+              "startDate": "2020-10-30",
+              "status": "CCCCCCCCCCCCCCCCUC4432CCC"
+            },
+            "CreditLimit": 0,
+            "worstPatStatusCount": 26,
+            "PaymentFrequency": {
+              "symbol": "X",
+              "description": "Unspecified",
+              "rank": 199,
+              "abbreviation": "Unspecified"
+            },
+            "late90Count": 3,
+            "late60Count": 1,
+            "dateLastPayment": "2020-11-14",
+            "AccountType": {
+              "symbol": "ST",
+              "description": "Educational",
+              "rank": 50,
+              "abbreviation": "Educational"
+            },
+            "TermType": {
+              "symbol": "P",
+              "description": "Provided",
+              "rank": 199,
+              "abbreviation": "Provided"
+            },
+            "monthlyPayment": 51,
+            "termMonths": 120,
+            "WorstPayStatus": {
+              "symbol": 4,
+              "description": "Late 120 Days",
+              "rank": 102,
+              "abbreviation": "120 Delinq"
+            },
+            "monthsReviewed": 26,
+            "collateral": "",
+            "amountPastDue": 0,
+            "CreditType": {
+              "symbol": "I",
+              "description": "Installment Account",
+              "rank": 20,
+              "abbreviation": "Installment"
+            },
+            "late30Count": 0
+          },
+          "currentBalance": 0,
+          "subscriberCode": "01BTP001",
+          "handle": "TR01_147211983_263088244_73",
+          "dateAccountStatus": "2020-11-30",
+          "dateClosed": "2020-11-30",
+          "accountNumber": "4X1X6X5X9X",
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 198,
+            "abbreviation": "Closed"
+          },
+          "highBalance": 5418,
+          "dateOpened": "2018-08-27",
+          "dateReported": "2020-11-30",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 12,
+          "dateVerified": "2020-11-30",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 50,
+            "abbreviation": "Closed"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Installment",
+        "accountTypeDescription": "Installment Account",
+        "accountTypeSymbol": "I",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": "C",
+            "description": "Current",
+            "rank": 110,
+            "abbreviation": "Current"
+          },
+          "creditorName": "SAF",
+          "IndustryCode": {
+            "symbol": "E",
+            "description": "Education/Employment",
+            "rank": 199,
+            "abbreviation": "Education/Employment"
+          },
+          "GrantedTrade": {
+            "PayStatusHistory": "",
+            "CreditLimit": 0,
+            "worstPatStatusCount": 0,
+            "PaymentFrequency": {
+              "symbol": "",
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "late90Count": 0,
+            "late60Count": 0,
+            "dateLastPayment": "2018-10-04",
+            "AccountType": {
+              "symbol": "ST",
+              "description": "Educational",
+              "rank": 50,
+              "abbreviation": "Educational"
+            },
+            "TermType": {
+              "symbol": "P",
+              "description": "Provided",
+              "rank": 199,
+              "abbreviation": "Provided"
+            },
+            "monthlyPayment": 0,
+            "termMonths": 0,
+            "WorstPayStatus": {
+              "symbol": "U",
+              "description": "Unknown",
+              "rank": 10000,
+              "abbreviation": "Unk"
+            },
+            "monthsReviewed": 0,
+            "collateral": "",
+            "amountPastDue": 0,
+            "CreditType": {
+              "symbol": "I",
+              "description": "Installment Account",
+              "rank": 20,
+              "abbreviation": "Installment"
+            },
+            "late30Count": 0
+          },
+          "currentBalance": 0,
+          "subscriberCode": "063YQ079",
+          "handle": "TR01_1588782643_-19150291_73",
+          "dateAccountStatus": "2018-10-04",
+          "dateClosed": "2018-10-04",
+          "accountNumber": "8X9X3X6X3XSX0X0X3",
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 198,
+            "abbreviation": "Closed"
+          },
+          "Remark": {
+            "RemarkCode": {
+              "symbol": "T00ACR",
+              "description": "Account closed due to refinance",
+              "rank": 199,
+              "abbreviation": "Account closed due to refinance"
+            },
+            "customRemark": ""
+          },
+          "highBalance": 3500,
+          "dateOpened": "2012-09-26",
+          "dateReported": "2018-10-04",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 13,
+          "dateVerified": "2018-10-04",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "R",
+            "description": "Refinanced",
+            "rank": 40,
+            "abbreviation": "Refi"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Installment",
+        "accountTypeDescription": "Installment Account",
+        "accountTypeSymbol": "I",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": "C",
+            "description": "Current",
+            "rank": 110,
+            "abbreviation": "Current"
+          },
+          "creditorName": "SAF",
+          "IndustryCode": {
+            "symbol": "E",
+            "description": "Education/Employment",
+            "rank": 199,
+            "abbreviation": "Education/Employment"
+          },
+          "GrantedTrade": {
+            "PayStatusHistory": "",
+            "CreditLimit": 0,
+            "worstPatStatusCount": 0,
+            "PaymentFrequency": {
+              "symbol": "",
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "late90Count": 0,
+            "late60Count": 0,
+            "dateLastPayment": "2018-10-04",
+            "AccountType": {
+              "symbol": "ST",
+              "description": "Educational",
+              "rank": 50,
+              "abbreviation": "Educational"
+            },
+            "TermType": {
+              "symbol": "P",
+              "description": "Provided",
+              "rank": 199,
+              "abbreviation": "Provided"
+            },
+            "monthlyPayment": 0,
+            "termMonths": 0,
+            "WorstPayStatus": {
+              "symbol": "U",
+              "description": "Unknown",
+              "rank": 10000,
+              "abbreviation": "Unk"
+            },
+            "monthsReviewed": 0,
+            "collateral": "",
+            "amountPastDue": 0,
+            "CreditType": {
+              "symbol": "I",
+              "description": "Installment Account",
+              "rank": 20,
+              "abbreviation": "Installment"
+            },
+            "late30Count": 0
+          },
+          "currentBalance": 0,
+          "subscriberCode": "063YQ079",
+          "handle": "TR01_1588782642_-19150291_73",
+          "dateAccountStatus": "2018-10-04",
+          "dateClosed": "2018-10-04",
+          "accountNumber": "8X9X3X6X3XSX0X0X2",
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 198,
+            "abbreviation": "Closed"
+          },
+          "Remark": {
+            "RemarkCode": {
+              "symbol": "T00ACR",
+              "description": "Account closed due to refinance",
+              "rank": 199,
+              "abbreviation": "Account closed due to refinance"
+            },
+            "customRemark": ""
+          },
+          "highBalance": 3390,
+          "dateOpened": "2011-09-22",
+          "dateReported": "2018-10-04",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 14,
+          "dateVerified": "2018-10-04",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "R",
+            "description": "Refinanced",
+            "rank": 40,
+            "abbreviation": "Refi"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Installment",
+        "accountTypeDescription": "Installment Account",
+        "accountTypeSymbol": "I",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": "C",
+            "description": "Current",
+            "rank": 110,
+            "abbreviation": "Current"
+          },
+          "creditorName": "SAF",
+          "IndustryCode": {
+            "symbol": "E",
+            "description": "Education/Employment",
+            "rank": 199,
+            "abbreviation": "Education/Employment"
+          },
+          "GrantedTrade": {
+            "PayStatusHistory": "",
+            "CreditLimit": 0,
+            "worstPatStatusCount": 0,
+            "PaymentFrequency": {
+              "symbol": "",
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "late90Count": 0,
+            "late60Count": 0,
+            "dateLastPayment": "2018-10-04",
+            "AccountType": {
+              "symbol": "ST",
+              "description": "Educational",
+              "rank": 50,
+              "abbreviation": "Educational"
+            },
+            "TermType": {
+              "symbol": "P",
+              "description": "Provided",
+              "rank": 199,
+              "abbreviation": "Provided"
+            },
+            "monthlyPayment": 0,
+            "termMonths": 0,
+            "WorstPayStatus": {
+              "symbol": "U",
+              "description": "Unknown",
+              "rank": 10000,
+              "abbreviation": "Unk"
+            },
+            "monthsReviewed": 0,
+            "collateral": "",
+            "amountPastDue": 0,
+            "CreditType": {
+              "symbol": "I",
+              "description": "Installment Account",
+              "rank": 20,
+              "abbreviation": "Installment"
+            },
+            "late30Count": 0
+          },
+          "currentBalance": 0,
+          "subscriberCode": "063YQ079",
+          "handle": "TR01_1588782641_-19150291_73",
+          "dateAccountStatus": "2018-10-04",
+          "dateClosed": "2018-10-04",
+          "accountNumber": "8X9X3X6X3XSX0X0X1",
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 198,
+            "abbreviation": "Closed"
+          },
+          "Remark": {
+            "RemarkCode": {
+              "symbol": "T00ACR",
+              "description": "Account closed due to refinance",
+              "rank": 199,
+              "abbreviation": "Account closed due to refinance"
+            },
+            "customRemark": ""
+          },
+          "highBalance": 2625,
+          "dateOpened": "2011-09-22",
+          "dateReported": "2018-10-04",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 15,
+          "dateVerified": "2018-10-04",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "R",
+            "description": "Refinanced",
+            "rank": 40,
+            "abbreviation": "Refi"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Revolving",
+        "accountTypeDescription": "Revolving Account",
+        "accountTypeSymbol": "R",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": "U",
+            "description": "Unknown",
+            "rank": 10000,
+            "abbreviation": "Unk"
+          },
+          "creditorName": "CAPITAL ONE",
+          "IndustryCode": {
+            "symbol": "B",
+            "description": "Bank",
+            "rank": 199,
+            "abbreviation": "Bank"
+          },
+          "GrantedTrade": {
+            "PayStatusHistory": "",
+            "CreditLimit": 1000,
+            "worstPatStatusCount": 0,
+            "PaymentFrequency": {
+              "symbol": "",
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "late90Count": 0,
+            "late60Count": 0,
+            "dateLastPayment": "2016-02-27",
+            "AccountType": {
+              "symbol": "CC",
+              "description": "Credit Card",
+              "rank": 50,
+              "abbreviation": "Credit Card"
+            },
+            "TermType": {
+              "symbol": "P",
+              "description": "Provided",
+              "rank": 199,
+              "abbreviation": "Provided"
+            },
+            "monthlyPayment": 0,
+            "termMonths": 0,
+            "WorstPayStatus": {
+              "symbol": "U",
+              "description": "Unknown",
+              "rank": 10000,
+              "abbreviation": "Unk"
+            },
+            "monthsReviewed": 0,
+            "collateral": "",
+            "amountPastDue": 0,
+            "CreditType": {
+              "symbol": "R",
+              "description": "Revolving Account",
+              "rank": 50,
+              "abbreviation": "Revolving"
+            },
+            "late30Count": 0
+          },
+          "currentBalance": 0,
+          "subscriberCode": "01DTV001",
+          "handle": "TR01_-1274836935_320525292_82",
+          "dateAccountStatus": "2016-07-18",
+          "dateClosed": "2016-07-18",
+          "accountNumber": 4862324271510237,
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 198,
+            "abbreviation": "Closed"
+          },
+          "Remark": {
+            "RemarkCode": {
+              "symbol": "T00CBL",
+              "description": "Chapter 7 bankruptcy",
+              "rank": 199,
+              "abbreviation": "Chapter 7 bankruptcy"
+            },
+            "customRemark": ""
+          },
+          "highBalance": 1252,
+          "dateOpened": "2012-08-24",
+          "dateReported": "2021-05-08",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 16,
+          "dateVerified": "2021-05-08",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "F",
+            "description": "Derogatory",
+            "rank": 20,
+            "abbreviation": "Derog"
+          }
+        }
+      },
+      {
+        "accountTypeAbbreviation": "Revolving",
+        "accountTypeDescription": "Revolving Account",
+        "accountTypeSymbol": "R",
+        "Tradeline": {
+          "PayStatus": {
+            "symbol": "U",
+            "description": "Unknown",
+            "rank": 10000,
+            "abbreviation": "Unk"
+          },
+          "creditorName": "CHASE CARD",
+          "IndustryCode": {
+            "symbol": "B",
+            "description": "Bank",
+            "rank": 199,
+            "abbreviation": "Bank"
+          },
+          "GrantedTrade": {
+            "PayStatusHistory": "",
+            "CreditLimit": 2882,
+            "worstPatStatusCount": 0,
+            "PaymentFrequency": {
+              "symbol": "",
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "late90Count": 0,
+            "late60Count": 0,
+            "dateLastPayment": "2016-08-22",
+            "AccountType": {
+              "symbol": "CC",
+              "description": "Credit Card",
+              "rank": 50,
+              "abbreviation": "Credit Card"
+            },
+            "TermType": {
+              "symbol": "P",
+              "description": "Provided",
+              "rank": 199,
+              "abbreviation": "Provided"
+            },
+            "monthlyPayment": 0,
+            "termMonths": 0,
+            "WorstPayStatus": {
+              "symbol": "U",
+              "description": "Unknown",
+              "rank": 10000,
+              "abbreviation": "Unk"
+            },
+            "monthsReviewed": 0,
+            "collateral": "",
+            "amountPastDue": 0,
+            "CreditType": {
+              "symbol": "R",
+              "description": "Revolving Account",
+              "rank": 50,
+              "abbreviation": "Revolving"
+            },
+            "late30Count": 0
+          },
+          "currentBalance": 0,
+          "subscriberCode": "0701N134",
+          "handle": "TR01_1580949109_745436556_82",
+          "dateAccountStatus": "2016-08-22",
+          "dateClosed": "2016-08-31",
+          "accountNumber": 4185822545135066,
+          "DisputeFlag": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "OpenClosed": {
+            "symbol": "C",
+            "description": "Closed",
+            "rank": 198,
+            "abbreviation": "Closed"
+          },
+          "Remark": {
+            "RemarkCode": {
+              "symbol": "T00CBL",
+              "description": "Chapter 7 bankruptcy",
+              "rank": 199,
+              "abbreviation": "Chapter 7 bankruptcy"
+            },
+            "customRemark": ""
+          },
+          "highBalance": 3284,
+          "dateOpened": "2012-07-23",
+          "dateReported": "2016-08-31",
+          "VerificationIndicator": {
+            "symbol": "F",
+            "description": "Account not disputed",
+            "rank": 199,
+            "abbreviation": "Account not disputed"
+          },
+          "position": 17,
+          "dateVerified": "2016-08-31",
+          "bureau": "TransUnion",
+          "AccountDesignator": {
+            "symbol": "I",
+            "description": "Individual",
+            "rank": 199,
+            "abbreviation": "Individual"
+          },
+          "AccountCondition": {
+            "symbol": "P",
+            "description": "Paid",
+            "rank": 10,
+            "abbreviation": "Paid"
+          }
+        }
+      }
+    ],
+    "Summary": {
+      "TradelineSummary": {
+        "TransUnion": {
+          "TotalBalances": 4811,
+          "TotalMonthlyPayments": 65,
+          "CloseAccounts": 13,
+          "OpenAccounts": 5,
+          "TotalAccounts": 18,
+          "DerogatoryAccounts": 5,
+          "DelinquentAccounts": 4
+        }
+      },
+      "PublicRecordSummary": {
+        "TransUnion": {
+          "NumberOfRecords": 1
+        }
+      },
+      "InquirySummary": {
+        "TransUnion": {
+          "NumberInLast2Years": 9
+        }
+      }
+    },
+    "SB168Frozen": {
+      "equifax": false,
+      "transunion": false,
+      "experian": false
+    },
+    "Sources": {
+      "Source": {
+        "InquiryDate": "2021-07-08",
+        "OriginalData": "VFU0UjA2MjAxMTk2ZGEwMTNlLWI3MWEtNDA0Yi05ZjUgIDEyMDFaIDUwNjA5MTcgMjAyMTA3MDgxMTIxMTVQSDAxMDEyMDcwMDBTSDAxMDI3MTAxWTA1TjA3U0NOMjAxMTExMDFOTTAxMDcwRjFHSURERU5TICAgICAgICAgICAgICAgICAgTkVJTCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgUEkwMTAyOUY2NjY0MDMwNzcxOTU2MDIwMSAgICBUQTAxMDEyQzExMDBBRDAxMTA1RjExMTAxICAgICAgICAgMk5EICAgICAgICAgICAgICAgICAgICAgICAgICBTVCAgICAgQlVSVCAgICAgICAgICAgICAgICAgICAgICAgSUE1MDUyMiAgICAgMjAxMzExMDhBRDAxMTA1RjExMTY2ICAgICAgICAgUE8gQk9YIDE2NiAgICAgICAgICAgICAgICAgICAgICAgICAgQlVSVCAgICAgICAgICAgICAgICAgICAgICAgSUE1MDUyMiAgICAgMjAxMzA3MTFBRDAxMTA1RjExNDA3ICAgICAgICAgNFRIICAgICAgICAgICAgICAgICAgICAgICAgICBTVCAgICAgQlVSVCAgICAgICAgICAgICAgICAgICAgICAgSUE1MDUyMiAgICAgICAgICAgICBFTTAxMTAwRU1QTE9ZRVIgWCAgICAgICAgICAgICAgICAgICAgICAgICBGU1VQUE9SVCBTVEFGRiAgICAgICAgIDIwMTAwODAxICAgICAgICAyMDIwMDkxOFYgICAgICAgICAgUFIwMTE2OFogMDUwMDE2OTQ3WDdYMVg4WCAgICAgQVRUT1JORVkgWCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMjAxNjA4MTgyMDE2MTEyNSAgICAgICAgICAgICAgICAgIENGRSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQ0wwMTE2MFkgMDI1NkMwMDFIJlIgQUNDT1VOVFMgICAgICAgICAgICBPM1gxWDVYNiAgICAgICAgICAgICAgICAgSU5PUlRIIElPV0EgTUVSQ1kgQ0xJTklDUyBSMjIgICAgICAgIDIwMTcxMjI1MjAxODAyMjhBICAgICAgICAgICAgICAgICA5QjAwMDAwMDE1NjAwMDAwMDE1NkNMQUNMMDExNjBZIDAyNTZDMDAxSCZSIEFDQ09VTlRTICAgICAgICAgICAgTzNYM1g4WDIgICAgICAgICAgICAgICAgIElOT1JUSCBJT1dBIE1FUkNZIENMSU5JQ1MgUjIyICAgICAgICAyMDE2MDkwMzIwMTYxMTMwQTIwMTYwODE4QzIwMTYwODE4VVIwMDAwMDAwMDAwMDAwMDAzNzhDQkxDTDAxMTYwWSAwMjU2QzAwMUgmUiBBQ0NPVU5UUyAgICAgICAgICAgIE8zWDFYNVgwICAgICAgICAgICAgICAgICBJTk9SVEggSU9XQSBNRVJDWSBDTElOSUNTIFIyICAgICAgICAgMjAxNTEwMDYyMDE1MTIzMUEyMDE1MTIzMUMyMDE1MTIzMVVSMDAwMDAwMDAwMDAwMDAwMzk3Q0JMVFIwMTI4OEIgMDI2UUswMDFKUE1DQiBDQVJEICAgICAgICAgICAgICBSNDI2NjgyMTcxMjg4MjQzMSAgICAgICAgVDIwMTIxMjAyMjAxNjA4MjJBMjAxNjA4MjJGMjAxNjAzMzEyMDE2MDMzMTA5MTAwMDAwMDAwMDAwMDAwMTQzMjAwMDAwMDk1MCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQ0NCRzAwMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMDAgICAgICAgVFIwMTI4OEUgMDEwNjYwNDFTVU5UUlVTVCBCSyAgICAgICAgICAgICBJNFgxWDZYNVg5WCAgICAgICAgICAgICAgSTIwMTEwOTIyMjAxNzEwMTBBMjAxNzEwMTBDICAgICAgICAgICAgICAgIDA1MTAwMDAwMDAwMDAwMDAxMDMxNCAgICAgICAgIDEyME0wMDAwMDAyMDAwNyBTVU5UUlVTVCBCQU5LUyBJTkMgICAgICAgICAgICAgICBTVFNMUDAwMDAwMDAwMDAwMDAwMDAxMDI1MjAxNzAzMDEwNTIwMTcwOTEwNTU1NTU1NTQzMTExICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMTIwMDAxMDgyVFIwMTI4OEUgMDFYUTMwMDFJT1dBIFNURFQgTE4gICAgICAgICAgICBJOFg5WDNYNlgzWElYMFgwWDMgICAgICAgSTIwMTIwOTMwMjAxNTA5MzBBMjAxNTA5MzBDICAgICAgICAyMDE1MDkxNDA1MTAwMDAwMDAwMDAwMDAwMzUwMCAgICAgICAgIDEwMU0wMDAwMDAwNDJERUZFUlJFRCBUTyAxMjE0MjAxMyAgICAgICAgICAgICAgICBTVFNMUDAwMDAwMDAwMDAwMDAwMDAwMTkwMjAxNTAxMDEwNTIwMTUwODMwNTU1NTU1NTQzMTExMTExMTExMTExMTExMTExMTExMTExMTEgICAgICAgICAgICAgMzUwMDAxMDgyVFIwMTI4OEUgMDFYUTMwMDFJT1dBIFNURFQgTE4gICAgICAgICAgICBJOFg5WDNYNlgzWElYMFgwWDIgICAgICAgSTIwMTEwOTIyMjAxNTA5MzBBMjAxNTA5MzBDICAgICAgICAyMDE1MDkxNDA1MTAwMDAwMDAwMDAwMDAwMzM5MCAgICAgICAgIDEwMU0wMDAwMDAwMDJERUZFUlJFRCBUTyAxMjE0MjAxMyAgICAgICAgICAgICAgICBTVFNMUDAwMDAwMDAwMDAwMDAwMDAwMDEzMjAxNTAxMDEwNTIwMTUwODMwNTU1NTU1NTQzMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTEgNDcwMDAxMDgyVFIwMTI4OEUgMDFYUTMwMDFJT1dBIFNURFQgTE4gICAgICAgICAgICBJOFg5WDNYNlgzWElYMFgwWDEgICAgICAgSTIwMTEwOTIyMjAxNTA5MzBBMjAxNTA5MzBDICAgICAgICAyMDE1MDkxNDA1MTAwMDAwMDAwMDAwMDAwMjYyNSAgICAgICAgIDEwMU0wMDAwMDAwMjFERUZFUlJFRCBUTyAxMjE0MjAxMyAgICAgICAgICAgICAgICBTVFNMUDAwMDAwMDAwMDAwMDAwMDAwMDk1MjAxNTAxMDEwNTIwMTUwODMwNTU1NTU1NTQzMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTEgNDcwMDAxMDgyVFIwMTI4OEIgMDc5OTExODlIU0JDIEJBTksgICAgICAgICAgICAgICBSNTE1NTk2MTI1Mjk4MDYwNSAgICAgICAgSTIwMjAwNjA3MjAyMTA1MjBBICAgICAgICAgMjAyMTA1MTEyMDIxMDUxMTAxMTAwMDAwMDAwMDAwMDAwMDIwMjAwMDAwMDMwMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQyAgIDAwMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgIDIwMjEwNDIwMTExMTExMTExICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMDkwMDAwMDAyVFIwMTI4OFYgMDFCVFAwMDFVUyBERVAgRUQgICAgICAgICAgICAgICBJN1gwWDBYOVgyWDVYOFg2ICAgICAgICAgSTIwMTgwODI3MjAyMTA1MTlBICAgICAgICAgICAgICAgICAyMDIxMDUxNDAxMTAwMDAwMjg2MzAwMDAwMzM4NyAgICAgICAgIDEyME0wMDAwMDAwMzIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBTVCAgIDAwMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgIDIwMjEwNDE5MTExMTEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMDUwMDAwMDAyVFIwMTI4OFYgMDFCVFAwMDFVUyBERVAgRUQgICAgICAgICAgICAgICBJN1gwWDBYOVgyWDVYOVg2ICAgICAgICAgSTIwMTgwODI3MjAyMTA1MTlBICAgICAgICAgICAgICAgICAyMDIxMDUxNDAxMTAwMDAwMTYwMDAwMDAwMTg5MiAgICAgICAgIDEyME0wMDAwMDAwMTggICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBTVCAgIDAwMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgIDIwMjEwNDE5MTExMTEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMDUwMDAwMDAyVFIwMTI4OEIgMDFEVFYwMDFDQVBJVEFMIE9ORSAgICAgICAgICAgICBSNTE3ODAxOTMyNjQzODkwNyAgICAgICAgSTIwMjAwOTMwMjAyMTA1MTZBICAgICAgICAgICAgICAgICAyMDIxMDUxMTAxMTAwMDAwMDE5MjAwMDAwMDM5NjAwMDAwMDc1ME1JTiAwMDAwMDAwMTUgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQyAgIDAwMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgIDIwMjEwNDE2MTExMTExMSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMDcwMDAwMDAyVFIwMTI4OFYgMDFCVFAwMDFVUyBERVAgRUQgICAgICAgICAgICAgICBJNFgxWDZYNVg5WCAgICAgICAgICAgICAgSTIwMTgwODI3MjAyMDExMzBBMjAyMDExMzBDICAgICAgICAyMDIwMTExNDAxMTAwMDAwMDAwMDAwMDAwNTQxOCAgICAgICAgIDEyMFgwMDAwMDAwNTEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBTVCAgIDAwMDAwMDAwMDAwMDAwMDAwMjUwMjAxOTAyMDEwNTIwMjAxMDMwMTExMTExMTExMTExMTExMVgxNTU0MzExMSAgICAgICAgICAgICAgICAgICAgICAgMjYwMDAxMDMyVFIwMTI4OEUgMDYzWVEwNzlTQUYgICAgICAgICAgICAgICAgICAgICBJOFg5WDNYNlgzWFNYMFgwWDMgICAgICAgSTIwMTIwOTI2MjAxODEwMDRBMjAxODEwMDRDICAgICAgICAyMDE4MTAwNDAxMTAwMDAwMDAwMDAwMDAwMzUwMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBTVEFDUjAwMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMDAgICAgICAgVFIwMTI4OEUgMDYzWVEwNzlTQUYgICAgICAgICAgICAgICAgICAgICBJOFg5WDNYNlgzWFNYMFgwWDIgICAgICAgSTIwMTEwOTIyMjAxODEwMDRBMjAxODEwMDRDICAgICAgICAyMDE4MTAwNDAxMTAwMDAwMDAwMDAwMDAwMzM5MCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBTVEFDUjAwMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMDAgICAgICAgVFIwMTI4OEUgMDYzWVEwNzlTQUYgICAgICAgICAgICAgICAgICAgICBJOFg5WDNYNlgzWFNYMFgwWDEgICAgICAgSTIwMTEwOTIyMjAxODEwMDRBMjAxODEwMDRDICAgICAgICAyMDE4MTAwNDAxMTAwMDAwMDAwMDAwMDAwMjYyNSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBTVEFDUjAwMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMDAgICAgICAgVFIwMTI4OEIgMDFEVFYwMDFDQVBJVEFMIE9ORSAgICAgICAgICAgICBSNDg2MjMyNDI3MTUxMDIzNyAgICAgICAgSTIwMTIwODI0MjAyMTA1MDhBMjAxNjA3MThDICAgICAgICAyMDE2MDIyN1VSMTAwMDAwMDAwMDAwMDAwMTI1MjAwMDAwMTAwMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQ0NCTDAwMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMDAgICAgICAgVFIwMTI4OEIgMDcwMU4xMzRDSEFTRSBDQVJEICAgICAgICAgICAgICBSNDE4NTgyMjU0NTEzNTA2NiAgICAgICAgSTIwMTIwNzIzMjAxNjA4MzFBMjAxNjA4MzFDMjAxNjA4MjIyMDE2MDgyMlVSMTAwMDAwMDAwMDAwMDAwMzI4NDAwMDAwMjg4MiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQ0NCTDAwMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMDAgICAgICAgSU4wMTA2NTMzUENCIDAyNjk5ODI0Q0FQIE9ORSAgICAgICAgICAgICAgICAgSSAgICAgICAgICAgMjAyMDA5MjdJTjAxMDY1MTdOWUYgMDU5MTk2MzRDSEFTRSBBVVRPICAgICAgICAgICAgICBQICAgICAgICAgICAyMDIwMDgxNklOMDEwNjUxMURUTiAwMTAwODMxNVREIEFVVE8gRklOQSAgICAgICAgICAgIEkgICAgICAgICAgIDIwMjAwODE2SU4wMTA2NTExRFROIDAxMjAzNTQzQUxMWSBGSU5BTiBJICAgICAgICAgICAgSUFVICAgICAgICAgMjAyMDA4MTZJTjAxMDY1MDZDSEEgMDY0MTI4MjlXSUxDT1ggQVVUTyAgICAgICAgICAgICBJICAgICAgICAgICAyMDIwMDgxNklOMDEwNjUzM1BDRiAwMTI0NjUzOENPQUYgICAgICAgICAgICAgICAgICAgIEkgICAgICAgICAgIDIwMjAwODExSU4wMTA2NTExRFROIDAxMjAzNTQzQUxMWSBGSU5BTiBJICAgICAgICAgICAgSUFVICAgICAgICAgMjAyMDA4MTFJTjAxMDY1MTVERkYgMDAwMjcwMTZBTUVSSUNSRURJVCAgICAgICAgICAgICBQICAgICAgICAgICAyMDIwMDgxMUlOMDEwNjUwOU1TRCAwMzc2NDE0M01FVEFCTksvRkhVVCAgICAgICAgICAgIEkgICAgICAgICAgIDIwMTkxMDI0QU8wMTAxNzA3NTAwMDEgICBMSzAxMDQ4UFIwMDAwWlAwNTAwMTY5NFVTQksgQ09VUlQgU09VVEhFUk4gSU9XQSBTQTAxMTA2MTEwIENPVVJUIEFWRSAgICAgICAgICAgICAgICAgU1VJVEUgMzAwICAgICAgICAgICAgICAgICAgICAgREVTIE1PSU5FUyAgICAgICAgICAgICAgICAgSUE1MDMwOSAgICAgUE4wMTAyN0Y0MDkgNTE1Mjg0NjIzMCAgICAgTEswMTA0OFRSMDAwMEVMMDEwNjYwNDFTVU5UUlVTVCBCQU5LICAgICAgICAgICAgU0EwMTEwNkMvTyBBQ1MgICAgICAgICAgICAgICAgICAgICAgIDUwMSBCTEVFQ0tFUiBTVFJFRVQgICAgICAgICAgIFVUSUNBICAgICAgICAgICAgICAgICAgICAgIE5ZMTM1MDEgICAgIFBOMDEwMjdGNDA5IDgwMDgzNTQ2MTEgICAgIExLMDEwNDhUUjAwMDBWWjAxQlRQMDAxVS5TLiBERVBUIE9GIEVEIC0gRElSRUNUIFNBMDExMDZQTyBCT1ggNTYwOSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBHUkVFTlZJTExFICAgICAgICAgICAgICAgICBUWDc1NDAzICAgICBQTjAxMDI3RjQwOSA4MDA4NDgwOTc5ICAgICBMSzAxMDQ4VFIwMDAwQkMwMURUVjAwMUNBUElUQUwgT05FIEJBTksgVVNBIE5BICBTQTAxMTA2UE8gQk9YIDMxMjkzICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgU0FMVCBMQUtFIENJVFkgICAgICAgICAgICAgVVQ4NDEzMSAgICAgUE4wMTAyN0Y0MDkgODAwOTU1NzA3MCAgICAgTEswMTA0OFRSMDAwMEVMMDFYUTMwMDFJU0wvSUEgU1REVCBMTiAgICAgICAgICAgU0EwMTEwNjY4MDUgVklTVEEgRFJJVkUgICAgICAgICAgICAgIEFTSEZPUkQgSSBCVUlMRElORyAgICAgICAgICAgIFdFU1QgREVTIE1PSU5FUyAgICAgICAgICAgIElBNTAyNjYgICAgIFBOMDEwMjdGNDA5IDgwMDI0Mzc1NTIgICAgIExLMDEwNDhUUjAwMDBCQzAyNlFLMDAxSlBNQ0IgQ0FSRCBTRVJWSUNFUyAgICAgIFNBMDExMDZQTyBCT1ggMTUzNjkgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBXSUxNSU5HVE9OICAgICAgICAgICAgICAgICBERTE5ODUwICAgICBQTjAxMDI3RjQwOSA4MDA5NDUyMDAwICAgICBMSzAxMDQ4VFIwMDAwRUwwNjNZUTA3OVNUVURFTlQgQVNTSVNUQU5DRSBGT1VORCBTQTAxMTA2MjUwMCBCUk9BRFdBWSAgICAgICAgICAgICAgICAgUE9CIDUyMDkgICAgICAgICAgICAgICAgICAgICAgSEVMRU5BICAgICAgICAgICAgICAgICAgICAgTVQ1OTYwNCAgICAgUE4wMTAyN0Y0MDkgODAwODUyMjc2MSAgICAgTEswMTA0OFRSMDAwMEJDMDcwMU4xMzRDSEFTRSBDQVJEICAgICAgICAgICAgICAgU0EwMTEwNlBPIEJPWCAxNTM2OSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFdJTE1JTkdUT04gICAgICAgICAgICAgICAgIERFMTk4NTAgICAgIFBOMDEwMjdGNDA5IDgwMDk0NTIwMDAgICAgIExLMDEwNDhUUjAwMDBCQzA3OTkxMTg5SFNCQyBCQU5LICAgICAgICAgICAgICAgIFNBMDExMDZQTyBCT1ggNTI1MyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDQVJPTCBTVFJFQU0gICAgICAgICAgICAgICBJTDYwMTk3ICAgICBQTjAxMDI3RjQwOSA4MDA0Nzc2MDAwICAgICBMSzAxMDQ4Q0wwMDAwWUMwMjU2QzAwMUgmUiBBQ0NPVU5UUyAgICAgICAgICAgICBTQTAxMTA2NTMyMCAyMk5EIEFWRSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTU9MSU5FICAgICAgICAgICAgICAgICAgICAgSUw2MTI2NSAgICAgUE4wMTAyN0Y0MDkgMzA5NzM2MjI1NSAgICAgTEswMTA0OElOMDYwMEEgMDY0MTI4MjlPREUvV0lMQ09YIEFVVE9NT1RJVkUgICAgU0EwMTEwNjMyMSAxOVRIIFNUUkVFVCBTVyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEZPUkVTVCBMQUtFICAgICAgICAgICAgICAgIE1ONTUwMjUgICAgIFBOMDEwMjdGMzA5IDY1MTQ2NDQyMTIgICAgIExLMDEwNDhJTjA5MjREIDAzNzY0MTQzTUVUQUJBTksvRklOR0VSSFVUICAgICAgIFNBMDExMDY3MDc1IEZMWUlORyBDTE9VRCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBFREVOIFBSQUlSSUUgICAgICAgICAgICAgICBNTjU1MzQ0ICAgICBQTjAxMDI3RjMwOSA4MDAzNTYyMzQ3ICAgICBMSzAxMDQ4SU4xMTIwTiAwMTAwODMxNVREIEFVVE8gRklOQU5DRSAgICAgICAgICBTQTAxMTA2RktBIENIUllTTEVSIEZJTkFOICAgICAgICAgICAgUE8gQk9YIDkyMjMgICgxMTMyICAgICAgICAgICAgRkFSTUlOR1RPTiBISUwgICAgICAgICAgICAgTUk0ODMzMyAgICAgUE4wMTAyN0YzMDkgODAwNTU2ODE3MiAgICAgTEswMTA0OElOMTEyME4gMDEyMDM1NDNBTExZIEZJTkFOQ0lBTCwgSU5DICAgICAgU0EwMTEwNlBPIEJPWCAzODA5MDEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEJMT09NSU5HVE9OICAgICAgICAgICAgICAgIE1ONTU0MzggICAgIFBOMDEwMjdGMzA5IDg4ODkyNTI1NTkgICAgIExLMDEwNDhJTjE1MjdGIDAwMDI3MDE2QU1FUklDUkVESVQgICAgICAgICAgICAgIFNBMDExMDY4MDEgQ0hFUlJZIFNUICAgICAgICAgICAgICAgICBTVUlURSAzOTAwICAgICAgICAgICAgICAgICAgICBGVCBXT1JUSCAgICAgICAgICAgICAgICAgICBUWDc2MTAyICAgICBQTjAxMDI3RjMwOSA4MDAyODQyMjcxICAgICBMSzAxMDQ4SU4xNzAyRiAwNTkxOTYzNENIQVNFIEFVVE8gICAgICAgICAgICAgICBTQTAxMTA2UC5PLiBCT1ggOTAxMDAzICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgRlQuIFdPUlRIICAgICAgICAgICAgICAgICAgVFg3NjEwMSAgICAgUE4wMTAyN0YzMDkgODAwMzM2NjY3NSAgICAgTEswMTA0OElOMzMxNEIgMDI2OTk4MjRDQVBJVEFMIE9ORSBCQU5LIFVTQSBOQSAgU0EwMTEwNlBPIEJPWCAgMzAyODEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFNBTFQgTEFLRSBDSVRZICAgICAgICAgICAgIFVUODQxMzAgICAgIFBOMDEwMjdGMzA5IDgwMDk1NTcwNzAgICAgIExLMDEwNDhJTjMzMTRGIDAxMjQ2NTM4Q0FQSVRBTCBPTkUgQVVUTyBGSU5BTkNFIFNBMDExMDYzOTA1IE4gREFMTEFTIFBBUksgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBQTEFOTyAgICAgICAgICAgICAgICAgICAgICBUWDc1MDkzICAgICBQTjAxMDI3RjMwOSA4MDA5NDYwMzMyICAgICBBTzAxMDE3MDY1MDAwMUgwMUFPMDEwMTcwMFc0MDAxICAgU0MwMTAzNDAwVzQwKzY1MyAgIEk5OCAxNCAxMiAzMCAwMkNIMDEwMzAwMFc0MFBPU1JFQTEgUDA4ICAgICAgIENIMDEwMzAwMFc0MFBPU1JFQTIgUDM0ICAgICAgIENIMDEwMzAwMFc0MFBPU1JFQTMgUDA3ICAgICAgIENIMDEwMzAwMFc0MFBPU1JFQTQgUDMyICAgICAgIEVORFMwMTAxMDE=",
+        "Bureau": {
+          "symbol": "TUC",
+          "description": "TransUnion",
+          "rank": 1,
+          "abbreviation": "TransUnion"
+        }
+      }
+    },
+    "SafetyCheckPassed": true,
+    "FraudIndicator": false,
+    "DeceasedIndicator": false,
+    "InquiryPartition": [
+      {
+        "Inquiry": {
+          "inquiryType": "I",
+          "IndustryCode": {
+            "symbol": "B",
+            "description": "Bank",
+            "rank": 199,
+            "abbreviation": "Bank"
+          },
+          "subscriberName": "CAP ONE",
+          "subscriberNumber": 2699824,
+          "bureau": "TransUnion",
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "inquiryDate": "2020-09-27"
+        }
+      },
+      {
+        "Inquiry": {
+          "inquiryType": "P",
+          "IndustryCode": {
+            "symbol": "F",
+            "description": "Finance/Personal",
+            "rank": 199,
+            "abbreviation": "Finance/Personal"
+          },
+          "subscriberName": "CHASE AUTO",
+          "subscriberNumber": 5919634,
+          "bureau": "TransUnion",
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "inquiryDate": "2020-08-16"
+        }
+      },
+      {
+        "Inquiry": {
+          "inquiryType": "I",
+          "IndustryCode": {
+            "symbol": "N",
+            "description": "Travel/Entertainment",
+            "rank": 199,
+            "abbreviation": "Travel/Entertainment"
+          },
+          "subscriberName": "TD AUTO FINA",
+          "subscriberNumber": 1008315,
+          "bureau": "TransUnion",
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "inquiryDate": "2020-08-16"
+        }
+      },
+      {
+        "Inquiry": {
+          "inquiryType": "I",
+          "IndustryCode": {
+            "symbol": "N",
+            "description": "Travel/Entertainment",
+            "rank": 199,
+            "abbreviation": "Travel/Entertainment"
+          },
+          "subscriberName": "ALLY FINAN I",
+          "subscriberNumber": 1203543,
+          "bureau": "TransUnion",
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "inquiryDate": "2020-08-16"
+        }
+      },
+      {
+        "Inquiry": {
+          "inquiryType": "I",
+          "IndustryCode": {
+            "symbol": "A",
+            "description": "Automotive",
+            "rank": 199,
+            "abbreviation": "Automotive"
+          },
+          "subscriberName": "WILCOX AUTO",
+          "subscriberNumber": 6412829,
+          "bureau": "TransUnion",
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "inquiryDate": "2020-08-16"
+        }
+      },
+      {
+        "Inquiry": {
+          "inquiryType": "I",
+          "IndustryCode": {
+            "symbol": "F",
+            "description": "Finance/Personal",
+            "rank": 199,
+            "abbreviation": "Finance/Personal"
+          },
+          "subscriberName": "COAF",
+          "subscriberNumber": 1246538,
+          "bureau": "TransUnion",
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "inquiryDate": "2020-08-11"
+        }
+      },
+      {
+        "Inquiry": {
+          "inquiryType": "I",
+          "IndustryCode": {
+            "symbol": "N",
+            "description": "Travel/Entertainment",
+            "rank": 199,
+            "abbreviation": "Travel/Entertainment"
+          },
+          "subscriberName": "ALLY FINAN I",
+          "subscriberNumber": 1203543,
+          "bureau": "TransUnion",
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "inquiryDate": "2020-08-11"
+        }
+      },
+      {
+        "Inquiry": {
+          "inquiryType": "P",
+          "IndustryCode": {
+            "symbol": "F",
+            "description": "Finance/Personal",
+            "rank": 199,
+            "abbreviation": "Finance/Personal"
+          },
+          "subscriberName": "AMERICREDIT",
+          "subscriberNumber": 27016,
+          "bureau": "TransUnion",
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "inquiryDate": "2020-08-11"
+        }
+      },
+      {
+        "Inquiry": {
+          "inquiryType": "I",
+          "IndustryCode": {
+            "symbol": "D",
+            "description": "Department/Variety and Other Retail",
+            "rank": 199,
+            "abbreviation": "Department/Variety and Other Retail"
+          },
+          "subscriberName": "METABNK/FHUT",
+          "subscriberNumber": 3764143,
+          "bureau": "TransUnion",
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "Reference": "96da013e-b71a-404b-9f5",
+            "BorrowerKey": "",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "inquiryDate": "2019-10-24"
+        }
+      }
+    ],
+    "PulblicRecordPartition": {
+      "PublicRecord": {
+        "Status": {
+          "symbol": 1,
+          "description": "Discharged",
+          "rank": 199,
+          "abbreviation": "Discharged"
+        },
+        "IndustryCode": {
+          "symbol": "Z",
+          "description": "Miscellaneous",
+          "rank": 199,
+          "abbreviation": "Miscellaneous"
+        },
+        "subscriberCode": 5001694,
+        "handle": "PR01_1657419304_-1031353275",
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "Reference": "96da013e-b71a-404b-9f5",
+          "BorrowerKey": "",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        },
+        "Type": {
+          "symbol": 1,
+          "description": "Chapter 7 Bankruptcy",
+          "rank": 199,
+          "abbreviation": "Chapter 7 Bankruptcy"
+        },
+        "courtName": "Federal District",
+        "referenceNumber": "7X1X8X",
+        "Classification": {
+          "symbol": "B",
+          "description": "Bankruptcy",
+          "rank": 199,
+          "abbreviation": "Bankruptcy"
+        },
+        "bureau": "TransUnion",
+        "AccountDesignator": {
+          "symbol": "J",
+          "description": "Joint",
+          "rank": 199,
+          "abbreviation": "Joint"
+        },
+        "Bankruptcy": {
+          "division": "",
+          "thirdParty": "",
+          "courtNumber": "",
+          "dateResolved": "2016-11-25",
+          "assetAmount": 0,
+          "liabilityAmount": 0,
+          "trustee": "",
+          "company": "",
+          "exemptAmount": 0
+        },
+        "dateFiled": "2016-08-18"
+      }
+    }
+  }
+}

@@ -282,7 +282,7 @@ export const parseDisputeToEmployer = (disputes: IProcessDisputePersonalResult[]
           City: employer?.CreditAddress?.city,
           Delete: 'true',
           Name: employer?.name,
-          Occupation: null,
+          Occupation: 'SUPPORT STAFF',
           State: employer?.CreditAddress?.stateCode,
           ZipCode: employer?.CreditAddress?.postalCode,
         },

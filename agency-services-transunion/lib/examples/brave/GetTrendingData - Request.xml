@@ -11,11 +11,11 @@
         <data:AdditionalInputs>
           <data:Data>
             <data:Name>CreditReportVersion</data:Name>
-            <data:Value>7.1</data:Value>
+            <data:Value>7</data:Value>
           </data:Data>
         </data:AdditionalInputs>
-        <data:RequestKey>BC-c9019d22-12a8-4793-ae94-81d0fb222caf</data:RequestKey>
-        <data:ClientKey>519fe0d8-c8d6-4fa7-8985-e511adcd53a5</data:ClientKey>
+        <data:RequestKey>BC-cb615c85-c54b-4388-9bfc-f663c688c0d7</data:RequestKey>
+        <data:ClientKey>4890d055-db04-47f5-acbd-2a4a909fa77f</data:ClientKey>
         <data:FromDate>2021-09-11T00:00:00.000Z20</data:FromDate>
         <data:GetPartnerTrendingData>false</data:GetPartnerTrendingData>
         <data:GetProductTrendingData>true</data:GetProductTrendingData>
