@@ -77,6 +77,16 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       identityId: '',
     };
     // const results: any = await queries.DisputeInflightCheck(payload);
+    // pre-step: seed db with current records
+    // step 1. need to listen to new users created from the app database and create an initial record in the db if doesn't exist already
+    // step 2. going through each record, call fulfill (regardless of last time that the user called fulfill in the app)
+    // step 2b. query for the users credit score record
+    // step 2c. move the current score to the prior score field. update the current score with the score from the fulfill results
+    // step 2d. note if the delta.
+    // step 2e. save record to database and move to next record.
+
+    // external: will need to add a email monitor to track the updates on the table and send emails out to the users when their score has updated
+
     const results = {};
 
     return JSON.stringify(results);
