@@ -106,3 +106,11 @@ export const getDispute = async (msg: IGetDisputeRequest): Promise<AxiosResponse
     return err;
   }
 };
+
+export const listCreditScores = async (): Promise<AxiosResponse<any>> => {
+  try {
+    return await postGraphQLRequest(qry.listVantageScores, null);
+  } catch (err) {
+    return err;
+  }
+};

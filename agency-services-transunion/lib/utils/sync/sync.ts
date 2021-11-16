@@ -50,7 +50,7 @@ export class Sync {
     console.log('url ===> ', appsyncUrl);
     let payload = {
       query: print(gql(query)),
-      variables: variables,
+      variables,
     };
     let opts = {
       method: 'POST',

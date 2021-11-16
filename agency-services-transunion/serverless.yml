@@ -116,6 +116,9 @@ functions:
       - { Ref: TuCertsLambdaLayer }
     events:
       - schedule: cron(0 16 17 * ? *)
+  seedCreditScoreTrackingsTable:
+    handler: src/handlers/transunion/seedCreditScoreTrackingsTable.main
+    timeout: 30
 
   # SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
 
