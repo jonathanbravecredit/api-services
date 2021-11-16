@@ -16,7 +16,7 @@ export const getCreditScoreTracking = (userId: string, bureauId: string): Promis
 
 export const listCreditScoresTrackings = (): Promise<CreditScoreTracking[]> => {
   return store
-    .query()
+    .scan()
     .execFetchAll()
     .then((res) => res)
     .catch((err) => err);
