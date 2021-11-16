@@ -107,6 +107,13 @@ functions:
       - { Ref: TuCertsLambdaLayer }
     events:
       - schedule: cron(0 16 * * ? *)
+  creditScoreUpdatesService:
+    handler: src/handlers/transunion/creditScoreUpdatesService.main
+    timeout: 30
+    layers:
+      - { Ref: TuCertsLambdaLayer }
+    events:
+      - schedule: cron(0 16 17 * ? *)
 
   # SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
 
