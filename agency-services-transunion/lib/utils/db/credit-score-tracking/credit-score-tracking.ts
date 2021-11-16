@@ -4,6 +4,7 @@ import {
   updateCreditScoreTracking,
   deleteCreditScoreTracking,
   describeCreditScoreTrackings,
+  listCreditScoresTrackings,
 } from 'lib/utils/db/credit-score-tracking/queries/credit-score-tracking.queries';
 
 export class CreditScoreTrackingUtil {
@@ -11,6 +12,7 @@ export class CreditScoreTrackingUtil {
 
   static create = createCreditScoreTracking;
   static get = getCreditScoreTracking;
+  static list = listCreditScoresTrackings;
   static update = updateCreditScoreTracking;
   static delete = deleteCreditScoreTracking;
   static describe = describeCreditScoreTrackings;

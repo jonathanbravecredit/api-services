@@ -14,6 +14,14 @@ export const getCreditScoreTracking = (userId: string, bureauId: string): Promis
     .catch((err) => err);
 };
 
+export const listCreditScoresTrackings = (): Promise<CreditScoreTracking[]> => {
+  return store
+    .query()
+    .execFetchAll()
+    .then((res) => res)
+    .catch((err) => err);
+};
+
 export const createCreditScoreTracking = (score: CreditScoreTracking): Promise<PutItemOutput> => {
   const createdOn = new Date().toISOString();
   const newScore = {

@@ -616,6 +616,96 @@ export const Fulfill = async (
   }
 };
 
+
+/**
+ * A returning user can refresh their report by calling fulfill
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const FulfillByUserId = async (
+  {
+    accountCode,
+    username,
+    message,
+    agent,
+    auth,
+    identityId,
+  }: {
+    accountCode: string;
+    username: string;
+    message: string;
+    agent: https.Agent;
+    auth: string;
+    identityId: string;
+  },
+  dispute: boolean = false,
+): Promise<{
+  success: boolean;
+  error?: interfaces.IErrorResponse | interfaces.INil | string;
+  data?: interfaces.IFulfillResult;
+}> => {
+  // validate incoming message
+  const payload: interfaces.IGenericRequest = { id: identityId };
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
+  if (!validate(payload)) throw `Malformed message=${payload}`;
+
+  //create helper classes
+  const soap = new SoapAid(tu.parseFulfill, tu.formatFulfill, tu.createFulfill, tu.createFulfillPayload);
+  const sync = new Sync(tu.enrichFulfillData);
+
+  try {
+    // get / parse data needed to process request
+    const prepped = await qrys.getDataForFulfill(payload);
+    const resp = await soap.parseAndSendPayload<interfaces.IFulfillResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      prepped.data,
+      'Fulfill',
+      parserOptions,
+    );
+
+    // get the specific response from parsed object
+    const data = returnNestedObject<interfaces.IFulfillResult>(resp, 'FulfillResult');
+    const responseType = data.ResponseType;
+    const error = data.ErrorResponse;
+
+    // log tu responses
+    const l1 = transactionLogger.createTransaction(identityId, 'Fulfill:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'Fulfill:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'Fulfill:error', JSON.stringify(error));
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
+
+    let response;
+    if (responseType.toLowerCase() === 'success') {
+      const synced = await sync.syncData({ id: payload.id }, data, dispute);
+      response = synced
+        ? { success: true, error: null, data: data }
+        : { success: false, error: 'failed to sync data to db' };
+    } else {
+      response = { success: false, error: error };
+    }
+
+    // log success response
+    const l4 = transactionLogger.createTransaction(identityId, 'Fulfill:response', JSON.stringify(response));
+    await transactionLogger.logger.create(l4);
+
+    return response;
+  } catch (err) {
+    // log error response
+    const error = errorLogger.createError(identityId, 'Fulfill', JSON.stringify(err));
+    await errorLogger.logger.create(error);
+    return { success: false, error: err };
+  }
+};
+
 /**
  * A returning user can refresh their report by calling fulfill
  * @param {string} accountCode Brave account code

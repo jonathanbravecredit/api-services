@@ -4,8 +4,13 @@ import * as https from 'https';
 import * as fs from 'fs';
 import * as queries from 'lib/proxy';
 import * as secrets from 'lib/utils/secrets/secrets';
+import { DB } from 'lib/utils/db/db';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
+import { returnNestedObject } from 'lib/utils';
+import { IFulfillServiceProductResponse } from 'lib/interfaces';
+import { IVantageScore } from 'lib/interfaces/transunion/vantage-score.interface';
+import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -68,7 +73,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       cert,
       passphrase,
     });
-    const payload = {
+    let payload = {
       accountCode,
       username,
       message,
@@ -79,20 +84,58 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     // const results: any = await queries.DisputeInflightCheck(payload);
     // pre-step: seed db with current records
     // step 1. need to listen to new users created from the app database and create an initial record in the db if doesn't exist already
+    const scores = await DB.creditScoreTrackings.list();
     // step 2. going through each record, call fulfill (regardless of last time that the user called fulfill in the app)
-    // step 2b. query for the users credit score record
-    // step 2c. move the current score to the prior score field. update the current score with the score from the fulfill results
-    // step 2d. note if the delta.
-    // step 2e. save record to database and move to next record.
-
-    // external: will need to add a email monitor to track the updates on the table and send emails out to the users when their score has updated
-
-    const results = {};
-
+    await Promise.all(
+      scores.map(async (score) => {
+        // step 2b. query for the users credit score record
+        payload = { ...payload, identityId: score.userId };
+        const fulfill = await queries.Fulfill(payload);
+        const { success } = fulfill;
+        let fulfillVantageScore: IFulfillServiceProductResponse;
+        if (success) {
+          const prodResponse = fulfill.data?.ServiceProductFulfillments.ServiceProductResponse; //returnNestedObject<any>(fulfill, 'ServiceProductResponse');
+          if (!prodResponse) return;
+          if (prodResponse instanceof Array) {
+            fulfillVantageScore = prodResponse.find((item: IFulfillServiceProductResponse) => {
+              return item['ServiceProduct'] === 'TUCVantageScore3';
+            });
+          } else if (prodResponse['ServiceProduct'] === 'TUCVantageScore3') {
+            fulfillVantageScore = prodResponse || null;
+          }
+          const prodObj = fulfillVantageScore.ServiceProductObject;
+          let vantageScore: IVantageScore;
+          if (typeof prodObj === 'string') {
+            vantageScore = JSON.parse(prodObj);
+          } else if (typeof prodObj === 'object') {
+            vantageScore = prodObj;
+          }
+          // parse the new score
+          const {
+            CreditScoreType: { riskScore },
+          } = vantageScore;
+          if (!riskScore) return;
+          // step 2c. move the current score to the prior score field. update the current score with the score from the fulfill results
+          const priorScore = score.currentScore;
+          // step 2d. note if the delta.
+          const delta = priorScore - riskScore;
+          const newScore: CreditScoreTracking = {
+            ...score,
+            delta,
+            priorScore,
+            currentScore: riskScore,
+          };
+          // step 2e. save record to database and move to next record.
+          console.log('new score ==> ', newScore);
+          await DB.creditScoreTrackings.update(newScore);
+        }
+      }),
+    );
+    const results = { success: true, error: null, data: null };
     return JSON.stringify(results);
   } catch (err) {
     const error = errorLogger.createError('credit_score_updates_system', 'unknown_server_error', JSON.stringify(err));
     await errorLogger.logger.create(error);
-    return { success: false, error: { error: `Unknown server error=${err}` } };
+    return JSON.stringify({ success: false, error: { error: `Unknown server error=${err}` } });
   }
 };
