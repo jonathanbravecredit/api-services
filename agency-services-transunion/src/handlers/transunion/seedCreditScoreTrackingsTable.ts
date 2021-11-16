@@ -30,7 +30,11 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
   try {
     // go to the app database and get all the records then form the payload
     // and create the records in the creditScoreTrackings Table
-    const scores = await listCreditScores();
+    const {
+      data: {
+        data: { listAppDatas: scores },
+      },
+    } = await listCreditScores();
     console.log('all scores ===> ', scores);
     const results = { success: true, error: null, data: null };
     return JSON.stringify(results);
