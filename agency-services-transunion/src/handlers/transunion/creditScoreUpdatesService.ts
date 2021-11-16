@@ -80,13 +80,10 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       auth,
       identityId: '',
     };
-    console.log('https agent ==> ', httpsAgent);
-    console.log('payload ==> ', payload);
     // const results: any = await queries.DisputeInflightCheck(payload);
     // pre-step: seed db with current records
     // step 1. need to listen to new users created from the app database and create an initial record in the db if doesn't exist already
     const scores = await DB.creditScoreTrackings.list();
-    console.log('score ==> ', JSON.stringify(scores));
     // step 2. going through each record, call fulfill (regardless of last time that the user called fulfill in the app)
     await Promise.all(
       scores.map(async (score) => {
@@ -121,7 +118,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
           // step 2c. move the current score to the prior score field. update the current score with the score from the fulfill results
           const priorScore = score.currentScore;
           // step 2d. note if the delta.
-          const delta = priorScore - riskScore;
+          const delta = riskScore - priorScore;
           const newScore: CreditScoreTracking = {
             ...score,
             delta,
