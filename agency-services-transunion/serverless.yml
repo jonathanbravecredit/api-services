@@ -50,6 +50,7 @@ provider:
     DISPUTES_TABLE: 'Disputes'
     CREDIT_BUREAU_TABLE: 'CreditBureauReportResults'
     INVESTIGATION_RESULTS_TABLE: 'InvestigationResults'
+    CREDIT_SCORE_UPDATES_TABLE: 'CreditScoreTrackings'
     ACCOUNT_ID: !Sub '${AWS::AccountId}'
     IDENTITY_ID: '${self:custom.settings.IDENTITY_IDS.${opt:stage}}'
     POOL_ID: '${self:custom.settings.POOL_IDS.${opt:stage}}'
@@ -89,6 +90,7 @@ provider:
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.DISPUTES_TABLE}'
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_BUREAU_TABLE}'
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.INVESTIGATION_RESULTS_TABLE}'
+        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_SCORE_UPDATES_TABLE}'
 
 layers:
   TuCerts:
@@ -521,6 +523,15 @@ resources:
       Value: { 'Fn::GetAtt': ['CreditBureauReportResults', 'StreamArn'] }
       Export:
         Name: !Sub '${self:service}-creditbureau-stream'
+    CreditScoreTrackings:
+      Description: 'CreditScoreTrackings'
+      Value: !Ref CreditScoreTrackings
+      Export:
+        Name: !Sub '${self:service}-creditscoretrackings'
+    CreditScoreTrackingsTableStreamArn:
+      Value: { 'Fn::GetAtt': ['CreditScoreTrackings', 'StreamArn'] }
+      Export:
+        Name: !Sub '${self:service}-creditscoretrackings-stream'
     VPC:
       Description: 'VPC'
       Value: !Ref VPC

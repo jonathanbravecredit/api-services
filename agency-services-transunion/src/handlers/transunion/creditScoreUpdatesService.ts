@@ -7,7 +7,6 @@ import * as secrets from 'lib/utils/secrets/secrets';
 import { DB } from 'lib/utils/db/db';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
-import { returnNestedObject } from 'lib/utils';
 import { IFulfillServiceProductResponse } from 'lib/interfaces';
 import { IVantageScore } from 'lib/interfaces/transunion/vantage-score.interface';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
@@ -81,15 +80,19 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       auth,
       identityId: '',
     };
+    console.log('https agent ==> ', httpsAgent);
+    console.log('payload ==> ', payload);
     // const results: any = await queries.DisputeInflightCheck(payload);
     // pre-step: seed db with current records
     // step 1. need to listen to new users created from the app database and create an initial record in the db if doesn't exist already
     const scores = await DB.creditScoreTrackings.list();
+    console.log('score ==> ', JSON.stringify(scores));
     // step 2. going through each record, call fulfill (regardless of last time that the user called fulfill in the app)
     await Promise.all(
       scores.map(async (score) => {
         // step 2b. query for the users credit score record
         payload = { ...payload, identityId: score.userId };
+        console.log('payload ==> ', JSON.stringify(payload));
         const fulfill = await queries.Fulfill(payload);
         const { success } = fulfill;
         let fulfillVantageScore: IFulfillServiceProductResponse;
