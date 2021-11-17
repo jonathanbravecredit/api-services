@@ -182,52 +182,6 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
         disputeEnrollmentKey
         disputeEnrolled
         disputeEnrolledOn
-        disputeStatus
-        disputes {
-          __typename
-          id
-          appDataId
-          disputeId
-          disputeStatus
-          disputeLetterCode
-          disputeLetterContent
-          openDisputes {
-            __typename
-            estimatedCompletionDate
-            lastUpdatedDate
-            openDate
-            requestedDate
-            totalClosedDisputedItems
-            totalDisputedItems
-            totalOpenDisputedItems
-            totalPVDisputedItemCount
-          }
-          closedDisputes {
-            __typename
-            estimatedCompletionDate
-            lastUpdatedDate
-            openDate
-            requestedDate
-            totalClosedDisputedItems
-            totalDisputedItems
-            totalOpenDisputedItems
-            totalPVDisputedItemCount
-          }
-          pvDisputedItems {
-            __typename
-            pvTradelines
-            pvPublicRecords
-          }
-          agencyName
-          openedOn
-          closedOn
-          disputeItems
-          disputeInvestigationResults
-          disputeCreditBureau
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         __typename
@@ -707,52 +661,6 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
         disputeEnrollmentKey
         disputeEnrolled
         disputeEnrolledOn
-        disputeStatus
-        disputes {
-          __typename
-          id
-          appDataId
-          disputeId
-          disputeStatus
-          disputeLetterCode
-          disputeLetterContent
-          openDisputes {
-            __typename
-            estimatedCompletionDate
-            lastUpdatedDate
-            openDate
-            requestedDate
-            totalClosedDisputedItems
-            totalDisputedItems
-            totalOpenDisputedItems
-            totalPVDisputedItemCount
-          }
-          closedDisputes {
-            __typename
-            estimatedCompletionDate
-            lastUpdatedDate
-            openDate
-            requestedDate
-            totalClosedDisputedItems
-            totalDisputedItems
-            totalOpenDisputedItems
-            totalPVDisputedItemCount
-          }
-          pvDisputedItems {
-            __typename
-            pvTradelines
-            pvPublicRecords
-          }
-          agencyName
-          openedOn
-          closedOn
-          disputeItems
-          disputeInvestigationResults
-          disputeCreditBureau
-          notificationStatus
-          notificationMessage
-          notificationSentOn
-        }
       }
       equifax {
         __typename
@@ -826,3 +734,30 @@ export const updatePreflightStatus = `mutation UpdatePreflightStatus($id: ID!, $
     }
   }
 }`;
+
+/**
+ * Lists all the transunion vantage scores from the database
+ */
+export const listVantageScores = `query ListAppDatas($filter: ModelAppDataFilterInput, $limit: Int, $nextToken: String) {
+    listAppDatas(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        agencies {
+          transunion {
+            fulfillVantageScore {
+              bureau
+              errorResponse
+              serviceProduct
+              serviceProductFullfillmentKey
+              serviceProductObject
+              serviceProductTypeId
+              serviceProductValue
+              status
+            }
+
+          }
+        }
+      }
+      nextToken
+    }
+  }`;

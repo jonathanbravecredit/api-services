@@ -2,7 +2,9 @@ import { IRequestOptions } from 'lib/interfaces';
 import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
 import axios from 'axios';
+import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 
+const transactionLogger = new TransactionLogger();
 const tuEnv = process.env.TU_ENV;
 const tuUrl =
   tuEnv === 'dev'
@@ -32,7 +34,8 @@ export class SoapAid {
   requestPayload: IRequestOptions;
   msg: string;
   xml: string;
-
+  envUrl: string;
+  host: string;
   constructor(
     parser: (
       xmlData: string,
@@ -44,11 +47,15 @@ export class SoapAid {
     cbPayload: (data: any, params?: any) => any = (a): any => {
       return a;
     },
+    envUrl: string = tuUrl,
+    host: string = tuHost,
   ) {
     this.parser = parser;
     this.cbMsg = cbMsg;
     this.cbXml = cbXml;
     this.cbPayload = cbPayload; // can send preformed payload
+    this.envUrl = envUrl;
+    this.host = host;
   }
 
   /**
@@ -90,7 +97,7 @@ export class SoapAid {
    */
   createRequestPayload(httpsAgent: https.Agent, auth: string, data: string, SOAPAction: string): IRequestOptions {
     this.requestPayload = {
-      url: tuUrl,
+      url: this.envUrl,
       method: 'POST',
       data: data,
       httpsAgent,
@@ -100,7 +107,7 @@ export class SoapAid {
         SOAPAction: `https://consumerconnectws.tui.transunion.com/ICC2/${SOAPAction}`,
         Authorization: auth,
         'Content-Length': data.length,
-        Host: tuHost,
+        Host: this.host,
         Connection: 'Keep-Alive',
         'User-Agent': 'Apache-HttpClient/4.5.2 (Java/1.8.0_181)',
       },
@@ -120,7 +127,8 @@ export class SoapAid {
     try {
       const res = await axios({ ...request });
       const results = this.parser(res.data, parserOptions);
-      console.log('soap-aid:parser results ===> ', results);
+      const l1 = transactionLogger.createTransaction('soap_aid', 'parser_results', JSON.stringify(results));
+      await transactionLogger.logger.create(l1);
       return results;
     } catch (err) {
       console.log('processRequest:err ===> ', err);
@@ -139,6 +147,7 @@ export class SoapAid {
   async processMockRequest<T>(mock: string, parserOptions: Partial<fastXml.X2jOptions>): Promise<T> {
     try {
       const results = this.parser(mock, parserOptions);
+      console.log('MOCK parsed response ==> ', JSON.stringify(results));
       return results;
     } catch (err) {
       console.log('processRequest:err ===> ', err);

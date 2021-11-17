@@ -126,6 +126,7 @@ export interface IEmployer extends IPartitionElements {
   CreditAddress?: ICreditAddress;
   Source?: ISource;
   name?: string;
+  occupation?: string;
 }
 export interface ISocialPartition {
   Social?: ISocial | ISocial[];

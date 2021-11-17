@@ -1,41 +1,37 @@
-import { IStandardResponse } from 'lib/interfaces';
+import { IDisputeStatus, IProcessDisputeTradelineResult, IStandardResponse } from 'lib/interfaces';
 
-export interface IGetDisputeStatusGraphQLResponse {
-  data: {
-    getAppData: {
-      id?: string;
-      agencies?: {
-        transunion?: {
-          disputeEnrollmentKey?: string;
-        };
+export interface IGetDataForGetDisputeStatus {
+  id?: string;
+  agencies?: {
+    transunion?: {
+      disputeEnrollmentKey?: string;
+    };
+  };
+  user?: {
+    userAttributes?: {
+      name?: {
+        first?: string;
+        middle?: string;
+        last?: string;
       };
-      user?: {
-        userAttributes?: {
-          name?: {
-            first?: string;
-            middle?: string;
-            last?: string;
-          };
-          address?: {
-            addressOne?: string;
-            addressTwo?: string;
-            city?: string;
-            state?: string;
-            zip?: string;
-          };
-          phone?: {
-            primary?: string;
-          };
-          dob?: {
-            year?: string;
-            month?: string;
-            day?: string;
-          };
-          ssn?: {
-            lastfour?: string;
-            full?: string;
-          };
-        };
+      address?: {
+        addressOne?: string;
+        addressTwo?: string;
+        city?: string;
+        state?: string;
+        zip?: string;
+      };
+      phone?: {
+        primary?: string;
+      };
+      dob?: {
+        year?: string;
+        month?: string;
+        day?: string;
+      };
+      ssn?: {
+        lastfour?: string;
+        full?: string;
       };
     };
   };
@@ -66,6 +62,7 @@ export interface IGetDisputeStatusPayload {
     };
     Ssn: string;
   };
+  DisputeId?: string;
   EnrollmentKey: string;
 }
 
@@ -123,5 +120,20 @@ export interface IGetDisputeStatusResponse {
 }
 
 export interface IGetDisputeStatusResult extends IStandardResponse {
-  DisputeStatus: string;
+  DisputeStatus: null | IDisputeStatus;
+  // DisputeId?: string | number;
+}
+
+// By ID specific
+export interface IGetDisputeStatusByIdRequest {
+  disputeId: string;
+}
+
+export interface IGetDisputeStatusByIdPayload extends IGetDisputeStatusByIdRequest {
+  id: string;
+}
+
+// I need to bundle our dispute package with the dispute resp from TU
+export interface IUpdateDisputeBundle {
+  updateDisputeResult: IGetDisputeStatusResult;
 }

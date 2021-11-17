@@ -1,0 +1,163 @@
+{
+  "fulfillVantageScore": {
+    "serviceProductObject": {
+      "CreditScoreType": {
+        "NoScoreReason": {
+          "symbol": "",
+          "description": "",
+          "rank": 100000,
+          "abbreviation": ""
+        },
+        "CreditScoreModel": {
+          "symbol": "00W40",
+          "description": "VantageScore 3.0 with Positive Score Factors",
+          "rank": 10000,
+          "abbreviation": "VantageScore 3.0 with Positive Score Factors"
+        },
+        "riskScore": 561,
+        "populationRank": 26,
+        "Source": {
+          "InquiryDate": "2021-07-08",
+          "BorrowerKey": "",
+          "Reference": "673dd66d-9e82-4b68-8e3",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        },
+        "scoreName": "VantageScore3",
+        "CreditScoreFactor": [
+          {
+            "bureauCode": 98,
+            "FactorType": "Negative",
+            "FactorText": [
+              "explain: Bankruptcy is a proven indicator of risk with future payments and causes a significant drop to your credit score over an extended period of time.",
+              "factor: There is a bankruptcy on your credit report",
+              "cando: Make all future payments on time. The impact on your credit score from the bankruptcy will diminish over time."
+            ],
+            "Factor": {
+              "symbol": 98,
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            }
+          },
+          {
+            "bureauCode": 8,
+            "FactorType": "Negative",
+            "FactorText": [
+              "explain: You have had too many accounts with late payments or do not have enough loans to provide sufficient information about your credit behaviors. Late payments are a proven indicator of increased risk. People with late payments are at risk of being overextended, putting existing credit with lenders at risk.",
+              "factor: You have either very few loans or too many loans with recent delinquencies",
+              "cando: Paying bills on time every month is important to maintaining a good credit score. If you remain behind with any payments, bring them current as soon as possible, and then make future payments on time. Over time, this will have a positive impact on your score."
+            ],
+            "Factor": {
+              "symbol": 8,
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            }
+          },
+          {
+            "bureauCode": 21,
+            "FactorType": "Negative",
+            "FactorText": [
+              "explain: The VantageScore credit score model relies on information in your credit files at the three national credit reporting companies (Equifax, Experian and TransUnion) to generate your score. Because you have no open accounts, your credit file does not contain enough information about your use of credit. A mix of different types of open and active credit accounts can have a positive impact on your credit score.",
+              "factor: No open accounts in your credit file",
+              "cando: Maintaining open and active credit accounts in good standing can help improve your credit score."
+            ],
+            "Factor": {
+              "symbol": 21,
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            }
+          },
+          {
+            "bureauCode": 95,
+            "FactorType": "Negative",
+            "FactorText": [
+              "explain: Some collection agencies report account information to credit bureaus just like lenders do. Your credit file has too many accounts that have been sent to a collection agency and remain unpaid. Unpaid collection accounts in your file can have a significant negative impact on your credit score.",
+              "factor: You have too many collection agency accounts that are unpaid",
+              "cando: Satisfy all collection accounts and pay all other accounts on time each month. The impact that negative items such as collections accounts have on your credit score will diminish over time."
+            ],
+            "Factor": {
+              "symbol": 95,
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            }
+          },
+          {
+            "bureauCode": "P49",
+            "FactorType": "Positive",
+            "FactorText": [
+              "explain: Bankcard accounts include credit cards and charge cards from a bank and are frequently revolving accounts. Revolving accounts allow you to carry a balance and your monthly payment will vary, based on the amount of your balance. The VantageScore credit score model relies on information in your credit files at the three national credit reporting companies (Equifax, Experian and TransUnion) to generate your score. Because you have no open bankcard or revolving accounts, your credit file does not contain enough information about your use of credit. A mix of different types of open and active credit accounts can have a positive impact on your score.",
+              "factor: Lack of sufficient relevant bankcard or revolving account information",
+              "cando: Maintaining open and active credit accounts in good standing can help improve your credit score."
+            ],
+            "Factor": {
+              "symbol": "P49",
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            }
+          },
+          {
+            "bureauCode": "P88",
+            "FactorType": "Positive",
+            "FactorText": [
+              "explain: Public records include information filed or recorded by local, state, federal or other government agencies that is available to the general public. The types of public records that can affect your score include legal judgments against you and tax liens levied by a government authority. You have few or no public records on your credit report, which increases your score.",
+              "factor: You have no recent derogatory public records on your credit report",
+              "cando: Pay all bills on-time and satisfy all judgments. The impact that negative items such as public records have on your credit score will diminish over time."
+            ],
+            "Factor": {
+              "symbol": "P88",
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            }
+          },
+          {
+            "bureauCode": "P14",
+            "FactorType": "Positive",
+            "FactorText": [
+              "explain: A credit file with sufficient accounts and credit history reflects more experience in handling credit. More experience can have a positive impact on your score.",
+              "factor: Your credit file contains enough information about your use of credit",
+              "cando: Maintaining open and active credit accounts in good standing can help improve your credit score."
+            ],
+            "Factor": {
+              "symbol": "P14",
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            }
+          },
+          {
+            "bureauCode": "P05",
+            "FactorType": "Positive",
+            "FactorText": [
+              "explain: A delinquency is a payment that was made 30 or more days late. You have had no or very few delinquencies recently which has caused your score to improve.",
+              "factor: There are no or only a few recent delinquencies on your accounts",
+              "cando: Keep paying bills on time every month since it is important for maintaining a good credit score. If you remain behind with any payments, bring them current as soon as possible, and then make future payments on time. Over time, this will have a positive impact on your score."
+            ],
+            "Factor": {
+              "symbol": "P05",
+              "description": "",
+              "rank": 100000,
+              "abbreviation": ""
+            }
+          }
+        ]
+      }
+    },
+    "serviceProduct": "TUCVantageScore3",
+    "serviceProductTypeId": "VantageScore",
+    "bureau": "TransUnion",
+    "serviceProductFullfillmentKey": "b01e4bea-b108-41d0-ba13-7c8873fdd725",
+    "serviceProductValue": "561",
+    "errorResponse": "true",
+    "status": "Success"
+  }
+}

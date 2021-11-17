@@ -1,0 +1,65 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data"
+  xmlns:arr="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:StartDispute>
+      <con:request>
+        <data:AccountCode>123456789</data:AccountCode>
+        <data:AccountName>CC2BraveCredit</data:AccountName>
+        <data:AdditionalInputs>
+          <data:Data>
+            <data:Name>DisputeVersion</data:Name>
+            <data:Value>2</data:Value>
+          </data:Data>
+        </data:AdditionalInputs>
+        <data:RequestKey>BC-90b8c0c9-d7f1-416e-87cc-f59d3b2e0b2d</data:RequestKey>
+        <data:ClientKey>ae994448-9f69-4975-add8-5d84afe6ceca</data:ClientKey>
+        <data:Customer>
+          <data:CurrentAddress>
+            <data:AddressLine1>2522 Avenue I</data:AddressLine1>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:City>Fort Madison</data:City>
+            <data:State>IA</data:State>
+            <data:Zipcode>52627</data:Zipcode>
+          </data:CurrentAddress>
+          <data:DateOfBirth>1969-03-01</data:DateOfBirth>
+          <data:FullName>
+            <data:FirstName>Libby</data:FirstName>
+            <data:LastName>Rittenhouse</data:LastName>
+            <data:MiddleName>S</data:MiddleName>
+            <data:Prefix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Suffix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:FullName>
+          <data:PhoneNumber xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          <data:Ssn>666842740</data:Ssn>
+          <data:Identifier>
+            <data:CustomerIdentifier>
+              <data:Id>666842740</data:Id>
+              <data:IdentifierType>SocialId</data:IdentifierType>
+            </data:CustomerIdentifier>
+          </data:Identifier>
+        </data:Customer>
+        <data:Employers xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <data:EnrollmentKey>788b6a4b-4c05-46d9-9fd1-0b127dcacaa2</data:EnrollmentKey>
+        <data:IndicativeDisputes>
+          <data:Aka>
+            <data:ValueData>
+              <data:Delete>true</data:Delete>
+              <data:Value>GORMAN,LIBBY,S </data:Value>
+            </data:ValueData>
+          </data:Aka>
+          <data:PreviousAddress xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        </data:IndicativeDisputes>
+        <data:ServiceBundleFulfillmentKey>f52ac2f9-d1e0-4f0f-b0a7-c6b00197cd08</data:ServiceBundleFulfillmentKey>
+      </con:request>
+    </con:StartDispute>
+  </soapenv:Body>
+</soapenv:Envelope>

@@ -5,10 +5,12 @@ import * as schemaGetAuthenticationQuestionsRequest from './schema_get-authentic
 import * as schemaVerifyAuthenticationQuestionsRequest from './schema_verify-authentication-questions-request.json';
 import * as schemaStartDisputeRequest from './schema_start-dispute-request.json';
 import * as schemaGetInvestigationRequest from './schema_get-investigation-results.json';
+import * as schemaGetInvestigationRequestById from './schema_get-investigation-results-byid.json';
 import * as schemaTradelineDispute from './schema_tradeline-dispute.json';
 import * as schemaPublicitemDispute from './schema_public-dispute.json';
 import * as schemaPersonalitemDispute from './schema_personal-dispute.json';
 import * as schemaGetTrendingDataRequest from './schema_get-trending-data-request.json';
+import * as shcemaGetDisputeStatusById from './schema_get-dispute-status-by-id.json';
 export const ajv = new Ajv();
 ajv.addSchema(schemaGenericRequest, 'getRequest');
 ajv.addSchema(schemaIndicativeEnrichment, 'indicativeEnrichment');
@@ -16,7 +18,9 @@ ajv.addSchema(schemaGetAuthenticationQuestionsRequest, 'getAuthenticationQuestio
 ajv.addSchema(schemaVerifyAuthenticationQuestionsRequest, 'verifyAuthenticationQuestionsRequest');
 ajv.addSchema(schemaStartDisputeRequest, 'startDisputeRequest');
 ajv.addSchema(schemaGetInvestigationRequest, 'getInvestigationResultsRequest');
+ajv.addSchema(schemaGetInvestigationRequestById, 'getInvestigationResultsRequestById');
 ajv.addSchema(schemaTradelineDispute, 'disputeTradeline');
 ajv.addSchema(schemaPublicitemDispute, 'disputePublicitem');
 ajv.addSchema(schemaPersonalitemDispute, 'disputePersonalitem');
 ajv.addSchema(schemaGetTrendingDataRequest, 'getTrendingDataRequest');
+ajv.addSchema(shcemaGetDisputeStatusById, 'getDisputeStatusById');

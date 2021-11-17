@@ -1,0 +1,21 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Body>
+    <GetTrendingDataResponse xmlns="https://consumerconnectws.tui.transunion.com/">
+      <GetTrendingDataResult xmlns:a="https://consumerconnectws.tui.transunion.com/data"
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <a:AccountName>CC2PartnerTesting1</a:AccountName>
+        <a:ErrorResponse>
+          <a:Code>103052</a:Code>
+          <a:Message>No trending data returned for requested product trending data</a:Message>
+          <a:Name>GetTrendingProductDataNotReturned</a:Name>
+        </a:ErrorResponse>
+        <a:RequestKey>NLcd0decc3-5195-4d0a-ba83-4f779019cade</a:RequestKey>
+        <a:ResponseType>Failure</a:ResponseType>
+        <a:ClientKey>12345678910</a:ClientKey>
+        <a:PartnerAttributes i:nil="true"/>
+        <a:ProductAttributes i:nil="true"/>
+        <a:ProductDisplayToken/>
+      </GetTrendingDataResult>
+    </GetTrendingDataResponse>
+  </s:Body>
+</s:Envelope>

@@ -29,7 +29,7 @@ export const createGetTrendingDataPayload = (data: IGetTrendingDataRequest): IGe
     AdditionalInputs: {
       Data: {
         Name: 'CreditReportVersion',
-        Value: '7.1',
+        Value: '7',
       },
     },
     ClientKey: id,
@@ -37,7 +37,6 @@ export const createGetTrendingDataPayload = (data: IGetTrendingDataRequest): IGe
     GetPartnerTrendingData: 'false',
     GetProductTrendingData: 'true',
     ProductDisplay: 'false',
-    ToDate: toDate,
   };
 };
 
@@ -83,7 +82,7 @@ export const createGetTrendingData = (msg: IGetTrendingData): string => {
             'data:AdditionalInputs': {
               'data:Data': {
                 'data:Name': textConstructor('CreditReportVersion'),
-                'data:Value': textConstructor(msg.request.AdditionalInputs?.Data.Value || '7.1'),
+                'data:Value': textConstructor(msg.request.AdditionalInputs?.Data.Value || '7'),
               },
             },
             'data:RequestKey': textConstructor(`BC-${uuid.v4()}`),
@@ -92,7 +91,6 @@ export const createGetTrendingData = (msg: IGetTrendingData): string => {
             'data:GetPartnerTrendingData': textConstructor(msg.request.GetPartnerTrendingData),
             'data:GetProductTrendingData': textConstructor(msg.request.GetProductTrendingData),
             'data:ProductDisplay': textConstructor(msg.request.ProductDisplay, true),
-            'data:ToDate': textConstructor(msg.request.ToDate, true),
           },
         },
       },

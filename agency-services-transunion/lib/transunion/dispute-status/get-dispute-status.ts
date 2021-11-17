@@ -1,23 +1,30 @@
 import {
+  IDispute,
+  IGetDataForGetDisputeStatus,
   IGetDisputeStatus,
-  IGetDisputeStatusGraphQLResponse,
   IGetDisputeStatusMsg,
   IGetDisputeStatusPayload,
   IGetDisputeStatusResponse,
+  IProxyQueryGetAppData,
+  IUpdateDisputeBundle,
 } from 'lib/interfaces';
 import { returnNestedObject, textConstructor } from 'lib/utils';
 import * as fastXml from 'fast-xml-parser';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import { MONTH_MAP } from 'lib/data/constants';
+import { UpdateAppDataInput } from 'src/api/api.service';
+import { DB } from 'lib/utils/db/db';
 
-// IGetDisputeStatusGraphQLResponse
 /**
  * Genarates the message payload for TU Enroll service
  * @param data
  * @returns IEnrollPayload
  */
-export const createGetDisputeStatusPayload = (data: IGetDisputeStatusGraphQLResponse): IGetDisputeStatusPayload => {
+export const createGetDisputeStatusPayload = (
+  data: IProxyQueryGetAppData<IGetDataForGetDisputeStatus>,
+  disputeId?: string,
+): IGetDisputeStatusPayload => {
   const id = data.data.getAppData.id?.split(':')?.pop();
   const attrs = data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;
@@ -52,15 +59,16 @@ export const createGetDisputeStatusPayload = (data: IGetDisputeStatusGraphQLResp
       },
       Ssn: attrs.ssn?.full || '',
     },
+    DisputeId: disputeId,
     EnrollmentKey: data.data.getAppData.agencies?.transunion?.disputeEnrollmentKey,
   };
 };
 
 /**
  * This method packages the message in a request body and adds account information
- * @param {string} accountCode Brave TU account code (can be overriden if passed as part of message)
- * @param {string} accountName Brave TU account name (can be overriden if passed as part of message)
- * @param {IIGetDisputeStatusMsg} msg
+ * @param accountCode Brave TU account code (can be overriden if passed as part of message)
+ * @param accountName Brave TU account name (can be overriden if passed as part of message)
+ * @param msg
  * @returns
  */
 export const formatGetDisputeStatus = (
@@ -82,7 +90,7 @@ export const formatGetDisputeStatus = (
 
 /**
  * This method transforms the JSON message to the XML request
- * @param {IGetDisputeStatus} msg The packaged message to send in XML format to TU
+ * @param msg The packaged message to send in XML format to TU
  * @returns
  */
 export const createGetDisputeStatus = (msg: IGetDisputeStatus): string => {

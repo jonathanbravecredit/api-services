@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "nullable": false
+    },
+    "userId": {
+      "type": "string",
+      "nullable": false
+    }
+  },
+  "required": [
+    "id",
+    "userId"
+  ],
+  "additionalProperties": false
+}

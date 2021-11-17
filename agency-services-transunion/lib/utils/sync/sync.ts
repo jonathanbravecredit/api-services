@@ -32,7 +32,7 @@ export class Sync {
       if (enriched === undefined) return false; // enrichment error
       const sync = await updateAppData({ input: enriched });
       const syncData: IGetAppDataResponse = sync.data; // gql error
-      console.log('synData:errors ==> ', JSON.stringify(syncData?.errors));
+      if (syncData?.errors?.length > 0) throw syncData?.errors;
       return syncData?.errors?.length > 0 ? false : true;
     } catch (err) {
       console.log('syncData:err ===> ', err);
@@ -50,7 +50,7 @@ export class Sync {
     console.log('url ===> ', appsyncUrl);
     let payload = {
       query: print(gql(query)),
-      variables: variables,
+      variables,
     };
     let opts = {
       method: 'POST',

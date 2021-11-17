@@ -33,6 +33,10 @@ custom:
       dev: '24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com'
       qa: '24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com'
       prod: 'krybm5pc3nbgdk4zwgcva2i4va.appsync-api.us-east-2.amazonaws.com'
+    APPDATA_STREAMS:
+      dev: 'rr5wtr4ev5exlbutrkih3r5lhq:GetAtt:AppDataTable:StreamArn'
+      qa: 'rr5wtr4ev5exlbutrkih3r5lhq:GetAtt:AppDataTable:StreamArn'
+      prod: '4tpaga7rzjayhk75opsmpeurme:GetAtt:AppDataTable:StreamArn'
 
 provider:
   name: aws
@@ -45,6 +49,12 @@ provider:
     NODE_ENV: ${opt:stage, 'dev'}
     TU_ENV: ${self:provider.stage}
     TU_SECRET_LOCATION: '${self:provider.stage}/agency-services/transunion'
+    API_ERROR_LOG_TABLE: 'APIErrorLog'
+    API_TRANSACTION_LOG_TABLE: 'APITransactionLog'
+    DISPUTES_TABLE: 'Disputes'
+    CREDIT_BUREAU_TABLE: 'CreditBureauReportResults'
+    INVESTIGATION_RESULTS_TABLE: 'InvestigationResults'
+    CREDIT_SCORE_UPDATES_TABLE: 'CreditScoreTrackings'
     ACCOUNT_ID: !Sub '${AWS::AccountId}'
     IDENTITY_ID: '${self:custom.settings.IDENTITY_IDS.${opt:stage}}'
     POOL_ID: '${self:custom.settings.POOL_IDS.${opt:stage}}'
@@ -68,6 +78,23 @@ provider:
         - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Mutation/*'
         - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Subscription/*'
       Action: 'appsync:GraphQL'
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:ListStreams
+        - dynamodb:DescribeTable
+        - dynamodb:Scan
+        - dynamodb:Query
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.API_ERROR_LOG_TABLE}'
+        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.API_TRANSACTION_LOG_TABLE}'
+        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.DISPUTES_TABLE}'
+        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_BUREAU_TABLE}'
+        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.INVESTIGATION_RESULTS_TABLE}'
+        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_SCORE_UPDATES_TABLE}'
 
 layers:
   TuCerts:
@@ -79,18 +106,33 @@ functions:
     timeout: 30
     layers:
       - { Ref: TuCertsLambdaLayer }
-  # postRequests:
-  #   handler: src/handlers/postRequests.main
-  #   layers:
-  #     - { Ref: TuCertsLambdaLayer }
-  #   events:
-  #     - sns:
-  #         arn: ${self:provider.environment.SNS_PROXY_ARN}
-  #         topicName: SnsProxyTopic
-  #         integration: lambda-proxy
-  #         filterPolicy:
-  #           service:
-  #             - 'transunion'
+  alertNotificationService:
+    handler: src/handlers/transunion/alertNotificationService.main
+    timeout: 30
+    layers:
+      - { Ref: TuCertsLambdaLayer }
+    events:
+      - schedule: cron(0 16 * * ? *)
+  creditScoreUpdatesService:
+    handler: src/handlers/transunion/creditScoreUpdatesService.main
+    timeout: 30
+    layers:
+      - { Ref: TuCertsLambdaLayer }
+    events:
+      - schedule: cron(0 14 18 * ? *)
+  triggerCreateCreditScoreTracking:
+    handler: src/triggers/triggerCreateCreditScoreTracking.main
+    timeout: 30
+    events:
+      - stream:
+          type: dynamodb
+          batchSize: 100
+          startingPosition: LATEST
+          arn:
+            Fn::ImportValue: '${self:custom.settings.APPDATA_STREAMS.${opt:stage}}'
+  seedCreditScoreTrackingsTable:
+    handler: src/handlers/transunion/seedCreditScoreTrackingsTable.main
+    timeout: 30
 
   # SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
 
@@ -156,6 +198,108 @@ resources:
     #     TableName: ${self:provider.environment.TABLENAME}
     #     StreamSpecification:
     #       StreamViewType: NEW_AND_OLD_IMAGES
+    CreditScoreTrackings:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: 'userId'
+            AttributeType: 'S'
+          - AttributeName: 'bureauId'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'userId'
+            KeyType: 'HASH'
+          - AttributeName: 'bureauId'
+            KeyType: 'RANGE'
+        BillingMode: PAY_PER_REQUEST
+        TableName: CreditScoreTrackings
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+    InvestigationResults:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: 'id'
+            AttributeType: 'S'
+          - AttributeName: 'userId'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'id'
+            KeyType: 'HASH'
+          - AttributeName: 'userId'
+            KeyType: 'RANGE'
+        BillingMode: PAY_PER_REQUEST
+        TableName: InvestigationResults
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+    CreditBureauReportResults:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: 'id'
+            AttributeType: 'S'
+          - AttributeName: 'userId'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'id'
+            KeyType: 'HASH'
+          - AttributeName: 'userId'
+            KeyType: 'RANGE'
+        BillingMode: PAY_PER_REQUEST
+        TableName: CreditBureauReportResults
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+    Disputes:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: 'id'
+            AttributeType: 'S'
+          - AttributeName: 'disputeId'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'id'
+            KeyType: 'HASH'
+          - AttributeName: 'disputeId'
+            KeyType: 'RANGE'
+        BillingMode: PAY_PER_REQUEST
+        TableName: Disputes
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+    APIErrorLog:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: 'userId'
+            AttributeType: 'S'
+          - AttributeName: 'errorId'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'userId'
+            KeyType: 'HASH'
+          - AttributeName: 'errorId'
+            KeyType: 'RANGE'
+        BillingMode: PAY_PER_REQUEST
+        TableName: APIErrorLog
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+    APITransactionLog:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: 'userId'
+            AttributeType: 'S'
+          - AttributeName: 'transactionId'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'userId'
+            KeyType: 'HASH'
+          - AttributeName: 'transactionId'
+            KeyType: 'RANGE'
+        BillingMode: PAY_PER_REQUEST
+        TableName: APITransactionLog
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
 
     VPC:
       Type: 'AWS::EC2::VPC'
@@ -369,6 +513,42 @@ resources:
     #     RawMessageDelivery: 'true'
 
   Outputs:
+    Disputes:
+      Description: 'Disputes'
+      Value: !Ref Disputes
+      Export:
+        Name: !Sub '${self:service}-disputes'
+    DisputesTableStreamArn:
+      Value: { 'Fn::GetAtt': ['Disputes', 'StreamArn'] }
+      Export:
+        Name: !Sub '${self:service}-disputes-stream'
+    InvestigationResults:
+      Description: 'InvestigationResults'
+      Value: !Ref InvestigationResults
+      Export:
+        Name: !Sub '${self:service}-investigationresults'
+    InvestigationResultsTableStreamArn:
+      Value: { 'Fn::GetAtt': ['InvestigationResults', 'StreamArn'] }
+      Export:
+        Name: !Sub '${self:service}-investigationresults-stream'
+    CreditBureauReportResults:
+      Description: 'CreditBureauReportResults'
+      Value: !Ref CreditBureauReportResults
+      Export:
+        Name: !Sub '${self:service}-creditbureaureportresults'
+    CreditBureauReportResultsTableStreamArn:
+      Value: { 'Fn::GetAtt': ['CreditBureauReportResults', 'StreamArn'] }
+      Export:
+        Name: !Sub '${self:service}-creditbureau-stream'
+    CreditScoreTrackings:
+      Description: 'CreditScoreTrackings'
+      Value: !Ref CreditScoreTrackings
+      Export:
+        Name: !Sub '${self:service}-creditscoretrackings'
+    CreditScoreTrackingsTableStreamArn:
+      Value: { 'Fn::GetAtt': ['CreditScoreTrackings', 'StreamArn'] }
+      Export:
+        Name: !Sub '${self:service}-creditscoretrackings-stream'
     VPC:
       Description: 'VPC'
       Value: !Ref VPC

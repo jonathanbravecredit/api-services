@@ -11,7 +11,7 @@ const region = process.env.AWS_REGION;
 export const postGraphQLRequest = async (query: string, variables: any): Promise<AxiosResponse<any>> => {
   let payload = {
     query: print(gql(query)),
-    variables: variables,
+    variables,
   };
   // create the options for the sync up
   let opts = {

@@ -1,0 +1,94 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+  <s:Header>
+    <ActivityId CorrelationId="555219d2-cc93-4ba7-8fe6-dbbbacf0721c"
+      xmlns="http://schemas.microsoft.com/2004/09/ServiceModel/Diagnostics">00000000-0000-0000-0000-000000000000</ActivityId>
+  </s:Header>
+  <s:Body>
+    <StartDisputeResponse xmlns="https://consumerconnectws.tui.transunion.com/">
+      <StartDisputeResult xmlns:a="https://consumerconnectws.tui.transunion.com/data"
+        xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <a:AccountName>CC2PartnerTesting1</a:AccountName>
+        <a:ErrorResponse i:nil="true" />
+        <a:RequestKey>15ac2bb6-eef7-4cad-b269-0f9001e57618</a:RequestKey>
+        <a:ResponseType>Success</a:ResponseType>
+        <a:ClientKey>VR_2019-06-25_13-38-16_ERMA</a:ClientKey>
+        <a:DisputeStatus>
+          <a:DisputeStatusDetail>
+            <a:ClosedDisputes>
+              <a:EstimatedCompletionDate>7/12/2019</a:EstimatedCompletionDate>
+              <a:LastUpdatedDate>6/25/2019</a:LastUpdatedDate>
+              <a:OpenDate>6/25/2019</a:OpenDate>
+              <a:RequestedDate>6/25/2019</a:RequestedDate>
+              <a:TotalClosedDisputedItems>1</a:TotalClosedDisputedItems>
+              <a:TotalDisputedItems>2</a:TotalDisputedItems>
+              <a:TotalOpenDisputedItems>0</a:TotalOpenDisputedItems>
+            </a:ClosedDisputes>
+            <a:DisputeId>6561</a:DisputeId>
+            <a:LetterStatus>
+              <a:DisputeLetterCode>PVC_FIN 000960022004 - Dispute Status ERMA J JONES</a:DisputeLetterCode>
+              <a:DisputeLetterContent>We appreciate you taking the time to contact us at TransUnion.
+                Our goal is to maintain complete and accurate credit
+                information. It's our commitment to you.
+
+                You recently submitted a dispute to TransUnion for an item(s) on
+                your credit report. Our records show that we previously completed
+                an investigation of the below item(s) and the data furnisher(s)
+                verified the information on your credit file.
+
+                As outlined in the Fair Credit Reporting Act, unless you have
+                additional relevant information that supports the change you are
+                requesting (i.e., a letter from the creditor or courthouse,
+                billing statement, letter from the IRS, cancelled check or money
+                order showing payment, etc.), we are not required to
+                reinvestigate the same item(s) again at this time. If you do have
+                additional information to support your dispute, you may upload it
+                via transunion.com/dispute and we will conduct a reinvestigation.
+
+                UNIVERSAL CD CBNA
+                Acct#: 478388076310****
+                POB 6497
+                SIOUX FALLS, SD 57117
+
+
+
+                If you disagree with this result, you may add a consumer
+                statement of 100 words or less to your credit report explaining
+                the details of why you disagree. Please note: if you provide a
+                consumer statement containing medical information, you expressly
+                consent to allow TransUnion to include this information in every
+                credit report we issue about you. You may also contact the data
+                furnishers directly to discuss the item(s) using the contact
+                information provided above.
+
+                If your dispute included additional items not listed above,
+                that means we are conducting an investigation by:
+
+                1. Making changes to your credit report based on the information
+                you provided; OR
+                2. Submitting an investigation request to the data furnisher(s)
+                who provided the information
+
+                Once the investigation is complete, you will receive the results
+                for those additional items in a separate communication that will
+                include your file number 960022004.
+
+                We're here to help. Should you have any further questions please
+                contact us at:
+                -  www.transunion.com
+                -  (800) 916-8800
+                -  P.O. Box 2000
+                  Chester, PA 19016-2000
+
+                Please have your file number ready 960022004.
+
+                Please do not reply to this email as this is a system generated
+                email.
+              </a:DisputeLetterContent>
+            </a:LetterStatus>
+            <a:Status>completeDispute</a:Status>
+          </a:DisputeStatusDetail>
+        </a:DisputeStatus>
+      </StartDisputeResult>
+    </StartDisputeResponse>
+  </s:Body>
+</s:Envelope>

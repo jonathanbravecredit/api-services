@@ -1,5 +1,6 @@
 import { returnNestedObject, updateNestedObject } from 'lib/utils/helpers/helpers';
 import * as convert from 'xml-js';
+import * as he from 'he';
 import * as uuid from 'uuid';
 import * as fastXml from 'fast-xml-parser';
 import {
@@ -10,8 +11,9 @@ import {
   IGetInvestigationResultsPayload,
   IGetInvestigationResultsResponse,
 } from 'lib/interfaces';
-import { DisputeInput, UpdateAppDataInput } from 'src/api/api.service';
+import { UpdateAppDataInput } from 'src/api/api.service';
 import { XmlFormatter } from 'lib/utils/xml-formatter/xml-formatter';
+import { DB as db } from 'lib/utils/db/db';
 
 /**
  * Genarates the message payload for TU get dispute history
@@ -109,31 +111,75 @@ export const enrichGetInvestigationResult = (
   flag: boolean = false,
 ): UpdateAppDataInput | undefined => {
   if (!data) return;
-  const disputes = data.agencies?.transunion?.disputes;
-  if (!disputes?.length) return; // no disputes saved to find
-  const updated: DisputeInput[] = disputes.map((dispute) => {
-    if (dispute.disputeId == getInvestigationResult.disputeId) {
-      return {
-        ...dispute,
-        disputeCreditBureau: JSON.stringify(getInvestigationResult.getInvestigationResult.CreditBureau),
-        disputeInvestigationResults: JSON.stringify(getInvestigationResult.getInvestigationResult.InvestigationResults),
-      };
-    } else {
-      return dispute;
-    }
-  });
-  const mapped = {
-    ...data,
-    agencies: {
-      ...data.agencies,
-      transunion: {
-        ...data.agencies?.transunion,
-        disputes: updated,
-      },
-    },
+  // now only going to save the id's
+  const sub = data.id;
+  const cbID = uuid.v4();
+  const irID = uuid.v4();
+  const irReport = getInvestigationResult.getInvestigationResult.InvestigationResults;
+  const cbReport = getInvestigationResult.getInvestigationResult.CreditBureau;
+  const disputeId = getInvestigationResult.disputeId;
+  const newIR = {
+    id: irID,
+    userId: sub,
+    record: JSON.stringify(irReport),
+    createdOn: null,
+    modifiedOn: null,
   };
-  console.log('mapped', mapped.agencies?.transunion.disputes);
-  return mapped;
+  db.investigationResults.create(newIR);
+
+  const newCB = {
+    id: cbID,
+    userId: sub,
+    record: JSON.stringify(cbReport),
+    createdOn: null,
+    modifiedOn: null,
+  };
+  db.creditBureauResults.create(newCB);
+  // update the disputes table with IR and CB ids.
+  db.disputes.updateResults(sub, disputeId, cbID, irID);
+  return data;
+};
+
+/**
+ * Update the investigation and credity bureau tables directly with the results
+ * - Replaces the enricher as this no longer holds the disputes
+ * @param id
+ * @param data
+ * @returns
+ */
+export const updateInvestigationResultsDB = async (id: string, data: IGetInvestigationEnrichPayload): Promise<any> => {
+  if (!data) return;
+  const sub = id;
+  const cbID = uuid.v4();
+  const irID = uuid.v4();
+  const irReport = data.getInvestigationResult.InvestigationResults;
+  const cbReport = data.getInvestigationResult.CreditBureau;
+  const disputeId = data.disputeId;
+  const newIR = {
+    id: irID,
+    userId: sub,
+    record: JSON.stringify(irReport),
+    createdOn: null,
+    modifiedOn: null,
+  };
+
+  const newCB = {
+    id: cbID,
+    userId: sub,
+    record: JSON.stringify(cbReport),
+    createdOn: null,
+    modifiedOn: null,
+  };
+
+  try {
+    await db.investigationResults.create(newIR);
+    await db.creditBureauResults.create(newCB);
+    await db.disputes.updateResults(sub, disputeId, cbID, irID);
+    return true;
+  } catch (err) {
+    console.log('updateInvestigationResultsDB error ===> ', err);
+    return false;
+  }
 };
 
 /**
@@ -148,13 +194,44 @@ export const parseInvestigationResults = (xml: string, options: any): any => {
 
   let results = obj;
   if (typeof investigationResults === 'string') {
-    const parsed = fastXml.parse(investigationResults, options);
-    results = updateNestedObject(obj, 'InvestigationResults', parsed);
+    let clean = he.decode(he.decode(investigationResults));
+    const parsed = fastXml.parse(clean, options);
+    console.log('parsed IR response ==> ', JSON.stringify(parsed));
+    const resultsResults = results.Envelope?.Body?.GetInvestigationResultsResponse?.GetInvestigationResultsResult;
+    results = {
+      ...results,
+      Envelope: {
+        Body: {
+          GetInvestigationResultsResponse: {
+            GetInvestigationResultsResult: {
+              ...resultsResults,
+              InvestigationResults: parsed,
+            },
+          },
+        },
+      },
+    };
   }
 
   if (typeof creditBureau === 'string') {
-    const parsed = fastXml.parse(creditBureau, options);
-    results = updateNestedObject(obj, 'CreditBureau', parsed);
+    let clean = he.decode(he.decode(creditBureau));
+    const parsed = fastXml.parse(clean, options);
+    console.log('parsed CB response ==> ', JSON.stringify(parsed));
+    const resultsResults = results.Envelope?.Body?.GetInvestigationResultsResponse?.GetInvestigationResultsResult;
+    results = {
+      ...results,
+      Envelope: {
+        Body: {
+          GetInvestigationResultsResponse: {
+            GetInvestigationResultsResult: {
+              ...resultsResults,
+              CreditBureau: parsed,
+            },
+          },
+        },
+      },
+    };
   }
+  console.log('parsed results ==> ', JSON.stringify(results));
   return results;
 };

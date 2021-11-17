@@ -1,0 +1,35 @@
+{
+  "success": true,
+  "error": {
+    "nil": true
+  },
+  "data": {
+    "AccountName": "CC2BraveCredit",
+    "ErrorResponse": {
+      "nil": true
+    },
+    "RequestKey": "BC-e6d93003-e29f-44af-8d68-c2534cd5c466",
+    "ResponseType": "Success",
+    "ClientKey": "519fe0d8-c8d6-4fa7-8985-e511adcd53a5",
+    "PartnerAttributes": {
+      "nil": true
+    },
+    "ProductAttributes": {
+      "ProductTrendingAttribute": {
+        "AttributeName": "TUCVantageScore3V6",
+        "Bureau": "TransUnion",
+        "ProductAttributeData": {
+          "ProductTrendingData": {
+            "AttributeDate": "2021-11-01T11:20:58",
+            "AttributeStatus": "Failure",
+            "AttributeValue": "",
+            "ServiceProductFulfillmentKey": "f40c42a8-d4fa-4616-a548-873efcd085d4"
+          }
+        },
+        "ServiceBundleCode": "CC2BraveCreditTUReportV3Score",
+        "ServiceProduct": "TUCVantageScore3"
+      }
+    },
+    "ProductDisplayToken": ""
+  }
+}

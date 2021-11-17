@@ -1,3 +1,5 @@
+import { MOCK_CONFIG } from 'lib/examples/mocks/Config';
+
 export const START_DISPUTE_RESPONSE = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
 <s:Body>
     <StartDisputeResponse xmlns="https://consumerconnectws.tui.transunion.com/">
@@ -7,10 +9,10 @@ export const START_DISPUTE_RESPONSE = `<s:Envelope xmlns:s="http://schemas.xmlso
             <a:ErrorResponse i:nil="true"/>
             <a:RequestKey>f8958f94-4842-4142-a9a7-ff05523ec414</a:RequestKey>
             <a:ResponseType>Success</a:ResponseType>
-            <a:ClientKey>SR_2018-03-09_13-33-18_DORA</a:ClientKey>
+            <a:ClientKey>${MOCK_CONFIG.userId}</a:ClientKey>
             <a:DisputeStatus>
                 <a:DisputeStatusDetail>
-                    <a:DisputeId>4606</a:DisputeId>
+                    <a:DisputeId>${MOCK_CONFIG.disputeId}</a:DisputeId>
                     <a:LetterStatus>
                         <a:DisputeLetterCode>FIN 000300010987 - Dispute Status DORA G
                             JULIEN</a:DisputeLetterCode>

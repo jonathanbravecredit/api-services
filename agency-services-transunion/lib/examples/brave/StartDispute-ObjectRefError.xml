@@ -1,0 +1,70 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data"
+  xmlns:arr="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:StartDispute>
+      <con:request>
+        <data:AccountCode>123456789</data:AccountCode>
+        <data:AccountName>CC2BraveCredit</data:AccountName>
+        <data:AdditionalInputs>
+          <data:Data>
+            <data:Name>DisputeVersion</data:Name>
+            <data:Value>2</data:Value>
+          </data:Data>
+        </data:AdditionalInputs>
+        <data:RequestKey>BC-b8e07c99-22d2-4e1b-a9e0-887a73ec651b</data:RequestKey>
+        <data:ClientKey>ba8114b5-b295-4f75-b2c8-c8bc1698d0ab</data:ClientKey>
+        <data:Customer>
+          <data:CurrentAddress>
+            <data:AddressLine1>101 2nd St</data:AddressLine1>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:City>Burt</data:City>
+            <data:State>IA</data:State>
+            <data:Zipcode>50522</data:Zipcode>
+          </data:CurrentAddress>
+          <data:DateOfBirth>1956-03-01</data:DateOfBirth>
+          <data:FullName>
+            <data:FirstName>Neil</data:FirstName>
+            <data:LastName>Giddens</data:LastName>
+            <data:MiddleName xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Prefix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Suffix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:FullName>
+          <data:PhoneNumber xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          <data:Ssn>666403077</data:Ssn>
+          <data:Identifier>
+            <data:CustomerIdentifier>
+              <data:Id>666403077</data:Id>
+              <data:IdentifierType>SocialId</data:IdentifierType>
+            </data:CustomerIdentifier>
+          </data:Identifier>
+        </data:Customer>
+        <data:Employers xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <data:EnrollmentKey>4ae42e33-e9a0-45fa-9aa0-83cff1fed001</data:EnrollmentKey>
+        <data:IndicativeDisputes>
+          <data:Aka>
+            <data:ValueData>
+              <data:Delete>true</data:Delete>
+              <data:Value>NEIL GIDDENS </data:Value>
+            </data:ValueData>
+          </data:Aka>
+          <data:PreviousAddress xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        </data:IndicativeDisputes>
+        <data:LineItems>
+          <data:LineItem xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        </data:LineItems>
+        <data:ServiceBundleFulfillmentKey>c926d18f-b227-4713-98d0-0141e39db29a</data:ServiceBundleFulfillmentKey>
+      </con:request>
+    </con:StartDispute>
+  </soapenv:Body>
+</soapenv:Envelope>

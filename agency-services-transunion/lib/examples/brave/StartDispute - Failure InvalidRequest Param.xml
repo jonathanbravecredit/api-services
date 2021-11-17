@@ -1,0 +1,69 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:con="https://consumerconnectws.tui.transunion.com/"
+  xmlns:data="https://consumerconnectws.tui.transunion.com/data"
+  xmlns:arr="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <con:StartDispute>
+      <con:request>
+        <data:AccountCode>123456789</data:AccountCode>
+        <data:AccountName>CC2BraveCredit</data:AccountName>
+        <data:RequestKey>BC-1f3f584b-3c49-460a-a999-941594d5fb61</data:RequestKey>
+        <data:ClientKey>e9acd8fc-95ff-49dc-ac0d-43cdd3ef7b0f</data:ClientKey>
+        <data:AdditionalInputs>
+          <data:Data>
+            <data:Name>DisputeVersion</data:Name>
+            <data:Value>2</data:Value>
+          </data:Data>
+        </data:AdditionalInputs>
+        <data:Customer>
+          <data:CurrentAddress>
+            <data:AddressLine1>5112 Walnut Ridge Dr</data:AddressLine1>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:City>Des Moines</data:City>
+            <data:State>IA</data:State>
+            <data:Zipcode>50317</data:Zipcode>
+          </data:CurrentAddress>
+          <data:DateOfBirth>1944-03-01</data:DateOfBirth>
+          <data:FullName>
+            <data:FirstName>Jennifer</data:FirstName>
+            <data:LastName>Reintjes</data:LastName>
+            <data:MiddleName xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Prefix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Suffix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:FullName>
+          <data:PhoneNumber xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          <data:Ssn>666305050</data:Ssn>
+          <data:Identifier>
+            <data:CustomerIdentifier>
+              <data:Id>666305050</data:Id>
+              <data:IdentifierType>SocialId</data:IdentifierType>
+            </data:CustomerIdentifier>
+          </data:Identifier>
+        </data:Customer>
+        <data:Employers xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <data:EnrollmentKey>cbb5ff1d-7ab8-4003-b08e-50aacf69a358</data:EnrollmentKey>
+        <data:IndicativeDisputes>
+          <data:Aka>
+            <data:ValueData>
+              <data:Delete>true</data:Delete>
+              <data:Value>JENNIFER JANE REINTJES </data:Value>
+            </data:ValueData>
+          </data:Aka>
+          <data:DeleteAddress>false</data:DeleteAddress>
+          <data:Address xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        </data:IndicativeDisputes>
+        <data:LineItems xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <data:ServiceBundleFulfillmentKey>510a66e8-3db6-4ebe-8dec-f88f883ae191</data:ServiceBundleFulfillmentKey>
+      </con:request>
+    </con:StartDispute>
+  </soapenv:Body>
+</soapenv:Envelope>

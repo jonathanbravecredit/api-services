@@ -1,0 +1,2093 @@
+{
+  "creditBureau": {
+    "version": 2,
+    "transactionControl": {
+      "tracking": {
+        "transactionTimeStamp": "2021-11-12T15:48:44.125-06:00",
+        "language": "en",
+        "identifier": {
+          "fin": 960026684,
+          "activityNumber": 504,
+          "partyId": 800003561640
+        },
+        "responseCode": 0,
+        "responseMessage": "Success"
+      }
+    },
+    "productArray": {
+      "product": {
+        "code": 7001,
+        "subject": {
+          "fileAccessCode": "*** 960026684-504 ***",
+          "enclosures": {
+            "codes": {
+              "code": 32,
+              "type": 0,
+              "versionNo": 1
+            },
+            "addresseeContact": {
+              "name": {
+                "unparsed": "NEIL GIDDENS"
+              },
+              "address": {
+                "street": {
+                  "unparsed": "101 2ND ST"
+                },
+                "location": {
+                  "unparsed": "BURT, IA 50522-5005"
+                },
+                "order": 1
+              }
+            },
+            "returnMailContact": {
+              "name": {
+                "unparsed": "TransUnion Consumer Relations"
+              },
+              "address": {
+                "street": {
+                  "unparsed": "P.O. Box 2000"
+                },
+                "location": {
+                  "unparsed": "Chester, PA 19016-2000"
+                },
+                "order": 1
+              }
+            }
+          },
+          "subjectRecord": {
+            "fileSummary": {
+              "inFileSinceDate": "03/01/2012",
+              "disclosureCoverInfo": {
+                "coverCode": 18,
+                "versionNo": 1,
+                "disputeURL": "www.transunion.com/disputeonline",
+                "summarySection": {
+                  "lineItem": {
+                    "handle": "",
+                    "itemType": 4,
+                    "credit": {
+                      "item": {
+                        "itemName": "PERSONAL INFORMATION"
+                      },
+                      "description": {
+                        "descriptionText": ""
+                      },
+                      "result": "INFORMATION UPDATED"
+                    }
+                  }
+                },
+                "resellerOperatorId": ""
+              }
+            },
+            "indicative": {
+              "name": {
+                "person": {
+                  "unparsed": "NEIL GIDDENS",
+                  "first": "NEIL",
+                  "middle": "",
+                  "last": "GIDDENS",
+                  "order": 1
+                }
+              },
+              "address": [
+                {
+                  "street": {
+                    "unparsed": "101 2ND ST",
+                    "number": 101,
+                    "name": "2ND",
+                    "type": "ST"
+                  },
+                  "location": {
+                    "unparsed": "BURT, IA 50522-5005",
+                    "city": "BURT",
+                    "state": "IA",
+                    "zipCode": 50522,
+                    "zipExt": 5005
+                  },
+                  "dateReported": "03/08/2014",
+                  "order": 1
+                },
+                {
+                  "street": {
+                    "unparsed": "PO BOX 166",
+                    "number": 166,
+                    "name": "PO BOX"
+                  },
+                  "location": {
+                    "unparsed": "BURT, IA 50522-0166",
+                    "city": "BURT",
+                    "state": "IA",
+                    "zipCode": 50522,
+                    "zipExt": 166
+                  },
+                  "dateReported": "11/11/2013",
+                  "order": 2
+                },
+                {
+                  "street": {
+                    "unparsed": "101 2ND ST APT 166",
+                    "number": 101,
+                    "name": "2ND",
+                    "type": "ST",
+                    "unit": {
+                      "type": "apartment",
+                      "number": 166
+                    }
+                  },
+                  "location": {
+                    "unparsed": "BURT, IA 50522-5005",
+                    "city": "BURT",
+                    "state": "IA",
+                    "zipCode": 50522,
+                    "zipExt": 5005
+                  },
+                  "dateReported": "02/28/2019",
+                  "order": 3
+                },
+                {
+                  "street": {
+                    "unparsed": "407 4TH ST",
+                    "number": 407,
+                    "name": "4TH",
+                    "type": "ST"
+                  },
+                  "location": {
+                    "unparsed": "BURT, IA 50522",
+                    "city": "BURT",
+                    "state": "IA",
+                    "zipCode": 50522
+                  },
+                  "dateReported": "05/11/2013",
+                  "order": 4
+                },
+                {
+                  "street": {
+                    "unparsed": "PO BOX 91",
+                    "number": 91,
+                    "name": "PO BOX"
+                  },
+                  "location": {
+                    "unparsed": "WHITTEMORE, IA 50598-0091",
+                    "city": "WHITTEMORE",
+                    "state": "IA",
+                    "zipCode": 50598,
+                    "zipExt": 91
+                  },
+                  "order": 5
+                }
+              ],
+              "socialSecurity": {
+                "number": "666-40-3077",
+                "order": 1
+              },
+              "dateOfBirth": {
+                "#text": "06/01/1956",
+                "estimated": false
+              },
+              "phone": {
+                "number": {
+                  "unparsed": "(515) 924-1406",
+                  "areaCode": 515,
+                  "exchange": 924,
+                  "suffix": 1406
+                },
+                "order": 1
+              }
+            },
+            "custom": {
+              "credit": {
+                "trade": [
+                  {
+                    "itemKey": "5178019326438907_1DTV001_R",
+                    "subscriber": {
+                      "industryCode": "BC",
+                      "memberCode": "1DTV001",
+                      "name": {
+                        "unparsed": "CAPITAL ONE BANK USA NA"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": "P O Box 30281"
+                        },
+                        "location": {
+                          "unparsed": "Salt Lake City, UT 84130-0281",
+                          "city": "Salt Lake City",
+                          "state": "UT",
+                          "zipCode": 84130,
+                          "zipExt": 281
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(800) 955-7070",
+                          "areaCode": 800,
+                          "exchange": 955,
+                          "suffix": 7070
+                        }
+                      }
+                    },
+                    "portfolioType": "revolving",
+                    "accountNumber": 5178019326438907,
+                    "ECOADesignator": "individual",
+                    "dateOpened": "01/31/2021",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "09/16/2021",
+                    "accountRating": 1,
+                    "terms": {
+                      "paymentFrequency": "monthly",
+                      "scheduledMonthlyPayment": "$15",
+                      "description": "$15 per month, paid Monthly"
+                    },
+                    "account": {
+                      "code": "CC",
+                      "description": "CREDIT CARD"
+                    },
+                    "paymentHistory": {
+                      "paymentPattern": {
+                        "startDate": "09/01/2021",
+                        "text": 11111111
+                      },
+                      "historicalCounters": {
+                        "monthsReviewedCount": 8,
+                        "late30DaysTotal": 0,
+                        "late60DaysTotal": 0,
+                        "late90DaysTotal": 0
+                      }
+                    },
+                    "mostRecentPayment": {
+                      "amount": "$51",
+                      "date": "09/11/2021",
+                      "description": "09/11/2021 ($51)"
+                    },
+                    "additionalTradeAccount": {
+                      "original": ""
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": false,
+                    "accountRatingDescription": "Current; Paid or Paying as Agreed",
+                    "portfolioTypeDescription": "Revolving Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histHighCreditStmt": "High balance of $267 from 04/2021 to 05/2021; $396 from 06/2021 to 09/2021",
+                    "histCreditLimitStmt": "Credit limit of $500 from 04/2021 to 07/2021; $750 from 08/2021 to 09/2021",
+                    "histPaymentDueList": "15;15;15;15;15;15",
+                    "histPaymentAmtList": "51;50;50;50;75;50",
+                    "histBalanceList": "192;251;301;346;142;217",
+                    "histPastDueList": "0;0;0;0;0;0",
+                    "histRemarkList": "",
+                    "isCollection": false
+                  },
+                  {
+                    "itemKey": "4862324271510237_1DTV001_R",
+                    "subscriber": {
+                      "industryCode": "BC",
+                      "memberCode": "1DTV001",
+                      "name": {
+                        "unparsed": "CAPITAL ONE BANK USA NA"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": "P O Box 30281"
+                        },
+                        "location": {
+                          "unparsed": "Salt Lake City, UT 84130-0281",
+                          "city": "Salt Lake City",
+                          "state": "UT",
+                          "zipCode": 84130,
+                          "zipExt": 281
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(800) 955-7070",
+                          "areaCode": 800,
+                          "exchange": 955,
+                          "suffix": 7070
+                        }
+                      }
+                    },
+                    "portfolioType": "revolving",
+                    "accountNumber": 4862324271510237,
+                    "ECOADesignator": "individual",
+                    "dateOpened": "12/24/2012",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "09/08/2021",
+                    "dateClosed": "11/18/2016",
+                    "highCredit": 1252,
+                    "creditLimit": 1000,
+                    "accountRating": "UR",
+                    "terms": {
+                      "description": ""
+                    },
+                    "account": {
+                      "code": "CC",
+                      "description": "CREDIT CARD"
+                    },
+                    "paymentHistory": "",
+                    "mostRecentPayment": {
+                      "date": "06/27/2016",
+                      "description": ""
+                    },
+                    "additionalTradeAccount": {
+                      "original": ""
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": false,
+                    "accountRatingDescription": "Unrated",
+                    "portfolioTypeDescription": "Revolving Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histPaymentDueList": "",
+                    "histPaymentAmtList": "",
+                    "histBalanceList": "",
+                    "histPastDueList": "",
+                    "histRemarkList": "",
+                    "isCollection": false
+                  },
+                  {
+                    "itemKey": "4185822545135066_701N134_R",
+                    "subscriber": {
+                      "industryCode": "BC",
+                      "memberCode": "701N134",
+                      "name": {
+                        "unparsed": "CHASE CARD"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": "P O  BOX 15369"
+                        },
+                        "location": {
+                          "unparsed": "WILMINGTON, DE 19850",
+                          "city": "WILMINGTON",
+                          "state": "DE",
+                          "zipCode": 19850
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(800) 945-2000",
+                          "areaCode": 800,
+                          "exchange": 945,
+                          "suffix": 2000
+                        }
+                      }
+                    },
+                    "portfolioType": "revolving",
+                    "accountNumber": 4185822545135066,
+                    "ECOADesignator": "individual",
+                    "dateOpened": "11/23/2012",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "12/31/2016",
+                    "dateClosed": "12/31/2016",
+                    "datePaidOut": "12/22/2016",
+                    "highCredit": 3284,
+                    "creditLimit": 2882,
+                    "accountRating": "UR",
+                    "terms": {
+                      "description": ""
+                    },
+                    "account": {
+                      "code": "CC",
+                      "description": "CREDIT CARD"
+                    },
+                    "paymentHistory": "",
+                    "mostRecentPayment": {
+                      "date": "12/22/2016",
+                      "description": ""
+                    },
+                    "additionalTradeAccount": {
+                      "original": ""
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": false,
+                    "accountRatingDescription": "Unrated",
+                    "portfolioTypeDescription": "Revolving Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histPaymentDueList": "",
+                    "histPaymentAmtList": "",
+                    "histBalanceList": "",
+                    "histPastDueList": "",
+                    "histRemarkList": "",
+                    "isCollection": false
+                  },
+                  {
+                    "itemKey": "4X1X6X5X9X_1066041_I",
+                    "subscriber": {
+                      "industryCode": "EL",
+                      "memberCode": 1066041,
+                      "name": {
+                        "unparsed": "CRESTAR BANK"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": [
+                            "C/O ACS",
+                            "501 BLEECKER ST"
+                          ]
+                        },
+                        "location": {
+                          "unparsed": "UTICA, NY 13501",
+                          "city": "UTICA",
+                          "state": "NY",
+                          "zipCode": 13501
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "Phone number not available"
+                        }
+                      }
+                    },
+                    "portfolioType": "installment",
+                    "accountNumber": "4X1X6X5X9X",
+                    "ECOADesignator": "individual",
+                    "dateOpened": "01/22/2012",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "02/10/2018",
+                    "dateClosed": "02/10/2018",
+                    "currentBalance": 0,
+                    "highCredit": 10314,
+                    "accountRating": 5,
+                    "remark": [
+                      {
+                        "code": "SLP",
+                        "type": "generic",
+                        "description": "STUDENT LOAN PERM ASSIGN GOVT"
+                      },
+                      {
+                        "code": "SGL",
+                        "type": "ratingHistory",
+                        "description": "CLAIM FILED WITH GOVERNMENT"
+                      }
+                    ],
+                    "terms": {
+                      "paymentFrequency": "monthly",
+                      "paymentScheduleMonthCount": 120,
+                      "scheduledMonthlyPayment": "$200",
+                      "description": "$200 per month, paid Monthly for 120  months"
+                    },
+                    "account": {
+                      "code": "ST",
+                      "description": "STUDENT LOAN"
+                    },
+                    "paymentHistory": {
+                      "maxDelinquency": {
+                        "code": 5,
+                        "maxDelinquencyDescription": "Maximum Delinquency of 120 days in 07/2017 for $1,025 and  in 02/2018",
+                        "maxDelinquencyData": {
+                          "earliest": true
+                        }
+                      },
+                      "paymentPattern": {
+                        "startDate": "01/01/2018",
+                        "text": 555555543111
+                      },
+                      "historicalCounters": {
+                        "monthsReviewedCount": 12,
+                        "late30DaysTotal": 0,
+                        "late60DaysTotal": 1,
+                        "late90DaysTotal": 8
+                      }
+                    },
+                    "mostRecentPayment": {
+                      "amount": "$0",
+                      "description": "null ($0)"
+                    },
+                    "additionalTradeAccount": {
+                      "original": {
+                        "description": "SUNTRUST BANKS INC (Educational)"
+                      }
+                    },
+                    "suppressionFlag": true,
+                    "adverseFlag": true,
+                    "estimatedDeletionDate": "04/2024",
+                    "accountRatingDescription": "&#x3E;Account 120 Days Past Due Date&#x26;lt;",
+                    "portfolioTypeDescription": "Installment Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histPaymentDueList": "",
+                    "histPaymentAmtList": "",
+                    "histBalanceList": "",
+                    "histPastDueList": "",
+                    "isCollection": false
+                  },
+                  {
+                    "itemKey": "7X0X0X9X2X5X8X6_1BTP001_I",
+                    "subscriber": {
+                      "industryCode": "VZ",
+                      "memberCode": "1BTP001",
+                      "name": {
+                        "unparsed": "DIRECT LOAN SVC SYSTEM"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": "PO BOX 5609"
+                        },
+                        "location": {
+                          "unparsed": "GREENVILLE, TX 75403-5609",
+                          "city": "GREENVILLE",
+                          "state": "TX",
+                          "zipCode": 75403,
+                          "zipExt": 5609
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(800) 848-0979",
+                          "areaCode": 800,
+                          "exchange": 848,
+                          "suffix": 979
+                        }
+                      }
+                    },
+                    "portfolioType": "installment",
+                    "accountNumber": "7X0X0X9X2X5X8X6",
+                    "ECOADesignator": "individual",
+                    "dateOpened": "12/27/2018",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "09/19/2021",
+                    "accountRating": 1,
+                    "terms": {
+                      "paymentFrequency": "monthly",
+                      "paymentScheduleMonthCount": 120,
+                      "scheduledMonthlyPayment": "$32",
+                      "description": "$32 per month, paid Monthly for 120  months"
+                    },
+                    "account": {
+                      "code": "ST",
+                      "description": "STUDENT LOAN"
+                    },
+                    "paymentHistory": {
+                      "paymentPattern": {
+                        "startDate": "09/01/2021",
+                        "text": 111111
+                      },
+                      "historicalCounters": {
+                        "monthsReviewedCount": 6,
+                        "late30DaysTotal": 0,
+                        "late60DaysTotal": 0,
+                        "late90DaysTotal": 0
+                      }
+                    },
+                    "mostRecentPayment": {
+                      "amount": "$32",
+                      "date": "09/14/2021",
+                      "description": "09/14/2021 ($32)"
+                    },
+                    "additionalTradeAccount": {
+                      "original": ""
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": false,
+                    "accountRatingDescription": "Current; Paid or Paying as Agreed",
+                    "portfolioTypeDescription": "Installment Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histHighCreditStmt": "High balance of $3,387 from 04/2021 to 09/2021",
+                    "histPaymentDueList": "32;32;32;32;32;32",
+                    "histPaymentAmtList": "32;32;32;32;32;32",
+                    "histBalanceList": "2863;2891;2945;2945;2973;3000",
+                    "histPastDueList": "0;0;0;0;0;0",
+                    "histRemarkList": "",
+                    "isCollection": false
+                  },
+                  {
+                    "itemKey": "7X0X0X9X2X5X9X6_1BTP001_I",
+                    "subscriber": {
+                      "industryCode": "VZ",
+                      "memberCode": "1BTP001",
+                      "name": {
+                        "unparsed": "DIRECT LOAN SVC SYSTEM"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": "PO BOX 5609"
+                        },
+                        "location": {
+                          "unparsed": "GREENVILLE, TX 75403-5609",
+                          "city": "GREENVILLE",
+                          "state": "TX",
+                          "zipCode": 75403,
+                          "zipExt": 5609
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(800) 848-0979",
+                          "areaCode": 800,
+                          "exchange": 848,
+                          "suffix": 979
+                        }
+                      }
+                    },
+                    "portfolioType": "installment",
+                    "accountNumber": "7X0X0X9X2X5X9X6",
+                    "ECOADesignator": "individual",
+                    "dateOpened": "12/27/2018",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "09/19/2021",
+                    "accountRating": 1,
+                    "terms": {
+                      "paymentFrequency": "monthly",
+                      "paymentScheduleMonthCount": 120,
+                      "scheduledMonthlyPayment": "$18",
+                      "description": "$18 per month, paid Monthly for 120  months"
+                    },
+                    "account": {
+                      "code": "ST",
+                      "description": "STUDENT LOAN"
+                    },
+                    "paymentHistory": {
+                      "paymentPattern": {
+                        "startDate": "09/01/2021",
+                        "text": 111111
+                      },
+                      "historicalCounters": {
+                        "monthsReviewedCount": 6,
+                        "late30DaysTotal": 0,
+                        "late60DaysTotal": 0,
+                        "late90DaysTotal": 0
+                      }
+                    },
+                    "mostRecentPayment": {
+                      "amount": "$18",
+                      "date": "09/14/2021",
+                      "description": "09/14/2021 ($18)"
+                    },
+                    "additionalTradeAccount": {
+                      "original": ""
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": false,
+                    "accountRatingDescription": "Current; Paid or Paying as Agreed",
+                    "portfolioTypeDescription": "Installment Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histHighCreditStmt": "High balance of $1,892 from 04/2021 to 09/2021",
+                    "histPaymentDueList": "18;18;18;18;18;18",
+                    "histPaymentAmtList": "18;18;18;18;18;18",
+                    "histBalanceList": "1600;1615;1646;1646;1661;1676",
+                    "histPastDueList": "0;0;0;0;0;0",
+                    "histRemarkList": "",
+                    "isCollection": false
+                  },
+                  {
+                    "itemKey": "4X1X6X5X9X_1BTP001_I",
+                    "subscriber": {
+                      "industryCode": "VZ",
+                      "memberCode": "1BTP001",
+                      "name": {
+                        "unparsed": "DIRECT LOAN SVC SYSTEM"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": "PO BOX 5609"
+                        },
+                        "location": {
+                          "unparsed": "GREENVILLE, TX 75403-5609",
+                          "city": "GREENVILLE",
+                          "state": "TX",
+                          "zipCode": 75403,
+                          "zipExt": 5609
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(800) 848-0979",
+                          "areaCode": 800,
+                          "exchange": 848,
+                          "suffix": 979
+                        }
+                      }
+                    },
+                    "portfolioType": "installment",
+                    "accountNumber": "4X1X6X5X9X",
+                    "ECOADesignator": "individual",
+                    "dateOpened": "12/27/2018",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "03/31/2021",
+                    "dateClosed": "03/31/2021",
+                    "accountRating": 1,
+                    "terms": {
+                      "paymentScheduleMonthCount": 120,
+                      "scheduledMonthlyPayment": "$51",
+                      "description": "$51 per month for 120 months"
+                    },
+                    "account": {
+                      "code": "ST",
+                      "description": "STUDENT LOAN"
+                    },
+                    "paymentHistory": {
+                      "maxDelinquency": {
+                        "code": 5,
+                        "maxDelinquencyDescription": "Maximum Delinquency of 120 days in 06/2019 for $250 and  in 07/2019 for $301",
+                        "maxDelinquencyData": {
+                          "earliest": true
+                        }
+                      },
+                      "paymentPattern": {
+                        "startDate": "03/01/2021",
+                        "text": "11111111111111111X15543111X"
+                      },
+                      "historicalCounters": {
+                        "monthsReviewedCount": 27,
+                        "late30DaysTotal": 0,
+                        "late60DaysTotal": 1,
+                        "late90DaysTotal": 3
+                      }
+                    },
+                    "mostRecentPayment": {
+                      "date": "03/14/2021",
+                      "description": ""
+                    },
+                    "additionalTradeAccount": {
+                      "original": ""
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": true,
+                    "accountRatingDescription": "Current; Paid or Paying as Agreed",
+                    "portfolioTypeDescription": "Installment Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histHighCreditStmt": "High balance of $5,313 from 05/2019 to 10/2019; $5,418 from 11/2019 to 03/2021",
+                    "histPaymentDueList": "51;51;51;51;51;51;51;51;51;51;51;51;51;51;51;51;51;50;50;50;50;50;50",
+                    "histPaymentAmtList": ";0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0",
+                    "histBalanceList": "0;4761;4803;4845;4887;4929;4971;5013;5055;5096;5138;5179;5220;5262;5303;5344;5385;5280;5280;5280;5280;5280;5280",
+                    "histPastDueList": "0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;301;250;200;150",
+                    "histRemarkList": ";;;;;;;;;;;;;;;;;NIR",
+                    "isCollection": false
+                  },
+                  {
+                    "itemKey": "3X1X5X6_256C001_O",
+                    "subscriber": {
+                      "industryCode": "YC",
+                      "memberCode": "256C001",
+                      "name": {
+                        "unparsed": "H&#x26;amp;R ACCOUNTS"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": "5320 22ND AVENUE"
+                        },
+                        "location": {
+                          "unparsed": "MOLINE, IL 61265",
+                          "city": "MOLINE",
+                          "state": "IL",
+                          "zipCode": 61265
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(309) 797-1400",
+                          "areaCode": 309,
+                          "exchange": 797,
+                          "suffix": 1400
+                        }
+                      }
+                    },
+                    "portfolioType": "open",
+                    "accountNumber": "3X1X5X6",
+                    "ECOADesignator": "individual",
+                    "dateOpened": "04/25/2018",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "06/30/2018",
+                    "currentBalance": 156,
+                    "highCredit": 156,
+                    "accountRating": "G",
+                    "remark": {
+                      "code": "CLA",
+                      "type": "ratingHistory",
+                      "description": "&#x3E;PLACED FOR COLLECTION&#x26;lt;"
+                    },
+                    "terms": {
+                      "description": ""
+                    },
+                    "account": {
+                      "code": "AG",
+                      "description": "COLLECTION AGENCY/ATTORNEY"
+                    },
+                    "pastDue": 156,
+                    "paymentHistory": "",
+                    "mostRecentPayment": {
+                      "date": "09/23/2015",
+                      "description": ""
+                    },
+                    "additionalTradeAccount": {
+                      "original": {
+                        "description": "MEDICAL-NORTH IOWA MERCY CLINICS R22 (Medical/Health Care)"
+                      }
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": true,
+                    "estimatedDeletionDate": "01/2025",
+                    "accountRatingDescription": "&#x3E;In Collection&#x26;lt;",
+                    "portfolioTypeDescription": "Open Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histPaymentDueList": "",
+                    "histPaymentAmtList": "",
+                    "histBalanceList": "",
+                    "histPastDueList": "",
+                    "isCollection": true
+                  },
+                  {
+                    "itemKey": "3X3X8X2_256C001_O",
+                    "subscriber": {
+                      "industryCode": "YC",
+                      "memberCode": "256C001",
+                      "name": {
+                        "unparsed": "H&#x26;amp;R ACCOUNTS"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": "5320 22ND AVENUE"
+                        },
+                        "location": {
+                          "unparsed": "MOLINE, IL 61265",
+                          "city": "MOLINE",
+                          "state": "IL",
+                          "zipCode": 61265
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(309) 797-1400",
+                          "areaCode": 309,
+                          "exchange": 797,
+                          "suffix": 1400
+                        }
+                      }
+                    },
+                    "portfolioType": "open",
+                    "accountNumber": "3X3X8X2",
+                    "ECOADesignator": "individual",
+                    "dateOpened": "01/03/2017",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "03/31/2017",
+                    "dateClosed": "12/18/2016",
+                    "datePaidOut": "12/18/2016",
+                    "highCredit": 378,
+                    "accountRating": "UR",
+                    "terms": {
+                      "description": ""
+                    },
+                    "account": {
+                      "code": "AG",
+                      "description": "COLLECTION AGENCY/ATTORNEY"
+                    },
+                    "paymentHistory": "",
+                    "mostRecentPayment": {
+                      "date": "09/23/2015",
+                      "description": ""
+                    },
+                    "additionalTradeAccount": {
+                      "original": {
+                        "description": "MEDICAL-NORTH IOWA MERCY CLINICS R22 (Medical/Health Care)"
+                      }
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": true,
+                    "accountRatingDescription": "Unrated",
+                    "portfolioTypeDescription": "Open Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histPaymentDueList": "",
+                    "histPaymentAmtList": "",
+                    "histBalanceList": "",
+                    "histPastDueList": "",
+                    "histRemarkList": "",
+                    "isCollection": true
+                  },
+                  {
+                    "itemKey": "3X1X5X0_256C001_O",
+                    "subscriber": {
+                      "industryCode": "YC",
+                      "memberCode": "256C001",
+                      "name": {
+                        "unparsed": "H&#x26;amp;R ACCOUNTS"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": "5320 22ND AVENUE"
+                        },
+                        "location": {
+                          "unparsed": "MOLINE, IL 61265",
+                          "city": "MOLINE",
+                          "state": "IL",
+                          "zipCode": 61265
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(309) 797-1400",
+                          "areaCode": 309,
+                          "exchange": 797,
+                          "suffix": 1400
+                        }
+                      }
+                    },
+                    "portfolioType": "open",
+                    "accountNumber": "3X1X5X0",
+                    "ECOADesignator": "individual",
+                    "dateOpened": "02/06/2016",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "04/30/2016",
+                    "dateClosed": "04/30/2016",
+                    "datePaidOut": "04/30/2016",
+                    "highCredit": 397,
+                    "accountRating": "UR",
+                    "terms": {
+                      "description": ""
+                    },
+                    "account": {
+                      "code": "AG",
+                      "description": "COLLECTION AGENCY/ATTORNEY"
+                    },
+                    "paymentHistory": "",
+                    "mostRecentPayment": {
+                      "date": "10/31/2015",
+                      "description": ""
+                    },
+                    "additionalTradeAccount": {
+                      "original": {
+                        "description": "MEDICAL-NORTH IOWA MERCY CLINICS R2 (Medical/Health Care)"
+                      }
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": true,
+                    "accountRatingDescription": "Unrated",
+                    "portfolioTypeDescription": "Open Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histPaymentDueList": "",
+                    "histPaymentAmtList": "",
+                    "histBalanceList": "",
+                    "histPastDueList": "",
+                    "histRemarkList": "",
+                    "isCollection": true
+                  },
+                  {
+                    "itemKey": "5155961252980605_7991189_R",
+                    "subscriber": {
+                      "industryCode": "BC",
+                      "memberCode": 7991189,
+                      "name": {
+                        "unparsed": "HOUSEHOLD BANK MC"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": [
+                            "*****MAIL RETURN 3/92****",
+                            "PO BOX 7460"
+                          ]
+                        },
+                        "location": {
+                          "unparsed": "SALINAS, CA 93902",
+                          "city": "SALINAS",
+                          "state": "CA",
+                          "zipCode": 93902
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(408) 754-1400",
+                          "areaCode": 408,
+                          "exchange": 754,
+                          "suffix": 1400
+                        }
+                      }
+                    },
+                    "portfolioType": "revolving",
+                    "accountNumber": 5155961252980605,
+                    "ECOADesignator": "individual",
+                    "dateOpened": "10/07/2020",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "09/20/2021",
+                    "datePaidOut": "09/11/2021",
+                    "accountRating": 1,
+                    "terms": {
+                      "paymentFrequency": "monthly",
+                      "description": "Paid Monthly"
+                    },
+                    "account": {
+                      "code": "CC",
+                      "description": "CREDIT CARD"
+                    },
+                    "paymentHistory": {
+                      "paymentPattern": {
+                        "startDate": "09/01/2021",
+                        "text": 1111111111
+                      },
+                      "historicalCounters": {
+                        "monthsReviewedCount": 10,
+                        "late30DaysTotal": 0,
+                        "late60DaysTotal": 0,
+                        "late90DaysTotal": 0
+                      }
+                    },
+                    "mostRecentPayment": {
+                      "amount": "$69",
+                      "date": "09/11/2021",
+                      "description": "09/11/2021 ($69)"
+                    },
+                    "additionalTradeAccount": {
+                      "original": ""
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": false,
+                    "accountRatingDescription": "Current; Paid or Paying as Agreed",
+                    "portfolioTypeDescription": "Revolving Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histHighCreditStmt": "High balance of $142 from 12/2020 to 12/2020; $190 from 01/2021 to 01/2021; $202 from 02/2021 to 04/2021; $202 from 06/2021 to 09/2021",
+                    "histCreditLimitStmt": "Credit limit of $300 from 12/2020 to 04/2021; $300 from 06/2021 to 09/2021",
+                    "histPaymentDueList": ";25;25;25;;0;25;25;25;25",
+                    "histPaymentAmtList": "69;50;50;0;;77;70;75;75;25",
+                    "histBalanceList": "0;69;117;146;;0;64;131;131;142",
+                    "histPastDueList": "0;0;0;0;;0;0;0;0;0",
+                    "histRemarkList": "",
+                    "isCollection": false
+                  },
+                  {
+                    "itemKey": "8X9X3X6X3XIX0X0X1_1XQ3001_I",
+                    "subscriber": {
+                      "industryCode": "EL",
+                      "memberCode": "1XQ3001",
+                      "name": {
+                        "unparsed": "IOWA STUDENT LOANS"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": [
+                            "6805 VISTA DR",
+                            "ASHFORD I BLDG"
+                          ]
+                        },
+                        "location": {
+                          "unparsed": "W DES MOINES, IA 50266-9307",
+                          "city": "W DES MOINES",
+                          "state": "IA",
+                          "zipCode": 50266,
+                          "zipExt": 9307
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(800) 243-7552",
+                          "areaCode": 800,
+                          "exchange": 243,
+                          "suffix": 7552
+                        }
+                      }
+                    },
+                    "portfolioType": "installment",
+                    "accountNumber": "8X9X3X6X3XIX0X0X1",
+                    "ECOADesignator": "individual",
+                    "dateOpened": "01/22/2012",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "01/31/2016",
+                    "dateClosed": "01/31/2016",
+                    "currentBalance": 0,
+                    "highCredit": 2625,
+                    "accountRating": 5,
+                    "remark": {
+                      "code": "SLP",
+                      "type": "generic",
+                      "description": "STUDENT LOAN PERM ASSIGN GOVT"
+                    },
+                    "terms": {
+                      "paymentFrequency": "monthly",
+                      "paymentScheduleMonthCount": 101,
+                      "scheduledMonthlyPayment": "$21",
+                      "description": "$21 per month, paid Monthly for 101  months"
+                    },
+                    "account": {
+                      "code": "ST",
+                      "description": "STUDENT LOAN"
+                    },
+                    "paymentHistory": {
+                      "maxDelinquency": {
+                        "code": 5,
+                        "maxDelinquencyDescription": "Maximum Delinquency of 120 days in 05/2015 for $95 and  in 12/2015",
+                        "maxDelinquencyData": {
+                          "earliest": true
+                        }
+                      },
+                      "paymentPattern": {
+                        "startDate": "12/01/2015",
+                        "text": 5.555555431111112e+46
+                      },
+                      "historicalCounters": {
+                        "monthsReviewedCount": 47,
+                        "late30DaysTotal": 0,
+                        "late60DaysTotal": 1,
+                        "late90DaysTotal": 8
+                      }
+                    },
+                    "mostRecentPayment": {
+                      "amount": "$21",
+                      "date": "01/14/2016",
+                      "description": "01/14/2016 ($21)"
+                    },
+                    "additionalTradeAccount": {
+                      "payment": {
+                        "description": "Payment deferred until 04/14/2014",
+                        "code": "D"
+                      },
+                      "original": ""
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": true,
+                    "estimatedDeletionDate": "12/2021",
+                    "accountRatingDescription": "&#x3E;Account 120 Days Past Due Date&#x26;lt;",
+                    "portfolioTypeDescription": "Installment Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histPaymentDueList": "",
+                    "histPaymentAmtList": "",
+                    "histBalanceList": "",
+                    "histPastDueList": "",
+                    "isCollection": false
+                  },
+                  {
+                    "itemKey": "8X9X3X6X3XIX0X0X2_1XQ3001_I",
+                    "subscriber": {
+                      "industryCode": "EL",
+                      "memberCode": "1XQ3001",
+                      "name": {
+                        "unparsed": "IOWA STUDENT LOANS"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": [
+                            "6805 VISTA DR",
+                            "ASHFORD I BLDG"
+                          ]
+                        },
+                        "location": {
+                          "unparsed": "W DES MOINES, IA 50266-9307",
+                          "city": "W DES MOINES",
+                          "state": "IA",
+                          "zipCode": 50266,
+                          "zipExt": 9307
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(800) 243-7552",
+                          "areaCode": 800,
+                          "exchange": 243,
+                          "suffix": 7552
+                        }
+                      }
+                    },
+                    "portfolioType": "installment",
+                    "accountNumber": "8X9X3X6X3XIX0X0X2",
+                    "ECOADesignator": "individual",
+                    "dateOpened": "01/22/2012",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "01/31/2016",
+                    "dateClosed": "01/31/2016",
+                    "currentBalance": 0,
+                    "highCredit": 3390,
+                    "accountRating": 5,
+                    "remark": {
+                      "code": "SLP",
+                      "type": "generic",
+                      "description": "STUDENT LOAN PERM ASSIGN GOVT"
+                    },
+                    "terms": {
+                      "paymentFrequency": "monthly",
+                      "paymentScheduleMonthCount": 101,
+                      "scheduledMonthlyPayment": "$2",
+                      "description": "$2 per month, paid Monthly for 101  months"
+                    },
+                    "account": {
+                      "code": "ST",
+                      "description": "STUDENT LOAN"
+                    },
+                    "paymentHistory": {
+                      "maxDelinquency": {
+                        "code": 5,
+                        "maxDelinquencyDescription": "Maximum Delinquency of 120 days in 05/2015 for $13 and  in 12/2015",
+                        "maxDelinquencyData": {
+                          "earliest": true
+                        }
+                      },
+                      "paymentPattern": {
+                        "startDate": "12/01/2015",
+                        "text": 5.555555431111112e+46
+                      },
+                      "historicalCounters": {
+                        "monthsReviewedCount": 47,
+                        "late30DaysTotal": 0,
+                        "late60DaysTotal": 1,
+                        "late90DaysTotal": 8
+                      }
+                    },
+                    "mostRecentPayment": {
+                      "amount": "$2",
+                      "date": "01/14/2016",
+                      "description": "01/14/2016 ($2)"
+                    },
+                    "additionalTradeAccount": {
+                      "payment": {
+                        "description": "Payment deferred until 04/14/2014",
+                        "code": "D"
+                      },
+                      "original": ""
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": true,
+                    "estimatedDeletionDate": "12/2021",
+                    "accountRatingDescription": "&#x3E;Account 120 Days Past Due Date&#x26;lt;",
+                    "portfolioTypeDescription": "Installment Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histPaymentDueList": "",
+                    "histPaymentAmtList": "",
+                    "histBalanceList": "",
+                    "histPastDueList": "",
+                    "isCollection": false
+                  },
+                  {
+                    "itemKey": "8X9X3X6X3XIX0X0X3_1XQ3001_I",
+                    "subscriber": {
+                      "industryCode": "EL",
+                      "memberCode": "1XQ3001",
+                      "name": {
+                        "unparsed": "IOWA STUDENT LOANS"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": [
+                            "6805 VISTA DR",
+                            "ASHFORD I BLDG"
+                          ]
+                        },
+                        "location": {
+                          "unparsed": "W DES MOINES, IA 50266-9307",
+                          "city": "W DES MOINES",
+                          "state": "IA",
+                          "zipCode": 50266,
+                          "zipExt": 9307
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(800) 243-7552",
+                          "areaCode": 800,
+                          "exchange": 243,
+                          "suffix": 7552
+                        }
+                      }
+                    },
+                    "portfolioType": "installment",
+                    "accountNumber": "8X9X3X6X3XIX0X0X3",
+                    "ECOADesignator": "individual",
+                    "dateOpened": "01/31/2013",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "01/31/2016",
+                    "dateClosed": "01/31/2016",
+                    "currentBalance": 0,
+                    "highCredit": 3500,
+                    "accountRating": 5,
+                    "remark": {
+                      "code": "SLP",
+                      "type": "generic",
+                      "description": "STUDENT LOAN PERM ASSIGN GOVT"
+                    },
+                    "terms": {
+                      "paymentFrequency": "monthly",
+                      "paymentScheduleMonthCount": 101,
+                      "scheduledMonthlyPayment": "$42",
+                      "description": "$42 per month, paid Monthly for 101  months"
+                    },
+                    "account": {
+                      "code": "ST",
+                      "description": "STUDENT LOAN"
+                    },
+                    "paymentHistory": {
+                      "maxDelinquency": {
+                        "code": 5,
+                        "maxDelinquencyDescription": "Maximum Delinquency of 120 days in 05/2015 for $190 and  in 12/2015",
+                        "maxDelinquencyData": {
+                          "earliest": true
+                        }
+                      },
+                      "paymentPattern": {
+                        "startDate": "12/01/2015",
+                        "text": 5.555555431111111e+34
+                      },
+                      "historicalCounters": {
+                        "monthsReviewedCount": 35,
+                        "late30DaysTotal": 0,
+                        "late60DaysTotal": 1,
+                        "late90DaysTotal": 8
+                      }
+                    },
+                    "mostRecentPayment": {
+                      "amount": "$42",
+                      "date": "01/14/2016",
+                      "description": "01/14/2016 ($42)"
+                    },
+                    "additionalTradeAccount": {
+                      "payment": {
+                        "description": "Payment deferred until 04/14/2014",
+                        "code": "D"
+                      },
+                      "original": ""
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": true,
+                    "estimatedDeletionDate": "12/2021",
+                    "accountRatingDescription": "&#x3E;Account 120 Days Past Due Date&#x26;lt;",
+                    "portfolioTypeDescription": "Installment Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histPaymentDueList": "",
+                    "histPaymentAmtList": "",
+                    "histBalanceList": "",
+                    "histPastDueList": "",
+                    "isCollection": false
+                  },
+                  {
+                    "itemKey": "4266821712882431_26QK001_R",
+                    "subscriber": {
+                      "industryCode": "BC",
+                      "memberCode": "26QK001",
+                      "name": {
+                        "unparsed": "JPMCB CARD SERVICES"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": "PO BOX 15369"
+                        },
+                        "location": {
+                          "unparsed": "WILMINGTON, DE 19850",
+                          "city": "WILMINGTON",
+                          "state": "DE",
+                          "zipCode": 19850
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(800) 945-2000",
+                          "areaCode": 800,
+                          "exchange": 945,
+                          "suffix": 2000
+                        }
+                      }
+                    },
+                    "portfolioType": "revolving",
+                    "accountNumber": 4266821712882431,
+                    "ECOADesignator": "terminated",
+                    "dateOpened": "04/02/2013",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "12/22/2016",
+                    "dateClosed": "12/22/2016",
+                    "datePaidOut": "07/31/2016",
+                    "currentBalance": 0,
+                    "highCredit": 1432,
+                    "creditLimit": 950,
+                    "accountRating": "L",
+                    "remark": [
+                      {
+                        "code": "CBG",
+                        "type": "generic",
+                        "description": "CLOSED BY CREDIT GRANTOR"
+                      },
+                      {
+                        "code": "PRL",
+                        "type": "ratingHistory",
+                        "description": "&#x3E;UNPAID BALANCE CHARGED OFF&#x26;lt;"
+                      }
+                    ],
+                    "terms": {
+                      "paymentFrequency": "monthly",
+                      "description": "Paid Monthly"
+                    },
+                    "account": {
+                      "code": "CC",
+                      "description": "CREDIT CARD"
+                    },
+                    "paymentHistory": {
+                      "maxDelinquency": {
+                        "code": 5,
+                        "maxDelinquencyDescription": "Maximum Delinquency of 120 days in 09/2016 for $148 and  in 10/2016 for $181",
+                        "maxDelinquencyData": {
+                          "earliest": true
+                        }
+                      },
+                      "paymentPattern": {
+                        "startDate": "11/01/2016",
+                        "text": 5.543332111111111e+36
+                      },
+                      "historicalCounters": {
+                        "monthsReviewedCount": 37,
+                        "late30DaysTotal": 2,
+                        "late60DaysTotal": 4,
+                        "late90DaysTotal": 3
+                      }
+                    },
+                    "mostRecentPayment": {
+                      "amount": "$0",
+                      "date": "07/31/2016",
+                      "description": "07/31/2016 ($0)"
+                    },
+                    "additionalTradeAccount": {
+                      "original": {
+                        "chargeOff": 1432
+                      }
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": true,
+                    "estimatedDeletionDate": "01/2023",
+                    "accountRatingDescription": "&#x3E;Charged Off&#x26;lt;",
+                    "portfolioTypeDescription": "Revolving Account",
+                    "ECOADesignatorDescription": "Account Relationship Terminated (11/22/2016)",
+                    "histPaymentDueList": "",
+                    "histPaymentAmtList": "",
+                    "histBalanceList": "",
+                    "histPastDueList": "",
+                    "isCollection": false
+                  },
+                  {
+                    "itemKey": "8X9X3X6X3XSX0X0X1_63YQ079_I",
+                    "subscriber": {
+                      "industryCode": "EL",
+                      "memberCode": "63YQ079",
+                      "name": {
+                        "unparsed": "STUDENT ASSISTANCE FOUND"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": [
+                            "2500 BROADWAY",
+                            "POB 5209"
+                          ]
+                        },
+                        "location": {
+                          "unparsed": "HELENA, MT 59604-5209",
+                          "city": "HELENA",
+                          "state": "MT",
+                          "zipCode": 59604,
+                          "zipExt": 5209
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(800) 852-2761",
+                          "areaCode": 800,
+                          "exchange": 852,
+                          "suffix": 2761
+                        }
+                      }
+                    },
+                    "portfolioType": "installment",
+                    "accountNumber": "8X9X3X6X3XSX0X0X1",
+                    "ECOADesignator": "individual",
+                    "dateOpened": "01/22/2012",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "02/04/2019",
+                    "dateClosed": "02/04/2019",
+                    "currentBalance": 0,
+                    "highCredit": 2625,
+                    "accountRating": 1,
+                    "remark": [
+                      {
+                        "code": "ACR",
+                        "type": "generic",
+                        "description": "ACCT CLOSED DUE TO REFINANCE"
+                      },
+                      {
+                        "code": "CLO",
+                        "type": "ratingHistory",
+                        "description": "CLOSED"
+                      }
+                    ],
+                    "terms": {
+                      "paymentFrequency": "monthly",
+                      "scheduledMonthlyPayment": "$0",
+                      "description": "$0 per month, paid Monthly"
+                    },
+                    "account": {
+                      "code": "ST",
+                      "description": "STUDENT LOAN"
+                    },
+                    "paymentHistory": "",
+                    "mostRecentPayment": {
+                      "amount": "$1,456",
+                      "date": "02/04/2019",
+                      "description": "02/04/2019 ($1,456)"
+                    },
+                    "additionalTradeAccount": {
+                      "original": ""
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": false,
+                    "accountRatingDescription": "Current; Paid or Paying as Agreed",
+                    "portfolioTypeDescription": "Installment Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histPaymentDueList": "",
+                    "histPaymentAmtList": "",
+                    "histBalanceList": "",
+                    "histPastDueList": "",
+                    "isCollection": false
+                  },
+                  {
+                    "itemKey": "8X9X3X6X3XSX0X0X2_63YQ079_I",
+                    "subscriber": {
+                      "industryCode": "EL",
+                      "memberCode": "63YQ079",
+                      "name": {
+                        "unparsed": "STUDENT ASSISTANCE FOUND"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": [
+                            "2500 BROADWAY",
+                            "POB 5209"
+                          ]
+                        },
+                        "location": {
+                          "unparsed": "HELENA, MT 59604-5209",
+                          "city": "HELENA",
+                          "state": "MT",
+                          "zipCode": 59604,
+                          "zipExt": 5209
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(800) 852-2761",
+                          "areaCode": 800,
+                          "exchange": 852,
+                          "suffix": 2761
+                        }
+                      }
+                    },
+                    "portfolioType": "installment",
+                    "accountNumber": "8X9X3X6X3XSX0X0X2",
+                    "ECOADesignator": "individual",
+                    "dateOpened": "01/22/2012",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "02/04/2019",
+                    "dateClosed": "02/04/2019",
+                    "currentBalance": 0,
+                    "highCredit": 3390,
+                    "accountRating": 1,
+                    "remark": [
+                      {
+                        "code": "ACR",
+                        "type": "generic",
+                        "description": "ACCT CLOSED DUE TO REFINANCE"
+                      },
+                      {
+                        "code": "CLO",
+                        "type": "ratingHistory",
+                        "description": "CLOSED"
+                      }
+                    ],
+                    "terms": {
+                      "paymentFrequency": "monthly",
+                      "scheduledMonthlyPayment": "$0",
+                      "description": "$0 per month, paid Monthly"
+                    },
+                    "account": {
+                      "code": "ST",
+                      "description": "STUDENT LOAN"
+                    },
+                    "paymentHistory": "",
+                    "mostRecentPayment": {
+                      "amount": "$1,881",
+                      "date": "02/04/2019",
+                      "description": "02/04/2019 ($1,881)"
+                    },
+                    "additionalTradeAccount": {
+                      "original": ""
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": false,
+                    "accountRatingDescription": "Current; Paid or Paying as Agreed",
+                    "portfolioTypeDescription": "Installment Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histPaymentDueList": "",
+                    "histPaymentAmtList": "",
+                    "histBalanceList": "",
+                    "histPastDueList": "",
+                    "isCollection": false
+                  },
+                  {
+                    "itemKey": "8X9X3X6X3XSX0X0X3_63YQ079_I",
+                    "subscriber": {
+                      "industryCode": "EL",
+                      "memberCode": "63YQ079",
+                      "name": {
+                        "unparsed": "STUDENT ASSISTANCE FOUND"
+                      },
+                      "address": {
+                        "street": {
+                          "unparsed": [
+                            "2500 BROADWAY",
+                            "POB 5209"
+                          ]
+                        },
+                        "location": {
+                          "unparsed": "HELENA, MT 59604-5209",
+                          "city": "HELENA",
+                          "state": "MT",
+                          "zipCode": 59604,
+                          "zipExt": 5209
+                        }
+                      },
+                      "phone": {
+                        "number": {
+                          "unparsed": "(800) 852-2761",
+                          "areaCode": 800,
+                          "exchange": 852,
+                          "suffix": 2761
+                        }
+                      }
+                    },
+                    "portfolioType": "installment",
+                    "accountNumber": "8X9X3X6X3XSX0X0X3",
+                    "ECOADesignator": "individual",
+                    "dateOpened": "01/26/2013",
+                    "dateEffectiveLabel": "DateUpdated",
+                    "dateEffective": "02/04/2019",
+                    "dateClosed": "02/04/2019",
+                    "currentBalance": 0,
+                    "highCredit": 3500,
+                    "accountRating": 1,
+                    "remark": [
+                      {
+                        "code": "ACR",
+                        "type": "generic",
+                        "description": "ACCT CLOSED DUE TO REFINANCE"
+                      },
+                      {
+                        "code": "CLO",
+                        "type": "ratingHistory",
+                        "description": "CLOSED"
+                      }
+                    ],
+                    "terms": {
+                      "paymentFrequency": "monthly",
+                      "scheduledMonthlyPayment": "$0",
+                      "description": "$0 per month, paid Monthly"
+                    },
+                    "account": {
+                      "code": "ST",
+                      "description": "STUDENT LOAN"
+                    },
+                    "paymentHistory": "",
+                    "mostRecentPayment": {
+                      "amount": "$1,942",
+                      "date": "02/04/2019",
+                      "description": "02/04/2019 ($1,942)"
+                    },
+                    "additionalTradeAccount": {
+                      "original": ""
+                    },
+                    "suppressionFlag": false,
+                    "adverseFlag": false,
+                    "accountRatingDescription": "Current; Paid or Paying as Agreed",
+                    "portfolioTypeDescription": "Installment Account",
+                    "ECOADesignatorDescription": "Individual Account",
+                    "histPaymentDueList": "",
+                    "histPaymentAmtList": "",
+                    "histBalanceList": "",
+                    "histPastDueList": "",
+                    "isCollection": false
+                  }
+                ],
+                "inquiries": {
+                  "creditFileInquiry": [
+                    {
+                      "order": 1,
+                      "ECOADesignator": {
+                        "code": "I",
+                        "description": "Individual"
+                      },
+                      "subscriber": {
+                        "subscriberType": "member",
+                        "memMktSubMktCde": 3314,
+                        "memSubCode": "B2699824",
+                        "industryCode": "B",
+                        "name": {
+                          "organization": "CAPITAL ONE BANK USA NA"
+                        },
+                        "address": {
+                          "street": {
+                            "unparsed": "PO BOX  30281"
+                          },
+                          "location": {
+                            "unparsed": "SALT LAKE CITY, UT 84130",
+                            "city": "SALT LAKE CITY",
+                            "state": "UT",
+                            "zipCode": 84130
+                          }
+                        },
+                        "phone": {
+                          "unparsed": "(800) 955-7070",
+                          "areaCode": 800,
+                          "exchange": 955,
+                          "suffix": 7070,
+                          "extension": ""
+                        }
+                      },
+                      "dates": "02/01/2021"
+                    },
+                    {
+                      "order": 2,
+                      "ECOADesignator": {
+                        "code": "P",
+                        "description": "Participant"
+                      },
+                      "subscriber": {
+                        "subscriberType": "member",
+                        "memMktSubMktCde": 1702,
+                        "memSubCode": "F5919634",
+                        "industryCode": "F",
+                        "name": {
+                          "organization": "CHASE CUSTOM FINANCE"
+                        },
+                        "address": {
+                          "street": {
+                            "unparsed": [
+                              "7650 EDINBOROUGH W",
+                              "SUITE 175"
+                            ]
+                          },
+                          "location": {
+                            "unparsed": "EDINA, MN 55435",
+                            "city": "EDINA",
+                            "state": "MN",
+                            "zipCode": 55435
+                          }
+                        },
+                        "phone": {
+                          "unparsed": "Phone number not available",
+                          "extension": ""
+                        }
+                      },
+                      "dates": "12/21/2020"
+                    },
+                    {
+                      "order": 3,
+                      "ECOADesignator": {
+                        "code": "I",
+                        "description": "Individual"
+                      },
+                      "subscriber": {
+                        "subscriberType": "member",
+                        "memMktSubMktCde": 1120,
+                        "memSubCode": "N1008315",
+                        "industryCode": "N",
+                        "name": {
+                          "organization": "TD AUTO FINANCE"
+                        },
+                        "address": {
+                          "street": {
+                            "unparsed": [
+                              "FKA CHRYSLER FINAN",
+                              "PO BOX 9223  (1132"
+                            ]
+                          },
+                          "location": {
+                            "unparsed": "FARMINGTON HIL, MI 48333",
+                            "city": "FARMINGTON HIL",
+                            "state": "MI",
+                            "zipCode": 48333
+                          }
+                        },
+                        "phone": {
+                          "unparsed": "Phone number not available",
+                          "extension": ""
+                        }
+                      },
+                      "dates": "12/21/2020"
+                    },
+                    {
+                      "order": 4,
+                      "ECOADesignator": {
+                        "code": "I",
+                        "description": "Individual"
+                      },
+                      "subscriber": {
+                        "subscriberType": "member",
+                        "memMktSubMktCde": 1120,
+                        "memSubCode": "N1203543",
+                        "industryCode": "N",
+                        "name": {
+                          "organization": "ALLY FINANCIAL"
+                        },
+                        "address": {
+                          "street": {
+                            "unparsed": [
+                              "ALLY FINANCIAL- FL",
+                              "12850 W GRAN BAY P"
+                            ]
+                          },
+                          "location": {
+                            "unparsed": "JACKSONVILLE, FL 32258",
+                            "city": "JACKSONVILLE",
+                            "state": "FL",
+                            "zipCode": 32258
+                          }
+                        },
+                        "phone": {
+                          "unparsed": "Phone number not available",
+                          "extension": ""
+                        }
+                      },
+                      "dates": "12/21/2020, 12/16/2020"
+                    },
+                    {
+                      "order": 5,
+                      "ECOADesignator": {
+                        "code": "I",
+                        "description": "Individual"
+                      },
+                      "subscriber": {
+                        "subscriberType": "member",
+                        "memMktSubMktCde": 600,
+                        "memSubCode": "A6412829",
+                        "industryCode": "A",
+                        "name": {
+                          "organization": "ODE/WILCOX AUTOMOTIVE"
+                        },
+                        "address": {
+                          "street": {
+                            "unparsed": "321 19TH STREET SW"
+                          },
+                          "location": {
+                            "unparsed": "FOREST LAKE, MN 55025",
+                            "city": "FOREST LAKE",
+                            "state": "MN",
+                            "zipCode": 55025
+                          }
+                        },
+                        "phone": {
+                          "unparsed": "(651) 464-4212",
+                          "areaCode": 651,
+                          "exchange": 464,
+                          "suffix": 4212,
+                          "extension": ""
+                        }
+                      },
+                      "requestor": {
+                        "organization": "EFX"
+                      },
+                      "dates": "12/21/2020",
+                      "permissiblePurpose": {
+                        "code": "BN",
+                        "description": "CONSUMER INITIATED TRANSACTION"
+                      }
+                    },
+                    {
+                      "order": 6,
+                      "ECOADesignator": {
+                        "code": "P",
+                        "description": "Participant"
+                      },
+                      "subscriber": {
+                        "subscriberType": "member",
+                        "memMktSubMktCde": 1527,
+                        "memSubCode": "F0027016",
+                        "industryCode": "F",
+                        "name": {
+                          "organization": "AMERICREDIT"
+                        },
+                        "address": {
+                          "street": {
+                            "unparsed": [
+                              "801 CHERRY ST",
+                              "SUITE 3900"
+                            ]
+                          },
+                          "location": {
+                            "unparsed": "FT WORTH, TX 76102",
+                            "city": "FT WORTH",
+                            "state": "TX",
+                            "zipCode": 76102
+                          }
+                        },
+                        "phone": {
+                          "unparsed": "(817) 302-7000",
+                          "areaCode": 817,
+                          "exchange": 302,
+                          "suffix": 7000,
+                          "extension": ""
+                        }
+                      },
+                      "dates": "12/16/2020"
+                    },
+                    {
+                      "order": 7,
+                      "ECOADesignator": {
+                        "code": "I",
+                        "description": "Individual"
+                      },
+                      "subscriber": {
+                        "subscriberType": "member",
+                        "memMktSubMktCde": 3314,
+                        "memSubCode": "F1246538",
+                        "industryCode": "F",
+                        "name": {
+                          "organization": "CAPITAL ONE AUTO FINANCE"
+                        },
+                        "address": {
+                          "street": {
+                            "unparsed": [
+                              "3905 N. DALLAS PAR",
+                              "PO #COAF1-222"
+                            ]
+                          },
+                          "location": {
+                            "unparsed": "PLANO, TX 75093",
+                            "city": "PLANO",
+                            "state": "TX",
+                            "zipCode": 75093
+                          }
+                        },
+                        "phone": {
+                          "unparsed": "(888) 396-2623",
+                          "areaCode": 888,
+                          "exchange": 396,
+                          "suffix": 2623,
+                          "extension": ""
+                        }
+                      },
+                      "dates": "12/16/2020"
+                    },
+                    {
+                      "order": 8,
+                      "ECOADesignator": {
+                        "code": "I",
+                        "description": "Individual"
+                      },
+                      "subscriber": {
+                        "subscriberType": "member",
+                        "memMktSubMktCde": 924,
+                        "memSubCode": "D3764143",
+                        "industryCode": "D",
+                        "name": {
+                          "organization": "METABANK/FINGERHUT"
+                        },
+                        "address": {
+                          "street": {
+                            "unparsed": "6509 FLYING CLOUD"
+                          },
+                          "location": {
+                            "unparsed": "EDEN PRAIRIE, MN 55344",
+                            "city": "EDEN PRAIRIE",
+                            "state": "MN",
+                            "zipCode": 55344
+                          }
+                        },
+                        "phone": {
+                          "unparsed": "(800) 356-2347",
+                          "areaCode": 800,
+                          "exchange": 356,
+                          "suffix": 2347,
+                          "extension": ""
+                        }
+                      },
+                      "dates": "02/28/2020"
+                    }
+                  ]
+                },
+                "histRemarkLegend": "NIR:STUDENT LOAN NOT IN REPAYMENT"
+              }
+            },
+            "addOnProduct": {
+              "scoreModel": {
+                "score": {
+                  "name": {
+                    "person": {
+                      "unparsed": "NEIL GIDDENS",
+                      "first": "NEIL",
+                      "middle": "",
+                      "last": "GIDDENS",
+                      "order": 1
+                    }
+                  },
+                  "productCode": "00W40",
+                  "score": 11,
+                  "scoreGrade": "-",
+                  "scoreDate": "11/12/2021",
+                  "quantitativeGraphNumber": -1,
+                  "populationGraphNumber": 50,
+                  "populationDescription": "Your credit ranks higher than --% of the nation&#x27;s population.",
+                  "summaryDescription": "You did not order a TransUnion credit score. You can purchase your credit score for $9.95 by calling 1-866-SCORE-TU or 1-866-726-7388."
+                }
+              },
+              "highRiskFraudAlert": {
+                "message": {
+                  "text": ""
+                }
+              },
+              "militaryLendingActSearch": {
+                "searchStatus": "noMatch"
+              }
+            },
+            "closingInfo": {
+              "mail": {
+                "unparsed": "TransUnion Consumer Relations"
+              },
+              "address": {
+                "street": {
+                  "unparsed": "P.O. Box 2000"
+                },
+                "location": {
+                  "unparsed": "Chester, PA 19016-2000"
+                },
+                "order": 1
+              },
+              "phone": {
+                "number": {
+                  "unparsed": "(800) 916-8800"
+                }
+              },
+              "contactURL": "www.transunion.com",
+              "disputeURL": "www.transunion.com/disputeonline"
+            },
+            "fileNumber": 960026684,
+            "consumerID": 800003561640,
+            "fileDate": "11/12/2021",
+            "dynamicText": {
+              "personalInfoDetail": {
+                "type": 1,
+                "text": "Your SSN has been masked for your protection."
+              },
+              "adverseAcctDetail": [
+                {
+                  "type": 2,
+                  "text": "Adverse information typically remains on your credit file for up to 7 years from the date of the delinquency. To help you understand what is generally considered adverse, we have added &#x3E;brackets&#x26;lt; to those items in this report."
+                },
+                {
+                  "type": 1,
+                  "text": "For any account that contains medical information, the information following &#x27;Medical-&#x27; is not displayed to anyone but you except where permitted by law."
+                },
+                {
+                  "type": 1,
+                  "text": "For your protection, your account numbers have been partially masked, and in some cases scrambled."
+                },
+                {
+                  "type": 1,
+                  "text": "Please note: Accounts are reported as &#x26;quot;Current; Paid or paying as agreed&#x26;quot; if paid within 30 days of the due date. Accounts reported as Current may still incur late fees or interest charges if not paid on or before the due date."
+                }
+              ],
+              "accountDetail": [
+                {
+                  "type": 2,
+                  "text": ""
+                },
+                {
+                  "text": "The following accounts are reported with no adverse information. For your protection, your account numbers have been partially masked, and in some cases scrambled."
+                },
+                {
+                  "text": "Please note: Accounts are reported as &#x26;quot;Current; Paid or paying as agreed&#x26;quot; if paid within 30 days of the due date. Accounts reported as Current may still incur late fees or interest charges if not paid on or before the due date."
+                }
+              ],
+              "regInquiryDetail": {
+                "type": 2,
+                "text": "Regular Inquiries are posted when someone accesses your credit information from TransUnion. The presence of an inquiry means that the company listed received your credit information on the dates specified. These inquiries will remain on your credit file for up to 2 years."
+              }
+            }
+          },
+          "fullDisclFlag": "Y"
+        }
+      }
+    }
+  }
+}

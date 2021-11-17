@@ -16,3 +16,5 @@ export * from './start-dispute.interface';
 export * from './verify-authentication-answers.interface';
 export * from './verify-authentication-questions.interface';
 export * from './get-trending-data.interface';
+export * from './get-alerts-notifications.interface';
+export * from './get-investigation-results-by-id.interface';
