@@ -129,7 +129,7 @@ functions:
           batchSize: 100
           startingPosition: LATEST
           arn:
-            Fn::ImportValue: '${self:custom.settings.APPDATA.${opt:stage}}'
+            Fn::ImportValue: '${self:custom.settings.APPDATA_STREAMS.${opt:stage}}'
   seedCreditScoreTrackingsTable:
     handler: src/handlers/transunion/seedCreditScoreTrackingsTable.main
     timeout: 30
