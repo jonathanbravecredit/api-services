@@ -1,12 +1,7 @@
 const AWS = require('aws-sdk');
 const db = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: 'us-east-2' });
 
-const APP_DATA =
-  process.env.NODE_ENV === 'prod'
-    ? 'AppData-4tpaga7rzjayhk75opsmpeurme-prod'
-    : 'AppData-rr5wtr4ev5exlbutrkih3r5lhq-dev';
-
-const tableName = APP_DATA;
+const tableName = process.env.APPDATA_TABLE;
 
 export const getAllItemsInDB = async () => {
   let params = {
