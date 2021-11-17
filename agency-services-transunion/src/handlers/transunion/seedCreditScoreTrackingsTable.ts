@@ -57,14 +57,16 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     } = await listCreditScores();
     await Promise.all(
       scores.map(async (score: IScore) => {
-        const prodObj = score.agencies.transunion.fulfillVantageScore.serviceProductObject;
+        const prodObj = score.agencies?.transunion?.fulfillVantageScore?.serviceProductObject;
         let vantageScore: IVantageScore;
-        if (typeof prodObj === 'string') {
-          vantageScore = JSON.parse(prodObj);
-        } else if (typeof prodObj === 'object') {
-          vantageScore = prodObj;
+        if (prodObj) {
+          if (typeof prodObj === 'string') {
+            vantageScore = JSON.parse(prodObj);
+          } else if (typeof prodObj === 'object') {
+            vantageScore = prodObj;
+          }
         }
-        const currentScore = vantageScore.CreditScoreType.riskScore || null;
+        const currentScore = vantageScore?.CreditScoreType?.riskScore || null;
         const now = new Date().toISOString();
         const payload: CreditScoreTracking = {
           userId: score.id,
