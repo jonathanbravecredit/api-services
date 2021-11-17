@@ -107,9 +107,9 @@ export const getDispute = async (msg: IGetDisputeRequest): Promise<AxiosResponse
   }
 };
 
-export const listCreditScores = async (): Promise<AxiosResponse<any>> => {
+export const listCreditScores = async (limit: number): Promise<AxiosResponse<any>> => {
   try {
-    return await postGraphQLRequest(qry.listVantageScores, null);
+    return await postGraphQLRequest(qry.listVantageScores, { limit: limit });
   } catch (err) {
     return err;
   }

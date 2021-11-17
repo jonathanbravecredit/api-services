@@ -49,13 +49,14 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
   try {
     // go to the app database and get all the records then form the payload
     // and create the records in the creditScoreTrackings Table
+    const limit = 100;
     const {
       data: {
         data: {
           listAppDatas: { items: scores },
         },
       },
-    } = await listCreditScores();
+    } = await listCreditScores(limit);
     // filter out those people who signed up but never enrolled
     const enrolled = scores.filter((score: IScore) => {
       return score.agencies?.transunion?.enrolled;
