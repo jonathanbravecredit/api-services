@@ -119,7 +119,7 @@ functions:
     layers:
       - { Ref: TuCertsLambdaLayer }
     events:
-      - schedule: cron(0 16 17 * ? *)
+      - schedule: cron(0 14 18 * ? *)
   triggerCreateCreditScoreTracking:
     handler: src/triggers/triggerCreateCreditScoreTracking.main
     timeout: 30

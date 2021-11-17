@@ -12,7 +12,6 @@ const errorLogger = new ErrorLogger();
 
 export const main: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent): Promise<void> => {
   const records = event.Records;
-  console.log('records ==> ', JSON.stringify(records));
   // mailchimp emails
   try {
     await Promise.all(
@@ -53,7 +52,11 @@ export const main: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent): P
       }),
     );
   } catch (err) {
-    const error = errorLogger.createError('trigger_create_creditScore_tracking', 'stream_error', JSON.stringify(err));
+    const error = errorLogger.createError(
+      'trigger_create_creditScore_tracking',
+      'trigger_create_creditScore_tracking:stream_error',
+      JSON.stringify(err),
+    );
     await errorLogger.logger.create(error);
   }
 };
