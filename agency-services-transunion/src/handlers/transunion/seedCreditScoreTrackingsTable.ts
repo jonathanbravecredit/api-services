@@ -16,6 +16,24 @@ import { listCreditScores } from 'lib/proxy';
 const errorLogger = new ErrorLogger();
 const transactionLogger = new TransactionLogger();
 
+interface IScore {
+  id: string;
+  agencies: {
+    transunion: {
+      fulfillVantageScore: {
+        bureau: string;
+        errorReponse: unknown;
+        serviceProduct: string;
+        serviceProductFullfillmentKey: string;
+        serviceProductObject: string;
+        serviceProductTypeId: string;
+        serviceProductValue: string;
+        status: string;
+      };
+    };
+  };
+}
+
 /**
  * Handler that processes single requests for Transunion services
  * @param service Service invoked via the SNS Proxy 'transunion'
@@ -32,10 +50,34 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     // and create the records in the creditScoreTrackings Table
     const {
       data: {
-        data: { listAppDatas: scores },
+        data: {
+          listAppDatas: { items: scores },
+        },
       },
     } = await listCreditScores();
-    console.log('all scores ===> ', scores);
+    await Promise.all(
+      scores.map(async (score: IScore) => {
+        const prodObj = score.agencies.transunion.fulfillVantageScore.serviceProductObject;
+        let vantageScore: IVantageScore;
+        if (typeof prodObj === 'string') {
+          vantageScore = JSON.parse(prodObj);
+        } else if (typeof prodObj === 'object') {
+          vantageScore = prodObj;
+        }
+        const currentScore = vantageScore.CreditScoreType.riskScore || null;
+        const now = new Date().toISOString();
+        const payload: CreditScoreTracking = {
+          userId: score.id,
+          bureauId: 'transunion',
+          priorScore: null,
+          currentScore: currentScore,
+          delta: null,
+          createdOn: now,
+          modifiedOn: now,
+        };
+        await DB.creditScoreTrackings.create(payload);
+      }),
+    );
     const results = { success: true, error: null, data: null };
     return JSON.stringify(results);
   } catch (err) {
