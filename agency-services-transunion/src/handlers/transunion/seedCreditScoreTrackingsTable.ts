@@ -11,6 +11,7 @@ import { IFulfillServiceProductResponse } from 'lib/interfaces';
 import { IVantageScore } from 'lib/interfaces/transunion/vantage-score.interface';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
 import { listCreditScores } from 'lib/proxy';
+import { getAllItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -21,7 +22,7 @@ interface IScore {
   agencies: {
     transunion: {
       enrolled: boolean;
-      fulfillVantageScore: {
+      fulfillVantageScore?: {
         bureau: string;
         errorReponse: unknown;
         serviceProduct: string;
@@ -30,7 +31,7 @@ interface IScore {
         serviceProductTypeId: string;
         serviceProductValue: string;
         status: string;
-      };
+      } | null;
     };
   };
 }
@@ -49,14 +50,8 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
   try {
     // go to the app database and get all the records then form the payload
     // and create the records in the creditScoreTrackings Table
-    const limit = 100;
-    const {
-      data: {
-        data: {
-          listAppDatas: { items: scores },
-        },
-      },
-    } = await listCreditScores(limit);
+    const scores = await getAllItemsInDB();
+
     // filter out those people who signed up but never enrolled
     const enrolled = scores.filter((score: IScore) => {
       return score.agencies?.transunion?.enrolled;

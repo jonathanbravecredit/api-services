@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { print } from 'graphql';
 import { TUReportResponseInput } from 'src/api/api.service';
 import { IEnrollServiceProductResponse, IFulfillServiceProductResponse } from 'lib/interfaces';
-
+// 2021-11-17T20:58:12.439Z
 const appsyncUrl = process.env.APPSYNC_ENDPOINT;
 const region = process.env.AWS_REGION;
 
