@@ -51,7 +51,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     // go to the app database and get all the records then form the payload
     // and create the records in the creditScoreTrackings Table
     const scores = await getAllItemsInDB();
-
+    console.log('score count ===> ', scores.length);
     // filter out those people who signed up but never enrolled
     const enrolled = scores.filter((score: IScore) => {
       return score.agencies?.transunion?.enrolled;
