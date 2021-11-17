@@ -739,7 +739,7 @@ export const updatePreflightStatus = `mutation UpdatePreflightStatus($id: ID!, $
  * Lists all the transunion vantage scores from the database
  */
 export const listVantageScores = `query ListAppDatas($filter: ModelAppDataFilterInput, $limit: Int, $nextToken: String) {
-    listAppDatas(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listAppDatas(filter: $filter, limit: 100, nextToken: $nextToken) {
       items {
         id
         agencies {
