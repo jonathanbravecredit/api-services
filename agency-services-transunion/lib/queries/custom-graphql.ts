@@ -744,6 +744,7 @@ export const listVantageScores = `query ListAppDatas($filter: ModelAppDataFilter
         id
         agencies {
           transunion {
+            enrolled
             fulfillVantageScore {
               bureau
               errorResponse

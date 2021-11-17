@@ -20,6 +20,7 @@ interface IScore {
   id: string;
   agencies: {
     transunion: {
+      enrolled: boolean;
       fulfillVantageScore: {
         bureau: string;
         errorReponse: unknown;
@@ -55,8 +56,12 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         },
       },
     } = await listCreditScores();
+    // filter out those people who signed up but never enrolled
+    const enrolled = scores.filter((score: IScore) => {
+      return score.agencies?.transunion?.enrolled;
+    });
     await Promise.all(
-      scores.map(async (score: IScore) => {
+      enrolled.map(async (score: IScore) => {
         const prodObj = score.agencies?.transunion?.fulfillVantageScore?.serviceProductObject;
         let vantageScore: IVantageScore;
         if (prodObj) {
