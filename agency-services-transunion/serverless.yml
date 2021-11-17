@@ -33,9 +33,6 @@ custom:
       dev: '24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com'
       qa: '24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com'
       prod: 'krybm5pc3nbgdk4zwgcva2i4va.appsync-api.us-east-2.amazonaws.com'
-    APPDATA_TABLES:
-      dev: 'AppData-rr5wtr4ev5exlbutrkih3r5lhq-dev'
-      prod: 'AppData-4tpaga7rzjayhk75opsmpeurme-prod'
     APPDATA_STREAMS:
       dev: 'rr5wtr4ev5exlbutrkih3r5lhq:GetAtt:AppDataTable:StreamArn'
       qa: 'rr5wtr4ev5exlbutrkih3r5lhq:GetAtt:AppDataTable:StreamArn'
@@ -61,7 +58,6 @@ provider:
     ACCOUNT_ID: !Sub '${AWS::AccountId}'
     IDENTITY_ID: '${self:custom.settings.IDENTITY_IDS.${opt:stage}}'
     POOL_ID: '${self:custom.settings.POOL_IDS.${opt:stage}}'
-    APPDATA_TABLE: '${self:custom.settings.APPDATA_TABLES.${opt:stage}}'
     APPSYNC_ENDPOINT: '${self:custom.settings.GRAPHQL_ENDPOINT.${opt:stage}}'
     APPSYNC_API: '${self:custom.settings.GRAPHQL_API.${opt:stage}}'
   vpc:
@@ -99,7 +95,6 @@ provider:
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_BUREAU_TABLE}'
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.INVESTIGATION_RESULTS_TABLE}'
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_SCORE_UPDATES_TABLE}'
-        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.APPDATA_TABLE}'
 
 layers:
   TuCerts:
@@ -135,9 +130,6 @@ functions:
           startingPosition: LATEST
           arn:
             Fn::ImportValue: '${self:custom.settings.APPDATA_STREAMS.${opt:stage}}'
-  seedCreditScoreTrackingsTable:
-    handler: src/handlers/transunion/seedCreditScoreTrackingsTable.main
-    timeout: 30
 
   # SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
 
