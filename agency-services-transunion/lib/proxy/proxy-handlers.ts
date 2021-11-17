@@ -18,6 +18,7 @@ import { Dispute } from 'lib/utils/db/disputes/model/dispute.model';
 import { updateInvestigationResultsDB } from 'lib/transunion';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
+import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
 
 const GO_LIVE = true;
 const errorLogger = new ErrorLogger();
@@ -1901,6 +1902,47 @@ export const GetTrendingData = async ({
 
 /**
  * Return the dispute history
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+ export const GetCreditScoreTracking = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: CreditScoreTracking | null}> => {
+  // validate incoming message
+  const payload: interfaces.IGenericRequest = { id: identityId };
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
+  if (!validate(payload)) throw `Malformed message=${payload}`;
+
+  const db = DB;
+
+  try {
+    const resp = await db.creditScoreTrackings.get(payload.id, 'transunion');
+    return { success: true, error: null, data: resp };
+  } catch (err) {
+    const error = errorLogger.createError(identityId, 'GetCreditScoreTracking', JSON.stringify(err));
+    await errorLogger.logger.create(error);
+    return { success: false, error: err, data: null };
+  }
+};
+
+/**
+ * Return the dispute investigation results
  * @param {string} accountCode Brave account code
  * @param {string} username Brave user ID (Identity ID)
  * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
