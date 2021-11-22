@@ -157,6 +157,9 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       case 'GetCreditBureauResultsByID':
         results = await queries.GetCreditBureauResultsByID(payload);
         return JSON.stringify(results);
+      case 'GetCreditScoreTracking':
+        results = await queries.GetCreditScoreTracking(payload);
+        return JSON.stringify(results);
       default:
         const error = errorLogger.createError(tokenUser, 'action_not_found', JSON.stringify(action));
         await errorLogger.logger.create(error);
