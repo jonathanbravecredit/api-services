@@ -29,7 +29,7 @@ export const createGetTrendingDataPayload = (data: IGetTrendingDataRequest): IGe
     AdditionalInputs: {
       Data: {
         Name: 'CreditReportVersion',
-        Value: '7',
+        Value: '7.1',
       },
     },
     ClientKey: id,
