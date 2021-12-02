@@ -103,26 +103,26 @@ layers:
 functions:
   graphql:
     handler: src/handlers/graphql.main
-    timeout: 30
+    timeout: 60
     layers:
       - { Ref: TuCertsLambdaLayer }
   alertNotificationService:
     handler: src/handlers/transunion/alertNotificationService.main
-    timeout: 30
+    timeout: 60
     layers:
       - { Ref: TuCertsLambdaLayer }
     events:
       - schedule: cron(0 16 * * ? *)
   creditScoreUpdatesService:
     handler: src/handlers/transunion/creditScoreUpdatesService.main
-    timeout: 30
+    timeout: 60
     layers:
       - { Ref: TuCertsLambdaLayer }
     events:
       - schedule: cron(0 14 18 * ? *)
   triggerCreateCreditScoreTracking:
     handler: src/triggers/triggerCreateCreditScoreTracking.main
-    timeout: 30
+    timeout: 60
     events:
       - stream:
           type: dynamodb
