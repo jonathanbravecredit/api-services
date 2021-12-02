@@ -2,10 +2,8 @@ import { IStandardResponse } from 'lib/interfaces';
 
 export interface IGetTrendingDataRequest {
   id: string;
-  params: {
-    fromDate: string;
-    toDate?: string;
-  };
+  fromDate: string;
+  toDate?: string;
 }
 
 export interface IGetTrendingDataGraphQLResponse {

@@ -24,12 +24,11 @@ const GO_LIVE = true;
 const errorLogger = new ErrorLogger();
 const transactionLogger = new TransactionLogger();
 const parserOptions = {
-  attributeNamePrefix: "",
+  attributeNamePrefix: '',
   ignoreAttributes: false,
   ignoreNameSpace: true,
   parseAttributeValue: true,
-  attrValueProcessor: (val, attrName) =>
-    he.encode(val, { isAttributeValue: true }), //default is a=>a
+  attrValueProcessor: (val, attrName) => he.encode(val, { isAttributeValue: true }), //default is a=>a
   tagValueProcessor: (val, tagName) => he.encode(val), //default is a=>a
 };
 
@@ -61,24 +60,15 @@ export const Ping = async ({
   const soap = new SoapAid(fastXml.parse, () => {}, tu.createPing);
   try {
     const { xml } = soap.createPackage(null, null, null);
-    const request = soap.createRequestPayload(agent, auth, xml, "Ping");
-    if (!xml || !request)
-      throw new Error(`Missing xml:${xml}, or request:${request}`);
+    const request = soap.createRequestPayload(agent, auth, xml, 'Ping');
+    if (!xml || !request) throw new Error(`Missing xml:${xml}, or request:${request}`);
     await soap.processRequest(request, parserOptions);
-    const response = { success: true, error: null, data: "Ping succeeded" };
-    const l1 = transactionLogger.createTransaction(
-      identityId,
-      "Ping",
-      JSON.stringify(response)
-    );
+    const response = { success: true, error: null, data: 'Ping succeeded' };
+    const l1 = transactionLogger.createTransaction(identityId, 'Ping', JSON.stringify(response));
     await transactionLogger.logger.create(l1);
     return response;
   } catch (err) {
-    const error = errorLogger.createError(
-      identityId,
-      "Ping",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'Ping', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
@@ -117,75 +107,53 @@ export const IndicativeEnrichment = async ({
     id: identityId,
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<interfaces.IIndicativeEnrichmentPayload>(
-    "indicativeEnrichment"
-  );
+  const validate = ajv.getSchema<interfaces.IIndicativeEnrichmentPayload>('indicativeEnrichment');
   if (!validate(payload)) throw `Malformed message=${message}`;
   //create helper
-  const soap = new SoapAid(
-    fastXml.parse,
-    tu.formatIndicativeEnrichment,
-    tu.createIndicativeEnrichment
-  );
+  const soap = new SoapAid(fastXml.parse, tu.formatIndicativeEnrichment, tu.createIndicativeEnrichment);
   try {
-    const resp =
-      await soap.parseAndSendPayload<interfaces.IIndicativeEnrichmentResponse>(
-        accountCode,
-        username,
-        agent,
-        auth,
-        payload,
-        "IndicativeEnrichment",
-        parserOptions
-      );
-
-    const data = returnNestedObject<interfaces.IIndicativeEnrichmentResult>(
-      resp,
-      "IndicativeEnrichmentResult"
+    const resp = await soap.parseAndSendPayload<interfaces.IIndicativeEnrichmentResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      payload,
+      'IndicativeEnrichment',
+      parserOptions,
     );
+
+    const data = returnNestedObject<interfaces.IIndicativeEnrichmentResult>(resp, 'IndicativeEnrichmentResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogger.createTransaction(
-      identityId,
-      "IndicativeEnrichment:data",
-      JSON.stringify(data)
-    );
+    const l1 = transactionLogger.createTransaction(identityId, 'IndicativeEnrichment:data', JSON.stringify(data));
     const l2 = transactionLogger.createTransaction(
       identityId,
-      "IndicativeEnrichment:type",
-      JSON.stringify(responseType)
+      'IndicativeEnrichment:type',
+      JSON.stringify(responseType),
     );
-    const l3 = transactionLogger.createTransaction(
-      identityId,
-      "IndicativeEnrichment:error",
-      JSON.stringify(error)
-    );
+    const l3 = transactionLogger.createTransaction(identityId, 'IndicativeEnrichment:error', JSON.stringify(error));
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
 
     const response =
-      responseType.toLowerCase() === "success"
+      responseType.toLowerCase() === 'success'
         ? { success: true, error: error, data: data }
         : { success: false, error: error, data: null };
 
     // log success response
     const l4 = transactionLogger.createTransaction(
       identityId,
-      "IndicativeEnrichment:response",
-      JSON.stringify(response)
+      'IndicativeEnrichment:response',
+      JSON.stringify(response),
     );
     await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
-    const error = errorLogger.createError(
-      identityId,
-      "IndicativeEnrichment",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'IndicativeEnrichment', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
@@ -223,77 +191,61 @@ export const GetAuthenticationQuestions = async ({
     id: identityId,
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<interfaces.IGetAuthenticationQuestionsPayload>(
-    "getAuthenticationQuestionsRequest"
-  );
+  const validate = ajv.getSchema<interfaces.IGetAuthenticationQuestionsPayload>('getAuthenticationQuestionsRequest');
   if (!validate(payload)) throw `Malformed message=${message}`;
   //create helper classes
-  const soap = new SoapAid(
-    fastXml.parse,
-    tu.formatGetAuthenticationQuestions,
-    tu.createGetAuthenticationQuestions
-  );
+  const soap = new SoapAid(fastXml.parse, tu.formatGetAuthenticationQuestions, tu.createGetAuthenticationQuestions);
 
   try {
-    const resp =
-      await soap.parseAndSendPayload<interfaces.IGetAuthenticationQuestionsResponse>(
-        accountCode,
-        username,
-        agent,
-        auth,
-        payload,
-        "GetAuthenticationQuestions",
-        parserOptions
-      );
+    const resp = await soap.parseAndSendPayload<interfaces.IGetAuthenticationQuestionsResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      payload,
+      'GetAuthenticationQuestions',
+      parserOptions,
+    );
 
-    const data =
-      returnNestedObject<interfaces.IGetAuthenticationQuestionsResult>(
-        resp,
-        "GetAuthenticationQuestionsResult"
-      );
+    const data = returnNestedObject<interfaces.IGetAuthenticationQuestionsResult>(
+      resp,
+      'GetAuthenticationQuestionsResult',
+    );
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogger.createTransaction(
-      identityId,
-      "GetAuthenticationQuestions:data",
-      JSON.stringify(data)
-    );
+    const l1 = transactionLogger.createTransaction(identityId, 'GetAuthenticationQuestions:data', JSON.stringify(data));
     const l2 = transactionLogger.createTransaction(
       identityId,
-      "GetAuthenticationQuestions:type",
-      JSON.stringify(responseType)
+      'GetAuthenticationQuestions:type',
+      JSON.stringify(responseType),
     );
     const l3 = transactionLogger.createTransaction(
       identityId,
-      "GetAuthenticationQuestions:error",
-      JSON.stringify(error)
+      'GetAuthenticationQuestions:error',
+      JSON.stringify(error),
     );
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
 
     const response =
-      responseType.toLowerCase() === "success"
+      responseType.toLowerCase() === 'success'
         ? { success: true, error: error, data: data }
         : { success: false, error: error, data: null };
 
     // log success response
     const l4 = transactionLogger.createTransaction(
       identityId,
-      "GetAuthenticationQuestions:response",
-      JSON.stringify(response)
+      'GetAuthenticationQuestions:response',
+      JSON.stringify(response),
     );
     await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
-    const error = errorLogger.createError(
-      identityId,
-      "GetAuthenticationQuestions",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'GetAuthenticationQuestions', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
@@ -331,79 +283,72 @@ export const VerifyAuthenticationQuestions = async ({
     id: identityId,
     ...JSON.parse(message),
   };
-  const validate =
-    ajv.getSchema<interfaces.IVerifyAuthenticationQuestionsPayload>(
-      "verifyAuthenticationQuestionsRequest"
-    );
+  const validate = ajv.getSchema<interfaces.IVerifyAuthenticationQuestionsPayload>(
+    'verifyAuthenticationQuestionsRequest',
+  );
   if (!validate(payload)) throw `Malformed message=${message}`;
   //create helper classes
   const soap = new SoapAid(
     fastXml.parse,
     tu.formatVerifyAuthenticationQuestions,
-    tu.createVerifyAuthenticationQuestions
+    tu.createVerifyAuthenticationQuestions,
   );
 
   try {
-    const resp =
-      await soap.parseAndSendPayload<interfaces.IVerifyAuthenticationQuestionsResponse>(
-        accountCode,
-        username,
-        agent,
-        auth,
-        payload,
-        "VerifyAuthenticationQuestions",
-        parserOptions
-      );
+    const resp = await soap.parseAndSendPayload<interfaces.IVerifyAuthenticationQuestionsResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      payload,
+      'VerifyAuthenticationQuestions',
+      parserOptions,
+    );
 
-    const data =
-      returnNestedObject<interfaces.IVerifyAuthenticationQuestionsResult>(
-        resp,
-        "VerifyAuthenticationQuestionsResult"
-      );
+    const data = returnNestedObject<interfaces.IVerifyAuthenticationQuestionsResult>(
+      resp,
+      'VerifyAuthenticationQuestionsResult',
+    );
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
     // log tu responses
     const l1 = transactionLogger.createTransaction(
       identityId,
-      "VerifyAuthenticationQuestions:data",
-      JSON.stringify(data)
+      'VerifyAuthenticationQuestions:data',
+      JSON.stringify(data),
     );
     const l2 = transactionLogger.createTransaction(
       identityId,
-      "VerifyAuthenticationQuestions:type",
-      JSON.stringify(responseType)
+      'VerifyAuthenticationQuestions:type',
+      JSON.stringify(responseType),
     );
     const l3 = transactionLogger.createTransaction(
       identityId,
-      "VerifyAuthenticationQuestions:error",
-      JSON.stringify(error)
+      'VerifyAuthenticationQuestions:error',
+      JSON.stringify(error),
     );
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
 
     const response =
-      responseType.toLowerCase() === "success"
+      responseType.toLowerCase() === 'success'
         ? { success: true, error: error, data: data }
         : { success: false, error: error, data: null };
 
     // log success response
     const l4 = transactionLogger.createTransaction(
       identityId,
-      "VerifyAuthenticationQuestions:response",
-      JSON.stringify(response)
+      'VerifyAuthenticationQuestions:response',
+      JSON.stringify(response),
     );
     await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogger.createError(
-      identityId,
-      "VerifyAuthenticationQuestions",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'VerifyAuthenticationQuestions', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
@@ -435,7 +380,7 @@ export const Enroll = async (
     auth: string;
     identityId: string;
   },
-  dispute: boolean = false
+  dispute: boolean = false,
 ): Promise<{
   success: boolean;
   error?: interfaces.IErrorResponse | interfaces.INil | string;
@@ -443,88 +388,60 @@ export const Enroll = async (
 }> => {
   // validate incoming message
   const payload: interfaces.IGenericRequest = { id: identityId };
-  const validate = ajv.getSchema<interfaces.IGenericRequest>("getRequest");
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed message=${message}`;
 
   //create helper classes
-  const soap = new SoapAid(
-    tu.parseEnroll,
-    tu.formatEnroll,
-    tu.createEnroll,
-    tu.createEnrollPayload
-  );
+  const soap = new SoapAid(tu.parseEnroll, tu.formatEnroll, tu.createEnroll, tu.createEnrollPayload);
   const sync = new Sync(tu.enrichEnrollmentData);
 
   try {
     const prepped = await qrys.getDataForEnrollment(payload);
-    console.log("prepped ===> ", prepped.data);
+    console.log('prepped ===> ', prepped.data);
     const resp = await soap.parseAndSendPayload<interfaces.IEnrollResponse>(
       accountCode,
       username,
       agent,
       auth,
       prepped.data,
-      "Enroll",
-      parserOptions
+      'Enroll',
+      parserOptions,
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IEnrollResult>(
-      resp,
-      "EnrollResult"
-    );
+    const data = returnNestedObject<interfaces.IEnrollResult>(resp, 'EnrollResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogger.createTransaction(
-      identityId,
-      "Enroll:data",
-      JSON.stringify(data)
-    );
-    const l2 = transactionLogger.createTransaction(
-      identityId,
-      "Enroll:type",
-      JSON.stringify(responseType)
-    );
-    const l3 = transactionLogger.createTransaction(
-      identityId,
-      "Enroll:error",
-      JSON.stringify(error)
-    );
+    const l1 = transactionLogger.createTransaction(identityId, 'Enroll:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'Enroll:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'Enroll:error', JSON.stringify(error));
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
 
     let response;
-    if (responseType.toLowerCase() === "success") {
+    if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }
-        : { success: false, error: "failed to sync data to db" };
+        : { success: false, error: 'failed to sync data to db' };
     } else {
       response =
-        `${error.Code}` == "103045"
+        `${error.Code}` == '103045'
           ? { success: true, error: null, data: null }
           : { success: false, error: error, data: null };
     }
 
     // log success response
-    const l4 = transactionLogger.createTransaction(
-      identityId,
-      "Enroll:response",
-      JSON.stringify(response)
-    );
+    const l4 = transactionLogger.createTransaction(identityId, 'Enroll:response', JSON.stringify(response));
     await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogger.createError(
-      identityId,
-      "Enroll",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'Enroll', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
@@ -556,7 +473,7 @@ export const EnrollDisputes = async (
     auth: string;
     identityId: string;
   },
-  dispute: boolean = false
+  dispute: boolean = false,
 ): Promise<{
   success: boolean;
   error?: interfaces.IErrorResponse | interfaces.INil | string;
@@ -564,7 +481,7 @@ export const EnrollDisputes = async (
 }> => {
   // validate incoming message
   const payload: interfaces.IGenericRequest = { id: identityId };
-  const validate = ajv.getSchema<interfaces.IGenericRequest>("getRequest");
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed message=${message}`;
 
   //create helper classes
@@ -572,7 +489,7 @@ export const EnrollDisputes = async (
     tu.parseEnrollDisputes,
     tu.formatEnrollDisputes,
     tu.createEnrollDisputes,
-    tu.createEnrollDisputesPayload
+    tu.createEnrollDisputesPayload,
   );
   const sync = new Sync(tu.enrichEnrollDisputesData);
 
@@ -584,67 +501,44 @@ export const EnrollDisputes = async (
       agent,
       auth,
       prepped.data,
-      "Enroll",
-      parserOptions
+      'Enroll',
+      parserOptions,
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IEnrollResult>(
-      resp,
-      "EnrollResult"
-    );
+    const data = returnNestedObject<interfaces.IEnrollResult>(resp, 'EnrollResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogger.createTransaction(
-      identityId,
-      "EnrollDisputes:data",
-      JSON.stringify(data)
-    );
-    const l2 = transactionLogger.createTransaction(
-      identityId,
-      "EnrollDisputes:type",
-      JSON.stringify(responseType)
-    );
-    const l3 = transactionLogger.createTransaction(
-      identityId,
-      "EnrollDisputes:error",
-      JSON.stringify(error)
-    );
+    const l1 = transactionLogger.createTransaction(identityId, 'EnrollDisputes:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'EnrollDisputes:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'EnrollDisputes:error', JSON.stringify(error));
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
 
     let response;
-    if (responseType.toLowerCase() === "success") {
+    if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }
-        : { success: false, error: "failed to sync data to db" };
+        : { success: false, error: 'failed to sync data to db' };
     } else {
       response =
-        `${error.Code}` == "103045"
+        `${error.Code}` == '103045'
           ? { success: true, error: null, data: null }
           : { success: false, error: error, data: null };
     }
 
     // log success response
-    const l4 = transactionLogger.createTransaction(
-      identityId,
-      "EnrollDisputes:response",
-      JSON.stringify(response)
-    );
+    const l4 = transactionLogger.createTransaction(identityId, 'EnrollDisputes:response', JSON.stringify(response));
     await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogger.createError(
-      identityId,
-      "EnrollDisputes",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'EnrollDisputes', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
@@ -675,7 +569,7 @@ export const Fulfill = async (
     auth: string;
     identityId: string;
   },
-  dispute: boolean = false
+  dispute: boolean = false,
 ): Promise<{
   success: boolean;
   error?: interfaces.IErrorResponse | interfaces.INil | string;
@@ -683,16 +577,11 @@ export const Fulfill = async (
 }> => {
   // validate incoming message
   const payload: interfaces.IGenericRequest = { id: identityId };
-  const validate = ajv.getSchema<interfaces.IGenericRequest>("getRequest");
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed message=${payload}`;
 
   //create helper classes
-  const soap = new SoapAid(
-    tu.parseFulfill,
-    tu.formatFulfill,
-    tu.createFulfill,
-    tu.createFulfillPayload
-  );
+  const soap = new SoapAid(tu.parseFulfill, tu.formatFulfill, tu.createFulfill, tu.createFulfillPayload);
   const sync = new Sync(tu.enrichFulfillData);
 
   try {
@@ -704,64 +593,41 @@ export const Fulfill = async (
       agent,
       auth,
       prepped.data,
-      "Fulfill",
-      parserOptions
+      'Fulfill',
+      parserOptions,
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IFulfillResult>(
-      resp,
-      "FulfillResult"
-    );
+    const data = returnNestedObject<interfaces.IFulfillResult>(resp, 'FulfillResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogger.createTransaction(
-      identityId,
-      "Fulfill:data",
-      JSON.stringify(data)
-    );
-    const l2 = transactionLogger.createTransaction(
-      identityId,
-      "Fulfill:type",
-      JSON.stringify(responseType)
-    );
-    const l3 = transactionLogger.createTransaction(
-      identityId,
-      "Fulfill:error",
-      JSON.stringify(error)
-    );
+    const l1 = transactionLogger.createTransaction(identityId, 'Fulfill:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'Fulfill:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'Fulfill:error', JSON.stringify(error));
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
 
     let response;
-    if (responseType.toLowerCase() === "success") {
+    if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }
-        : { success: false, error: "failed to sync data to db" };
+        : { success: false, error: 'failed to sync data to db' };
     } else {
       response = { success: false, error: error };
     }
 
     // log success response
-    const l4 = transactionLogger.createTransaction(
-      identityId,
-      "Fulfill:response",
-      JSON.stringify(response)
-    );
+    const l4 = transactionLogger.createTransaction(identityId, 'Fulfill:response', JSON.stringify(response));
     await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogger.createError(
-      identityId,
-      "Fulfill",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'Fulfill', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
@@ -792,7 +658,7 @@ export const FulfillByUserId = async (
     auth: string;
     identityId: string;
   },
-  dispute: boolean = false
+  dispute: boolean = false,
 ): Promise<{
   success: boolean;
   error?: interfaces.IErrorResponse | interfaces.INil | string;
@@ -800,16 +666,11 @@ export const FulfillByUserId = async (
 }> => {
   // validate incoming message
   const payload: interfaces.IGenericRequest = { id: identityId };
-  const validate = ajv.getSchema<interfaces.IGenericRequest>("getRequest");
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed message=${payload}`;
 
   //create helper classes
-  const soap = new SoapAid(
-    tu.parseFulfill,
-    tu.formatFulfill,
-    tu.createFulfill,
-    tu.createFulfillPayload
-  );
+  const soap = new SoapAid(tu.parseFulfill, tu.formatFulfill, tu.createFulfill, tu.createFulfillPayload);
   const sync = new Sync(tu.enrichFulfillData);
 
   try {
@@ -821,64 +682,41 @@ export const FulfillByUserId = async (
       agent,
       auth,
       prepped.data,
-      "Fulfill",
-      parserOptions
+      'Fulfill',
+      parserOptions,
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IFulfillResult>(
-      resp,
-      "FulfillResult"
-    );
+    const data = returnNestedObject<interfaces.IFulfillResult>(resp, 'FulfillResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogger.createTransaction(
-      identityId,
-      "Fulfill:data",
-      JSON.stringify(data)
-    );
-    const l2 = transactionLogger.createTransaction(
-      identityId,
-      "Fulfill:type",
-      JSON.stringify(responseType)
-    );
-    const l3 = transactionLogger.createTransaction(
-      identityId,
-      "Fulfill:error",
-      JSON.stringify(error)
-    );
+    const l1 = transactionLogger.createTransaction(identityId, 'Fulfill:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'Fulfill:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'Fulfill:error', JSON.stringify(error));
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
 
     let response;
-    if (responseType.toLowerCase() === "success") {
+    if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }
-        : { success: false, error: "failed to sync data to db" };
+        : { success: false, error: 'failed to sync data to db' };
     } else {
       response = { success: false, error: error };
     }
 
     // log success response
-    const l4 = transactionLogger.createTransaction(
-      identityId,
-      "Fulfill:response",
-      JSON.stringify(response)
-    );
+    const l4 = transactionLogger.createTransaction(identityId, 'Fulfill:response', JSON.stringify(response));
     await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogger.createError(
-      identityId,
-      "Fulfill",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'Fulfill', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
@@ -909,7 +747,7 @@ export const FulfillDisputes = async (
     auth: string;
     identityId: string;
   },
-  dispute: boolean = false
+  dispute: boolean = false,
 ): Promise<{
   success: boolean;
   error?: interfaces.IErrorResponse | interfaces.INil | string;
@@ -917,7 +755,7 @@ export const FulfillDisputes = async (
 }> => {
   // validate incoming message
   const payload: interfaces.IGenericRequest = { id: identityId };
-  const validate = ajv.getSchema<interfaces.IGenericRequest>("getRequest");
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed message=${message}`;
 
   //create helper classes
@@ -925,7 +763,7 @@ export const FulfillDisputes = async (
     tu.parseFulfillDisputes,
     tu.formatFulfillDisputes,
     tu.createFulfillDisputes,
-    tu.createFulfillDisputesPayload
+    tu.createFulfillDisputesPayload,
   );
   const sync = new Sync(tu.enrichFulfillDisputesData);
 
@@ -938,63 +776,40 @@ export const FulfillDisputes = async (
       agent,
       auth,
       prepped.data,
-      "Fulfill",
-      parserOptions
+      'Fulfill',
+      parserOptions,
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IFulfillResult>(
-      resp,
-      "FulfillResult"
-    );
+    const data = returnNestedObject<interfaces.IFulfillResult>(resp, 'FulfillResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogger.createTransaction(
-      identityId,
-      "FulfillDisputes:data",
-      JSON.stringify(data)
-    );
-    const l2 = transactionLogger.createTransaction(
-      identityId,
-      "FulfillDisputes:type",
-      JSON.stringify(responseType)
-    );
-    const l3 = transactionLogger.createTransaction(
-      identityId,
-      "FulfillDisputes:error",
-      JSON.stringify(error)
-    );
+    const l1 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:error', JSON.stringify(error));
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
 
     let response;
-    if (responseType.toLowerCase() === "success") {
+    if (responseType.toLowerCase() === 'success') {
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }
-        : { success: false, error: "failed to sync data to db" };
+        : { success: false, error: 'failed to sync data to db' };
     } else {
       response = { success: false, error: error };
     }
     // log success response
-    const l4 = transactionLogger.createTransaction(
-      identityId,
-      "FulfillDisputes:response",
-      JSON.stringify(response)
-    );
+    const l4 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:response', JSON.stringify(response));
     await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogger.createError(
-      identityId,
-      "FulfillDisputes",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'FulfillDisputes', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
@@ -1030,76 +845,48 @@ export const GetServiceProduct = async ({
 }> => {
   // validate incoming message
   const payload: interfaces.IGenericRequest = { id: identityId };
-  const validate = ajv.getSchema<interfaces.IGenericRequest>("getRequest");
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed message=${message}`;
-  const soap = new SoapAid(
-    fastXml.parse,
-    tu.formatGetServiceProduct,
-    tu.createGetServiceProduct
-  );
+  const soap = new SoapAid(fastXml.parse, tu.formatGetServiceProduct, tu.createGetServiceProduct);
 
   try {
     // create helper classes
-    const resp =
-      await soap.parseAndSendPayload<interfaces.IGetServiceProductResponse>(
-        accountCode,
-        username,
-        agent,
-        auth,
-        payload,
-        "GetServiceProduct",
-        parserOptions
-      );
+    const resp = await soap.parseAndSendPayload<interfaces.IGetServiceProductResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      payload,
+      'GetServiceProduct',
+      parserOptions,
+    );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IGetServiceProductResult>(
-      resp,
-      "GetServiceProductResult"
-    );
+    const data = returnNestedObject<interfaces.IGetServiceProductResult>(resp, 'GetServiceProductResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogger.createTransaction(
-      identityId,
-      "GetServiceProduct:data",
-      JSON.stringify(data)
-    );
-    const l2 = transactionLogger.createTransaction(
-      identityId,
-      "GetServiceProduct:type",
-      JSON.stringify(responseType)
-    );
-    const l3 = transactionLogger.createTransaction(
-      identityId,
-      "GetServiceProduct:error",
-      JSON.stringify(error)
-    );
+    const l1 = transactionLogger.createTransaction(identityId, 'GetServiceProduct:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'GetServiceProduct:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'GetServiceProduct:error', JSON.stringify(error));
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
 
     const response =
-      responseType.toLowerCase() === "success"
+      responseType.toLowerCase() === 'success'
         ? { success: true, error: error, data: data }
         : { success: false, error: error, data: null };
 
     // log success response
-    const l4 = transactionLogger.createTransaction(
-      identityId,
-      "GetServiceProduct:response",
-      JSON.stringify(response)
-    );
+    const l4 = transactionLogger.createTransaction(identityId, 'GetServiceProduct:response', JSON.stringify(response));
     await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogger.createError(
-      identityId,
-      "GetServiceProduct",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'GetServiceProduct', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
@@ -1137,7 +924,7 @@ export const GetDisputeStatus = async ({
 }> => {
   // validate incoming message
   const payload: interfaces.IGenericRequest = { id: identityId };
-  const validate = ajv.getSchema<interfaces.IGenericRequest>("getRequest");
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed payload=${payload}`;
 
   //create helper classes
@@ -1145,7 +932,7 @@ export const GetDisputeStatus = async ({
     tu.parseGetDisputeStatus,
     tu.formatGetDisputeStatus,
     tu.createGetDisputeStatus,
-    tu.createGetDisputeStatusPayload
+    tu.createGetDisputeStatusPayload,
   );
 
   try {
@@ -1154,66 +941,42 @@ export const GetDisputeStatus = async ({
     if (!prepped.data?.data?.getAppData?.id) {
       throw `No record in db:=${prepped}`;
     }
-    const resp =
-      await soap.parseAndSendPayload<interfaces.IGetDisputeStatusResponse>(
-        accountCode,
-        username,
-        agent,
-        auth,
-        prepped.data,
-        "GetDisputeStatus",
-        parserOptions
-      );
+    const resp = await soap.parseAndSendPayload<interfaces.IGetDisputeStatusResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      prepped.data,
+      'GetDisputeStatus',
+      parserOptions,
+    );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IGetDisputeStatusResult>(
-      resp,
-      "GetDisputeStatusResult"
-    );
+    const data = returnNestedObject<interfaces.IGetDisputeStatusResult>(resp, 'GetDisputeStatusResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogger.createTransaction(
-      identityId,
-      "GetDisputeStatus:data",
-      JSON.stringify(data)
-    );
-    const l2 = transactionLogger.createTransaction(
-      identityId,
-      "GetDisputeStatus:type",
-      JSON.stringify(responseType)
-    );
-    const l3 = transactionLogger.createTransaction(
-      identityId,
-      "GetDisputeStatus:error",
-      JSON.stringify(error)
-    );
+    const l1 = transactionLogger.createTransaction(identityId, 'GetDisputeStatus:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'GetDisputeStatus:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'GetDisputeStatus:error', JSON.stringify(error));
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
 
     const response =
-      responseType.toLowerCase() === "success"
+      responseType.toLowerCase() === 'success'
         ? { success: true, error: error, data: data }
         : { success: false, error: error, data: null };
 
     // log success response
-    const l4 = transactionLogger.createTransaction(
-      identityId,
-      "GetDisputeStatus:response",
-      JSON.stringify(response)
-    );
+    const l4 = transactionLogger.createTransaction(identityId, 'GetDisputeStatus:response', JSON.stringify(response));
     await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogger.createError(
-      identityId,
-      "GetDisputeStatus",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'GetDisputeStatus', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
@@ -1255,9 +1018,7 @@ export const GetDisputeStatusByID = async ({
     id: identityId,
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<interfaces.IGetDisputeStatusByIdPayload>(
-    "getDisputeStatusById"
-  );
+  const validate = ajv.getSchema<interfaces.IGetDisputeStatusByIdPayload>('getDisputeStatusById');
   if (!validate(payload)) throw `Malformed payload=${payload}`;
 
   //create helper classes
@@ -1266,7 +1027,7 @@ export const GetDisputeStatusByID = async ({
     tu.parseGetDisputeStatus,
     tu.formatGetDisputeStatus,
     tu.createGetDisputeStatus,
-    tu.createGetDisputeStatusPayload
+    tu.createGetDisputeStatusPayload,
   );
 
   try {
@@ -1283,8 +1044,8 @@ export const GetDisputeStatusByID = async ({
           agent,
           auth,
           prepped.data,
-          "GetDisputeStatus",
-          parserOptions
+          'GetDisputeStatus',
+          parserOptions,
         )
       : await soap.parseAndDontSendPayload<interfaces.IGetDisputeStatusResponse>(
           accountCode,
@@ -1292,65 +1053,47 @@ export const GetDisputeStatusByID = async ({
           agent,
           auth,
           prepped.data,
-          "GetDisputeStatus",
-          parserOptions
+          'GetDisputeStatus',
+          parserOptions,
         );
 
     if (!live) {
-      resp = tu.parseGetDisputeStatus(
-        GET_DISPUTE_STATUS_RESPONSE_WITHID,
-        parserOptions
-      );
+      resp = tu.parseGetDisputeStatus(GET_DISPUTE_STATUS_RESPONSE_WITHID, parserOptions);
     }
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IGetDisputeStatusResult>(
-      resp,
-      "GetDisputeStatusResult"
-    );
+    const data = returnNestedObject<interfaces.IGetDisputeStatusResult>(resp, 'GetDisputeStatusResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogger.createTransaction(
-      identityId,
-      "GetDisputeStatusByID:data",
-      JSON.stringify(data)
-    );
+    const l1 = transactionLogger.createTransaction(identityId, 'GetDisputeStatusByID:data', JSON.stringify(data));
     const l2 = transactionLogger.createTransaction(
       identityId,
-      "GetDisputeStatusByID:type",
-      JSON.stringify(responseType)
+      'GetDisputeStatusByID:type',
+      JSON.stringify(responseType),
     );
-    const l3 = transactionLogger.createTransaction(
-      identityId,
-      "GetDisputeStatusByID:error",
-      JSON.stringify(error)
-    );
+    const l3 = transactionLogger.createTransaction(identityId, 'GetDisputeStatusByID:error', JSON.stringify(error));
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
 
     const response =
-      responseType.toLowerCase() === "success"
+      responseType.toLowerCase() === 'success'
         ? { success: true, error: error, data: data }
         : { success: false, error: error, data: null };
 
     // log success response
     const l4 = transactionLogger.createTransaction(
       identityId,
-      "GetDisputeStatusByID:response",
-      JSON.stringify(response)
+      'GetDisputeStatusByID:response',
+      JSON.stringify(response),
     );
     await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogger.createError(
-      identityId,
-      "GetDisputeStatusByID",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'GetDisputeStatusByID', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
@@ -1385,18 +1128,10 @@ export const StartDispute = async ({
     id: identityId,
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<interfaces.IStartDisputeRequest>(
-    "startDisputeRequest"
-  );
-  const tradeline =
-    ajv.getSchema<interfaces.IProcessDisputeTradelineResult>(
-      "disputeTradeline"
-    );
-  const publicitem =
-    ajv.getSchema<interfaces.IProcessDisputePublicResult>("disputePublicitem");
-  const personalitem = ajv.getSchema<interfaces.IProcessDisputePersonalResult>(
-    "disputePersonalitem"
-  );
+  const validate = ajv.getSchema<interfaces.IStartDisputeRequest>('startDisputeRequest');
+  const tradeline = ajv.getSchema<interfaces.IProcessDisputeTradelineResult>('disputeTradeline');
+  const publicitem = ajv.getSchema<interfaces.IProcessDisputePublicResult>('disputePublicitem');
+  const personalitem = ajv.getSchema<interfaces.IProcessDisputePersonalResult>('disputePersonalitem');
 
   if (!validate(payload)) throw `Malformed message=${message}`;
   let payloadMethod: (data: any, params?: any) => any;
@@ -1415,14 +1150,9 @@ export const StartDispute = async ({
   }
   //create helper classes
   // const sync = new Sync(tu.enrichDisputeData);
-  const soap = new SoapAid(
-    tu.parseStartDispute,
-    tu.formatStartDispute,
-    startDisputeMethod,
-    payloadMethod
-  );
+  const soap = new SoapAid(tu.parseStartDispute, tu.formatStartDispute, startDisputeMethod, payloadMethod);
   try {
-    console.log("*** IN START DISPUTE ***");
+    console.log('*** IN START DISPUTE ***');
     const prepped = await qrys.getDataForStartDispute(payload);
     const reprepped = { data: prepped.data, disputes: payload.disputes };
     let resp = live
@@ -1432,8 +1162,8 @@ export const StartDispute = async ({
           agent,
           auth,
           reprepped,
-          "StartDispute",
-          parserOptions
+          'StartDispute',
+          parserOptions,
         )
       : await soap.parseAndDontSendPayload<interfaces.IStartDisputeResponse>(
           accountCode,
@@ -1441,8 +1171,8 @@ export const StartDispute = async ({
           agent,
           auth,
           reprepped,
-          "StartDispute",
-          parserOptions
+          'StartDispute',
+          parserOptions,
         );
 
     // get the specific response from parsed object
@@ -1450,10 +1180,7 @@ export const StartDispute = async ({
       resp = tu.parseStartDispute(START_DISPUTE_RESPONSE, parserOptions);
     }
 
-    const data = returnNestedObject<interfaces.IStartDisputeResult>(
-      resp,
-      "StartDisputeResult"
-    );
+    const data = returnNestedObject<interfaces.IStartDisputeResult>(resp, 'StartDisputeResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
     const bundle: interfaces.IStartDisputeBundle = {
@@ -1461,45 +1188,30 @@ export const StartDispute = async ({
       disputes: payload.disputes,
     };
 
-    const l1 = transactionLogger.createTransaction(
-      identityId,
-      "StartDispute:data",
-      JSON.stringify(data)
-    );
-    const l2 = transactionLogger.createTransaction(
-      identityId,
-      "StartDispute:type",
-      JSON.stringify(responseType)
-    );
-    const l3 = transactionLogger.createTransaction(
-      identityId,
-      "StartDispute:error",
-      JSON.stringify(error)
-    );
+    const l1 = transactionLogger.createTransaction(identityId, 'StartDispute:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'StartDispute:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'StartDispute:error', JSON.stringify(error));
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
 
     let response;
-    if (responseType.toLowerCase() === "success") {
+    if (responseType.toLowerCase() === 'success') {
       // need to add to the app database, and to the disputes database
       let status = data?.DisputeStatus?.DisputeStatusDetail?.Status;
       let openedOn = new Date().toISOString();
       let closedOn =
-        status.toLowerCase() === "cancelleddispute" ||
-        status.toLowerCase() === "completedispute"
-          ? openedOn
-          : null;
+        status.toLowerCase() === 'cancelleddispute' || status.toLowerCase() === 'completedispute' ? openedOn : null;
       const dbDispute = DB.disputes.generators.createDisputeDBRecord(
         identityId,
         data,
         JSON.stringify(payload.disputes),
         openedOn,
-        closedOn
+        closedOn,
       );
 
       const newDispute = await DB.disputes.create(dbDispute);
-      if (status.toLowerCase() === "completedispute") {
+      if (status.toLowerCase() === 'completedispute') {
         // auto closed
         const payload = {
           accountCode,
@@ -1516,20 +1228,12 @@ export const StartDispute = async ({
       response = { success: false, error: error };
     }
     // log success response
-    const l4 = transactionLogger.createTransaction(
-      identityId,
-      "StartDispute:response",
-      JSON.stringify(response)
-    );
+    const l4 = transactionLogger.createTransaction(identityId, 'StartDispute:response', JSON.stringify(response));
     await transactionLogger.logger.create(l4);
     return response;
   } catch (err) {
     // log error response
-    const error = errorLogger.createError(
-      identityId,
-      "StartDispute",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'StartDispute', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
@@ -1567,7 +1271,7 @@ export const GetDisputeHistory = async ({
   const payload: interfaces.IGenericRequest = {
     id: identityId,
   };
-  const validate = ajv.getSchema<interfaces.IGenericRequest>("getRequest");
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed message=${message}`;
 
   //create helper classes
@@ -1575,43 +1279,35 @@ export const GetDisputeHistory = async ({
     fastXml.parse,
     tu.formatGetDisputeHistory,
     tu.createGetDisputeHistory,
-    tu.createGetDisputeHistoryPayload
+    tu.createGetDisputeHistoryPayload,
   );
 
   try {
     // get / parse data needed to process request
     const prepped = await qrys.getDataForGetDisputeHistory(payload); // same data
-    const resp =
-      await soap.parseAndSendPayload<interfaces.IGetDisputeHistoryResponse>(
-        accountCode,
-        username,
-        agent,
-        auth,
-        prepped.data,
-        "GetDisputeHistory",
-        parserOptions
-      );
+    const resp = await soap.parseAndSendPayload<interfaces.IGetDisputeHistoryResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      prepped.data,
+      'GetDisputeHistory',
+      parserOptions,
+    );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IGetDisputeHistoryResult>(
-      resp,
-      "GetDisputeHistoryResult"
-    );
+    const data = returnNestedObject<interfaces.IGetDisputeHistoryResult>(resp, 'GetDisputeHistoryResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
     const response =
-      responseType.toLowerCase() === "success"
+      responseType.toLowerCase() === 'success'
         ? { success: true, error: error, data: data }
         : { success: false, error: error, data: null };
-    console.log("response ===> ", response);
+    console.log('response ===> ', response);
     return response;
   } catch (err) {
-    const error = errorLogger.createError(
-      identityId,
-      "GetDisputeHistory",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'GetDisputeHistory', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
@@ -1647,9 +1343,7 @@ export const GetInvestigationResults = async ({
     id: identityId,
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<interfaces.IGetInvestigationResultsRequest>(
-    "getInvestigationResultsRequest"
-  );
+  const validate = ajv.getSchema<interfaces.IGetInvestigationResultsRequest>('getInvestigationResultsRequest');
   if (!validate(payload)) throw `Malformed message=${message}`;
 
   //create helper classes
@@ -1658,7 +1352,7 @@ export const GetInvestigationResults = async ({
     tu.parseInvestigationResults,
     tu.formatGetInvestigationResults,
     tu.createGetInvestigationResults,
-    tu.createGetInvestigationResultsPayload
+    tu.createGetInvestigationResultsPayload,
   );
 
   try {
@@ -1672,8 +1366,8 @@ export const GetInvestigationResults = async ({
           agent,
           auth,
           reprepped,
-          "GetInvestigationResults",
-          parserOptions
+          'GetInvestigationResults',
+          parserOptions,
         )
       : await soap.parseAndDontSendPayload<interfaces.IGetInvestigationResultsResponse>(
           accountCode,
@@ -1681,8 +1375,8 @@ export const GetInvestigationResults = async ({
           agent,
           auth,
           reprepped,
-          "GetInvestigationResults",
-          parserOptions
+          'GetInvestigationResults',
+          parserOptions,
         );
 
     if (!live) {
@@ -1693,17 +1387,12 @@ export const GetInvestigationResults = async ({
       // 4 - verified as accuraed
       // 5 - verified as accurate and updated
       // 6 - deleted
-      resp = tu.parseInvestigationResults(
-        ALL_GET_INVESTIGATION_MOCKS[6],
-        parserOptions
-      );
-      console.log("MOCK response data ==> ", JSON.stringify(resp));
+      resp = tu.parseInvestigationResults(ALL_GET_INVESTIGATION_MOCKS[6], parserOptions);
+      console.log('MOCK response data ==> ', JSON.stringify(resp));
     }
 
     // get the specific response from parsed object
-    const data =
-      resp.Envelope.Body.GetInvestigationResultsResponse
-        .GetInvestigationResultsResult;
+    const data = resp.Envelope.Body.GetInvestigationResultsResponse.GetInvestigationResultsResult;
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
     const bundle: interfaces.IGetInvestigationEnrichPayload = {
@@ -1712,22 +1401,16 @@ export const GetInvestigationResults = async ({
     };
 
     let response;
-    if (responseType.toLowerCase() === "success") {
+    if (responseType.toLowerCase() === 'success') {
       const synced = await updateInvestigationResultsDB(payload.id, bundle);
-      response = synced
-        ? { success: true, error: null }
-        : { success: false, error: "failed to sync data to db" };
+      response = synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
     } else {
       response = { success: false, error: error };
     }
-    console.log("response ===> ", response);
+    console.log('response ===> ', response);
     return response;
   } catch (err) {
-    const error = errorLogger.createError(
-      identityId,
-      "GetInvestigationResults",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'GetInvestigationResults', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
@@ -1753,7 +1436,7 @@ export const CompleteOnboardingEnrollments = async ({
   data?: interfaces.IEnrollResult;
 }> => {
   const payload: interfaces.IGenericRequest = { id: identityId };
-  const validate = ajv.getSchema<interfaces.IGenericRequest>("getRequest");
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed message=${message}`;
 
   try {
@@ -1765,25 +1448,21 @@ export const CompleteOnboardingEnrollments = async ({
       auth,
       identityId,
     };
-    const {
-      success: enrollSuccess,
-      error: enrollError,
-      data: enrollData,
-    } = await Enroll(payload, false); // report & score enroll
+    const { success: enrollSuccess, error: enrollError, data: enrollData } = await Enroll(payload, false); // report & score enroll
     const l1 = transactionLogger.createTransaction(
       identityId,
-      "CompleteOnboardingEnrollments:success",
-      JSON.stringify(enrollSuccess)
+      'CompleteOnboardingEnrollments:success',
+      JSON.stringify(enrollSuccess),
     );
     const l2 = transactionLogger.createTransaction(
       identityId,
-      "CompleteOnboardingEnrollments:err",
-      JSON.stringify(enrollError)
+      'CompleteOnboardingEnrollments:err',
+      JSON.stringify(enrollError),
     );
     const l3 = transactionLogger.createTransaction(
       identityId,
-      "CompleteOnboardingEnrollments:enrollData",
-      JSON.stringify(enrollData)
+      'CompleteOnboardingEnrollments:enrollData',
+      JSON.stringify(enrollData),
     );
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
@@ -1791,14 +1470,10 @@ export const CompleteOnboardingEnrollments = async ({
     const response = enrollSuccess
       ? { success: true, error: null, data: enrollData }
       : { success: false, error: enrollError };
-    console.log("response ===> ", response);
+    console.log('response ===> ', response);
     return response;
   } catch (err) {
-    const error = errorLogger.createError(
-      identityId,
-      "CompleteOnboardingEnrollments",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'CompleteOnboardingEnrollments', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
@@ -1829,29 +1504,23 @@ export const DisputePreflightCheck = async ({
   identityId: string;
 }): Promise<{ success: boolean; error?: any }> => {
   const payload: interfaces.IGenericRequest = { id: identityId };
-  const validate = ajv.getSchema<interfaces.IGenericRequest>("getRequest");
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed message=${message}`;
 
   let enrolled: boolean;
   try {
-    console.log("*** IN GET ENROLL STATUS ***");
+    console.log('*** IN GET ENROLL STATUS ***');
     const { data } = await qrys.getDisputeEnrollment(payload);
-    enrolled = !data
-      ? false
-      : returnNestedObject<boolean>(data, "disputeEnrolled");
-    console.log("DisputePreflightCheck:enrolled ===> ", enrolled);
+    enrolled = !data ? false : returnNestedObject<boolean>(data, 'disputeEnrolled');
+    console.log('DisputePreflightCheck:enrolled ===> ', enrolled);
   } catch (err) {
-    const error = errorLogger.createError(
-      identityId,
-      "DisputePreflightCheck:EnrollStatus",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'DisputePreflightCheck:EnrollStatus', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 
   if (!enrolled) {
-    console.log("*** IN ENROLL ***");
+    console.log('*** IN ENROLL ***');
     try {
       const payload = {
         accountCode,
@@ -1864,11 +1533,7 @@ export const DisputePreflightCheck = async ({
       const { success, error, data } = await EnrollDisputes(payload);
       if (!success) return { success: false, error: error };
     } catch (err) {
-      const error = errorLogger.createError(
-        identityId,
-        "DisputePreflightCheck:EnrollDisputes",
-        JSON.stringify(err)
-      );
+      const error = errorLogger.createError(identityId, 'DisputePreflightCheck:EnrollDisputes', JSON.stringify(err));
       await errorLogger.logger.create(error);
       return { success: false, error: err };
     }
@@ -1876,12 +1541,10 @@ export const DisputePreflightCheck = async ({
 
   let refresh: boolean;
   try {
-    console.log("*** IN REFRESH ***");
+    console.log('*** IN REFRESH ***');
     const { data } = await qrys.getFulfilledOn(payload);
-    const fulfilledOn = !data
-      ? false
-      : returnNestedObject<string>(data, "fulfilledOn");
-    console.log("DisputePreflightCheck:fulfilledOn ===> ", fulfilledOn);
+    const fulfilledOn = !data ? false : returnNestedObject<string>(data, 'fulfilledOn');
+    console.log('DisputePreflightCheck:fulfilledOn ===> ', fulfilledOn);
     if (!fulfilledOn) {
       refresh = true;
     } else {
@@ -1889,19 +1552,15 @@ export const DisputePreflightCheck = async ({
       const last = new Date(fulfilledOn);
       refresh = dateDiffInHours(last, now) > 24 ? true : false;
     }
-    console.log("DisputePreflightCheck:refresh ===> ", refresh);
+    console.log('DisputePreflightCheck:refresh ===> ', refresh);
   } catch (err) {
-    const error = errorLogger.createError(
-      identityId,
-      "DisputePreflightCheck:Refresh",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'DisputePreflightCheck:Refresh', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
 
   if (refresh) {
-    console.log("*** IN REFRESH:FULFILL ***");
+    console.log('*** IN REFRESH:FULFILL ***');
     try {
       const payload = {
         accountCode,
@@ -1914,18 +1573,14 @@ export const DisputePreflightCheck = async ({
       const { success, error } = await FulfillDisputes(payload);
       if (!success) return { success: false, error: error };
     } catch (err) {
-      const error = errorLogger.createError(
-        identityId,
-        "DisputePreflightCheck:FulfillDisputes",
-        JSON.stringify(err)
-      );
+      const error = errorLogger.createError(identityId, 'DisputePreflightCheck:FulfillDisputes', JSON.stringify(err));
       await errorLogger.logger.create(error);
       return { success: false, error: err };
     }
   }
 
   try {
-    console.log("*** IN GETDISPUTESTATUS ***");
+    console.log('*** IN GETDISPUTESTATUS ***');
     const payload = {
       accountCode,
       username,
@@ -1935,17 +1590,11 @@ export const DisputePreflightCheck = async ({
       identityId,
     };
     const { success, error } = await GetDisputeStatus(payload);
-    const response = success
-      ? { success: true }
-      : { success: false, error: error };
-    console.log("response ===> ", response);
+    const response = success ? { success: true } : { success: false, error: error };
+    console.log('response ===> ', response);
     return response;
   } catch (err) {
-    const error = errorLogger.createError(
-      identityId,
-      "DisputePreflightCheck:GetDisputeStatus",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'DisputePreflightCheck:GetDisputeStatus', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
@@ -1984,74 +1633,65 @@ export const DisputeInflightCheck = async ({
     tu.parseGetAlertNotifications,
     tu.formatGetAlertsNotifications,
     tu.createGetAlertsNotification,
-    tu.createGetAlerNotificationsPaylod
+    tu.createGetAlerNotificationsPaylod,
   );
 
   // call GetAlertsNotificationsForAllUsers
   let notifications: interfaces.IAlertNotification[] = [];
   try {
-    console.log("*** IN GET ALERT NOTIFICATIONS ***");
+    console.log('*** IN GET ALERT NOTIFICATIONS ***');
     let resp: interfaces.IGetAlertNotificationsResponse = live
       ? await soap.parseAndSendPayload<interfaces.IGetAlertNotificationsResponse>(
           accountCode,
           username,
           agent,
           auth,
-          "",
-          "GetAlertNotificationsForAllUsers",
-          parserOptions
+          '',
+          'GetAlertNotificationsForAllUsers',
+          parserOptions,
         )
       : await soap.parseAndDontSendPayload<interfaces.IGetAlertNotificationsResponse>(
           accountCode,
           username,
           agent,
           auth,
-          "",
-          "GetAlertNotificationsForAllUsers",
-          parserOptions
+          '',
+          'GetAlertNotificationsForAllUsers',
+          parserOptions,
         );
 
     if (!live) {
       resp = GET_ALERT_NOTIFICATIONS_RESPONSE; // already parsed
     }
-    console.log("get alerts resp ===> ", JSON.stringify(resp));
-    const data =
-      returnNestedObject<interfaces.IGetAlertNotificationsForAllUsersResult>(
-        resp,
-        "GetAlertNotificationsForAllUsersResult"
-      );
+    console.log('get alerts resp ===> ', JSON.stringify(resp));
+    const data = returnNestedObject<interfaces.IGetAlertNotificationsForAllUsersResult>(
+      resp,
+      'GetAlertNotificationsForAllUsersResult',
+    );
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
-    const l1 = transactionLogger.createTransaction(
-      identityId,
-      "GetAlertNotifications:data",
-      JSON.stringify(data)
-    );
+    const l1 = transactionLogger.createTransaction(identityId, 'GetAlertNotifications:data', JSON.stringify(data));
     const l2 = transactionLogger.createTransaction(
       identityId,
-      "GetAlertNotifications:response",
-      JSON.stringify(responseType)
+      'GetAlertNotifications:response',
+      JSON.stringify(responseType),
     );
-    const l3 = transactionLogger.createTransaction(
-      identityId,
-      "GetAlertNotifications:error",
-      JSON.stringify(error)
-    );
+    const l3 = transactionLogger.createTransaction(identityId, 'GetAlertNotifications:error', JSON.stringify(error));
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
 
-    if (responseType.toLowerCase() !== "success") {
+    if (responseType.toLowerCase() !== 'success') {
       // does the TU api respond
       throw error;
     }
     notifications = data?.AlertNotifications?.AlertNotification;
   } catch (err) {
     const error = errorLogger.createError(
-      "alert_notification_operation",
-      "DisputeInflightCheck:GetAlertNotifications",
-      JSON.stringify(err)
+      'alert_notification_operation',
+      'DisputeInflightCheck:GetAlertNotifications',
+      JSON.stringify(err),
     );
     await errorLogger.logger.create(error);
     return { success: false, error: err };
@@ -2065,7 +1705,7 @@ export const DisputeInflightCheck = async ({
   }[] = [];
   if (notifications?.length) {
     try {
-      console.log("*** IN GET DISPUTE STATUS ***");
+      console.log('*** IN GET DISPUTE STATUS ***');
       // alerts come with client keys (assigned by us) which are also our DB keys
       allDisputeStatusUpdates = await Promise.all(
         notifications.map(async (alert) => {
@@ -2079,14 +1719,14 @@ export const DisputeInflightCheck = async ({
             identityId: alert.ClientKey,
           };
           return await GetDisputeStatusByID(payload);
-        })
+        }),
       );
-      console.log("all status ===> ", JSON.stringify(allDisputeStatusUpdates));
+      console.log('all status ===> ', JSON.stringify(allDisputeStatusUpdates));
     } catch (err) {
       const error = errorLogger.createError(
-        "alert_notification_operation",
-        "DisputeInflightCheck:GetDisputeStatus",
-        JSON.stringify(err)
+        'alert_notification_operation',
+        'DisputeInflightCheck:GetDisputeStatus',
+        JSON.stringify(err),
       );
       await errorLogger.logger.create(error);
       return { success: false, error: err };
@@ -2112,48 +1752,42 @@ export const DisputeInflightCheck = async ({
   const successful = allDisputeStatusUpdates.filter((d) => {
     return d.success;
   });
-  console.log("all disputes filtered ===> ", JSON.stringify(successful));
+  console.log('all disputes filtered ===> ', JSON.stringify(successful));
 
   // loop through and update the status of each result in the disputes DB
   if (successful.length) {
     try {
-      console.log("*** IN UPDATE DATABASE WITH NEW STATUS ***");
+      console.log('*** IN UPDATE DATABASE WITH NEW STATUS ***');
       // alerts come with client keys which are also our keys
       const updates = await Promise.all(
         successful.map(async (item) => {
           // I need the dispute id, the client key (id), and the dispute status
           const id = item.data?.ClientKey;
-          const disputeId =
-            item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
+          const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
           if (!item.data || !id || !disputeId)
             throw `Missing dispute data:=${item.data} or id:=${id} or disputeId:=${disputeId}`;
 
           // get the current dispute from the dispute table
           // update it with the new results...this is not a patch
           const currentDispute = await DB.disputes.get(id, `${disputeId}`);
-          console.log("currentDispute", currentDispute);
+          console.log('currentDispute', currentDispute);
           const closedOn =
-            item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes
-              ?.LastUpdatedDate || currentDispute.closedOn;
-          const mappedDispute =
-            DB.disputes.generators.createUpdateDisputeDBRecord(
-              item.data,
-              closedOn
-            );
+            item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || currentDispute.closedOn;
+          const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
           const updatedDispute = {
             ...currentDispute,
             ...mappedDispute,
           };
-          console.log("updatedDispute", updatedDispute);
+          console.log('updatedDispute', updatedDispute);
           await DB.disputes.update(updatedDispute);
-        })
+        }),
       );
-      console.log("dispute updates ===> ", JSON.stringify(updates));
+      console.log('dispute updates ===> ', JSON.stringify(updates));
     } catch (err) {
       const error = errorLogger.createError(
-        "alert_notification_operation",
-        "DisputeInflightCheck:UpdateDisputeDB",
-        JSON.stringify(err)
+        'alert_notification_operation',
+        'DisputeInflightCheck:UpdateDisputeDB',
+        JSON.stringify(err),
       );
       await errorLogger.logger.create(error);
       return { success: false, error: err };
@@ -2162,20 +1796,17 @@ export const DisputeInflightCheck = async ({
 
   // Only want to get investigation results for completed disputes
   const completed = allDisputeStatusUpdates.filter(
-    (d) =>
-      d.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() ===
-      "completedispute"
+    (d) => d.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'completedispute',
   );
-  console.log("completed disputes ===> ", JSON.stringify(completed));
+  console.log('completed disputes ===> ', JSON.stringify(completed));
   if (completed.length) {
     try {
-      console.log("*** IN GET INVESTIGATION RESULTS ***");
+      console.log('*** IN GET INVESTIGATION RESULTS ***');
       const alerted = await Promise.all(
         completed.map(async (item) => {
           // I need the dispute id, the client key (id), and the dispute status
           const id = item.data?.ClientKey;
-          const disputeId =
-            item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
+          const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
           if (!item.data || !id || !disputeId)
             throw `Missing dispute data:=${item.data} or id:=${id} or disputeId:=${disputeId}`;
 
@@ -2194,23 +1825,23 @@ export const DisputeInflightCheck = async ({
           });
           let response = synced
             ? { success: true, error: null, data: synced.data }
-            : { success: false, error: "failed to get investigation results" };
-          console.log("response ===> ", response);
+            : { success: false, error: 'failed to get investigation results' };
+          console.log('response ===> ', response);
           return response;
-        })
+        }),
       );
       return { success: true, error: false, data: JSON.stringify(alerted) };
     } catch (err) {
       const error = errorLogger.createError(
-        "alert_notification_operation",
-        "DisputeInflightCheck:GetInvestigationResults",
-        JSON.stringify(err)
+        'alert_notification_operation',
+        'DisputeInflightCheck:GetInvestigationResults',
+        JSON.stringify(err),
       );
       await errorLogger.logger.create(error);
       return { success: false, error: err };
     }
   }
-  return { success: true, error: false, data: "Fall through success" };
+  return { success: true, error: false, data: 'Fall through success' };
 };
 
 /**
@@ -2244,83 +1875,55 @@ export const GetTrendingData = async ({
   // validate incoming message
   const payload: interfaces.IGetTrendingDataRequest = {
     id: identityId,
-    params: {
-      ...JSON.parse(message),
-    },
+    ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<interfaces.IGetTrendingDataRequest>(
-    "getTrendingDataRequest"
-  );
-  if (!validate(payload)) throw `Malformed message=${message}`;
+  const validate = ajv.getSchema<interfaces.IGetTrendingDataRequest>('getTrendingDataRequest');
+  if (!validate(payload)) throw `Malformed message=${payload}`;
 
   //create helper classes
   const soap = new SoapAid(
     fastXml.parse,
     tu.formatGetTrendingData,
     tu.createGetTrendingData,
-    tu.createGetTrendingDataPayload
+    tu.createGetTrendingDataPayload,
   );
 
   try {
-    const resp =
-      await soap.parseAndSendPayload<interfaces.IGetTrendingDataResponse>(
-        accountCode,
-        username,
-        agent,
-        auth,
-        payload,
-        "GetTrendingData",
-        parserOptions
-      );
+    const resp = await soap.parseAndSendPayload<interfaces.IGetTrendingDataResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      payload,
+      'GetTrendingData',
+      parserOptions,
+    );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IGetTrendingDataResult>(
-      resp,
-      "GetTrendingDataResult"
-    );
+    const data = returnNestedObject<interfaces.IGetTrendingDataResult>(resp, 'GetTrendingDataResult');
     const responseType = data.ResponseType;
     const error = data.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogger.createTransaction(
-      identityId,
-      "GetTrendingData:data",
-      JSON.stringify(data)
-    );
-    const l2 = transactionLogger.createTransaction(
-      identityId,
-      "GetTrendingData:type",
-      JSON.stringify(responseType)
-    );
-    const l3 = transactionLogger.createTransaction(
-      identityId,
-      "GetTrendingData:error",
-      JSON.stringify(error)
-    );
+    const l1 = transactionLogger.createTransaction(identityId, 'GetTrendingData:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'GetTrendingData:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'GetTrendingData:error', JSON.stringify(error));
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
 
     const response =
-      responseType.toLowerCase() === "success"
+      responseType.toLowerCase() === 'success'
         ? { success: true, error: error, data: data }
         : { success: false, error: error, data: null };
 
     // log success response
-    const l4 = transactionLogger.createTransaction(
-      identityId,
-      "GetTrendingData:response",
-      JSON.stringify(response)
-    );
+    const l4 = transactionLogger.createTransaction(identityId, 'GetTrendingData:response', JSON.stringify(response));
     await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
-    const error = errorLogger.createError(
-      identityId,
-      "GetTrendingData",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'GetTrendingData', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
@@ -2335,7 +1938,7 @@ export const GetTrendingData = async ({
  * @param {string} auth
  * @returns
  */
- export const GetCreditScoreTracking = async ({
+export const GetCreditScoreTracking = async ({
   accountCode,
   username,
   message,
@@ -2349,7 +1952,11 @@ export const GetTrendingData = async ({
   agent: https.Agent;
   auth: string;
   identityId: string;
-}): Promise<{ success: boolean; error: interfaces.IErrorResponse | interfaces.INil; data: CreditScoreTracking | null}> => {
+}): Promise<{
+  success: boolean;
+  error: interfaces.IErrorResponse | interfaces.INil;
+  data: CreditScoreTracking | null;
+}> => {
   // validate incoming message
   const payload: interfaces.IGenericRequest = { id: identityId };
   const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
@@ -2400,10 +2007,7 @@ export const GetInvestigationResultsByID = async ({
     userId: identityId,
     ...JSON.parse(message),
   };
-  const validate =
-    ajv.getSchema<interfaces.IGetInvestigationResultsByIdRequest>(
-      "getInvestigationResultsRequestById"
-    );
+  const validate = ajv.getSchema<interfaces.IGetInvestigationResultsByIdRequest>('getInvestigationResultsRequestById');
   if (!validate(payload)) throw `Malformed message=${message}`;
 
   const db = DB;
@@ -2412,11 +2016,7 @@ export const GetInvestigationResultsByID = async ({
     const resp = await db.investigationResults.get(payload.id, payload.userId);
     return { success: true, error: null, data: resp };
   } catch (err) {
-    const error = errorLogger.createError(
-      identityId,
-      "GetInvestigationResultsByID",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'GetInvestigationResultsByID', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
@@ -2455,10 +2055,7 @@ export const GetCreditBureauResultsByID = async ({
     userId: identityId,
     ...JSON.parse(message),
   };
-  const validate =
-    ajv.getSchema<interfaces.IGetInvestigationResultsByIdRequest>(
-      "getInvestigationResultsRequestById"
-    );
+  const validate = ajv.getSchema<interfaces.IGetInvestigationResultsByIdRequest>('getInvestigationResultsRequestById');
   if (!validate(payload)) throw `Malformed message=${message}`;
 
   const db = DB;
@@ -2467,11 +2064,7 @@ export const GetCreditBureauResultsByID = async ({
     const resp = await db.creditBureauResults.get(payload.id, payload.userId);
     return { success: true, error: null, data: resp };
   } catch (err) {
-    const error = errorLogger.createError(
-      identityId,
-      "GetCreditBureauResultsByID",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'GetCreditBureauResultsByID', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
@@ -2506,7 +2099,7 @@ export const GetAllDisputesByUser = async ({
   data: Dispute[];
 }> => {
   const payload: interfaces.IGenericRequest = { id: identityId };
-  const validate = ajv.getSchema<interfaces.IGenericRequest>("getRequest");
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed message=${message}`;
 
   const db = DB;
@@ -2515,11 +2108,7 @@ export const GetAllDisputesByUser = async ({
     const resp = await db.disputes.list(payload.id);
     return { success: true, error: null, data: resp };
   } catch (err) {
-    const error = errorLogger.createError(
-      identityId,
-      "GetAllDisputesByUser",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'GetAllDisputesByUser', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }
@@ -2554,7 +2143,7 @@ export const GetCurrentDisputeByUser = async ({
   data: Dispute;
 }> => {
   const payload: interfaces.IGenericRequest = { id: identityId };
-  const validate = ajv.getSchema<interfaces.IGenericRequest>("getRequest");
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed message=${message}`;
 
   const db = DB;
@@ -2566,11 +2155,7 @@ export const GetCurrentDisputeByUser = async ({
     })[0];
     return { success: true, error: null, data: resp };
   } catch (err) {
-    const error = errorLogger.createError(
-      identityId,
-      "GetCurrentDisputeByUser",
-      JSON.stringify(err)
-    );
+    const error = errorLogger.createError(identityId, 'GetCurrentDisputeByUser', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }

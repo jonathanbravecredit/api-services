@@ -5,27 +5,18 @@
       "type": "string",
       "nullable": false
     },
-    "params": {
-      "type": "object",
-      "properties": {
-        "fromDate": {
-          "type": "string",
-          "nullable": false
-        },
-        "toDate": {
-          "type": "string",
-          "nullable": true
-        }
-      },
-      "required": [
-        "fromDate"
-      ],
+    "fromDate": {
+      "type": "string",
       "nullable": false
+    },
+    "toDate": {
+      "type": "string",
+      "nullable": true
     }
   },
   "required": [
     "id",
-    "params"
+    "fromDate"
   ],
   "additionalProperties": false
 }
