@@ -1866,9 +1866,7 @@ export const GetTrendingData = async ({
   // validate incoming message
   const payload: interfaces.IGetTrendingDataRequest = {
     id: identityId,
-    params: {
-      ...JSON.parse(message),
-    },
+    ...JSON.parse(message),
   };
   const validate = ajv.getSchema<interfaces.IGetTrendingDataRequest>('getTrendingDataRequest');
   if (!validate(payload)) throw `Malformed message=${message}`;

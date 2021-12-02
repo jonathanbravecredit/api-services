@@ -16,8 +16,8 @@ import { textConstructor } from 'lib/utils';
  */
 export const createGetTrendingDataPayload = (data: IGetTrendingDataRequest): IGetTrendingDataPayload => {
   const id = data.id?.split(':')?.pop();
-  const fromDate = data.params.fromDate;
-  const toDate = data.params.toDate;
+  const fromDate = data.fromDate;
+  const toDate = data.toDate;
 
   if (!id || !fromDate) {
     console.log(`no id or fromDate provided: id=${id} or fromDate=${fromDate}`);
