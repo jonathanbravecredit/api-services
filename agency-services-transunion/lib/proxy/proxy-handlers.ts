@@ -1957,6 +1957,8 @@ export const GetCreditScoreTracking = async ({
 
   try {
     const resp = await db.creditScoreTrackings.get(payload.id, 'transunion');
+    const l1 = transactionLogger.createTransaction(identityId, 'GetTrendingData:data', JSON.stringify(resp))
+    await transactionLogger.logger.create(l1);
     return { success: true, error: null, data: resp };
   } catch (err) {
     const error = errorLogger.createError(identityId, 'GetCreditScoreTracking', JSON.stringify(err));
