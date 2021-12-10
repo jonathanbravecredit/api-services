@@ -122,9 +122,9 @@ export const IndicativeEnrichment = async ({
       parserOptions,
     );
 
-    const data = returnNestedObject<interfaces.IIndicativeEnrichmentResult>(resp, 'IndicativeEnrichmentResult');
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
+    const data = resp.Envelope?.Body?.IndicativeEnrichmentResponse?.IndicativeEnrichmentResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
 
     // log tu responses
     const l1 = transactionLogger.createTransaction(identityId, 'IndicativeEnrichment:data', JSON.stringify(data));
@@ -207,12 +207,9 @@ export const GetAuthenticationQuestions = async ({
       parserOptions,
     );
 
-    const data = returnNestedObject<interfaces.IGetAuthenticationQuestionsResult>(
-      resp,
-      'GetAuthenticationQuestionsResult',
-    );
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
+    const data = resp.Envelope?.Body?.GetAuthenticationQuestionsResponse?.GetAuthenticationQuestionsResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
 
     // log tu responses
     const l1 = transactionLogger.createTransaction(identityId, 'GetAuthenticationQuestions:data', JSON.stringify(data));
@@ -305,12 +302,9 @@ export const VerifyAuthenticationQuestions = async ({
       parserOptions,
     );
 
-    const data = returnNestedObject<interfaces.IVerifyAuthenticationQuestionsResult>(
-      resp,
-      'VerifyAuthenticationQuestionsResult',
-    );
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
+    const data = resp.Envelope?.Body?.VerifyAuthenticationQuestionsResponse?.VerifyAuthenticationQuestionsResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
 
     // log tu responses
     const l1 = transactionLogger.createTransaction(
@@ -409,9 +403,9 @@ export const Enroll = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IEnrollResult>(resp, 'EnrollResult');
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
+    const data = resp.Envelope?.Body?.EnrollResponse?.EnrollResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
 
     // log tu responses
     const l1 = transactionLogger.createTransaction(identityId, 'Enroll:data', JSON.stringify(data));
@@ -506,9 +500,9 @@ export const EnrollDisputes = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IEnrollResult>(resp, 'EnrollResult');
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
+    const data = resp.Envelope?.Body?.EnrollResponse?.EnrollResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
 
     // log tu responses
     const l1 = transactionLogger.createTransaction(identityId, 'EnrollDisputes:data', JSON.stringify(data));
@@ -598,9 +592,9 @@ export const Fulfill = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IFulfillResult>(resp, 'FulfillResult');
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
+    const data = resp.Envelope?.Body?.FulfillResponse?.FulfillResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
 
     // log tu responses
     const l1 = transactionLogger.createTransaction(identityId, 'Fulfill:data', JSON.stringify(data));
@@ -687,9 +681,9 @@ export const FulfillByUserId = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IFulfillResult>(resp, 'FulfillResult');
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
+    const data = resp.Envelope?.Body?.FulfillResponse?.FulfillResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
 
     // log tu responses
     const l1 = transactionLogger.createTransaction(identityId, 'Fulfill:data', JSON.stringify(data));
@@ -781,9 +775,9 @@ export const FulfillDisputes = async (
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IFulfillResult>(resp, 'FulfillResult');
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
+    const data = resp.Envelope?.Body?.FulfillResponse?.FulfillResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
 
     // log tu responses
     const l1 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:data', JSON.stringify(data));
@@ -862,9 +856,9 @@ export const GetServiceProduct = async ({
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IGetServiceProductResult>(resp, 'GetServiceProductResult');
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
+    const data = resp.Envelope?.Body?.GetServiceProductResponse?.GetServiceProductResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
 
     // log tu responses
     const l1 = transactionLogger.createTransaction(identityId, 'GetServiceProduct:data', JSON.stringify(data));
@@ -952,9 +946,9 @@ export const GetDisputeStatus = async ({
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IGetDisputeStatusResult>(resp, 'GetDisputeStatusResult');
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
+    const data = resp.Envelope?.Body?.GetDisputeStatusResponse?.GetDisputeStatusResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
 
     // log tu responses
     const l1 = transactionLogger.createTransaction(identityId, 'GetDisputeStatus:data', JSON.stringify(data));
@@ -1037,7 +1031,7 @@ export const GetDisputeStatusByID = async ({
       throw `No record in db:=${prepped}`;
     }
 
-    let resp = live
+    let resp: interfaces.IGetDisputeStatusResponse = live
       ? await soap.parseAndSendPayload<interfaces.IGetDisputeStatusResponse>(
           accountCode,
           username,
@@ -1061,9 +1055,9 @@ export const GetDisputeStatusByID = async ({
       resp = tu.parseGetDisputeStatus(GET_DISPUTE_STATUS_RESPONSE_WITHID, parserOptions);
     }
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IGetDisputeStatusResult>(resp, 'GetDisputeStatusResult');
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
+    const data = resp.Envelope?.Body?.GetDisputeStatusResponse?.GetDisputeStatusResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
 
     // log tu responses
     const l1 = transactionLogger.createTransaction(identityId, 'GetDisputeStatusByID:data', JSON.stringify(data));
@@ -1155,7 +1149,7 @@ export const StartDispute = async ({
     console.log('*** IN START DISPUTE ***');
     const prepped = await qrys.getDataForStartDispute(payload);
     const reprepped = { data: prepped.data, disputes: payload.disputes };
-    let resp = live
+    let resp: interfaces.IStartDisputeResponse = live
       ? await soap.parseAndSendPayload<interfaces.IStartDisputeResponse>(
           accountCode,
           username,
@@ -1180,9 +1174,9 @@ export const StartDispute = async ({
       resp = tu.parseStartDispute(START_DISPUTE_RESPONSE, parserOptions);
     }
 
-    const data = returnNestedObject<interfaces.IStartDisputeResult>(resp, 'StartDisputeResult');
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
+    const data = resp.Envelope?.Body?.StartDisputeResponse?.StartDisputeResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
     const bundle: interfaces.IStartDisputeBundle = {
       startDisputeResult: data,
       disputes: payload.disputes,
@@ -1296,9 +1290,9 @@ export const GetDisputeHistory = async ({
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IGetDisputeHistoryResult>(resp, 'GetDisputeHistoryResult');
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
+    const data = resp.Envelope?.Body?.GetDisputeHistoryResponse?.GetDisputeHistoryResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
 
     const response =
       responseType.toLowerCase() === 'success'
@@ -1392,9 +1386,9 @@ export const GetInvestigationResults = async ({
     }
 
     // get the specific response from parsed object
-    const data = resp.Envelope.Body.GetInvestigationResultsResponse.GetInvestigationResultsResult;
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
+    const data = resp.Envelope?.Body?.GetInvestigationResultsResponse?.GetInvestigationResultsResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
     const bundle: interfaces.IGetInvestigationEnrichPayload = {
       disputeId: payload.disputeId,
       getInvestigationResult: data,
@@ -1663,14 +1657,11 @@ export const DisputeInflightCheck = async ({
     if (!live) {
       resp = GET_ALERT_NOTIFICATIONS_RESPONSE; // already parsed
     }
-    console.log('get alerts resp ===> ', JSON.stringify(resp));
-    const data = returnNestedObject<interfaces.IGetAlertNotificationsForAllUsersResult>(
-      resp,
-      'GetAlertNotificationsForAllUsersResult',
-    );
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
 
+    const data = resp.Envelope?.Body?.GetAlertNotificationsForAllUsersResponse?.GetAlertNotificationsForAllUsersResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
+    
     const l1 = transactionLogger.createTransaction(identityId, 'GetAlertNotifications:data', JSON.stringify(data));
     const l2 = transactionLogger.createTransaction(
       identityId,
@@ -1878,6 +1869,7 @@ export const GetTrendingData = async ({
     ...JSON.parse(message),
   };
   const validate = ajv.getSchema<interfaces.IGetTrendingDataRequest>('getTrendingDataRequest');
+
   if (!validate(payload)) throw `Malformed message=${payload}`;
 
   //create helper classes
@@ -1900,9 +1892,9 @@ export const GetTrendingData = async ({
     );
 
     // get the specific response from parsed object
-    const data = returnNestedObject<interfaces.IGetTrendingDataResult>(resp, 'GetTrendingDataResult');
-    const responseType = data.ResponseType;
-    const error = data.ErrorResponse;
+    const data = resp.Envelope?.Body?.GetTrendingDataResponse?.GetTrendingDataResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
 
     // log tu responses
     const l1 = transactionLogger.createTransaction(identityId, 'GetTrendingData:data', JSON.stringify(data));
@@ -1966,6 +1958,8 @@ export const GetCreditScoreTracking = async ({
 
   try {
     const resp = await db.creditScoreTrackings.get(payload.id, 'transunion');
+    const l1 = transactionLogger.createTransaction(identityId, 'GetTrendingData:data', JSON.stringify(resp))
+    await transactionLogger.logger.create(l1);
     return { success: true, error: null, data: resp };
   } catch (err) {
     const error = errorLogger.createError(identityId, 'GetCreditScoreTracking', JSON.stringify(err));
