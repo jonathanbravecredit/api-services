@@ -423,7 +423,7 @@ export const Enroll = async (
         : { success: false, error: 'failed to sync data to db' };
     } else {
       response =
-        `${error.Code}` === '103045'
+        `${error.Code}` == '103045'
           ? { success: true, error: null, data: null }
           : { success: false, error: error, data: null };
     }
@@ -1661,7 +1661,7 @@ export const DisputeInflightCheck = async ({
     const data = resp.Envelope?.Body?.GetAlertNotificationsForAllUsersResponse?.GetAlertNotificationsForAllUsersResult;
     const responseType = data?.ResponseType;
     const error = data?.ErrorResponse;
-
+    
     const l1 = transactionLogger.createTransaction(identityId, 'GetAlertNotifications:data', JSON.stringify(data));
     const l2 = transactionLogger.createTransaction(
       identityId,
@@ -1869,7 +1869,8 @@ export const GetTrendingData = async ({
     ...JSON.parse(message),
   };
   const validate = ajv.getSchema<interfaces.IGetTrendingDataRequest>('getTrendingDataRequest');
-  if (!validate(payload)) throw `Malformed message=${message}`;
+
+  if (!validate(payload)) throw `Malformed message=${payload}`;
 
   //create helper classes
   const soap = new SoapAid(
