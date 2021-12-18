@@ -128,7 +128,7 @@ functions:
       - { Ref: TuCertsLambdaLayer }
     events:
       - sqs:
-          arn: !GetAtt:
+          arn: !GetAtt
             - TransunionQueue
             - Arn
           batchSize: 1
