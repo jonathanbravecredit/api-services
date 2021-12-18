@@ -123,6 +123,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
             delta,
             priorScore,
             currentScore: riskScore,
+            modifiedOn: new Date().toISOString(),
           };
           // step 2e. save record to database and move to next record.
           await DB.creditScoreTrackings.update(newScore);

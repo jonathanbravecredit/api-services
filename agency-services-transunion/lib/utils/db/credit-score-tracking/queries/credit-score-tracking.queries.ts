@@ -69,3 +69,11 @@ export const describeCreditScoreTrackings = (): Promise<number> => {
     .then((res) => res.Table.ItemCount)
     .catch((err) => err);
 };
+
+export const batchUpdateCreditScoreTracking = (scores: CreditScoreTracking[]): Promise<PutItemOutput> => {
+  return store
+    .batchWrite()
+    .exec()
+    .then((res) => res)
+    .catch((err) => err);
+};
