@@ -89,7 +89,6 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       scores.map(async (score) => {
         // step 2b. query for the users credit score record
         payload = { ...payload, identityId: score.userId };
-        console.log('payload ==> ', JSON.stringify(payload));
         const fulfill = await queries.Fulfill(payload);
         const { success } = fulfill;
         let fulfillVantageScore: IFulfillServiceProductResponse;
@@ -126,7 +125,6 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
             currentScore: riskScore,
           };
           // step 2e. save record to database and move to next record.
-          console.log('new score ==> ', newScore);
           await DB.creditScoreTrackings.update(newScore);
         }
       }),
