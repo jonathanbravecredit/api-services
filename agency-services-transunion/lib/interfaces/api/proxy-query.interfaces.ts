@@ -14,3 +14,9 @@ export interface IProxyRequest {
   auth: string;
   identityId: string;
 }
+
+export interface ITransunionBatchPayload<T> {
+  service: string;
+  command: string;
+  message: T;
+}

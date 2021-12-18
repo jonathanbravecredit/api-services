@@ -7,7 +7,7 @@ import * as secrets from 'lib/utils/secrets/secrets';
 import { DB } from 'lib/utils/db/db';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
-import { IFulfillServiceProductResponse, IProxyRequest } from 'lib/interfaces';
+import { IFulfillServiceProductResponse, IProxyRequest, ITransunionBatchPayload } from 'lib/interfaces';
 import { IVantageScore } from 'lib/interfaces/transunion/vantage-score.interface';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
 
@@ -66,69 +66,72 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
   }
 
   try {
-    const records = event.Records;
-    console.log('testing ===> ', JSON.stringify(records));
-    // const records = event.Records.filter((r) => records.messageId.toLowerCase() === 'creditscoreupdates');
-    // const httpsAgent = new https.Agent({
-    //   key,
-    //   cert,
-    //   passphrase,
-    // });
+    const records = event.Records.map((r) => {
+      return JSON.parse(r.body) as ITransunionBatchPayload<{ id: string }>;
+    }).filter((r) => r.service === 'creditscoreupdates');
+    const httpsAgent = new https.Agent({
+      key,
+      cert,
+      passphrase,
+    });
 
-    // await Promise.all(
-    //   records.map(async (rec) => {
-    //     let payload: IProxyRequest = JSON.parse(rec.body); // this just needs the id I think.
-    //     payload = {
-    //       ...payload,
-    //       accountCode,
-    //       username,
-    //       message,
-    //       auth,
-    //       agent: httpsAgent,
-    //     }; // don't pass the agent in the queue;
-    //     const fulfill = await queries.Fulfill(payload);
-    //     const score = await DB.creditScoreTrackings.get(payload.identityId, 'transunion');
-    //     const { success } = fulfill;
-    //     let fulfillVantageScore: IFulfillServiceProductResponse;
-    //     if (success) {
-    //       const prodResponse = fulfill.data?.ServiceProductFulfillments.ServiceProductResponse; //returnNestedObject<any>(fulfill, 'ServiceProductResponse');
-    //       if (!prodResponse) return;
-    //       if (prodResponse instanceof Array) {
-    //         fulfillVantageScore = prodResponse.find((item: IFulfillServiceProductResponse) => {
-    //           return item['ServiceProduct'] === 'TUCVantageScore3';
-    //         });
-    //       } else if (prodResponse['ServiceProduct'] === 'TUCVantageScore3') {
-    //         fulfillVantageScore = prodResponse || null;
-    //       }
-    //       const prodObj = fulfillVantageScore.ServiceProductObject;
-    //       let vantageScore: IVantageScore;
-    //       if (typeof prodObj === 'string') {
-    //         vantageScore = JSON.parse(prodObj);
-    //       } else if (typeof prodObj === 'object') {
-    //         vantageScore = prodObj;
-    //       }
-    //       // parse the new score
-    //       const {
-    //         CreditScoreType: { riskScore },
-    //       } = vantageScore;
-    //       if (!riskScore) return;
-    //       // step 2c. move the current score to the prior score field. update the current score with the score from the fulfill results
-    //       const priorScore = score.currentScore;
-    //       // step 2d. note if the delta.
-    //       const delta = riskScore - priorScore;
-    //       const newScore: CreditScoreTracking = {
-    //         ...score,
-    //         delta,
-    //         priorScore,
-    //         currentScore: riskScore,
-    //       };
-    //       // step 2e. save record to database and move to next record.
-    //       console.log('new score ==> ', newScore);
-    //       await DB.creditScoreTrackings.update(newScore);
-    //     }
-    //   }),
-    // );
-    const results = { success: true, error: null, data: `Processed ${records.length} records` };
+    await Promise.all(
+      records.map(async (rec) => {
+        const identityId = rec.message.id;
+        const payload: IProxyRequest = {
+          accountCode,
+          username,
+          message,
+          agent: httpsAgent,
+          auth,
+          identityId,
+        }; // don't pass the agent in the queue;
+        const fulfill = await queries.Fulfill(payload);
+        const score = await DB.creditScoreTrackings.get(payload.identityId, 'transunion');
+        const { success } = fulfill;
+        let fulfillVantageScore: IFulfillServiceProductResponse;
+        if (success) {
+          const prodResponse = fulfill.data?.ServiceProductFulfillments.ServiceProductResponse; //returnNestedObject<any>(fulfill, 'ServiceProductResponse');
+          if (!prodResponse) return;
+          if (prodResponse instanceof Array) {
+            fulfillVantageScore = prodResponse.find((item: IFulfillServiceProductResponse) => {
+              return item['ServiceProduct'] === 'TUCVantageScore3';
+            });
+          } else if (prodResponse['ServiceProduct'] === 'TUCVantageScore3') {
+            fulfillVantageScore = prodResponse || null;
+          }
+          const prodObj = fulfillVantageScore.ServiceProductObject;
+          let vantageScore: IVantageScore;
+          if (typeof prodObj === 'string') {
+            vantageScore = JSON.parse(prodObj);
+          } else if (typeof prodObj === 'object') {
+            vantageScore = prodObj;
+          }
+          // parse the new score
+          const {
+            CreditScoreType: { riskScore },
+          } = vantageScore;
+          if (!riskScore) return;
+          // step 2c. move the current score to the prior score field. update the current score with the score from the fulfill results
+          const priorScore = score.currentScore;
+          // step 2d. note if the delta.
+          const delta = riskScore - priorScore;
+          const newScore: CreditScoreTracking = {
+            ...score,
+            delta,
+            priorScore,
+            currentScore: riskScore,
+          };
+          // step 2e. save record to database and move to next record.
+          await DB.creditScoreTrackings.update(newScore);
+        }
+      }),
+    );
+    const results = {
+      success: true,
+      error: null,
+      data: `Transunion credit score updates worker ${records.length} records`,
+    };
     return JSON.stringify(results);
   } catch (err) {
     const error = errorLogger.createError('credit_score_updates_system', 'unknown_server_error', JSON.stringify(err));
