@@ -115,14 +115,14 @@ functions:
       - schedule: cron(0 16 * * ? *)
   creditScoreUpdatesService:
     handler: src/handlers/transunion/creditScoreUpdatesService.main
-    timeout: 900
+    timeout: 120
     layers:
       - { Ref: TuCertsLambdaLayer }
     events:
       - schedule: cron(0 14 18 * ? *)
   creditScoreUpdatesWorker:
     handler: src/handlers/transunion/creditScoreUpdatesWorker.main
-    timeout: 900
+    timeout: 120
     reservedConcurrency: 5
     layers:
       - { Ref: TuCertsLambdaLayer }
@@ -413,7 +413,7 @@ resources:
       Properties:
         TopicName: ${self:provider.stage}-${self:service}-sns-topic
 
-    # Create our 'TransunionQueue' SQS queue
+    # Create our 'TransunionQueue' SQS queue for batch operations
     TransunionQueue:
       Type: 'AWS::SQS::Queue'
       Properties:
@@ -424,6 +424,7 @@ resources:
             - TransunionQueueDLQ
             - Arn
           maxReceiveCount: 3
+        VisibilityTimeout: 720
 
     # Create our 'TransunionQueue' Dead Letter Queue SQS queue
     TransunionQueueDLQ:
