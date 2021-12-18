@@ -30,7 +30,7 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
       scores.map(async (score) => {
         // step 2b. query for the users credit score record
         const payload = pubsub.createSNSPayload<{ id: string }>('transunion:batch', { id: 'test' });
-        await sns.publish(payload);
+        await sns.publish(payload).promise();
       }),
     );
     const results = { success: true, error: null, data: `Tranunion:batch queued ${scores.length} records.` };
