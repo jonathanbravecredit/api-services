@@ -463,9 +463,9 @@ resources:
           - TransunionQueue
           - Arn
         Protocol: sqs
-        FilterPolicy:
-          service:
-            - 'transunion:batch'
+        # FilterPolicy:
+        #   service:
+        #     - 'transunion:batch'
         RawMessageDelivery: 'true'
 
   Outputs:
