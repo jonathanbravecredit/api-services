@@ -115,14 +115,14 @@ functions:
       - schedule: cron(0 16 * * ? *)
   creditScoreUpdatesService:
     handler: src/handlers/transunion/creditScoreUpdatesService.main
-    timeout: 60
+    timeout: 900
     layers:
       - { Ref: TuCertsLambdaLayer }
     events:
       - schedule: cron(0 14 18 * ? *)
   triggerCreateCreditScoreTracking:
     handler: src/triggers/triggerCreateCreditScoreTracking.main
-    timeout: 60
+    timeout: 900
     events:
       - stream:
           type: dynamodb
