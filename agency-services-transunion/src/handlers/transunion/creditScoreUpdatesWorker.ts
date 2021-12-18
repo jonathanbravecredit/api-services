@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { AppSyncResolverEvent } from 'aws-lambda';
+import { AppSyncResolverEvent, SQSEvent, SQSHandler } from 'aws-lambda';
 import * as https from 'https';
 import * as fs from 'fs';
 import * as queries from 'lib/proxy';
@@ -7,7 +7,7 @@ import * as secrets from 'lib/utils/secrets/secrets';
 import { DB } from 'lib/utils/db/db';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
-import { IFulfillServiceProductResponse } from 'lib/interfaces';
+import { IFulfillServiceProductResponse, IProxyRequest } from 'lib/interfaces';
 import { IVantageScore } from 'lib/interfaces/transunion/vantage-score.interface';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
 
@@ -34,10 +34,8 @@ let password;
  * @param message Object containing service specific package for processing
  * @returns Lambda proxy response
  */
-export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> => {
-  const action: string = event?.arguments?.action;
-  const message: string = event?.arguments?.message;
-
+export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
+  // prep work
   try {
     const secretJSON = await secrets.getSecretKey(transunionSKLoc);
     const { tuKeyPassphrase, tuPassword } = JSON.parse(secretJSON);
@@ -50,7 +48,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     errorLogger.logger.create(error);
     return { success: false, error: { error: `Error gathering/reading secrets=${err}` } };
   }
-
+  // prep work
   try {
     const prefix = tuEnv === 'dev' ? 'dev' : 'prod';
     key = fs.readFileSync(`/opt/${prefix}-tubravecredit.key`);
@@ -67,29 +65,22 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
   }
 
   try {
+    const records = event.Records.filter((r) => records.messageId.toLowerCase() === 'creditscoreupdates');
     const httpsAgent = new https.Agent({
       key,
       cert,
       passphrase,
     });
-    let payload = {
-      accountCode,
-      username,
-      message,
-      agent: httpsAgent,
-      auth,
-      identityId: '',
-    };
-    // const results: any = await queries.DisputeInflightCheck(payload);
-    // pre-step: seed db with current records
-    // step 1. need to listen to new users created from the app database and create an initial record in the db if doesn't exist already
-    const scores = await DB.creditScoreTrackings.list();
-    // step 2. going through each record, call fulfill (regardless of last time that the user called fulfill in the app)
+
     await Promise.all(
-      scores.map(async (score) => {
-        // step 2b. query for the users credit score record
-        payload = { ...payload, identityId: score.userId };
+      records.map(async (rec) => {
+        let payload: IProxyRequest = JSON.parse(rec.body);
+        payload = {
+          ...payload,
+          agent: httpsAgent,
+        }; // don't pass the agent in the queue;
         const fulfill = await queries.Fulfill(payload);
+        const score = await DB.creditScoreTrackings.get(payload.identityId, 'transunion');
         const { success } = fulfill;
         let fulfillVantageScore: IFulfillServiceProductResponse;
         if (success) {
@@ -123,14 +114,14 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
             delta,
             priorScore,
             currentScore: riskScore,
-            modifiedOn: new Date().toISOString(),
           };
           // step 2e. save record to database and move to next record.
+          console.log('new score ==> ', newScore);
           await DB.creditScoreTrackings.update(newScore);
         }
       }),
     );
-    const results = { success: true, error: null, data: null };
+    const results = { success: true, error: null, data: `Processed ${records.length} records` };
     return JSON.stringify(results);
   } catch (err) {
     const error = errorLogger.createError('credit_score_updates_system', 'unknown_server_error', JSON.stringify(err));
