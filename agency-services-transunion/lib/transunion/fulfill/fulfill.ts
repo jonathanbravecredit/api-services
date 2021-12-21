@@ -13,7 +13,7 @@ import {
   IFulfillServiceProductResponse,
 } from 'lib/interfaces';
 import { MONTH_MAP } from 'lib/data/constants';
-import { UpdateAppDataInput } from 'src/api/api.service';
+import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 
 /**
  * Genarates the message payload for TU Enroll service
@@ -231,6 +231,73 @@ export const enrichFulfillData = (
         serviceBundleFulfillmentKey: serviceBundleFulfillmentKey, // this always has to be synced to the report in fulfill fields
       },
     },
+  };
+  console.log('mapped', mapped);
+  return mapped;
+};
+
+/**
+ * This method parses and enriches the state data
+ * @param {UpdateAppDataInput} data
+ * @param {IFulfillResult} enroll
+ * @returns {UpdateAppDataInput | undefined }
+ */
+export const enrichFulfillDataWorker = (
+  fulfill: IFulfillResult, // IFulfillResult
+):
+  | {
+      fulfilledOn: string;
+      fulfillReport: TUReportResponseInput;
+      fulfillMergeReport: TUReportResponseInput;
+      fulfillVantageScore: TUReportResponseInput;
+      serviceBundleFulfillmentKey: string;
+    }
+  | undefined => {
+  let fulfillReport;
+  let fulfillMergeReport;
+  let fulfillVantageScore;
+  let fulfilledOn = new Date().toISOString();
+  const prodResponse = returnNestedObject<any>(fulfill, 'ServiceProductResponse');
+  const serviceBundleFulfillmentKey = fulfill.ServiceBundleFulfillmentKey;
+
+  if (!prodResponse) return;
+  if (prodResponse instanceof Array) {
+    fulfillReport = prodResponse.find((item: IFulfillServiceProductResponse) => {
+      return item['ServiceProduct'] === 'TUCReport';
+    });
+    fulfillMergeReport = prodResponse.find((item: IFulfillServiceProductResponse) => {
+      return item['ServiceProduct'] === 'MergeCreditReports';
+    });
+    fulfillVantageScore = prodResponse.find((item: IFulfillServiceProductResponse) => {
+      return item['ServiceProduct'] === 'TUCVantageScore3';
+    });
+  } else {
+    switch (prodResponse['ServiceProduct']) {
+      case 'TUCReport':
+        fulfillReport = prodResponse || null;
+        break;
+      case 'MergeCreditReports':
+        fulfillMergeReport = prodResponse || null;
+        break;
+      case 'TUCVantageScore3':
+        fulfillVantageScore = prodResponse || null;
+        break;
+      default:
+        break;
+    }
+  }
+
+  const report = mapReportResponse(fulfillReport);
+  const mergeReport = mapReportResponse(fulfillMergeReport);
+  const vantageScore = mapReportResponse(fulfillVantageScore);
+  if (!mergeReport || !vantageScore) return null;
+
+  const mapped = {
+    fulfilledOn: fulfilledOn,
+    fulfillReport: report,
+    fulfillMergeReport: mergeReport,
+    fulfillVantageScore: vantageScore,
+    serviceBundleFulfillmentKey: serviceBundleFulfillmentKey, // this always has to be synced to the report in fulfill fields
   };
   console.log('mapped', mapped);
   return mapped;

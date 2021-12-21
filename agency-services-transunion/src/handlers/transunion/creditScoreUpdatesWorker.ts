@@ -10,6 +10,7 @@ import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { IFulfillServiceProductResponse, IProxyRequest, ITransunionBatchPayload } from 'lib/interfaces';
 import { IVantageScore } from 'lib/interfaces/transunion/vantage-score.interface';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
+import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -67,7 +68,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
 
   try {
     const records = event.Records.map((r) => {
-      return JSON.parse(r.body) as ITransunionBatchPayload<{ id: string }>;
+      return JSON.parse(r.body) as ITransunionBatchPayload<IGetEnrollmentData>;
     });
     const httpsAgent = new https.Agent({
       key,
@@ -81,12 +82,12 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
         const payload: IProxyRequest = {
           accountCode,
           username,
-          message,
+          message: JSON.stringify(message),
           agent: httpsAgent,
           auth,
           identityId,
         }; // don't pass the agent in the queue;
-        const fulfill = await queries.Fulfill(payload); // THIS NEEDS TO BE REWORKED
+        const fulfill = await queries.FulfillWorker(payload); // THIS NEEDS TO BE REWORKED
         const score = await DB.creditScoreTrackings.get(payload.identityId, 'transunion');
         const { success } = fulfill;
         let fulfillVantageScore: IFulfillServiceProductResponse;

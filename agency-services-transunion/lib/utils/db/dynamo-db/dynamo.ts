@@ -1,3 +1,7 @@
+import { IFulfillResult } from 'lib/interfaces';
+import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
+import { TUReportResponseInput } from 'src/api/api.service';
+
 const AWS = require('aws-sdk');
 const db = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: 'us-east-2' });
 
@@ -18,4 +22,79 @@ export const getAllItemsInDB = async () => {
   } while (typeof items.LastEvaluatedKey != 'undefined');
 
   return scanResults;
+};
+
+export const getAllEnrollmentItemsInDB = async (): Promise<IGetEnrollmentData[]> => {
+  let params = {
+    TableName: tableName,
+  };
+
+  let scanResults: IGetEnrollmentData[] = [];
+  let items;
+
+  do {
+    items = await db.scan(params).promise();
+    items.Items.forEach((item) => {
+      if (item.agencies?.transunion?.enrolled) {
+        scanResults.push({
+          id: item.id,
+          agencies: {
+            transunion: {
+              enrollmentKey: item.agencies?.transunion?.enrollmentKey,
+              serviceBundleFulfillmentKey: item.agencies?.transunion?.serviceBundleFulfillmentKey,
+            },
+          },
+        });
+      }
+    });
+    params['ExclusiveStartKey'] = items.LastEvaluatedKey;
+  } while (typeof items.LastEvaluatedKey != 'undefined');
+
+  return scanResults;
+};
+
+export const updateFulfillReport = (
+  id: string,
+  fulfillReport: {
+    fulfilledOn: string;
+    fulfillReport: TUReportResponseInput;
+    fulfillMergeReport: TUReportResponseInput;
+    fulfillVantageScore: TUReportResponseInput;
+    serviceBundleFulfillmentKey: string;
+  },
+) => {
+  let timeStamp = new Date().toISOString(); //always have last updated date
+  const params = {
+    TableName: tableName,
+    Key: {
+      id: id,
+    },
+    // ConditionExpression: 'attribute_exists(queryParam.tableId)',
+    UpdateExpression:
+      'SET #a.#t.#fo = :fo, #a.#t.#fr = :fr, #a.#t.#fm = :fm, #a.#t.#fs = :fs, #a.#t.#bk = :bk,  modifiedOn = :m',
+    ExpressionAttributeNames: {
+      '#a': 'agencies',
+      '#t': 'transunion',
+      '#fo': 'fulfilledOn',
+      '#fr': 'fulfillReport',
+      '#fm': 'fulfillMergeReport',
+      '#fs': 'fulfillVantageScore',
+      '#bk': 'serviceBundleFulfillmentKey',
+    },
+    ExpressionAttributeValues: {
+      ':fo': fulfillReport.fulfilledOn,
+      ':fr': fulfillReport.fulfillReport,
+      ':fm': fulfillReport.fulfillMergeReport,
+      ':fs': fulfillReport.fulfillVantageScore,
+      ':bk': fulfillReport.serviceBundleFulfillmentKey,
+      ':m': timeStamp,
+    },
+    ReturnValues: 'UPDATED_NEW',
+  };
+
+  return db
+    .update(params)
+    .promise()
+    .then((res) => res)
+    .catch((err) => err);
 };

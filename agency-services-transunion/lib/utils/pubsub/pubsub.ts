@@ -1,7 +1,7 @@
 export class PubSubUtil {
   constructor() {}
 
-  createSNSPayload<T>(subject: string, message: T, service: string = 'transunion:batch'): AWS.SNS.PublishInput {
+  createSNSPayload<T>(subject: string, message: T, service: string = 'transunionbatch'): AWS.SNS.PublishInput {
     return {
       Subject: subject,
       Message: JSON.stringify({
