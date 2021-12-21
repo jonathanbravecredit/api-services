@@ -11,6 +11,7 @@ import { IFulfillServiceProductResponse, IProxyRequest, ITransunionBatchPayload 
 import { IVantageScore } from 'lib/interfaces/transunion/vantage-score.interface';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
 import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
+import { TransunionUtil as TU } from 'lib/utils/transunion/transunion';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -87,42 +88,13 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
           auth,
           identityId,
         }; // don't pass the agent in the queue;
-        const fulfill = await queries.FulfillWorker(payload); // THIS NEEDS TO BE REWORKED
-        const score = await DB.creditScoreTrackings.get(payload.identityId, 'transunion');
+        const fulfill = await queries.FulfillWorker(payload);
         const { success } = fulfill;
-        let fulfillVantageScore: IFulfillServiceProductResponse;
         if (success) {
           const prodResponse = fulfill.data?.ServiceProductFulfillments.ServiceProductResponse; //returnNestedObject<any>(fulfill, 'ServiceProductResponse');
           if (!prodResponse) return;
-          if (prodResponse instanceof Array) {
-            fulfillVantageScore = prodResponse.find((item: IFulfillServiceProductResponse) => {
-              return item['ServiceProduct'] === 'TUCVantageScore3';
-            });
-          } else if (prodResponse['ServiceProduct'] === 'TUCVantageScore3') {
-            fulfillVantageScore = prodResponse || null;
-          }
-          const prodObj = fulfillVantageScore.ServiceProductObject;
-          let vantageScore: IVantageScore;
-          if (typeof prodObj === 'string') {
-            vantageScore = JSON.parse(prodObj);
-          } else if (typeof prodObj === 'object') {
-            vantageScore = prodObj;
-          }
-          // parse the new score
-          const {
-            CreditScoreType: { riskScore },
-          } = vantageScore;
-          if (!riskScore) return;
-          // step 2c. move the current score to the prior score field. update the current score with the score from the fulfill results
-          const priorScore = score.currentScore;
-          // step 2d. note if the delta.
-          const delta = riskScore - priorScore;
-          const newScore: CreditScoreTracking = {
-            ...score,
-            delta,
-            priorScore,
-            currentScore: riskScore,
-          };
+          const score = await DB.creditScoreTrackings.get(payload.identityId, 'transunion');
+          const newScore = TU.parseProductResponseForScoreTracking(prodResponse, score);
           // step 2e. save record to database and move to next record.
           await DB.creditScoreTrackings.update(newScore);
         }
