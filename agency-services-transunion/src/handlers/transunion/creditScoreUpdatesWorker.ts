@@ -22,7 +22,7 @@ let cert: Buffer;
 let cacert: Buffer;
 let username = 'CC2BraveCredit';
 let accountCode = 'M2RVc0ZZM0Rwd2FmZA';
-let message;
+// let message;
 let user;
 let auth;
 let passphrase;
@@ -82,7 +82,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
         const payload: IProxyRequest = {
           accountCode,
           username,
-          message: JSON.stringify(message),
+          message: JSON.stringify(rec.message),
           agent: httpsAgent,
           auth,
           identityId,
