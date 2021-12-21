@@ -24,7 +24,7 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
     const enrolled = await getAllEnrollmentItemsInDB();
     // step 2. going through each record, call fulfill (regardless of last time that the user called fulfill in the app)
     await Promise.all(
-      enrolled.map(async (enrollee) => {
+      enrolled.slice(0, 5).map(async (enrollee) => {
         // step 2b. query for the users credit score record
         const payload = pubsub.createSNSPayload<{ id: string }>('creditscoreupdates', enrollee, 'transunionbatch');
         await sns.publish(payload).promise();
