@@ -1,15 +1,13 @@
 import 'reflect-metadata';
-import { AppSyncResolverEvent, SQSEvent, SQSHandler } from 'aws-lambda';
-import * as https from 'https';
-import * as fs from 'fs';
-import * as queries from 'lib/proxy';
-import * as secrets from 'lib/utils/secrets/secrets';
+import { SQSEvent, SQSHandler } from 'aws-lambda';
+import { Agent } from 'https';
+import { readFileSync } from 'fs';
+import { FulfillWorker } from 'lib/proxy';
+import { getSecretKey } from 'lib/utils/secrets/secrets';
 import { DB } from 'lib/utils/db/db';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
-import { IFulfillServiceProductResponse, IProxyRequest, ITransunionBatchPayload } from 'lib/interfaces';
-import { IVantageScore } from 'lib/interfaces/transunion/vantage-score.interface';
-import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
+import { IProxyRequest, ITransunionBatchPayload } from 'lib/interfaces';
 import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
 import { TransunionUtil as TU } from 'lib/utils/transunion/transunion';
 
@@ -40,7 +38,7 @@ let password;
 export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
   // prep work
   try {
-    const secretJSON = await secrets.getSecretKey(transunionSKLoc);
+    const secretJSON = await getSecretKey(transunionSKLoc);
     const { tuKeyPassphrase, tuPassword } = JSON.parse(secretJSON);
     password = tuPassword;
     passphrase = tuKeyPassphrase;
@@ -54,9 +52,9 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
   // prep work
   try {
     const prefix = tuEnv === 'dev' ? 'dev' : 'prod';
-    key = fs.readFileSync(`/opt/${prefix}-tubravecredit.key`);
-    cert = fs.readFileSync(`/opt/${prefix}-brave.credit.crt`);
-    cacert = fs.readFileSync(`/opt/${prefix}-Root-CA-Bundle.crt`);
+    key = readFileSync(`/opt/${prefix}-tubravecredit.key`);
+    cert = readFileSync(`/opt/${prefix}-brave.credit.crt`);
+    cacert = readFileSync(`/opt/${prefix}-Root-CA-Bundle.crt`);
   } catch (err) {
     const error = errorLogger.createError(
       'credit_score_updates_operation',
@@ -72,7 +70,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
       return JSON.parse(r.body) as ITransunionBatchPayload<IGetEnrollmentData>;
     });
     console.log(`Received ${records.length} records`);
-    const httpsAgent = new https.Agent({
+    const httpsAgent = new Agent({
       key,
       cert,
       passphrase,
@@ -89,8 +87,9 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
           auth,
           identityId,
         }; // don't pass the agent in the queue;
+
         // a special version of fulfill that calls TU API but updates the DB more directly for better performance
-        const fulfill = await queries.FulfillWorker(payload);
+        const fulfill = await FulfillWorker(payload);
         console.log('fulfill results ===> ', fulfill);
         const { success } = fulfill;
         if (success) {
