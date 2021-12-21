@@ -69,7 +69,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
     const records = event.Records.map((r) => {
       return JSON.parse(r.body) as ITransunionBatchPayload<IGetEnrollmentData>;
     });
-    console.log(`Received ${records.length} records `, JSON.stringify(records));
+    console.log(`Received ${records.length} records `);
     const httpsAgent = new Agent({
       key,
       cert,
@@ -87,20 +87,16 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
           auth,
           identityId,
         }; // don't pass the agent in the queue;
-        console.log('payload ===> ', payload);
         // a special version of fulfill that calls TU API but updates the DB more directly for better performance
         const fulfill = await FulfillWorker(payload);
-        console.log('fulfill results ===> ', fulfill);
         const { success } = fulfill;
         if (success) {
           const prodResponse = fulfill.data?.ServiceProductFulfillments.ServiceProductResponse; //returnNestedObject<any>(fulfill, 'ServiceProductResponse');
           if (!prodResponse) return;
           // get the last score tracked
           const score = await DB.creditScoreTrackings.get(payload.identityId, 'transunion');
-          console.log('score ===> ', score);
           // get the current score from the fulfill response and note the delta
           const newScore = TU.parseProductResponseForScoreTracking(prodResponse, score);
-          console.log('newscore ===> ', newScore);
           // ave record to database and move to next record.
           if (newScore !== null) {
             await DB.creditScoreTrackings.update(newScore);
@@ -108,7 +104,6 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
         }
       }),
     );
-    console.log('resp ===> ', resp);
     const results = {
       success: true,
       error: null,

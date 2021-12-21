@@ -299,6 +299,5 @@ export const enrichFulfillDataWorker = (
     fulfillVantageScore: vantageScore,
     serviceBundleFulfillmentKey: serviceBundleFulfillmentKey, // this always has to be synced to the report in fulfill fields
   };
-  console.log('mapped', mapped);
   return mapped;
 };
