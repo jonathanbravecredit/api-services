@@ -663,8 +663,8 @@ export const FulfillWorker = async (
 }> => {
   // validate incoming message
   const payload: interfaces.IFulfillWorkerData = JSON.parse(message);
-  // const validate = ajv.getSchema<interfaces.IFulfillWorkerData>('fulfillWorker');
-  // if (!validate(payload)) throw `Malformed message=${payload}`;
+  const validate = ajv.getSchema<interfaces.IFulfillWorkerData>('fulfillWorker');
+  if (!validate(payload)) throw `Malformed message=${payload}`;
   console.log('here in worker 1');
   //create helper classes
   const soap = new SoapAid(tu.parseFulfill, tu.formatFulfill, tu.createFulfill, tu.createFulfillPayload);

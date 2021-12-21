@@ -149,7 +149,7 @@ export class TransunionUtil {
   static parseProductResponseForScoreTracking(
     resp: IFulfillServiceProductResponse | IFulfillServiceProductResponse[],
     score: CreditScoreTracking,
-  ): CreditScoreTracking {
+  ): CreditScoreTracking | null {
     let fulfillVantageScore: IFulfillServiceProductResponse;
     if (resp instanceof Array) {
       fulfillVantageScore = resp.find((item: IFulfillServiceProductResponse) => {
@@ -169,7 +169,7 @@ export class TransunionUtil {
     const {
       CreditScoreType: { riskScore },
     } = vantageScore;
-    if (!riskScore) return;
+    if (!riskScore) return null;
     // step 2c. move the current score to the prior score field. update the current score with the score from the fulfill results
     const priorScore = score.currentScore;
     // step 2d. note if the delta.
@@ -180,6 +180,7 @@ export class TransunionUtil {
       priorScore,
       currentScore: riskScore,
     };
+    return newScore;
   }
 }
 

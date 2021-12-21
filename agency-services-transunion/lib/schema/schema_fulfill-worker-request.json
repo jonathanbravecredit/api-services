@@ -5,6 +5,18 @@
       "type": "string",
       "nullable": false
     },
+    "user": {
+      "type": "object",
+      "nullable": false,
+      "properties": {
+        "userAttributes": {
+          "type": "object",
+          "nullable": false,
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
     "agencies": {
       "type": "object",
       "nullable": false,

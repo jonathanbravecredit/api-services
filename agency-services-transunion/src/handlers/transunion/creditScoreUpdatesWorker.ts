@@ -102,7 +102,9 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
           const newScore = TU.parseProductResponseForScoreTracking(prodResponse, score);
           console.log('newscore ===> ', newScore);
           // ave record to database and move to next record.
-          await DB.creditScoreTrackings.update(newScore);
+          if (newScore !== null) {
+            await DB.creditScoreTrackings.update(newScore);
+          }
         }
       }),
     );
