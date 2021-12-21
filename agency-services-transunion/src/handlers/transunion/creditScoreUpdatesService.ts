@@ -1,14 +1,17 @@
 import 'reflect-metadata';
 import { AppSyncResolverEvent, AppSyncResolverHandler } from 'aws-lambda';
-import { SNS } from 'aws-sdk';
+import { SNS, DynamoDB } from 'aws-sdk';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
 import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
+import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
 const sns = new SNS({ region: 'us-east-2' });
 const pubsub = new PubSubUtil();
+const db = new DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: 'us-east-2' });
+const tableName = process.env.APPTABLE;
 /**
  * Handler that processes single requests for Transunion services
  * @param service Service invoked via the SNS Proxy 'transunion'
@@ -21,16 +24,35 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
   // const scores = await DB.creditScoreTrackings.list();
   // create the payload with out the auth and agent
   try {
-    const enrolled = await getAllEnrollmentItemsInDB();
-    // step 2. going through each record, call fulfill (regardless of last time that the user called fulfill in the app)
-    await Promise.all(
-      enrolled.map(async (enrollee) => {
-        // step 2b. query for the users credit score record
-        const payload = pubsub.createSNSPayload<{ id: string }>('creditscoreupdates', enrollee, 'transunionbatch');
-        await sns.publish(payload).promise();
-      }),
-    );
-    const results = { success: true, error: null, data: `Tranunion:batch queued ${enrolled.length} records.` };
+    let params = {
+      TableName: tableName,
+    };
+    let items;
+    let counter: number = 0;
+    do {
+      items = await db.scan(params).promise();
+      await Promise.all(
+        items.Items.map(async (item) => {
+          if (item.agencies?.transunion?.enrolled) {
+            const enrollee = {
+              id: item.id,
+              user: item.user,
+              agencies: {
+                transunion: {
+                  enrollmentKey: item.agencies?.transunion?.enrollmentKey,
+                  serviceBundleFulfillmentKey: item.agencies?.transunion?.serviceBundleFulfillmentKey,
+                },
+              },
+            };
+            const payload = pubsub.createSNSPayload<{ id: string }>('creditscoreupdates', enrollee, 'transunionbatch');
+            await sns.publish(payload).promise();
+            counter++;
+          }
+        }),
+      );
+      params['ExclusiveStartKey'] = items.LastEvaluatedKey;
+    } while (typeof items.LastEvaluatedKey != 'undefined');
+    const results = { success: true, error: null, data: `Tranunion:batch queued ${counter} records.` };
     return JSON.stringify(results);
   } catch (err) {
     const error = errorLogger.createError('credit_score_updates_system', 'unknown_server_error', JSON.stringify(err));
