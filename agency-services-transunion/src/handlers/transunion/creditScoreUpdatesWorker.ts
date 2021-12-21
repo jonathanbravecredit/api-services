@@ -88,14 +88,17 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
           auth,
           identityId,
         }; // don't pass the agent in the queue;
+        // a special version of fulfill that calls TU API but updates the DB more directly for better performance
         const fulfill = await queries.FulfillWorker(payload);
         const { success } = fulfill;
         if (success) {
           const prodResponse = fulfill.data?.ServiceProductFulfillments.ServiceProductResponse; //returnNestedObject<any>(fulfill, 'ServiceProductResponse');
           if (!prodResponse) return;
+          // get the last score tracked
           const score = await DB.creditScoreTrackings.get(payload.identityId, 'transunion');
+          // get the current score from the fulfill response and note the delta
           const newScore = TU.parseProductResponseForScoreTracking(prodResponse, score);
-          // step 2e. save record to database and move to next record.
+          // ave record to database and move to next record.
           await DB.creditScoreTrackings.update(newScore);
         }
       }),
