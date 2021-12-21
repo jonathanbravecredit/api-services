@@ -26,7 +26,7 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
     await Promise.all(
       enrolled.map(async (enrollee) => {
         // step 2b. query for the users credit score record
-        const payload = pubsub.createSNSPayload<{ id: string }>('creditscoreupdates', enrollee);
+        const payload = pubsub.createSNSPayload<{ id: string }>('creditscoreupdates', enrollee, 'transunionbatch');
         await sns.publish(payload).promise();
       }),
     );
