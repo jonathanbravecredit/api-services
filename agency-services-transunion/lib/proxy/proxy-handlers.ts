@@ -663,8 +663,8 @@ export const FulfillWorker = async (
 }> => {
   // validate incoming message
   const payload: interfaces.IFulfillWorkerData = JSON.parse(message);
-  const validate = ajv.getSchema<interfaces.IFulfillWorkerData>('fulfillWorker');
-  if (!validate(payload)) throw `Malformed message=${payload}`;
+  // const validate = ajv.getSchema<interfaces.IFulfillWorkerData>('fulfillWorker');
+  // if (!validate(payload)) throw `Malformed message=${payload}`;
   console.log('here in worker 1');
   //create helper classes
   const soap = new SoapAid(tu.parseFulfill, tu.formatFulfill, tu.createFulfill, tu.createFulfillPayload);
@@ -692,12 +692,12 @@ export const FulfillWorker = async (
     const error = data?.ErrorResponse;
 
     // log tu responses
-    const l1 = transactionLogger.createTransaction(identityId, 'FulfillWorker:data', JSON.stringify(data));
-    const l2 = transactionLogger.createTransaction(identityId, 'FulfillWorker:type', JSON.stringify(responseType));
-    const l3 = transactionLogger.createTransaction(identityId, 'FulfillWorker:error', JSON.stringify(error));
-    await transactionLogger.logger.create(l1);
-    await transactionLogger.logger.create(l2);
-    await transactionLogger.logger.create(l3);
+    // const l1 = transactionLogger.createTransaction(identityId, 'FulfillWorker:data', JSON.stringify(data));
+    // const l2 = transactionLogger.createTransaction(identityId, 'FulfillWorker:type', JSON.stringify(responseType));
+    // const l3 = transactionLogger.createTransaction(identityId, 'FulfillWorker:error', JSON.stringify(error));
+    // await transactionLogger.logger.create(l1);
+    // await transactionLogger.logger.create(l2);
+    // await transactionLogger.logger.create(l3);
 
     let response;
     if (responseType.toLowerCase() === 'success') {
@@ -711,9 +711,9 @@ export const FulfillWorker = async (
       response = { success: false, error: error };
     }
 
-    // log success response
-    const l4 = transactionLogger.createTransaction(identityId, 'FulfillWorker:response', JSON.stringify(response));
-    await transactionLogger.logger.create(l4);
+    // // log success response
+    // const l4 = transactionLogger.createTransaction(identityId, 'FulfillWorker:response', JSON.stringify(response));
+    // await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
