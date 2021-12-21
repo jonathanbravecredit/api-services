@@ -148,7 +148,7 @@ functions:
     timeout: 900
     events:
       - stream:
-          type: dynamodbß
+          type: dynamodb
           batchSize: 100
           startingPosition: LATEST
           arn:
@@ -475,7 +475,7 @@ resources:
         Protocol: sqs
         FilterPolicy:
           service:
-            - 'transunion:batch'
+            - transunionbatch
         RawMessageDelivery: 'true'
 
   Outputs:
