@@ -141,13 +141,14 @@ functions:
           arn: !GetAtt
             - TransunionQueue
             - Arn
-          batchSize: 1
+          batchSize: 100
+          maximumBatchingWindow: 5
   triggerCreateCreditScoreTracking:
     handler: src/triggers/triggerCreateCreditScoreTracking.main
     timeout: 900
     events:
       - stream:
-          type: dynamodb
+          type: dynamodbß
           batchSize: 100
           startingPosition: LATEST
           arn:
@@ -472,9 +473,9 @@ resources:
           - TransunionQueue
           - Arn
         Protocol: sqs
-        # FilterPolicy:
-        #   service:
-        #     - 'transunion:batch'
+        FilterPolicy:
+          service:
+            - 'transunion:batch'
         RawMessageDelivery: 'true'
 
   Outputs:

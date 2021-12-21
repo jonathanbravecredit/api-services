@@ -68,7 +68,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
   try {
     const records = event.Records.map((r) => {
       return JSON.parse(r.body) as ITransunionBatchPayload<{ id: string }>;
-    }).filter((r) => r.service === 'creditscoreupdates');
+    });
     const httpsAgent = new https.Agent({
       key,
       cert,
@@ -86,7 +86,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
           auth,
           identityId,
         }; // don't pass the agent in the queue;
-        const fulfill = await queries.Fulfill(payload);
+        const fulfill = await queries.Fulfill(payload); // THIS NEEDS TO BE REWORKED
         const score = await DB.creditScoreTrackings.get(payload.identityId, 'transunion');
         const { success } = fulfill;
         let fulfillVantageScore: IFulfillServiceProductResponse;

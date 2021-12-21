@@ -9,6 +9,12 @@ export class PubSubUtil {
         command: 'POST',
         message: message,
       }),
+      MessageAttributes: {
+        service: {
+          DataType: 'String',
+          StringValue: service,
+        },
+      },
       TopicArn: process.env.TU_SNS_PROXY_ARN || '',
     };
   }
