@@ -1,12 +1,8 @@
 import 'reflect-metadata';
 import { AppSyncResolverEvent, AppSyncResolverHandler } from 'aws-lambda';
 import { SNS } from 'aws-sdk';
-import * as queries from 'lib/proxy';
 import { DB } from 'lib/utils/db/db';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
-import { IFulfillServiceProductResponse } from 'lib/interfaces';
-import { IVantageScore } from 'lib/interfaces/transunion/vantage-score.interface';
-import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
 import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
 
 // request.debug = true; import * as request from 'request';
