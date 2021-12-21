@@ -5,7 +5,7 @@ import { TUReportResponseInput } from 'src/api/api.service';
 const AWS = require('aws-sdk');
 const db = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: 'us-east-2' });
 
-const tableName = process.env.APPDATA_TABLE;
+const tableName = process.env.APPTABLE;
 
 export const getAllItemsInDB = async () => {
   let params = {
