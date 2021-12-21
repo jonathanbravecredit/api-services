@@ -21,6 +21,7 @@ import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
 import { IFulfillWorkerData } from 'lib/interfaces/transunion/fulfill-worker.interface';
 import { updateFulfillReport } from 'lib/utils/db/dynamo-db/dynamo';
+import { IFulfillGraphQLResponse } from 'lib/interfaces';
 
 const GO_LIVE = true;
 const errorLogger = new ErrorLogger();
@@ -664,10 +665,14 @@ export const FulfillWorker = async (
   const payload: interfaces.IFulfillWorkerData = JSON.parse(message);
   const validate = ajv.getSchema<interfaces.IFulfillWorkerData>('fulfillWorker');
   if (!validate(payload)) throw `Malformed message=${payload}`;
-  console.log('here in worker 1')
+  console.log('here in worker 1');
   //create helper classes
   const soap = new SoapAid(tu.parseFulfill, tu.formatFulfill, tu.createFulfill, tu.createFulfillPayload);
-
+  const formatted: IFulfillGraphQLResponse = {
+    data: {
+      getAppData: payload,
+    },
+  };
   try {
     // get / parse data needed to process request
     const resp = await soap.parseAndSendPayload<interfaces.IFulfillResponse>(
@@ -675,11 +680,11 @@ export const FulfillWorker = async (
       username,
       agent,
       auth,
-      payload,
+      formatted,
       'Fulfill',
       parserOptions,
     );
-    console.log('here in worker 2 ', resp)
+    console.log('here in worker 2 ', resp);
 
     // get the specific response from parsed object
     const data = resp.Envelope?.Body?.FulfillResponse?.FulfillResult;
@@ -696,11 +701,11 @@ export const FulfillWorker = async (
 
     let response;
     if (responseType.toLowerCase() === 'success') {
-      console.log('here in worker 3')
+      console.log('here in worker 3');
       const mapped = enrichFulfillDataWorker(data);
-      console.log('here in worker 4 ', mapped)
+      console.log('here in worker 4 ', mapped);
       const sync = await updateFulfillReport(payload.id, mapped);
-      console.log('here in worker 5 ', sync)
+      console.log('here in worker 5 ', sync);
       response = { success: true, error: null, data: data };
     } else {
       response = { success: false, error: error };

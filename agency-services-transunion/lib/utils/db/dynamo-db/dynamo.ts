@@ -38,6 +38,7 @@ export const getAllEnrollmentItemsInDB = async (): Promise<IGetEnrollmentData[]>
       if (item.agencies?.transunion?.enrolled) {
         scanResults.push({
           id: item.id,
+          user: item.user,
           agencies: {
             transunion: {
               enrollmentKey: item.agencies?.transunion?.enrollmentKey,

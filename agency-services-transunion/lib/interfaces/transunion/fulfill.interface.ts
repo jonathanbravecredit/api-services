@@ -7,7 +7,7 @@ export interface IFulfillGraphQLResponse {
       agencies?: {
         transunion?: {
           enrollmentKey: string;
-          disputeEnrollmentKey: string;
+          disputeEnrollmentKey?: string;
           serviceBundleFulfillmentKey?: string;
           disputeServiceBundleFulfillmentKey?: string;
         };
