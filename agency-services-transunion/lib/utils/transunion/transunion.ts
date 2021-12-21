@@ -1,4 +1,14 @@
-import { IBorrowerName, ICreditAddress, IEmployer, IPhoneNumber, ITradeLinePartition, IRemark } from 'lib/interfaces';
+import {
+  IBorrowerName,
+  ICreditAddress,
+  IEmployer,
+  IPhoneNumber,
+  ITradeLinePartition,
+  IRemark,
+  IFulfillServiceProductResponse,
+} from 'lib/interfaces';
+import { IVantageScore } from 'lib/interfaces/transunion/vantage-score.interface';
+import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
 
 // start building this out to handle all the data from TU
 export class TransunionUtil {
@@ -129,6 +139,48 @@ export class TransunionUtil {
     return remarks instanceof Array
       ? remarks.map((r) => r.customRemark || '').reduce((a, b) => `${a} \n ${b}`)
       : remarks.customRemark || '';
+  }
+
+  /**
+   * Flatten the remarks into one paragraph
+   * @param remarks
+   * @returns
+   */
+  static parseProductResponseForScoreTracking(
+    resp: IFulfillServiceProductResponse | IFulfillServiceProductResponse[],
+    score: CreditScoreTracking,
+  ): CreditScoreTracking | null {
+    let fulfillVantageScore: IFulfillServiceProductResponse;
+    if (resp instanceof Array) {
+      fulfillVantageScore = resp.find((item: IFulfillServiceProductResponse) => {
+        return item['ServiceProduct'] === 'TUCVantageScore3';
+      });
+    } else if (resp['ServiceProduct'] === 'TUCVantageScore3') {
+      fulfillVantageScore = resp || null;
+    }
+    const prodObj = fulfillVantageScore.ServiceProductObject;
+    let vantageScore: IVantageScore;
+    if (typeof prodObj === 'string') {
+      vantageScore = JSON.parse(prodObj);
+    } else if (typeof prodObj === 'object') {
+      vantageScore = prodObj;
+    }
+    // parse the new score
+    const {
+      CreditScoreType: { riskScore },
+    } = vantageScore;
+    if (!riskScore) return null;
+    // step 2c. move the current score to the prior score field. update the current score with the score from the fulfill results
+    const priorScore = score.currentScore;
+    // step 2d. note if the delta.
+    const delta = priorScore < 300 ? 0 : riskScore - priorScore;
+    const newScore: CreditScoreTracking = {
+      ...score,
+      delta,
+      priorScore,
+      currentScore: riskScore,
+    };
+    return newScore;
   }
 }
 

@@ -15,10 +15,13 @@ import { ALL_GET_INVESTIGATION_MOCKS } from 'lib/examples/mocks/AllGetInvestigat
 import { GET_DISPUTE_STATUS_RESPONSE_WITHID } from 'lib/examples/mocks/GetDisputeStatusResponse-Complete';
 import { DB } from 'lib/utils/db/db';
 import { Dispute } from 'lib/utils/db/disputes/model/dispute.model';
-import { updateInvestigationResultsDB } from 'lib/transunion';
+import { enrichFulfillDataWorker, updateInvestigationResultsDB } from 'lib/transunion';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
+import { IFulfillWorkerData } from 'lib/interfaces/transunion/fulfill-worker.interface';
+import { updateFulfillReport } from 'lib/utils/db/dynamo-db/dynamo';
+import { IFulfillGraphQLResponse } from 'lib/interfaces';
 
 const GO_LIVE = true;
 const errorLogger = new ErrorLogger();
@@ -622,6 +625,95 @@ export const Fulfill = async (
   } catch (err) {
     // log error response
     const error = errorLogger.createError(identityId, 'Fulfill', JSON.stringify(err));
+    await errorLogger.logger.create(error);
+    return { success: false, error: err };
+  }
+};
+
+/**
+ * A returning user can refresh their report by calling fulfill
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const FulfillWorker = async (
+  {
+    accountCode,
+    username,
+    message,
+    agent,
+    auth,
+    identityId,
+  }: {
+    accountCode: string;
+    username: string;
+    message: string;
+    agent: https.Agent;
+    auth: string;
+    identityId: string;
+  },
+  dispute: boolean = false,
+): Promise<{
+  success: boolean;
+  error?: interfaces.IErrorResponse | interfaces.INil | string;
+  data?: interfaces.IFulfillResult;
+}> => {
+  // validate incoming message
+  const payload: interfaces.IFulfillWorkerData = JSON.parse(message);
+  const validate = ajv.getSchema<interfaces.IFulfillWorkerData>('fulfillWorker');
+  if (!validate(payload)) throw `Malformed message=${payload}`;
+  //create helper classes
+  const soap = new SoapAid(tu.parseFulfill, tu.formatFulfill, tu.createFulfill, tu.createFulfillPayload);
+  const formatted: IFulfillGraphQLResponse = {
+    data: {
+      getAppData: payload,
+    },
+  };
+  try {
+    // get / parse data needed to process request
+    const resp = await soap.parseAndSendPayload<interfaces.IFulfillResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      formatted,
+      'Fulfill',
+      parserOptions,
+    );
+
+    // get the specific response from parsed object
+    const data = resp.Envelope?.Body?.FulfillResponse?.FulfillResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
+
+    // log tu responses
+    // const l1 = transactionLogger.createTransaction(identityId, 'FulfillWorker:data', JSON.stringify(data));
+    // const l2 = transactionLogger.createTransaction(identityId, 'FulfillWorker:type', JSON.stringify(responseType));
+    // const l3 = transactionLogger.createTransaction(identityId, 'FulfillWorker:error', JSON.stringify(error));
+    // await transactionLogger.logger.create(l1);
+    // await transactionLogger.logger.create(l2);
+    // await transactionLogger.logger.create(l3);
+
+    let response;
+    if (responseType.toLowerCase() === 'success') {
+      const mapped = enrichFulfillDataWorker(data);
+      const sync = await updateFulfillReport(payload.id, mapped);
+      response = { success: true, error: null, data: data };
+    } else {
+      response = { success: false, error: error };
+    }
+
+    // // log success response
+    // const l4 = transactionLogger.createTransaction(identityId, 'FulfillWorker:response', JSON.stringify(response));
+    // await transactionLogger.logger.create(l4);
+
+    return response;
+  } catch (err) {
+    // log error response
+    const error = errorLogger.createError(identityId, 'FulfillWorker', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
@@ -1661,7 +1753,7 @@ export const DisputeInflightCheck = async ({
     const data = resp.Envelope?.Body?.GetAlertNotificationsForAllUsersResponse?.GetAlertNotificationsForAllUsersResult;
     const responseType = data?.ResponseType;
     const error = data?.ErrorResponse;
-    
+
     const l1 = transactionLogger.createTransaction(identityId, 'GetAlertNotifications:data', JSON.stringify(data));
     const l2 = transactionLogger.createTransaction(
       identityId,
@@ -1958,7 +2050,7 @@ export const GetCreditScoreTracking = async ({
 
   try {
     const resp = await db.creditScoreTrackings.get(payload.id, 'transunion');
-    const l1 = transactionLogger.createTransaction(identityId, 'GetTrendingData:data', JSON.stringify(resp))
+    const l1 = transactionLogger.createTransaction(identityId, 'GetTrendingData:data', JSON.stringify(resp));
     await transactionLogger.logger.create(l1);
     return { success: true, error: null, data: resp };
   } catch (err) {

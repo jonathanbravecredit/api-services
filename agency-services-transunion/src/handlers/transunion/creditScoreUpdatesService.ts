@@ -1,13 +1,9 @@
 import 'reflect-metadata';
 import { AppSyncResolverEvent, AppSyncResolverHandler } from 'aws-lambda';
 import { SNS } from 'aws-sdk';
-import * as queries from 'lib/proxy';
-import { DB } from 'lib/utils/db/db';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
-import { IFulfillServiceProductResponse } from 'lib/interfaces';
-import { IVantageScore } from 'lib/interfaces/transunion/vantage-score.interface';
-import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
 import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
+import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -22,18 +18,19 @@ const pubsub = new PubSubUtil();
  */
 export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResolverEvent<any>): Promise<any> => {
   // can be kicked off through AppSync if needed
-  const scores = await DB.creditScoreTrackings.list();
+  // const scores = await DB.creditScoreTrackings.list();
   // create the payload with out the auth and agent
   try {
+    const enrolled = await getAllEnrollmentItemsInDB();
     // step 2. going through each record, call fulfill (regardless of last time that the user called fulfill in the app)
     await Promise.all(
-      scores.map(async (score) => {
+      enrolled.map(async (enrollee) => {
         // step 2b. query for the users credit score record
-        const payload = pubsub.createSNSPayload<{ id: string }>('creditscoreupdates', { id: 'test' });
+        const payload = pubsub.createSNSPayload<{ id: string }>('creditscoreupdates', enrollee, 'transunionbatch');
         await sns.publish(payload).promise();
       }),
     );
-    const results = { success: true, error: null, data: `Tranunion:batch queued ${scores.length} records.` };
+    const results = { success: true, error: null, data: `Tranunion:batch queued ${enrolled.length} records.` };
     return JSON.stringify(results);
   } catch (err) {
     const error = errorLogger.createError('credit_score_updates_system', 'unknown_server_error', JSON.stringify(err));

@@ -37,6 +37,9 @@ custom:
       dev: 'rr5wtr4ev5exlbutrkih3r5lhq:GetAtt:AppDataTable:StreamArn'
       qa: 'rr5wtr4ev5exlbutrkih3r5lhq:GetAtt:AppDataTable:StreamArn'
       prod: '4tpaga7rzjayhk75opsmpeurme:GetAtt:AppDataTable:StreamArn'
+    APPTABLES:
+      dev: 'AppData-rr5wtr4ev5exlbutrkih3r5lhq-dev'
+      prod: 'AppData-4tpaga7rzjayhk75opsmpeurme-prod'
 
 provider:
   name: aws
@@ -61,6 +64,7 @@ provider:
     APPSYNC_ENDPOINT: '${self:custom.settings.GRAPHQL_ENDPOINT.${opt:stage}}'
     APPSYNC_API: '${self:custom.settings.GRAPHQL_API.${opt:stage}}'
     TU_SNS_PROXY_ARN: !Ref TransunionSNSTopic
+    APPTABLE: ${self:custom.settings.APPTABLES.${opt:stage}}
   vpc:
     securityGroupIds:
       - !GetAtt NatGatewayLambdaSecurityGroup.GroupId
@@ -102,6 +106,7 @@ provider:
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.API_ERROR_LOG_TABLE}'
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.API_TRANSACTION_LOG_TABLE}'
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.DISPUTES_TABLE}'
+        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.APPTABLE}'
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_BUREAU_TABLE}'
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.INVESTIGATION_RESULTS_TABLE}'
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_SCORE_UPDATES_TABLE}'
@@ -141,7 +146,8 @@ functions:
           arn: !GetAtt
             - TransunionQueue
             - Arn
-          batchSize: 1
+          batchSize: 100
+          maximumBatchingWindow: 5
   triggerCreateCreditScoreTracking:
     handler: src/triggers/triggerCreateCreditScoreTracking.main
     timeout: 900
@@ -472,9 +478,9 @@ resources:
           - TransunionQueue
           - Arn
         Protocol: sqs
-        # FilterPolicy:
-        #   service:
-        #     - 'transunion:batch'
+        FilterPolicy:
+          service:
+            - transunionbatch
         RawMessageDelivery: 'true'
 
   Outputs:
