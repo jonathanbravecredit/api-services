@@ -3,8 +3,8 @@ import { AppSyncResolverEvent, AppSyncResolverHandler } from 'aws-lambda';
 import { SNS, DynamoDB } from 'aws-sdk';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
-import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
-import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
+// import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
+// import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -32,7 +32,7 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
     do {
       items = await db.scan(params).promise();
       await Promise.all(
-        items.Items.map(async (item) => {
+        items.Items.slice(0, 12).map(async (item) => {
           if (item.agencies?.transunion?.enrolled) {
             const enrollee = {
               id: item.id,
@@ -51,7 +51,7 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
         }),
       );
       params['ExclusiveStartKey'] = items.LastEvaluatedKey;
-    } while (typeof items.LastEvaluatedKey != 'undefined');
+    } while (typeof items.LastEvaluatedKey != 'undefined' && counter < 10);
     const results = { success: true, error: null, data: `Tranunion:batch queued ${counter} records.` };
     return JSON.stringify(results);
   } catch (err) {
