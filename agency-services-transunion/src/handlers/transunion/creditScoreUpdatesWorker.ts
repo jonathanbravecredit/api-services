@@ -76,7 +76,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
       passphrase,
     });
 
-    await Promise.all(
+    const resp = await Promise.all(
       records.map(async (rec) => {
         const identityId = rec.message.id;
         const payload: IProxyRequest = {
@@ -87,7 +87,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
           auth,
           identityId,
         }; // don't pass the agent in the queue;
-
+        console.log('payload ===> ', payload);
         // a special version of fulfill that calls TU API but updates the DB more directly for better performance
         const fulfill = await FulfillWorker(payload);
         console.log('fulfill results ===> ', fulfill);
@@ -106,6 +106,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
         }
       }),
     );
+    console.log('resp ===> ', resp);
     const results = {
       success: true,
       error: null,

@@ -71,7 +71,7 @@ export const updateFulfillReport = (
     },
     // ConditionExpression: 'attribute_exists(queryParam.tableId)',
     UpdateExpression:
-      'SET #a.#t.#fo = :fo, #a.#t.#fr = :fr, #a.#t.#fm = :fm, #a.#t.#fs = :fs, #a.#t.#bk = :bk,  modifiedOn = :m',
+      'SET #a.#t.#fo = :fo, #a.#t.#fr = :fr, #a.#t.#fm = :fm, #a.#t.#fs = :fs, #a.#t.#bk = :bk, updatedAt = :m',
     ExpressionAttributeNames: {
       '#a': 'agencies',
       '#t': 'transunion',

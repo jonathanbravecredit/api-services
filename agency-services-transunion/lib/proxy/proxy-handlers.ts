@@ -664,7 +664,7 @@ export const FulfillWorker = async (
   const payload: interfaces.IFulfillWorkerData = JSON.parse(message);
   const validate = ajv.getSchema<interfaces.IFulfillWorkerData>('fulfillWorker');
   if (!validate(payload)) throw `Malformed message=${payload}`;
-
+  console.log('here in worker 1')
   //create helper classes
   const soap = new SoapAid(tu.parseFulfill, tu.formatFulfill, tu.createFulfill, tu.createFulfillPayload);
 
@@ -679,6 +679,7 @@ export const FulfillWorker = async (
       'Fulfill',
       parserOptions,
     );
+    console.log('here in worker 2 ', resp)
 
     // get the specific response from parsed object
     const data = resp.Envelope?.Body?.FulfillResponse?.FulfillResult;
@@ -695,8 +696,11 @@ export const FulfillWorker = async (
 
     let response;
     if (responseType.toLowerCase() === 'success') {
+      console.log('here in worker 3')
       const mapped = enrichFulfillDataWorker(data);
-      await updateFulfillReport(payload.id, mapped);
+      console.log('here in worker 4 ', mapped)
+      const sync = await updateFulfillReport(payload.id, mapped);
+      console.log('here in worker 5 ', sync)
       response = { success: true, error: null, data: data };
     } else {
       response = { success: false, error: error };
