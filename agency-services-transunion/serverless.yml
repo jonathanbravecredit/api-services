@@ -130,14 +130,14 @@ functions:
       - schedule: cron(0 16 * * ? *)
   creditScoreUpdatesService:
     handler: src/handlers/transunion/creditScoreUpdatesService.main
-    timeout: 120
+    timeout: 240
     layers:
       - { Ref: TuCertsLambdaLayer }
     events:
       - schedule: cron(0 14 18 * ? *)
   creditScoreUpdatesWorker:
     handler: src/handlers/transunion/creditScoreUpdatesWorker.main
-    timeout: 120
+    timeout: 240
     reservedConcurrency: 5
     layers:
       - { Ref: TuCertsLambdaLayer }
