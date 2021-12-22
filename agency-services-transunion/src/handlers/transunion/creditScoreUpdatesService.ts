@@ -51,7 +51,7 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
         }),
       );
       params['ExclusiveStartKey'] = items.LastEvaluatedKey;
-    } while (typeof items.LastEvaluatedKey != 'undefined' && counter < 10);
+    } while (typeof items.LastEvaluatedKey != 'undefined');
     const results = { success: true, error: null, data: `Tranunion:batch queued ${counter} records.` };
     return JSON.stringify(results);
   } catch (err) {
