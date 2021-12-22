@@ -1,4 +1,10 @@
-import { mapReportResponse, returnNestedObject, textConstructor, updateNestedObject } from 'lib/utils/helpers/helpers';
+import {
+  mapReportResponse,
+  mapReportResponseWorker,
+  returnNestedObject,
+  textConstructor,
+  updateNestedObject,
+} from 'lib/utils/helpers/helpers';
 import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
 import * as uuid from 'uuid';
@@ -287,9 +293,9 @@ export const enrichFulfillDataWorker = (
     }
   }
 
-  const report = mapReportResponse(fulfillReport);
-  const mergeReport = mapReportResponse(fulfillMergeReport);
-  const vantageScore = mapReportResponse(fulfillVantageScore);
+  const report = mapReportResponseWorker(fulfillReport);
+  const mergeReport = mapReportResponseWorker(fulfillMergeReport);
+  const vantageScore = mapReportResponseWorker(fulfillVantageScore);
   if (!mergeReport || !vantageScore) return null;
 
   const mapped = {
