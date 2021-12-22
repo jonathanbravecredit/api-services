@@ -32,7 +32,7 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
     do {
       items = await db.scan(params).promise();
       await Promise.all(
-        items.Items.slice(0, 12).map(async (item) => {
+        items.Items.slice.map(async (item) => {
           if (item.agencies?.transunion?.enrolled) {
             const enrollee = {
               id: item.id,
