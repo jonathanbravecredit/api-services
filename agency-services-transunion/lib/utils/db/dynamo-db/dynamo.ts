@@ -1,9 +1,9 @@
 import { IFulfillResult } from 'lib/interfaces';
 import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
 import { TUReportResponseInput } from 'src/api/api.service';
+import { DynamoDB } from 'aws-sdk';
 
-const AWS = require('aws-sdk');
-const db = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: 'us-east-2' });
+const db = new DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: 'us-east-2' });
 
 const tableName = process.env.APPTABLE;
 

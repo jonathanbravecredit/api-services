@@ -1,4 +1,5 @@
 import * as aws4 from 'aws4';
+import { DynamoDB } from 'aws-sdk';
 import axios, { AxiosResponse } from 'axios';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
@@ -152,12 +153,35 @@ export const mapReportResponse = (
   res: IEnrollServiceProductResponse | IFulfillServiceProductResponse | undefined,
 ): TUReportResponseInput | null => {
   if (res === undefined) return null;
+
   return {
     bureau: res['Bureau'],
     errorResponse: res['ErrorResponse']['Code'] || res['ErrorResponse']['nil'],
     serviceProduct: res['ServiceProduct'],
     serviceProductFullfillmentKey: res['ServiceProductFulfillmentKey'],
     serviceProductObject: JSON.stringify(res['ServiceProductObject']),
+    serviceProductTypeId: res['ServiceProductTypeId'],
+    serviceProductValue: res['ServiceProductValue'],
+    status: res['Status'],
+  };
+};
+
+// IMPORTANT!!! DO NOT STRINGIFY THE serviceProductObject
+// GraphQL schema has this as a type of AWSJSON, which converts on write to AWS MAP and back to STRING on read
+//    Good: saving through GQL:
+//        - JSON String > GQL(write/converts to map) > Dynamo (saved as map) > GQL(read/converts to string) > JSON String
+//    Bad: saving through DynamoDB query:
+//        - JSON string > dynamo DB (write/saves as string) > GQL (read/converts to string) > double JSON String (bad!!!)
+export const mapReportResponseWorker = (
+  res: IEnrollServiceProductResponse | IFulfillServiceProductResponse | undefined,
+): TUReportResponseInput | null => {
+  if (res === undefined) return null;
+  return {
+    bureau: res['Bureau'],
+    errorResponse: res['ErrorResponse']['Code'] || res['ErrorResponse']['nil'],
+    serviceProduct: res['ServiceProduct'],
+    serviceProductFullfillmentKey: res['ServiceProductFulfillmentKey'],
+    serviceProductObject: res['ServiceProductObject'],
     serviceProductTypeId: res['ServiceProductTypeId'],
     serviceProductValue: res['ServiceProductValue'],
     status: res['Status'],

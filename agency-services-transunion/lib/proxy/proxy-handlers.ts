@@ -667,6 +667,7 @@ export const FulfillWorker = async (
   if (!validate(payload)) throw `Malformed message=${payload}`;
   //create helper classes
   const soap = new SoapAid(tu.parseFulfill, tu.formatFulfill, tu.createFulfill, tu.createFulfillPayload);
+
   const formatted: IFulfillGraphQLResponse = {
     data: {
       getAppData: payload,
@@ -690,12 +691,12 @@ export const FulfillWorker = async (
     const error = data?.ErrorResponse;
 
     // log tu responses
-    // const l1 = transactionLogger.createTransaction(identityId, 'FulfillWorker:data', JSON.stringify(data));
-    // const l2 = transactionLogger.createTransaction(identityId, 'FulfillWorker:type', JSON.stringify(responseType));
-    // const l3 = transactionLogger.createTransaction(identityId, 'FulfillWorker:error', JSON.stringify(error));
-    // await transactionLogger.logger.create(l1);
-    // await transactionLogger.logger.create(l2);
-    // await transactionLogger.logger.create(l3);
+    const l1 = transactionLogger.createTransaction(identityId, 'FulfillWorker:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'FulfillWorker:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'FulfillWorker:error', JSON.stringify(error));
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
 
     let response;
     if (responseType.toLowerCase() === 'success') {
@@ -706,9 +707,9 @@ export const FulfillWorker = async (
       response = { success: false, error: error };
     }
 
-    // // log success response
-    // const l4 = transactionLogger.createTransaction(identityId, 'FulfillWorker:response', JSON.stringify(response));
-    // await transactionLogger.logger.create(l4);
+    // log success response
+    const l4 = transactionLogger.createTransaction(identityId, 'FulfillWorker:response', JSON.stringify(response));
+    await transactionLogger.logger.create(l4);
 
     return response;
   } catch (err) {
@@ -1847,8 +1848,16 @@ export const DisputeInflightCheck = async ({
           // I need the dispute id, the client key (id), and the dispute status
           const id = item.data?.ClientKey;
           const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
-          if (!item.data || !id || !disputeId)
-            throw `Missing dispute data:=${item.data} or id:=${id} or disputeId:=${disputeId}`;
+          if (!item.data || !id || !disputeId) {
+            const l1 = transactionLogger.createTransaction(
+              id,
+              'DisputeInflightCheck:UpdateDisputeDB',
+              JSON.stringify(item.data),
+            );
+            await transactionLogger.logger.create(l1);
+            return;
+          }
+          // throw `Missing dispute data:=${item.data} or id:=${id} or disputeId:=${disputeId}`;
 
           // get the current dispute from the dispute table
           // update it with the new results...this is not a patch
@@ -1890,8 +1899,15 @@ export const DisputeInflightCheck = async ({
           // I need the dispute id, the client key (id), and the dispute status
           const id = item.data?.ClientKey;
           const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
-          if (!item.data || !id || !disputeId)
-            throw `Missing dispute data:=${item.data} or id:=${id} or disputeId:=${disputeId}`;
+          if (!item.data || !id || !disputeId) {
+            const l1 = transactionLogger.createTransaction(
+              id,
+              'DisputeInflightCheck:GetInvestigationResults',
+              JSON.stringify(item.data),
+            );
+            await transactionLogger.logger.create(l1);
+            return;
+          }
 
           const payload = {
             accountCode,
