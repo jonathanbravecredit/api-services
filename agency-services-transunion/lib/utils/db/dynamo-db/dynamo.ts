@@ -54,6 +54,20 @@ export const getAllEnrollmentItemsInDB = async (): Promise<IGetEnrollmentData[]>
   return scanResults;
 };
 
+export const getItemsInDB = (id) => {
+  const params = {
+    Key: {
+      id: id,
+    },
+    TableName: tableName,
+  };
+  return db
+    .get(params)
+    .promise()
+    .then((res) => res)
+    .catch((err) => err);
+};
+
 export const updateFulfillReport = (
   id: string,
   fulfillReport: {
