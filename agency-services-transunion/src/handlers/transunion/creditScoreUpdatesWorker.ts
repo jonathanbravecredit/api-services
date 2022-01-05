@@ -105,6 +105,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
             await DB.creditScoreTrackings.update(newScore);
           }
         }
+        return rec;
       }),
     );
     const results = {
