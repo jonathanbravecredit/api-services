@@ -26,17 +26,15 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
   // const scores = await DB.creditScoreTrackings.list();
   // create the payload with out the auth and agent
   try {
-    let appItems = [];
-    await Promise.all(
+    const appItems = await Promise.all(
       DEV_FAILED_FULFILLS.map(async (id) => {
-        const items = await getItemsInDB(id);
-        appItems = [...appItems, ...items.Items];
+        return await getItemsInDB(id);
       }),
     );
     let counter = 0;
     await Promise.all(
       appItems.map(async (item) => {
-        if (item.agencies?.transunion?.enrolled) {
+        if (item.Item?.agencies?.transunion?.enrolled) {
           const enrollee = {
             id: item.id,
             user: item.user,

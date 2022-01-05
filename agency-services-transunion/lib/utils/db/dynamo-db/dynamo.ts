@@ -57,7 +57,7 @@ export const getAllEnrollmentItemsInDB = async (): Promise<IGetEnrollmentData[]>
 export const getItemsInDB = (id) => {
   const params = {
     Key: {
-      IdleDeadline: id,
+      id: id,
     },
     TableName: tableName,
   };
