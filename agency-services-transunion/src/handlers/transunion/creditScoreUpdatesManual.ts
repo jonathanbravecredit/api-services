@@ -56,7 +56,6 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
               },
             },
           };
-          console.log('enrollee ---> ', enrollee);
           const payload = pubsub.createSNSPayload<IEnrollee>('creditscoreupdates', enrollee, 'transunionbatch');
           await sns.publish(payload).promise();
           counter++;
