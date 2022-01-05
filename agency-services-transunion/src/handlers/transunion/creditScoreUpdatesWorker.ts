@@ -89,6 +89,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
         }; // don't pass the agent in the queue;
         // a special version of fulfill that calls TU API but updates the DB more directly for better performance
         const fulfill = await FulfillWorker(payload);
+        console.log('fulfill ==> ', JSON.stringify(fulfill));
         const { success } = fulfill;
         if (success) {
           const prodResponse = fulfill.data?.ServiceProductFulfillments.ServiceProductResponse; //returnNestedObject<any>(fulfill, 'ServiceProductResponse');
