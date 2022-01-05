@@ -75,7 +75,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
       cert,
       passphrase,
     });
-
+    let counter = 0;
     const resp = await Promise.all(
       records.map(async (rec) => {
         const identityId = rec.message.id;
@@ -89,7 +89,6 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
         }; // don't pass the agent in the queue;
         // a special version of fulfill that calls TU API but updates the DB more directly for better performance
         const fulfill = await FulfillWorker(payload);
-        console.log('fulfill ==> ', JSON.stringify(fulfill));
         const { success } = fulfill;
         if (success) {
           const prodResponse = fulfill.data?.ServiceProductFulfillments.ServiceProductResponse; //returnNestedObject<any>(fulfill, 'ServiceProductResponse');
@@ -102,13 +101,15 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
           if (newScore !== null) {
             await DB.creditScoreTrackings.update(newScore);
           }
+          counter++;
         }
+        return rec;
       }),
     );
     const results = {
       success: true,
       error: null,
-      data: `Transunion credit score updates worker ${records.length} records`,
+      data: `Transunion credit score updates worker successfully processed ${counter} records`,
     };
     return JSON.stringify(results);
   } catch (err) {
