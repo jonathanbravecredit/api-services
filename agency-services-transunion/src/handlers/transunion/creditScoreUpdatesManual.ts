@@ -38,7 +38,7 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
   // create the payload with out the auth and agent
   try {
     const appItems = await Promise.all(
-      DEV_FAILED_FULFILLS.map(async (id) => {
+      FAILED_FULFILLS.map(async (id) => {
         return await getItemsInDB(id);
       }),
     );

@@ -1080,6 +1080,57 @@ export const GetDisputeStatus = async ({
  * @param {string} auth
  * @returns
  */
+export const ListDisputesByUser = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{
+  success: boolean;
+  error?: interfaces.IErrorResponse | interfaces.INil;
+  data?: Dispute[] | null;
+}> => {
+  const live = GO_LIVE; // !!! IMPORTANT FLAG TO DISABLE MOCKS !!!
+  // validate incoming message
+  const payload: interfaces.IGenericRequest = {
+    id: identityId,
+  };
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
+  if (!validate(payload)) throw `Malformed payload=${payload}`;
+
+  try {
+    // get / parse data needed to process request
+    const results = await DB.disputes.list(payload.id);
+    const response = { success: true, error: null, data: results };
+    return response;
+  } catch (err) {
+    // log error response
+    const error = errorLogger.createError(identityId, 'ListDisputesByUser', JSON.stringify(err));
+    await errorLogger.logger.create(error);
+    return { success: false, error: err, data: null };
+  }
+};
+
+/**
+ * Confirms eligibility to open a dispute
+ *  (Optional) ID can be passsed to check status of open dispute
+ *  IMPORTANT - This is a sync operation and updates the disputes with the latest status
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
 export const GetDisputeStatusByID = async ({
   accountCode,
   username,
