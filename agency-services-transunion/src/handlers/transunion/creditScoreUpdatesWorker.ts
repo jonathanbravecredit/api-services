@@ -93,6 +93,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
         const { success } = fulfill;
         if (success) {
           const prodResponse = fulfill.data?.ServiceProductFulfillments.ServiceProductResponse; //returnNestedObject<any>(fulfill, 'ServiceProductResponse');
+          console.log('prod response ==> ', prodResponse);
           if (!prodResponse) return;
           // get the last score tracked
           const score = await DB.creditScoreTrackings.get(payload.identityId, 'transunion');
