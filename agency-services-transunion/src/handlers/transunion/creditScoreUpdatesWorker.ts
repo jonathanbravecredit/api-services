@@ -70,6 +70,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
       return JSON.parse(r.body) as ITransunionBatchPayload<IGetEnrollmentData>;
     });
     console.log(`Received ${records.length} records `);
+    console.log('records ===> ', JSON.stringify(records));
     const httpsAgent = new Agent({
       key,
       cert,
