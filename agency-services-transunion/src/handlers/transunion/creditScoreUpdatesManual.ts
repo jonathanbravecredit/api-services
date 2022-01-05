@@ -14,6 +14,17 @@ const sns = new SNS({ region: 'us-east-2' });
 const pubsub = new PubSubUtil();
 const db = new DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: 'us-east-2' });
 const tableName = process.env.APPTABLE;
+
+interface IEnrollee {
+  id: string;
+  user: any;
+  agencies: {
+    transunion: {
+      enrollmentKey: string;
+      serviceBundleFulfillmentKey: string;
+    };
+  };
+}
 /**
  * Handler that processes single requests for Transunion services
  * @param service Service invoked via the SNS Proxy 'transunion'
@@ -35,18 +46,18 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
     await Promise.all(
       appItems.map(async (item) => {
         if (item.Item?.agencies?.transunion?.enrolled) {
-          const enrollee = {
-            id: item.id,
-            user: item.user,
+          const enrollee: IEnrollee = {
+            id: item.Item.id,
+            user: item.Item.user,
             agencies: {
               transunion: {
-                enrollmentKey: item.agencies?.transunion?.enrollmentKey,
-                serviceBundleFulfillmentKey: item.agencies?.transunion?.serviceBundleFulfillmentKey,
+                enrollmentKey: item.Item.agencies?.transunion?.enrollmentKey,
+                serviceBundleFulfillmentKey: item.Item.agencies?.transunion?.serviceBundleFulfillmentKey,
               },
             },
           };
           console.log('enrollee ---> ', enrollee);
-          const payload = pubsub.createSNSPayload<{ id: string }>('creditscoreupdates', enrollee, 'transunionbatch');
+          const payload = pubsub.createSNSPayload<IEnrollee>('creditscoreupdates', enrollee, 'transunionbatch');
           await sns.publish(payload).promise();
           counter++;
         }
