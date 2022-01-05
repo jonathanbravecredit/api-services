@@ -273,3 +273,9 @@ export const FAILED_FULFILLS = [
   'd7595864-f0d0-4cdd-bbe9-8e2aaf9d7b6b',
   'c8147703-67a3-4986-b49d-99fdea3f73d4',
 ];
+
+export const DEV_FAILED_FULFILLS = [
+  'fecc9790-390f-4c48-b1b6-ecadfd7af2a6',
+  '950f0f8b-6a74-4695-a8b9-b51e51b2cae6',
+  'e5336884-9a7d-44f4-a57f-a429991f84d2',
+];

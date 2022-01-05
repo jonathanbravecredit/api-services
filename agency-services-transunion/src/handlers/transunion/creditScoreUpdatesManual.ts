@@ -3,7 +3,7 @@ import { AppSyncResolverEvent, AppSyncResolverHandler } from 'aws-lambda';
 import { SNS, DynamoDB } from 'aws-sdk';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
-import { FAILED_FULFILLS } from 'lib/data/failedfulfills';
+import { DEV_FAILED_FULFILLS, FAILED_FULFILLS } from 'lib/data/failedfulfills';
 // import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
 // import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
 
@@ -27,7 +27,7 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
   try {
     let appItems = [];
     await Promise.all(
-      FAILED_FULFILLS.map(async (id) => {
+      DEV_FAILED_FULFILLS.map(async (id) => {
         let params: DynamoDB.DocumentClient.QueryInput = {
           TableName: tableName,
           KeyConditionExpression: 'id = :id',
