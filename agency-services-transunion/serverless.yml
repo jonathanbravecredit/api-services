@@ -434,6 +434,7 @@ resources:
       Type: 'AWS::SQS::Queue'
       Properties:
         QueueName: ${self:provider.stage}-${self:service}-sqs
+        DelaySeconds: 3
         ReceiveMessageWaitTimeSeconds: 20
         RedrivePolicy:
           deadLetterTargetArn: !GetAtt
