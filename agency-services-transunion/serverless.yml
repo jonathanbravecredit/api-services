@@ -135,6 +135,11 @@ functions:
       - { Ref: TuCertsLambdaLayer }
     events:
       - schedule: cron(0 14 18 * ? *)
+  creditScoreUpdatesManual:
+    handler: src/handlers/transunion/creditScoreUpdatesManual.main
+    timeout: 900
+    layers:
+      - { Ref: TuCertsLambdaLayer }
   creditScoreUpdatesWorker:
     handler: src/handlers/transunion/creditScoreUpdatesWorker.main
     timeout: 900
