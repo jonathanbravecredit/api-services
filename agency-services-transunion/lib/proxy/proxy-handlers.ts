@@ -585,11 +585,9 @@ export const CancelEnroll = async (
     tu.createCancelEnroll,
     tu.createCancelEnrollmentPayload,
   );
-  // const sync = new Sync(tu.enrichEnrollmentData);
 
   try {
     const prepped = await qrys.getCancelEnrollment(payload);
-    console.log('prepped ===> ', JSON.stringify(prepped.data));
     const resp = await soap.parseAndSendPayload<interfaces.ICancelEnrollResponse>(
       accountCode,
       username,
@@ -601,9 +599,9 @@ export const CancelEnroll = async (
     );
 
     // get the specific response from parsed object
-    console.log('cancel enroll response ===> ', JSON.stringify(resp));
     const data = resp.Envelope?.Body?.CancelEnrollmentResponse?.CancelEnrollmentResult;
     const responseType = data?.ResponseType;
+    const sucess = data?.Success;
     const error = data?.ErrorResponse;
 
     // log tu responses
@@ -614,8 +612,20 @@ export const CancelEnroll = async (
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
 
-    // const synced = await updateEnrollmentStatus(payload.id, false, 'cancelled', 'Account cancelled due to inactivity or user request');
-    let response = { success: true, error: null, data: null };
+    let response;
+    if (responseType.toLowerCase() === 'success' && sucess) {
+      const synced = await updateEnrollmentStatus(
+        payload.id,
+        false,
+        'cancelled',
+        'Account cancelled due to inactivity or user request',
+      );
+      response = synced
+        ? { success: true, error: null, data: data }
+        : { success: false, error: 'failed to sync data to db' };
+    } else {
+      response = { success: false, error: error };
+    }
     return response;
   } catch (err) {
     // log error response

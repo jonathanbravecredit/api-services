@@ -47,4 +47,23 @@ export interface ICancelEnrollResponse {
   };
 }
 
-export interface ICancelEnrollResult extends IStandardResponse {}
+export interface IFulfillResult extends IStandardResponse {
+  EnrollmentKey: string;
+  ServiceBundleFulfillmentKey: string;
+  ServiceProductFulfillments: {
+    ServiceProductResponse: IFulfillServiceProductResponse[] | IFulfillServiceProductResponse;
+  };
+}
+
+export interface ICancelEnrollResult extends IStandardResponse {
+  CancelEnrollmentServiceProducts: {
+    CancelEnrollmentProduct: ICancelEnrollmentProduct[];
+  };
+  Success: boolean;
+}
+
+export interface ICancelEnrollmentProduct {
+  Message: string;
+  ServiceProduct: string;
+  Status: string;
+}
