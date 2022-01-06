@@ -587,33 +587,31 @@ export const CancelEnroll = async (
   );
 
   try {
-    // const prepped = await qrys.getCancelEnrollment(payload);
-    // const resp = await soap.parseAndSendPayload<interfaces.ICancelEnrollResponse>(
-    //   accountCode,
-    //   username,
-    //   agent,
-    //   auth,
-    //   prepped.data,
-    //   'CancelEnrollment',
-    //   parserOptions,
-    // );
+    const prepped = await qrys.getCancelEnrollment(payload);
+    const resp = await soap.parseAndSendPayload<interfaces.ICancelEnrollResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      prepped.data,
+      'CancelEnrollment',
+      parserOptions,
+    );
 
-    // // get the specific response from parsed object
-    // const data = resp.Envelope?.Body?.CancelEnrollmentResponse?.CancelEnrollmentResult;
-    // const responseType = data?.ResponseType;
-    // const success = data?.Success;
-    // const error = data?.ErrorResponse;
+    // get the specific response from parsed object
+    const data = resp.Envelope?.Body?.CancelEnrollmentResponse?.CancelEnrollmentResult;
+    const responseType = data?.ResponseType;
+    const success = data?.Success;
+    const error = data?.ErrorResponse;
 
-    // // log tu responses
-    // const l1 = transactionLogger.createTransaction(identityId, 'CancelEnroll:data', JSON.stringify(data));
-    // const l2 = transactionLogger.createTransaction(identityId, 'CancelEnroll:type', JSON.stringify(responseType));
-    // const l3 = transactionLogger.createTransaction(identityId, 'CancelEnroll:error', JSON.stringify(error));
-    // await transactionLogger.logger.create(l1);
-    // await transactionLogger.logger.create(l2);
-    // await transactionLogger.logger.create(l3);
-    const responseType = 'success';
-    const success = true;
-    const error = 'unknown';
+    // log tu responses
+    const l1 = transactionLogger.createTransaction(identityId, 'CancelEnroll:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'CancelEnroll:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'CancelEnroll:error', JSON.stringify(error));
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
+
     let response;
     if (responseType.toLowerCase() === 'success' && success) {
       const synced = await updateEnrollmentStatus(
