@@ -113,3 +113,42 @@ export const updateFulfillReport = (
     .then((res) => res)
     .catch((err) => err);
 };
+
+export const updateEnrollmentStatus = (
+  id: string,
+  enrolled: boolean,
+  status: string,
+  statusReasonDescription: string,
+) => {
+  let timeStamp = new Date().toISOString(); //always have last updated date
+  const params = {
+    TableName: tableName,
+    Key: {
+      id: id,
+    },
+    // ConditionExpression: 'attribute_exists(queryParam.tableId)',
+    UpdateExpression: 'SET #a.#t.#en = :en, #s = :s, #sr = :sr, #srd = :srd, updatedAt = :m',
+    ExpressionAttributeNames: {
+      '#s': 'status',
+      '#sr': 'statusReason',
+      '#srd': 'statusReasonDescription',
+      '#a': 'agencies',
+      '#t': 'transunion',
+      '#en': 'enrolled',
+    },
+    ExpressionAttributeValues: {
+      ':s': status,
+      ':sr': status,
+      ':srd': statusReasonDescription,
+      ':en': enrolled,
+      ':m': timeStamp,
+    },
+    ReturnValues: 'UPDATED_NEW',
+  };
+
+  return db
+    .update(params)
+    .promise()
+    .then((res) => res)
+    .catch((err) => err);
+};

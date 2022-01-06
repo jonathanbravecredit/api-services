@@ -20,7 +20,7 @@ import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
 import { IFulfillWorkerData } from 'lib/interfaces/transunion/fulfill-worker.interface';
-import { updateFulfillReport } from 'lib/utils/db/dynamo-db/dynamo';
+import { updateEnrollmentStatus, updateFulfillReport } from 'lib/utils/db/dynamo-db/dynamo';
 import { IFulfillGraphQLResponse } from 'lib/interfaces';
 
 const GO_LIVE = true;
@@ -536,6 +536,89 @@ export const EnrollDisputes = async (
   } catch (err) {
     // log error response
     const error = errorLogger.createError(identityId, 'EnrollDisputes', JSON.stringify(err));
+    await errorLogger.logger.create(error);
+    return { success: false, error: err, data: null };
+  }
+};
+
+/**
+ * After verification the user is eligible to enroll.
+ * Enrolls user and returns merge report and vantage score
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Enrollment message format...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const CancelEnroll = async (
+  {
+    accountCode,
+    username,
+    message,
+    agent,
+    auth,
+    identityId,
+  }: {
+    accountCode: string;
+    username: string;
+    message: string;
+    agent: https.Agent;
+    auth: string;
+    identityId: string;
+  },
+  dispute: boolean = false,
+): Promise<{
+  success: boolean;
+  error?: interfaces.IErrorResponse | interfaces.INil | string;
+  data?: interfaces.IEnrollResult;
+}> => {
+  // validate incoming message
+  const payload: interfaces.IGenericRequest = { id: identityId };
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
+  if (!validate(payload)) throw `Malformed message=${message}`;
+
+  //create helper classes
+  const soap = new SoapAid(
+    fastXml.parse,
+    tu.formatCancelEnroll,
+    tu.createCancelEnroll,
+    tu.createCancelEnrollmentPayload,
+  );
+  // const sync = new Sync(tu.enrichEnrollmentData);
+
+  try {
+    const prepped = await qrys.getCancelEnrollment(payload);
+    console.log('prepped ===> ', prepped.data);
+    const resp = await soap.parseAndSendPayload<interfaces.ICancelEnrollResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      prepped.data,
+      'CancelEnrollment',
+      parserOptions,
+    );
+
+    // get the specific response from parsed object
+    const data = resp.Envelope?.Body?.CancelEnrollmentResponse?.CancelEnrollmentResult;
+    const responseType = data?.ResponseType;
+    const error = data?.ErrorResponse;
+
+    // log tu responses
+    const l1 = transactionLogger.createTransaction(identityId, 'CancelEnroll:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'CancelEnroll:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'CancelEnroll:error', JSON.stringify(error));
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
+
+    // const synced = await updateEnrollmentStatus(payload.id, false, 'cancelled', 'Account cancelled due to inactivity or user request');
+    let response = { success: true, error: null, data: null };
+    return response;
+  } catch (err) {
+    // log error response
+    const error = errorLogger.createError(identityId, 'CancelEnroll', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
   }

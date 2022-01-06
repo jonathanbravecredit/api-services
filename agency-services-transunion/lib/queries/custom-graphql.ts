@@ -263,6 +263,17 @@ export const qryGetEnrollment = `query GetAppData($id: ID!) {
   }
 }`;
 
+export const qryGetCancelEnrollment = `query GetAppData($id: ID!) {
+  getEnrollment(id: $id) {
+    agencies {
+      transunion {
+        enrollmentKey
+        disputeEnrollmentKey
+      }
+    }
+  }
+}`;
+
 export const qryGetDisputeEnrollment = `query GetAppData($id: ID!) {
   getAppData(id: $id) {
     agencies {
