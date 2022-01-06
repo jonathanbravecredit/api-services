@@ -601,6 +601,7 @@ export const CancelEnroll = async (
     );
 
     // get the specific response from parsed object
+    console.log('cancel enroll response ===> ', JSON.stringify(resp));
     const data = resp.Envelope?.Body?.CancelEnrollmentResponse?.CancelEnrollmentResult;
     const responseType = data?.ResponseType;
     const error = data?.ErrorResponse;
