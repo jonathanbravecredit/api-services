@@ -264,7 +264,7 @@ export const qryGetEnrollment = `query GetAppData($id: ID!) {
 }`;
 
 export const qryGetCancelEnrollment = `query GetAppData($id: ID!) {
-  getEnrollment(id: $id) {
+  getAppData(id: $id) {
     agencies {
       transunion {
         enrollmentKey
