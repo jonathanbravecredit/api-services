@@ -1,18 +1,6 @@
-import { mapReportResponse, returnNestedObject, textConstructor, updateNestedObject } from 'lib/utils/helpers/helpers';
+import { textConstructor } from 'lib/utils/helpers/helpers';
 import * as convert from 'xml-js';
-import * as fastXml from 'fast-xml-parser';
-import * as he from 'he';
 import * as uuid from 'uuid';
-import {
-  IEnroll,
-  IEnrollGraphQLResponse,
-  IEnrollPayload,
-  IEnrollResponse,
-  IEnrollResult,
-  IEnrollServiceProductResponse,
-} from 'lib/interfaces';
-import { MONTH_MAP } from 'lib/data/constants';
-import { UpdateAppDataInput } from 'src/api/api.service';
 import {
   ICancelEnroll,
   ICancelEnrollGraphQLResponse,
