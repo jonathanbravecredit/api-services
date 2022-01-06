@@ -589,7 +589,7 @@ export const CancelEnroll = async (
 
   try {
     const prepped = await qrys.getCancelEnrollment(payload);
-    console.log('prepped ===> ', prepped.data);
+    console.log('prepped ===> ', JSON.stringify(prepped.data));
     const resp = await soap.parseAndSendPayload<interfaces.ICancelEnrollResponse>(
       accountCode,
       username,
