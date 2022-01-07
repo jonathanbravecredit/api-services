@@ -21,7 +21,7 @@ import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
 import { IFulfillWorkerData } from 'lib/interfaces/transunion/fulfill-worker.interface';
 import { updateEnrollmentStatus, updateFulfillReport } from 'lib/utils/db/dynamo-db/dynamo';
-import { IFulfillGraphQLResponse } from 'lib/interfaces';
+import { ICancelEnrollGraphQLResponse, IFulfillGraphQLResponse } from 'lib/interfaces';
 
 const GO_LIVE = true;
 const errorLogger = new ErrorLogger();
@@ -551,7 +551,62 @@ export const EnrollDisputes = async (
  * @param {string} auth
  * @returns
  */
-export const CancelEnroll = async (
+export const CancelEnroll = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{
+  success: boolean;
+  error?: interfaces.IErrorResponse | interfaces.INil | string;
+  data?: string;
+}> => {
+  // validate incoming message
+  const payload: interfaces.IGenericRequest = { id: identityId };
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
+  if (!validate(payload)) throw `Malformed message=${message}`;
+
+  try {
+    const prepped: { data: ICancelEnrollGraphQLResponse } = await qrys.getCancelEnrollment(payload);
+    const enrollmentKey = prepped.data.data.getAppData?.agencies?.transunion?.enrollmentKey;
+    const disputeKey = prepped.data.data.getAppData?.agencies?.transunion?.disputeEnrollmentKey;
+    if (!enrollmentKey && !disputeKey)
+      throw `no enrollment keys, enrollmentKey=${enrollmentKey}, disputeEnrollmentKey=${disputeKey}`;
+    if (enrollmentKey) {
+      await CancelEnrollWorker({ accountCode, username, message, agent, auth, identityId }, prepped, enrollmentKey);
+    }
+    if (disputeKey) {
+      await CancelEnrollWorker({ accountCode, username, message, agent, auth, identityId }, prepped, disputeKey);
+    }
+    return { success: true, error: null, data: 'success' };
+  } catch (err) {
+    // log error response
+    const error = errorLogger.createError(identityId, 'CancelEnroll', JSON.stringify(err));
+    await errorLogger.logger.create(error);
+    return { success: false, error: err, data: null };
+  }
+};
+
+/**
+ * After verification the user is eligible to enroll.
+ * Enrolls user and returns merge report and vantage score
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Enrollment message format...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const CancelEnrollWorker = async (
   {
     accountCode,
     username,
@@ -567,7 +622,8 @@ export const CancelEnroll = async (
     auth: string;
     identityId: string;
   },
-  dispute: boolean = false,
+  prepped: { data: ICancelEnrollGraphQLResponse },
+  enrollmentKey: string,
 ): Promise<{
   success: boolean;
   error?: interfaces.IErrorResponse | interfaces.INil | string;
@@ -587,13 +643,25 @@ export const CancelEnroll = async (
   );
 
   try {
-    const prepped = await qrys.getCancelEnrollment(payload);
+    if (!enrollmentKey) throw `no enrollment keys, enrollmentKey=${enrollmentKey}`;
+    const packet: ICancelEnrollGraphQLResponse = {
+      data: {
+        getAppData: {
+          id: prepped.data.data.getAppData.id,
+          agencies: {
+            transunion: {
+              enrollmentKey: enrollmentKey,
+            },
+          },
+        },
+      },
+    };
     const resp = await soap.parseAndSendPayload<interfaces.ICancelEnrollResponse>(
       accountCode,
       username,
       agent,
       auth,
-      prepped.data,
+      packet,
       'CancelEnrollment',
       parserOptions,
     );
@@ -620,7 +688,6 @@ export const CancelEnroll = async (
         'cancelled',
         'Account cancelled due to inactivity or user request',
       );
-      console.log('synced ===> ', JSON.stringify(synced));
       response = synced
         ? { success: true, error: null, data: 'success' }
         : { success: false, error: 'failed to sync data to db' };

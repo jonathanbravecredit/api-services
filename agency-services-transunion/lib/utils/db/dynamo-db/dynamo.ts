@@ -121,8 +121,6 @@ export const updateEnrollmentStatus = (
   statusReasonDescription: string,
 ) => {
   let timeStamp = new Date().toISOString(); //always have last updated date
-  //   lastStatusModifiedOn: now.toISOString(),
-  // nextStatusModifiedOn: addHoursToDate(now, duration).toISOString(),
   const params = {
     TableName: tableName,
     Key: {
@@ -131,6 +129,7 @@ export const updateEnrollmentStatus = (
     // ConditionExpression: 'attribute_exists(queryParam.tableId)',
     UpdateExpression: `SET
     #a.#t.#en = :en,
+    #a.#t.#den = :en,
     #s = :s,
     #sr = :sr,
     #srd = :srd,
@@ -146,6 +145,7 @@ export const updateEnrollmentStatus = (
       '#a': 'agencies',
       '#t': 'transunion',
       '#en': 'enrolled',
+      '#den': 'disputeEnrolled',
     },
     ExpressionAttributeValues: {
       ':s': status,
