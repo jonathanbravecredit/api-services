@@ -14,3 +14,4 @@ export * from './service-product/get-service-product';
 export * from './start-dispute/start-dispute';
 export * from './get-trending-data/get-trending-data';
 export * from './get-alerts-notifications/get-alerts-notifications';
+export * from './cancel-enrollment/cancel-enrollment';
