@@ -153,6 +153,28 @@ functions:
             - Arn
           batchSize: 100
           maximumBatchingWindow: 5
+          filterPatterns:
+            - service: ['creditscoreupdates']
+  cancelEnrollmentManual:
+    handler: src/handlers/transunion/cancelEnrollmentManual.main
+    timeout: 900
+    layers:
+      - { Ref: TuCertsLambdaLayer }
+  cancelEnrollmentWorker:
+    handler: src/handlers/transunion/cancelEnrollmentWorker.main
+    timeout: 900
+    reservedConcurrency: 5
+    layers:
+      - { Ref: TuCertsLambdaLayer }
+    events:
+      - sqs:
+          arn: !GetAtt
+            - TransunionQueue
+            - Arn
+          batchSize: 100
+          maximumBatchingWindow: 5
+          filterPatterns:
+            - service: ['cancelenrollment']
   triggerCreateCreditScoreTracking:
     handler: src/triggers/triggerCreateCreditScoreTracking.main
     timeout: 900
@@ -487,6 +509,8 @@ resources:
         FilterPolicy:
           service:
             - transunionbatch
+            - creditscoreupdates
+            - cancelenrollment
         RawMessageDelivery: 'true'
 
   Outputs:
