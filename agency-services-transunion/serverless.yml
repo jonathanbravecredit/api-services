@@ -128,6 +128,8 @@ functions:
       - { Ref: TuCertsLambdaLayer }
     events:
       - schedule: cron(0 16 * * ? *)
+
+  # Update credit scores and reports flow
   creditScoreUpdatesService:
     handler: src/handlers/transunion/creditScoreUpdatesService.main
     timeout: 720
@@ -154,7 +156,10 @@ functions:
           batchSize: 100
           maximumBatchingWindow: 5
           filterPatterns:
-            - service: ['creditscoreupdates']
+            - data:
+              - service: 'creditscoreupdates'
+
+  # Cancel enrollment flow
   cancelEnrollmentManual:
     handler: src/handlers/transunion/cancelEnrollmentManual.main
     timeout: 720
