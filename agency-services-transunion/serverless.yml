@@ -153,8 +153,8 @@ functions:
             - Arn
           batchSize: 100
           maximumBatchingWindow: 5
-          # filterPatterns:
-          #   - service: ['creditscoreupdates']
+          filterPatterns:
+            - service: ['creditscoreupdates']
   cancelEnrollmentManual:
     handler: src/handlers/transunion/cancelEnrollmentManual.main
     timeout: 720
@@ -173,8 +173,8 @@ functions:
             - Arn
           batchSize: 100
           maximumBatchingWindow: 5
-          filterPatterns:
-            - service: ['cancelenrollment']
+          # filterPatterns:
+          #   - service: ['cancelenrollment']
   triggerCreateCreditScoreTracking:
     handler: src/triggers/triggerCreateCreditScoreTracking.main
     timeout: 900
