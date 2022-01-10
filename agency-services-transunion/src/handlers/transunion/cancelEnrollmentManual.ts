@@ -44,7 +44,6 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
         const enrollee: { id: string } = { id };
         const payload = pubsub.createSNSPayload<{ id: string }>('cancelenrollment', enrollee, 'cancelenrollment');
         const res = await sns.publish(payload).promise();
-        console.log('res', JSON.stringify(res));
         counter++;
       }),
     );
