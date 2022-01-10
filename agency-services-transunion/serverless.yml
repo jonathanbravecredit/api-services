@@ -175,6 +175,21 @@ functions:
             - Arn
           batchSize: 100
           maximumBatchingWindow: 5
+
+  # generic batch updates worker
+  batchUpdatesWorker:
+    handler: src/handlers/transunion/batchUpdatesWorker.main
+    timeout: 720
+    reservedConcurrency: 5
+    layers:
+      - { Ref: TuCertsLambdaLayer }
+    events:
+      - sqs:
+          arn: !GetAtt
+            - TransunionQueue
+            - Arn
+          batchSize: 100
+          maximumBatchingWindow: 5
   triggerCreateCreditScoreTracking:
     handler: src/triggers/triggerCreateCreditScoreTracking.main
     timeout: 900
