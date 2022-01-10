@@ -38,31 +38,14 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
   // const scores = await DB.creditScoreTrackings.list();
   // create the payload with out the auth and agent
   try {
-    const appItems = await Promise.all(
-      CANCEL_ENROLLMENTS.map(async (id) => {
-        return await getItemsInDB(id);
-      }),
-    );
     let counter = 0;
     await Promise.all(
-      appItems.map(async (item) => {
-        // item.Item?.agencies?.transunion?.enrolled
-        if (true) {
-          const enrollee: IEnrollee = {
-            id: item.Item.id,
-            user: item.Item.user,
-            agencies: {
-              transunion: {
-                enrollmentKey: item.Item.agencies?.transunion?.enrollmentKey,
-                serviceBundleFulfillmentKey: item.Item.agencies?.transunion?.serviceBundleFulfillmentKey,
-              },
-            },
-          };
-          const payload = pubsub.createSNSPayload<IEnrollee>('cancelenrollment', enrollee, 'cancelenrollment');
-          const res = await sns.publish(payload).promise();
-          console.log('res', JSON.stringify(res));
-          counter++;
-        }
+      CANCEL_ENROLLMENTS.map(async (id) => {
+        const enrollee: { id: string } = { id };
+        const payload = pubsub.createSNSPayload<{ id: string }>('cancelenrollment', enrollee, 'cancelenrollment');
+        const res = await sns.publish(payload).promise();
+        console.log('res', JSON.stringify(res));
+        counter++;
       }),
     );
     const results = { success: true, error: null, data: `Tranunion:batch queued ${counter} records.` };
