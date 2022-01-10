@@ -573,7 +573,7 @@ export const CancelEnroll = async ({
   // validate incoming message
   const payload: interfaces.IGenericRequest = { id: identityId };
   const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
-  if (!validate(payload)) throw `Malformed message=${message}`;
+  if (!validate(payload)) throw `Malformed message=${payload}`;
 
   try {
     const prepped: { data: ICancelEnrollGraphQLResponse } = await qrys.getCancelEnrollment(payload);

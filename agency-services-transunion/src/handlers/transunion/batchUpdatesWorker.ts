@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { SQSEvent, SQSHandler } from 'aws-lambda';
 import { Agent } from 'https';
 import { readFileSync } from 'fs';
-import { FulfillWorker } from 'lib/proxy';
+import { CancelEnroll, FulfillWorker } from 'lib/proxy';
 import { getSecretKey } from 'lib/utils/secrets/secrets';
 import { DB } from 'lib/utils/db/db';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
@@ -64,6 +64,8 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
     errorLogger.logger.create(error);
     return { success: false, error: { error: `Error gathering/reading cert=${err}` } };
   }
+
+  // single batch worker handles all the requests
   const creditScoreUpdate = event.Records.map((r) => {
     return JSON.parse(r.body) as ITransunionBatchPayload<IGetEnrollmentData>;
   }).filter((b) => {
@@ -130,5 +132,46 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
 
   if (cancelEnrollment.length) {
     console.log('cancelEnrollment ==> ', JSON.stringify(cancelEnrollment));
+    try {
+      const httpsAgent = new Agent({
+        key,
+        cert,
+        passphrase,
+      });
+      let counter = 0;
+      const resp = await Promise.all(
+        cancelEnrollment.map(async (rec) => {
+          const identityId = rec.message.id;
+          const payload: IProxyRequest = {
+            accountCode,
+            username,
+            message: JSON.stringify({}),
+            agent: httpsAgent,
+            auth,
+            identityId,
+          }; // don't pass the agent in the queue;
+          const cancel = await CancelEnroll(payload);
+          const { success } = cancel;
+          if (success) {
+            counter++;
+          }
+          return rec;
+        }),
+      );
+      const results = {
+        success: true,
+        error: null,
+        data: `Transunion cancel enroll worker successfully processed ${counter} records`,
+      };
+      return JSON.stringify(results);
+    } catch (err) {
+      const error = errorLogger.createError(
+        'cancel_enroll_updates_system',
+        'unknown_server_error',
+        JSON.stringify(err),
+      );
+      await errorLogger.logger.create(error);
+      return JSON.stringify({ success: false, error: { error: `Unknown server error=${err}` } });
+    }
   }
 };
