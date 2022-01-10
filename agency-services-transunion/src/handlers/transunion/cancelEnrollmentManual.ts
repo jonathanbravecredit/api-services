@@ -3,6 +3,9 @@ import { AppSyncResolverEvent, AppSyncResolverHandler } from 'aws-lambda';
 import { SNS, DynamoDB } from 'aws-sdk';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
+import { DEV_FAILED_FULFILLS, FAILED_FULFILLS } from 'lib/data/failedfulfills';
+import { getItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
+import { CANCEL_ENROLLMENTS } from 'lib/data/cancelEnrollments';
 // import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
 // import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
 
@@ -12,6 +15,17 @@ const sns = new SNS({ region: 'us-east-2' });
 const pubsub = new PubSubUtil();
 const db = new DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: 'us-east-2' });
 const tableName = process.env.APPTABLE;
+
+interface IEnrollee {
+  id: string;
+  user: any;
+  agencies: {
+    transunion: {
+      enrollmentKey: string;
+      serviceBundleFulfillmentKey: string;
+    };
+  };
+}
 /**
  * Handler that processes single requests for Transunion services
  * @param service Service invoked via the SNS Proxy 'transunion'
@@ -24,38 +38,33 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
   // const scores = await DB.creditScoreTrackings.list();
   // create the payload with out the auth and agent
   try {
-    let params = {
-      TableName: tableName,
-    };
-    let items;
-    let counter: number = 0;
-    do {
-      items = await db.scan(params).promise();
-      await Promise.all(
-        items.Items.map(async (item) => {
-          if (item.agencies?.transunion?.enrolled) {
-            const enrollee = {
-              id: item.id,
-              user: item.user,
-              agencies: {
-                transunion: {
-                  enrollmentKey: item.agencies?.transunion?.enrollmentKey,
-                  serviceBundleFulfillmentKey: item.agencies?.transunion?.serviceBundleFulfillmentKey,
-                },
+    const appItems = await Promise.all(
+      CANCEL_ENROLLMENTS.map(async (id) => {
+        return await getItemsInDB(id);
+      }),
+    );
+    let counter = 0;
+    await Promise.all(
+      appItems.map(async (item) => {
+        // item.Item?.agencies?.transunion?.enrolled
+        if (true) {
+          const enrollee: IEnrollee = {
+            id: item.Item.id,
+            user: item.Item.user,
+            agencies: {
+              transunion: {
+                enrollmentKey: item.Item.agencies?.transunion?.enrollmentKey,
+                serviceBundleFulfillmentKey: item.Item.agencies?.transunion?.serviceBundleFulfillmentKey,
               },
-            };
-            const payload = pubsub.createSNSPayload<{ id: string }>(
-              'creditscoreupdates',
-              enrollee,
-              'creditscoreupdates',
-            );
-            await sns.publish(payload).promise();
-            counter++;
-          }
-        }),
-      );
-      params['ExclusiveStartKey'] = items.LastEvaluatedKey;
-    } while (typeof items.LastEvaluatedKey != 'undefined');
+            },
+          };
+          const payload = pubsub.createSNSPayload<IEnrollee>('cancelenrollment', enrollee, 'cancelenrollment');
+          const res = await sns.publish(payload).promise();
+          console.log('res', JSON.stringify(res));
+          counter++;
+        }
+      }),
+    );
     const results = { success: true, error: null, data: `Tranunion:batch queued ${counter} records.` };
     return JSON.stringify(results);
   } catch (err) {
