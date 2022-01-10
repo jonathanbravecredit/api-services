@@ -46,7 +46,8 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
     let counter = 0;
     await Promise.all(
       appItems.map(async (item) => {
-        if (item.Item?.agencies?.transunion?.enrolled) {
+        // item.Item?.agencies?.transunion?.enrolled
+        if (true) {
           const enrollee: IEnrollee = {
             id: item.Item.id,
             user: item.Item.user,
