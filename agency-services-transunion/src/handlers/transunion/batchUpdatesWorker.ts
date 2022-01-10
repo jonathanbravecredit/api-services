@@ -122,6 +122,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
         error: null,
         data: `Transunion credit score updates worker successfully processed ${counter} records`,
       };
+      console.log(JSON.stringify(results));
       return JSON.stringify(results);
     } catch (err) {
       const error = errorLogger.createError('credit_score_updates_system', 'unknown_server_error', JSON.stringify(err));
@@ -131,7 +132,6 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
   }
 
   if (cancelEnrollment.length) {
-    console.log('cancelEnrollment ==> ', JSON.stringify(cancelEnrollment));
     try {
       const httpsAgent = new Agent({
         key,
@@ -163,6 +163,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
         error: null,
         data: `Transunion cancel enroll worker successfully processed ${counter} records`,
       };
+      console.log(JSON.stringify(results));
       return JSON.stringify(results);
     } catch (err) {
       const error = errorLogger.createError(
