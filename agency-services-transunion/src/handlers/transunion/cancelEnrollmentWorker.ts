@@ -7,8 +7,8 @@ import { SQSEvent, SQSHandler } from 'aws-lambda';
 // import { DB } from 'lib/utils/db/db';
 // import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 // import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
-// import { IProxyRequest, ITransunionBatchPayload } from 'lib/interfaces';
-// import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
+import { IProxyRequest, ITransunionBatchPayload } from 'lib/interfaces';
+import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
 // import { TransunionUtil as TU } from 'lib/utils/transunion/transunion';
 
 // // request.debug = true; import * as request from 'request';
@@ -66,6 +66,13 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
   //   return { success: false, error: { error: `Error gathering/reading cert=${err}` } };
   // }
 
+  // remove later...for testing only
+  const records = event.Records.map((r) => {
+    return JSON.parse(r.body) as ITransunionBatchPayload<IGetEnrollmentData>;
+  }).filter((b) => {
+    return b.service === 'cancelenrollment';
+  });
+  console.log(`Received ${records.length} records `);
   // try {
   //   const records = event.Records.map((r) => {
   //     return JSON.parse(r.body) as ITransunionBatchPayload<IGetEnrollmentData>;

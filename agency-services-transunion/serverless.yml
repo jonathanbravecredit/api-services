@@ -155,9 +155,6 @@ functions:
             - Arn
           batchSize: 100
           maximumBatchingWindow: 5
-          filterPatterns:
-            - data:
-              - service: 'creditscoreupdates'
 
   # Cancel enrollment flow
   cancelEnrollmentManual:
@@ -178,8 +175,6 @@ functions:
             - Arn
           batchSize: 100
           maximumBatchingWindow: 5
-          # filterPatterns:
-          #   - service: ['cancelenrollment']
   triggerCreateCreditScoreTracking:
     handler: src/triggers/triggerCreateCreditScoreTracking.main
     timeout: 900

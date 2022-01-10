@@ -68,6 +68,8 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
   try {
     const records = event.Records.map((r) => {
       return JSON.parse(r.body) as ITransunionBatchPayload<IGetEnrollmentData>;
+    }).filter((b) => {
+      return b.service === 'creditscoreupdates';
     });
     console.log(`Received ${records.length} records `);
     const httpsAgent = new Agent({
