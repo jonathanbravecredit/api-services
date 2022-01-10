@@ -142,19 +142,6 @@ functions:
     timeout: 720
     layers:
       - { Ref: TuCertsLambdaLayer }
-  creditScoreUpdatesWorker:
-    handler: src/handlers/transunion/creditScoreUpdatesWorker.main
-    timeout: 720
-    reservedConcurrency: 5
-    layers:
-      - { Ref: TuCertsLambdaLayer }
-    events:
-      - sqs:
-          arn: !GetAtt
-            - TransunionQueue
-            - Arn
-          batchSize: 100
-          maximumBatchingWindow: 5
 
   # Cancel enrollment flow
   cancelEnrollmentManual:
@@ -162,19 +149,6 @@ functions:
     timeout: 720
     layers:
       - { Ref: TuCertsLambdaLayer }
-  cancelEnrollmentWorker:
-    handler: src/handlers/transunion/cancelEnrollmentWorker.main
-    timeout: 720
-    reservedConcurrency: 5
-    layers:
-      - { Ref: TuCertsLambdaLayer }
-    events:
-      - sqs:
-          arn: !GetAtt
-            - TransunionQueue
-            - Arn
-          batchSize: 100
-          maximumBatchingWindow: 5
 
   # generic batch updates worker
   batchUpdatesWorker:
