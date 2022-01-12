@@ -89,7 +89,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     );
 
     const successful = statusUpdates.filter((u) => u.success);
-    console.log('successful ===> ', successful);
+    console.log('successful ===> ', JSON.stringify(successful));
 
     if (successful.length) {
       try {
