@@ -95,28 +95,34 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       try {
         const updates = await Promise.all(
           successful.map(async (item) => {
-            const id = item.data?.ClientKey;
-            const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
-            if (!item.data || !id || !disputeId) {
-              const l1 = transactionLogger.createTransaction(
-                id,
-                'CleanUpOpenDisputes:UpdateDisputeDB',
-                JSON.stringify(item.data),
-              );
-              await transactionLogger.logger.create(l1);
-              return;
+            try {
+              const id = item.data?.ClientKey;
+              const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
+              if (!item.data || !id || !disputeId) {
+                const l1 = transactionLogger.createTransaction(
+                  id,
+                  'CleanUpOpenDisputes:UpdateDisputeDB',
+                  JSON.stringify(item.data),
+                );
+                await transactionLogger.logger.create(l1);
+                return;
+              }
+              const currentDispute = await DB.disputes.get(id, `${disputeId}`);
+              console.log('currentDispute', currentDispute);
+              const closedOn =
+                item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate ||
+                currentDispute.closedOn;
+              const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
+              const updatedDispute = {
+                ...currentDispute,
+                ...mappedDispute,
+              };
+              console.log('updatedDispute', updatedDispute);
+              await DB.disputes.update(updatedDispute);
+              return 'success';
+            } catch (err) {
+              return err;
             }
-            const currentDispute = await DB.disputes.get(id, `${disputeId}`);
-            console.log('currentDispute', currentDispute);
-            const closedOn =
-              item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || currentDispute.closedOn;
-            const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
-            const updatedDispute = {
-              ...currentDispute,
-              ...mappedDispute,
-            };
-            console.log('updatedDispute', updatedDispute);
-            return await DB.disputes.update(updatedDispute);
           }),
         );
         console.log('dispute updates ===> ', JSON.stringify(updates));
