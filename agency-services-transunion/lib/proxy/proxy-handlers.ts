@@ -1343,7 +1343,7 @@ export const GetDisputeStatusByID = async ({
           username,
           agent,
           auth,
-          prepped.data,
+          { data: prepped.data, disputeId: payload.disputeId },
           'GetDisputeStatus',
           parserOptions,
         )
@@ -1352,7 +1352,7 @@ export const GetDisputeStatusByID = async ({
           username,
           agent,
           auth,
-          prepped.data,
+          { data: prepped.data, disputeId: payload.disputeId },
           'GetDisputeStatus',
           parserOptions,
         );

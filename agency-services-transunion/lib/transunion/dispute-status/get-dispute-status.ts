@@ -18,10 +18,13 @@ import { MONTH_MAP } from 'lib/data/constants';
  * @param data
  * @returns IEnrollPayload
  */
-export const createGetDisputeStatusPayload = (
-  data: IProxyQueryGetAppData<IGetDataForGetDisputeStatus>,
-  disputeId?: string,
-): IGetDisputeStatusPayload => {
+export const createGetDisputeStatusPayload = ({
+  data,
+  disputeId,
+}: {
+  data: IProxyQueryGetAppData<IGetDataForGetDisputeStatus>;
+  disputeId?: string;
+}): IGetDisputeStatusPayload => {
   const id = data.data.getAppData.id?.split(':')?.pop();
   const attrs = data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;

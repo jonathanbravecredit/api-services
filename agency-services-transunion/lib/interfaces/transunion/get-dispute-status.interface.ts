@@ -35,6 +35,7 @@ export interface IGetDataForGetDisputeStatus {
       };
     };
   };
+  disputeId?: string;
 }
 
 export interface IGetDisputeStatusPayload {
