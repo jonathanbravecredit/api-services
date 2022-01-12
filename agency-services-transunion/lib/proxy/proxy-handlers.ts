@@ -1005,7 +1005,7 @@ export const FulfillDisputes = async (
   // validate incoming message
   const payload: interfaces.IGenericRequest = { id: identityId };
   const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
-  if (!validate(payload)) throw `Malformed message=${message}`;
+  if (!validate(payload)) throw `Malformed message=${payload}`;
 
   //create helper classes
   const soap = new SoapAid(
@@ -2093,7 +2093,7 @@ export const DisputeInflightCheck = async ({
             ...mappedDispute,
           };
           console.log('updatedDispute', updatedDispute);
-          await DB.disputes.update(updatedDispute);
+          return await DB.disputes.update(updatedDispute);
         }),
       );
       console.log('dispute updates ===> ', JSON.stringify(updates));

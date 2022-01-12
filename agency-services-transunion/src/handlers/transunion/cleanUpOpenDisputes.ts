@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import * as https from 'https';
 import * as fs from 'fs';
-import * as queries from 'lib/proxy';
+import { GetDisputeStatusByID } from 'lib/proxy';
 import * as secrets from 'lib/utils/secrets/secrets';
 import { DB } from 'lib/utils/db/db';
 import { DISPUTE_CLEANUP_LIST } from 'lib/data/disputeCleanupList';
@@ -84,7 +84,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
           auth,
           identityId: item.id,
         };
-        return await queries.GetDisputeStatusByID(payload);
+        return await GetDisputeStatusByID(payload);
       }),
     );
 
@@ -115,7 +115,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
               ...mappedDispute,
             };
             console.log('updatedDispute', updatedDispute);
-            await DB.disputes.update(updatedDispute);
+            return await DB.disputes.update(updatedDispute);
           }),
         );
         console.log('dispute updates ===> ', JSON.stringify(updates));
@@ -149,16 +149,18 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
               await transactionLogger.logger.create(l1);
               return;
             }
-
+            const message = JSON.stringify({ disputeId: `${disputeId}` });
             const payload = {
               accountCode,
               username,
-              message: JSON.stringify({ disputeId: `${disputeId}` }),
+              message,
               agent: httpsAgent,
               auth,
               identityId: id,
             };
+            console.log('CALLING FULFILL DISPUTES');
             const fulfilled = await FulfillDisputes(payload);
+            console.log('CALLING GET INVESTIGATION RESULTS');
             const synced = await GetInvestigationResults({
               ...payload,
               message: JSON.stringify({}),

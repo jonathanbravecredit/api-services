@@ -147,6 +147,6 @@ export const createGetDisputeStatus = (msg: IGetDisputeStatus): string => {
  */
 export const parseGetDisputeStatus = (xml: string, options: any): IGetDisputeStatusResponse => {
   const obj: IGetDisputeStatusResponse = fastXml.parse(xml, options);
-  console.log('parsed dispute obj ==> ', obj);
+  console.log('parsed dispute obj ==> ', JSON.stringify(obj));
   return obj;
 };
