@@ -2085,8 +2085,11 @@ export const DisputeInflightCheck = async ({
           // update it with the new results...this is not a patch
           const currentDispute = await DB.disputes.get(id, `${disputeId}`);
           console.log('currentDispute', currentDispute);
-          const closedOn =
-            item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || currentDispute.closedOn;
+          const complete = item.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'completedispute';
+          const closedOn = complete
+            ? item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate ||
+              item.data?.DisputeStatus.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate
+            : currentDispute.closedOn;
           const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
           const updatedDispute = {
             ...currentDispute,
