@@ -150,6 +150,13 @@ functions:
     layers:
       - { Ref: TuCertsLambdaLayer }
 
+  # clean up open disputes
+  cleanUpOpenDisputes:
+    handler: src/handlers/transunion/cleanUpOpenDisputes.main
+    timeout: 720
+    layers:
+      - { Ref: TuCertsLambdaLayer }
+
   # generic batch updates worker
   batchUpdatesWorker:
     handler: src/handlers/transunion/batchUpdatesWorker.main
