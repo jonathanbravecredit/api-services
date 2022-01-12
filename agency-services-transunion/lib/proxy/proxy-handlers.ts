@@ -1968,13 +1968,21 @@ export const DisputeInflightCheck = async ({
     const responseType = data?.ResponseType;
     const error = data?.ErrorResponse;
 
-    const l1 = transactionLogger.createTransaction(identityId, 'GetAlertNotifications:data', JSON.stringify(data));
+    const l1 = transactionLogger.createTransaction(
+      'alert_notification_operation',
+      'GetAlertNotifications:data',
+      JSON.stringify(data),
+    );
     const l2 = transactionLogger.createTransaction(
-      identityId,
+      'alert_notification_operation',
       'GetAlertNotifications:response',
       JSON.stringify(responseType),
     );
-    const l3 = transactionLogger.createTransaction(identityId, 'GetAlertNotifications:error', JSON.stringify(error));
+    const l3 = transactionLogger.createTransaction(
+      'alert_notification_operation',
+      'GetAlertNotifications:error',
+      JSON.stringify(error),
+    );
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
@@ -1984,6 +1992,7 @@ export const DisputeInflightCheck = async ({
       throw error;
     }
     notifications = data?.AlertNotifications?.AlertNotification;
+    console.log('all notifications ===> ', JSON.stringify(notifications));
   } catch (err) {
     const error = errorLogger.createError(
       'alert_notification_operation',
