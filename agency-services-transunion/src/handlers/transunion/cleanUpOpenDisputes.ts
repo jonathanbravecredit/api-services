@@ -162,10 +162,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
             console.log('CALLING FULFILL DISPUTES');
             const fulfilled = await FulfillDisputes(payload);
             console.log('CALLING GET INVESTIGATION RESULTS');
-            const synced = await GetInvestigationResults({
-              ...payload,
-              message: JSON.stringify({}),
-            });
+            const synced = await GetInvestigationResults(payload);
             let response = synced
               ? { success: true, error: null, data: synced.data }
               : { success: false, error: 'failed to get investigation results' };

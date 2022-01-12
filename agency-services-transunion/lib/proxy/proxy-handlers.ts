@@ -1644,7 +1644,7 @@ export const GetInvestigationResults = async ({
     ...JSON.parse(message),
   };
   const validate = ajv.getSchema<interfaces.IGetInvestigationResultsRequest>('getInvestigationResultsRequest');
-  if (!validate(payload)) throw `Malformed message=${message}`;
+  if (!validate(payload)) throw `Malformed message=${payload}`;
 
   //create helper classes
   const sync = new Sync(tu.enrichGetInvestigationResult);
@@ -2140,10 +2140,7 @@ export const DisputeInflightCheck = async ({
             identityId: id,
           };
           const fulfilled = await FulfillDisputes(payload);
-          const synced = await GetInvestigationResults({
-            ...payload,
-            message: JSON.stringify({}),
-          });
+          const synced = await GetInvestigationResults(payload);
           let response = synced
             ? { success: true, error: null, data: synced.data }
             : { success: false, error: 'failed to get investigation results' };
