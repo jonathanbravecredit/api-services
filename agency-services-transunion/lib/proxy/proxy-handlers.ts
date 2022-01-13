@@ -1,14 +1,15 @@
 import * as he from 'he';
 import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
+import * as qrys from 'lib/proxy/proxy-queries';
+import * as interfaces from 'lib/interfaces';
+import * as tu from 'lib/transunion';
+import * as moment from 'moment';
 import { ajv } from 'lib/schema/validation';
 import { Sync } from 'lib/utils/sync/sync';
 import { SoapAid } from 'lib/utils/soap-aid/soap-aid';
 import { dateDiffInHours } from 'lib/utils/dates/dates';
 import { returnNestedObject } from 'lib/utils/helpers/helpers';
-import * as qrys from 'lib/proxy/proxy-queries';
-import * as interfaces from 'lib/interfaces';
-import * as tu from 'lib/transunion';
 import { START_DISPUTE_RESPONSE } from 'lib/examples/mocks/StartDisputeResponse';
 import { GET_ALERT_NOTIFICATIONS_RESPONSE } from 'lib/examples/mocks/GetAlertNotificationsResponse';
 import { ALL_GET_INVESTIGATION_MOCKS } from 'lib/examples/mocks/AllGetInvestigationMocks';
@@ -1005,7 +1006,7 @@ export const FulfillDisputes = async (
   // validate incoming message
   const payload: interfaces.IGenericRequest = { id: identityId };
   const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
-  if (!validate(payload)) throw `Malformed message=${message}`;
+  if (!validate(payload)) throw `Malformed message=${payload}`;
 
   //create helper classes
   const soap = new SoapAid(
@@ -1343,7 +1344,7 @@ export const GetDisputeStatusByID = async ({
           username,
           agent,
           auth,
-          prepped.data,
+          { data: prepped.data, disputeId: payload.disputeId },
           'GetDisputeStatus',
           parserOptions,
         )
@@ -1352,7 +1353,7 @@ export const GetDisputeStatusByID = async ({
           username,
           agent,
           auth,
-          prepped.data,
+          { data: prepped.data, disputeId: payload.disputeId },
           'GetDisputeStatus',
           parserOptions,
         );
@@ -1644,7 +1645,7 @@ export const GetInvestigationResults = async ({
     ...JSON.parse(message),
   };
   const validate = ajv.getSchema<interfaces.IGetInvestigationResultsRequest>('getInvestigationResultsRequest');
-  if (!validate(payload)) throw `Malformed message=${message}`;
+  if (!validate(payload)) throw `Malformed message=${payload}`;
 
   //create helper classes
   const sync = new Sync(tu.enrichGetInvestigationResult);
@@ -1968,13 +1969,21 @@ export const DisputeInflightCheck = async ({
     const responseType = data?.ResponseType;
     const error = data?.ErrorResponse;
 
-    const l1 = transactionLogger.createTransaction(identityId, 'GetAlertNotifications:data', JSON.stringify(data));
+    const l1 = transactionLogger.createTransaction(
+      'alert_notification_operation',
+      'GetAlertNotifications:data',
+      JSON.stringify(data),
+    );
     const l2 = transactionLogger.createTransaction(
-      identityId,
+      'alert_notification_operation',
       'GetAlertNotifications:response',
       JSON.stringify(responseType),
     );
-    const l3 = transactionLogger.createTransaction(identityId, 'GetAlertNotifications:error', JSON.stringify(error));
+    const l3 = transactionLogger.createTransaction(
+      'alert_notification_operation',
+      'GetAlertNotifications:error',
+      JSON.stringify(error),
+    );
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
@@ -1984,6 +1993,7 @@ export const DisputeInflightCheck = async ({
       throw error;
     }
     notifications = data?.AlertNotifications?.AlertNotification;
+    console.log('all notifications ===> ', JSON.stringify(notifications));
   } catch (err) {
     const error = errorLogger.createError(
       'alert_notification_operation',
@@ -2058,33 +2068,37 @@ export const DisputeInflightCheck = async ({
       // alerts come with client keys which are also our keys
       const updates = await Promise.all(
         successful.map(async (item) => {
-          // I need the dispute id, the client key (id), and the dispute status
-          const id = item.data?.ClientKey;
-          const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
-          if (!item.data || !id || !disputeId) {
-            const l1 = transactionLogger.createTransaction(
-              id,
-              'DisputeInflightCheck:UpdateDisputeDB',
-              JSON.stringify(item.data),
-            );
-            await transactionLogger.logger.create(l1);
-            return;
+          try {
+            const id = item.data?.ClientKey;
+            const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
+            if (!item.data || !id || !disputeId) {
+              const l1 = transactionLogger.createTransaction(
+                id,
+                'DisputeInflightCheck:UpdateDisputeDB',
+                JSON.stringify(item.data),
+              );
+              await transactionLogger.logger.create(l1);
+              return 'missing params';
+            }
+            const currentDispute = await DB.disputes.get(id, `${disputeId}`);
+            console.log('currentDispute', currentDispute);
+            const complete = item.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'completedispute';
+            const tuDate = item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate ||
+              item.data?.DisputeStatus.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate;
+            const closedOn = complete
+              ? moment(tuDate, 'MM/DD/YYYY').toISOString()
+              : currentDispute.closedOn;
+            const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
+            const updatedDispute = {
+              ...currentDispute,
+              ...mappedDispute,
+            };
+            console.log('updatedDispute', updatedDispute);
+            await DB.disputes.update(updatedDispute);
+            return 'success';
+          } catch (err) {
+            return err;
           }
-          // throw `Missing dispute data:=${item.data} or id:=${id} or disputeId:=${disputeId}`;
-
-          // get the current dispute from the dispute table
-          // update it with the new results...this is not a patch
-          const currentDispute = await DB.disputes.get(id, `${disputeId}`);
-          console.log('currentDispute', currentDispute);
-          const closedOn =
-            item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || currentDispute.closedOn;
-          const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
-          const updatedDispute = {
-            ...currentDispute,
-            ...mappedDispute,
-          };
-          console.log('updatedDispute', updatedDispute);
-          await DB.disputes.update(updatedDispute);
         }),
       );
       console.log('dispute updates ===> ', JSON.stringify(updates));
@@ -2109,37 +2123,36 @@ export const DisputeInflightCheck = async ({
       console.log('*** IN GET INVESTIGATION RESULTS ***');
       const alerted = await Promise.all(
         completed.map(async (item) => {
-          // I need the dispute id, the client key (id), and the dispute status
-          const id = item.data?.ClientKey;
-          const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
-          if (!item.data || !id || !disputeId) {
-            const l1 = transactionLogger.createTransaction(
-              id,
-              'DisputeInflightCheck:GetInvestigationResults',
-              JSON.stringify(item.data),
-            );
-            await transactionLogger.logger.create(l1);
-            return;
+          try {
+            const id = item.data?.ClientKey;
+            const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
+            if (!item.data || !id || !disputeId) {
+              const l1 = transactionLogger.createTransaction(
+                id,
+                'DisputeInflightCheck:GetInvestigationResults',
+                JSON.stringify(item.data),
+              );
+              await transactionLogger.logger.create(l1);
+              return;
+            }
+            const payload = {
+              accountCode,
+              username,
+              message: JSON.stringify({ disputeId: `${disputeId}` }),
+              agent,
+              auth,
+              identityId: id,
+            };
+            const fulfilled = await FulfillDisputes(payload);
+            const synced = await GetInvestigationResults(payload);
+            let response = synced
+              ? { success: true, error: null, data: synced.data }
+              : { success: false, error: 'failed to get investigation results' };
+            console.log('response ===> ', response);
+            return response;
+          } catch (err) {
+            return err;
           }
-
-          const payload = {
-            accountCode,
-            username,
-            message: JSON.stringify({ disputeId: `${disputeId}` }),
-            agent,
-            auth,
-            identityId: id,
-          };
-          const fulfilled = await FulfillDisputes(payload);
-          const synced = await GetInvestigationResults({
-            ...payload,
-            message: JSON.stringify({}),
-          });
-          let response = synced
-            ? { success: true, error: null, data: synced.data }
-            : { success: false, error: 'failed to get investigation results' };
-          console.log('response ===> ', response);
-          return response;
         }),
       );
       return { success: true, error: false, data: JSON.stringify(alerted) };
