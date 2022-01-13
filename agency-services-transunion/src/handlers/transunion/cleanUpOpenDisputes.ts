@@ -1,13 +1,12 @@
 import 'reflect-metadata';
-import * as https from 'https';
 import * as fs from 'fs';
-import { GetDisputeStatusByID } from 'lib/proxy';
+import * as https from 'https';
 import * as secrets from 'lib/utils/secrets/secrets';
-import { DB } from 'lib/utils/db/db';
-import { DISPUTE_CLEANUP_LIST } from 'lib/data/disputeCleanupList';
-import { AppSyncResolverEvent } from 'aws-lambda';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
+import { DB } from 'lib/utils/db/db';
+import { Handler } from 'aws-lambda';
+import { GetDisputeStatusByID } from 'lib/proxy';
 import { FulfillDisputes, GetInvestigationResults } from 'lib/proxy';
 
 // request.debug = true; import * as request from 'request';
@@ -33,9 +32,10 @@ let password;
  * @param message Object containing service specific package for processing
  * @returns Lambda proxy response
  */
-export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> => {
-  const action: string = event?.arguments?.action;
-  const message: string = event?.arguments?.message; // stringified disputeId, and sub
+export const main: Handler<{ list: { id: string; disputeId: string }[] }> = async (event): Promise<any> => {
+  const { list } = event;
+  console.log('event ===> ', event);
+  if (!list) return;
 
   try {
     const secretJSON = await secrets.getSecretKey(transunionSKLoc);
@@ -72,7 +72,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       passphrase,
     });
 
-    const cleanupList = DISPUTE_CLEANUP_LIST;
+    const cleanupList = list;
     const statusUpdates = await Promise.all(
       cleanupList.map(async (item) => {
         const message = JSON.stringify({ disputeId: item.disputeId });
