@@ -148,35 +148,39 @@ export const main: Handler<{ list: { id: string; disputeId: string }[] }> = asyn
       try {
         const alerted = await Promise.all(
           completed.map(async (item) => {
-            const id = item.data?.ClientKey;
-            const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
-            if (!item.data || !id || !disputeId) {
-              const l1 = transactionLogger.createTransaction(
-                id,
-                'CleanUpOpenDisputes:GetInvestigationResults',
-                JSON.stringify(item.data),
-              );
-              await transactionLogger.logger.create(l1);
-              return;
+            try {
+              const id = item.data?.ClientKey;
+              const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
+              if (!item.data || !id || !disputeId) {
+                const l1 = transactionLogger.createTransaction(
+                  id,
+                  'CleanUpOpenDisputes:GetInvestigationResults',
+                  JSON.stringify(item.data),
+                );
+                await transactionLogger.logger.create(l1);
+                return;
+              }
+              const message = JSON.stringify({ disputeId: `${disputeId}` });
+              const payload = {
+                accountCode,
+                username,
+                message,
+                agent: httpsAgent,
+                auth,
+                identityId: id,
+              };
+              console.log('CALLING FULFILL DISPUTES');
+              const fulfilled = await FulfillDisputes(payload);
+              console.log('CALLING GET INVESTIGATION RESULTS');
+              const synced = await GetInvestigationResults(payload);
+              let response = synced
+                ? { success: true, error: null, data: synced.data }
+                : { success: false, error: 'failed to get investigation results' };
+              console.log('response ===> ', response);
+              return response;
+            } catch (err) {
+              return err;
             }
-            const message = JSON.stringify({ disputeId: `${disputeId}` });
-            const payload = {
-              accountCode,
-              username,
-              message,
-              agent: httpsAgent,
-              auth,
-              identityId: id,
-            };
-            console.log('CALLING FULFILL DISPUTES');
-            const fulfilled = await FulfillDisputes(payload);
-            console.log('CALLING GET INVESTIGATION RESULTS');
-            const synced = await GetInvestigationResults(payload);
-            let response = synced
-              ? { success: true, error: null, data: synced.data }
-              : { success: false, error: 'failed to get investigation results' };
-            console.log('response ===> ', response);
-            return response;
           }),
         );
         console.log('alerted ===> ', JSON.stringify(alerted));

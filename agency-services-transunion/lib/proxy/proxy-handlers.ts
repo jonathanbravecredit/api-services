@@ -2067,36 +2067,36 @@ export const DisputeInflightCheck = async ({
       // alerts come with client keys which are also our keys
       const updates = await Promise.all(
         successful.map(async (item) => {
-          // I need the dispute id, the client key (id), and the dispute status
-          const id = item.data?.ClientKey;
-          const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
-          if (!item.data || !id || !disputeId) {
-            const l1 = transactionLogger.createTransaction(
-              id,
-              'DisputeInflightCheck:UpdateDisputeDB',
-              JSON.stringify(item.data),
-            );
-            await transactionLogger.logger.create(l1);
-            return;
+          try {
+            const id = item.data?.ClientKey;
+            const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
+            if (!item.data || !id || !disputeId) {
+              const l1 = transactionLogger.createTransaction(
+                id,
+                'DisputeInflightCheck:UpdateDisputeDB',
+                JSON.stringify(item.data),
+              );
+              await transactionLogger.logger.create(l1);
+              return 'missing params';
+            }
+            const currentDispute = await DB.disputes.get(id, `${disputeId}`);
+            console.log('currentDispute', currentDispute);
+            const complete = item.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'completedispute';
+            const closedOn = complete
+              ? item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate ||
+                item.data?.DisputeStatus.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate
+              : currentDispute.closedOn;
+            const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
+            const updatedDispute = {
+              ...currentDispute,
+              ...mappedDispute,
+            };
+            console.log('updatedDispute', updatedDispute);
+            await DB.disputes.update(updatedDispute);
+            return 'success';
+          } catch (err) {
+            return err;
           }
-          // throw `Missing dispute data:=${item.data} or id:=${id} or disputeId:=${disputeId}`;
-
-          // get the current dispute from the dispute table
-          // update it with the new results...this is not a patch
-          const currentDispute = await DB.disputes.get(id, `${disputeId}`);
-          console.log('currentDispute', currentDispute);
-          const complete = item.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'completedispute';
-          const closedOn = complete
-            ? item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate ||
-              item.data?.DisputeStatus.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate
-            : currentDispute.closedOn;
-          const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
-          const updatedDispute = {
-            ...currentDispute,
-            ...mappedDispute,
-          };
-          console.log('updatedDispute', updatedDispute);
-          return await DB.disputes.update(updatedDispute);
         }),
       );
       console.log('dispute updates ===> ', JSON.stringify(updates));
@@ -2121,34 +2121,36 @@ export const DisputeInflightCheck = async ({
       console.log('*** IN GET INVESTIGATION RESULTS ***');
       const alerted = await Promise.all(
         completed.map(async (item) => {
-          // I need the dispute id, the client key (id), and the dispute status
-          const id = item.data?.ClientKey;
-          const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
-          if (!item.data || !id || !disputeId) {
-            const l1 = transactionLogger.createTransaction(
-              id,
-              'DisputeInflightCheck:GetInvestigationResults',
-              JSON.stringify(item.data),
-            );
-            await transactionLogger.logger.create(l1);
-            return;
+          try {
+            const id = item.data?.ClientKey;
+            const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
+            if (!item.data || !id || !disputeId) {
+              const l1 = transactionLogger.createTransaction(
+                id,
+                'DisputeInflightCheck:GetInvestigationResults',
+                JSON.stringify(item.data),
+              );
+              await transactionLogger.logger.create(l1);
+              return;
+            }
+            const payload = {
+              accountCode,
+              username,
+              message: JSON.stringify({ disputeId: `${disputeId}` }),
+              agent,
+              auth,
+              identityId: id,
+            };
+            const fulfilled = await FulfillDisputes(payload);
+            const synced = await GetInvestigationResults(payload);
+            let response = synced
+              ? { success: true, error: null, data: synced.data }
+              : { success: false, error: 'failed to get investigation results' };
+            console.log('response ===> ', response);
+            return response;
+          } catch (err) {
+            return err;
           }
-
-          const payload = {
-            accountCode,
-            username,
-            message: JSON.stringify({ disputeId: `${disputeId}` }),
-            agent,
-            auth,
-            identityId: id,
-          };
-          const fulfilled = await FulfillDisputes(payload);
-          const synced = await GetInvestigationResults(payload);
-          let response = synced
-            ? { success: true, error: null, data: synced.data }
-            : { success: false, error: 'failed to get investigation results' };
-          console.log('response ===> ', response);
-          return response;
         }),
       );
       return { success: true, error: false, data: JSON.stringify(alerted) };
