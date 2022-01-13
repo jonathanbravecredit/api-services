@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import * as fs from 'fs';
 import * as https from 'https';
+import * as moment from 'moment';
 import * as secrets from 'lib/utils/secrets/secrets';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
@@ -111,10 +112,10 @@ export const main: Handler<{ list: { id: string; disputeId: string }[] }> = asyn
               console.log('currentDispute', currentDispute);
               const complete =
                 item.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'completedispute';
-              const closedOn = complete
-                ? item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate ||
-                  item.data?.DisputeStatus.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate
-                : currentDispute.closedOn;
+              const tuDate =
+                item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate ||
+                item.data?.DisputeStatus.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate;
+              const closedOn = complete ? moment(tuDate, 'MM/DD/YYYY').toISOString() : currentDispute.closedOn;
               const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
               const updatedDispute = {
                 ...currentDispute,

@@ -1,14 +1,15 @@
 import * as he from 'he';
 import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
+import * as qrys from 'lib/proxy/proxy-queries';
+import * as interfaces from 'lib/interfaces';
+import * as tu from 'lib/transunion';
+import * as moment from 'moment';
 import { ajv } from 'lib/schema/validation';
 import { Sync } from 'lib/utils/sync/sync';
 import { SoapAid } from 'lib/utils/soap-aid/soap-aid';
 import { dateDiffInHours } from 'lib/utils/dates/dates';
 import { returnNestedObject } from 'lib/utils/helpers/helpers';
-import * as qrys from 'lib/proxy/proxy-queries';
-import * as interfaces from 'lib/interfaces';
-import * as tu from 'lib/transunion';
 import { START_DISPUTE_RESPONSE } from 'lib/examples/mocks/StartDisputeResponse';
 import { GET_ALERT_NOTIFICATIONS_RESPONSE } from 'lib/examples/mocks/GetAlertNotificationsResponse';
 import { ALL_GET_INVESTIGATION_MOCKS } from 'lib/examples/mocks/AllGetInvestigationMocks';
@@ -2082,9 +2083,10 @@ export const DisputeInflightCheck = async ({
             const currentDispute = await DB.disputes.get(id, `${disputeId}`);
             console.log('currentDispute', currentDispute);
             const complete = item.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'completedispute';
+            const tuDate = item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate ||
+              item.data?.DisputeStatus.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate;
             const closedOn = complete
-              ? item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate ||
-                item.data?.DisputeStatus.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate
+              ? moment(tuDate, 'MM/DD/YYYY').toISOString()
               : currentDispute.closedOn;
             const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
             const updatedDispute = {
