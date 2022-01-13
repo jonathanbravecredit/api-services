@@ -105,7 +105,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
                   JSON.stringify(item.data),
                 );
                 await transactionLogger.logger.create(l1);
-                return;
+                return 'failed';
               }
               const currentDispute = await DB.disputes.get(id, `${disputeId}`);
               console.log('currentDispute', currentDispute);
