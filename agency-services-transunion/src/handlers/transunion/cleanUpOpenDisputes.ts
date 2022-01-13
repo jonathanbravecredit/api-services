@@ -179,7 +179,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
             return response;
           }),
         );
-        return { success: true, error: false, data: JSON.stringify(alerted) };
+        console.log('alerted ===> ', JSON.stringify(alerted));
       } catch (err) {
         const error = errorLogger.createError(
           'clean_open_disputes_operations',
