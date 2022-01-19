@@ -21,7 +21,7 @@ import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
 import { IFulfillWorkerData } from 'lib/interfaces/transunion/fulfill-worker.interface';
-import { updateEnrollmentStatus, updateFulfillReport } from 'lib/utils/db/dynamo-db/dynamo';
+import { updateEnrollmentStatus, updateFulfillReport, updateNavbarDisputesBadge } from 'lib/utils/db/dynamo-db/dynamo';
 import { ICancelEnrollGraphQLResponse, IFulfillGraphQLResponse } from 'lib/interfaces';
 
 const GO_LIVE = true;
@@ -73,6 +73,42 @@ export const Ping = async ({
     return response;
   } catch (err) {
     const error = errorLogger.createError(identityId, 'Ping', JSON.stringify(err));
+    await errorLogger.logger.create(error);
+    return { success: false, error: err };
+  }
+};
+
+/**
+ * Simple method to ping TU services and ensure a successful response
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+ export const UpdateNavBar = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{
+  success: boolean;
+  error?: interfaces.IErrorResponse | interfaces.INil | string;
+  data?: any;
+}> => {
+   let parsed: {toggle: boolean} = JSON.parse(message)
+  try {
+    await updateNavbarDisputesBadge(identityId, parsed.toggle)
+    return {success: true, error: null, data: null};
+  } catch (err) {
+    const error = errorLogger.createError(identityId, 'UpdateNavBar', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err };
   }
