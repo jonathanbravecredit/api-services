@@ -1,14 +1,15 @@
 import * as he from 'he';
 import * as https from 'https';
 import * as fastXml from 'fast-xml-parser';
+import * as qrys from 'lib/proxy/proxy-queries';
+import * as interfaces from 'lib/interfaces';
+import * as tu from 'lib/transunion';
+import * as moment from 'moment';
 import { ajv } from 'lib/schema/validation';
 import { Sync } from 'lib/utils/sync/sync';
 import { SoapAid } from 'lib/utils/soap-aid/soap-aid';
 import { dateDiffInHours } from 'lib/utils/dates/dates';
 import { returnNestedObject } from 'lib/utils/helpers/helpers';
-import * as qrys from 'lib/proxy/proxy-queries';
-import * as interfaces from 'lib/interfaces';
-import * as tu from 'lib/transunion';
 import { START_DISPUTE_RESPONSE } from 'lib/examples/mocks/StartDisputeResponse';
 import { GET_ALERT_NOTIFICATIONS_RESPONSE } from 'lib/examples/mocks/GetAlertNotificationsResponse';
 import { ALL_GET_INVESTIGATION_MOCKS } from 'lib/examples/mocks/AllGetInvestigationMocks';
@@ -20,8 +21,9 @@ import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
 import { IFulfillWorkerData } from 'lib/interfaces/transunion/fulfill-worker.interface';
-import { updateFulfillReport, updateNavbarDisputesBadge } from 'lib/utils/db/dynamo-db/dynamo';
-import { IFulfillGraphQLResponse } from 'lib/interfaces';
+import { updateEnrollmentStatus, updateFulfillReport } from 'lib/utils/db/dynamo-db/dynamo';
+import { ICancelEnrollGraphQLResponse, IFulfillGraphQLResponse } from 'lib/interfaces';
+
 
 const GO_LIVE = true;
 const errorLogger = new ErrorLogger();
@@ -542,6 +544,168 @@ export const EnrollDisputes = async (
 };
 
 /**
+ * After verification the user is eligible to enroll.
+ * Enrolls user and returns merge report and vantage score
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Enrollment message format...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const CancelEnroll = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{
+  success: boolean;
+  error?: interfaces.IErrorResponse | interfaces.INil | string;
+  data?: string;
+}> => {
+  // validate incoming message
+  const payload: interfaces.IGenericRequest = { id: identityId };
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
+  if (!validate(payload)) throw `Malformed message=${payload}`;
+
+  try {
+    const prepped: { data: ICancelEnrollGraphQLResponse } = await qrys.getCancelEnrollment(payload);
+    const enrollmentKey = prepped.data.data.getAppData?.agencies?.transunion?.enrollmentKey;
+    const disputeKey = prepped.data.data.getAppData?.agencies?.transunion?.disputeEnrollmentKey;
+    if (!enrollmentKey && !disputeKey)
+      throw `no enrollment keys, enrollmentKey=${enrollmentKey}, disputeEnrollmentKey=${disputeKey}`;
+    if (enrollmentKey) {
+      await CancelEnrollWorker({ accountCode, username, message, agent, auth, identityId }, prepped, enrollmentKey);
+    }
+    if (disputeKey) {
+      await CancelEnrollWorker({ accountCode, username, message, agent, auth, identityId }, prepped, disputeKey);
+    }
+    return { success: true, error: null, data: 'success' };
+  } catch (err) {
+    // log error response
+    const error = errorLogger.createError(identityId, 'CancelEnroll', JSON.stringify(err));
+    await errorLogger.logger.create(error);
+    return { success: false, error: err, data: null };
+  }
+};
+
+/**
+ * After verification the user is eligible to enroll.
+ * Enrolls user and returns merge report and vantage score
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Enrollment message format...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
+export const CancelEnrollWorker = async (
+  {
+    accountCode,
+    username,
+    message,
+    agent,
+    auth,
+    identityId,
+  }: {
+    accountCode: string;
+    username: string;
+    message: string;
+    agent: https.Agent;
+    auth: string;
+    identityId: string;
+  },
+  prepped: { data: ICancelEnrollGraphQLResponse },
+  enrollmentKey: string,
+): Promise<{
+  success: boolean;
+  error?: interfaces.IErrorResponse | interfaces.INil | string;
+  data?: interfaces.IEnrollResult;
+}> => {
+  // validate incoming message
+  const payload: interfaces.IGenericRequest = { id: identityId };
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
+  if (!validate(payload)) throw `Malformed message=${message}`;
+
+  //create helper classes
+  const soap = new SoapAid(
+    fastXml.parse,
+    tu.formatCancelEnroll,
+    tu.createCancelEnroll,
+    tu.createCancelEnrollmentPayload,
+  );
+
+  try {
+    if (!enrollmentKey) throw `no enrollment keys, enrollmentKey=${enrollmentKey}`;
+    const packet: ICancelEnrollGraphQLResponse = {
+      data: {
+        getAppData: {
+          id: prepped.data.data.getAppData.id,
+          agencies: {
+            transunion: {
+              enrollmentKey: enrollmentKey,
+            },
+          },
+        },
+      },
+    };
+    const resp = await soap.parseAndSendPayload<interfaces.ICancelEnrollResponse>(
+      accountCode,
+      username,
+      agent,
+      auth,
+      packet,
+      'CancelEnrollment',
+      parserOptions,
+    );
+
+    // get the specific response from parsed object
+    const data = resp.Envelope?.Body?.CancelEnrollmentResponse?.CancelEnrollmentResult;
+    const responseType = data?.ResponseType;
+    const success = data?.Success;
+    const error = data?.ErrorResponse;
+
+    // log tu responses
+    const l1 = transactionLogger.createTransaction(identityId, 'CancelEnroll:data', JSON.stringify(data));
+    const l2 = transactionLogger.createTransaction(identityId, 'CancelEnroll:type', JSON.stringify(responseType));
+    const l3 = transactionLogger.createTransaction(identityId, 'CancelEnroll:error', JSON.stringify(error));
+    await transactionLogger.logger.create(l1);
+    await transactionLogger.logger.create(l2);
+    await transactionLogger.logger.create(l3);
+
+    let response;
+    if (responseType.toLowerCase() === 'success' && success) {
+      const synced = await updateEnrollmentStatus(
+        payload.id,
+        false,
+        'cancelled',
+        'Account cancelled due to inactivity or user request',
+      );
+      response = synced
+        ? { success: true, error: null, data: 'success' }
+        : { success: false, error: 'failed to sync data to db' };
+    } else {
+      response = { success: false, error: error };
+    }
+    return response;
+  } catch (err) {
+    // log error response
+    const error = errorLogger.createError(identityId, 'CancelEnroll', JSON.stringify(err));
+    await errorLogger.logger.create(error);
+    return { success: false, error: err, data: null };
+  }
+};
+
+/**
  * A returning user can refresh their report by calling fulfill
  * @param {string} accountCode Brave account code
  * @param {string} username Brave user ID (Identity ID)
@@ -843,7 +1007,7 @@ export const FulfillDisputes = async (
   // validate incoming message
   const payload: interfaces.IGenericRequest = { id: identityId };
   const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
-  if (!validate(payload)) throw `Malformed message=${message}`;
+  if (!validate(payload)) throw `Malformed message=${payload}`;
 
   //create helper classes
   const soap = new SoapAid(
@@ -1080,6 +1244,57 @@ export const GetDisputeStatus = async ({
  * @param {string} auth
  * @returns
  */
+export const ListDisputesByUser = async ({
+  accountCode,
+  username,
+  message,
+  agent,
+  auth,
+  identityId,
+}: {
+  accountCode: string;
+  username: string;
+  message: string;
+  agent: https.Agent;
+  auth: string;
+  identityId: string;
+}): Promise<{
+  success: boolean;
+  error?: interfaces.IErrorResponse | interfaces.INil;
+  data?: Dispute[] | null;
+}> => {
+  const live = GO_LIVE; // !!! IMPORTANT FLAG TO DISABLE MOCKS !!!
+  // validate incoming message
+  const payload: interfaces.IGenericRequest = {
+    id: identityId,
+  };
+  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
+  if (!validate(payload)) throw `Malformed payload=${payload}`;
+
+  try {
+    // get / parse data needed to process request
+    const results = await DB.disputes.list(payload.id);
+    const response = { success: true, error: null, data: results };
+    return response;
+  } catch (err) {
+    // log error response
+    const error = errorLogger.createError(identityId, 'ListDisputesByUser', JSON.stringify(err));
+    await errorLogger.logger.create(error);
+    return { success: false, error: err, data: null };
+  }
+};
+
+/**
+ * Confirms eligibility to open a dispute
+ *  (Optional) ID can be passsed to check status of open dispute
+ *  IMPORTANT - This is a sync operation and updates the disputes with the latest status
+ * @param {string} accountCode Brave account code
+ * @param {string} username Brave user ID (Identity ID)
+ * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
+ * @param {https.Agent} agent
+ * @param {string} auth
+ * @returns
+ */
 export const GetDisputeStatusByID = async ({
   accountCode,
   username,
@@ -1130,7 +1345,7 @@ export const GetDisputeStatusByID = async ({
           username,
           agent,
           auth,
-          prepped.data,
+          { data: prepped.data, disputeId: payload.disputeId },
           'GetDisputeStatus',
           parserOptions,
         )
@@ -1139,7 +1354,7 @@ export const GetDisputeStatusByID = async ({
           username,
           agent,
           auth,
-          prepped.data,
+          { data: prepped.data, disputeId: payload.disputeId },
           'GetDisputeStatus',
           parserOptions,
         );
@@ -1431,7 +1646,7 @@ export const GetInvestigationResults = async ({
     ...JSON.parse(message),
   };
   const validate = ajv.getSchema<interfaces.IGetInvestigationResultsRequest>('getInvestigationResultsRequest');
-  if (!validate(payload)) throw `Malformed message=${message}`;
+  if (!validate(payload)) throw `Malformed message=${payload}`;
 
   //create helper classes
   const sync = new Sync(tu.enrichGetInvestigationResult);
@@ -1755,13 +1970,21 @@ export const DisputeInflightCheck = async ({
     const responseType = data?.ResponseType;
     const error = data?.ErrorResponse;
 
-    const l1 = transactionLogger.createTransaction(identityId, 'GetAlertNotifications:data', JSON.stringify(data));
+    const l1 = transactionLogger.createTransaction(
+      'alert_notification_operation',
+      'GetAlertNotifications:data',
+      JSON.stringify(data),
+    );
     const l2 = transactionLogger.createTransaction(
-      identityId,
+      'alert_notification_operation',
       'GetAlertNotifications:response',
       JSON.stringify(responseType),
     );
-    const l3 = transactionLogger.createTransaction(identityId, 'GetAlertNotifications:error', JSON.stringify(error));
+    const l3 = transactionLogger.createTransaction(
+      'alert_notification_operation',
+      'GetAlertNotifications:error',
+      JSON.stringify(error),
+    );
     await transactionLogger.logger.create(l1);
     await transactionLogger.logger.create(l2);
     await transactionLogger.logger.create(l3);
@@ -1771,6 +1994,7 @@ export const DisputeInflightCheck = async ({
       throw error;
     }
     notifications = data?.AlertNotifications?.AlertNotification;
+    console.log('all notifications ===> ', JSON.stringify(notifications));
   } catch (err) {
     const error = errorLogger.createError(
       'alert_notification_operation',
@@ -1845,33 +2069,37 @@ export const DisputeInflightCheck = async ({
       // alerts come with client keys which are also our keys
       const updates = await Promise.all(
         successful.map(async (item) => {
-          // I need the dispute id, the client key (id), and the dispute status
-          const id = item.data?.ClientKey;
-          const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
-          if (!item.data || !id || !disputeId) {
-            const l1 = transactionLogger.createTransaction(
-              id,
-              'DisputeInflightCheck:UpdateDisputeDB',
-              JSON.stringify(item.data),
-            );
-            await transactionLogger.logger.create(l1);
-            return;
+          try {
+            const id = item.data?.ClientKey;
+            const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
+            if (!item.data || !id || !disputeId) {
+              const l1 = transactionLogger.createTransaction(
+                id,
+                'DisputeInflightCheck:UpdateDisputeDB',
+                JSON.stringify(item.data),
+              );
+              await transactionLogger.logger.create(l1);
+              return 'missing params';
+            }
+            const currentDispute = await DB.disputes.get(id, `${disputeId}`);
+            console.log('currentDispute', currentDispute);
+            const complete = item.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'completedispute';
+            const tuDate = item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate ||
+              item.data?.DisputeStatus.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate;
+            const closedOn = complete
+              ? moment(tuDate, 'MM/DD/YYYY').toISOString()
+              : currentDispute.closedOn;
+            const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
+            const updatedDispute = {
+              ...currentDispute,
+              ...mappedDispute,
+            };
+            console.log('updatedDispute', updatedDispute);
+            await DB.disputes.update(updatedDispute);
+            return 'success';
+          } catch (err) {
+            return err;
           }
-          // throw `Missing dispute data:=${item.data} or id:=${id} or disputeId:=${disputeId}`;
-
-          // get the current dispute from the dispute table
-          // update it with the new results...this is not a patch
-          const currentDispute = await DB.disputes.get(id, `${disputeId}`);
-          console.log('currentDispute', currentDispute);
-          const closedOn =
-            item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate || currentDispute.closedOn;
-          const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
-          const updatedDispute = {
-            ...currentDispute,
-            ...mappedDispute,
-          };
-          console.log('updatedDispute', updatedDispute);
-          await DB.disputes.update(updatedDispute);
         }),
       );
       console.log('dispute updates ===> ', JSON.stringify(updates));
@@ -1896,40 +2124,42 @@ export const DisputeInflightCheck = async ({
       console.log('*** IN GET INVESTIGATION RESULTS ***');
       const alerted = await Promise.all(
         completed.map(async (item) => {
-          // I need the dispute id, the client key (id), and the dispute status
-          const id = item.data?.ClientKey;
-          const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
-          if (!item.data || !id || !disputeId) {
-            const l1 = transactionLogger.createTransaction(
-              id,
-              'DisputeInflightCheck:GetInvestigationResults',
-              JSON.stringify(item.data),
-            );
-            await transactionLogger.logger.create(l1);
-            return;
+          try {
+            const id = item.data?.ClientKey;
+            const disputeId = item.data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
+            if (!item.data || !id || !disputeId) {
+              const l1 = transactionLogger.createTransaction(
+                id,
+                'DisputeInflightCheck:GetInvestigationResults',
+                JSON.stringify(item.data),
+              );
+              await transactionLogger.logger.create(l1);
+              return;
+            }
+            const payload = {
+              accountCode,
+              username,
+              message: JSON.stringify({ disputeId: `${disputeId}` }),
+              agent,
+              auth,
+              identityId: id,
+            };
+            const fulfilled = await FulfillDisputes(payload);
+            const synced = await GetInvestigationResults({
+              ...payload,
+              message: JSON.stringify({}),
+            });
+            if (synced) {
+              updateNavbarDisputesBadge(id)
+            }
+            let response = synced
+              ? { success: true, error: null, data: synced.data }
+              : { success: false, error: 'failed to get investigation results' };
+            console.log('response ===> ', response);
+            return response;
+          } catch (err) {
+            return err;
           }
-
-          const payload = {
-            accountCode,
-            username,
-            message: JSON.stringify({ disputeId: `${disputeId}` }),
-            agent,
-            auth,
-            identityId: id,
-          };
-          const fulfilled = await FulfillDisputes(payload);
-          const synced = await GetInvestigationResults({
-            ...payload,
-            message: JSON.stringify({}),
-          });
-          if (synced) {
-            updateNavbarDisputesBadge(id)
-          }
-          let response = synced
-            ? { success: true, error: null, data: synced.data }
-            : { success: false, error: 'failed to get investigation results' };
-          console.log('response ===> ', response);
-          return response;
         }),
       );
       return { success: true, error: false, data: JSON.stringify(alerted) };

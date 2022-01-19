@@ -6,25 +6,25 @@ import {
   IGetDisputeStatusPayload,
   IGetDisputeStatusResponse,
   IProxyQueryGetAppData,
-  IUpdateDisputeBundle,
 } from 'lib/interfaces';
-import { returnNestedObject, textConstructor } from 'lib/utils';
+import { textConstructor } from 'lib/utils';
 import * as fastXml from 'fast-xml-parser';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import { MONTH_MAP } from 'lib/data/constants';
-import { UpdateAppDataInput } from 'src/api/api.service';
-import { DB } from 'lib/utils/db/db';
 
 /**
  * Genarates the message payload for TU Enroll service
  * @param data
  * @returns IEnrollPayload
  */
-export const createGetDisputeStatusPayload = (
-  data: IProxyQueryGetAppData<IGetDataForGetDisputeStatus>,
-  disputeId?: string,
-): IGetDisputeStatusPayload => {
+export const createGetDisputeStatusPayload = ({
+  data,
+  disputeId,
+}: {
+  data: IProxyQueryGetAppData<IGetDataForGetDisputeStatus>;
+  disputeId?: string;
+}): IGetDisputeStatusPayload => {
   const id = data.data.getAppData.id?.split(':')?.pop();
   const attrs = data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;
@@ -147,5 +147,6 @@ export const createGetDisputeStatus = (msg: IGetDisputeStatus): string => {
  */
 export const parseGetDisputeStatus = (xml: string, options: any): IGetDisputeStatusResponse => {
   const obj: IGetDisputeStatusResponse = fastXml.parse(xml, options);
+  console.log('parsed dispute obj ==> ', JSON.stringify(obj));
   return obj;
 };

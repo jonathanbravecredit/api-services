@@ -160,6 +160,12 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       case 'GetCreditScoreTracking':
         results = await queries.GetCreditScoreTracking(payload);
         return JSON.stringify(results);
+      case 'ListDisputesByUser':
+        results = await queries.ListDisputesByUser(payload);
+        return JSON.stringify(results);
+      case 'CancelEnrollment':
+        results = await queries.CancelEnroll(payload);
+        return JSON.stringify(results);
       default:
         const error = errorLogger.createError(tokenUser, 'action_not_found', JSON.stringify(action));
         await errorLogger.logger.create(error);
