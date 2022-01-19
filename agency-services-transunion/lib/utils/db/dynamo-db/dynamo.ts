@@ -130,7 +130,7 @@ export const updateNavbarDisputesBadge = (
     UpdateExpression:
       'SET #n.#d.#b = :t, updatedAt = :m',
     ExpressionAttributeNames: {
-      '#n': 'navbar',
+      '#n': 'navBar',
       '#d': 'disputes',
       '#b': 'badge',
     },
