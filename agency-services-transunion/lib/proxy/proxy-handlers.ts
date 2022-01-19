@@ -24,7 +24,6 @@ import { IFulfillWorkerData } from 'lib/interfaces/transunion/fulfill-worker.int
 import { updateEnrollmentStatus, updateFulfillReport } from 'lib/utils/db/dynamo-db/dynamo';
 import { ICancelEnrollGraphQLResponse, IFulfillGraphQLResponse } from 'lib/interfaces';
 
-
 const GO_LIVE = true;
 const errorLogger = new ErrorLogger();
 const transactionLogger = new TransactionLogger();
@@ -2145,13 +2144,7 @@ export const DisputeInflightCheck = async ({
               identityId: id,
             };
             const fulfilled = await FulfillDisputes(payload);
-            const synced = await GetInvestigationResults({
-              ...payload,
-              message: JSON.stringify({}),
-            });
-            if (synced) {
-              updateNavbarDisputesBadge(id)
-            }
+            const synced = await GetInvestigationResults(payload);
             let response = synced
               ? { success: true, error: null, data: synced.data }
               : { success: false, error: 'failed to get investigation results' };
