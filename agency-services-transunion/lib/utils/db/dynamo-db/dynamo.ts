@@ -200,3 +200,55 @@ export const updateEnrollmentStatus = (
     .then((res) => res)
     .catch((err) => err);
 };
+
+export const updateEnrollmentStatus = (
+  id: string,
+  enrolled: boolean,
+  status: string,
+  statusReasonDescription: string,
+) => {
+  let timeStamp = new Date().toISOString(); //always have last updated date
+  const params = {
+    TableName: tableName,
+    Key: {
+      id: id,
+    },
+    // ConditionExpression: 'attribute_exists(queryParam.tableId)',
+    UpdateExpression: `SET
+    #a.#t.#en = :en,
+    #a.#t.#den = :en,
+    #s = :s,
+    #sr = :sr,
+    #srd = :srd,
+    #lsm = :lsm,
+    #nsm = :nsm,
+    updatedAt = :m`,
+    ExpressionAttributeNames: {
+      '#s': 'status',
+      '#sr': 'statusReason',
+      '#srd': 'statusReasonDescription',
+      '#lsm': 'lastStatusModifiedOn',
+      '#nsm': 'nextStatusModifiedOn',
+      '#a': 'agencies',
+      '#t': 'transunion',
+      '#en': 'enrolled',
+      '#den': 'disputeEnrolled',
+    },
+    ExpressionAttributeValues: {
+      ':s': status,
+      ':sr': status,
+      ':srd': statusReasonDescription,
+      ':lsm': timeStamp,
+      ':nsm': -1,
+      ':en': enrolled,
+      ':m': timeStamp,
+    },
+    ReturnValues: 'UPDATED_NEW',
+  };
+
+  return db
+    .update(params)
+    .promise()
+    .then((res) => res)
+    .catch((err) => err);
+};
