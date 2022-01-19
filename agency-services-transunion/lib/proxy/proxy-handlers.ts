@@ -105,11 +105,9 @@ export const Ping = async ({
 }> => {
    let parsed: {toggle: boolean} = JSON.parse(message)
    try {
-    let value = await updateNavbarDisputesBadge(identityId, parsed.toggle)
-    console.log('VALUEVALUEVALUE', JSON.stringify(value))
+    await updateNavbarDisputesBadge(identityId, parsed.toggle)
     return {success: true, error: null, data: null};
   } catch (err) {
-    console.log('ERRORERRORERROR', JSON.stringify(err))
     const error = errorLogger.createError(identityId, 'UpdateNavBar', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err };
