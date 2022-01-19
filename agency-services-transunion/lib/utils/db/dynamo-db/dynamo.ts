@@ -118,7 +118,8 @@ export const updateFulfillReport = (
 
 
 export const updateNavbarDisputesBadge = (
-  id: string
+  id: string,
+  toggle: boolean = true
 ) => {
   let timeStamp = new Date().toISOString(); //always have last updated date
   const params = {
@@ -135,7 +136,7 @@ export const updateNavbarDisputesBadge = (
       '#b': 'badge',
     },
     ExpressionAttributeValues: {
-      ':t': true,
+      ':t': toggle,
       ':m': timeStamp,
     }
   };
