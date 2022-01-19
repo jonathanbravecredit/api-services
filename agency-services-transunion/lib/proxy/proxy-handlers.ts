@@ -20,7 +20,7 @@ import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
 import { IFulfillWorkerData } from 'lib/interfaces/transunion/fulfill-worker.interface';
-import { updateFulfillReport } from 'lib/utils/db/dynamo-db/dynamo';
+import { updateFulfillReport, updateNavbarDisputesBadge } from 'lib/utils/db/dynamo-db/dynamo';
 import { IFulfillGraphQLResponse } from 'lib/interfaces';
 
 const GO_LIVE = true;
@@ -1922,6 +1922,9 @@ export const DisputeInflightCheck = async ({
             ...payload,
             message: JSON.stringify({}),
           });
+          if (synced) {
+            updateNavbarDisputesBadge(id)
+          }
           let response = synced
             ? { success: true, error: null, data: synced.data }
             : { success: false, error: 'failed to get investigation results' };
