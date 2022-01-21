@@ -1196,7 +1196,7 @@ export const GetDisputeStatus = async ({
       username,
       agent,
       auth,
-      prepped.data,
+      prepped,
       'GetDisputeStatus',
       parserOptions,
     );
@@ -2083,11 +2083,10 @@ export const DisputeInflightCheck = async ({
             const currentDispute = await DB.disputes.get(id, `${disputeId}`);
             console.log('currentDispute', currentDispute);
             const complete = item.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'completedispute';
-            const tuDate = item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate ||
+            const tuDate =
+              item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate ||
               item.data?.DisputeStatus.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate;
-            const closedOn = complete
-              ? moment(tuDate, 'MM/DD/YYYY').toISOString()
-              : currentDispute.closedOn;
+            const closedOn = complete ? moment(tuDate, 'MM/DD/YYYY').toISOString() : currentDispute.closedOn;
             const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
             const updatedDispute = {
               ...currentDispute,
