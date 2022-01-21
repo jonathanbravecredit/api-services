@@ -84,7 +84,7 @@ export const Ping = async ({
  * @param {string} auth
  * @returns
  */
- export const UpdateNavBar = async ({
+export const UpdateNavBar = async ({
   accountCode,
   username,
   message,
@@ -103,10 +103,10 @@ export const Ping = async ({
   error?: interfaces.IErrorResponse | interfaces.INil | string;
   data?: any;
 }> => {
-   let parsed: {toggle: boolean} = JSON.parse(message)
-   try {
-    await updateNavbarDisputesBadge(identityId, parsed.toggle)
-    return {success: true, error: null, data: null};
+  let parsed: { toggle: boolean } = JSON.parse(message);
+  try {
+    await updateNavbarDisputesBadge(identityId, parsed.toggle);
+    return { success: true, error: null, data: null };
   } catch (err) {
     const error = errorLogger.createError(identityId, 'UpdateNavBar', JSON.stringify(err));
     await errorLogger.logger.create(error);
@@ -1232,7 +1232,7 @@ export const GetDisputeStatus = async ({
       username,
       agent,
       auth,
-      prepped.data,
+      prepped,
       'GetDisputeStatus',
       parserOptions,
     );
@@ -1842,7 +1842,7 @@ export const DisputePreflightCheck = async ({
 }): Promise<{ success: boolean; error?: any }> => {
   const payload: interfaces.IGenericRequest = { id: identityId };
   const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
-  if (!validate(payload)) throw `Malformed message=${message}`;
+  if (!validate(payload)) throw `Malformed message=${payload}`;
 
   let enrolled: boolean;
   try {
@@ -2119,11 +2119,10 @@ export const DisputeInflightCheck = async ({
             const currentDispute = await DB.disputes.get(id, `${disputeId}`);
             console.log('currentDispute', currentDispute);
             const complete = item.data?.DisputeStatus?.DisputeStatusDetail?.Status.toLowerCase() === 'completedispute';
-            const tuDate = item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate ||
+            const tuDate =
+              item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate ||
               item.data?.DisputeStatus.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate;
-            const closedOn = complete
-              ? moment(tuDate, 'MM/DD/YYYY').toISOString()
-              : currentDispute.closedOn;
+            const closedOn = complete ? moment(tuDate, 'MM/DD/YYYY').toISOString() : currentDispute.closedOn;
             const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
             const updatedDispute = {
               ...currentDispute,
