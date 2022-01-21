@@ -107,6 +107,42 @@ export const updateFulfillReport = (
     ReturnValues: 'UPDATED_NEW',
   };
 
+
+
+  return db
+    .update(params)
+    .promise()
+    .then((res) => res)
+    .catch((err) => err);
+};
+
+
+export const updateNavbarDisputesBadge = (
+  id: string,
+  toggle: boolean = true
+) => {
+  let timeStamp = new Date().toISOString(); //always have last updated date
+  const params = {
+    TableName: tableName,
+    Key: {
+      id: id,
+    },
+    // ConditionExpression: 'attribute_exists(queryParam.tableId)',
+    UpdateExpression:
+      'SET #n.#d.#b = :t, updatedAt = :m',
+    ExpressionAttributeNames: {
+      '#n': 'navBar',
+      '#d': 'disputes',
+      '#b': 'badge',
+    },
+    ExpressionAttributeValues: {
+      ':t': toggle,
+      ':m': timeStamp,
+    }
+  };
+
+
+
   return db
     .update(params)
     .promise()
