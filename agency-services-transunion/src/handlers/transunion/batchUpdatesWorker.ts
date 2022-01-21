@@ -65,6 +65,9 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
     return { success: false, error: { error: `Error gathering/reading cert=${err}` } };
   }
 
+  /*==========================================*/
+  //       CREDIT SCORE UPDATES WORKER
+  /*==========================================*/
   // single batch worker handles all the requests
   const creditScoreUpdate = event.Records.map((r) => {
     return JSON.parse(r.body) as ITransunionBatchPayload<IGetEnrollmentData>;
@@ -72,12 +75,6 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
     return b.service === 'creditscoreupdates';
   });
   console.log(`Received ${creditScoreUpdate.length} creditscoreupdates records `);
-  const cancelEnrollment = event.Records.map((r) => {
-    return JSON.parse(r.body) as ITransunionBatchPayload<IGetEnrollmentData>;
-  }).filter((b) => {
-    return b.service === 'cancelenrollment';
-  });
-  console.log(`Received ${cancelEnrollment.length} cancelEnrollment records `);
 
   if (creditScoreUpdate.length) {
     try {
@@ -130,6 +127,16 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
       return JSON.stringify({ success: false, error: { error: `Unknown server error=${err}` } });
     }
   }
+
+  /*==========================================*/
+  //       CANCEL ENROLLMENTS WORKER
+  /*==========================================*/
+  const cancelEnrollment = event.Records.map((r) => {
+    return JSON.parse(r.body) as ITransunionBatchPayload<{ id: string }>;
+  }).filter((b) => {
+    return b.service === 'cancelenrollment';
+  });
+  console.log(`Received ${cancelEnrollment.length} cancelEnrollment records `);
 
   if (cancelEnrollment.length) {
     try {
