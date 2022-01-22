@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+//  This file was automatically generated and should not be edited.
 
 export type __SubscriptionContainer = {
   onCreateAppData: OnCreateAppDataSubscription;
@@ -10,6 +11,7 @@ export type __SubscriptionContainer = {
 export type Transunion = {
   __typename: 'Transunion';
   authenticated?: boolean | null;
+  authenticatedOn?: string | null;
   indicativeEnrichmentSuccess?: boolean | null;
   indicativeEnrichmentStatus?: TUStatusRef | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
@@ -147,6 +149,7 @@ export type AgenciesInput = {
 
 export type TransunionInput = {
   authenticated?: boolean | null;
+  authenticatedOn?: string | null;
   indicativeEnrichmentSuccess?: boolean | null;
   indicativeEnrichmentStatus?: TUStatusRefInput | null;
   getAuthenticationQuestionsSuccess?: boolean | null;
@@ -523,6 +526,7 @@ export type ModelAppDataConnection = {
 export type PatchTransunionMutation = {
   __typename: 'Transunion';
   authenticated?: boolean | null;
+  authenticatedOn?: string | null;
   indicativeEnrichmentSuccess?: boolean | null;
   indicativeEnrichmentStatus?: {
     __typename: 'TUStatusRef';
@@ -704,6 +708,7 @@ export type CreateAppDataMutation = {
     transunion?: {
       __typename: 'Transunion';
       authenticated?: boolean | null;
+      authenticatedOn?: string | null;
       indicativeEnrichmentSuccess?: boolean | null;
       indicativeEnrichmentStatus?: {
         __typename: 'TUStatusRef';
@@ -946,6 +951,7 @@ export type UpdateAppDataMutation = {
     transunion?: {
       __typename: 'Transunion';
       authenticated?: boolean | null;
+      authenticatedOn?: string | null;
       indicativeEnrichmentSuccess?: boolean | null;
       indicativeEnrichmentStatus?: {
         __typename: 'TUStatusRef';
@@ -1188,6 +1194,7 @@ export type DeleteAppDataMutation = {
     transunion?: {
       __typename: 'Transunion';
       authenticated?: boolean | null;
+      authenticatedOn?: string | null;
       indicativeEnrichmentSuccess?: boolean | null;
       indicativeEnrichmentStatus?: {
         __typename: 'TUStatusRef';
@@ -1430,6 +1437,7 @@ export type GetAppDataQuery = {
     transunion?: {
       __typename: 'Transunion';
       authenticated?: boolean | null;
+      authenticatedOn?: string | null;
       indicativeEnrichmentSuccess?: boolean | null;
       indicativeEnrichmentStatus?: {
         __typename: 'TUStatusRef';
@@ -1674,6 +1682,7 @@ export type ListAppDatasQuery = {
       transunion?: {
         __typename: 'Transunion';
         authenticated?: boolean | null;
+        authenticatedOn?: string | null;
         indicativeEnrichmentSuccess?: boolean | null;
         indicativeEnrichmentStatus?: {
           __typename: 'TUStatusRef';
@@ -1918,6 +1927,7 @@ export type OnCreateAppDataSubscription = {
     transunion?: {
       __typename: 'Transunion';
       authenticated?: boolean | null;
+      authenticatedOn?: string | null;
       indicativeEnrichmentSuccess?: boolean | null;
       indicativeEnrichmentStatus?: {
         __typename: 'TUStatusRef';
@@ -2160,6 +2170,7 @@ export type OnUpdateAppDataSubscription = {
     transunion?: {
       __typename: 'Transunion';
       authenticated?: boolean | null;
+      authenticatedOn?: string | null;
       indicativeEnrichmentSuccess?: boolean | null;
       indicativeEnrichmentStatus?: {
         __typename: 'TUStatusRef';
@@ -2402,6 +2413,7 @@ export type OnDeleteAppDataSubscription = {
     transunion?: {
       __typename: 'Transunion';
       authenticated?: boolean | null;
+      authenticatedOn?: string | null;
       indicativeEnrichmentSuccess?: boolean | null;
       indicativeEnrichmentStatus?: {
         __typename: 'TUStatusRef';
