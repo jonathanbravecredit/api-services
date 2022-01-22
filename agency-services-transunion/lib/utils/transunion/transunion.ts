@@ -148,7 +148,7 @@ export class TransunionUtil {
    */
   static parseProductResponseForScoreTracking(
     resp: IFulfillServiceProductResponse | IFulfillServiceProductResponse[],
-    score: CreditScoreTracking,
+    score?: CreditScoreTracking,
   ): CreditScoreTracking | null {
     let fulfillVantageScore: IFulfillServiceProductResponse;
     if (resp instanceof Array) {

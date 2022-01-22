@@ -7,6 +7,7 @@ import * as tu from 'lib/transunion';
 import * as moment from 'moment';
 import { ajv } from 'lib/schema/validation';
 import { Sync } from 'lib/utils/sync/sync';
+import { TransunionUtil as tuUtil } from 'lib/utils/transunion/transunion';
 import { SoapAid } from 'lib/utils/soap-aid/soap-aid';
 import { dateDiffInHours } from 'lib/utils/dates/dates';
 import { returnNestedObject } from 'lib/utils/helpers/helpers';
@@ -23,6 +24,7 @@ import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/cr
 import { IFulfillWorkerData } from 'lib/interfaces/transunion/fulfill-worker.interface';
 import { updateEnrollmentStatus, updateFulfillReport, updateNavbarDisputesBadge } from 'lib/utils/db/dynamo-db/dynamo';
 import { ICancelEnrollGraphQLResponse, IFulfillGraphQLResponse } from 'lib/interfaces';
+import { CreditScoreMaker } from 'lib/utils/db/credit-scores/model/credit-scores.model';
 
 const GO_LIVE = true;
 const errorLogger = new ErrorLogger();
@@ -1907,8 +1909,22 @@ export const DisputePreflightCheck = async ({
         auth,
         identityId,
       };
-      const { success, error } = await FulfillDisputes(payload);
+      const { success, error, data } = await FulfillDisputes(payload);
       if (!success) return { success: false, error: error };
+      const prodResp = data?.ServiceProductFulfillments.ServiceProductResponse;
+      const riskScore = tuUtil.parseProductResponseForScoreTracking(prodResp);
+      if (riskScore != null) {
+        const sub = identityId;
+        const scoreId = new Date().valueOf();
+        const bureauId = 'transunion';
+        const score = riskScore.currentScore;
+        const creditScore = new CreditScoreMaker(sub, scoreId, bureauId, score);
+        try {
+          await DB.creditScoreHistory.create(creditScore);
+        } catch (err) {
+          console.log('log credit score error: ', JSON.stringify(err));
+        }
+      }
     } catch (err) {
       const error = errorLogger.createError(identityId, 'DisputePreflightCheck:FulfillDisputes', JSON.stringify(err));
       await errorLogger.logger.create(error);
@@ -2179,6 +2195,21 @@ export const DisputeInflightCheck = async ({
               identityId: id,
             };
             const fulfilled = await FulfillDisputes(payload);
+            const prodResp = fulfilled.data?.ServiceProductFulfillments.ServiceProductResponse;
+            const riskScore = tuUtil.parseProductResponseForScoreTracking(prodResp);
+            if (riskScore != null) {
+              const sub = id;
+              const scoreId = new Date().valueOf();
+              const bureauId = 'transunion';
+              const score = riskScore.currentScore;
+              const creditScore = new CreditScoreMaker(sub, scoreId, bureauId, score);
+              try {
+                await DB.creditScoreHistory.create(creditScore);
+              } catch (err) {
+                console.log('log credit score error: ', JSON.stringify(err));
+              }
+            }
+
             const synced = await GetInvestigationResults(payload);
             let response = synced
               ? { success: true, error: null, data: synced.data }

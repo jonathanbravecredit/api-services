@@ -58,6 +58,7 @@ provider:
     CREDIT_BUREAU_TABLE: 'CreditBureauReportResults'
     INVESTIGATION_RESULTS_TABLE: 'InvestigationResults'
     CREDIT_SCORE_UPDATES_TABLE: 'CreditScoreTrackings'
+    CREDIT_SCORE_HISTORY_TABLE: 'CreditScores'
     ACCOUNT_ID: !Sub '${AWS::AccountId}'
     IDENTITY_ID: '${self:custom.settings.IDENTITY_IDS.${opt:stage}}'
     POOL_ID: '${self:custom.settings.POOL_IDS.${opt:stage}}'
@@ -110,6 +111,7 @@ provider:
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_BUREAU_TABLE}'
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.INVESTIGATION_RESULTS_TABLE}'
         - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_SCORE_UPDATES_TABLE}'
+        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_SCORE_HISTORY_TABLE}'
 
 layers:
   TuCerts:

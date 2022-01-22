@@ -9,6 +9,8 @@ import { DB } from 'lib/utils/db/db';
 import { Handler } from 'aws-lambda';
 import { GetDisputeStatusByID } from 'lib/proxy';
 import { FulfillDisputes, GetInvestigationResults } from 'lib/proxy';
+import { TransunionUtil as tuUtil } from 'lib/utils/transunion/transunion';
+import { CreditScoreMaker } from 'lib/utils/db/credit-scores/model/credit-scores.model';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -172,6 +174,20 @@ export const main: Handler<{ list: { id: string; disputeId: string }[] }> = asyn
               };
               console.log('CALLING FULFILL DISPUTES');
               const fulfilled = await FulfillDisputes(payload);
+              const prodResp = fulfilled.data?.ServiceProductFulfillments.ServiceProductResponse;
+              const riskScore = tuUtil.parseProductResponseForScoreTracking(prodResp);
+              if (riskScore != null) {
+                const sub = id;
+                const scoreId = new Date().valueOf();
+                const bureauId = 'transunion';
+                const score = riskScore.currentScore;
+                const creditScore = new CreditScoreMaker(sub, scoreId, bureauId, score);
+                try {
+                  await DB.creditScoreHistory.create(creditScore);
+                } catch (err) {
+                  console.log('log credit score error: ', JSON.stringify(err));
+                }
+              }
               console.log('CALLING GET INVESTIGATION RESULTS');
               const synced = await GetInvestigationResults(payload);
               let response = synced
