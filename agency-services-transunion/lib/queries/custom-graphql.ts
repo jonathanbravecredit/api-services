@@ -61,6 +61,7 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
       transunion {
         __typename
         authenticated
+        authenticatedOn
         indicativeEnrichmentSuccess
         indicativeEnrichmentStatus {
           __typename
@@ -489,6 +490,34 @@ export const qryGetDispute = `query GetDispute($id: ID!) {
   }
 }`;
 
+/**
+ * Lists all the transunion vantage scores from the database
+ */
+export const listVantageScores = `query ListAppDatas($filter: ModelAppDataFilterInput, $limit: Int, $nextToken: String) {
+  listAppDatas(filter: $filter, limit: 100, nextToken: $nextToken) {
+    items {
+      id
+      agencies {
+        transunion {
+          enrolled
+          fulfillVantageScore {
+            bureau
+            errorResponse
+            serviceProduct
+            serviceProductFullfillmentKey
+            serviceProductObject
+            serviceProductTypeId
+            serviceProductValue
+            status
+          }
+
+        }
+      }
+    }
+    nextToken
+  }
+}`;
+
 //==============================
 //          MUTATIONS
 //==============================
@@ -552,6 +581,7 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
       transunion {
         __typename
         authenticated
+        authenticatedOn
         indicativeEnrichmentSuccess
         indicativeEnrichmentStatus {
           __typename
@@ -729,48 +759,3 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
     owner
   }
 }`;
-/**
- * Gets the transunion disputes preflight status
- * @param {ID!} id user identity id
- * @param {string} disputePreflightStatus 'failed | success'
- */
-export const updatePreflightStatus = `mutation UpdatePreflightStatus($id: ID!, $disputePreflightStatus: String ) {
-  updatePreflightStatus(id: $id, disputePreflightStatus: $disputePreflightStatus) {
-    id
-    agencies {
-      transunion {
-        disputes {
-          disputePreflightStatus
-        }
-      }
-    }
-  }
-}`;
-
-/**
- * Lists all the transunion vantage scores from the database
- */
-export const listVantageScores = `query ListAppDatas($filter: ModelAppDataFilterInput, $limit: Int, $nextToken: String) {
-    listAppDatas(filter: $filter, limit: 100, nextToken: $nextToken) {
-      items {
-        id
-        agencies {
-          transunion {
-            enrolled
-            fulfillVantageScore {
-              bureau
-              errorResponse
-              serviceProduct
-              serviceProductFullfillmentKey
-              serviceProductObject
-              serviceProductTypeId
-              serviceProductValue
-              status
-            }
-
-          }
-        }
-      }
-      nextToken
-    }
-  }`;
