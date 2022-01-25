@@ -3,8 +3,6 @@ import { AppSyncResolverEvent, AppSyncResolverHandler } from 'aws-lambda';
 import { SNS, DynamoDB } from 'aws-sdk';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
-import { DEV_FAILED_FULFILLS, FAILED_FULFILLS } from 'lib/data/failedfulfills';
-import { getItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
 import { CANCEL_ENROLLMENTS } from 'lib/data/cancelEnrollments';
 // import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
 // import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
