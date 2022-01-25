@@ -1,9 +1,8 @@
 import 'reflect-metadata';
-import { AppSyncResolverEvent, AppSyncResolverHandler } from 'aws-lambda';
+import { Handler } from 'aws-lambda';
 import { SNS, DynamoDB } from 'aws-sdk';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
-import { DEV_FAILED_FULFILLS, FAILED_FULFILLS } from 'lib/data/failedfulfills';
 import { getItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
 // import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
 // import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
@@ -32,13 +31,16 @@ interface IEnrollee {
  * @param message Object containing service specific package for processing
  * @returns Lambda proxy response
  */
-export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResolverEvent<any>): Promise<any> => {
+export const main: Handler = async (event: { list: string[] }): Promise<any> => {
   // can be kicked off through AppSync if needed
   // const scores = await DB.creditScoreTrackings.list();
   // create the payload with out the auth and agent
+  const { list } = event;
+  if (!list || !list.length) return;
+
   try {
     const appItems = await Promise.all(
-      FAILED_FULFILLS.map(async (id) => {
+      list.map(async (id) => {
         return await getItemsInDB(id);
       }),
     );
