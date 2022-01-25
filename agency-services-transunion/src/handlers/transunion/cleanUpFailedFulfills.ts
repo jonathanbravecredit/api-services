@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { Handler } from 'aws-lambda';
 import { listTransactionLog } from 'lib/utils/db/logger/queries/api-transaction.queries';
 import { Sync } from 'lib/utils/sync/sync';
