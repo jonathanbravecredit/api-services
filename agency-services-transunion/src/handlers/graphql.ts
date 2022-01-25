@@ -97,6 +97,9 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       case 'Ping':
         results = await queries.Ping(payload);
         return JSON.stringify(results);
+      case 'UpdateNavBar':
+        results = await queries.UpdateNavBar(payload);
+        return JSON.stringify(results);
       case 'IndicativeEnrichment':
         results = await queries.IndicativeEnrichment(payload);
         return JSON.stringify(results);

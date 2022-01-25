@@ -228,6 +228,13 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
       databreachReviewed
       databreachStatus
     }
+    navBar {
+      __typename
+      disputes {
+        __typename
+        badge
+      }
+    }
     status
     statusReason
     statusReasonDescription
@@ -747,6 +754,13 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
       databreachCardStatus
       databreachReviewed
       databreachStatus
+    }
+    navBar {
+      __typename
+      disputes {
+        __typename
+        badge
+      }
     }
     status
     statusReason
