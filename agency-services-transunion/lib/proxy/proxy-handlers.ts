@@ -21,7 +21,6 @@ import { enrichFulfillDataWorker, updateInvestigationResultsDB } from 'lib/trans
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
-import { IFulfillWorkerData } from 'lib/interfaces/transunion/fulfill-worker.interface';
 import { updateEnrollmentStatus, updateFulfillReport, updateNavbarDisputesBadge } from 'lib/utils/db/dynamo-db/dynamo';
 import { ICancelEnrollGraphQLResponse, IFulfillGraphQLResponse } from 'lib/interfaces';
 import { CreditScoreMaker } from 'lib/utils/db/credit-scores/model/credit-scores.model';
