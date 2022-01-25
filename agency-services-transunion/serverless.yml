@@ -159,6 +159,13 @@ functions:
     layers:
       - { Ref: TuCertsLambdaLayer }
 
+  # clean up failed fulfills
+  cleanUpFailedFulfills:
+    handler: src/handlers/transunion/cleanUpFailedFulfills.main
+    timeout: 720
+    layers:
+      - { Ref: TuCertsLambdaLayer }
+
   # generic batch updates worker
   batchUpdatesWorker:
     handler: src/handlers/transunion/batchUpdatesWorker.main
