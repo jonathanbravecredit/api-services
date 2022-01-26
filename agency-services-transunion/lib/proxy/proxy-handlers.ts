@@ -1741,8 +1741,6 @@ export const GetInvestigationResults = async ({
     let response;
     if (responseType.toLowerCase() === 'success') {
       const synced = await updateInvestigationResultsDB(payload.id, bundle);
-      // update the db navbar badge with true;
-      await updateNavbarDisputesBadge(identityId, true);
       response = synced ? { success: true, error: null } : { success: false, error: 'failed to sync data to db' };
     } else {
       response = { success: false, error: error };
