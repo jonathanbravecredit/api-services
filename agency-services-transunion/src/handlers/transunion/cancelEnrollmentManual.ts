@@ -3,6 +3,9 @@ import { SNS } from 'aws-sdk';
 import { Handler } from 'aws-lambda';
 import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
+import { CANCEL_ENROLLMENTS } from 'lib/data/cancelEnrollments';
+// import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
+// import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();

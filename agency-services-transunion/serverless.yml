@@ -131,6 +131,16 @@ functions:
     events:
       - schedule: cron(0 16 * * ? *)
 
+  monitorInvestigationResults:
+    handler: src/monitors/monitorInvestigationResults.main
+    timeout: 60
+    events:
+      - stream:
+          type: dynamodb
+          batchSize: 100
+          startingPosition: LATEST
+          arn: { 'Fn::GetAtt': ['InvestigationResults', 'StreamArn'] }
+
   # Update credit scores and reports flow
   creditScoreUpdatesService:
     handler: src/handlers/transunion/creditScoreUpdatesService.main
