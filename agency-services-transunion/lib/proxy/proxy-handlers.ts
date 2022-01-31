@@ -2043,7 +2043,10 @@ export const DisputeInflightCheck = async ({
       // does the TU api respond
       throw error;
     }
-    notifications = data?.AlertNotifications?.AlertNotification;
+    notifications =
+      data?.AlertNotifications?.AlertNotification instanceof Array
+        ? data?.AlertNotifications?.AlertNotification
+        : [data?.AlertNotifications?.AlertNotification];
     console.log('all notifications ===> ', JSON.stringify(notifications));
   } catch (err) {
     const error = errorLogger.createError(
