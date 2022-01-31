@@ -174,8 +174,11 @@ export const main: Handler<{ list: { id: string; disputeId: string }[] }> = asyn
               };
               console.log('CALLING FULFILL DISPUTES');
               const fulfilled = await FulfillDisputes(payload);
+              console.log('fulfilled ==> ', fulfilled);
               const prodResp = fulfilled.data?.ServiceProductFulfillments.ServiceProductResponse;
+              console.log('prodResp ==> ', prodResp);
               const riskScore = tuUtil.parseProductResponseForScoreTracking(prodResp);
+              console.log('riskScore ==> ', riskScore);
               if (riskScore != null) {
                 const sub = id;
                 const scoreId = new Date().valueOf();
