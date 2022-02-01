@@ -5,7 +5,7 @@ import { DB } from 'lib/utils/db/db';
 import { UpdateAppDataInput } from 'src/api/api.service';
 import { CreditScoreMaker } from 'lib/utils/db/credit-scores/model/credit-scores.model';
 import * as dayjs from 'dayjs';
-import * as _ from 'lodash';
+import { find } from 'lodash';
 import { safeParse } from 'lib/utils';
 
 export const main: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent): Promise<void> => {
@@ -25,12 +25,11 @@ export const main: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent): P
         // update the db navbar badge with true;
         const oldFulfilledOn = oldImage.agencies?.transunion?.fulfilledOn;
         const newFulfilledOn = newImage.agencies?.transunion?.fulfilledOn;
-        const changed = dayjs(oldFulfilledOn).isAfter(newFulfilledOn);
+        const changed = dayjs(newFulfilledOn).isAfter(oldFulfilledOn);
         if (changed) {
           const spo = newImage.agencies?.transunion?.fulfillVantageScore?.serviceProductObject;
           if (spo) {
-            const creditscore = safeParse(spo, 'CreditScoreType');
-            const { riskScore }: { riskScore: number } = _.find(creditscore, 'riskScore');
+            const { riskScore } = safeParse(spo, 'CreditScoreType') as { riskScore: number };
             if (riskScore != null) {
               const sub = newImage.id;
               const scoreId = new Date().valueOf();
