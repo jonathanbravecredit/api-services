@@ -1910,20 +1910,6 @@ export const DisputePreflightCheck = async ({
       };
       const { success, error, data } = await FulfillDisputes(payload);
       if (!success) return { success: false, error: error };
-      const prodResp = data?.ServiceProductFulfillments.ServiceProductResponse;
-      const riskScore = tuUtil.parseProductResponseForScoreTracking(prodResp);
-      if (riskScore != null) {
-        const sub = identityId;
-        const scoreId = new Date().valueOf();
-        const bureauId = 'transunion';
-        const score = riskScore.currentScore;
-        const creditScore = new CreditScoreMaker(sub, scoreId, bureauId, score);
-        try {
-          await DB.creditScoreHistory.create(creditScore);
-        } catch (err) {
-          console.log('log credit score error: ', JSON.stringify(err));
-        }
-      }
     } catch (err) {
       const error = errorLogger.createError(identityId, 'DisputePreflightCheck:FulfillDisputes', JSON.stringify(err));
       await errorLogger.logger.create(error);
@@ -2196,22 +2182,10 @@ export const DisputeInflightCheck = async ({
               auth,
               identityId: id,
             };
+            console.log('CALLING FULFILL');
             const fulfilled = await Fulfill(payload);
-            const prodResp = fulfilled.data?.ServiceProductFulfillments.ServiceProductResponse;
-            const riskScore = tuUtil.parseProductResponseForScoreTracking(prodResp);
-            if (riskScore != null) {
-              const sub = id;
-              const scoreId = new Date().valueOf();
-              const bureauId = 'transunion';
-              const score = riskScore.currentScore;
-              const creditScore = new CreditScoreMaker(sub, scoreId, bureauId, score);
-              try {
-                await DB.creditScoreHistory.create(creditScore);
-              } catch (err) {
-                console.log('log credit score error: ', JSON.stringify(err));
-              }
-            }
-
+            if (!fulfilled.success) throw `fulfilled failed; error: ${fulfilled.error}; data: ${fulfilled.data}`;
+            console.log('CALLING GET INVESTIGATION RESULTS');
             const synced = await GetInvestigationResults(payload);
             let response = synced
               ? { success: true, error: null, data: synced.data }

@@ -172,25 +172,9 @@ export const main: Handler<{ list: { id: string; disputeId: string }[] }> = asyn
                 auth,
                 identityId: id,
               };
-              console.log('CALLING FULFILL DISPUTES');
+              console.log('CALLING FULFILL');
               const fulfilled = await Fulfill(payload);
-              console.log('fulfilled ==> ', fulfilled);
-              const prodResp = fulfilled.data?.ServiceProductFulfillments.ServiceProductResponse;
-              console.log('prodResp ==> ', prodResp);
-              const riskScore = tuUtil.parseProductResponseForScoreTracking(prodResp);
-              console.log('riskScore ==> ', riskScore);
-              if (riskScore != null) {
-                const sub = id;
-                const scoreId = new Date().valueOf();
-                const bureauId = 'transunion';
-                const score = riskScore.currentScore;
-                const creditScore = new CreditScoreMaker(sub, scoreId, bureauId, score);
-                try {
-                  await DB.creditScoreHistory.create(creditScore);
-                } catch (err) {
-                  console.log('log credit score error: ', JSON.stringify(err));
-                }
-              }
+              if (!fulfilled.success) throw `fulfilled failed; error: ${fulfilled.error}; data: ${fulfilled.data}`;
               console.log('CALLING GET INVESTIGATION RESULTS');
               const synced = await GetInvestigationResults(payload);
               let response = synced

@@ -131,3 +131,9 @@ export interface IFulfillServiceProductResponse {
   ServiceProductValue: string;
   Status: string;
 }
+
+export interface IFulfillVantageScore {
+  CreditScoreType: {
+    riskScore: number;
+  };
+}

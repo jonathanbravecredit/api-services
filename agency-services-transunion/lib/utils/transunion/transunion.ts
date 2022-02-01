@@ -156,9 +156,10 @@ export class TransunionUtil {
         return item['ServiceProduct'] === 'TUCVantageScore3';
       });
     } else if (resp['ServiceProduct'] === 'TUCVantageScore3') {
-      fulfillVantageScore = resp || null;
+      fulfillVantageScore = resp;
     }
     const prodObj = fulfillVantageScore.ServiceProductObject;
+    console.log('prodObject in getScore ');
     let vantageScore: IVantageScore;
     if (typeof prodObj === 'string') {
       vantageScore = JSON.parse(prodObj);
