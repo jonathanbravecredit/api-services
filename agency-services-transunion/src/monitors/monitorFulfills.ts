@@ -32,12 +32,12 @@ export const main: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent): P
           const spo = newImage.agencies?.transunion?.fulfillVantageScore?.serviceProductObject;
           if (spo) {
             const creditscore = safeParse(spo, 'CreditScoreType');
-            const score: number = _.find(creditscore, 'riskScore');
-            if (score != null) {
+            const { riskScore } = _.find(creditscore, 'riskScore');
+            if (riskScore != null) {
               const sub = newImage.id;
               const scoreId = new Date().valueOf();
               const bureauId = 'transunion';
-              const creditScore = new CreditScoreMaker(sub, scoreId, bureauId, score);
+              const creditScore = new CreditScoreMaker(sub, scoreId, bureauId, riskScore);
               try {
                 await DB.creditScoreHistory.create(creditScore);
               } catch (err) {
