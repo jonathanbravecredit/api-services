@@ -25,7 +25,10 @@ export const createCreditScore = (creditScore: CreditScore): Promise<void> => {
     .ifNotExists()
     .exec()
     .then((res) => res)
-    .catch((err) => err);
+    .catch((err) => {
+      console.log('createCreditScore error: ', err);
+      return err;
+    });
 };
 
 export const deleteCreditScore = (id: string, scoreId: number): Promise<void> => {

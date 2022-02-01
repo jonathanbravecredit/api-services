@@ -141,6 +141,17 @@ functions:
           startingPosition: LATEST
           arn: { 'Fn::GetAtt': ['InvestigationResults', 'StreamArn'] }
 
+  monitorFulfills:
+    handler: src/monitors/monitorFulfills.main
+    timeout: 60
+    events:
+      - stream:
+          type: dynamodb
+          batchSize: 100
+          startingPosition: LATEST
+          arn:
+            Fn::ImportValue: '${self:custom.settings.APPDATA_STREAMS.${opt:stage}}'
+
   # Update credit scores and reports flow
   creditScoreUpdatesService:
     handler: src/handlers/transunion/creditScoreUpdatesService.main
