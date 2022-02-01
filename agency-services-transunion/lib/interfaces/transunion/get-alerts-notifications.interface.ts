@@ -31,7 +31,7 @@ export interface IGetAlertNotificationsForAllUsersResult {
   RequestKey: string;
   ResponseType: string;
   AlertNotifications: {
-    AlertNotification: IAlertNotification[];
+    AlertNotification: IAlertNotification[] | IAlertNotification;
   };
   HasMoreNotifications: boolean;
 }

@@ -7,7 +7,7 @@ import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { DB } from 'lib/utils/db/db';
 import { Handler } from 'aws-lambda';
-import { GetDisputeStatusByID } from 'lib/proxy';
+import { Fulfill, GetDisputeStatusByID } from 'lib/proxy';
 import { FulfillDisputes, GetInvestigationResults } from 'lib/proxy';
 import { TransunionUtil as tuUtil } from 'lib/utils/transunion/transunion';
 import { CreditScoreMaker } from 'lib/utils/db/credit-scores/model/credit-scores.model';
@@ -173,9 +173,12 @@ export const main: Handler<{ list: { id: string; disputeId: string }[] }> = asyn
                 identityId: id,
               };
               console.log('CALLING FULFILL DISPUTES');
-              const fulfilled = await FulfillDisputes(payload);
+              const fulfilled = await Fulfill(payload);
+              console.log('fulfilled ==> ', fulfilled);
               const prodResp = fulfilled.data?.ServiceProductFulfillments.ServiceProductResponse;
+              console.log('prodResp ==> ', prodResp);
               const riskScore = tuUtil.parseProductResponseForScoreTracking(prodResp);
+              console.log('riskScore ==> ', riskScore);
               if (riskScore != null) {
                 const sub = id;
                 const scoreId = new Date().valueOf();
