@@ -2196,7 +2196,7 @@ export const DisputeInflightCheck = async ({
               auth,
               identityId: id,
             };
-            const fulfilled = await FulfillDisputes(payload);
+            const fulfilled = await Fulfill(payload);
             const prodResp = fulfilled.data?.ServiceProductFulfillments.ServiceProductResponse;
             const riskScore = tuUtil.parseProductResponseForScoreTracking(prodResp);
             if (riskScore != null) {
