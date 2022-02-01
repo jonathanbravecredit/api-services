@@ -13,7 +13,7 @@ export const main: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent): P
   const modifies = records.filter((r) => r.eventName === 'MODIFY');
 
   /*================*/
-  //    INSERTS     //
+  //    MODIFIES    //
   /*================*/
   try {
     await Promise.all(
