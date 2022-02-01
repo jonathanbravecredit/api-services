@@ -1,13 +1,11 @@
+import 'reflect-metadata';
 import { DynamoDBRecord, DynamoDBStreamEvent, DynamoDBStreamHandler, StreamRecord } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 import { DB } from 'lib/utils/db/db';
-import { updateNavbarDisputesBadge } from 'lib/utils/db/dynamo-db/dynamo';
 import { UpdateAppDataInput } from 'src/api/api.service';
-import { TransunionUtil as tuUtil } from 'lib/utils/transunion/transunion';
 import { CreditScoreMaker } from 'lib/utils/db/credit-scores/model/credit-scores.model';
 import * as dayjs from 'dayjs';
 import * as _ from 'lodash';
-import { IFulfillVantageScore } from 'lib/interfaces';
 import { safeParse } from 'lib/utils';
 
 export const main: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent): Promise<void> => {
@@ -32,7 +30,7 @@ export const main: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent): P
           const spo = newImage.agencies?.transunion?.fulfillVantageScore?.serviceProductObject;
           if (spo) {
             const creditscore = safeParse(spo, 'CreditScoreType');
-            const { riskScore } = _.find(creditscore, 'riskScore');
+            const { riskScore }: { riskScore: number } = _.find(creditscore, 'riskScore');
             if (riskScore != null) {
               const sub = newImage.id;
               const scoreId = new Date().valueOf();
