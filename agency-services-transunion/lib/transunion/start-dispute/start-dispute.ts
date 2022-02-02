@@ -1,3 +1,6 @@
+import * as fastXml from 'fast-xml-parser';
+import * as convert from 'xml-js';
+import * as uuid from 'uuid';
 import {
   IAka,
   IAttachment,
@@ -18,16 +21,10 @@ import {
   IBorrowerAddress,
   IBorrowerName,
   IIndicativeDisputesAddress,
-  IDisputePersonalItem,
-  IDispute,
 } from 'lib/interfaces';
 import { textConstructor } from 'lib/utils/helpers/helpers';
-import * as fastXml from 'fast-xml-parser';
-import * as convert from 'xml-js';
-import * as uuid from 'uuid';
 import { MONTH_MAP } from 'lib/data/constants';
 import { TransunionUtil } from 'lib/utils/transunion/transunion';
-import { DB as db } from 'lib/utils/db/db';
 import { UpdateAppDataInput } from 'src/api/api.service';
 /**
  * Genarates the message payload for TU Fulfill request
