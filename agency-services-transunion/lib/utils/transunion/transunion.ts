@@ -24,10 +24,12 @@ export class TransunionUtil {
     if (!borrowerName) return this.bcMissing;
     if (!borrowerName.Name) return this.bcMissing;
     const name: Record<string, any> = borrowerName.Name;
+    console.log('name: ', JSON.stringify(name));
     if (!name) return this.bcMissing;
     let fullName = '';
+    // `${(name[key] as string).replace(new RegExp(',', 'g'), ' ')} ` : '';
     for (const key in NAME_MAP) {
-      const str = !!name[key] ? `${(name[key] as string).replace(new RegExp(',', 'g'), ' ')} ` : '';
+      const str = !!name[key] ? name[key] : '';
       fullName = `${fullName}${str}`;
     }
     return fullName.trim();
