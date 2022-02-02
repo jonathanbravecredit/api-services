@@ -32,11 +32,6 @@ export class TransunionUtil {
       const str = !!name[key] ? name[key] : '';
       fullName = `${fullName}${str}`;
     }
-    if (fullName.endsWith(',')) {
-      const str = fullName.split('');
-      str[str.length - 1] = '';
-      fullName = str.join('');
-    }
     return fullName.trim();
   }
 
