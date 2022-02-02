@@ -27,9 +27,15 @@ export class TransunionUtil {
     console.log('name: ', JSON.stringify(name));
     if (!name) return this.bcMissing;
     let fullName = '';
+    // `${(name[key] as string).replace(new RegExp(',', 'g'), ' ')} ` : '';
     for (const key in NAME_MAP) {
-      const str = !!name[key] ? `${(name[key] as string).replace(new RegExp(',', 'g'), ' ')} ` : '';
+      const str = !!name[key] ? name[key] : '';
       fullName = `${fullName}${str}`;
+    }
+    if (fullName.endsWith(',')) {
+      const str = fullName.split('');
+      str[str.length - 1] = '';
+      fullName = str.join('');
     }
     return fullName.trim();
   }
