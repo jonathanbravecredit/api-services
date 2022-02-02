@@ -27,10 +27,10 @@ export class TransunionUtil {
     if (!name) return this.bcMissing;
     let fullName = '';
     for (const key in NAME_MAP) {
-      const str = !!name[key] ? `${(name[key] as string).replace(new RegExp(',', 'g'), '')} ` : '';
+      const str = !!name[key] ? `${(name[key] as string).replace(new RegExp(',', 'g'), ' ')} ` : '';
       fullName = `${fullName}${str}`;
     }
-    return fullName;
+    return fullName.trim();
   }
 
   /**
