@@ -1,4 +1,4 @@
-import { IFulfillResult } from 'lib/interfaces';
+import { IFulfillResult, INavBarRequest } from 'lib/interfaces';
 import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
 import { TUReportResponseInput } from 'src/api/api.service';
 import { DynamoDB } from 'aws-sdk';
@@ -114,22 +114,35 @@ export const updateFulfillReport = (
     .catch((err) => err);
 };
 
-export const updateNavbarDisputesBadge = (id: string, toggle: boolean = true) => {
+export const updateNavbarDisputesBadge = (payload: INavBarRequest) => {
   let timeStamp = new Date().toISOString(); //always have last updated date
+
   const params = {
     TableName: tableName,
     Key: {
-      id: id,
+      id: payload.id,
     },
     // ConditionExpression: 'attribute_exists(queryParam.tableId)',
-    UpdateExpression: 'SET #n.#d.#b = :t, updatedAt = :m',
+    UpdateExpression: `SET
+      #n.#h.#b = :h,
+      #n.#r.#b = :r,
+      #n.#d.#b = :d,
+      #n.#s.#b = :s,
+      updatedAt = :m
+      `,
     ExpressionAttributeNames: {
       '#n': 'navBar',
+      '#h': 'home',
+      '#r': 'report',
       '#d': 'disputes',
+      '#s': 'settings',
       '#b': 'badge',
     },
     ExpressionAttributeValues: {
-      ':t': toggle,
+      ':h': payload.home?.badge || false,
+      ':r': payload.report?.badge || false,
+      ':d': payload.disputes?.badge || false,
+      ':s': payload.settings?.badge || false,
       ':m': timeStamp,
     },
   };

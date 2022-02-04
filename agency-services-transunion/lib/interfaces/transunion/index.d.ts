@@ -20,3 +20,4 @@ export * from './get-trending-data.interface';
 export * from './get-alerts-notifications.interface';
 export * from './get-investigation-results-by-id.interface';
 export * from './cancel-enrollment.interface';
+export * from './nav-bar-request.interface';

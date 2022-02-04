@@ -104,9 +104,14 @@ export const UpdateNavBar = async ({
   error?: interfaces.IErrorResponse | interfaces.INil | string;
   data?: any;
 }> => {
-  let parsed: { toggle: boolean } = JSON.parse(message);
+  const payload: interfaces.INavBarRequest = {
+    id: identityId,
+    ...JSON.parse(message),
+  };
+  const validate = ajv.getSchema<interfaces.INavBarRequest>('navBarRequest');
+  if (!validate(payload)) throw `Malformed message=${payload}`;
   try {
-    await updateNavbarDisputesBadge(identityId, parsed.toggle);
+    await updateNavbarDisputesBadge(payload);
     return { success: true, error: null, data: null };
   } catch (err) {
     const error = errorLogger.createError(identityId, 'UpdateNavBar', JSON.stringify(err));
