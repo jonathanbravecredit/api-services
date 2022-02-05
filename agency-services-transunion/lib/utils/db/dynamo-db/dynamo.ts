@@ -130,7 +130,6 @@ export const updateNavbarDisputesBadge = (payload: INavBarRequest) => {
       '#r': 'report',
       '#d': 'disputes',
       '#s': 'settings',
-      '#b': 'badge',
     },
     ExpressionAttributeValues: {
       ':h': payload.home || { badge: false },
