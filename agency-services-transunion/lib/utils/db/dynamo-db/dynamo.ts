@@ -123,13 +123,7 @@ export const updateNavbarDisputesBadge = (payload: INavBarRequest) => {
       id: payload.id,
     },
     // ConditionExpression: 'attribute_exists(queryParam.tableId)',
-    UpdateExpression: `SET
-      #n.#h.#b = :h,
-      #n.#r.#b = :r,
-      #n.#d.#b = :d,
-      #n.#s.#b = :s,
-      updatedAt = :m
-      `,
+    UpdateExpression: 'SET #n.#h.#b = :h, #n.#r.#b = :r, #n.#d.#b = :d, #n.#s.#b = :s, updatedAt = :m',
     ExpressionAttributeNames: {
       '#n': 'navBar',
       '#h': 'home',
