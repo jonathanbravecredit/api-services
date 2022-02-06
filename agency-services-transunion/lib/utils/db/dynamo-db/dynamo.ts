@@ -114,51 +114,7 @@ export const updateFulfillReport = (
     .catch((err) => err);
 };
 
-export const updateNavbarBadge = (
-  payload: INavBarRequest,
-  explicit: boolean = false,
-  expressions?: { set: string; name: string; value: any },
-) => {
-  let timeStamp = new Date().toISOString(); //always have last updated date
-  const { navBar } = payload;
-  const params = explicit
-    ? {
-        TableName: tableName,
-        Key: {
-          id: payload.id,
-        },
-        UpdateExpression: `${expressions.set}, updatedAt = :t`,
-        ExpressionAttributeNames: {
-          '#name': expressions.name,
-        },
-        ExpressionAttributeValues: {
-          ':value': expressions.value,
-          ':t': timeStamp,
-        },
-        ReturnValues: 'UPDATED_NEW',
-      }
-    : {
-        TableName: tableName,
-        Key: {
-          id: payload.id,
-        },
-        UpdateExpression: 'SET #n.#h = :h, #n.#r = :r, #n.#d = :d, #n.#s = :s, updatedAt = :m',
-        ExpressionAttributeNames: {
-          '#n': 'navBar',
-          '#h': 'home',
-          '#r': 'report',
-          '#d': 'disputes',
-          '#s': 'settings',
-        },
-        ExpressionAttributeValues: {
-          ':h': navBar.home || { badge: false },
-          ':r': navBar.report || { badge: false },
-          ':d': navBar.disputes || { badge: false },
-          ':s': navBar.settings || { badge: false },
-          ':m': timeStamp,
-        },
-        ReturnValues: 'UPDATED_NEW',
-      };
+export const updateDynamoDB = (params: DynamoDB.DocumentClient.UpdateItemInput) => {
   console.log('params: ==> ', params);
   return db
     .update(params)
@@ -173,13 +129,53 @@ export const updateNavbarBadge = (
     });
 };
 
+export const updateNavBarBadges = (payload: INavBarRequest) => {
+  const { navBar } = payload;
+  let timeStamp = new Date().toISOString(); //always have last updated date
+  const params = {
+    TableName: tableName,
+    Key: {
+      id: payload.id,
+    },
+    UpdateExpression: 'SET #n.#h = :h, #n.#r = :r, #n.#d = :d, #n.#s = :s, updatedAt = :m',
+    ExpressionAttributeNames: {
+      '#n': 'navBar',
+      '#h': 'home',
+      '#r': 'report',
+      '#d': 'disputes',
+      '#s': 'settings',
+    },
+    ExpressionAttributeValues: {
+      ':h': navBar.home || { badge: false },
+      ':r': navBar.report || { badge: false },
+      ':d': navBar.disputes || { badge: false },
+      ':s': navBar.settings || { badge: false },
+      ':m': timeStamp,
+    },
+    ReturnValues: 'UPDATED_NEW',
+  };
+  return updateDynamoDB(params);
+};
 export const updateNavbarDisputesBadge = (payload: INavBarRequest) => {
   const { navBar } = payload;
-  const set = 'SET #name = :value';
-  const name = 'navBar.disputes';
-  const value = `{ badge: ${navBar.disputes.badge || false}}`;
-  const updateExpression = { set, name, value };
-  return updateNavbarBadge(payload, true, updateExpression);
+  let timeStamp = new Date().toISOString(); //always have last updated date
+  const params = {
+    TableName: tableName,
+    Key: {
+      id: payload.id,
+    },
+    UpdateExpression: `SET #n.#d = :d, updatedAt = :t`,
+    ExpressionAttributeNames: {
+      '#n': 'navBar',
+      '#d': 'disputes',
+    },
+    ExpressionAttributeValues: {
+      ':d': navBar.disputes || { badge: false },
+      ':t': timeStamp,
+    },
+    ReturnValues: 'UPDATED_NEW',
+  };
+  return updateDynamoDB(params);
 };
 
 export const updateEnrollmentStatus = (
