@@ -19,7 +19,7 @@ export const main: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent): P
         // update the db navbar badge with true;
         try {
           const payload = {
-            id: newImage.id,
+            id: newImage.userId,
             navBar: {
               disputes: {
                 badge: true,
