@@ -114,16 +114,28 @@ export const updateFulfillReport = (
     .catch((err) => err);
 };
 
-export const updateNavbarBadge = (payload: INavBarRequest, expression?: string) => {
+export const updateNavbarBadge = (
+  payload: INavBarRequest,
+  explicit: boolean = false,
+  expressions?: { set: string; name: string; value: any },
+) => {
   let timeStamp = new Date().toISOString(); //always have last updated date
   const { navBar } = payload;
-  const params = expression
+  const params = explicit
     ? {
         TableName: tableName,
         Key: {
           id: payload.id,
         },
-        UpdateExpression: expression,
+        UpdateExpression: `${expressions.set}, updatedAt = :m`,
+        ExpressionAttributeNames: {
+          '#name': expressions.name,
+        },
+        ExpressionAttributeValues: {
+          ':value': expressions.value,
+          ':t': timeStamp,
+        },
+        ReturnValues: 'UPDATED_NEW',
       }
     : {
         TableName: tableName,
@@ -163,8 +175,11 @@ export const updateNavbarBadge = (payload: INavBarRequest, expression?: string) 
 
 export const updateNavbarDisputesBadge = (payload: INavBarRequest) => {
   const { navBar } = payload;
-  const updateExpression = `SET navBar.disputes.badge = ${navBar.disputes.badge || false}`;
-  return updateNavbarBadge(payload, updateExpression);
+  const set = 'SET #name = :value';
+  const name = 'navBar.disputes';
+  const value = `{ badge: ${navBar.disputes.badge || false}}`;
+  const updateExpression = { set, name, value };
+  return updateNavbarBadge(payload, true, updateExpression);
 };
 
 export const updateEnrollmentStatus = (
