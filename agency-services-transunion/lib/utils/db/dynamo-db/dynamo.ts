@@ -152,7 +152,7 @@ export const updateNavbarBadge = (payload: INavBarRequest, expression?: string) 
     .update(params)
     .promise()
     .then((res) => {
-      console.log('update Nav Bar ', res);
+      console.log('update Nav Bar ', JSON.stringify(res));
       return res;
     })
     .catch((err) => {
