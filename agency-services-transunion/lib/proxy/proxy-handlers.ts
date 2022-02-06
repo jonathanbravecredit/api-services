@@ -109,7 +109,8 @@ export const UpdateNavBar = async ({
     ...JSON.parse(message),
   };
   const validate = ajv.getSchema<interfaces.INavBarRequest>('navBarRequest');
-  if (!validate(payload)) throw `Malformed message=${payload}`;
+  if (!validate(payload)) throw `Malformed message=${JSON.stringify(payload)}`;
+
   try {
     await updateNavbarDisputesBadge(payload);
     return { success: true, error: null, data: null };

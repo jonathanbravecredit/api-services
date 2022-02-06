@@ -35,6 +35,11 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
   const action: string = event?.arguments?.action;
   const message: string = event?.arguments?.message;
 
+  if (process.env.TU_ENV === 'dev') {
+    console.log('action: ', action);
+    console.log('message: ', JSON.stringify(message));
+  }
+
   let tokenUser;
   try {
     const token = event['token'];

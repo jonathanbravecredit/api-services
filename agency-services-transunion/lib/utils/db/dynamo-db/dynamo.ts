@@ -139,7 +139,7 @@ export const updateNavbarDisputesBadge = (payload: INavBarRequest) => {
       ':m': timeStamp,
     },
   };
-
+  console.log('params: ==> ', params);
   return db
     .update(params)
     .promise()

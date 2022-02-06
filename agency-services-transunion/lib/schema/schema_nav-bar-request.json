@@ -5,12 +5,12 @@
       "type": "string",
       "nullable": false
     },
-    "home": {
+    "init": {
       "type": "object",
       "properties": {
         "badge": {
           "type": "boolean",
-          "nullable": false
+          "nullable": true
         }
       },
       "nullable": false
@@ -20,7 +20,7 @@
       "properties": {
         "badge": {
           "type": "boolean",
-          "nullable": false
+          "nullable": true
         }
       },
       "nullable": false
@@ -30,7 +30,7 @@
       "properties": {
         "badge": {
           "type": "boolean",
-          "nullable": false
+          "nullable": true
         }
       },
       "nullable": false
