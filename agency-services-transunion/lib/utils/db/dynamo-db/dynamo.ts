@@ -116,7 +116,7 @@ export const updateFulfillReport = (
 
 export const updateNavbarDisputesBadge = (payload: INavBarRequest) => {
   let timeStamp = new Date().toISOString(); //always have last updated date
-
+  const { navBar } = payload;
   const params = {
     TableName: tableName,
     Key: {
@@ -132,10 +132,10 @@ export const updateNavbarDisputesBadge = (payload: INavBarRequest) => {
       '#s': 'settings',
     },
     ExpressionAttributeValues: {
-      ':h': payload.home || { badge: false },
-      ':r': payload.report || { badge: false },
-      ':d': payload.disputes || { badge: false },
-      ':s': payload.settings || { badge: false },
+      ':h': navBar.home || { badge: false },
+      ':r': navBar.report || { badge: false },
+      ':d': navBar.disputes || { badge: false },
+      ':s': navBar.settings || { badge: false },
       ':m': timeStamp,
     },
   };

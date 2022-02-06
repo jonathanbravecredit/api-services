@@ -5,49 +5,55 @@
       "type": "string",
       "nullable": false
     },
-    "init": {
+    "navBar": {
       "type": "object",
       "properties": {
-        "badge": {
-          "type": "boolean",
-          "nullable": true
-        }
-      },
-      "nullable": false
-    },
-    "report": {
-      "type": "object",
-      "properties": {
-        "badge": {
-          "type": "boolean",
-          "nullable": true
-        }
-      },
-      "nullable": false
-    },
-    "disputes": {
-      "type": "object",
-      "properties": {
-        "badge": {
-          "type": "boolean",
-          "nullable": true
-        }
-      },
-      "nullable": false
-    },
-    "settings": {
-      "type": "object",
-      "properties": {
-        "badge": {
-          "type": "boolean",
+        "init": {
+          "type": "object",
+          "properties": {
+            "badge": {
+              "type": "boolean",
+              "nullable": true
+            }
+          },
+          "nullable": false
+        },
+        "report": {
+          "type": "object",
+          "properties": {
+            "badge": {
+              "type": "boolean",
+              "nullable": true
+            }
+          },
+          "nullable": false
+        },
+        "disputes": {
+          "type": "object",
+          "properties": {
+            "badge": {
+              "type": "boolean",
+              "nullable": true
+            }
+          },
+          "nullable": false
+        },
+        "settings": {
+          "type": "object",
+          "properties": {
+            "badge": {
+              "type": "boolean",
+              "nullable": false
+            }
+          },
           "nullable": false
         }
-      },
-      "nullable": false
+      }
     }
   },
   "required": [
-    "id"
+    "id",
+    "navBar"
   ],
   "additionalProperties": false
 }
