@@ -164,14 +164,14 @@ export const updateNavbarDisputesBadge = (payload: INavBarRequest) => {
     Key: {
       id: payload.id,
     },
-    UpdateExpression: `SET #n.#d = :d, updatedAt = :t`,
+    UpdateExpression: 'SET #n.#d = :d, updatedAt = :m',
     ExpressionAttributeNames: {
       '#n': 'navBar',
       '#d': 'disputes',
     },
     ExpressionAttributeValues: {
       ':d': navBar.disputes || { badge: false },
-      ':t': timeStamp,
+      ':m': timeStamp,
     },
     ReturnValues: 'UPDATED_NEW',
   };
