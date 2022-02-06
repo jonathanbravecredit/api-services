@@ -127,7 +127,7 @@ export const updateNavbarBadge = (
         Key: {
           id: payload.id,
         },
-        UpdateExpression: `${expressions.set}, updatedAt = :m`,
+        UpdateExpression: `${expressions.set}, updatedAt = :t`,
         ExpressionAttributeNames: {
           '#name': expressions.name,
         },
