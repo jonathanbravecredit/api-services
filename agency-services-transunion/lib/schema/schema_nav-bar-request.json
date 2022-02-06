@@ -16,7 +16,7 @@
               "nullable": true
             }
           },
-          "nullable": false
+          "nullable": true
         },
         "report": {
           "type": "object",
@@ -26,7 +26,7 @@
               "nullable": true
             }
           },
-          "nullable": false
+          "nullable": true
         },
         "disputes": {
           "type": "object",
@@ -36,17 +36,17 @@
               "nullable": true
             }
           },
-          "nullable": false
+          "nullable": true
         },
         "settings": {
           "type": "object",
           "properties": {
             "badge": {
               "type": "boolean",
-              "nullable": false
+              "nullable": true
             }
           },
-          "nullable": false
+          "nullable": true
         }
       }
     }
