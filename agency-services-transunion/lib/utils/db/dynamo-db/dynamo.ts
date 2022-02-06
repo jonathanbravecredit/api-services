@@ -145,6 +145,7 @@ export const updateNavbarBadge = (payload: INavBarRequest, expression?: string) 
           ':s': navBar.settings || { badge: false },
           ':m': timeStamp,
         },
+        ReturnValues: 'UPDATED_NEW',
       };
   console.log('params: ==> ', params);
   return db
