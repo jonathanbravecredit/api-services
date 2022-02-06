@@ -21,7 +21,12 @@ import { enrichFulfillDataWorker, updateInvestigationResultsDB } from 'lib/trans
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
-import { updateEnrollmentStatus, updateFulfillReport, updateNavbarDisputesBadge } from 'lib/utils/db/dynamo-db/dynamo';
+import {
+  updateEnrollmentStatus,
+  updateFulfillReport,
+  updateNavbarBadge,
+  updateNavbarDisputesBadge,
+} from 'lib/utils/db/dynamo-db/dynamo';
 import { ICancelEnrollGraphQLResponse, IFulfillGraphQLResponse } from 'lib/interfaces';
 import { CreditScoreMaker } from 'lib/utils/db/credit-scores/model/credit-scores.model';
 
@@ -112,7 +117,7 @@ export const UpdateNavBar = async ({
   if (!validate(payload)) throw `Malformed message=${JSON.stringify(payload)}`;
 
   try {
-    await updateNavbarDisputesBadge(payload);
+    await updateNavbarBadge(payload);
     return { success: true, error: null, data: null };
   } catch (err) {
     const error = errorLogger.createError(identityId, 'UpdateNavBar', JSON.stringify(err));

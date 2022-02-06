@@ -114,31 +114,38 @@ export const updateFulfillReport = (
     .catch((err) => err);
 };
 
-export const updateNavbarDisputesBadge = (payload: INavBarRequest) => {
+export const updateNavbarBadge = (payload: INavBarRequest, expression?: string) => {
   let timeStamp = new Date().toISOString(); //always have last updated date
   const { navBar } = payload;
-  const params = {
-    TableName: tableName,
-    Key: {
-      id: payload.id,
-    },
-    // ConditionExpression: 'attribute_exists(queryParam.tableId)',
-    UpdateExpression: 'SET #n.#h = :h, #n.#r = :r, #n.#d = :d, #n.#s = :s, updatedAt = :m',
-    ExpressionAttributeNames: {
-      '#n': 'navBar',
-      '#h': 'home',
-      '#r': 'report',
-      '#d': 'disputes',
-      '#s': 'settings',
-    },
-    ExpressionAttributeValues: {
-      ':h': navBar.home || { badge: false },
-      ':r': navBar.report || { badge: false },
-      ':d': navBar.disputes || { badge: false },
-      ':s': navBar.settings || { badge: false },
-      ':m': timeStamp,
-    },
-  };
+  const params = expression
+    ? {
+        TableName: tableName,
+        Key: {
+          id: payload.id,
+        },
+        UpdateExpression: expression,
+      }
+    : {
+        TableName: tableName,
+        Key: {
+          id: payload.id,
+        },
+        UpdateExpression: 'SET #n.#h = :h, #n.#r = :r, #n.#d = :d, #n.#s = :s, updatedAt = :m',
+        ExpressionAttributeNames: {
+          '#n': 'navBar',
+          '#h': 'home',
+          '#r': 'report',
+          '#d': 'disputes',
+          '#s': 'settings',
+        },
+        ExpressionAttributeValues: {
+          ':h': navBar.home || { badge: false },
+          ':r': navBar.report || { badge: false },
+          ':d': navBar.disputes || { badge: false },
+          ':s': navBar.settings || { badge: false },
+          ':m': timeStamp,
+        },
+      };
   console.log('params: ==> ', params);
   return db
     .update(params)
@@ -151,6 +158,12 @@ export const updateNavbarDisputesBadge = (payload: INavBarRequest) => {
       console.log('update Nav Bar err ', err);
       return err;
     });
+};
+
+export const updateNavbarDisputesBadge = (payload: INavBarRequest) => {
+  const { navBar } = payload;
+  const updateExpression = `SET navBar.disputes.badge = ${navBar.disputes.badge || false}`;
+  return updateNavbarBadge(payload, updateExpression);
 };
 
 export const updateEnrollmentStatus = (

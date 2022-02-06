@@ -20,8 +20,10 @@ export const main: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent): P
         try {
           const payload = {
             id: newImage.id,
-            disputes: {
-              badge: true,
+            navBar: {
+              disputes: {
+                badge: true,
+              },
             },
           };
           await updateNavbarDisputesBadge(payload);
