@@ -230,7 +230,19 @@ export const qryGetAppData = `query GetAppData($id: ID!) {
     }
     navBar {
       __typename
+      home {
+        __typename
+        badge
+      }
+      report {
+        __typename
+        badge
+      }
       disputes {
+        __typename
+        badge
+      }
+      settings {
         __typename
         badge
       }
@@ -757,7 +769,19 @@ export const qryUpdateAppData = `mutation UpdateAppData($input: UpdateAppDataInp
     }
     navBar {
       __typename
+      home {
+        __typename
+        badge
+      }
+      report {
+        __typename
+        badge
+      }
       disputes {
+        __typename
+        badge
+      }
+      settings {
         __typename
         badge
       }

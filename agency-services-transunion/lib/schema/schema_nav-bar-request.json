@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "nullable": false
+    },
+    "navBar": {
+      "type": "object",
+      "properties": {
+        "init": {
+          "type": "object",
+          "properties": {
+            "badge": {
+              "type": "boolean",
+              "nullable": true
+            }
+          },
+          "nullable": true
+        },
+        "report": {
+          "type": "object",
+          "properties": {
+            "badge": {
+              "type": "boolean",
+              "nullable": true
+            }
+          },
+          "nullable": true
+        },
+        "disputes": {
+          "type": "object",
+          "properties": {
+            "badge": {
+              "type": "boolean",
+              "nullable": true
+            }
+          },
+          "nullable": true
+        },
+        "settings": {
+          "type": "object",
+          "properties": {
+            "badge": {
+              "type": "boolean",
+              "nullable": true
+            }
+          },
+          "nullable": true
+        }
+      }
+    }
+  },
+  "required": [
+    "id",
+    "navBar"
+  ],
+  "additionalProperties": false
+}
