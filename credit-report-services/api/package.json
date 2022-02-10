@@ -19,5 +19,10 @@
     "serverless-dotenv-plugin": "^3.0.0",
     "serverless-offline": "^6.8.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@shiftcoders/dynamo-easy": "^7.1.0",
+    "ajv": "^7.0.2",
+    "dayjs": "^1.10.7",
+    "reflect-metadata": "^0.1.13"
+  }
 }
