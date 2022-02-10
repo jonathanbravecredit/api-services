@@ -144,7 +144,7 @@ resources:
       Export:
         Name: !Sub '${self:service}-credit-reports'
     CreditReportsTableStreamArn:
-      Value: { 'Fn::GetAtt': ['CrediReports', 'StreamArn'] }
+      Value: { 'Fn::GetAtt': ['CreditReports', 'StreamArn'] }
       Export:
         Name: !Sub '${self:service}-credit-reports-stream'
     ApiGatewayRestApiId:
