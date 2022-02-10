@@ -31,8 +31,8 @@ provider:
     # SECURITY_GROUPS:
     # SUBNETS:
   vpc:
-    securityGroupIds: !Split: [',', !ImportValue agency-services-transunion-vpc-natsecuritygroup]
-    subnetIds: !Split: [',', !ImportValue agency-services-transunion-subnets-private]
+    securityGroupIds: { 'Fn::Split': [',', { 'Fn::ImportValue': 'agency-services-transunion-vpc-natsecuritygroup' }] }
+    subnetIds: { 'Fn::Split': [',', { 'Fn::ImportValue': 'agency-services-transunion-subnets-private' }] }
 
 resources:
   Resources:
