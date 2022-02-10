@@ -53,8 +53,6 @@ resources:
       Type: AWS::ApiGateway::RestApi
       Properties:
         Name: 'Credit reports service api'
-        Tags:
-          - 'CreditReports'
 
     ApiGatewayAuthorizer:
       Type: AWS::ApiGateway::Authorizer
