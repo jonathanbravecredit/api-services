@@ -28,11 +28,11 @@ provider:
   region: ${opt:region, 'us-east-2'}
   environment:
     OUR_ENV: ${self:provider.stage}
-    SECURITY_GROUPS: !ImportValue agency-services-transunion-vpc-natsecuritygroup
-    SUBNETS: !ImportValue agency-services-transunion-subnets-private
+    # SECURITY_GROUPS:
+    # SUBNETS:
   vpc:
-    securityGroupIds: !Split: [',', '${self:provider.environment.SECURITY_GROUPS}']
-    subnetIds: !Split: [',', '${self:provider.environment.SUBNETS}']
+    securityGroupIds: !Split: [',', !ImportValue agency-services-transunion-vpc-natsecuritygroup]
+    subnetIds: !Split: [',', !ImportValue agency-services-transunion-subnets-private]
 
 resources:
   Resources:
