@@ -22,11 +22,20 @@ provider:
   vpc:
     securityGroupIds: !Split: [',', '${self:provider.environment.SECURITY_GROUPS}']
     subnetIds: !Split: [',', '${self:provider.environment.SUBNETS}']
+  apiGateway:
+    restApiId: !ImportValue credit-report-services-credit-reports-apigw-id
+    restApiRootResourceId: credit-report-services-credit-reports-apigw-rootresource
 
 functions:
-  hello:
-    handler: handler.hello
+  getCreditReport:
+    handler: src/api/creditreports.main
+    onError: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:lambdadeadletterqueue'
     events:
       - http:
-          path: hello
+          path: creditreport
           method: get
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: !ImportValue credit-report-services-credit-reports-authorizer

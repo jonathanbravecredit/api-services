@@ -132,7 +132,7 @@ resources:
       Description: 'Credit reports table'
       Value: !Ref CreditReports
       Export:
-        Name: !Sub '${self:service}-credit-reports'
+        Name: !Sub '${self:service}-credit-reports-table'
     CreditReportsTableStreamArn:
       Value: { 'Fn::GetAtt': ['CreditReports', 'StreamArn'] }
       Export:
