@@ -3,6 +3,7 @@ import { IBorrowerAddress, ICreditAddress } from 'libs/interfaces/merge-report.i
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 import { Source } from 'libs/models/Common/Source';
+import { CreditAddress } from 'libs/models/MergeReport/MergeReportComponents/CreditAddress';
 
 export class BorrowerAddress extends Homogenize<IBorrowerAddress> implements IBorrowerAddress {
   CreditAddress: ICreditAddress;
@@ -21,7 +22,7 @@ export class BorrowerAddress extends Homogenize<IBorrowerAddress> implements IBo
   }
 
   init(): void {
-    this.CreditAddress = !this.CreditAddress ? {} : this.CreditAddress; // for now
+    this.CreditAddress = !this.CreditAddress ? new CreditAddress({}) : new CreditAddress(this.CreditAddress); // for now
     this.Dwelling = !this.Dwelling ? new CodeRef({}) : new CodeRef(this.Dwelling);
     this.Origin = !this.Origin ? new CodeRef({}) : new CodeRef(this.Origin);
     this.Ownership = !this.Ownership ? new CodeRef({}) : new CodeRef(this.Ownership);

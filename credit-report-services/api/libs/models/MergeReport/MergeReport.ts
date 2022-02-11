@@ -14,7 +14,7 @@ export class MergeReport extends Homogenize<IMergeReport> implements IMergeRepor
   constructor(_data: IMergeReport) {
     super(_data);
     this.homogenize(_data);
-    this.init;
+    this.init();
   }
 
   init(): void {

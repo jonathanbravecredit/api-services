@@ -13,8 +13,11 @@ import {
 } from 'libs/interfaces/merge-report.interface';
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { SourceSummary } from 'libs/models/Common/SourceSummary';
+import { BankingPartition } from 'libs/models/MergeReport/MergeReportComponents/BankingPartition';
 import { Borrower } from 'libs/models/MergeReport/MergeReportComponents/Borrower';
+import { InquiryPartition } from 'libs/models/MergeReport/MergeReportComponents/InquiryPartition';
 import { SB168Frozen } from 'libs/models/MergeReport/MergeReportComponents/SB168Frozen';
+import { TradeLinePartition } from 'libs/models/MergeReport/MergeReportComponents/TradeLinePartition';
 
 export class TrueLinkCreditReportType
   extends Homogenize<ITrueLinkCreditReportType>
@@ -46,29 +49,20 @@ export class TrueLinkCreditReportType
     this.SB168Frozen = new SB168Frozen(this.SB168Frozen);
     this.Borrower = new Borrower(this.Borrower);
     this.Sources = this.homogenizeArray<ISourceSummary, SourceSummary>(this.Sources, SourceSummary);
+    this.TradeLinePartition = this.homogenizeArray<ITradeLinePartition, TradeLinePartition>(
+      this.TradeLinePartition,
+      TradeLinePartition,
+    );
+    this.InquiryPartition = this.homogenizeArray<IInquiryPartition, InquiryPartition>(
+      this.InquiryPartition,
+      InquiryPartition,
+    );
+    this.BankingRecordPartition = this.homogenizeArray<IBankingPartition, BankingPartition>(
+      this.BankingRecordPartition,
+      BankingPartition,
+    );
 
     // array maps
     // property maps
   }
 }
-
-export class ImportedClass {
-  public constructor(something: any) {}
-  public async exampleMethod() {
-    return 'hey';
-  }
-}
-
-interface GenericInterface<T> {
-  new (_data: any): T;
-}
-
-export class Simulator<T extends { exampleMethod(): Promise<string> }> {
-  public constructor(private c: GenericInterface<T>) {}
-  async work() {
-    const instanceTry = new this.c('hello');
-    await instanceTry.exampleMethod();
-  }
-}
-const simulator = new Simulator(ImportedClass);
-simulator.work();

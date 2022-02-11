@@ -12,7 +12,10 @@
             "postalCode": 33025,
             "houseNumber": 1071,
             "stateCode": "FL",
-            "direction": "SW"
+            "direction": "SW",
+            "country": null,
+            "county": null,
+            "unparsedStreet": null
           },
           "addressOrder": 0,
           "dateReported": "1997-08-01",
@@ -60,18 +63,22 @@
       "SocialPartition": [],
       "SocialSecurityNumber": null
     },
-    "Sources": {
-      "Source": {
-        "InquiryDate": "1999-07-28",
-        "OriginalData": "",
-        "Bureau": {
-          "symbol": "TUC",
-          "description": "TransUnion",
-          "rank": 1,
-          "abbreviation": "TransUnion"
+    "Sources": [
+      {
+        "Source": {
+          "InquiryDate": "1999-07-28",
+          "OriginalData": "",
+          "BorrowerKey": null,
+          "Reference": null,
+          "Bureau": {
+            "abbreviation": null,
+            "description": null,
+            "symbol": null,
+            "rank": null
+          }
         }
       }
-    },
+    ],
     "TradeLinePartition": [],
     "InquiryPartition": [],
     "BankingRecordPartition": [],
@@ -81,6 +88,11 @@
     "DeceasedIndicator": null,
     "FraudIndicator": null,
     "CreditVision": null,
-    "Subscriber": []
+    "Subscriber": [],
+    "SB168Frozen": {
+      "equifax": null,
+      "experian": null,
+      "transunion": null
+    }
   }
 }
