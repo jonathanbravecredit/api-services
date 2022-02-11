@@ -2,7 +2,7 @@
 /* !!Important!!                      */
 /* - Keep all spelling mistakes as is */
 
-import { ISource, ICodeRef, IPartitionSet, IPartitionElements, IRemark } from 'libs/interfaces/common.interface';
+import { ISource, ICodeRef, IPartitionSet, IPartitionElements, IRemark, IDate } from 'libs/interfaces/common.interface';
 
 /*====================================*/
 export interface IMergeReport {
@@ -76,7 +76,7 @@ export interface ICreditAddress {
   postalCode?: string | number;
 }
 export interface IBorrowerBirth extends IPartitionSet {
-  BirthDate?: string;
+  BirthDate?: IDate;
   Source?: ISource;
   date?: string;
   age?: number;

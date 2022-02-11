@@ -5,6 +5,9 @@ export interface ICodeRef {
   rank?: number | string;
 }
 
+export interface ISourceSummary {
+  Source: ISource;
+}
 export interface ISource {
   BorrowerKey?: string;
   Bureau?: ICodeRef;
@@ -15,6 +18,12 @@ export interface ISource {
 export interface IRemark {
   RemarkCode?: ICodeRef;
   customRemark?: string;
+}
+
+export interface IDate {
+  month?: string | number;
+  year?: string | number;
+  day?: string | number;
 }
 
 export interface IPartitionSet {

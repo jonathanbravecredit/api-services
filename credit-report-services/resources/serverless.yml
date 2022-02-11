@@ -55,7 +55,7 @@ resources:
     ApiGatewayRestApi:
       Type: AWS::ApiGateway::RestApi
       Properties:
-        Name: !Sub '${self:provider.stage}-credit-report-service-api'
+        Name: ${self:provider.stage}-credit-report-service-api
 
     ApiGatewayAuthorizer:
       Type: AWS::ApiGateway::Authorizer
