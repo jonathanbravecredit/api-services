@@ -16,7 +16,11 @@ import { SourceSummary } from 'libs/models/Common/SourceSummary';
 import { BankingPartition } from 'libs/models/MergeReport/MergeReportComponents/BankingPartition';
 import { Borrower } from 'libs/models/MergeReport/MergeReportComponents/Borrower';
 import { InquiryPartition } from 'libs/models/MergeReport/MergeReportComponents/InquiryPartition';
+import { Message } from 'libs/models/MergeReport/MergeReportComponents/Message';
+import { PublicPartition } from 'libs/models/MergeReport/MergeReportComponents/PublicPartition';
 import { SB168Frozen } from 'libs/models/MergeReport/MergeReportComponents/SB168Frozen';
+import { Subscriber } from 'libs/models/MergeReport/MergeReportComponents/Subscriber';
+import { Summary } from 'libs/models/MergeReport/MergeReportComponents/Summary';
 import { TradeLinePartition } from 'libs/models/MergeReport/MergeReportComponents/TradeLinePartition';
 
 export class TrueLinkCreditReportType
@@ -25,13 +29,13 @@ export class TrueLinkCreditReportType
 {
   SB168Frozen: ISB168Frozen;
   Borrower: IBorrower;
-  Summary: ISummary;
   TradeLinePartition: ITradeLinePartition | ITradeLinePartition[] = [];
   InquiryPartition: IInquiryPartition[] = [];
   BankingRecordPartition: IBankingPartition[] = [];
   PulblicRecordPartition: IPublicPartition[] = [];
   Subscriber: ISubscriber[] = [];
   Message: IMessage[] = [];
+  Summary: ISummary;
   Sources: ISourceSummary[] = [];
 
   SafetyCheckPassed: boolean | string | null = null;
@@ -48,7 +52,6 @@ export class TrueLinkCreditReportType
   init(): void {
     this.SB168Frozen = new SB168Frozen(this.SB168Frozen);
     this.Borrower = new Borrower(this.Borrower);
-    this.Sources = this.homogenizeArray<ISourceSummary, SourceSummary>(this.Sources, SourceSummary);
     this.TradeLinePartition = this.homogenizeArray<ITradeLinePartition, TradeLinePartition>(
       this.TradeLinePartition,
       TradeLinePartition,
@@ -61,8 +64,13 @@ export class TrueLinkCreditReportType
       this.BankingRecordPartition,
       BankingPartition,
     );
-
-    // array maps
-    // property maps
+    this.PulblicRecordPartition = this.homogenizeArray<IPublicPartition, PublicPartition>(
+      this.PulblicRecordPartition,
+      PublicPartition,
+    );
+    this.Subscriber = this.homogenizeArray<ISubscriber, Subscriber>(this.Subscriber, Subscriber);
+    this.Message = this.homogenizeArray<IMessage, Message>(this.Message, Message);
+    this.Summary = new Summary(this.Summary);
+    this.Sources = this.homogenizeArray<ISourceSummary, SourceSummary>(this.Sources, SourceSummary);
   }
 }

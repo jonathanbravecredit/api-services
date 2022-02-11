@@ -4,9 +4,9 @@ import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 import { Source } from 'libs/models/Common/Source';
 import { Remark } from 'libs/models/Common/Remark';
-import { WatchTrade } from 'libs/models/MergeReport/MergeReportComponents/WatchTrade';
-import { GrantedTrade } from 'libs/models/MergeReport/MergeReportComponents/GrantedTrade';
-import { CollectionTrade } from 'libs/models/MergeReport/MergeReportComponents/CollectionTrade';
+import { WatchTrade } from 'libs/models/MergeReport/MergeReportComponents/TradelineComponents/WatchTrade';
+import { GrantedTrade } from 'libs/models/MergeReport/MergeReportComponents/TradelineComponents/GrantedTrade';
+import { CollectionTrade } from 'libs/models/MergeReport/MergeReportComponents/TradelineComponents/CollectionTrade';
 
 export class Tradeline extends Homogenize<ITradeline> implements ITradeline {
   AccountCondition: ICodeRef;

@@ -2,7 +2,7 @@ import { ICodeRef } from 'libs/interfaces/common.interface';
 import { IGrantedTrade, IPayStatusHistory } from 'libs/interfaces/merge-report.interface';
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
-import { PayStatusHistory } from 'libs/models/MergeReport/MergeReportComponents/PayStatusHistory';
+import { PayStatusHistory } from 'libs/models/MergeReport/MergeReportComponents/TradelineComponents/PayStatusHistory';
 
 export class GrantedTrade extends Homogenize<IGrantedTrade> implements IGrantedTrade {
   AccountType: ICodeRef;

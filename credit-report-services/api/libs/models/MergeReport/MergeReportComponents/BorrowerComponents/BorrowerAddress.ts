@@ -3,7 +3,7 @@ import { IBorrowerAddress, ICreditAddress } from 'libs/interfaces/merge-report.i
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 import { Source } from 'libs/models/Common/Source';
-import { CreditAddress } from 'libs/models/MergeReport/MergeReportComponents/CreditAddress';
+import { CreditAddress } from 'libs/models/Common/CreditAddress';
 
 export class BorrowerAddress extends Homogenize<IBorrowerAddress> implements IBorrowerAddress {
   CreditAddress: ICreditAddress;

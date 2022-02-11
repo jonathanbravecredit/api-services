@@ -1,6 +1,6 @@
 import { IInquiry, IInquiryPartition, IInquirySummaryInfo } from 'libs/interfaces/merge-report.interface';
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
-import { Inquiry } from 'libs/models/MergeReport/MergeReportComponents/Inquiry';
+import { Inquiry } from 'libs/models/MergeReport/MergeReportComponents/InquiryComponents/Inquiry';
 
 export class InquiryPartition extends Homogenize<IInquiryPartition> implements IInquiryPartition {
   Inquiry: IInquiry;

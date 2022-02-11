@@ -1,6 +1,6 @@
 import { ITradeline, ITradeLinePartition } from 'libs/interfaces/merge-report.interface';
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
-import { Tradeline } from 'libs/models/MergeReport/MergeReportComponents/Tradeline';
+import { Tradeline } from 'libs/models/MergeReport/MergeReportComponents/TradelineComponents/Tradeline';
 
 export class TradeLinePartition extends Homogenize<ITradeLinePartition> implements ITradeLinePartition {
   Tradeline: ITradeline;

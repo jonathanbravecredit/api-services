@@ -1,6 +1,6 @@
 import { ISocial, ISocialPartition } from 'libs/interfaces/merge-report.interface';
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
-import { Social } from 'libs/models/MergeReport/MergeReportComponents/Social';
+import { Social } from 'libs/models/MergeReport/MergeReportComponents/BorrowerComponents/Social';
 
 export class SocialPartition extends Homogenize<ISocialPartition> implements ISocialPartition {
   Social: ISocial[] = [];

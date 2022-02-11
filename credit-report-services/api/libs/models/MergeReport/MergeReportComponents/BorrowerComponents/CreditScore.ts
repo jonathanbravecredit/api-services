@@ -3,7 +3,7 @@ import { ICreditScore, ICreditScoreFactor } from 'libs/interfaces/merge-report.i
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 import { Source } from 'libs/models/Common/Source';
-import { CreditScoreFactor } from 'libs/models/MergeReport/MergeReportComponents/CreditScoreFactor';
+import { CreditScoreFactor } from 'libs/models/MergeReport/MergeReportComponents/BorrowerComponents/CreditScoreFactor';
 
 export class CreditScore extends Homogenize<ICreditScore> implements ICreditScore {
   CreditScoreFactor: ICreditScoreFactor[] = [];

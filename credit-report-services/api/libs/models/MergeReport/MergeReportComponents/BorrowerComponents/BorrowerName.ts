@@ -3,7 +3,7 @@ import { IBorrowerName, IName } from 'libs/interfaces/merge-report.interface';
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 import { Source } from 'libs/models/Common/Source';
-import { Name } from 'libs/models/MergeReport/MergeReportComponents/Name';
+import { Name } from 'libs/models/MergeReport/MergeReportComponents/BorrowerComponents/Name';
 
 export class BorrowerName extends Homogenize<IBorrowerName> implements IBorrowerName {
   Name: IName;

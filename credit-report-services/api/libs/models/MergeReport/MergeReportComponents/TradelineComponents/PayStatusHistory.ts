@@ -1,6 +1,6 @@
 import { IMonthyPayStatusItem, IPayStatusHistory } from 'libs/interfaces/merge-report.interface';
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
-import { MonthlyPayStatusItem } from 'libs/models/MergeReport/MergeReportComponents/MonthlyPayStatusItem';
+import { MonthlyPayStatusItem } from 'libs/models/MergeReport/MergeReportComponents/TradelineComponents/MonthlyPayStatusItem';
 
 export class PayStatusHistory extends Homogenize<IPayStatusHistory> implements IPayStatusHistory {
   MonthlyPayStatus: IMonthyPayStatusItem[] = [];

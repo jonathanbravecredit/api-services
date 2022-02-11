@@ -3,7 +3,7 @@ import { IBorrowerTelephone, IPhoneNumber } from 'libs/interfaces/merge-report.i
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 import { Source } from 'libs/models/Common/Source';
-import { PhoneNumber } from 'libs/models/MergeReport/MergeReportComponents/PhoneNumber';
+import { PhoneNumber } from 'libs/models/MergeReport/MergeReportComponents/BorrowerComponents/PhoneNumber';
 
 export class BorrowerTelephone extends Homogenize<IBorrowerTelephone> implements IBorrowerTelephone {
   PhoneNumber: IPhoneNumber;
