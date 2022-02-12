@@ -4,9 +4,9 @@ import { TrueLinkCreditReportType } from 'libs/models/MergeReport/MergeReportCom
 
 /**
  * Rules for merge report.
- * 1. primitives can terminate in value or null
- * 2. no primitives can be missing from a leaf
- * 3. arrays can terminate in an empty array
+ * 1. primitives can terminate in a value or null
+ * 2. no leaves can be undefined and must conform to class properties that define it
+ * 3. arrays can ONLY terminate in an empty array
  * 4. complex objects CANNOT terminate in a null. Must go to leaves
  */
 export class MergeReport extends Homogenize<IMergeReport> implements IMergeReport {

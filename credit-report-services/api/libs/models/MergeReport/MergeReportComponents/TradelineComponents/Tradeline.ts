@@ -16,7 +16,7 @@ export class Tradeline extends Homogenize<ITradeline> implements ITradeline {
   OpenClosed: ICodeRef;
   PayStatus: ICodeRef;
   VerificationIndicator: ICodeRef;
-  Remark: IRemark | IRemark[];
+  Remark: IRemark[];
   WatchTrade: IWatchTrade;
   GrantedTrade: IGrantedTrade;
   CollectionTrade: ICollectionTrade;

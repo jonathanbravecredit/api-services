@@ -29,7 +29,7 @@ export class TrueLinkCreditReportType
 {
   SB168Frozen: ISB168Frozen;
   Borrower: IBorrower;
-  TradeLinePartition: ITradeLinePartition | ITradeLinePartition[] = [];
+  TradeLinePartition: ITradeLinePartition[] = [];
   InquiryPartition: IInquiryPartition[] = [];
   BankingRecordPartition: IBankingPartition[] = [];
   PulblicRecordPartition: IPublicPartition[] = [];
