@@ -3,14 +3,14 @@ import { IWatchTrade } from 'libs/interfaces/merge-report.interface';
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 
-export class WatchTrade extends Homogenize<IWatchTrade> implements IWatchTrade {
+export class WatchTrade extends Homogenize<Partial<IWatchTrade>> implements IWatchTrade {
   ContactMethod: ICodeRef;
   CreditType: ICodeRef;
   PreviousAccountCondition: ICodeRef;
   previousAmountPastDue: number | string | null = null;
   amountPastDue: number | string | null = null;
 
-  constructor(_data: IWatchTrade) {
+  constructor(_data: Partial<IWatchTrade>) {
     super(_data);
     this.homogenize(_data);
     this.init();

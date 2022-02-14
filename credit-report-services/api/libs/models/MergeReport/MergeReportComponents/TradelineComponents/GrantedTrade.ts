@@ -4,7 +4,7 @@ import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 import { PayStatusHistory } from 'libs/models/MergeReport/MergeReportComponents/TradelineComponents/PayStatusHistory';
 
-export class GrantedTrade extends Homogenize<IGrantedTrade> implements IGrantedTrade {
+export class GrantedTrade extends Homogenize<Partial<IGrantedTrade>> implements IGrantedTrade {
   AccountType: ICodeRef;
   CreditType: ICodeRef;
   PaymentFrequency: ICodeRef;
@@ -26,7 +26,7 @@ export class GrantedTrade extends Homogenize<IGrantedTrade> implements IGrantedT
   dateWorstPayStatus: string | null = null;
   datePastDue: string | null = null;
 
-  constructor(_data: IGrantedTrade) {
+  constructor(_data: Partial<IGrantedTrade>) {
     super(_data);
     this.homogenize(_data);
     this.init();

@@ -3,7 +3,7 @@ import { IMonthyPayStatusItem } from 'libs/interfaces/merge-report.interface';
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 
-export class MonthlyPayStatusItem extends Homogenize<IMonthyPayStatusItem> implements IMonthyPayStatusItem {
+export class MonthlyPayStatusItem extends Homogenize<Partial<IMonthyPayStatusItem>> implements IMonthyPayStatusItem {
   GenericRemark: ICodeRef;
   RatingRemark: ICodeRef;
   ComplianceRemark: ICodeRef;
@@ -17,7 +17,7 @@ export class MonthlyPayStatusItem extends Homogenize<IMonthyPayStatusItem> imple
   currentBalance: number | string | null = null;
   changed: boolean | string | null = null;
 
-  constructor(_data: IMonthyPayStatusItem) {
+  constructor(_data: Partial<IMonthyPayStatusItem>) {
     super(_data);
     this.homogenize(_data);
     this.init();

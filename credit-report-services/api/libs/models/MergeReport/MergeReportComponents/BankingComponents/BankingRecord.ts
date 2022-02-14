@@ -5,7 +5,7 @@ import { CodeRef } from 'libs/models/Common/CodeRef';
 import { Remark } from 'libs/models/Common/Remark';
 import { Source } from 'libs/models/Common/Source';
 
-export class BankingRecord extends Homogenize<IBankingRecord> implements IBankingRecord {
+export class BankingRecord extends Homogenize<Partial<IBankingRecord>> implements IBankingRecord {
   BankingType: ICodeRef;
   AccountDesignator: ICodeRef;
   IndustryCode: ICodeRef;
@@ -21,7 +21,7 @@ export class BankingRecord extends Homogenize<IBankingRecord> implements IBankin
   balance: number | string | null = null;
   accountNumber: string | null = null;
 
-  constructor(_data: IBankingRecord) {
+  constructor(_data: Partial<IBankingRecord>) {
     super(_data);
     this.homogenize(_data);
     this.init();

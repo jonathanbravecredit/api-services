@@ -8,7 +8,7 @@ import { WatchTrade } from 'libs/models/MergeReport/MergeReportComponents/Tradel
 import { GrantedTrade } from 'libs/models/MergeReport/MergeReportComponents/TradelineComponents/GrantedTrade';
 import { CollectionTrade } from 'libs/models/MergeReport/MergeReportComponents/TradelineComponents/CollectionTrade';
 
-export class Tradeline extends Homogenize<ITradeline> implements ITradeline {
+export class Tradeline extends Homogenize<Partial<ITradeline>> implements ITradeline {
   AccountCondition: ICodeRef;
   AccountDesignator: ICodeRef;
   DisputeFlag: ICodeRef;
@@ -35,7 +35,7 @@ export class Tradeline extends Homogenize<ITradeline> implements ITradeline {
   dateClosed: string | null = null;
   dateAccountStatus: string | null = null;
 
-  constructor(_data: ITradeline) {
+  constructor(_data: Partial<ITradeline>) {
     super(_data);
     this.homogenize(_data);
     this.init();

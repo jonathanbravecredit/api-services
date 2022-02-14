@@ -3,13 +3,13 @@ import { ICreditScoreFactor } from 'libs/interfaces/merge-report.interface';
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 
-export class CreditScoreFactor extends Homogenize<ICreditScoreFactor> implements ICreditScoreFactor {
+export class CreditScoreFactor extends Homogenize<Partial<ICreditScoreFactor>> implements ICreditScoreFactor {
   Factor: ICodeRef;
   FactorText: string[] = [];
   FactorType: 'Negative' | 'Positive' | null = null;
   bureauCode: number | null = null;
 
-  constructor(_data: ICreditScoreFactor) {
+  constructor(_data: Partial<ICreditScoreFactor>) {
     super(_data);
     this.homogenize(_data);
     this.init();

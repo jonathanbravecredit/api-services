@@ -3,11 +3,11 @@ import { IFinancingStatement } from 'libs/interfaces/merge-report.interface';
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 
-export class FinancingStatement extends Homogenize<IFinancingStatement> implements IFinancingStatement {
+export class FinancingStatement extends Homogenize<Partial<IFinancingStatement>> implements IFinancingStatement {
   CreditorType: ICodeRef;
   dateMaturity: string | null = null;
 
-  constructor(_data: IFinancingStatement) {
+  constructor(_data: Partial<IFinancingStatement>) {
     super(_data);
     this.homogenize(_data);
     this.init();

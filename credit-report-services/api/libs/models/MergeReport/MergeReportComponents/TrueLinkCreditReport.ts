@@ -24,7 +24,7 @@ import { Summary } from 'libs/models/MergeReport/MergeReportComponents/Summary';
 import { TradeLinePartition } from 'libs/models/MergeReport/MergeReportComponents/TradeLinePartition';
 
 export class TrueLinkCreditReportType
-  extends Homogenize<ITrueLinkCreditReportType>
+  extends Homogenize<Partial<ITrueLinkCreditReportType>>
   implements ITrueLinkCreditReportType
 {
   SB168Frozen: ISB168Frozen;
@@ -43,7 +43,7 @@ export class TrueLinkCreditReportType
   FraudIndicator: boolean | string | null = null;
   CreditVision: boolean | string | null = null;
 
-  constructor(_data: ITrueLinkCreditReportType) {
+  constructor(_data: Partial<ITrueLinkCreditReportType>) {
     super(_data);
     this.homogenize(_data);
     this.init();

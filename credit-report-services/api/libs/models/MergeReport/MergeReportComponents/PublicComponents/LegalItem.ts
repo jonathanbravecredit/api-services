@@ -3,7 +3,7 @@ import { ILegalItem } from 'libs/interfaces/merge-report.interface';
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 
-export class LegalItem extends Homogenize<ILegalItem> implements ILegalItem {
+export class LegalItem extends Homogenize<Partial<ILegalItem>> implements ILegalItem {
   CourtLocation: ICodeRef;
   CourtType: ICodeRef;
   plaintiff: string | null = null;
@@ -13,7 +13,7 @@ export class LegalItem extends Homogenize<ILegalItem> implements ILegalItem {
   balance: number | string | null = null;
   dateSatisfied: string | null = null;
 
-  constructor(_data: ILegalItem) {
+  constructor(_data: Partial<ILegalItem>) {
     super(_data);
     this.homogenize(_data);
     this.init();

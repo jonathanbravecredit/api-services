@@ -27,7 +27,7 @@ import { MiscPublicRecord } from 'libs/models/MergeReport/MergeReportComponents/
 import { RegisteredItem } from 'libs/models/MergeReport/MergeReportComponents/PublicComponents/RegisteredItem';
 import { TaxLien } from 'libs/models/MergeReport/MergeReportComponents/PublicComponents/TaxLien';
 
-export class PublicRecord extends Homogenize<IPublicRecord> implements IPublicRecord {
+export class PublicRecord extends Homogenize<Partial<IPublicRecord>> implements IPublicRecord {
   AccountDesignator: ICodeRef;
   Classification: ICodeRef;
   IndustryCode: ICodeRef;
@@ -55,7 +55,7 @@ export class PublicRecord extends Homogenize<IPublicRecord> implements IPublicRe
   dateVerified: string | null = null;
   dateUpdated: string | null = null;
 
-  constructor(_data: IPublicRecord) {
+  constructor(_data: Partial<IPublicRecord>) {
     super(_data);
     this.homogenize(_data);
     this.init();

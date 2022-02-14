@@ -4,14 +4,15 @@ import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { Source } from 'libs/models/Common/Source';
 
 export class BorrowerBureauIdentifier
-  extends Homogenize<IBorrowerBureauIdentifier>
+  extends Homogenize<Partial<IBorrowerBureauIdentifier>>
   implements IBorrowerBureauIdentifier
 {
   type: string | null = null;
   identifier: string | null = null;
+  partitionSet: number | string | null = null;
   Source: ISource;
 
-  constructor(_data: IBorrowerBureauIdentifier) {
+  constructor(_data: Partial<IBorrowerBureauIdentifier>) {
     super(_data);
     this.homogenize(_data);
     this.init();

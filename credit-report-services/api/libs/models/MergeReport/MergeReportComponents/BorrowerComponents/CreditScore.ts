@@ -5,7 +5,7 @@ import { CodeRef } from 'libs/models/Common/CodeRef';
 import { Source } from 'libs/models/Common/Source';
 import { CreditScoreFactor } from 'libs/models/MergeReport/MergeReportComponents/BorrowerComponents/CreditScoreFactor';
 
-export class CreditScore extends Homogenize<ICreditScore> implements ICreditScore {
+export class CreditScore extends Homogenize<Partial<ICreditScore>> implements ICreditScore {
   CreditScoreFactor: ICreditScoreFactor[] = [];
   CreditScoreMode: ICodeRef;
   NoScoreReason: ICodeRef;
@@ -17,7 +17,7 @@ export class CreditScore extends Homogenize<ICreditScore> implements ICreditScor
   scoreName: string | null = null;
   populationRank: number | string | null = null;
 
-  constructor(_data: ICreditScore) {
+  constructor(_data: Partial<ICreditScore>) {
     super(_data);
     this.homogenize(_data);
     this.init();

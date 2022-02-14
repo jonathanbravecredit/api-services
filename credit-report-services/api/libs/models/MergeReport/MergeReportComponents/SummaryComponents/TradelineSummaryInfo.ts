@@ -3,7 +3,7 @@ import { ITradelineSummaryInfo } from 'libs/interfaces/merge-report.interface';
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 
-export class TradelineSummaryInfo extends Homogenize<ITradelineSummaryInfo> implements ITradelineSummaryInfo {
+export class TradelineSummaryInfo extends Homogenize<Partial<ITradelineSummaryInfo>> implements ITradelineSummaryInfo {
   RecentDeliquencyMOP: ICodeRef;
   TotalHistoricalNegatives: number | string | null = null;
   OpenCollectionAccounts: number | string | null = null;
@@ -28,7 +28,7 @@ export class TradelineSummaryInfo extends Homogenize<ITradelineSummaryInfo> impl
   TotalMonthlyPayments: number | string | null = null;
   AgeofCredit: number | string | null = null;
 
-  constructor(_data: ITradelineSummaryInfo) {
+  constructor(_data: Partial<ITradelineSummaryInfo>) {
     super(_data);
     this.homogenize(_data);
     this.init();

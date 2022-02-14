@@ -9,9 +9,9 @@ import { TrueLinkCreditReportType } from 'libs/models/MergeReport/MergeReportCom
  * 3. arrays can ONLY terminate in an empty array
  * 4. complex objects CANNOT terminate in a null. Must go to leaves
  */
-export class MergeReport extends Homogenize<IMergeReport> implements IMergeReport {
+export class MergeReport extends Homogenize<Partial<IMergeReport>> implements IMergeReport {
   TrueLinkCreditReportType: ITrueLinkCreditReportType;
-  constructor(_data: IMergeReport) {
+  constructor(_data: Partial<IMergeReport>) {
     super(_data);
     this.homogenize(_data);
     this.init();

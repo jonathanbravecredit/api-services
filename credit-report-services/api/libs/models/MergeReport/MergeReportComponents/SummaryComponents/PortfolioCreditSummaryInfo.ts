@@ -4,7 +4,7 @@ import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 
 export class PortfolioCreditSummaryInfo
-  extends Homogenize<IPortfolioCreditSummaryInfo>
+  extends Homogenize<Partial<IPortfolioCreditSummaryInfo>>
   implements IPortfolioCreditSummaryInfo
 {
   SummaryType: ICodeRef;
@@ -15,7 +15,7 @@ export class PortfolioCreditSummaryInfo
   CreditLimitAmount: number | string | null = null;
   BalanceAmount: number | string | null = null;
 
-  constructor(_data: IPortfolioCreditSummaryInfo) {
+  constructor(_data: Partial<IPortfolioCreditSummaryInfo>) {
     super(_data);
     this.homogenize(_data);
     this.init();

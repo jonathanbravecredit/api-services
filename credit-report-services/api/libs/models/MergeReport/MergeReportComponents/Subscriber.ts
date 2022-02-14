@@ -5,7 +5,7 @@ import { CodeRef } from 'libs/models/Common/CodeRef';
 import { Source } from 'libs/models/Common/Source';
 import { CreditAddress } from 'libs/models/Common/CreditAddress';
 
-export class Subscriber extends Homogenize<ISubscriber> implements ISubscriber {
+export class Subscriber extends Homogenize<Partial<ISubscriber>> implements ISubscriber {
   CreditAddress: ICreditAddress;
   IndustryCode: ICodeRef;
   Source: ISource;
@@ -13,7 +13,7 @@ export class Subscriber extends Homogenize<ISubscriber> implements ISubscriber {
   telephone: string | null = null;
   name: string | null = null;
 
-  constructor(_data: ISubscriber) {
+  constructor(_data: Partial<ISubscriber>) {
     super(_data);
     this.homogenize(_data);
     this.init();

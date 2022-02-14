@@ -5,7 +5,7 @@ import { CodeRef } from 'libs/models/Common/CodeRef';
 import { Source } from 'libs/models/Common/Source';
 import { CreditAddress } from 'libs/models/Common/CreditAddress';
 
-export class BorrowerAddress extends Homogenize<IBorrowerAddress> implements IBorrowerAddress {
+export class BorrowerAddress extends Homogenize<Partial<IBorrowerAddress>> implements IBorrowerAddress {
   CreditAddress: ICreditAddress;
   Dwelling: ICodeRef;
   Origin: ICodeRef;
@@ -15,7 +15,7 @@ export class BorrowerAddress extends Homogenize<IBorrowerAddress> implements IBo
   addressOrder: number | null = null;
   partitionSet: number | null = null;
 
-  constructor(_data: IBorrowerAddress) {
+  constructor(_data: Partial<IBorrowerAddress>) {
     super(_data);
     this.homogenize(_data);
     this.init();

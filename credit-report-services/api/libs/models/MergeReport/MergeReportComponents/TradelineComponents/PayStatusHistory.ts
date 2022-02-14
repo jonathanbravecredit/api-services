@@ -2,12 +2,12 @@ import { IMonthyPayStatusItem, IPayStatusHistory } from 'libs/interfaces/merge-r
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { MonthlyPayStatusItem } from 'libs/models/MergeReport/MergeReportComponents/TradelineComponents/MonthlyPayStatusItem';
 
-export class PayStatusHistory extends Homogenize<IPayStatusHistory> implements IPayStatusHistory {
+export class PayStatusHistory extends Homogenize<Partial<IPayStatusHistory>> implements IPayStatusHistory {
   MonthlyPayStatus: IMonthyPayStatusItem[] = [];
   startDate: string | null = null;
   status: string | null = null;
 
-  constructor(_data: IPayStatusHistory) {
+  constructor(_data: Partial<IPayStatusHistory>) {
     super(_data);
     this.homogenize(_data);
     this.init();

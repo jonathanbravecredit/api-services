@@ -3,11 +3,11 @@ import { IMessage } from 'libs/interfaces/merge-report.interface';
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 
-export class Message extends Homogenize<IMessage> implements IMessage {
+export class Message extends Homogenize<Partial<IMessage>> implements IMessage {
   Code: ICodeRef;
   Type: ICodeRef;
 
-  constructor(_data: IMessage) {
+  constructor(_data: Partial<IMessage>) {
     super(_data);
     this.homogenize(_data);
     this.init();

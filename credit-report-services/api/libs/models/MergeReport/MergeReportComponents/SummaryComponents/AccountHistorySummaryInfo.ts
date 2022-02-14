@@ -4,7 +4,7 @@ import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 
 export class AccountHistorySummaryInfo
-  extends Homogenize<IAccountHistorySummaryInfo>
+  extends Homogenize<Partial<IAccountHistorySummaryInfo>>
   implements IAccountHistorySummaryInfo
 {
   SummaryType: ICodeRef;
@@ -21,7 +21,7 @@ export class AccountHistorySummaryInfo
   PriorMonthBalance: number | string | null = null;
   CreditLimitAmount: number | string | null = null;
 
-  constructor(_data: IAccountHistorySummaryInfo) {
+  constructor(_data: Partial<IAccountHistorySummaryInfo>) {
     super(_data);
     this.homogenize(_data);
     this.init();

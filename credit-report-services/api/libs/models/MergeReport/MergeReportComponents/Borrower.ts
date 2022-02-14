@@ -21,7 +21,7 @@ import { CreditStatement } from 'libs/models/MergeReport/MergeReportComponents/B
 import { Employer } from 'libs/models/MergeReport/MergeReportComponents/BorrowerComponents/Employer';
 import { SocialPartition } from 'libs/models/MergeReport/MergeReportComponents/BorrowerComponents/SocialPartition';
 
-export class Borrower extends Homogenize<IBorrower> implements IBorrower {
+export class Borrower extends Homogenize<Partial<IBorrower>> implements IBorrower {
   BorrowerAddress: IBorrowerAddress[] = [];
   PreviousAddress: IBorrowerAddress[] = [];
   Birth: IBorrowerBirth[] = [];
@@ -35,7 +35,7 @@ export class Borrower extends Homogenize<IBorrower> implements IBorrower {
   borrowerKey: string | null = null;
   SocialSecurityNumber: string | number | null = null;
 
-  constructor(_data: IBorrower) {
+  constructor(_data: Partial<IBorrower>) {
     super(_data);
     this.homogenize(_data);
     this.init();

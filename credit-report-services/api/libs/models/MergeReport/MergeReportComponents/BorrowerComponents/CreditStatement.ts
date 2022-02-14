@@ -4,12 +4,12 @@ import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 import { Source } from 'libs/models/Common/Source';
 
-export class CreditStatement extends Homogenize<ICreditStatement> implements ICreditStatement {
+export class CreditStatement extends Homogenize<Partial<ICreditStatement>> implements ICreditStatement {
   StatementType: ICodeRef;
   Source: ISource;
   statement: string | null = null;
 
-  constructor(_data: ICreditStatement) {
+  constructor(_data: Partial<ICreditStatement>) {
     super(_data);
     this.homogenize(_data);
     this.init();

@@ -13,14 +13,14 @@ import { PortfolioCreditSummary } from 'libs/models/MergeReport/MergeReportCompo
 import { PublicRecordSummary } from 'libs/models/MergeReport/MergeReportComponents/SummaryComponents/PublicRecordSummary';
 import { TradelineSummary } from 'libs/models/MergeReport/MergeReportComponents/SummaryComponents/TradelineSummary';
 
-export class Summary extends Homogenize<ISummary> implements ISummary {
+export class Summary extends Homogenize<Partial<ISummary>> implements ISummary {
   TradelineSummary: ITradelineSummary;
   InquirySummary: IInquirySummary;
   PublicRecordSummary: IPublicRecordSummary;
   PortfolioCreditSummary: IPortfolioCreditSummary[] = [];
   AccountHistorySummary: IAccountHistorySummary[] = [];
 
-  constructor(_data: ISummary) {
+  constructor(_data: Partial<ISummary>) {
     super(_data);
     this.homogenize(_data);
     this.init();
