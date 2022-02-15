@@ -7,7 +7,6 @@ import * as tu from 'lib/transunion';
 import * as moment from 'moment';
 import { ajv } from 'lib/schema/validation';
 import { Sync } from 'lib/utils/sync/sync';
-import { TransunionUtil as tuUtil } from 'lib/utils/transunion/transunion';
 import { SoapAid } from 'lib/utils/soap-aid/soap-aid';
 import { dateDiffInHours } from 'lib/utils/dates/dates';
 import { returnNestedObject } from 'lib/utils/helpers/helpers';
@@ -17,13 +16,13 @@ import { ALL_GET_INVESTIGATION_MOCKS } from 'lib/examples/mocks/AllGetInvestigat
 import { GET_DISPUTE_STATUS_RESPONSE_WITHID } from 'lib/examples/mocks/GetDisputeStatusResponse-Complete';
 import { DB } from 'lib/utils/db/db';
 import { Dispute } from 'lib/utils/db/disputes/model/dispute.model';
-import { enrichFulfillDataWorker, updateInvestigationResultsDB } from 'lib/transunion';
+import { enrichFulfillDataWorker, updateInvestigationResultsDB, writeFulfillReport } from 'lib/transunion';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
 import { updateEnrollmentStatus, updateFulfillReport, updateNavBarBadges } from 'lib/utils/db/dynamo-db/dynamo';
-import { ICancelEnrollGraphQLResponse, IFulfillGraphQLResponse } from 'lib/interfaces';
-import { CreditScoreMaker } from 'lib/utils/db/credit-scores/model/credit-scores.model';
+import { ICancelEnrollGraphQLResponse, IFulfillGraphQLResponse, IMergeReport } from 'lib/interfaces';
+import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
 
 const GO_LIVE = true;
 const errorLogger = new ErrorLogger();
@@ -815,6 +814,8 @@ export const Fulfill = async (
 
     let response;
     if (responseType.toLowerCase() === 'success') {
+      // send the report to the report service
+      await writeFulfillReport(data);
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }
@@ -907,6 +908,7 @@ export const FulfillWorker = async (
     let response;
     if (responseType.toLowerCase() === 'success') {
       const mapped = enrichFulfillDataWorker(data);
+      await writeFulfillReport(data);
       const sync = await updateFulfillReport(payload.id, mapped);
       response = { success: true, error: null, data: data };
     } else {
@@ -994,6 +996,7 @@ export const FulfillByUserId = async (
 
     let response;
     if (responseType.toLowerCase() === 'success') {
+      await writeFulfillReport(data);
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }
@@ -1088,6 +1091,7 @@ export const FulfillDisputes = async (
 
     let response;
     if (responseType.toLowerCase() === 'success') {
+      await writeFulfillReport(data);
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }

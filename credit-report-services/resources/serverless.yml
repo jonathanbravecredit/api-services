@@ -132,28 +132,33 @@ resources:
       Description: 'Credit reports table'
       Value: !Ref CreditReports
       Export:
-        Name: !Sub '${self:service}-credit-reports-table'
+        Name: !Sub '${self:service}-table'
     CreditReportsTableStreamArn:
       Value: { 'Fn::GetAtt': ['CreditReports', 'StreamArn'] }
       Export:
-        Name: !Sub '${self:service}-credit-reports-stream'
+        Name: !Sub '${self:service}-stream'
     ApiGatewayRestApiId:
       Description: 'Credit reports API id'
       Value: !Ref ApiGatewayRestApi
       Export:
-        Name: !Sub '${self:service}-credit-reports-apigw-id'
+        Name: !Sub '${self:service}-apigw-id'
     ApiGatewayRestApiResourceId:
       Description: 'Credit reports API root resource'
       Value: !GetAtt ApiGatewayRestApi.RootResourceId
       Export:
-        Name: !Sub '${self:service}-credit-reports-apigw-rootresource'
+        Name: !Sub '${self:service}-apigw-rootresource'
     ApiGatewayAuthorizorId:
       Description: 'Credit reports API gateway authorizer'
       Value: !Ref ApiGatewayAuthorizer
       Export:
-        Name: !Sub '${self:service}-credit-reports-authorizer'
+        Name: !Sub '${self:service}-authorizer'
     CreditReportsQueueArn:
       Description: 'Credit reports queue ARN'
       Value: !GetAtt CreditReportsQueue.Arn
       Export:
         Name: !Sub '${self:service}-sqs-arn'
+    CreditReportTopicArn:
+      Description: 'Credit reports SNS ARN'
+      Value: !Ref CreditReportsSNSTopic
+      Export:
+        Name: !Sub '${self:service}-sns-arn'

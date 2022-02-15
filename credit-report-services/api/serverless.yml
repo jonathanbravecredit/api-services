@@ -27,8 +27,18 @@ provider:
     securityGroupIds: { 'Fn::Split': [',', { 'Fn::ImportValue': 'agency-services-transunion-vpc-natsecuritygroup' }] }
     subnetIds: { 'Fn::Split': [',', { 'Fn::ImportValue': 'agency-services-transunion-subnets-private' }] }
   apiGateway:
-    restApiId: !ImportValue credit-report-services-credit-reports-apigw-id
-    restApiRootResourceId: credit-report-services-credit-reports-apigw-rootresource
+    restApiId: !ImportValue credit-report-service-resources-apigw-id
+    restApiRootResourceId: !ImportValue credit-report-service-resources-apigw-rootresource
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - sqs:ReceiveMessage
+        - sqs:DeleteMessage
+        - sqs:GetQueueAttributes
+      Resource: '*'
+    - Effect: 'Allow'
+      Action: 'sns:Publish'
+      Resource: '*'
 
 functions:
   getCreditReport:
@@ -41,5 +51,14 @@ functions:
           cors: true
           authorizer:
             type: COGNITO_USER_POOLS
-            authorizerId:
-              Ref: !ImportValue credit-report-services-credit-reports-authorizer
+            authorizerId: !ImportValue credit-report-service-resources-authorizer
+
+  createCreditReport:
+    handler: src/subs/creditreports/create.main
+    onError: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:lambdadeadletterqueue'
+    events:
+      - sqs:
+          arn:
+            Fn::ImportValue: 'credit-report-service-resources-sqs-arn'
+          batchSize: 1
+          maximumBatchingWindow: 5
