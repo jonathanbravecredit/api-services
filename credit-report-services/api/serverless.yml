@@ -36,6 +36,9 @@ provider:
         - sqs:DeleteMessage
         - sqs:GetQueueAttributes
       Resource: '*'
+    - Effect: 'Allow'
+      Action: 'sns:Publish'
+      Resource: '*'
 
 functions:
   getCreditReport:
