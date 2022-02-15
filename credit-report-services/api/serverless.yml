@@ -27,7 +27,7 @@ provider:
     securityGroupIds: { 'Fn::Split': [',', { 'Fn::ImportValue': 'agency-services-transunion-vpc-natsecuritygroup' }] }
     subnetIds: { 'Fn::Split': [',', { 'Fn::ImportValue': 'agency-services-transunion-subnets-private' }] }
   apiGateway:
-    restApiId: !ImportValue credit-report-service-resources-credit-reports-apigw-id
+    restApiId: !ImportValue credit-report-service-resources-apigw-id
     restApiRootResourceId: !ImportValue credit-report-service-resources-apigw-rootresource
   iamRoleStatements:
     - Effect: 'Allow'
