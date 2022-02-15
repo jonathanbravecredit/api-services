@@ -1,0 +1,857 @@
+{
+  "TrueLinkCreditReportType": {
+    "Subscriber": [
+      {
+        "CreditAddress": {
+          "unparsedStreet": "P.O. BOX 746",
+          "stateCode": "IL",
+          "city": "WOOD DALE",
+          "postalCode": 60191,
+          "country": null,
+          "county": null,
+          "direction": null,
+          "houseNumber": null,
+          "postDirection": null,
+          "streetName": null,
+          "unit": null
+        },
+        "name": "HHLD BANK",
+        "telephone": "",
+        "subscriberCode": "0235197E",
+        "IndustryCode": {
+          "symbol": "BC",
+          "description": "Bank Credit Cards",
+          "rank": 199,
+          "abbreviation": "Bank Credit Cards"
+        },
+        "Source": {
+          "InquiryDate": "1999-07-28",
+          "BorrowerKey": "",
+          "Reference": "1a3a1b15-e105-40d7-b8d",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          }
+        }
+      }
+    ],
+    "Borrower": {
+      "BorrowerAddress": [
+        {
+          "CreditAddress": {
+            "postDirection": "",
+            "streetName": "101ST",
+            "streetType": "",
+            "unit": "",
+            "city": "HOLLYWOOD",
+            "postalCode": 33025,
+            "houseNumber": 1071,
+            "stateCode": "FL",
+            "direction": "SW",
+            "country": null,
+            "county": null,
+            "unparsedStreet": null
+          },
+          "Origin": {
+            "symbol": "",
+            "description": "",
+            "rank": 100000,
+            "abbreviation": ""
+          },
+          "addressOrder": 0,
+          "dateReported": "1997-08-01",
+          "partitionSet": 0,
+          "Source": {
+            "InquiryDate": "1999-07-28",
+            "BorrowerKey": "",
+            "Reference": "1a3a1b15-e105-40d7-b8d",
+            "Bureau": {
+              "abbreviation": null,
+              "description": null,
+              "symbol": null,
+              "rank": null
+            }
+          },
+          "Dwelling": {
+            "abbreviation": null,
+            "description": null,
+            "symbol": null,
+            "rank": null
+          },
+          "Ownership": {
+            "abbreviation": null,
+            "description": null,
+            "symbol": null,
+            "rank": null
+          }
+        }
+      ],
+      "SocialSecurityNumber": 899010022,
+      "BorrowerTelephone": [
+        {
+          "partitionSet": 0,
+          "PhoneNumber": {
+            "Extension": "",
+            "Number": 4310420,
+            "AreaCode": null
+          },
+          "PhoneType": {
+            "symbol": 9,
+            "description": "Undefined",
+            "rank": 1,
+            "abbreviation": "Undefined"
+          },
+          "Source": {
+            "InquiryDate": "1999-07-28",
+            "BorrowerKey": "",
+            "Reference": "1a3a1b15-e105-40d7-b8d",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "dateReported": null,
+          "dateUpdated": null
+        },
+        {
+          "partitionSet": 1,
+          "PhoneNumber": {
+            "Extension": "",
+            "Number": 2071633,
+            "AreaCode": 404
+          },
+          "PhoneType": {
+            "symbol": 12,
+            "description": "VoIP",
+            "rank": 1,
+            "abbreviation": "VoIP"
+          },
+          "Source": {
+            "InquiryDate": "1999-07-28",
+            "BorrowerKey": "",
+            "Reference": "1a3a1b15-e105-40d7-b8d",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "dateReported": null,
+          "dateUpdated": null
+        },
+        {
+          "partitionSet": 2,
+          "PhoneNumber": {
+            "Extension": "",
+            "Number": 7339417,
+            "AreaCode": 401
+          },
+          "PhoneType": {
+            "symbol": 1,
+            "description": "Phone (voice, standard)",
+            "rank": 1,
+            "abbreviation": "Phone (voice, standard)"
+          },
+          "Source": {
+            "InquiryDate": "1999-07-28",
+            "BorrowerKey": "",
+            "Reference": "1a3a1b15-e105-40d7-b8d",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "dateReported": null,
+          "dateUpdated": null
+        }
+      ],
+      "SocialPartition": [
+        {
+          "Social": [
+            {
+              "Source": {
+                "InquiryDate": "1999-07-28",
+                "BorrowerKey": "",
+                "Reference": "1a3a1b15-e105-40d7-b8d",
+                "Bureau": {
+                  "symbol": "TUC",
+                  "description": "TransUnion",
+                  "rank": 1,
+                  "abbreviation": "TransUnion"
+                }
+              },
+              "SocialSecurityNumber": 899010022
+            }
+          ]
+        }
+      ],
+      "Birth": [
+        {
+          "date": "1957-09-01",
+          "partitionSet": 0,
+          "age": 0,
+          "Source": {
+            "InquiryDate": "1999-07-28",
+            "BorrowerKey": "",
+            "Reference": "1a3a1b15-e105-40d7-b8d",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "BirthDate": {
+            "month": 9,
+            "year": 1957,
+            "day": 1
+          }
+        }
+      ],
+      "CreditScore": [
+        {
+          "CreditScoreModel": {
+            "symbol": 2,
+            "description": "Score Model: EMPIRICA 95",
+            "rank": 10000,
+            "abbreviation": "Score Model: EMPIRICA 95"
+          },
+          "riskScore": 597,
+          "NoScoreReason": {
+            "symbol": "",
+            "description": "",
+            "rank": 100000,
+            "abbreviation": ""
+          },
+          "Source": {
+            "InquiryDate": "1999-07-28",
+            "BorrowerKey": "",
+            "Reference": "1a3a1b15-e105-40d7-b8d",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "CreditScoreFactor": [
+            {
+              "bureauCode": 14,
+              "Factor": {
+                "symbol": 14,
+                "description": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "FactorType": "Negative",
+              "FactorText": []
+            },
+            {
+              "bureauCode": 18,
+              "Factor": {
+                "symbol": 18,
+                "description": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "FactorType": "Negative",
+              "FactorText": []
+            },
+            {
+              "bureauCode": 13,
+              "Factor": {
+                "symbol": 13,
+                "description": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "FactorType": "Negative",
+              "FactorText": []
+            },
+            {
+              "bureauCode": 10,
+              "Factor": {
+                "symbol": 10,
+                "description": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "FactorType": "Negative",
+              "FactorText": []
+            }
+          ],
+          "qualitativeRank": null,
+          "inquiriesAffectedScore": null,
+          "new": null,
+          "scoreName": null,
+          "populationRank": null,
+          "CreditScoreMode": {
+            "abbreviation": null,
+            "description": null,
+            "symbol": null,
+            "rank": null
+          }
+        },
+        {
+          "NoScoreReason": {
+            "symbol": "",
+            "description": "",
+            "rank": 100000,
+            "abbreviation": ""
+          },
+          "CreditScoreModel": {
+            "symbol": "00P94",
+            "description": "VantageScore",
+            "rank": 10000,
+            "abbreviation": "VantageScore"
+          },
+          "riskScore": 990,
+          "populationRank": 100,
+          "qualitativeRank": "A",
+          "Source": {
+            "InquiryDate": "1999-07-28",
+            "BorrowerKey": "",
+            "Reference": "1a3a1b15-e105-40d7-b8d",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "scoreName": "VantageScore",
+          "CreditScoreFactor": [
+            {
+              "bureauCode": 0,
+              "FactorType": "Negative",
+              "FactorText": [
+                "You have no accounts that can be used in determining a credit score.",
+                "Your credit score cannot be calculated because there is not enough information in your credit report for a creditor or lender to evaluate your creditworthiness. You can start to build your credit by slowly opening new accounts and using them regularly. Consider opening a secured credit card if you have trouble receiving new credit."
+              ],
+              "Factor": {
+                "symbol": 0,
+                "description": "",
+                "rank": 100000,
+                "abbreviation": ""
+              }
+            },
+            {
+              "bureauCode": 10,
+              "FactorType": "Negative",
+              "FactorText": [
+                "You have no installment accounts that can be used in determining a credit score.",
+                "A healthy balance of credit and loan accounts is key to achieving a high credit score. It is important to build a record of responsible credit use over time with different types of accounts."
+              ],
+              "Factor": {
+                "symbol": 10,
+                "description": "",
+                "rank": 100000,
+                "abbreviation": ""
+              }
+            },
+            {
+              "bureauCode": 20,
+              "FactorType": "Negative",
+              "FactorText": [
+                "You have no revolving credit accounts that can be used in determining a credit score.",
+                "A healthy balance of credit and loan accounts is key to achieving a high credit score. It is important to build a record of responsible credit use over time with different types of accounts."
+              ],
+              "Factor": {
+                "symbol": 20,
+                "description": "",
+                "rank": 100000,
+                "abbreviation": ""
+              }
+            },
+            {
+              "bureauCode": 30,
+              "FactorType": "Negative",
+              "FactorText": [
+                "You have no bank credit card accounts that can be used in determining a credit score.",
+                "A healthy balance of credit and loan accounts is key to achieving a high credit score. It is important to build a record of responsible credit use over time with different types of accounts."
+              ],
+              "Factor": {
+                "symbol": 30,
+                "description": "",
+                "rank": 100000,
+                "abbreviation": ""
+              }
+            }
+          ],
+          "inquiriesAffectedScore": null,
+          "new": null,
+          "CreditScoreMode": {
+            "abbreviation": null,
+            "description": null,
+            "symbol": null,
+            "rank": null
+          }
+        },
+        {
+          "NoScoreReason": {
+            "symbol": "",
+            "description": "",
+            "rank": 100000,
+            "abbreviation": ""
+          },
+          "CreditScoreModel": {
+            "symbol": "00R96",
+            "description": "Auto Insurance Score",
+            "rank": 10000,
+            "abbreviation": "Auto Insurance Score"
+          },
+          "riskScore": 350,
+          "populationRank": 0,
+          "qualitativeRank": 0,
+          "Source": {
+            "InquiryDate": "1999-07-28",
+            "BorrowerKey": "",
+            "Reference": "1a3a1b15-e105-40d7-b8d",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "scoreName": "AutoInsuranceScore",
+          "CreditScoreFactor": [
+            {
+              "bureauCode": "S11",
+              "FactorType": "Negative",
+              "FactorText": [
+                "You have 2 or more finance company inquiries.",
+                "Inquiries are often linked to credit, loan, finance or other types of applications. Recent inquiries could possibly indicate that you may be entering into more debt, which is a potential risk for businesses.|If you are interested in better managing your credit, you should exercise moderation when applying for new credit. Every time you submit a new application for credit, an inquiry is added to your credit file.|Consider not submitting applications to finance companies for at least two years. Inquiries that have been in your credit report for more than two years are no longer shown on your credit report."
+              ],
+              "Factor": {
+                "symbol": "S11",
+                "description": "",
+                "rank": 100000,
+                "abbreviation": ""
+              }
+            },
+            {
+              "bureauCode": "G01",
+              "FactorType": "Negative",
+              "FactorText": [
+                "You have no bank credit card accounts older than 6 years.",
+                "Establishing a history of paying bills on time and using credit responsibly helps insurers gather a clearer picture of your credit profile. Opening new accounts can cause your credit to appear unstable because a record of responsible use has not yet been established for the account. Your appeal to insurers will increase as you keep your new accounts open, active and paid on-time."
+              ],
+              "Factor": {
+                "symbol": "G01",
+                "description": "",
+                "rank": 100000,
+                "abbreviation": ""
+              }
+            },
+            {
+              "bureauCode": "S01",
+              "FactorType": "Negative",
+              "FactorText": [
+                "An inquiry was made within the past 10 months.",
+                "Inquiries are often linked to credit, loan, finance or other types of applications. Recent inquiries could possibly indicate that you may be entering into more debt, which is a potential risk for businesses.|If you are interested in better managing your credit, you should exercise moderation when applying for new credit. Each time you submit a new application for credit, an inquiry is added to your credit file."
+              ],
+              "Factor": {
+                "symbol": "S01",
+                "description": "",
+                "rank": 100000,
+                "abbreviation": ""
+              }
+            }
+          ],
+          "inquiriesAffectedScore": null,
+          "new": null,
+          "CreditScoreMode": {
+            "abbreviation": null,
+            "description": null,
+            "symbol": null,
+            "rank": null
+          }
+        },
+        {
+          "NoScoreReason": {
+            "symbol": "",
+            "description": "",
+            "rank": 100000,
+            "abbreviation": ""
+          },
+          "CreditScoreModel": {
+            "symbol": "00R95",
+            "description": "Home Insurance Score",
+            "rank": 10000,
+            "abbreviation": "Home Insurance Score"
+          },
+          "riskScore": 350,
+          "populationRank": 2,
+          "qualitativeRank": 0,
+          "Source": {
+            "InquiryDate": "1999-07-28",
+            "BorrowerKey": "",
+            "Reference": "1a3a1b15-e105-40d7-b8d",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "scoreName": "HomeInsuranceScore",
+          "CreditScoreFactor": [
+            {
+              "bureauCode": "S11",
+              "FactorType": "Negative",
+              "FactorText": [
+                "You have a recent credit inquiry (14 months ago).",
+                "Inquiries are often linked to credit, loan, finance or other types of applications. Recent inquiries could possibly indicate that you may be entering into more debt, which is a potential risk for businesses.|If you are interested in better managing your credit, you should exercise moderation when applying for new credit. Each time you submit a new application for credit, an inquiry is added to your credit file."
+              ],
+              "Factor": {
+                "symbol": "S11",
+                "description": "",
+                "rank": 100000,
+                "abbreviation": ""
+              }
+            },
+            {
+              "bureauCode": "G01",
+              "FactorType": "Negative",
+              "FactorText": [
+                "Your oldest bank credit card account is not yet 18 years old.",
+                "Although some of your bank credit card accounts have been open for an extended period of time, you may be more appealing to insurers if you continue to allow these accounts to age. In fact, the optimal period of time for a bank credit card account to have been open (in relation to your insurance score) is 18 years or more.|Establishing a history of paying bills on time and using credit responsibly helps businesses gather a clear picture of your credit profile. It is important to build a record of responsible credit usage over time with different types of accounts. You may want to consider letting existing bank credit card accounts mature. Even if you don&#x27;t use the account, you may want to keep the account open to have at least one longstanding account in your credit history."
+              ],
+              "Factor": {
+                "symbol": "G01",
+                "description": "",
+                "rank": 100000,
+                "abbreviation": ""
+              }
+            },
+            {
+              "bureauCode": "S01",
+              "FactorType": "Negative",
+              "FactorText": [
+                "You have a recent credit inquiry (24 months ago).",
+                "Inquiries are often linked to credit, loan, finance or other types of applications. Recent inquiries could possibly indicate that you may be entering into more debt, which is a potential risk for businesses.|If you are interested in better managing your credit, you should exercise moderation when applying for new credit. Each time you submit a new application for credit, an inquiry is added to your credit file."
+              ],
+              "Factor": {
+                "symbol": "S01",
+                "description": "",
+                "rank": 100000,
+                "abbreviation": ""
+              }
+            }
+          ],
+          "inquiriesAffectedScore": null,
+          "new": null,
+          "CreditScoreMode": {
+            "abbreviation": null,
+            "description": null,
+            "symbol": null,
+            "rank": null
+          }
+        },
+        {
+          "NoScoreReason": {
+            "symbol": "",
+            "description": "",
+            "rank": 100000,
+            "abbreviation": ""
+          },
+          "CreditScoreModel": {
+            "symbol": "00W40",
+            "description": "VantageScore 3.0 with Positive Score Factors",
+            "rank": 10000,
+            "abbreviation": "VantageScore 3.0 with Positive Score Factors"
+          },
+          "riskScore": 766,
+          "populationRank": 76,
+          "Source": {
+            "InquiryDate": "1999-07-28",
+            "BorrowerKey": "",
+            "Reference": "1a3a1b15-e105-40d7-b8d",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "scoreName": "VantageScore3",
+          "CreditScoreFactor": [
+            {
+              "bureauCode": 83,
+              "FactorType": "Negative",
+              "FactorText": [
+                "explain: An installment account is one with a fixed monthly payment for the life of the loan. Auto loans and student loans are common examples of installment loans. The VantageScore credit score model relies on information in your credit files at the three national credit reporting companies (Equifax, Experian and TransUnion) to generate your score. Your credit file does not contain enough information about your installment accounts. A mix of different types of open and active credit accounts, including installment accounts, can have a positive impact on your credit score.",
+                "factor: Lack of sufficient relevant installment account information",
+                "cando: Maintaining open and active credit accounts in good standing can help improve your credit score."
+              ],
+              "Factor": {
+                "symbol": 83,
+                "description": "",
+                "rank": 100000,
+                "abbreviation": ""
+              }
+            },
+            {
+              "bureauCode": 74,
+              "FactorType": "Negative",
+              "FactorText": [
+                "explain: An installment account is one with a fixed monthly payment for the life of the loan. Auto loans and student loans are common examples of installment loans. The amount that has been paid down on your open installment accounts is low. People who haven&#x27;t paid down much of their installment account loan balances are higher credit risks than people who have.",
+                "factor: The balance amount paid down on your open installment accounts is too low",
+                "cando: As monthly installment account payments are made, a portion of the outstanding principle balance is reduced, benefitting your score. Whenever possible, further pay down balances on your accounts. Over time this will also have a positive impact on your score."
+              ],
+              "Factor": {
+                "symbol": 74,
+                "description": "",
+                "rank": 100000,
+                "abbreviation": ""
+              }
+            }
+          ],
+          "qualitativeRank": null,
+          "inquiriesAffectedScore": null,
+          "new": null,
+          "CreditScoreMode": {
+            "abbreviation": null,
+            "description": null,
+            "symbol": null,
+            "rank": null
+          }
+        }
+      ],
+      "BorrowerName": [
+        {
+          "partitionSet": 0,
+          "NameType": {
+            "symbol": 1,
+            "description": "Primary",
+            "rank": 199,
+            "abbreviation": "Primary"
+          },
+          "Source": {
+            "InquiryDate": "1999-07-28",
+            "BorrowerKey": "",
+            "Reference": "1a3a1b15-e105-40d7-b8d",
+            "Bureau": {
+              "symbol": "TUC",
+              "description": "TransUnion",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "Name": {
+            "last": "TESTV",
+            "first": "VICTOR",
+            "middle": "LINK",
+            "prefix": null,
+            "suffix": null
+          },
+          "dateReported": null,
+          "dateUpdated": null
+        }
+      ],
+      "PreviousAddress": [],
+      "CreditStatement": [],
+      "Employer": [],
+      "BorrowerBureauIdentifier": [],
+      "borrowerKey": null
+    },
+    "Summary": {
+      "PublicRecordSummary": {
+        "TransUnion": {
+          "NumberOfRecords": 0
+        },
+        "Experian": {
+          "NumberOfRecords": null
+        },
+        "Equifax": {
+          "NumberOfRecords": null
+        },
+        "Transunion": {
+          "NumberOfRecords": null
+        },
+        "Merge": {
+          "NumberOfRecords": null
+        }
+      },
+      "TradelineSummary": {
+        "TransUnion": {
+          "TotalBalances": 1989,
+          "TotalMonthlyPayments": 64,
+          "CloseAccounts": 1,
+          "OpenAccounts": 4,
+          "TotalAccounts": 5,
+          "DerogatoryAccounts": 0,
+          "DelinquentAccounts": 2,
+          "TotalHistoricalNegatives": null,
+          "OpenCollectionAccounts": null,
+          "TotalCollectionAccounts": null,
+          "HistoricalNegativeAccounts": null,
+          "TotalInstallmentAccounts": null,
+          "OpenInstallmentAccounts": null,
+          "TotalOtherAccounts": null,
+          "OpenOtherAccounts": null,
+          "OpenMortgageAccounts": null,
+          "RecentDeliquencyDate": null,
+          "TotalMortgageAccounts": null,
+          "TotalRevolvingAccounts": null,
+          "OpenRevolvingAccounts": null,
+          "CreditSummaryPeriod": null,
+          "AgeofCredit": null,
+          "RecentDeliquencyMOP": {
+            "abbreviation": null,
+            "description": null,
+            "symbol": null,
+            "rank": null
+          }
+        },
+        "Experian": {
+          "TotalHistoricalNegatives": null,
+          "OpenCollectionAccounts": null,
+          "TotalCollectionAccounts": null,
+          "HistoricalNegativeAccounts": null,
+          "TotalInstallmentAccounts": null,
+          "OpenInstallmentAccounts": null,
+          "TotalOtherAccounts": null,
+          "OpenOtherAccounts": null,
+          "OpenMortgageAccounts": null,
+          "RecentDeliquencyDate": null,
+          "TotalMortgageAccounts": null,
+          "DelinquentAccounts": null,
+          "DerogatoryAccounts": null,
+          "CloseAccounts": null,
+          "TotalAccounts": null,
+          "OpenAccounts": null,
+          "TotalRevolvingAccounts": null,
+          "OpenRevolvingAccounts": null,
+          "CreditSummaryPeriod": null,
+          "TotalBalances": null,
+          "TotalMonthlyPayments": null,
+          "AgeofCredit": null,
+          "RecentDeliquencyMOP": {
+            "abbreviation": null,
+            "description": null,
+            "symbol": null,
+            "rank": null
+          }
+        },
+        "Equifax": {
+          "TotalHistoricalNegatives": null,
+          "OpenCollectionAccounts": null,
+          "TotalCollectionAccounts": null,
+          "HistoricalNegativeAccounts": null,
+          "TotalInstallmentAccounts": null,
+          "OpenInstallmentAccounts": null,
+          "TotalOtherAccounts": null,
+          "OpenOtherAccounts": null,
+          "OpenMortgageAccounts": null,
+          "RecentDeliquencyDate": null,
+          "TotalMortgageAccounts": null,
+          "DelinquentAccounts": null,
+          "DerogatoryAccounts": null,
+          "CloseAccounts": null,
+          "TotalAccounts": null,
+          "OpenAccounts": null,
+          "TotalRevolvingAccounts": null,
+          "OpenRevolvingAccounts": null,
+          "CreditSummaryPeriod": null,
+          "TotalBalances": null,
+          "TotalMonthlyPayments": null,
+          "AgeofCredit": null,
+          "RecentDeliquencyMOP": {
+            "abbreviation": null,
+            "description": null,
+            "symbol": null,
+            "rank": null
+          }
+        },
+        "Merge": {
+          "TotalHistoricalNegatives": null,
+          "OpenCollectionAccounts": null,
+          "TotalCollectionAccounts": null,
+          "HistoricalNegativeAccounts": null,
+          "TotalInstallmentAccounts": null,
+          "OpenInstallmentAccounts": null,
+          "TotalOtherAccounts": null,
+          "OpenOtherAccounts": null,
+          "OpenMortgageAccounts": null,
+          "RecentDeliquencyDate": null,
+          "TotalMortgageAccounts": null,
+          "DelinquentAccounts": null,
+          "DerogatoryAccounts": null,
+          "CloseAccounts": null,
+          "TotalAccounts": null,
+          "OpenAccounts": null,
+          "TotalRevolvingAccounts": null,
+          "OpenRevolvingAccounts": null,
+          "CreditSummaryPeriod": null,
+          "TotalBalances": null,
+          "TotalMonthlyPayments": null,
+          "AgeofCredit": null,
+          "RecentDeliquencyMOP": {
+            "abbreviation": null,
+            "description": null,
+            "symbol": null,
+            "rank": null
+          }
+        }
+      },
+      "InquirySummary": {
+        "TransUnion": {
+          "NumberInLast2Years": 4
+        },
+        "Experian": {
+          "NumberInLast2Years": null
+        },
+        "Equifax": {
+          "NumberInLast2Years": null
+        },
+        "Transunion": {
+          "NumberInLast2Years": null
+        },
+        "Merge": {
+          "NumberInLast2Years": null
+        }
+      },
+      "PortfolioCreditSummary": [],
+      "AccountHistorySummary": []
+    },
+    "SB168Frozen": {
+      "experian": false,
+      "equifax": false,
+      "transunion": false
+    },
+    "Sources": [
+      {
+        "Source": {
+          "InquiryDate": "1999-07-28",
+          "OriginalData": "VFU0UiAgIDAxMTFhM2ExYjE1LWUxMDUtNDBkNy1iOGQgIDEyTEFaIDA3MTgzMjAzMTk5OTA3MjgyMTA3MzdQSDAxICAgMDcwMDBTSDAxICAgMTAxWTA1TjE2TUlOMTk5NzA5MDFOTTAxICAgRjFURVNUViAgICAgICAgICAgICAgICAgICAgVklDVE9SICAgICAgICAgTElOSyAgICAgICAgICAgICAgICAgUEkwMSAgIEY4OTkwMTAwMjIxOTU3MDkwMSAgICBBRDAxICAgRjEgMTA3MSAgICAgIFNXMTAxU1QgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgSE9MTFlXT09EICAgICAgICAgICAgICAgICAgRkwzMzAyNSAgICAgMTk5NzA4MDFQTjAxICAgRjEwOSAgICA0MzEwNDIwICAgICBTTTAxICAgMTAwMDAwMDAwMjAwMzAwNzAwNTAwNDAwMDAwMTAwMDAwNFNEMDEgICBSMDAwMDAxMjQxMDAwMDAwNDAwMDAwMDAxOTg5MDAwMDAwMDIwMDAwMDAwMDY0MDAwU0QwMSAgIFQwMDAwMDEyNDEwMDAwMDA0MDAwMDAwMDE5ODkwMDAwMDAwMjAwMDAwMDAwNjQgICBUUjAxICAgQiAwMjM1MTk3RUhSU0kgQkFOSy1XSElSTCAgICAgICAgIFIxNTkwNTc3MTk5OSAgICAgICAgICAgICBJMTk5NzA4MDExOTk5MDcwMUEgICAgICAgICAgICAgICAgIDE5OTkwNTAxMDIxMDAwMDAwMjc2MDAwMDAwMzY0ICAgICAgICAgTUlOIDAwMDAwMDAyMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIENIICAgMDAwMDAwMDIwMDYgICAgICAgICAgICAgICAgICAgMTk5OTA3MDEyMTIxMTIxMTExMTExMTExMTEyMTEgICAgICAgICAgICAgICAgICAgICAgICAgICAyMzA0MDAwMDFUUjAxICAgQiAwODg1NTA5MU1FUkMgQksgT0YgU1QgTE9VSVMgTkEgIE0zNjQ2MTA2ICAgICAgICAgICAgICAgICBNMTk5NTA3MDExOTk5MDQwMUExOTk5MDQwMUMgICAgICAgIDE5OTkwMzAxMDIxMDAwMDAwMDAwMDAwMTE5MjAwICAgICAgICAgMzYwTTAwMDAwMTI4NiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIENWQ0xPMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgICAgMTk5OTA0MDFYMjEyMTExMTExMTEyMTExMTEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAxODAzMDAwMDJUUjAxICAgRCAwNjM1RDAwMUJVUkRJTkVTICAgICAgICAgICAgICAgIFIyMjU1NjM3NzAyICAgICAgICAgICAgICBJMTk5NzA4MDExOTk5MDYwMUEgICAgICAgICAgICAgICAgIDE5OTkwNTAxMDExMDAwMDAwMjk2MDAwMDAwNTEzMDAwMDAwNDAwTUlOIDAwMDAwMDAwNyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIENIICAgMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgICAgMTk5OTA2MDExMTExMTExMTExMTExMTExMTExMSAgICAgICAgICAgICAgICAgICAgICAgICAgICAyMzAwMDAwMDJUUjAxICAgQiAwNjREQjAwMkNJVElCQU5LIE5BICAgICAgICAgICAgIFI1NDI0ICAgICAgICAgICAgICAgICAgICBJMTk5ODEwMDExOTk5MDYwMUEgICAgICAgICAgICAgICAgIDE5OTkwNTAxMDExMDAwMDAxMjAxICAgICAgICAgICAgICAgICAgTUlOIDAwMDAwMDAxNyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIENDICAgMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgICAgMTk5OTA2MDExMTExMTExMTEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAwOTAwMDAwMDJUUjAxICAgQiAwMjM1MTY3QUhSU0kgQkFOSyAgICAgICAgICAgICAgIFIxMDE1OTA1NzcxOTk5ICAgICAgICAgICBJMTk5NzA4MDExOTk4MTEwMUEgICAgICAgICAgICAgICAgIDE5OTgwNDAxMDExMDAwMDAwMjE2MDAwMDAwMzY0ICAgICAgICAgICAgWDAwMDAwMDAyMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMDAwMDAwMDAwICAgICAgICAgICAgICAgICAgICAgMTk5ODExMDExMTExWDExMTExMjFYMTEgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAxNTAxMDAwMDJJTjAxICAgMTJMQVogMDcxODMyMDNUUlVFIExJTksgICAgICAgICAgICAgICBJICAgICAgICAgICAxOTk5MDcyOElOMDEgICAxMkNPWiAwODI1NjI1NUNSRURDTyAgICAgICAgICAgICAgICAgIEkgICAgICAgICAgIDE5OTkwMzI0SU4wMSAgIDEyQ09aIDA4MjU2MjU1Q1JFRENPICAgICAgICAgICAgICAgICAgQyAgICAgICAgICAgMTk5OTAzMThJTjAxICAgMDZDSE4gMDEyMTExMjVTRUFSUyAgICAgICAgICAgICAgICAgICBJICAgICAgICAgICAxOTk4MDcyME9CMDEgICBNRVJDSEFOVFMgQVNTT0NJQVRJT04gQ1JFRElUIEJVUkVBVSwgSU5DLiAgICAgICAgIDEzNCBTLiBUQU1QQSwgUC5PLkJPWCAzMzA3ICAgICAgICAgICAgICBUQU1QQSwgRkwuIDMzNjAyICAgICAgICAgICAgIDgxMyAyNzMgNzgzMyAgICAgICAgICBBTzAxICAgMDc1MDAwMSAgIExLMDEgICBUUjAwMDBCQzAyMzUxOTdFSEhMRCBCQU5LICAgICAgICAgICAgICAgIFNBMDEgICBQLk8uIEJPWCA3NDYgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBXT09EIERBTEUgICAgICAgICAgICAgICAgICBJTDYwMTkxICAgICBMSzAxICAgVFIwMDAwQk0wODg1NTA5MU1FUkMgQiBTTCBOQSAgICAgICAgICAgIFBTQTAxICAgTVRHIFNFUlYgVFJBTSAzMi0xICAgICAgICAgICAgUE9CIDUyNCAgICAgICAgICAgICAgICAgICAgICAgU1QgTE9VSVMgICAgICAgICAgICAgICAgICAgTU82MzE2NiAgICAgUE4wMSAgIEY0MDkgODAwOTU1NjM3MiAgICAgTEswMSAgIFRSMDAwMERDMDYzNUQwMDFCVVJESU4vRkRTTkIgICAgICAgICAgICBQU0EwMSAgIDEzMTQxIDM0VEggU1QgTiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIENMRUFSV0FURVIgICAgICAgICAgICAgICAgIEZMMzQ2MjIgICAgIFBOMDEgICBGNDA5IDgwMDQ3NzIxNjcgICAgIExLMDEgICBUUjAwMDBCQzA2NERCMDAyQ0lUSUJBTksgTUMgICAgICAgICAgICAgUFNBMDEgICBQT0IgNjI0MSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBTSU9VWCBGQUxMUyAgICAgICAgICAgICAgICBTRDU3MTE3ICAgICBQTjAxICAgRjQwOSA4MDA4NDMwNzc3ICAgICBMSzAxICAgVFIwMDAwQlowMjM1MTY3QUhITEQgQkFOSyAgICAgICAgICAgICAgICBTQTAxICAgUC5PLiBCT1ggNzQ2ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgV09PRCBEQUxFICAgICAgICAgICAgICAgICAgSUw2MDE5MSAgICAgTEswMSAgIElOMTIwMFogMDgyNTYyNTVDUkVEQ08gICAgICAgICAgICAgICAgICBQU0EwMSAgIDk0NDQgQkFMQk9BIEFWRSAgICAgICAgICAgICAgIFNVSVRFIDUwMCAgICAgICAgICAgICAgICAgICAgIFNBTiBESUVHTyAgICAgICAgICAgICAgICAgIENBOTIxMjMgICAgIFBOMDEgICBGMzA5IDgwMDMwMDMwMzIgICAgIExLMDEgICBJTjA2MDBOIDAxMjExMTI1U0VBUlMgICAgICAgICAgICAgICAgICAgIFNBMDEgICAxMzIwMCBTTUlUSCBSRCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDTEVWRUxBTkQgICAgICAgICAgICAgICAgICBPSDQ0MTMwICAgICBBTzAxICAgMDcwMzAwMVAwN1BOMDEgICBGMTEyTDQwNDIwNzE2MzMgICAgIFBOMDEgICBDMTAxIDQwMTczMzk0MTcgICAgIEFPMDEgICAwMDAwMjAxICAgU0MwMSAgIDAwMDAyKzU5NyAgICAwMTQwMTgwMTMwMTAgIEFPMDEgICAwMFA5NDAxICAgU0MwMSAgIDAwUDk0Kzk5MCAgICAwMCAxMCAyMCAzMCAxMkFPMDEwMTcwMFI5NjAxICAgU0MwMTAzNDAwUjk2KzM1MCAgICBTMTFHMDFTMDEgICAgIEFPMDEwMTcwMFI5NTAxICAgU0MwMTAzNDAwUjk1KzM1MCAgICBTMTFHMDFTMDEgICAgIFNDMDEwMzQwMFc0MCs3NjYgICAgODMgNzQgICAgICAgICBFTkRTICAgMDQy",
+          "Bureau": {
+            "symbol": "TUC",
+            "description": "TransUnion",
+            "rank": 1,
+            "abbreviation": "TransUnion"
+          },
+          "BorrowerKey": null,
+          "Reference": null
+        }
+      }
+    ],
+    "SafetyCheckPassed": true,
+    "FraudIndicator": false,
+    "DeceasedIndicator": false,
+    "TradeLinePartition": [],
+    "InquiryPartition": [],
+    "BankingRecordPartition": [],
+    "PulblicRecordPartition": [],
+    "Message": [],
+    "CreditVision": null
+  }
+}
