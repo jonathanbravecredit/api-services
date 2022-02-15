@@ -20,8 +20,8 @@ provider:
     SECURITY_GROUPS: !ImportValue agency-services-transunion-vpc-natsecuritygroup
     SUBNETS: !ImportValue agency-services-transunion-subnets-private
   vpc:
-    securityGroupIds: !Split: [',', '${self:provider.environment.SECURITY_GROUPS}']
-    subnetIds: !Split: [',', '${self:provider.environment.SUBNETS}']
+    securityGroupIds: !Split [',', '${self:provider.environment.SECURITY_GROUPS}']
+    subnetIds: !Split [',', '${self:provider.environment.SUBNETS}']
   apiGateway:
     restApiId: !ImportValue credit-report-services-credit-reports-apigw-id
     restApiRootResourceId: credit-report-services-credit-reports-apigw-rootresource
