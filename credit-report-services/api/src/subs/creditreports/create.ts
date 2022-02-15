@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { SQSEvent, SQSHandler } from 'aws-lambda';
 import { IBatchPayload, ICreditReportPayload } from 'libs/interfaces/batch.interfaces';
 import { CreditReportMaker } from 'libs/models/CreditReport.model';
