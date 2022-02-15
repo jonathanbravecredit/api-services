@@ -1,14 +1,15 @@
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda';
 import { response } from 'libs/utils/response';
-import * as json from 'libs/data/example.json';
-import { MergeReport } from 'libs/models/MergeReport/MergeReport';
-import { IMergeReport } from 'libs/interfaces/merge-report.interface';
+import { getReport } from 'libs/queries/CreditReport.queries';
 
 export const main: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  const tuRaw = json as unknown as IMergeReport;
-  const report = new MergeReport(tuRaw);
-  console.log('report 1: ', JSON.stringify(report));
-  console.log('spacer==========================>');
-  console.log('report 2: ', report);
-  return response(200, null);
+  console.log('event ==> ', JSON.stringify(event));
+  const sub = event?.requestContext?.authorizer?.claims?.sub;
+  if (!sub) return response(200, 'no id provided');
+  try {
+    const report = await getReport(sub, 0);
+    return response(200, report);
+  } catch (err) {
+    return response(500, err);
+  }
 };

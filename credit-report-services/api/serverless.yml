@@ -43,3 +43,12 @@ functions:
             type: COGNITO_USER_POOLS
             authorizerId:
               Ref: !ImportValue credit-report-services-credit-reports-authorizer
+
+  createCreditReport:
+    handler: src/subs/creditreports/create.main
+    onError: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:lambdadeadletterqueue'
+    events:
+      - sqs:
+          arn: !ImportValue credit-report-service-resources-sqs-arn
+          batchSize: 1
+          maximumBatchingWindow: 5
