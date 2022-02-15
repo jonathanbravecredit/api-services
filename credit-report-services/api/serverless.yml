@@ -10,6 +10,10 @@ plugins:
   - serverless-offline
   - serverless-dotenv-plugin # Load .env as environment variables
 
+custom:
+  bundle:
+    linting: false
+
 provider:
   name: aws
   runtime: nodejs12.x
@@ -20,15 +24,15 @@ provider:
     SECURITY_GROUPS: !ImportValue agency-services-transunion-vpc-natsecuritygroup
     SUBNETS: !ImportValue agency-services-transunion-subnets-private
   vpc:
-    securityGroupIds: !Split [',', '${self:provider.environment.SECURITY_GROUPS}']
-    subnetIds: !Split [',', '${self:provider.environment.SUBNETS}']
+    securityGroupIds: { 'Fn::Split': [',', { 'Fn::ImportValue': 'agency-services-transunion-vpc-natsecuritygroup' }] }
+    subnetIds: { 'Fn::Split': [',', { 'Fn::ImportValue': 'agency-services-transunion-subnets-private' }] }
   apiGateway:
     restApiId: !ImportValue credit-report-services-credit-reports-apigw-id
     restApiRootResourceId: credit-report-services-credit-reports-apigw-rootresource
 
 functions:
   getCreditReport:
-    handler: src/api/creditreports.main
+    handler: src/api/creditreports/get.main
     onError: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:lambdadeadletterqueue'
     events:
       - http:
