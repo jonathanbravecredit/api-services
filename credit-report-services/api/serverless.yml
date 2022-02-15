@@ -23,13 +23,19 @@ provider:
     OUR_ENV: ${self:provider.stage}
     SECURITY_GROUPS: !ImportValue agency-services-transunion-vpc-natsecuritygroup
     SUBNETS: !ImportValue agency-services-transunion-subnets-private
-    CREDITREPORT_SQS_ARN: !ImportValue credit-report-service-resources-sqs-arn
   vpc:
     securityGroupIds: { 'Fn::Split': [',', { 'Fn::ImportValue': 'agency-services-transunion-vpc-natsecuritygroup' }] }
     subnetIds: { 'Fn::Split': [',', { 'Fn::ImportValue': 'agency-services-transunion-subnets-private' }] }
   apiGateway:
     restApiId: !ImportValue credit-report-services-credit-reports-apigw-id
     restApiRootResourceId: credit-report-services-credit-reports-apigw-rootresource
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - sqs:ReceiveMessage
+        - sqs:DeleteMessage
+        - sqs:GetQueueAttributes
+      Resource: '*'
 
 functions:
   getCreditReport:
@@ -50,6 +56,7 @@ functions:
     onError: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:lambdadeadletterqueue'
     events:
       - sqs:
-          arn: !Sub '${self:provider.environment.CREDITREPORT_SQS_ARN}'
+          arn:
+            Fn::ImportValue: 'credit-report-service-resources-sqs-arn'
           batchSize: 1
           maximumBatchingWindow: 5
