@@ -908,6 +908,7 @@ export const FulfillWorker = async (
     let response;
     if (responseType.toLowerCase() === 'success') {
       const mapped = enrichFulfillDataWorker(data);
+      await writeFulfillReport(data);
       const sync = await updateFulfillReport(payload.id, mapped);
       response = { success: true, error: null, data: data };
     } else {
@@ -995,6 +996,7 @@ export const FulfillByUserId = async (
 
     let response;
     if (responseType.toLowerCase() === 'success') {
+      await writeFulfillReport(data);
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }
@@ -1089,6 +1091,7 @@ export const FulfillDisputes = async (
 
     let response;
     if (responseType.toLowerCase() === 'success') {
+      await writeFulfillReport(data);
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }
