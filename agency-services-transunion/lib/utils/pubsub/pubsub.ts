@@ -1,7 +1,12 @@
 export class PubSubUtil {
   constructor() {}
 
-  createSNSPayload<T>(subject: string, message: T, service: string = 'transunionbatch'): AWS.SNS.PublishInput {
+  createSNSPayload<T>(
+    subject: string,
+    message: T,
+    service: string,
+    topic: string = process.env.TU_SNS_PROXY_ARN,
+  ): AWS.SNS.PublishInput {
     return {
       Subject: subject,
       Message: JSON.stringify({
@@ -15,7 +20,7 @@ export class PubSubUtil {
           StringValue: service,
         },
       },
-      TopicArn: process.env.TU_SNS_PROXY_ARN || '',
+      TopicArn: topic || '',
     };
   }
 }

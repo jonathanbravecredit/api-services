@@ -157,3 +157,8 @@ resources:
       Value: !GetAtt CreditReportsQueue.Arn
       Export:
         Name: !Sub '${self:service}-sqs-arn'
+    CreditReportTopicArn:
+      Description: 'Credit reports SNS ARN'
+      Value: !Ref CreditReportsSNSTopic
+      Export:
+        Name: !Sub '${self:service}-sns-arn'

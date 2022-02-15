@@ -5,7 +5,6 @@ import * as qrys from 'lib/proxy/proxy-queries';
 import * as interfaces from 'lib/interfaces';
 import * as tu from 'lib/transunion';
 import * as moment from 'moment';
-import { SNS } from 'aws-sdk';
 import { ajv } from 'lib/schema/validation';
 import { Sync } from 'lib/utils/sync/sync';
 import { SoapAid } from 'lib/utils/soap-aid/soap-aid';
@@ -17,7 +16,7 @@ import { ALL_GET_INVESTIGATION_MOCKS } from 'lib/examples/mocks/AllGetInvestigat
 import { GET_DISPUTE_STATUS_RESPONSE_WITHID } from 'lib/examples/mocks/GetDisputeStatusResponse-Complete';
 import { DB } from 'lib/utils/db/db';
 import { Dispute } from 'lib/utils/db/disputes/model/dispute.model';
-import { enrichFulfillDataWorker, updateInvestigationResultsDB } from 'lib/transunion';
+import { enrichFulfillDataWorker, updateInvestigationResultsDB, writeFulfillReport } from 'lib/transunion';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
@@ -816,13 +815,7 @@ export const Fulfill = async (
     let response;
     if (responseType.toLowerCase() === 'success') {
       // send the report to the report service
-      const { fulfillMergeReport } = tu.enrichFulfillDataWorker(data);
-      const report = JSON.parse(fulfillMergeReport.serviceProductObject) as IMergeReport;
-      const pubsub = new PubSubUtil();
-      const snsPayload = pubsub.createSNSPayload<IMergeReport>('creditreports', report, 'create');
-      const sns = new SNS({ region: 'us-east-2' });
-      await sns.publish(snsPayload).promise();
-
+      await writeFulfillReport(data);
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }

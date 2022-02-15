@@ -9,6 +9,7 @@ import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
 import * as uuid from 'uuid';
 import * as he from 'he';
+import { SNS } from 'aws-sdk';
 import {
   IFulfill,
   IFulfillGraphQLResponse,
@@ -17,9 +18,11 @@ import {
   IFulfillResponse,
   IFulfillResult,
   IFulfillServiceProductResponse,
+  IMergeReport,
 } from 'lib/interfaces';
 import { MONTH_MAP } from 'lib/data/constants';
 import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
+import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
 
 /**
  * Genarates the message payload for TU Enroll service
@@ -306,4 +309,13 @@ export const enrichFulfillDataWorker = (
     serviceBundleFulfillmentKey: serviceBundleFulfillmentKey, // this always has to be synced to the report in fulfill fields
   };
   return mapped;
+};
+
+export const writeFulfillReport = async (data: IFulfillResult) => {
+  const { fulfillMergeReport } = enrichFulfillDataWorker(data);
+  const report = JSON.parse(fulfillMergeReport.serviceProductObject) as IMergeReport;
+  const pubsub = new PubSubUtil();
+  const snsPayload = pubsub.createSNSPayload<IMergeReport>('create', report, 'creditreports', ' NEED THE TOPIC ARN');
+  const sns = new SNS({ region: 'us-east-2' });
+  await sns.publish(snsPayload).promise();
 };
