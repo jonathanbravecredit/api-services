@@ -28,7 +28,7 @@ provider:
     subnetIds: { 'Fn::Split': [',', { 'Fn::ImportValue': 'agency-services-transunion-subnets-private' }] }
   apiGateway:
     restApiId: !ImportValue credit-report-services-credit-reports-apigw-id
-    restApiRootResourceId: credit-report-services-credit-reports-apigw-rootresource
+    restApiRootResourceId: !ImportValue credit-report-services-credit-reports-apigw-rootresource
   iamRoleStatements:
     - Effect: 'Allow'
       Action:
