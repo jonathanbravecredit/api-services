@@ -4,11 +4,11 @@ import { IBatchPayload, ICreditReportPayload } from 'libs/interfaces/batch.inter
 import { CreditReportMaker } from 'libs/models/CreditReport.model';
 import { createReport, updateReport } from 'libs/queries/CreditReport.queries';
 
-export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
+export const main: SQSHandler = async (event: SQSEvent): Promise<void> => {
   const reportRequests = event.Records.map((r) => {
     return JSON.parse(r.body) as IBatchPayload<ICreditReportPayload>;
   });
-
+  console.log('report requests: ', reportRequests);
   if (reportRequests.length) {
     try {
       Promise.all(
@@ -18,6 +18,8 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
           const added = new CreditReportMaker(userId, bureau, report);
           const current = new CreditReportMaker(userId, bureau, report, 0); // version 0 is always current
           current.setCurrentVersion(added.version);
+          console.log('added: ', added);
+          console.log('current: ', current);
           try {
             await createReport(added);
             await updateReport(current);

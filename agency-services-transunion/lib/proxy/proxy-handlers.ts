@@ -468,7 +468,7 @@ export const Enroll = async (
 
     let response;
     if (responseType.toLowerCase() === 'success') {
-      await writeEnrollReport(data);
+      await writeEnrollReport(data, identityId);
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }
@@ -821,7 +821,7 @@ export const Fulfill = async (
     let response;
     if (responseType.toLowerCase() === 'success') {
       // send the report to the report service
-      await writeFulfillReport(data);
+      await writeFulfillReport(data, payload.id);
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }
@@ -914,7 +914,7 @@ export const FulfillWorker = async (
     let response;
     if (responseType.toLowerCase() === 'success') {
       const mapped = enrichFulfillDataWorker(data);
-      await writeFulfillReport(data);
+      await writeFulfillReport(data, payload.id);
       const sync = await updateFulfillReport(payload.id, mapped);
       response = { success: true, error: null, data: data };
     } else {
@@ -1002,7 +1002,7 @@ export const FulfillByUserId = async (
 
     let response;
     if (responseType.toLowerCase() === 'success') {
-      await writeFulfillReport(data);
+      await writeFulfillReport(data, payload.id);
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }
@@ -1097,7 +1097,7 @@ export const FulfillDisputes = async (
 
     let response;
     if (responseType.toLowerCase() === 'success') {
-      await writeFulfillReport(data);
+      await writeFulfillReport(data, payload.id);
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }
