@@ -11,6 +11,7 @@ import * as uuid from 'uuid';
 import * as he from 'he';
 import { SNS } from 'aws-sdk';
 import {
+  IEnrollResult,
   IFulfill,
   IFulfillGraphQLResponse,
   IFulfillMsg,
