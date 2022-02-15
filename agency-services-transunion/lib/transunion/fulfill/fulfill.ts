@@ -23,6 +23,7 @@ import {
 import { MONTH_MAP } from 'lib/data/constants';
 import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
+import { BraveParsers } from 'lib/utils/brave/parser/BraveParser';
 
 /**
  * Genarates the message payload for TU Enroll service
@@ -313,9 +314,10 @@ export const enrichFulfillDataWorker = (
 
 export const writeFulfillReport = async (data: IFulfillResult) => {
   const { fulfillMergeReport } = enrichFulfillDataWorker(data);
-  const report = JSON.parse(fulfillMergeReport.serviceProductObject) as IMergeReport;
+  const report = BraveParsers.parseTransunionMergeReport(fulfillMergeReport.serviceProductObject);
   const pubsub = new PubSubUtil();
-  const snsPayload = pubsub.createSNSPayload<IMergeReport>('create', report, 'creditreports', ' NEED THE TOPIC ARN');
+  const topic = process.env.CREDITREPORTS_SNS_PROXY_ARN;
+  const snsPayload = pubsub.createSNSPayload<IMergeReport>('create', report, 'creditreports', topic);
   const sns = new SNS({ region: 'us-east-2' });
   await sns.publish(snsPayload).promise();
 };
