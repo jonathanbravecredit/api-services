@@ -5,7 +5,7 @@ import { InquirySummaryInfo } from 'libs/models/MergeReport/MergeReportComponent
 export class InquirySummary extends Homogenize<Partial<IInquirySummary>> implements IInquirySummary {
   Experian: IInquirySummaryInfo;
   Equifax: IInquirySummaryInfo;
-  Transunion: IInquirySummaryInfo;
+  TransUnion: IInquirySummaryInfo;
   Merge: IInquirySummaryInfo;
 
   constructor(_data: Partial<IInquirySummary>) {
@@ -17,7 +17,7 @@ export class InquirySummary extends Homogenize<Partial<IInquirySummary>> impleme
   init(): void {
     this.Experian = new InquirySummaryInfo(this.Experian);
     this.Equifax = new InquirySummaryInfo(this.Equifax);
-    this.Transunion = new InquirySummaryInfo(this.Transunion);
+    this.TransUnion = new InquirySummaryInfo(this.TransUnion);
     this.Merge = new InquirySummaryInfo(this.Merge);
   }
 }

@@ -435,7 +435,7 @@ export interface ITradelineSummaryInfo {
 export interface IInquirySummary {
   Experian: IInquirySummaryInfo;
   Equifax: IInquirySummaryInfo;
-  Transunion: IInquirySummaryInfo;
+  TransUnion: IInquirySummaryInfo;
   Merge: IInquirySummaryInfo;
 }
 export interface IInquirySummaryInfo {
