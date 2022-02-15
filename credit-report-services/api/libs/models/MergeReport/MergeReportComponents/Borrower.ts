@@ -11,17 +11,17 @@ import {
   ISocialPartition,
 } from 'libs/interfaces/merge-report.interface';
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
-import { BorrowerAddress } from 'libs/models/MergeReport/MergeReportComponents/BorrowerAddress';
-import { BorrowerBirth } from 'libs/models/MergeReport/MergeReportComponents/BorrowerBirth';
-import { BorrowerBureauIdentifier } from 'libs/models/MergeReport/MergeReportComponents/BorrowerBureauIdentifier';
-import { BorrowerName } from 'libs/models/MergeReport/MergeReportComponents/BorrowerName';
-import { BorrowerTelephone } from 'libs/models/MergeReport/MergeReportComponents/BorrowerTelephone';
-import { CreditScore } from 'libs/models/MergeReport/MergeReportComponents/CreditScore';
-import { CreditStatement } from 'libs/models/MergeReport/MergeReportComponents/CreditStatement';
-import { Employer } from 'libs/models/MergeReport/MergeReportComponents/Employer';
-import { SocialPartition } from 'libs/models/MergeReport/MergeReportComponents/SocialPartition';
+import { BorrowerAddress } from 'libs/models/MergeReport/MergeReportComponents/BorrowerComponents/BorrowerAddress';
+import { BorrowerBirth } from 'libs/models/MergeReport/MergeReportComponents/BorrowerComponents/BorrowerBirth';
+import { BorrowerBureauIdentifier } from 'libs/models/MergeReport/MergeReportComponents/BorrowerComponents/BorrowerBureauIdentifier';
+import { BorrowerName } from 'libs/models/MergeReport/MergeReportComponents/BorrowerComponents/BorrowerName';
+import { BorrowerTelephone } from 'libs/models/MergeReport/MergeReportComponents/BorrowerComponents/BorrowerTelephone';
+import { CreditScore } from 'libs/models/MergeReport/MergeReportComponents/BorrowerComponents/CreditScore';
+import { CreditStatement } from 'libs/models/MergeReport/MergeReportComponents/BorrowerComponents/CreditStatement';
+import { Employer } from 'libs/models/MergeReport/MergeReportComponents/BorrowerComponents/Employer';
+import { SocialPartition } from 'libs/models/MergeReport/MergeReportComponents/BorrowerComponents/SocialPartition';
 
-export class Borrower extends Homogenize<IBorrower> implements IBorrower {
+export class Borrower extends Homogenize<Partial<IBorrower>> implements IBorrower {
   BorrowerAddress: IBorrowerAddress[] = [];
   PreviousAddress: IBorrowerAddress[] = [];
   Birth: IBorrowerBirth[] = [];
@@ -35,7 +35,7 @@ export class Borrower extends Homogenize<IBorrower> implements IBorrower {
   borrowerKey: string | null = null;
   SocialSecurityNumber: string | number | null = null;
 
-  constructor(_data: IBorrower) {
+  constructor(_data: Partial<IBorrower>) {
     super(_data);
     this.homogenize(_data);
     this.init();

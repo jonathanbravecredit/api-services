@@ -2,11 +2,11 @@ import { ICodeRef, IRemark } from 'libs/interfaces/common.interface';
 import { Homogenize } from 'libs/models/Base/HomogenizeData';
 import { CodeRef } from 'libs/models/Common/CodeRef';
 
-export class Remark extends Homogenize<IRemark> implements IRemark {
+export class Remark extends Homogenize<Partial<IRemark>> implements IRemark {
   RemarkCode: ICodeRef;
   customRemark: string;
 
-  constructor(_data: IRemark) {
+  constructor(_data: Partial<IRemark>) {
     super(_data);
     this.homogenize(_data);
     this.init();
