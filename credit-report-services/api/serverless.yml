@@ -27,8 +27,8 @@ provider:
     securityGroupIds: { 'Fn::Split': [',', { 'Fn::ImportValue': 'agency-services-transunion-vpc-natsecuritygroup' }] }
     subnetIds: { 'Fn::Split': [',', { 'Fn::ImportValue': 'agency-services-transunion-subnets-private' }] }
   apiGateway:
-    restApiId: !ImportValue credit-report-services-credit-reports-apigw-id
-    restApiRootResourceId: !ImportValue credit-report-services-credit-reports-apigw-rootresource
+    restApiId: !ImportValue credit-report-service-resources-credit-reports-apigw-id
+    restApiRootResourceId: !ImportValue credit-report-service-resources-apigw-rootresource
   iamRoleStatements:
     - Effect: 'Allow'
       Action:
@@ -48,7 +48,7 @@ functions:
           cors: true
           authorizer:
             type: COGNITO_USER_POOLS
-            authorizerId: !ImportValue credit-report-service-credit-reports-authorizer
+            authorizerId: !ImportValue credit-report-service-resources-authorizer
 
   createCreditReport:
     handler: src/subs/creditreports/create.main
