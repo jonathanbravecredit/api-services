@@ -11,7 +11,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<void> => {
   console.log('report requests: ', JSON.stringify(reportRequests));
   if (reportRequests.length) {
     try {
-      Promise.all(
+      await Promise.all(
         reportRequests.map(async (rec) => {
           const message = rec.message;
           const { userId, bureau, report } = message;
