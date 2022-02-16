@@ -11,6 +11,7 @@ import * as uuid from 'uuid';
 import * as he from 'he';
 import { SNS } from 'aws-sdk';
 import {
+  IEnrollResult,
   IFulfill,
   IFulfillGraphQLResponse,
   IFulfillMsg,
@@ -24,6 +25,7 @@ import { MONTH_MAP } from 'lib/data/constants';
 import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
 import { BraveParsers } from 'lib/utils/brave/parser/BraveParser';
+import { ICreditReportPayload } from 'lib/interfaces/transunion/batch.interfaces';
 
 /**
  * Genarates the message payload for TU Enroll service
@@ -312,12 +314,17 @@ export const enrichFulfillDataWorker = (
   return mapped;
 };
 
-export const writeFulfillReport = async (data: IFulfillResult) => {
+export const writeFulfillReport = async (data: IFulfillResult, id: string) => {
   const { fulfillMergeReport } = enrichFulfillDataWorker(data);
   const report = BraveParsers.parseTransunionMergeReport(fulfillMergeReport.serviceProductObject);
   const pubsub = new PubSubUtil();
   const topic = process.env.CREDITREPORTS_SNS_PROXY_ARN;
-  const snsPayload = pubsub.createSNSPayload<IMergeReport>('create', report, 'creditreports', topic);
+  const payload = {
+    userId: id,
+    bureau: 'transunion',
+    report: report,
+  } as ICreditReportPayload;
+  const snsPayload = pubsub.createSNSPayload<ICreditReportPayload>('create', payload, 'creditreports', topic);
   const sns = new SNS({ region: 'us-east-2' });
   await sns.publish(snsPayload).promise();
 };
