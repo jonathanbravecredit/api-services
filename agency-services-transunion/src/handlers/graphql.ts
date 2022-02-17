@@ -7,6 +7,8 @@ import * as secrets from 'lib/utils/secrets/secrets';
 import * as tokens from 'lib/utils/tokens/tokens';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
+import { EnrollV2 } from 'lib/transunion/enroll/Enrollv2';
+import { FulfillV2 } from 'lib/transunion/fulfill/Fulfillv2';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -115,13 +117,15 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await queries.VerifyAuthenticationQuestions(payload);
         return JSON.stringify(results);
       case 'Enroll':
-        results = await queries.Enroll(payload);
+        const enroll = new EnrollV2(payload);
+        results = await enroll.run();
         return JSON.stringify(results);
       case 'EnrollDisputes':
         results = await queries.EnrollDisputes(payload);
         return JSON.stringify(results);
       case 'Fulfill':
-        results = await queries.Fulfill(payload);
+        const fulfill = new FulfillV2(payload);
+        results = await fulfill.run();
         return JSON.stringify(results);
       case 'FulfillDisputes':
         results = await queries.FulfillDisputes(payload);
