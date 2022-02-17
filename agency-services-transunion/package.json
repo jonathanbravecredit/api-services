@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@shiftcoders/dynamo-easy": "^7.1.0",
-    "ajv": "^7.2.4",
+    "ajv": "^7.0.2",
     "aws-appsync": "^4.1.4",
     "aws4": "^1.11.0",
     "axios": "^0.21.4",
