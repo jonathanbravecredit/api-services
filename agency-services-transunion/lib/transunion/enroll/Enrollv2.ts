@@ -108,8 +108,11 @@ export class EnrollV2 extends LoggerTransactionals {
     responder.parseResponse(this.parserOptions);
     responder.enrichData(sync.clean);
     this.response = responder.response;
-    this.responseType = responder.responseType;
-    this.responseError = responder.responseError;
+    this.responseType = _nest.find(this.response, 'ResponseType');
+    this.responseError = _nest.find(this.response, 'ErrorResponse');
+    console.log('response: ', this.response);
+    console.log('responseType: ', this.responseType);
+    console.log('responseError: ', this.responseError);
     console.log('responder enriched: ', JSON.stringify(responder.enriched));
     if (this.responseType.toLowerCase() === 'success') {
       const synched = await sync.syncData(responder.enriched);

@@ -27,12 +27,12 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
       });
 
       const updated = _nest.update(obj, 'ServiceProductResponse', [...mapped.filter(Boolean)]);
+      console.log('updated ===> ', updated);
       this.response = updated ? updated : obj;
+      console.log('this.response ===> ', this.response);
     } else {
       this.response = obj;
     }
-    this.responseType = _nest.find(this.response, 'ResponseType');
-    this.responseError = _nest.find(this.response, 'ErrorResponse');
     return this.response;
   }
 
