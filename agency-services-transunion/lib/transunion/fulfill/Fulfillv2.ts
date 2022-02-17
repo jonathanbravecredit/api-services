@@ -18,7 +18,7 @@ import { IProxyHandlerResponse } from 'lib/interfaces/api/proxy-handler.interfac
 import { UpdateAppDataInput } from 'src/api/api.service';
 import { LoggerTransactionals } from 'lib/utils/logger/LoggerTransactionals';
 
-export class Fulfill extends LoggerTransactionals {
+export class FulfillV2 extends LoggerTransactionals {
   protected reqXML: string;
   protected resXML: string;
   protected data: IFulfillGraphQLResponse;
@@ -33,40 +33,55 @@ export class Fulfill extends LoggerTransactionals {
     super('Fulfill');
   }
 
+  /**
+   * API runner to:
+   *  - prep the payload (via the Payloader)
+   *  - map to the request data structure and generate the request XML (with the Requester)
+   *  - send request, parse response, and sync response to database (with the Responder)
+   *  - log the results and send back results to API
+   * @returns
+   */
   async run(): Promise<IProxyHandlerResponse<IFulfillResult>> {
     const { accountCode, username, message, agent, auth, identityId } = this.payload;
     try {
-      // prep the payload
       await this.runPayloader();
-      // generate the request and request XML
       const requester = new FulfillRequester(this.data);
       this.runRequester<FulfillRequester>(requester);
-      // parse, send to TU, and sync response to DB
       const responder = new FulfillResponder();
       await this.runSendAndSync<FulfillResponder>(agent, auth, identityId, responder);
-      // log the results
       await this.logResults();
-      // send the results back to gql
       return this.results;
     } catch (err) {
+      console.log('error ===> ', err);
+      this.logGenericError(identityId, err);
       return { success: false, data: null, error: err };
     }
   }
 
+  /**
+   * Payloader runner to:
+   *  - validate the payload
+   *  - prep the payload
+   * @returns
+   */
   async runPayloader(): Promise<IFulfillGraphQLResponse> {
-    // prep the payload
     const payload: IGenericRequest = { id: this.payload.identityId };
     const payloader = new Payloader<IFulfillGraphQLResponse>();
     payloader.validate<IGenericRequest>(payload, 'getRequest');
-    // query and prep
     const qry = qryGetDataForFulfill;
     payloader.prep<IGenericRequest>(qry, payload);
     this.data = payloader.data;
     return this.data;
   }
 
+  /**
+   * Requester runner to:
+   *  - generate the request (map to TU datastructure)
+   *  - generate the XML
+   * @param requester
+   * @returns
+   */
   runRequester<T extends FulfillRequester>(requester: T): string {
-    // const requester = new FulfillRequester(this.action, this.data);
     requester.generateRequest();
     requester.generateXML();
     const { xml } = requester;
@@ -74,6 +89,18 @@ export class Fulfill extends LoggerTransactionals {
     return this.reqXML;
   }
 
+  /**
+   * Send and Sync runner to:
+   *  - use the soap client to send the request
+   *  - use the sync client to get a copy of the current state
+   *  - use the responder to parse the response
+   *  - use the responder to enrich the current state with new data
+   *  - set the response properties and create results
+   * @param agent
+   * @param auth
+   * @param id
+   * @param responder
+   */
   async runSendAndSync<T extends FulfillResponder>(
     agent: https.Agent,
     auth: string,
@@ -82,34 +109,36 @@ export class Fulfill extends LoggerTransactionals {
   ): Promise<void> {
     const soap = new SoapV2();
     await soap.sendRequest(agent, auth, this.action, this.parserOptions, this.reqXML);
-
     const sync = new SyncV2();
     await sync.getCleanData({ id });
-    // this is odd that the responder is in between sync calls
-    // set the xml in the respond to the response from soap
     responder.xml = soap.response;
     responder.parseResponse(this.parserOptions);
     responder.enrichData(sync.clean);
-
     this.response = responder.response;
     this.responseError = responder.responseError;
     this.responseType = responder.responseType;
-
-    this.setResults(sync, responder.enriched);
-  }
-
-  async setResults(sync: SyncV2, enriched: UpdateAppDataInput): Promise<void> {
     if (this.responseType.toLowerCase() === 'success') {
-      const syncd = await sync.syncData(enriched);
-      const data = _nest.find<IFulfillResult>(this.response, 'FulfillResult');
-      this.results = syncd
-        ? { success: true, error: null, data: data }
-        : { success: false, error: 'failed to sync data to db' };
+      const synched = await sync.syncData(responder.enriched);
+      this.setSuccessResults(synched);
     } else {
-      this.results = { success: false, error: this.responseError };
+      this.setFailedResults();
     }
   }
 
+  setSuccessResults(synched: boolean): void {
+    const data = _nest.find<IFulfillResult>(this.response, 'FulfillResult');
+    this.results = synched
+      ? { success: true, error: null, data: data }
+      : { success: false, error: 'failed to sync data to db' };
+  }
+
+  setFailedResults(): void {
+    this.results = { success: false, error: this.responseError };
+  }
+
+  /**
+   * Log the transunion results and generic results
+   */
   async logResults(): Promise<void> {
     const id = this.payload.identityId;
     this.log(id, { ...this }, 'TRANSUNION');
