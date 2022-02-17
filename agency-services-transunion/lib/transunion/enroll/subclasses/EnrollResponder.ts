@@ -16,6 +16,10 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
     if (!this.xml) throw 'No XML set';
     const obj: IEnrollResponse = fastXml.parse(this.xml, options);
     const spr = _nest.find(obj, 'ServiceProductResponse');
+
+    console.log('enroll resp: ===> ', obj);
+    console.log('spr: ===> ', spr);
+
     if (!spr) throw 'No response found';
     if (spr instanceof Array) {
       const mapped = spr.map((prod) => {
