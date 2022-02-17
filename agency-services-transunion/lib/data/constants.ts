@@ -1,5 +1,8 @@
 import { IErrorCodes } from 'lib/interfaces';
 
+export const ACCOUNT_CODE = 'M2RVc0ZZM0Rwd2FmZA'
+export const ACCOUNT_NAME = 'CC2BraveCredit';
+
 export const MONTH_MAP: Record<string, any> = {
   jan: '01',
   feb: '02',

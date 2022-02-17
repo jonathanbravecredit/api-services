@@ -3,7 +3,7 @@ import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import * as fastXml from 'fast-xml-parser';
 import { UpdateAppDataInput } from 'src/api/api.service';
-import { XmlFormatter } from 'lib/utils/xml-formatter/xml-formatter';
+import { XMLUtil as XML } from 'lib/utils/xml/XMLUtil';
 import {
   IGetAlertNotificationsResponse,
   IGetAlertsNotification,
@@ -63,13 +63,13 @@ export const createGetAlertsNotification = (msg: IGetAlertsNotification): string
       'soapenv:Body': {
         'con:GetAlertNotificationsForAllUsers': {
           'con:request': {
-            'data:AccountCode': XmlFormatter.textConstructor(msg.request.AccountCode),
-            'data:AccountName': XmlFormatter.textConstructor(msg.request.AccountName),
-            'data:RequestKey': XmlFormatter.textConstructor(`BC-${uuid.v4()}`),
+            'data:AccountCode': XML.textConstructor(msg.request.AccountCode),
+            'data:AccountName': XML.textConstructor(msg.request.AccountName),
+            'data:RequestKey': XML.textConstructor(`BC-${uuid.v4()}`),
             'data:AdditionalInputs': {
               'data:Data': {
-                'data:Name': XmlFormatter.textConstructor('DisputeVersion'),
-                'data:Value': XmlFormatter.textConstructor('2'),
+                'data:Name': XML.textConstructor('DisputeVersion'),
+                'data:Value': XML.textConstructor('2'),
               },
             },
           },
