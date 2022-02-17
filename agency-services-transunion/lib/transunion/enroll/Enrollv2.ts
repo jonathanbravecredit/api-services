@@ -64,7 +64,6 @@ export class EnrollV2 extends LoggerTransactionals {
     const qry = qryGetDataForEnrollment;
     await payloader.prep<IGenericRequest>(qry, payload);
     this.data = payloader.data;
-    console.log('data: ', this.data);
     return this.data;
   }
 
@@ -111,6 +110,7 @@ export class EnrollV2 extends LoggerTransactionals {
     this.response = responder.response;
     this.responseType = responder.responseType;
     this.responseError = responder.responseError;
+    console.log('responder enriched: ', JSON.stringify(responder.enriched));
     if (this.responseType.toLowerCase() === 'success') {
       const synched = await sync.syncData(responder.enriched);
       this.setSuccessResults(synched);

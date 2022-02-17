@@ -33,6 +33,7 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
   }
 
   enrichData(appdata: UpdateAppDataInput | undefined): UpdateAppDataInput | undefined {
+    console.log('appData', appdata);
     if (!appdata) return;
     let enrollReport;
     let enrollMergeReport;
@@ -45,6 +46,10 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
       this.response,
       'ServiceProductResponse',
     );
+
+    console.log('ekey: ', eKey);
+    console.log('fKey: ', fKey);
+    console.log('spr: ', spr);
 
     if (!spr) return;
     if (spr instanceof Array) {
@@ -66,6 +71,10 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
           break;
       }
     }
+
+    console.log('enrollReport: ', enrollReport);
+    console.log('enrollMergeReport: ', enrollMergeReport);
+    console.log('enrollVantageScore: ', enrollVantageScore);
 
     const mapped = {
       ...appdata,
