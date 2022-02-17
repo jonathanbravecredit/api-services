@@ -18,12 +18,8 @@ export class TURequestBase<T> {
   constructor(protected data: T) {}
 
   init() {
-    const { id } = _nest.find(this.data, 'id');
-    const { enrollmentKey } = _nest.find(this.data, 'enrollmentKey');
-    const { userAttributes } = _nest.find(this.data, 'userAttributes');
-
-    this.clientKey = id;
-    this.enrollmentKey = enrollmentKey;
-    this.attributes = userAttributes;
+    this.clientKey = _nest.find(this.data, 'id');
+    this.attributes = _nest.find(this.data, 'userAttributes');
+    this.enrollmentKey = _nest.find(this.data, 'enrollmentKey');
   }
 }
