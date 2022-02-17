@@ -8,7 +8,7 @@ import { ServiceProductParser as spp } from 'lib/transunion/parsers/ServiceProdu
 import { Nested as _nest } from 'lib/utils/helpers/Nested';
 
 export class FulfillResponder extends TUResponseBase<IFulfillResponse, UpdateAppDataInput> {
-  constructor(protected action: string) {
+  constructor() {
     super();
   }
 

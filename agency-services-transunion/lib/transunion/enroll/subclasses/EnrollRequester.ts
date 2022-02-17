@@ -2,15 +2,15 @@ import * as convert from 'xml-js';
 import * as dayjs from 'dayjs';
 import * as uuid from 'uuid';
 import * as _ from 'lodash';
-import { IFulfillGraphQLResponse, IFulfillRequest } from 'lib/interfaces';
+import { IEnrollGraphQLResponse, IEnrollRequest } from 'lib/interfaces';
 import { TURequestBase } from 'lib/transunion/tu/TURequestBase';
 import { XMLUtil as XML } from 'lib/utils/xml/XMLUtil';
 
-export class FulfillRequester extends TURequestBase<IFulfillGraphQLResponse> {
-  request: IFulfillRequest;
+export class EnrollRequester extends TURequestBase<IEnrollGraphQLResponse> {
+  request: IEnrollRequest;
   xml: string;
 
-  constructor(protected data: IFulfillGraphQLResponse) {
+  constructor(protected data: IEnrollGraphQLResponse) {
     super(data);
     super.init();
     this.serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
@@ -22,7 +22,7 @@ export class FulfillRequester extends TURequestBase<IFulfillGraphQLResponse> {
     return dayjs(badDate, 'YYYY-MMM-D').format('YYYY-MM-DD');
   }
 
-  generateRequest(): IFulfillRequest {
+  generateRequest(): IEnrollRequest {
     this.request = {
       AccountCode: this.accountCode,
       AccountName: this.accountName,
@@ -50,9 +50,8 @@ export class FulfillRequester extends TURequestBase<IFulfillGraphQLResponse> {
         },
         Ssn: this.attributes.ssn?.full || '',
       },
-      EnrollmentKey: this.enrollmentKey,
       ServiceBundleCode: this.serviceBundleCode,
-    } as IFulfillRequest;
+    } as IEnrollRequest;
     return this.request;
   }
 
@@ -66,17 +65,17 @@ export class FulfillRequester extends TURequestBase<IFulfillGraphQLResponse> {
         },
         'soapenv:Header': {},
         'soapenv:Body': {
-          'con:Fulfill': {
+          'con:Enroll': {
             'con:request': {
               'data:AccountCode': XML.textConstructor(this.request.AccountCode),
               'data:AccountName': XML.textConstructor(this.request.AccountName),
               'data:AdditionalInputs': {
                 'data:Data': {
                   'data:Name': XML.textConstructor('CreditReportVersion'),
-                  'data:Value': XML.textConstructor(this.request.AdditionalInputs?.Data.Value || '7.1'),
+                  'data:Value': XML.textConstructor(this.request.AdditionalInputs?.Data.Value || '7'),
                 },
               },
-              'data:RequestKey': XML.textConstructor(this.request.RequestKey),
+              'data:RequestKey': XML.textConstructor(`BC-${uuid.v4()}`),
               'data:ClientKey': XML.textConstructor(this.request.ClientKey),
               'data:Customer': {
                 'data:CurrentAddress': {
@@ -96,7 +95,7 @@ export class FulfillRequester extends TURequestBase<IFulfillGraphQLResponse> {
                 },
                 'data:Ssn': XML.textConstructor(this.request.Customer.Ssn),
               },
-              'data:EnrollmentKey': XML.textConstructor(this.request.EnrollmentKey),
+              'data:Email': XML.textConstructor(this.request.Email, true),
               'data:Language': XML.textConstructor(this.request.Language, true),
               'data:ServiceBundleCode': XML.textConstructor(this.request.ServiceBundleCode),
             },

@@ -1,71 +1,66 @@
 import * as https from 'https';
-import { Nested as _nest } from 'lib/utils/helpers/Nested';
 import { SyncV2 } from 'lib/utils/sync/SyncV2';
 import { SoapV2 } from 'lib/utils/soap-aid/SoapV2';
+import { Nested as _nest } from 'lib/utils/helpers/Nested';
 import { Payloader } from 'lib/utils/payloader/Payloader';
-import { FulfillRequester } from 'lib/transunion/fulfill/subclasses/FulfillRequester';
-import { FulfillResponder } from 'lib/transunion/fulfill/subclasses/FulfillResponder';
-import { qryGetDataForFulfill } from 'lib/queries';
-import {
-  IFulfillGraphQLResponse,
-  IFulfillResponse,
-  IFulfillResult,
-  IGenericRequest,
-  IProxyRequest,
-} from 'lib/interfaces';
+import { qryGetDataForEnrollment } from 'lib/queries';
+import { IEnrollGraphQLResponse, IEnrollResponse, IEnrollResult, IGenericRequest, IProxyRequest } from 'lib/interfaces';
 import { DEFAULT_PARSER_OPTIONS } from 'lib/utils/parser/options';
 import { IProxyHandlerResponse } from 'lib/interfaces/api/proxy-handler.interfaces';
 import { UpdateAppDataInput } from 'src/api/api.service';
+import { EnrollRequester } from 'lib/transunion/enroll/subclasses/EnrollRequester';
+import { EnrollResponder } from 'lib/transunion/enroll/subclasses/EnrollResponder';
 import { LoggerTransactionals } from 'lib/utils/logger/LoggerTransactionals';
 
-export class Fulfill extends LoggerTransactionals {
+export class Enroll extends LoggerTransactionals {
   protected reqXML: string;
   protected resXML: string;
-  protected data: IFulfillGraphQLResponse;
-  protected action = 'Fulfill';
+  protected data: IEnrollGraphQLResponse;
+  protected action = 'Enroll';
   protected parserOptions = DEFAULT_PARSER_OPTIONS;
-  protected response: IFulfillResponse;
+  protected response: IEnrollResponse;
   protected responseType: string;
   protected responseError: any;
-  protected results: IProxyHandlerResponse<IFulfillResult>;
+  protected results: IProxyHandlerResponse<IEnrollResult>;
 
   constructor(protected payload: IProxyRequest) {
-    super('Fulfill');
+    super('Enroll');
   }
 
-  async run(): Promise<IProxyHandlerResponse<IFulfillResult>> {
+  async run(): Promise<IProxyHandlerResponse<IEnrollResult>> {
     const { accountCode, username, message, agent, auth, identityId } = this.payload;
     try {
       // prep the payload
-      await this.runPayloader();
+      await this.runPayloader(identityId);
       // generate the request and request XML
-      const requester = new FulfillRequester(this.data);
-      this.runRequester<FulfillRequester>(requester);
+      const requester = new EnrollRequester(this.data);
+      this.runRequester<EnrollRequester>(requester);
       // parse, send to TU, and sync response to DB
-      const responder = new FulfillResponder();
-      await this.runSendAndSync<FulfillResponder>(agent, auth, identityId, responder);
+      const responder = new EnrollResponder();
+      await this.runSendAndSync<EnrollResponder>(agent, auth, identityId, responder);
       // log the results
-      await this.logResults();
+      await this.logResults(identityId);
       // send the results back to gql
       return this.results;
     } catch (err) {
+      await this.logGenericError(identityId, err);
       return { success: false, data: null, error: err };
     }
   }
 
-  async runPayloader(): Promise<IFulfillGraphQLResponse> {
+  async runPayloader(id: string): Promise<IEnrollGraphQLResponse> {
     // prep the payload
-    const payload: IGenericRequest = { id: this.payload.identityId };
-    const payloader = new Payloader<IFulfillGraphQLResponse>();
+    const payload: IGenericRequest = { id };
+    const payloader = new Payloader<IEnrollGraphQLResponse>();
     payloader.validate<IGenericRequest>(payload, 'getRequest');
     // query and prep
-    const qry = qryGetDataForFulfill;
+    const qry = qryGetDataForEnrollment;
     payloader.prep<IGenericRequest>(qry, payload);
     this.data = payloader.data;
     return this.data;
   }
 
-  runRequester<T extends FulfillRequester>(requester: T): string {
+  runRequester<T extends EnrollRequester>(requester: T): string {
     // const requester = new FulfillRequester(this.action, this.data);
     requester.generateRequest();
     requester.generateXML();
@@ -74,7 +69,7 @@ export class Fulfill extends LoggerTransactionals {
     return this.reqXML;
   }
 
-  async runSendAndSync<T extends FulfillResponder>(
+  async runSendAndSync<T extends EnrollResponder>(
     agent: https.Agent,
     auth: string,
     id: string,
@@ -92,8 +87,8 @@ export class Fulfill extends LoggerTransactionals {
     responder.enrichData(sync.clean);
 
     this.response = responder.response;
-    this.responseError = responder.responseError;
     this.responseType = responder.responseType;
+    this.responseError = responder.responseError;
 
     this.setResults(sync, responder.enriched);
   }
@@ -101,18 +96,19 @@ export class Fulfill extends LoggerTransactionals {
   async setResults(sync: SyncV2, enriched: UpdateAppDataInput): Promise<void> {
     if (this.responseType.toLowerCase() === 'success') {
       const syncd = await sync.syncData(enriched);
-      const data = _nest.find<IFulfillResult>(this.response, 'FulfillResult');
+      const data = _nest.find<IEnrollResult>(this.response, 'EnrollResult');
       this.results = syncd
         ? { success: true, error: null, data: data }
         : { success: false, error: 'failed to sync data to db' };
     } else {
-      this.results = { success: false, error: this.responseError };
+      this.results =
+        `${this.responseError.Code}` == '103045'
+          ? { success: true, error: null, data: null }
+          : { success: false, error: this.responseError, data: null };
     }
   }
 
-  async logResults(): Promise<void> {
-    const id = this.payload.identityId;
+  async logResults(id: string): Promise<void> {
     this.log(id, { ...this }, 'TRANSUNION');
-    await this.log(id, this.results, 'GENERIC');
   }
 }
