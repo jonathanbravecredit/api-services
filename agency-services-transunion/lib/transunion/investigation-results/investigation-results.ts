@@ -12,7 +12,7 @@ import {
   IGetInvestigationResultsResponse,
 } from 'lib/interfaces';
 import { UpdateAppDataInput } from 'src/api/api.service';
-import { XmlFormatter } from 'lib/utils/xml-formatter/xml-formatter';
+import { XMLUtil as XML } from 'lib/utils/xml/XMLUtil';
 import { DB as db } from 'lib/utils/db/db';
 
 /**
@@ -84,12 +84,12 @@ export const createGetInvestigationResults = (msg: IGetInvestigationResults): st
       'soapenv:Body': {
         'con:GetInvestigationResults': {
           'con:request': {
-            'data:AccountCode': XmlFormatter.textConstructor(msg.request.AccountCode),
-            'data:AccountName': XmlFormatter.textConstructor(msg.request.AccountName),
-            'data:RequestKey': XmlFormatter.textConstructor(`BC-${uuid.v4()}`),
-            'data:ClientKey': XmlFormatter.textConstructor(msg.request.ClientKey),
-            'data:DisputeId': XmlFormatter.textConstructor(msg.request.DisputeId, true),
-            'data:EnrollmentKey': XmlFormatter.textConstructor(msg.request.EnrollmentKey),
+            'data:AccountCode': XML.textConstructor(msg.request.AccountCode),
+            'data:AccountName': XML.textConstructor(msg.request.AccountName),
+            'data:RequestKey': XML.textConstructor(`BC-${uuid.v4()}`),
+            'data:ClientKey': XML.textConstructor(msg.request.ClientKey),
+            'data:DisputeId': XML.textConstructor(msg.request.DisputeId, true),
+            'data:EnrollmentKey': XML.textConstructor(msg.request.EnrollmentKey),
           },
         },
       },

@@ -1,4 +1,4 @@
-export class XmlFormatter {
+export class XMLUtil {
   constructor() {}
 
   static nilConstructor() {

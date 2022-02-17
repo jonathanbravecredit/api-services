@@ -1,44 +1,46 @@
-import { IStandardResponse } from 'lib/interfaces/transunion';
+import { IErrorResponse, INil, IStandardResponse } from 'lib/interfaces/transunion';
 
 export interface IFulfillGraphQLResponse {
   data: {
-    getAppData: {
-      id?: string;
-      agencies?: {
-        transunion?: {
-          enrollmentKey: string;
-          disputeEnrollmentKey?: string;
-          serviceBundleFulfillmentKey?: string;
-          disputeServiceBundleFulfillmentKey?: string;
-        };
+    getAppData: IGetDataForFulfill;
+  };
+}
+
+export interface IGetDataForFulfill {
+  id?: string;
+  agencies?: {
+    transunion?: {
+      enrollmentKey: string;
+      disputeEnrollmentKey?: string;
+      serviceBundleFulfillmentKey?: string;
+      disputeServiceBundleFulfillmentKey?: string;
+    };
+  };
+  user?: {
+    userAttributes?: {
+      name?: {
+        first?: string;
+        middle?: string;
+        last?: string;
       };
-      user?: {
-        userAttributes?: {
-          name?: {
-            first?: string;
-            middle?: string;
-            last?: string;
-          };
-          address?: {
-            addressOne?: string;
-            addressTwo?: string;
-            city?: string;
-            state?: string;
-            zip?: string;
-          };
-          phone?: {
-            primary?: string;
-          };
-          dob?: {
-            year?: string;
-            month?: string;
-            day?: string;
-          };
-          ssn?: {
-            lastfour?: string;
-            full?: string;
-          };
-        };
+      address?: {
+        addressOne?: string;
+        addressTwo?: string;
+        city?: string;
+        state?: string;
+        zip?: string;
+      };
+      phone?: {
+        primary?: string;
+      };
+      dob?: {
+        year?: string;
+        month?: string;
+        day?: string;
+      };
+      ssn?: {
+        lastfour?: string;
+        full?: string;
       };
     };
   };
@@ -87,15 +89,12 @@ export interface IFulfill {
   request: IFulfillMsg;
 }
 
+export interface IFulfillRequest extends IFulfillMsg {}
 export interface IFulfillMsg extends IFulfillPayload {
   AccountCode: string;
   AccountName: string;
   EnrollmentKey: string;
   Language?: string;
-}
-
-export interface IFulfillResponseSuccess {
-  Fulfill: IFulfillResponse;
 }
 
 export interface IFulfillResponse {
@@ -136,4 +135,62 @@ export interface IFulfillVantageScore {
   CreditScoreType: {
     riskScore: number;
   };
+}
+
+export interface IFulfillUserAttributes {
+  name?: {
+    first?: string;
+    middle?: string;
+    last?: string;
+  };
+  address?: {
+    addressOne?: string;
+    addressTwo?: string;
+    city?: string;
+    state?: string;
+    zip?: string;
+  };
+  phone?: {
+    primary?: string;
+  };
+  dob?: IDob;
+  ssn?: {
+    lastfour?: string;
+    full?: string;
+  };
+}
+
+export interface IName {
+  first?: string;
+  middle?: string;
+  last?: string;
+}
+
+export interface IAddress {
+  addressOne?: string;
+  addressTwo?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+}
+
+export interface IPhone {
+  primary: string;
+}
+
+export interface IDob {
+  year?: string;
+  month?: string;
+  day?: string;
+}
+
+export interface ISsn {
+  lastfour?: string;
+  full?: string;
+}
+
+export interface IFulfillProxyResult {
+  success: boolean;
+  error?: IErrorResponse | INil | string;
+  data?: IFulfillResult;
 }
