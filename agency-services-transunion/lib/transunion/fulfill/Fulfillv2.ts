@@ -69,8 +69,9 @@ export class FulfillV2 extends LoggerTransactionals {
     const payloader = new Payloader<IFulfillGraphQLResponse>();
     payloader.validate<IGenericRequest>(payload, 'getRequest');
     const qry = qryGetDataForFulfill;
-    payloader.prep<IGenericRequest>(qry, payload);
+    await payloader.prep<IGenericRequest>(qry, payload);
     this.data = payloader.data;
+    console.log('data: ', this.data);
     return this.data;
   }
 

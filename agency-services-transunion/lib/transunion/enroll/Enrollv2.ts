@@ -62,8 +62,9 @@ export class EnrollV2 extends LoggerTransactionals {
     const payloader = new Payloader<IEnrollGraphQLResponse>();
     payloader.validate<IGenericRequest>(payload, 'getRequest');
     const qry = qryGetDataForEnrollment;
-    payloader.prep<IGenericRequest>(qry, payload);
+    await payloader.prep<IGenericRequest>(qry, payload);
     this.data = payloader.data;
+    console.log('data: ', this.data);
     return this.data;
   }
 
