@@ -13,21 +13,21 @@
     "url": "https://github.com/AnomalyInnovations/serverless-typescript-starter.git"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.64",
-    "@types/jest": "^26.0.14",
+    "@types/aws-lambda": "^8.10.92",
+    "@types/jest": "^26.0.24",
     "serverless-bundle": "3.2.1",
-    "serverless-dotenv-plugin": "^3.0.0",
-    "serverless-offline": "^6.8.0"
+    "serverless-dotenv-plugin": "^3.12.2",
+    "serverless-offline": "^6.9.0"
   },
   "dependencies": {
     "@shiftcoders/dynamo-easy": "^7.1.0",
-    "ajv": "^7.0.2",
-    "aws-appsync": "^4.0.3",
+    "ajv": "^7.2.4",
+    "aws-appsync": "^4.1.4",
     "aws4": "^1.11.0",
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "dayjs": "^1.10.7",
     "es6-promise": "^4.2.8",
-    "fast-xml-parser": "^3.19.0",
+    "fast-xml-parser": "^3.21.1",
     "he": "^1.2.0",
     "isomorphic-fetch": "^3.0.0",
     "jwk-to-pem": "^2.0.5",
