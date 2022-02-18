@@ -89,14 +89,12 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
   }
 
   setMergeReport(input: TUReportResponseInput) {
-    const data = _nest.find<TUReportResponseInput>(input, 'enrollMergeReport');
-    const spo = _nest.find<string>(data, 'serviceProductObject');
+    const { serviceProductObject: spo } = input;
     this.mergeReport = new MergeReport(JSON.parse(spo));
   }
 
   setMergeReportSPO(input: TUReportResponseInput) {
-    const data = _nest.find<TUReportResponseInput>(input, 'enrollMergeReport');
-    const spo = _nest.find<string>(data, 'serviceProductObject');
+    const { serviceProductObject: spo } = input;
     this.mergeReportSPO = spo;
   }
 }

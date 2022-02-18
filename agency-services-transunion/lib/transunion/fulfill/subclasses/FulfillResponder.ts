@@ -86,14 +86,12 @@ export class FulfillResponder extends TUResponseBase<IFulfillResponse, UpdateApp
   }
 
   setMergeReport(input: TUReportResponseInput) {
-    const data = _nest.find<TUReportResponseInput>(input, 'fulfillMergeReport');
-    const spo = _nest.find<string>(data, 'serviceProductObject');
+    const { serviceProductObject: spo } = input;
     this.mergeReport = new MergeReport(JSON.parse(spo));
   }
 
   setMergeReportSPO(input: TUReportResponseInput) {
-    const data = _nest.find<TUReportResponseInput>(input, 'fulfillMergeReport');
-    const spo = _nest.find<string>(data, 'serviceProductObject');
+    const { serviceProductObject: spo } = input;
     this.mergeReportSPO = spo;
   }
 }
