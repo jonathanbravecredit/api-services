@@ -7,10 +7,11 @@ import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { DB } from 'lib/utils/db/db';
 import { Handler } from 'aws-lambda';
-import { Fulfill, GetDisputeStatusByID } from 'lib/proxy';
-import { FulfillDisputes, GetInvestigationResults } from 'lib/proxy';
+import { GetDisputeStatusByID } from 'lib/proxy';
+import { GetInvestigationResults } from 'lib/proxy';
 import { TransunionUtil as tuUtil } from 'lib/utils/transunion/transunion';
 import { CreditScoreMaker } from 'lib/utils/db/credit-scores/model/credit-scores.model';
+import { FulfillV2 } from 'lib/transunion/fulfill/Fulfillv2';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -173,7 +174,7 @@ export const main: Handler<{ list: { id: string; disputeId: string }[] }> = asyn
                 identityId: id,
               };
               console.log('CALLING FULFILL');
-              const fulfilled = await Fulfill(payload);
+              const fulfilled = await new FulfillV2(payload).run();
               if (!fulfilled.success) throw `fulfilled failed; error: ${fulfilled.error}; data: ${fulfilled.data}`;
               console.log('CALLING GET INVESTIGATION RESULTS');
               const synced = await GetInvestigationResults(payload);
