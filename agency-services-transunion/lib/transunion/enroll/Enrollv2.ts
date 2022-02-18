@@ -17,6 +17,8 @@ import { IProxyHandlerResponse } from 'lib/interfaces/api/proxy-handler.interfac
 import { EnrollRequester } from 'lib/transunion/enroll/subclasses/EnrollRequester';
 import { EnrollResponder } from 'lib/transunion/enroll/subclasses/EnrollResponder';
 import { LoggerTransactionals } from 'lib/utils/logger/LoggerTransactionals';
+import { TUReportResponseInput } from 'src/api/api.service';
+import { MergeReport } from 'lib/models/MergeReport/MergeReport';
 
 export class EnrollV2 extends LoggerTransactionals {
   protected reqXML: string;
@@ -27,7 +29,7 @@ export class EnrollV2 extends LoggerTransactionals {
   protected response: IEnrollResponse;
   protected responseType: string;
   protected responseError: any;
-  protected results: IProxyHandlerResponse<{ report: IMergeReport }>;
+  protected results: IProxyHandlerResponse<{ report: MergeReport }>;
 
   constructor(protected payload: IProxyRequest) {
     super('Enroll');
@@ -41,7 +43,7 @@ export class EnrollV2 extends LoggerTransactionals {
    *  - log the results and send back results to API
    * @returns
    */
-  async run(): Promise<IProxyHandlerResponse<{ report: IMergeReport }>> {
+  async run(): Promise<IProxyHandlerResponse<{ report: MergeReport }>> {
     const { accountCode, username, message, agent, auth, identityId } = this.payload;
     try {
       await this.runPayloader(identityId);
@@ -119,14 +121,16 @@ export class EnrollV2 extends LoggerTransactionals {
     this.responseError = _nest.find(this.response, 'ErrorResponse');
     if (this.responseType.toLowerCase() === 'success') {
       const synched = await sync.syncData(responder.enriched);
-      const data = _nest.find<IMergeReport>(responder.enriched, 'enrollMergeReport');
-      this.setSuccessResults(synched, data);
+      const data = _nest.find<TUReportResponseInput>(responder.enriched, 'enrollMergeReport');
+      const spo = _nest.find<string>(data, 'serviceProductObject');
+      const report = new MergeReport(JSON.parse(spo));
+      this.setSuccessResults(synched, report);
     } else {
       this.setFailedResults();
     }
   }
 
-  setSuccessResults(synched: boolean, data: IMergeReport): void {
+  setSuccessResults(synched: boolean, data: MergeReport): void {
     this.results = synched
       ? { success: true, error: null, data: { report: data } }
       : { success: false, error: 'failed to sync data to db' };
