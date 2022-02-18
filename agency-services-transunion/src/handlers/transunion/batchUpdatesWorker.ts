@@ -2,14 +2,16 @@ import 'reflect-metadata';
 import { SQSEvent, SQSHandler } from 'aws-lambda';
 import { Agent } from 'https';
 import { readFileSync } from 'fs';
-import { CancelEnroll, FulfillWorker } from 'lib/proxy';
+import { CancelEnroll } from 'lib/proxy';
 import { getSecretKey } from 'lib/utils/secrets/secrets';
 import { DB } from 'lib/utils/db/db';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
-import { IProxyRequest, ITransunionBatchPayload } from 'lib/interfaces';
+import { IFulfillResult, IProxyRequest, ITransunionBatchPayload } from 'lib/interfaces';
 import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
 import { TransunionUtil as TU } from 'lib/utils/transunion/transunion';
+import { FulfillV2 } from 'lib/transunion/fulfill/Fulfillv2';
+import { Nested as _nest } from 'lib/utils/helpers/Nested';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -99,10 +101,12 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
             identityId,
           }; // don't pass the agent in the queue;
           // a special version of fulfill that calls TU API but updates the DB more directly for better performance
-          const fulfill = await FulfillWorker(payload);
-          const { success } = fulfill;
-          if (success) {
-            const prodResponse = fulfill.data?.ServiceProductFulfillments.ServiceProductResponse; //returnNestedObject<any>(fulfill, 'ServiceProductResponse');
+          const fulfill = new FulfillV2(payload);
+          const { success } = await fulfill.run();
+          const resp = fulfill.response;
+          const result = _nest.find<IFulfillResult>(resp, 'FulfillResult');
+          if (success && result) {
+            const prodResponse = result.ServiceProductFulfillments.ServiceProductResponse; //returnNestedObject<any>(fulfill, 'ServiceProductResponse');
             if (!prodResponse) return;
             // get the last score tracked
             const score = await DB.creditScoreTrackings.get(payload.identityId, 'transunion');

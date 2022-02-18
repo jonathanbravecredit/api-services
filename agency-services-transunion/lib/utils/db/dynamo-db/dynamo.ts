@@ -72,8 +72,6 @@ export const updateFulfillReport = (
   id: string,
   fulfillReport: {
     fulfilledOn: string;
-    fulfillReport: TUReportResponseInput;
-    fulfillMergeReport: TUReportResponseInput;
     fulfillVantageScore: TUReportResponseInput;
     serviceBundleFulfillmentKey: string;
   },
@@ -85,21 +83,16 @@ export const updateFulfillReport = (
       id: id,
     },
     // ConditionExpression: 'attribute_exists(queryParam.tableId)',
-    UpdateExpression:
-      'SET #a.#t.#fo = :fo, #a.#t.#fr = :fr, #a.#t.#fm = :fm, #a.#t.#fs = :fs, #a.#t.#bk = :bk, updatedAt = :m',
+    UpdateExpression: 'SET #a.#t.#fo = :fo, #a.#t.#fs = :fs, #a.#t.#bk = :bk, updatedAt = :m',
     ExpressionAttributeNames: {
       '#a': 'agencies',
       '#t': 'transunion',
       '#fo': 'fulfilledOn',
-      '#fr': 'fulfillReport',
-      '#fm': 'fulfillMergeReport',
       '#fs': 'fulfillVantageScore',
       '#bk': 'serviceBundleFulfillmentKey',
     },
     ExpressionAttributeValues: {
       ':fo': fulfillReport.fulfilledOn,
-      ':fr': fulfillReport.fulfillReport,
-      ':fm': fulfillReport.fulfillMergeReport,
       ':fs': fulfillReport.fulfillVantageScore,
       ':bk': fulfillReport.serviceBundleFulfillmentKey,
       ':m': timeStamp,

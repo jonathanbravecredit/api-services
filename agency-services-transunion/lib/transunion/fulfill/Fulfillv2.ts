@@ -26,10 +26,13 @@ export class FulfillV2 extends LoggerTransactionals {
   protected data: IFulfillGraphQLResponse;
   protected action = 'Fulfill';
   protected parserOptions = DEFAULT_PARSER_OPTIONS;
-  protected response: IFulfillResponse;
+  public response: IFulfillResponse;
   protected responseType: string;
   protected responseError: any;
   protected results: IProxyHandlerResponse<IFulfillResult>;
+  protected serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
+  public mergeReport: MergeReport;
+  public mergeReportSPO: string;
 
   constructor(protected payload: IProxyRequest) {
     super('Fulfill');
@@ -47,7 +50,7 @@ export class FulfillV2 extends LoggerTransactionals {
     const { accountCode, username, message, agent, auth, identityId } = this.payload;
     try {
       await this.runPayloader();
-      const requester = new FulfillRequester(this.data);
+      const requester = new FulfillRequester(this.data, this.serviceBundleCode);
       this.runRequester<FulfillRequester>(requester);
       const responder = new FulfillResponder();
       await this.runSendAndSync<FulfillResponder>(agent, auth, identityId, responder);
@@ -118,10 +121,10 @@ export class FulfillV2 extends LoggerTransactionals {
     responder.parseResponse(this.parserOptions);
     responder.enrichData(sync.clean); // this will remove the reports because now saving in separate DB
     this.setResponses(responder.response);
+    this.setMergeReportItems(responder);
     if (this.responseType.toLowerCase() === 'success') {
       const synched = await sync.syncData(responder.enriched); // this will go away with publishing to credit report system
-      const { spo, report } = this.parseReport(responder.enriched);
-      await this.publishReport(spo, id);
+      await this.publishReport(this.mergeReportSPO, id);
       this.setSuccessResults(synched);
     } else {
       this.setFailedResults();
@@ -132,6 +135,11 @@ export class FulfillV2 extends LoggerTransactionals {
     this.response = response;
     this.responseType = _nest.find(this.response, 'ResponseType');
     this.responseError = _nest.find(this.response, 'ErrorResponse');
+  }
+
+  setMergeReportItems(responder: FulfillResponder): void {
+    this.mergeReport = responder.mergeReport;
+    this.mergeReportSPO = responder.mergeReportSPO;
   }
 
   setSuccessResults(synched: boolean): void {

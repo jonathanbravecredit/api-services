@@ -10,10 +10,9 @@ export class EnrollRequester extends TURequestBase<IEnrollGraphQLResponse> {
   request: IEnrollRequest;
   xml: string;
 
-  constructor(protected data: IEnrollGraphQLResponse) {
-    super(data);
+  constructor(protected data: IEnrollGraphQLResponse, serviceBundleCode: string) {
+    super(data, serviceBundleCode);
     super.init();
-    this.serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
   }
 
   get dob() {

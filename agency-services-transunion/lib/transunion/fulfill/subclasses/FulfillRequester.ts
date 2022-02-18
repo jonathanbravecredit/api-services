@@ -10,10 +10,9 @@ export class FulfillRequester extends TURequestBase<IFulfillGraphQLResponse> {
   request: IFulfillRequest;
   xml: string;
 
-  constructor(protected data: IFulfillGraphQLResponse) {
-    super(data);
+  constructor(protected data: IFulfillGraphQLResponse, serviceBundleCode: string) {
+    super(data, serviceBundleCode);
     super.init();
-    this.serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
   }
 
   get dob() {
@@ -22,7 +21,8 @@ export class FulfillRequester extends TURequestBase<IFulfillGraphQLResponse> {
     return dayjs(badDate, 'YYYY-MMM-D').format('YYYY-MM-DD');
   }
 
-  generateRequest(): IFulfillRequest {
+  generateRequest(disputing: boolean = false): IFulfillRequest {
+    const eKey = disputing ? this.disputeEnrollmentKey : this.enrollmentKey;
     this.request = {
       AccountCode: this.accountCode,
       AccountName: this.accountName,
@@ -50,7 +50,7 @@ export class FulfillRequester extends TURequestBase<IFulfillGraphQLResponse> {
         },
         Ssn: this.attributes.ssn?.full || '',
       },
-      EnrollmentKey: this.enrollmentKey,
+      EnrollmentKey: eKey,
       ServiceBundleCode: this.serviceBundleCode,
     } as IFulfillRequest;
     return this.request;

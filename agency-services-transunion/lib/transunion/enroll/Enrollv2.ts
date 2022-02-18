@@ -10,7 +10,6 @@ import { IProxyHandlerResponse } from 'lib/interfaces/api/proxy-handler.interfac
 import { EnrollRequester } from 'lib/transunion/enroll/subclasses/EnrollRequester';
 import { EnrollResponder } from 'lib/transunion/enroll/subclasses/EnrollResponder';
 import { LoggerTransactionals } from 'lib/utils/logger/LoggerTransactionals';
-import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 import { MergeReport } from 'lib/models/MergeReport/MergeReport';
 import { CreditReportPublisher } from 'lib/transunion/credit-report-service/CreditReportPublisher';
 
@@ -24,6 +23,9 @@ export class EnrollV2 extends LoggerTransactionals {
   protected responseType: string;
   protected responseError: any;
   protected results: IProxyHandlerResponse<{ report: MergeReport }>;
+  protected serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
+  public mergeReport: MergeReport;
+  public mergeReportSPO: string;
 
   constructor(protected payload: IProxyRequest) {
     super('Enroll');
@@ -41,7 +43,7 @@ export class EnrollV2 extends LoggerTransactionals {
     const { accountCode, username, message, agent, auth, identityId } = this.payload;
     try {
       await this.runPayloader(identityId);
-      const requester = new EnrollRequester(this.data);
+      const requester = new EnrollRequester(this.data, this.serviceBundleCode);
       this.runRequester<EnrollRequester>(requester);
       const responder = new EnrollResponder();
       await this.runSendAndSync<EnrollResponder>(agent, auth, identityId, responder);
@@ -111,11 +113,11 @@ export class EnrollV2 extends LoggerTransactionals {
     responder.parseResponse(this.parserOptions);
     responder.enrichData(sync.clean); // this will remove the reports because now saving in separate DB
     this.setResponses(responder.response);
+    this.setMergeReportItems(responder);
     if (this.responseType.toLowerCase() === 'success') {
       const synched = await sync.syncData(responder.enriched);
-      const { spo, report } = this.parseReport(responder.enriched);
-      await this.publishReport(spo, id);
-      this.setSuccessResults(synched, report);
+      await this.publishReport(this.mergeReportSPO, id);
+      this.setSuccessResults(synched, this.mergeReport);
     } else {
       this.setFailedResults();
     }
@@ -127,6 +129,11 @@ export class EnrollV2 extends LoggerTransactionals {
     this.responseError = _nest.find(this.response, 'ErrorResponse');
   }
 
+  setMergeReportItems(responder: EnrollResponder): void {
+    this.mergeReport = responder.mergeReport;
+    this.mergeReportSPO = responder.mergeReportSPO;
+  }
+
   setSuccessResults(synched: boolean, data: MergeReport): void {
     this.results = synched
       ? { success: true, error: null, data: { report: data } }
@@ -135,13 +142,6 @@ export class EnrollV2 extends LoggerTransactionals {
 
   setFailedResults(): void {
     this.results = { success: false, error: this.responseError };
-  }
-
-  parseReport(enriched: UpdateAppDataInput): { data: TUReportResponseInput; spo: string; report: MergeReport } {
-    const data = _nest.find<TUReportResponseInput>(enriched, 'enrollMergeReport');
-    const spo = _nest.find<string>(data, 'serviceProductObject');
-    const report = new MergeReport(JSON.parse(spo));
-    return { data, spo, report };
   }
 
   async publishReport(spo: string, id: string): Promise<void> {
