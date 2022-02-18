@@ -48,16 +48,18 @@ export class Nested {
    */
   static delete(o: any, k: string) {
     const obj = Object.assign({}, o);
-    const _deleteKeyNestedObject = (o: any, k: string) => {
-      if (!o) return;
-      delete o[k];
-      Object.keys(o).forEach((key) => {
-        if (typeof o[key] === 'object') {
-          _deleteKeyNestedObject(o[key], k);
-        }
-      });
-    };
+    this._deleteKeyNestedObject(obj, k);
     return obj;
+  }
+
+  private static _deleteKeyNestedObject(o: any, k: string) {
+    if (!o) return;
+    delete o[k];
+    Object.keys(o).forEach((key) => {
+      if (typeof o[key] === 'object') {
+        this._deleteKeyNestedObject(o[key], k);
+      }
+    });
   }
 
   /**
@@ -69,15 +71,17 @@ export class Nested {
    */
   static update(o: any, k: string, v: any): any {
     const obj = Object.assign({}, o);
-    const _updateNestedRecurse = (o: any, k: string, v: any) => {
-      if (!o) return;
-      Object.keys(o).forEach((key) => {
-        if (key == k) o[k] = v;
-        if (typeof o[key] === 'object') {
-          _updateNestedRecurse(o[key], k, v);
-        }
-      });
-    };
+    this._updateNestedRecurse(obj, k, v);
     return obj;
+  }
+
+  private static _updateNestedRecurse(o: any, k: string, v: any) {
+    if (!o) return;
+    Object.keys(o).forEach((key) => {
+      if (key == k) o[k] = v;
+      if (typeof o[key] === 'object') {
+        this._updateNestedRecurse(o[key], k, v);
+      }
+    });
   }
 }
