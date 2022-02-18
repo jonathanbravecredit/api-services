@@ -4,7 +4,14 @@ import { SoapV2 } from 'lib/utils/soap-aid/SoapV2';
 import { Nested as _nest } from 'lib/utils/helpers/Nested';
 import { Payloader } from 'lib/utils/payloader/Payloader';
 import { qryGetDataForEnrollment } from 'lib/queries';
-import { IEnrollGraphQLResponse, IEnrollResponse, IEnrollResult, IGenericRequest, IProxyRequest } from 'lib/interfaces';
+import {
+  IEnrollGraphQLResponse,
+  IEnrollResponse,
+  IEnrollResult,
+  IGenericRequest,
+  IMergeReport,
+  IProxyRequest,
+} from 'lib/interfaces';
 import { DEFAULT_PARSER_OPTIONS } from 'lib/utils/parser/options';
 import { IProxyHandlerResponse } from 'lib/interfaces/api/proxy-handler.interfaces';
 import { EnrollRequester } from 'lib/transunion/enroll/subclasses/EnrollRequester';
@@ -20,7 +27,7 @@ export class EnrollV2 extends LoggerTransactionals {
   protected response: IEnrollResponse;
   protected responseType: string;
   protected responseError: any;
-  protected results: IProxyHandlerResponse<IEnrollResult>;
+  protected results: IProxyHandlerResponse<{ report: IMergeReport }>;
 
   constructor(protected payload: IProxyRequest) {
     super('Enroll');
@@ -34,7 +41,7 @@ export class EnrollV2 extends LoggerTransactionals {
    *  - log the results and send back results to API
    * @returns
    */
-  async run(): Promise<IProxyHandlerResponse<IEnrollResult>> {
+  async run(): Promise<IProxyHandlerResponse<{ report: IMergeReport }>> {
     const { accountCode, username, message, agent, auth, identityId } = this.payload;
     try {
       await this.runPayloader(identityId);
@@ -110,22 +117,18 @@ export class EnrollV2 extends LoggerTransactionals {
     this.response = responder.response;
     this.responseType = _nest.find(this.response, 'ResponseType');
     this.responseError = _nest.find(this.response, 'ErrorResponse');
-    console.log('response: ', this.response);
-    console.log('responseType: ', this.responseType);
-    console.log('responseError: ', this.responseError);
-    console.log('responder enriched: ', JSON.stringify(responder.enriched));
     if (this.responseType.toLowerCase() === 'success') {
       const synched = await sync.syncData(responder.enriched);
-      this.setSuccessResults(synched);
+      const data = _nest.find<IMergeReport>(responder.enriched, 'enrollMergeReport');
+      this.setSuccessResults(synched, data);
     } else {
       this.setFailedResults();
     }
   }
 
-  setSuccessResults(synched: boolean): void {
-    const data = _nest.find<IEnrollResult>(this.response, 'EnrollResult');
+  setSuccessResults(synched: boolean, data: IMergeReport): void {
     this.results = synched
-      ? { success: true, error: null, data: data }
+      ? { success: true, error: null, data: { report: data } }
       : { success: false, error: 'failed to sync data to db' };
   }
 

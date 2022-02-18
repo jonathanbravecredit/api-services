@@ -16,20 +16,13 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
     if (!this.xml) throw 'No XML set';
     const obj: IEnrollResponse = fastXml.parse(this.xml, options);
     const spr = _nest.find(obj, 'ServiceProductResponse');
-
-    console.log('enroll resp: ===> ', obj);
-    console.log('spr: ===> ', spr);
-
     if (!spr) throw 'No response found';
     if (spr instanceof Array) {
       const mapped = spr.map((prod) => {
         return spp.parseResponse(prod, options);
       });
-      console.log('mapped ===> ', JSON.stringify(mapped));
       const updated = _nest.update(obj, 'ServiceProductResponse', [...mapped.filter(Boolean)]);
-      console.log('updated ===> ', JSON.stringify(updated));
       this.response = updated ? updated : obj;
-      console.log('this.response ===> ', JSON.stringify(this.response));
     } else {
       this.response = obj;
     }
@@ -51,10 +44,6 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
       'ServiceProductResponse',
     );
 
-    console.log('ekey: ', eKey);
-    console.log('fKey: ', fKey);
-    console.log('spr: ', spr);
-
     if (!spr) return;
     if (spr instanceof Array) {
       enrollReport = _.find(spr, ['ServiceProduct', 'TUCReport']);
@@ -75,10 +64,6 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
           break;
       }
     }
-
-    console.log('enrollReport: ', enrollReport);
-    console.log('enrollMergeReport: ', enrollMergeReport);
-    console.log('enrollVantageScore: ', enrollVantageScore);
 
     const mapped = {
       ...appdata,
