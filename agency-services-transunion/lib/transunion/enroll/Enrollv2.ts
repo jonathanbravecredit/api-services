@@ -4,21 +4,15 @@ import { SoapV2 } from 'lib/utils/soap-aid/SoapV2';
 import { Nested as _nest } from 'lib/utils/helpers/Nested';
 import { Payloader } from 'lib/utils/payloader/Payloader';
 import { qryGetDataForEnrollment } from 'lib/queries';
-import {
-  IEnrollGraphQLResponse,
-  IEnrollResponse,
-  IEnrollResult,
-  IGenericRequest,
-  IMergeReport,
-  IProxyRequest,
-} from 'lib/interfaces';
+import { IEnrollGraphQLResponse, IEnrollResponse, IGenericRequest, IProxyRequest } from 'lib/interfaces';
 import { DEFAULT_PARSER_OPTIONS } from 'lib/utils/parser/options';
 import { IProxyHandlerResponse } from 'lib/interfaces/api/proxy-handler.interfaces';
 import { EnrollRequester } from 'lib/transunion/enroll/subclasses/EnrollRequester';
 import { EnrollResponder } from 'lib/transunion/enroll/subclasses/EnrollResponder';
 import { LoggerTransactionals } from 'lib/utils/logger/LoggerTransactionals';
-import { TUReportResponseInput } from 'src/api/api.service';
+import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 import { MergeReport } from 'lib/models/MergeReport/MergeReport';
+import { CreditReportPublisher } from 'lib/transunion/credit-report-service/CreditReportPublisher';
 
 export class EnrollV2 extends LoggerTransactionals {
   protected reqXML: string;
@@ -115,19 +109,22 @@ export class EnrollV2 extends LoggerTransactionals {
     await sync.getCleanData({ id });
     responder.xml = soap.response;
     responder.parseResponse(this.parserOptions);
-    responder.enrichData(sync.clean);
-    this.response = responder.response;
-    this.responseType = _nest.find(this.response, 'ResponseType');
-    this.responseError = _nest.find(this.response, 'ErrorResponse');
+    responder.enrichData(sync.clean); // this will remove the reports because now saving in separate DB
+    this.setResponses(responder.response);
     if (this.responseType.toLowerCase() === 'success') {
       const synched = await sync.syncData(responder.enriched);
-      const data = _nest.find<TUReportResponseInput>(responder.enriched, 'enrollMergeReport');
-      const spo = _nest.find<string>(data, 'serviceProductObject');
-      const report = new MergeReport(JSON.parse(spo));
+      const { spo, report } = this.parseReport(responder.enriched);
+      await this.publishReport(spo, id);
       this.setSuccessResults(synched, report);
     } else {
       this.setFailedResults();
     }
+  }
+
+  setResponses(response: IEnrollResponse): void {
+    this.response = response;
+    this.responseType = _nest.find(this.response, 'ResponseType');
+    this.responseError = _nest.find(this.response, 'ErrorResponse');
   }
 
   setSuccessResults(synched: boolean, data: MergeReport): void {
@@ -138,6 +135,18 @@ export class EnrollV2 extends LoggerTransactionals {
 
   setFailedResults(): void {
     this.results = { success: false, error: this.responseError };
+  }
+
+  parseReport(enriched: UpdateAppDataInput): { data: TUReportResponseInput; spo: string; report: MergeReport } {
+    const data = _nest.find<TUReportResponseInput>(enriched, 'enrollMergeReport');
+    const spo = _nest.find<string>(data, 'serviceProductObject');
+    const report = new MergeReport(JSON.parse(spo));
+    return { data, spo, report };
+  }
+
+  async publishReport(spo: string, id: string): Promise<void> {
+    const publisher = new CreditReportPublisher(spo);
+    await publisher.publish(id);
   }
 
   async logResults(id: string): Promise<void> {

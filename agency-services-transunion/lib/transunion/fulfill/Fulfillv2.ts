@@ -15,8 +15,10 @@ import {
 } from 'lib/interfaces';
 import { DEFAULT_PARSER_OPTIONS } from 'lib/utils/parser/options';
 import { IProxyHandlerResponse } from 'lib/interfaces/api/proxy-handler.interfaces';
-import { UpdateAppDataInput } from 'src/api/api.service';
+import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 import { LoggerTransactionals } from 'lib/utils/logger/LoggerTransactionals';
+import { MergeReport } from 'lib/models/MergeReport/MergeReport';
+import { CreditReportPublisher } from 'lib/transunion/credit-report-service/CreditReportPublisher';
 
 export class FulfillV2 extends LoggerTransactionals {
   protected reqXML: string;
@@ -114,16 +116,22 @@ export class FulfillV2 extends LoggerTransactionals {
     await sync.getCleanData({ id });
     responder.xml = soap.response;
     responder.parseResponse(this.parserOptions);
-    responder.enrichData(sync.clean);
-    this.response = responder.response;
-    this.responseError = responder.responseError;
-    this.responseType = responder.responseType;
+    responder.enrichData(sync.clean); // this will remove the reports because now saving in separate DB
+    this.setResponses(responder.response);
     if (this.responseType.toLowerCase() === 'success') {
-      const synched = await sync.syncData(responder.enriched);
+      const synched = await sync.syncData(responder.enriched); // this will go away with publishing to credit report system
+      const { spo, report } = this.parseReport(responder.enriched);
+      await this.publishReport(spo, id);
       this.setSuccessResults(synched);
     } else {
       this.setFailedResults();
     }
+  }
+
+  setResponses(response: IFulfillResponse): void {
+    this.response = response;
+    this.responseType = _nest.find(this.response, 'ResponseType');
+    this.responseError = _nest.find(this.response, 'ErrorResponse');
   }
 
   setSuccessResults(synched: boolean): void {
@@ -135,6 +143,18 @@ export class FulfillV2 extends LoggerTransactionals {
 
   setFailedResults(): void {
     this.results = { success: false, error: this.responseError };
+  }
+
+  parseReport(enriched: UpdateAppDataInput): { data: TUReportResponseInput; spo: string; report: MergeReport } {
+    const data = _nest.find<TUReportResponseInput>(enriched, 'enrollMergeReport');
+    const spo = _nest.find<string>(data, 'serviceProductObject');
+    const report = new MergeReport(JSON.parse(spo));
+    return { data, spo, report };
+  }
+
+  async publishReport(spo: string, id: string): Promise<void> {
+    const publisher = new CreditReportPublisher(spo);
+    await publisher.publish(id);
   }
 
   /**
