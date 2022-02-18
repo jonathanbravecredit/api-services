@@ -4,7 +4,7 @@ import * as fastXml from 'fast-xml-parser';
 import * as qrys from 'lib/proxy/proxy-queries';
 import * as interfaces from 'lib/interfaces';
 import * as tu from 'lib/transunion';
-import * as moment from 'moment';
+import * as dayjs from 'dayjs';
 import { ajv } from 'lib/schema/validation';
 import { Sync } from 'lib/utils/sync/sync';
 import { SoapAid } from 'lib/utils/soap-aid/soap-aid';
@@ -16,18 +16,14 @@ import { ALL_GET_INVESTIGATION_MOCKS } from 'lib/examples/mocks/AllGetInvestigat
 import { GET_DISPUTE_STATUS_RESPONSE_WITHID } from 'lib/examples/mocks/GetDisputeStatusResponse-Complete';
 import { DB } from 'lib/utils/db/db';
 import { Dispute } from 'lib/utils/db/disputes/model/dispute.model';
-import {
-  enrichFulfillDataWorker,
-  updateInvestigationResultsDB,
-  writeEnrollReport,
-  writeFulfillReport,
-} from 'lib/transunion';
+import { updateInvestigationResultsDB, writeEnrollReport } from 'lib/transunion';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
-import { updateEnrollmentStatus, updateFulfillReport, updateNavBarBadges } from 'lib/utils/db/dynamo-db/dynamo';
-import { ICancelEnrollGraphQLResponse, IFulfillGraphQLResponse, IMergeReport } from 'lib/interfaces';
-import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
+import { updateEnrollmentStatus, updateNavBarBadges } from 'lib/utils/db/dynamo-db/dynamo';
+import { ICancelEnrollGraphQLResponse } from 'lib/interfaces';
+import { FulfillV2 } from 'lib/transunion/fulfill/Fulfillv2';
+import { FulfillDisputesV2 } from 'lib/transunion/fulfill-disputes/FulfillDisputesV2';
 
 const GO_LIVE = true;
 const errorLogger = new ErrorLogger();
@@ -749,372 +745,6 @@ export const CancelEnrollWorker = async (
     const error = errorLogger.createError(identityId, 'CancelEnroll', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err, data: null };
-  }
-};
-
-/**
- * A returning user can refresh their report by calling fulfill
- * @param {string} accountCode Brave account code
- * @param {string} username Brave user ID (Identity ID)
- * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
- * @param {https.Agent} agent
- * @param {string} auth
- * @returns
- */
-export const Fulfill = async (
-  {
-    accountCode,
-    username,
-    message,
-    agent,
-    auth,
-    identityId,
-  }: {
-    accountCode: string;
-    username: string;
-    message: string;
-    agent: https.Agent;
-    auth: string;
-    identityId: string;
-  },
-  dispute: boolean = false,
-): Promise<{
-  success: boolean;
-  error?: interfaces.IErrorResponse | interfaces.INil | string;
-  data?: interfaces.IFulfillResult;
-}> => {
-  // validate incoming message
-  const payload: interfaces.IGenericRequest = { id: identityId };
-  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
-  if (!validate(payload)) throw `Malformed message=${payload}`;
-
-  //create helper classes
-  const soap = new SoapAid(tu.parseFulfill, tu.formatFulfill, tu.createFulfill, tu.createFulfillPayload);
-  const sync = new Sync(tu.enrichFulfillData);
-
-  try {
-    // get / parse data needed to process request
-    const prepped = await qrys.getDataForFulfill(payload);
-    const resp = await soap.parseAndSendPayload<interfaces.IFulfillResponse>(
-      accountCode,
-      username,
-      agent,
-      auth,
-      prepped.data,
-      'Fulfill',
-      parserOptions,
-    );
-
-    // get the specific response from parsed object
-    const data = resp.Envelope?.Body?.FulfillResponse?.FulfillResult;
-    const responseType = data?.ResponseType;
-    const error = data?.ErrorResponse;
-
-    // log tu responses
-    const l1 = transactionLogger.createTransaction(identityId, 'Fulfill:data', JSON.stringify(data));
-    const l2 = transactionLogger.createTransaction(identityId, 'Fulfill:type', JSON.stringify(responseType));
-    const l3 = transactionLogger.createTransaction(identityId, 'Fulfill:error', JSON.stringify(error));
-    await transactionLogger.logger.create(l1);
-    await transactionLogger.logger.create(l2);
-    await transactionLogger.logger.create(l3);
-
-    let response;
-    if (responseType.toLowerCase() === 'success') {
-      // send the report to the report service
-      await writeFulfillReport(data, payload.id);
-      const synced = await sync.syncData({ id: payload.id }, data, dispute);
-      response = synced
-        ? { success: true, error: null, data: data }
-        : { success: false, error: 'failed to sync data to db' };
-    } else {
-      response = { success: false, error: error };
-    }
-
-    // log success response
-    const l4 = transactionLogger.createTransaction(identityId, 'Fulfill:response', JSON.stringify(response));
-    await transactionLogger.logger.create(l4);
-
-    return response;
-  } catch (err) {
-    // log error response
-    const error = errorLogger.createError(identityId, 'Fulfill', JSON.stringify(err));
-    await errorLogger.logger.create(error);
-    return { success: false, error: err };
-  }
-};
-
-/**
- * A returning user can refresh their report by calling fulfill
- * @param {string} accountCode Brave account code
- * @param {string} username Brave user ID (Identity ID)
- * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
- * @param {https.Agent} agent
- * @param {string} auth
- * @returns
- */
-export const FulfillWorker = async (
-  {
-    accountCode,
-    username,
-    message,
-    agent,
-    auth,
-    identityId,
-  }: {
-    accountCode: string;
-    username: string;
-    message: string;
-    agent: https.Agent;
-    auth: string;
-    identityId: string;
-  },
-  dispute: boolean = false,
-): Promise<{
-  success: boolean;
-  error?: interfaces.IErrorResponse | interfaces.INil | string;
-  data?: interfaces.IFulfillResult;
-}> => {
-  // validate incoming message
-  const payload: interfaces.IFulfillWorkerData = JSON.parse(message);
-  const validate = ajv.getSchema<interfaces.IFulfillWorkerData>('fulfillWorker');
-  if (!validate(payload)) throw `Malformed message=${payload}`;
-  //create helper classes
-  const soap = new SoapAid(tu.parseFulfill, tu.formatFulfill, tu.createFulfill, tu.createFulfillPayload);
-
-  const formatted: IFulfillGraphQLResponse = {
-    data: {
-      getAppData: payload,
-    },
-  };
-  try {
-    // get / parse data needed to process request
-    const resp = await soap.parseAndSendPayload<interfaces.IFulfillResponse>(
-      accountCode,
-      username,
-      agent,
-      auth,
-      formatted,
-      'Fulfill',
-      parserOptions,
-    );
-
-    // get the specific response from parsed object
-    const data = resp.Envelope?.Body?.FulfillResponse?.FulfillResult;
-    const responseType = data?.ResponseType;
-    const error = data?.ErrorResponse;
-
-    // log tu responses
-    const l1 = transactionLogger.createTransaction(identityId, 'FulfillWorker:data', JSON.stringify(data));
-    const l2 = transactionLogger.createTransaction(identityId, 'FulfillWorker:type', JSON.stringify(responseType));
-    const l3 = transactionLogger.createTransaction(identityId, 'FulfillWorker:error', JSON.stringify(error));
-    await transactionLogger.logger.create(l1);
-    await transactionLogger.logger.create(l2);
-    await transactionLogger.logger.create(l3);
-
-    let response;
-    if (responseType.toLowerCase() === 'success') {
-      const mapped = enrichFulfillDataWorker(data);
-      await writeFulfillReport(data, payload.id);
-      const sync = await updateFulfillReport(payload.id, mapped);
-      response = { success: true, error: null, data: data };
-    } else {
-      response = { success: false, error: error };
-    }
-
-    // log success response
-    const l4 = transactionLogger.createTransaction(identityId, 'FulfillWorker:response', JSON.stringify(response));
-    await transactionLogger.logger.create(l4);
-
-    return response;
-  } catch (err) {
-    // log error response
-    const error = errorLogger.createError(identityId, 'FulfillWorker', JSON.stringify(err));
-    await errorLogger.logger.create(error);
-    return { success: false, error: err };
-  }
-};
-
-/**
- * A returning user can refresh their report by calling fulfill
- * @param {string} accountCode Brave account code
- * @param {string} username Brave user ID (Identity ID)
- * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
- * @param {https.Agent} agent
- * @param {string} auth
- * @returns
- */
-export const FulfillByUserId = async (
-  {
-    accountCode,
-    username,
-    message,
-    agent,
-    auth,
-    identityId,
-  }: {
-    accountCode: string;
-    username: string;
-    message: string;
-    agent: https.Agent;
-    auth: string;
-    identityId: string;
-  },
-  dispute: boolean = false,
-): Promise<{
-  success: boolean;
-  error?: interfaces.IErrorResponse | interfaces.INil | string;
-  data?: interfaces.IFulfillResult;
-}> => {
-  // validate incoming message
-  const payload: interfaces.IGenericRequest = { id: identityId };
-  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
-  if (!validate(payload)) throw `Malformed message=${payload}`;
-
-  //create helper classes
-  const soap = new SoapAid(tu.parseFulfill, tu.formatFulfill, tu.createFulfill, tu.createFulfillPayload);
-  const sync = new Sync(tu.enrichFulfillData);
-
-  try {
-    // get / parse data needed to process request
-    const prepped = await qrys.getDataForFulfill(payload);
-    const resp = await soap.parseAndSendPayload<interfaces.IFulfillResponse>(
-      accountCode,
-      username,
-      agent,
-      auth,
-      prepped.data,
-      'Fulfill',
-      parserOptions,
-    );
-
-    // get the specific response from parsed object
-    const data = resp.Envelope?.Body?.FulfillResponse?.FulfillResult;
-    const responseType = data?.ResponseType;
-    const error = data?.ErrorResponse;
-
-    // log tu responses
-    const l1 = transactionLogger.createTransaction(identityId, 'Fulfill:data', JSON.stringify(data));
-    const l2 = transactionLogger.createTransaction(identityId, 'Fulfill:type', JSON.stringify(responseType));
-    const l3 = transactionLogger.createTransaction(identityId, 'Fulfill:error', JSON.stringify(error));
-    await transactionLogger.logger.create(l1);
-    await transactionLogger.logger.create(l2);
-    await transactionLogger.logger.create(l3);
-
-    let response;
-    if (responseType.toLowerCase() === 'success') {
-      await writeFulfillReport(data, payload.id);
-      const synced = await sync.syncData({ id: payload.id }, data, dispute);
-      response = synced
-        ? { success: true, error: null, data: data }
-        : { success: false, error: 'failed to sync data to db' };
-    } else {
-      response = { success: false, error: error };
-    }
-
-    // log success response
-    const l4 = transactionLogger.createTransaction(identityId, 'Fulfill:response', JSON.stringify(response));
-    await transactionLogger.logger.create(l4);
-
-    return response;
-  } catch (err) {
-    // log error response
-    const error = errorLogger.createError(identityId, 'Fulfill', JSON.stringify(err));
-    await errorLogger.logger.create(error);
-    return { success: false, error: err };
-  }
-};
-
-/**
- * A returning user can refresh their report by calling fulfill
- * @param {string} accountCode Brave account code
- * @param {string} username Brave user ID (Identity ID)
- * @param {string} message JSON object in Full message format (fullfillment key required)...TODO add type definitions for
- * @param {https.Agent} agent
- * @param {string} auth
- * @returns
- */
-export const FulfillDisputes = async (
-  {
-    accountCode,
-    username,
-    message,
-    agent,
-    auth,
-    identityId,
-  }: {
-    accountCode: string;
-    username: string;
-    message: string;
-    agent: https.Agent;
-    auth: string;
-    identityId: string;
-  },
-  dispute: boolean = false,
-): Promise<{
-  success: boolean;
-  error?: interfaces.IErrorResponse | interfaces.INil | string;
-  data?: interfaces.IFulfillResult;
-}> => {
-  // validate incoming message
-  const payload: interfaces.IGenericRequest = { id: identityId };
-  const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
-  if (!validate(payload)) throw `Malformed message=${payload}`;
-
-  //create helper classes
-  const soap = new SoapAid(
-    tu.parseFulfillDisputes,
-    tu.formatFulfillDisputes,
-    tu.createFulfillDisputes,
-    tu.createFulfillDisputesPayload,
-  );
-  const sync = new Sync(tu.enrichFulfillDisputesData);
-
-  try {
-    // get / parse data needed to process request
-    const prepped = await qrys.getDataForFulfill(payload);
-    const resp = await soap.parseAndSendPayload<interfaces.IFulfillResponse>(
-      accountCode,
-      username,
-      agent,
-      auth,
-      prepped.data,
-      'Fulfill',
-      parserOptions,
-    );
-
-    // get the specific response from parsed object
-    const data = resp.Envelope?.Body?.FulfillResponse?.FulfillResult;
-    const responseType = data?.ResponseType;
-    const error = data?.ErrorResponse;
-
-    // log tu responses
-    const l1 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:data', JSON.stringify(data));
-    const l2 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:type', JSON.stringify(responseType));
-    const l3 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:error', JSON.stringify(error));
-    await transactionLogger.logger.create(l1);
-    await transactionLogger.logger.create(l2);
-    await transactionLogger.logger.create(l3);
-
-    let response;
-    if (responseType.toLowerCase() === 'success') {
-      await writeFulfillReport(data, payload.id);
-      const synced = await sync.syncData({ id: payload.id }, data, dispute);
-      response = synced
-        ? { success: true, error: null, data: data }
-        : { success: false, error: 'failed to sync data to db' };
-    } else {
-      response = { success: false, error: error };
-    }
-    // log success response
-    const l4 = transactionLogger.createTransaction(identityId, 'FulfillDisputes:response', JSON.stringify(response));
-    await transactionLogger.logger.create(l4);
-
-    return response;
-  } catch (err) {
-    // log error response
-    const error = errorLogger.createError(identityId, 'FulfillDisputes', JSON.stringify(err));
-    await errorLogger.logger.create(error);
-    return { success: false, error: err };
   }
 };
 
@@ -1924,7 +1554,7 @@ export const DisputePreflightCheck = async ({
         auth,
         identityId,
       };
-      const { success, error, data } = await FulfillDisputes(payload);
+      const { success, error } = await new FulfillDisputesV2(payload).run();
       if (!success) return { success: false, error: error };
     } catch (err) {
       const error = errorLogger.createError(identityId, 'DisputePreflightCheck:FulfillDisputes', JSON.stringify(err));
@@ -2142,7 +1772,7 @@ export const DisputeInflightCheck = async ({
             const tuDate =
               item.data?.DisputeStatus.DisputeStatusDetail?.ClosedDisputes?.LastUpdatedDate ||
               item.data?.DisputeStatus.DisputeStatusDetail?.OpenDisputes?.LastUpdatedDate;
-            const closedOn = complete ? moment(tuDate, 'MM/DD/YYYY').toISOString() : currentDispute.closedOn;
+            const closedOn = complete ? dayjs(tuDate, 'MM/DD/YYYY').toISOString() : currentDispute.closedOn;
             const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
             const updatedDispute = {
               ...currentDispute,
@@ -2199,7 +1829,7 @@ export const DisputeInflightCheck = async ({
               identityId: id,
             };
             console.log('CALLING FULFILL');
-            const fulfilled = await Fulfill(payload);
+            const fulfilled = await new FulfillV2(payload).run();
             if (!fulfilled.success) throw `fulfilled failed; error: ${fulfilled.error}; data: ${fulfilled.data}`;
             console.log('CALLING GET INVESTIGATION RESULTS');
             const synced = await GetInvestigationResults(payload);

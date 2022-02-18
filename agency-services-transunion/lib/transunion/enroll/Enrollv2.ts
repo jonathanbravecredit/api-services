@@ -41,7 +41,7 @@ export class EnrollV2 extends LoggerTransactionals {
     const { accountCode, username, message, agent, auth, identityId } = this.payload;
     try {
       await this.runPayloader(identityId);
-      const requester = new EnrollRequester(this.data);
+      const requester = new EnrollRequester(this.data, 'CC2BraveCreditTUReportV3Score');
       this.runRequester<EnrollRequester>(requester);
       const responder = new EnrollResponder();
       await this.runSendAndSync<EnrollResponder>(agent, auth, identityId, responder);

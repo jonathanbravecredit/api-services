@@ -32,8 +32,6 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
   enrichData(appdata: UpdateAppDataInput | undefined): UpdateAppDataInput | undefined {
     console.log('appData', appdata);
     if (!appdata) return;
-    let enrollReport;
-    let enrollMergeReport;
     let enrollVantageScore;
     let enrolledOn = new Date().toISOString();
 
@@ -46,17 +44,9 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
 
     if (!spr) return;
     if (spr instanceof Array) {
-      enrollReport = _.find(spr, ['ServiceProduct', 'TUCReport']);
-      enrollMergeReport = _.find(spr, ['ServiceProduct', 'MergeCreditReports']);
       enrollVantageScore = _.find(spr, ['ServiceProduct', 'TUCVantageScore3']);
     } else {
       switch (spr.ServiceProduct) {
-        case 'TUCReport':
-          enrollReport = spr || null;
-          break;
-        case 'MergeCreditReports':
-          enrollMergeReport = spr || null;
-          break;
         case 'TUCVantageScore3':
           enrollVantageScore = spr || null;
           break;
@@ -64,7 +54,7 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
           break;
       }
     }
-
+    // TODO eventually need to write score to either score table or report table
     const mapped = {
       ...appdata,
       agencies: {
@@ -74,12 +64,8 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
           enrolled: true,
           enrolledOn: enrolledOn,
           enrollmentKey: eKey,
-          enrollReport: mapReportResponse(enrollReport),
-          enrollMergeReport: mapReportResponse(enrollMergeReport),
           enrollVantageScore: mapReportResponse(enrollVantageScore),
           fulfilledOn: enrolledOn,
-          fulfillReport: mapReportResponse(enrollReport),
-          fulfillMergeReport: mapReportResponse(enrollMergeReport),
           fulfillVantageScore: mapReportResponse(enrollVantageScore),
           serviceBundleFulfillmentKey: fKey, // this always has to be synced to the report in fulfill fields
         },

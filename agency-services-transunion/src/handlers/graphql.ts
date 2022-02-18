@@ -9,6 +9,7 @@ import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { EnrollV2 } from 'lib/transunion/enroll/Enrollv2';
 import { FulfillV2 } from 'lib/transunion/fulfill/Fulfillv2';
+import { FulfillDisputesV2 } from 'lib/transunion/fulfill-disputes/FulfillDisputesV2';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -128,7 +129,8 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await fulfill.run();
         return JSON.stringify(results);
       case 'FulfillDisputes':
-        results = await queries.FulfillDisputes(payload);
+        const fulfillDispute = new FulfillDisputesV2(payload);
+        results = await fulfillDispute.run();
         return JSON.stringify(results);
       case 'GetServiceProduct':
         results = await queries.GetServiceProduct(payload);

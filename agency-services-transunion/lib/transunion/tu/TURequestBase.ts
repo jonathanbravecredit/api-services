@@ -11,15 +11,16 @@ export class TURequestBase<T> {
   protected accountName: string = ACCOUNT_NAME;
   protected clientKey: string;
   protected enrollmentKey: string;
-  protected serviceBundleCode: string;
+  protected disputeEnrollmentKey: string;
   protected attributes: IAttributes;
   // protected xml: string;
 
-  constructor(protected data: T) {}
+  constructor(protected data: T, protected serviceBundleCode: string) {}
 
   init() {
     this.clientKey = _nest.find(this.data, 'id');
     this.attributes = _nest.find(this.data, 'userAttributes');
     this.enrollmentKey = _nest.find(this.data, 'enrollmentKey');
+    this.disputeEnrollmentKey = _nest.find(this.data, 'disputeEnrollmentKey');
   }
 }

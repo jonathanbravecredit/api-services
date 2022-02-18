@@ -26,10 +26,11 @@ export class FulfillV2 extends LoggerTransactionals {
   protected data: IFulfillGraphQLResponse;
   protected action = 'Fulfill';
   protected parserOptions = DEFAULT_PARSER_OPTIONS;
-  protected response: IFulfillResponse;
+  public response: IFulfillResponse;
   protected responseType: string;
   protected responseError: any;
   protected results: IProxyHandlerResponse<IFulfillResult>;
+  protected serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
 
   constructor(protected payload: IProxyRequest) {
     super('Fulfill');
@@ -47,7 +48,7 @@ export class FulfillV2 extends LoggerTransactionals {
     const { accountCode, username, message, agent, auth, identityId } = this.payload;
     try {
       await this.runPayloader();
-      const requester = new FulfillRequester(this.data);
+      const requester = new FulfillRequester(this.data, this.serviceBundleCode);
       this.runRequester<FulfillRequester>(requester);
       const responder = new FulfillResponder();
       await this.runSendAndSync<FulfillResponder>(agent, auth, identityId, responder);

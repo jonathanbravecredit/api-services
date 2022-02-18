@@ -175,30 +175,10 @@ export const enrichFulfillDisputesData = (
   fulfill: IFulfillResult, // IFulfillResult
 ): UpdateAppDataInput | undefined => {
   if (!data) return;
-  let fulfillMergeReport;
-  let fulfilledOn = new Date().toISOString();
-  const prodResponse = returnNestedObject<any>(fulfill, 'ServiceProductResponse');
+
+  const fulfilledOn = new Date().toISOString();
   const serviceBundleFulfillmentKey = fulfill.ServiceBundleFulfillmentKey;
 
-  if (!prodResponse) return;
-  if (prodResponse instanceof Array) {
-    fulfillMergeReport = prodResponse.find((item: IFulfillServiceProductResponse) => {
-      return item['ServiceProduct'] === 'MergeCreditReports';
-    });
-  } else {
-    switch (prodResponse['ServiceProduct']) {
-      case 'MergeCreditReports':
-        fulfillMergeReport = prodResponse || null;
-        break;
-      default:
-        break;
-    }
-  }
-
-  const priorMergeReport = data.agencies?.transunion?.fulfillMergeReport;
-  const mergeReport = fulfillMergeReport ? mapReportResponse(fulfillMergeReport) : priorMergeReport;
-
-  if (!mergeReport) return data; // don't overwrite report if there is an error mapping...the other two are less critical
   const mapped = {
     ...data,
     agencies: {
@@ -206,7 +186,6 @@ export const enrichFulfillDisputesData = (
       transunion: {
         ...data.agencies?.transunion,
         fulfilledOn: fulfilledOn,
-        fulfillMergeReport: mergeReport,
         serviceBundleFulfillmentKey: serviceBundleFulfillmentKey, // this always has to be synced to the report in fulfill fields
       },
     },
