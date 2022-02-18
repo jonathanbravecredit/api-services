@@ -25,7 +25,7 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
       const mapped = spr.map((prod) => {
         return spp.parseResponse(prod, options);
       });
-
+      console.log('mapped ===> ', mapped);
       const updated = _nest.update(obj, 'ServiceProductResponse', [...mapped.filter(Boolean)]);
       console.log('updated ===> ', updated);
       this.response = updated ? updated : obj;
