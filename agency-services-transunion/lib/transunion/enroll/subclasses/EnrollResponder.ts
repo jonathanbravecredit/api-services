@@ -25,11 +25,11 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
       const mapped = spr.map((prod) => {
         return spp.parseResponse(prod, options);
       });
-      console.log('mapped ===> ', mapped);
+      console.log('mapped ===> ', JSON.stringify(mapped));
       const updated = _nest.update(obj, 'ServiceProductResponse', [...mapped.filter(Boolean)]);
-      console.log('updated ===> ', updated);
+      console.log('updated ===> ', JSON.stringify(updated));
       this.response = updated ? updated : obj;
-      console.log('this.response ===> ', this.response);
+      console.log('this.response ===> ', JSON.stringify(this.response));
     } else {
       this.response = obj;
     }
