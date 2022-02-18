@@ -7,7 +7,6 @@ export class ServiceProductParser {
     if (typeof prodObj === 'string') {
       let clean = he.decode(he.decode(prodObj)); // two decodes, because comes in encoded, and our defualt parser options encode it again.
       const parsed = fastXml.parse(clean, options);
-      console.log('parsed ===> ', parsed);
       return {
         ...prod,
         ServiceProductObject: parsed,
