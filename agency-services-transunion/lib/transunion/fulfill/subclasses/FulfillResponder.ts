@@ -2,14 +2,16 @@ import * as fastXml from 'fast-xml-parser';
 import * as _ from 'lodash';
 import { mapReportResponse } from 'lib/utils/helpers/helpers';
 import { IFulfillResponse, IFulfillServiceProductResponse } from 'lib/interfaces';
-import { UpdateAppDataInput } from 'src/api/api.service';
+import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 import { TUResponseBase } from 'lib/transunion/tu/TUResponseBase';
 import { ServiceProductParser as spp } from 'lib/transunion/parsers/ServiceProductParser';
 import { Nested as _nest } from 'lib/utils/helpers/Nested';
-import { IMergeReport } from 'lib/interfaces/merge-report.interface';
+import { MergeReport } from 'lib/models/MergeReport/MergeReport';
 
 export class FulfillResponder extends TUResponseBase<IFulfillResponse, UpdateAppDataInput> {
-  public report: IMergeReport;
+  public mergeReport: MergeReport;
+  public mergeReportSPO: string;
+
   constructor() {
     super();
   }
@@ -36,6 +38,7 @@ export class FulfillResponder extends TUResponseBase<IFulfillResponse, UpdateApp
 
   enrichData(appdata: UpdateAppDataInput | undefined): UpdateAppDataInput | undefined {
     if (!appdata) return;
+    let fulfillMergeReport;
     let fulfillVantageScore;
     let fulfilledOn = new Date().toISOString();
 
@@ -43,12 +46,15 @@ export class FulfillResponder extends TUResponseBase<IFulfillResponse, UpdateApp
       | IFulfillServiceProductResponse
       | IFulfillServiceProductResponse[];
     const key = _nest.find(this.response, 'ServiceBundleFulfillmentKey') as string;
-
     if (!spr) return;
     if (spr instanceof Array) {
+      fulfillMergeReport = _.find(spr, ['ServiceProduct', 'MergeCreditReports']);
       fulfillVantageScore = _.find(spr, ['ServiceProduct', 'TUCVantageScore3']);
     } else {
       switch (_.get(spr, 'ServiceProduct')) {
+        case 'MergeCreditReports':
+          fulfillMergeReport = spr || null;
+          break;
         case 'TUCVantageScore3':
           fulfillVantageScore = spr || null;
           break;
@@ -56,6 +62,9 @@ export class FulfillResponder extends TUResponseBase<IFulfillResponse, UpdateApp
           break;
       }
     }
+
+    this.setMergeReport(mapReportResponse(fulfillMergeReport));
+    this.setMergeReportSPO(mapReportResponse(fulfillMergeReport));
 
     const priorVantageScore = _nest.find(appdata, 'fulfillVantageScore');
     const vantageScore = fulfillVantageScore ? mapReportResponse(fulfillVantageScore) : priorVantageScore;
@@ -74,5 +83,17 @@ export class FulfillResponder extends TUResponseBase<IFulfillResponse, UpdateApp
     };
     this.enriched = mapped;
     return this.enriched;
+  }
+
+  setMergeReport(input: TUReportResponseInput) {
+    const data = _nest.find<TUReportResponseInput>(input, 'fulfillMergeReport');
+    const spo = _nest.find<string>(data, 'serviceProductObject');
+    this.mergeReport = new MergeReport(JSON.parse(spo));
+  }
+
+  setMergeReportSPO(input: TUReportResponseInput) {
+    const data = _nest.find<TUReportResponseInput>(input, 'fulfillMergeReport');
+    const spo = _nest.find<string>(data, 'serviceProductObject');
+    this.mergeReportSPO = spo;
   }
 }

@@ -2,12 +2,16 @@ import * as fastXml from 'fast-xml-parser';
 import * as _ from 'lodash';
 import { Nested as _nest } from 'lib/utils/helpers/Nested';
 import { mapReportResponse } from 'lib/utils/helpers/helpers';
-import { IEnrollResponse, IEnrollServiceProductResponse } from 'lib/interfaces';
-import { UpdateAppDataInput } from 'src/api/api.service';
+import { IEnrollResponse, IEnrollServiceProductResponse, IMergeReport } from 'lib/interfaces';
+import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 import { TUResponseBase } from 'lib/transunion/tu/TUResponseBase';
 import { ServiceProductParser as spp } from 'lib/transunion/parsers/ServiceProductParser';
+import { MergeReport } from 'lib/models/MergeReport/MergeReport';
 
 export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDataInput> {
+  public mergeReport: MergeReport;
+  public mergeReportSPO: string;
+
   constructor() {
     super();
   }
@@ -32,6 +36,7 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
   enrichData(appdata: UpdateAppDataInput | undefined): UpdateAppDataInput | undefined {
     console.log('appData', appdata);
     if (!appdata) return;
+    let enrollMergeReport;
     let enrollVantageScore;
     let enrolledOn = new Date().toISOString();
 
@@ -44,9 +49,13 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
 
     if (!spr) return;
     if (spr instanceof Array) {
+      enrollMergeReport = _.find(spr, ['ServiceProduct', 'MergeCreditReports']);
       enrollVantageScore = _.find(spr, ['ServiceProduct', 'TUCVantageScore3']);
     } else {
       switch (spr.ServiceProduct) {
+        case 'MergeCreditReports':
+          enrollMergeReport = spr || null;
+          break;
         case 'TUCVantageScore3':
           enrollVantageScore = spr || null;
           break;
@@ -54,6 +63,10 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
           break;
       }
     }
+
+    this.setMergeReport(mapReportResponse(enrollMergeReport));
+    this.setMergeReportSPO(mapReportResponse(enrollMergeReport));
+
     // TODO eventually need to write score to either score table or report table
     const mapped = {
       ...appdata,
@@ -73,5 +86,17 @@ export class EnrollResponder extends TUResponseBase<IEnrollResponse, UpdateAppDa
     };
     this.enriched = mapped;
     return this.enriched;
+  }
+
+  setMergeReport(input: TUReportResponseInput) {
+    const data = _nest.find<TUReportResponseInput>(input, 'enrollMergeReport');
+    const spo = _nest.find<string>(data, 'serviceProductObject');
+    this.mergeReport = new MergeReport(JSON.parse(spo));
+  }
+
+  setMergeReportSPO(input: TUReportResponseInput) {
+    const data = _nest.find<TUReportResponseInput>(input, 'enrollMergeReport');
+    const spo = _nest.find<string>(data, 'serviceProductObject');
+    this.mergeReportSPO = spo;
   }
 }

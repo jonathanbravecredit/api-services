@@ -24,6 +24,7 @@ import { updateEnrollmentStatus, updateNavBarBadges } from 'lib/utils/db/dynamo-
 import { ICancelEnrollGraphQLResponse } from 'lib/interfaces';
 import { FulfillV2 } from 'lib/transunion/fulfill/Fulfillv2';
 import { FulfillDisputesV2 } from 'lib/transunion/fulfill-disputes/FulfillDisputesV2';
+import { MergeReport } from 'lib/models/MergeReport/MergeReport';
 
 const GO_LIVE = true;
 const errorLogger = new ErrorLogger();
@@ -1486,10 +1487,12 @@ export const DisputePreflightCheck = async ({
   agent: https.Agent;
   auth: string;
   identityId: string;
-}): Promise<{ success: boolean; error?: any }> => {
+}): Promise<{ success: boolean; error?: any, data: { report: MergeReport | null} }> => {
   const payload: interfaces.IGenericRequest = { id: identityId };
   const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed message=${payload}`;
+
+  let report: { report: MergeReport };
 
   let enrolled: boolean;
   try {
@@ -1500,7 +1503,7 @@ export const DisputePreflightCheck = async ({
   } catch (err) {
     const error = errorLogger.createError(identityId, 'DisputePreflightCheck:EnrollStatus', JSON.stringify(err));
     await errorLogger.logger.create(error);
-    return { success: false, error: err };
+    return { success: false, error: err, data: null };
   }
 
   if (!enrolled) {
@@ -1515,11 +1518,11 @@ export const DisputePreflightCheck = async ({
         identityId,
       };
       const { success, error, data } = await EnrollDisputes(payload);
-      if (!success) return { success: false, error: error };
+      if (!success) return { success: false, error: error, data: { report: null } };
     } catch (err) {
       const error = errorLogger.createError(identityId, 'DisputePreflightCheck:EnrollDisputes', JSON.stringify(err));
       await errorLogger.logger.create(error);
-      return { success: false, error: err };
+      return { success: false, error: err, data: { report: null }};
     }
   }
 
@@ -1540,7 +1543,7 @@ export const DisputePreflightCheck = async ({
   } catch (err) {
     const error = errorLogger.createError(identityId, 'DisputePreflightCheck:Refresh', JSON.stringify(err));
     await errorLogger.logger.create(error);
-    return { success: false, error: err };
+    return { success: false, error: err, data: { report: null } };
   }
 
   if (refresh) {
@@ -1554,12 +1557,14 @@ export const DisputePreflightCheck = async ({
         auth,
         identityId,
       };
-      const { success, error } = await new FulfillDisputesV2(payload).run();
-      if (!success) return { success: false, error: error };
+      const fulfill = new FulfillDisputesV2(payload);
+      const { success, error, data } = await fulfill.run();
+      report = { report: fulfill.mergeReport };
+      if (!success) return { success: false, error: error, data: { report: null } };
     } catch (err) {
       const error = errorLogger.createError(identityId, 'DisputePreflightCheck:FulfillDisputes', JSON.stringify(err));
       await errorLogger.logger.create(error);
-      return { success: false, error: err };
+      return { success: false, error: err, data: { report: null } };
     }
   }
 
@@ -1574,13 +1579,13 @@ export const DisputePreflightCheck = async ({
       identityId,
     };
     const { success, error } = await GetDisputeStatus(payload);
-    const response = success ? { success: true } : { success: false, error: error };
+    const response = success ? { success: true, error: null, data: report } : { success: false, error: error, data: { report: null } };
     console.log('response ===> ', response);
     return response;
   } catch (err) {
     const error = errorLogger.createError(identityId, 'DisputePreflightCheck:GetDisputeStatus', JSON.stringify(err));
     await errorLogger.logger.create(error);
-    return { success: false, error: err };
+    return { success: false, error: err, data: { report: null } };
   }
 };
 
