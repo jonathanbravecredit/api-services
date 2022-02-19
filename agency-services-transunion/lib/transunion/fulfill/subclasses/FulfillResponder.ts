@@ -63,6 +63,9 @@ export class FulfillResponder extends TUResponseBase<IFulfillResponse, UpdateApp
       }
     }
 
+    console.log('fulfillresponder:fulfillMergeReport: ', fulfillMergeReport);
+    console.log('fulfillresponder:fulfillVantageScore ', fulfillVantageScore);
+
     this.setMergeReport(mapReportResponse(fulfillMergeReport));
     this.setMergeReportSPO(mapReportResponse(fulfillMergeReport));
 
@@ -86,11 +89,13 @@ export class FulfillResponder extends TUResponseBase<IFulfillResponse, UpdateApp
   }
 
   setMergeReport(input: TUReportResponseInput) {
+    console.log('set merge report input: ', input);
     const { serviceProductObject: spo } = input;
     this.mergeReport = new MergeReport(JSON.parse(spo));
   }
 
   setMergeReportSPO(input: TUReportResponseInput) {
+    console.log('set merge reportSPO input: ', input);
     const { serviceProductObject: spo } = input;
     this.mergeReportSPO = spo;
   }
