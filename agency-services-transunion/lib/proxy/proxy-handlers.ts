@@ -1564,7 +1564,6 @@ export const DisputePreflightCheck = async ({
       console.log('refresh data: ', data);
       report = { report: fulfill.mergeReport };
       console.log('refresh report: ', report);
-      if (!success) return { success: false, error: error, data: { report: null } };
     } catch (err) {
       const error = errorLogger.createError(identityId, 'DisputePreflightCheck:FulfillDisputes', JSON.stringify(err));
       await errorLogger.logger.create(error);
