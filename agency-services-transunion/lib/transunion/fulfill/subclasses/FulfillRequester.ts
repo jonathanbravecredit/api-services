@@ -23,6 +23,8 @@ export class FulfillRequester extends TURequestBase<IFulfillGraphQLResponse> {
 
   generateRequest(disputing: boolean = false): IFulfillRequest {
     const eKey = disputing ? this.disputeEnrollmentKey : this.enrollmentKey;
+    console.log('disputeEnrollmentKey: ', this.disputeEnrollmentKey);
+    console.log('enrollmentKey: ', this.enrollmentKey);
     this.request = {
       AccountCode: this.accountCode,
       AccountName: this.accountName,
@@ -105,6 +107,7 @@ export class FulfillRequester extends TURequestBase<IFulfillGraphQLResponse> {
       },
     };
     this.xml = convert.json2xml(JSON.stringify(xmlObj), { compact: true, spaces: 4 });
+    console.log('fulfill request xml: ', JSON.stringify(this.xml));
     return this.xml;
   }
 }
