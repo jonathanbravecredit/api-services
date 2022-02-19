@@ -1535,9 +1535,9 @@ export const DisputePreflightCheck = async ({
     if (!fulfilledOn) {
       refresh = true;
     } else {
-      const now = new Date();
-      const last = new Date(fulfilledOn);
-      refresh = dateDiffInHours(last, now) > 24 ? true : false;
+      const now = dayjs(new Date());
+      const last = dayjs(fulfilledOn);
+      refresh = now.diff(last, 'hour') >= 24 ? true : false
     }
     console.log('DisputePreflightCheck:refresh ===> ', refresh);
   } catch (err) {
@@ -1559,7 +1559,11 @@ export const DisputePreflightCheck = async ({
       };
       const fulfill = new FulfillDisputesV2(payload);
       const { success, error, data } = await fulfill.run();
+      console.log('refresh success: ', success);
+      console.log('refresh error: ', error);
+      console.log('refresh data: ', data);
       report = { report: fulfill.mergeReport };
+      console.log('refresh report: ', report);
       if (!success) return { success: false, error: error, data: { report: null } };
     } catch (err) {
       const error = errorLogger.createError(identityId, 'DisputePreflightCheck:FulfillDisputes', JSON.stringify(err));
