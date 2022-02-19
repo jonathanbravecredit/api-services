@@ -107,7 +107,7 @@ export class FulfillRequester extends TURequestBase<IFulfillGraphQLResponse> {
       },
     };
     this.xml = convert.json2xml(JSON.stringify(xmlObj), { compact: true, spaces: 4 });
-    console.log('fulfill request xml: ', JSON.stringify(this.xml));
+    console.log('fulfill request xml: ', this.xml);
     return this.xml;
   }
 }

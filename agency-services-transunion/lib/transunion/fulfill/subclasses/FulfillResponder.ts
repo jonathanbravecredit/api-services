@@ -37,7 +37,7 @@ export class FulfillResponder extends TUResponseBase<IFulfillResponse, UpdateApp
   }
 
   enrichData(appdata: UpdateAppDataInput | undefined): UpdateAppDataInput | undefined {
-    if (!appdata) return;
+    if (!appdata || this.responseType.toLowerCase() !== 'success') return;
     let fulfillMergeReport;
     let fulfillVantageScore;
     let fulfilledOn = new Date().toISOString();
