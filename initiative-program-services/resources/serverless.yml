@@ -20,3 +20,22 @@ provider:
   vpc:
     securityGroupIds: { 'Fn::Split': [',', { 'Fn::ImportValue': 'agency-services-transunion-vpc-natsecuritygroup' }] }
     subnetIds: { 'Fn::Split': [',', { 'Fn::ImportValue': 'agency-services-transunion-subnets-private' }] }
+# resources:
+#   Resources:
+#     InitiativePrograms:
+#       Type: AWS::DynamoDB::Table
+#       Properties:
+#         AttributeDefinitions:
+#           - AttributeName: 'userId'
+#             AttributeType: 'S'
+#           - AttributeName: 'initiativeId'
+#             AttributeType: 'S'
+#         KeySchema:
+#           - AttributeName: 'userId'
+#             KeyType: 'HASH'
+#           - AttributeName: 'initiativeId'
+#             KeyType: 'RANGE'
+#         BillingMode: PAY_PER_REQUEST
+#         TableName: InitiativePrograms
+#         StreamSpecification:
+#           StreamViewType: NEW_AND_OLD_IMAGES
