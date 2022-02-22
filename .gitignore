@@ -1,0 +1,8 @@
+# Dependency directories
+agency-services-transunion/node_modules
+credit-report-services/node_modules
+initiative-program-services/node_modules
+
+agency-services-transunion/.serverless
+credit-report-services/.serverless
+initiative-program-services/.serverless
