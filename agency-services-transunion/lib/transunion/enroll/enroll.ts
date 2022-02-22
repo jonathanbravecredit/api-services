@@ -1,8 +1,15 @@
-import { mapReportResponse, returnNestedObject, textConstructor, updateNestedObject } from 'lib/utils/helpers/helpers';
+import {
+  mapReportResponse,
+  mapReportResponseWorker,
+  returnNestedObject,
+  textConstructor,
+  updateNestedObject,
+} from 'lib/utils/helpers/helpers';
 import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
 import * as he from 'he';
 import * as uuid from 'uuid';
+import { SNS } from 'aws-sdk';
 import {
   IEnroll,
   IEnrollGraphQLResponse,
@@ -10,9 +17,13 @@ import {
   IEnrollResponse,
   IEnrollResult,
   IEnrollServiceProductResponse,
+  IMergeReport,
 } from 'lib/interfaces';
 import { MONTH_MAP } from 'lib/data/constants';
-import { UpdateAppDataInput } from 'src/api/api.service';
+import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
+import { BraveParsers } from 'lib/utils/brave/parser/BraveParser';
+import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
+import { ICreditReportPayload } from 'lib/interfaces/transunion/batch.interfaces';
 
 /**
  * Genarates the message payload for TU Enroll service
@@ -238,4 +249,59 @@ export const enrichEnrollmentData = (
       },
     },
   };
+};
+
+/**
+ * This method parses and enriches the state data
+ * @param {UpdateAppDataInput} data
+ * @param {IFulfillResult} enroll
+ * @returns {UpdateAppDataInput | undefined }
+ */
+export const enrollMergeReport = (
+  enroll: IEnrollResult, // IFulfillResult
+):
+  | {
+      enrollMergeReport: TUReportResponseInput;
+    }
+  | undefined => {
+  let enrollMergeReport;
+  const prodResponse = returnNestedObject<any>(enroll, 'ServiceProductResponse');
+
+  if (!prodResponse) return;
+  if (prodResponse instanceof Array) {
+    enrollMergeReport = prodResponse.find((item: IEnrollServiceProductResponse) => {
+      return item['ServiceProduct'] === 'MergeCreditReports';
+    });
+  } else {
+    switch (prodResponse['ServiceProduct']) {
+      case 'MergeCreditReports':
+        enrollMergeReport = prodResponse || null;
+        break;
+      default:
+        break;
+    }
+  }
+
+  const mergeReport = mapReportResponseWorker(enrollMergeReport);
+  if (!mergeReport) return null;
+
+  const mapped = {
+    enrollMergeReport: mergeReport,
+  };
+  return mapped;
+};
+
+export const writeEnrollReport = async (data: IEnrollResult, id: string) => {
+  const { enrollMergeReport: mergeReport } = enrollMergeReport(data);
+  const report = BraveParsers.parseTransunionMergeReport(mergeReport.serviceProductObject);
+  const pubsub = new PubSubUtil();
+  const topic = process.env.CREDITREPORTS_SNS_PROXY_ARN;
+  const payload = {
+    userId: id,
+    bureau: 'transunion',
+    report: report,
+  } as ICreditReportPayload;
+  const snsPayload = pubsub.createSNSPayload<ICreditReportPayload>('create', payload, 'creditreports', topic);
+  const sns = new SNS({ region: 'us-east-2' });
+  await sns.publish(snsPayload).promise();
 };

@@ -16,7 +16,12 @@ import { ALL_GET_INVESTIGATION_MOCKS } from 'lib/examples/mocks/AllGetInvestigat
 import { GET_DISPUTE_STATUS_RESPONSE_WITHID } from 'lib/examples/mocks/GetDisputeStatusResponse-Complete';
 import { DB } from 'lib/utils/db/db';
 import { Dispute } from 'lib/utils/db/disputes/model/dispute.model';
-import { enrichFulfillDataWorker, updateInvestigationResultsDB, writeFulfillReport } from 'lib/transunion';
+import {
+  enrichFulfillDataWorker,
+  updateInvestigationResultsDB,
+  writeEnrollReport,
+  writeFulfillReport,
+} from 'lib/transunion';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
@@ -463,6 +468,7 @@ export const Enroll = async (
 
     let response;
     if (responseType.toLowerCase() === 'success') {
+      await writeEnrollReport(data, identityId);
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }
@@ -815,7 +821,7 @@ export const Fulfill = async (
     let response;
     if (responseType.toLowerCase() === 'success') {
       // send the report to the report service
-      await writeFulfillReport(data);
+      await writeFulfillReport(data, payload.id);
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }
@@ -908,7 +914,7 @@ export const FulfillWorker = async (
     let response;
     if (responseType.toLowerCase() === 'success') {
       const mapped = enrichFulfillDataWorker(data);
-      await writeFulfillReport(data);
+      await writeFulfillReport(data, payload.id);
       const sync = await updateFulfillReport(payload.id, mapped);
       response = { success: true, error: null, data: data };
     } else {
@@ -996,7 +1002,7 @@ export const FulfillByUserId = async (
 
     let response;
     if (responseType.toLowerCase() === 'success') {
-      await writeFulfillReport(data);
+      await writeFulfillReport(data, payload.id);
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }
@@ -1091,7 +1097,7 @@ export const FulfillDisputes = async (
 
     let response;
     if (responseType.toLowerCase() === 'success') {
-      await writeFulfillReport(data);
+      await writeFulfillReport(data, payload.id);
       const synced = await sync.syncData({ id: payload.id }, data, dispute);
       response = synced
         ? { success: true, error: null, data: data }

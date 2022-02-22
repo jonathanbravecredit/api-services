@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda';
 import { response } from 'libs/utils/response';
 import { getReport } from 'libs/queries/CreditReport.queries';

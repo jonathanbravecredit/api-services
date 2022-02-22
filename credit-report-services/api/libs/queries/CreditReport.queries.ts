@@ -32,7 +32,10 @@ export const createReport = (report: CreditReport): Promise<PutItemOutput> => {
     .ifNotExists()
     .exec()
     .then((res) => res)
-    .catch((err) => err);
+    .catch((err) => {
+      console.log('error: ', err);
+      return err;
+    });
 };
 
 export const updateReport = (report: CreditReport): Promise<PutItemOutput> => {
