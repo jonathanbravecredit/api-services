@@ -1,7 +1,7 @@
 # NOTE: update this with your service name
 service: initiative-program-resources
 
-# Create an optimized package for our functions 
+# Create an optimized package for our functions
 package:
   individually: true
 
@@ -10,23 +10,152 @@ plugins:
   - serverless-offline
   - serverless-dotenv-plugin # Load .env as environment variables
 
+custom:
+  settings:
+    IDENTITY_IDS:
+      dev: 'us-east-2:69169c15-c0c4-4e0b-886c-4afab307e612'
+      qa: 'us-east-2:69169c15-c0c4-4e0b-886c-4afab307e612'
+      prod: 'us-east-2:ea31caf7-0945-4607-a3c4-0c9942967a32'
+    POOL_IDS:
+      dev: 'us-east-2_beTcykTM9'
+      qa: 'us-east-2_beTcykTM9'
+      prod: 'us-east-2_R22DawoAR'
+
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: dev
-  region: us-east-1
-  # To load environment variables externally
-  # rename env.example to .env and uncomment
-  # the following line. Also, make sure to not
-  # commit your .env.
-  #
-  #environment:
-  #  SAMPLE_ENV_VAR: ${env:SAMPLE_ENV_VAR}
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-2'}
+  environment:
+    OUR_ENV: ${self:provider.stage}
 
-functions:
-  hello:
-    handler: handler.hello
-    events:
-      - http:
-          path: hello
-          method: get
+resources:
+  Resources:
+    InitiativePrograms:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: 'id'
+            AttributeType: 'S'
+          - AttributeName: 'initiative'
+            AttributeType: 'S'
+        KeySchema:
+          - AttributeName: 'id'
+            KeyType: 'HASH'
+          - AttributeName: 'initiative'
+            KeyType: 'RANGE'
+        BillingMode: PAY_PER_REQUEST
+        TableName: InitiativePrograms
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+
+    ApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: ${self:provider.stage}-initiative-program-service-api
+
+    ApiGatewayAuthorizer:
+      Type: AWS::ApiGateway::Authorizer
+      Properties:
+        Name: initiative-program-authorizer
+        Type: COGNITO_USER_POOLS
+        IdentitySource: method.request.header.Authorization
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        ProviderARNs:
+          - !Sub 'arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/${self:custom.settings.POOL_IDS.${opt:stage}}'
+
+    InitiativeProgamSNSTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: ${self:provider.stage}-initiative-program-topic
+
+    # Create our 'MailchimpQueue' Dead Letter Queue SQS queue
+    InitiativeProgramQueueDLQ:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: ${self:provider.stage}-initiative-program-dlq
+        ReceiveMessageWaitTimeSeconds: 20
+
+    # Create our 'MailchimpQueue' SQS queue
+    InitiativeProgramQueue:
+      Type: 'AWS::SQS::Queue'
+      Properties:
+        QueueName: ${self:provider.stage}-initiative-program-sqs
+        ReceiveMessageWaitTimeSeconds: 20
+        RedrivePolicy:
+          deadLetterTargetArn: !GetAtt
+            - InitiativeProgramQueueDLQ
+            - Arn
+          maxReceiveCount: 3
+        VisibilityTimeout: 720
+
+    # Create our queue policy for the 'MailchimpQueue'
+    SnsToInitiativeProgramQueueSqsPolicy:
+      Type: AWS::SQS::QueuePolicy
+      Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: 'allow-sns-messages'
+              Effect: Allow
+              Principal: '*'
+              Resource: !GetAtt
+                - InitiativeProgramQueue
+                - Arn
+              Action: 'SQS:SendMessage'
+              Condition:
+                ArnEquals:
+                  'aws:SourceArn': !Ref InitiativeProgramSNSTopic
+        Queues:
+          - Ref: InitiativeProgramQueue
+
+    # Create the subscription to the 'queue
+    InitiativeProgramQueueSubscription:
+      Type: 'AWS::SNS::Subscription'
+      Properties:
+        TopicArn: !Ref InitiativeProgramSNSTopic
+        Endpoint: !GetAtt
+          - InitiativeProgramQueue
+          - Arn
+        Protocol: sqs
+        FilterPolicy:
+          service:
+            - initiativeprogram
+        RawMessageDelivery: 'true'
+
+  Outputs:
+    InitiativeProgramTable:
+      Description: 'Credit reports table'
+      Value: !Ref InitiativePrograms
+      Export:
+        Name: !Sub '${self:service}-table'
+    InitiativeProgramTableStreamArn:
+      Value: { 'Fn::GetAtt': ['InitiativePrograms', 'StreamArn'] }
+      Export:
+        Name: !Sub '${self:service}-stream'
+    ApiGatewayRestApiId:
+      Description: 'Initiative program API id'
+      Value: !Ref ApiGatewayRestApi
+      Export:
+        Name: !Sub '${self:service}-apigw-id'
+    ApiGatewayRestApiResourceId:
+      Description: 'Initiative program API root resource'
+      Value: !GetAtt ApiGatewayRestApi.RootResourceId
+      Export:
+        Name: !Sub '${self:service}-apigw-rootresource'
+    ApiGatewayAuthorizorId:
+      Description: 'Credit reports API gateway authorizer'
+      Value: !Ref ApiGatewayAuthorizer
+      Export:
+        Name: !Sub '${self:service}-authorizer'
+    InitiativeProgramQueueArn:
+      Description: 'Credit reports queue ARN'
+      Value: !GetAtt InitiativeProgramQueue.Arn
+      Export:
+        Name: !Sub '${self:service}-sqs-arn'
+    CreditReportTopicArn:
+      Description: 'Credit reports SNS ARN'
+      Value: !Ref InitiativeProgramSNSTopic
+      Export:
+        Name: !Sub '${self:service}-sns-arn'
