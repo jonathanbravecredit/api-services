@@ -1,15 +1,6 @@
 # NOTE: update this with your service name
 service: web-api-resources
 
-# Create an optimized package for our functions
-package:
-  individually: true
-
-plugins:
-  - serverless-bundle # Package our functions with Webpack
-  - serverless-offline
-  - serverless-dotenv-plugin # Load .env as environment variables
-
 custom:
   settings:
     IDENTITY_IDS:
@@ -55,6 +46,6 @@ resources:
         Name: !Sub '${self:service}-apigw-id'
     ApiGatewayRestApiResourceId:
       Description: 'Web App API root resource'
-      Value: !GetAtt ApiGatewayRestApi.RootResourceId
+      Value: !GetAtt ApiGatewayRestApi.RootResourceIdß
       Export:
         Name: !Sub '${self:service}-apigw-rootresource'
