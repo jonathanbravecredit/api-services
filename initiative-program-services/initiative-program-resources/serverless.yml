@@ -56,7 +56,7 @@ resources:
         ProviderARNs:
           - !Sub 'arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/${self:custom.settings.POOL_IDS.${opt:stage}}'
 
-    InitiativeProgamSNSTopic:
+    InitiativeProgramSNSTopic:
       Type: AWS::SNS::Topic
       Properties:
         TopicName: ${self:provider.stage}-initiative-program-topic
