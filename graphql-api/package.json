@@ -1,0 +1,38 @@
+{
+  "name": "agency-services-transunion",
+  "version": "0.1.0",
+  "description": "A TypeScript starter for Serverless Framework",
+  "main": "handler.js",
+  "scripts": {
+    "test": "serverless-bundle test"
+  },
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AnomalyInnovations/serverless-typescript-starter.git"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.92",
+    "@types/jest": "^26.0.24",
+    "serverless-bundle": "^5.3.0",
+    "serverless-dotenv-plugin": "^3.12.2",
+    "serverless-offline": "^6.9.0"
+  },
+  "dependencies": {
+    "@shiftcoders/dynamo-easy": "^7.1.0",
+    "ajv": "^7.0.2",
+    "aws-appsync": "^4.1.4",
+    "aws4": "^1.11.0",
+    "axios": "^0.21.4",
+    "dayjs": "^1.10.7",
+    "es6-promise": "^4.2.8",
+    "fast-xml-parser": "^3.21.1",
+    "he": "^1.2.0",
+    "isomorphic-fetch": "^3.0.0",
+    "jwk-to-pem": "^2.0.5",
+    "reflect-metadata": "^0.1.13",
+    "uuid": "^8.3.2",
+    "xml-js": "^1.6.11"
+  }
+}

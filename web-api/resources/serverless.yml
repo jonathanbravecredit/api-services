@@ -1,11 +1,6 @@
 # NOTE: update this with your service name
 service: web-api-resources
 
-plugins:
-  - serverless-bundle # Package our functions with Webpack
-  - serverless-offline
-  - serverless-dotenv-plugin # Load .env as environment variables
-
 custom:
   settings:
     IDENTITY_IDS:
@@ -54,3 +49,8 @@ resources:
       Value: !GetAtt ApiGatewayRestApi.RootResourceId
       Export:
         Name: !Sub '${self:service}-apigw-rootresource'
+    ApiGatewauAuthorizerId:
+      Description: 'Web App API authorizer id'
+      Value: !Ref ApiGatewayAuthorizer
+      Export:
+        Name: !Sub '${self:service}-apigw-authorizer'

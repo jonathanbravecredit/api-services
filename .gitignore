@@ -1,8 +1,16 @@
 # Dependency directories
-agency-services-transunion/node_modules
-credit-report-services/node_modules
-initiative-program-services/node_modules
+graphql-api/node_modules
+graphql-api/jspm_packages
 
-agency-services-transunion/.serverless
-credit-report-services/.serverless
-initiative-program-services/.serverless
+# Serverless
+graphql-api/.webpack
+graphql-api/.serverless
+
+
+# Dependency directories
+web-api/producers/node_modules
+web-api/producers/jspm_packages
+
+# Serverless
+web-api/producers/.webpack
+web-api/producers/.serverless
