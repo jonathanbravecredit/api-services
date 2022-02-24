@@ -1,10 +1,6 @@
 # NOTE: update this with your service name
 service: web-api-resources
 
-# Create an optimized package for our functions
-package:
-  individually: true
-
 plugins:
   - serverless-bundle # Package our functions with Webpack
   - serverless-offline
