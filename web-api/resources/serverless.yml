@@ -49,3 +49,8 @@ resources:
       Value: !GetAtt ApiGatewayRestApi.RootResourceId
       Export:
         Name: !Sub '${self:service}-apigw-rootresource'
+    ApiGatewauAuthorizerId:
+      Description: 'Web App API authorizer id'
+      Value: !Ref ApiGatewayAuthorizer
+      Export:
+        Name: !Sub '${self:service}-apigw-authorizer'
