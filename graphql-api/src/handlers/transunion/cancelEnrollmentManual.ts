@@ -1,8 +1,8 @@
 import 'reflect-metadata';
-import { AppSyncResolverEvent, AppSyncResolverHandler } from 'aws-lambda';
-import { SNS, DynamoDB } from 'aws-sdk';
-import ErrorLogger from 'lib/utils/db/logger/logger-errors';
+import { SNS } from 'aws-sdk';
+import { Handler } from 'aws-lambda';
 import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
+import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import { CANCEL_ENROLLMENTS } from 'lib/data/cancelEnrollments';
 // import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
 // import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
@@ -11,19 +11,7 @@ import { CANCEL_ENROLLMENTS } from 'lib/data/cancelEnrollments';
 const errorLogger = new ErrorLogger();
 const sns = new SNS({ region: 'us-east-2' });
 const pubsub = new PubSubUtil();
-const db = new DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: 'us-east-2' });
-const tableName = process.env.APPTABLE;
 
-interface IEnrollee {
-  id: string;
-  user: any;
-  agencies: {
-    transunion: {
-      enrollmentKey: string;
-      serviceBundleFulfillmentKey: string;
-    };
-  };
-}
 /**
  * Handler that processes single requests for Transunion services
  * @param service Service invoked via the SNS Proxy 'transunion'
@@ -31,14 +19,19 @@ interface IEnrollee {
  * @param message Object containing service specific package for processing
  * @returns Lambda proxy response
  */
-export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResolverEvent<any>): Promise<any> => {
+export const main: Handler = async (event: any): Promise<any> => {
   // can be kicked off through AppSync if needed
   // const scores = await DB.creditScoreTrackings.list();
   // create the payload with out the auth and agent
+  const { list } = event;
+  if (!list && !list.length) {
+    console.log('no list provided');
+  }
+
   try {
     let counter = 0;
     await Promise.all(
-      CANCEL_ENROLLMENTS.map(async (id) => {
+      list.map(async (id) => {
         const enrollee: { id: string } = { id };
         const payload = pubsub.createSNSPayload<{ id: string }>('cancelenrollment', enrollee, 'cancelenrollment');
         const res = await sns.publish(payload).promise();
