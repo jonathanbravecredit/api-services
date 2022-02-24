@@ -5,11 +5,6 @@ service: initiative-program-resources
 package:
   individually: true
 
-plugins:
-  - serverless-bundle # Package our functions with Webpack
-  - serverless-offline
-  - serverless-dotenv-plugin # Load .env as environment variables
-
 custom:
   settings:
     IDENTITY_IDS:
@@ -65,7 +60,7 @@ resources:
         ProviderARNs:
           - !Sub 'arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/${self:custom.settings.POOL_IDS.${opt:stage}}'
 
-    InitiativeProgamSNSTopic:
+    InitiativeProgramSNSTopic:
       Type: AWS::SNS::Topic
       Properties:
         TopicName: ${self:provider.stage}-initiative-program-topic
