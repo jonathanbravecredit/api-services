@@ -1,10 +1,6 @@
 # NOTE: update this with your service name
 service: initiative-program-resources
 
-# Create an optimized package for our functions
-package:
-  individually: true
-
 custom:
   settings:
     IDENTITY_IDS:
