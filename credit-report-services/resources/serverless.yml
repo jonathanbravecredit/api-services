@@ -1,15 +1,6 @@
 # NOTE: update this with your service name
 service: credit-report-service-resources
 
-# Create an optimized package for our functions
-package:
-  individually: true
-
-plugins:
-  - serverless-bundle # Package our functions with Webpack
-  - serverless-offline
-  - serverless-dotenv-plugin # Load .env as environment variables
-
 custom:
   settings:
     IDENTITY_IDS:
