@@ -1,0 +1,16 @@
+# Dependency directories
+graphql-api/node_modules
+graphql-api/jspm_packages
+
+# Serverless
+graphql-api/.webpack
+graphql-api/.serverless
+
+
+# Dependency directories
+web-api/producers/node_modules
+web-api/producers/jspm_packages
+
+# Serverless
+web-api/producers/.webpack
+web-api/producers/.serverless
