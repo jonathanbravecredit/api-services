@@ -18,6 +18,7 @@ provider:
   environment:
     OUR_ENV: ${self:provider.stage}
     INITIATIVE_TOPIC_ARN: !ImportValue initiative-program-resources-sns-arn
+    API_AUTHORIZER_ID: !ImportValue web-api-resources-apigw-authorizer
   iamRoleStatements:
     - Effect: 'Allow'
       Action: 'sns:Publish'
@@ -34,7 +35,7 @@ functions:
           cors: true
           authorizer:
             type: COGNITO_USER_POOLS
-            authorizerId: !ImportValue web-api-resources-apigw-authorizer
+            authorizerId: ${self:provider.environment.API_AUTHORIZER_ID}
   updateInitiative:
     handler: src/initiatives/put.main
     onError: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:lambdadeadletterqueue'
@@ -45,4 +46,4 @@ functions:
           cors: true
           authorizer:
             type: COGNITO_USER_POOLS
-            authorizerId: !ImportValue web-api-resources-apigw-authorizer
+            authorizerId: ${self:provider.environment.API_AUTHORIZER_ID}
