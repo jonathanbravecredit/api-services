@@ -34,20 +34,14 @@ functions:
     onError: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:lambdadeadletterqueue'
     events:
       - http:
-          path: initiatives
+          path: /initiatives
           method: post
           cors: true
-          authorizer:
-            type: COGNITO_USER_POOLS
-            authorizerId: fpf6li
   updateInitiative:
     handler: src/initiatives/put.main
     onError: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:lambdadeadletterqueue'
     events:
       - http:
-          path: initiatives
+          path: /initiatives
           method: put
           cors: true
-          authorizer:
-            type: COGNITO_USER_POOLS
-            authorizerId: fpf6li
