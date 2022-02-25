@@ -1,5 +1,8 @@
 import { APIGatewayProxyHandler, APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { IInitiativePutRequest } from 'libs/interfaces/initiatives/initiative-batch.interfaces';
+import {
+  IInitiativeProgramUpdatePayload,
+  IInitiativePutRequest,
+} from 'libs/interfaces/initiatives/initiative-batch.interfaces';
 import { PubSubUtil } from 'libs/utils/pubsub/pubsub';
 import { response } from 'libs/utils/response/response';
 
@@ -11,9 +14,9 @@ export const main: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent):
     return response(200, `no parentId: ${parentId}; or taskId:${taskId}; or taskStatus: ${taskStatus} provided`);
   if (!process.env.INITIATIVE_TOPIC_ARN)
     return response(200, `no topic available: ${process.env.INITIATIVE_TOPIC_ARN}`);
-  const payload = { parentId, taskId, taskStatus };
+  const payload = { userId, parentId, taskId, taskStatus };
   const pub = new PubSubUtil();
-  pub.createSNSPayload<IInitiativePutRequest>(
+  pub.createSNSPayload<IInitiativeProgramUpdatePayload>(
     'webAPI',
     'PUT',
     payload,

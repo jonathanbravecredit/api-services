@@ -11,8 +11,15 @@ export interface IInitiativePutRequest {
   taskStatus: InitiativeStatus;
 }
 
-export interface IInitiativeProgramPayload {
+export interface IInitiativeProgramCreatePayload {
   userId: string;
   reason: string;
   programId: string;
+}
+
+export interface IInitiativeProgramUpdatePayload {
+  userId: string;
+  parentId: string;
+  taskId: string;
+  taskStatus: InitiativeStatus;
 }
