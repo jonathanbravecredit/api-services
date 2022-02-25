@@ -23,6 +23,9 @@ provider:
     - Effect: 'Allow'
       Action: 'sns:Publish'
       Resource: '*'
+    - Effect: 'Allow'
+      Action:
+        - 'lambda:InvokeFunction'
 
 functions:
   createInitiative:
@@ -35,7 +38,7 @@ functions:
           cors: true
           authorizer:
             type: COGNITO_USER_POOLS
-            authorizerId: 'fpf6li'
+            authorizerId: fpf6li
   updateInitiative:
     handler: src/initiatives/put.main
     onError: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:lambdadeadletterqueue'
@@ -46,4 +49,4 @@ functions:
           cors: true
           authorizer:
             type: COGNITO_USER_POOLS
-            authorizerId: 'fpf6li'
+            authorizerId: fpf6li
