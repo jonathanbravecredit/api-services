@@ -18,6 +18,10 @@ provider:
   environment:
     OUR_ENV: ${self:provider.stage}
     INITIATIVE_TOPIC_ARN: !ImportValue initiative-program-resources-sns-arn
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action: 'sns:Publish'
+      Resource: '*'
 
 functions:
   createInitiative:
