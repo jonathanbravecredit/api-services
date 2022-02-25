@@ -35,7 +35,7 @@ functions:
           cors: true
           authorizer:
             type: COGNITO_USER_POOLS
-            authorizerId: ${self:provider.environment.API_AUTHORIZER_ID}
+            authorizerId: 'fpf6li'
   updateInitiative:
     handler: src/initiatives/put.main
     onError: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:lambdadeadletterqueue'
@@ -46,4 +46,4 @@ functions:
           cors: true
           authorizer:
             type: COGNITO_USER_POOLS
-            authorizerId: ${self:provider.environment.API_AUTHORIZER_ID}
+            authorizerId: 'fpf6li'
