@@ -5,7 +5,7 @@ export class PubSubUtil {
   payload: SNS.PublishInput | undefined;
 
   createSNSPayload<T>(subject: string, command: string, message: T, service: string, topic: string): SNS.PublishInput {
-    return {
+    this.payload = {
       Subject: subject,
       Message: JSON.stringify({
         service: service,
@@ -20,6 +20,7 @@ export class PubSubUtil {
       },
       TopicArn: topic || '',
     };
+    return this.payload;
   }
 
   async publishSNSPayload(): Promise<any> {
