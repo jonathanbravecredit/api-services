@@ -23,7 +23,7 @@ provider:
     restApiId: !ImportValue web-api-resources-apigw-id
     restApiRootResourceId: !ImportValue web-api-resources-apigw-rootresource
     restApiResources:
-      /initiatives: !ImportValue web-api-resources-apigw-initiativeresource
+      initiatives: !ImportValue web-api-resources-apigw-initiativeresource
   iamRoleStatements:
     - Effect: 'Allow'
       Action: 'sns:Publish'
