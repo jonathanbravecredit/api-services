@@ -19,6 +19,6 @@ export const main: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent):
     'initiativeprogram',
     process.env.INITIATIVE_TOPIC_ARN,
   );
-  pub.publishSNSPayload();
+  await pub.publishSNSPayload();
   return response(200, 'create initiative sent');
 };
