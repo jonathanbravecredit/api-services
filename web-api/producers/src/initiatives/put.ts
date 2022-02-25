@@ -7,6 +7,7 @@ import { PubSubUtil } from 'libs/utils/pubsub/pubsub';
 import { response } from 'libs/utils/response/response';
 
 export const main: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  console.log('event: ', JSON.stringify(event));
   const userId = event?.requestContext?.authorizer?.claims?.sub;
   if (!userId) return response(200, 'no id found');
   const { parentId, taskId, taskStatus } = JSON.parse(event.body) as IInitiativePutRequest;
