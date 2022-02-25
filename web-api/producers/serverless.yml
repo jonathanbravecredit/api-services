@@ -17,7 +17,28 @@ provider:
   region: ${opt:region, 'us-east-2'}
   environment:
     OUR_ENV: ${self:provider.stage}
+    INITIATIVE_TOPIC_ARN: !ImportValue initiative-program-resources-sns-arn
 
 functions:
-  hello:
-    handler: handler.hello
+  createInitiative:
+    handler: src/initiatives/post.main
+    onError: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:lambdadeadletterqueue'
+    events:
+      - http:
+          path: initiatives
+          method: post
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId: !ImportValue web-api-resources-apigw-authorizer
+  updateInitiative:
+    handler: src/initiatives/put.main
+    onError: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:lambdadeadletterqueue'
+    events:
+      - http:
+          path: initiatives
+          method: put
+          cors: true
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId: !ImportValue web-api-resources-apigw-authorizer
