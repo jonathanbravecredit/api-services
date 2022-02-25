@@ -21,7 +21,7 @@ provider:
     API_AUTHORIZER_ID: !ImportValue web-api-resources-apigw-authorizer
   apiGateway:
     restApiId: !ImportValue web-api-resources-apigw-id
-    restApiRootResourceId: !ImportValue web-api-resources-apigw-rootresource
+    restApiRootResourceId: !ImportValue web-api-resources-apigw-initiativeresource
   iamRoleStatements:
     - Effect: 'Allow'
       Action: 'sns:Publish'
