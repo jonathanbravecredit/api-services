@@ -26,6 +26,7 @@ provider:
     - Effect: 'Allow'
       Action:
         - 'lambda:InvokeFunction'
+      Resource: '*'
 
 functions:
   createInitiative:
