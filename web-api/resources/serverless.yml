@@ -58,7 +58,7 @@ resources:
         Name: !Sub '${self:service}-apigw-rootresource'
     ApiGatewayRestApiInitiativeResourceId:
       Description: 'Web App API root resource id'
-      Value: !GetAtt InitiativeResource.RootResourceId
+      Value: !Ref InitiativeResource
       Export:
         Name: !Sub '${self:service}-apigw-initiativeresource'
     ApiGatewauAuthorizerId:
