@@ -3,7 +3,6 @@ const sns = new SNS();
 
 export class PubSubUtil {
   payload: SNS.PublishInput | undefined;
-  constructor() {}
 
   createSNSPayload<T>(subject: string, command: string, message: T, service: string, topic: string): SNS.PublishInput {
     return {
