@@ -21,7 +21,7 @@ provider:
     API_AUTHORIZER_ID: !ImportValue web-api-resources-apigw-authorizer
   apiGateway:
     restApiId: !ImportValue web-api-resources-apigw-id
-    restApiRootResourceId: !ImportValue web-api-resources-apigw-initiativeresource
+    restApiRootResourceId: !ImportValue web-api-resources-apigw-rootresource
   iamRoleStatements:
     - Effect: 'Allow'
       Action: 'sns:Publish'
@@ -37,7 +37,7 @@ functions:
     onError: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:lambdadeadletterqueue'
     events:
       - http:
-          path: /initiatives
+          path: ''
           method: post
           cors: true
           authorizer:
@@ -48,7 +48,7 @@ functions:
     onError: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:lambdadeadletterqueue'
     events:
       - http:
-          path: /initiatives
+          path: ''
           method: put
           cors: true
           authorizer:
