@@ -188,9 +188,16 @@ functions:
     layers:
       - { Ref: TuCertsLambdaLayer }
 
-  # clean up re-enrollemtns fulfills
+  # clean up re-enrollments
   cleanUpReEnrollment:
     handler: src/handlers/transunion/cleanUpReEnrollment.main
+    timeout: 6
+    layers:
+      - { Ref: TuCertsLambdaLayer }
+
+  # clean up re-enrollments
+  cleanUpDisputeReEnrollment:
+    handler: src/handlers/transunion/cleanUpDisputeReEnrollment.main
     timeout: 6
     layers:
       - { Ref: TuCertsLambdaLayer }
