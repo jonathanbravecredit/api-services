@@ -188,6 +188,13 @@ functions:
     layers:
       - { Ref: TuCertsLambdaLayer }
 
+  # clean up re-enrollemtns fulfills
+  cleanUpReEnrollment:
+    handler: src/handlers/transunion/cleanUpReEnrollment.main
+    timeout: 6
+    layers:
+      - { Ref: TuCertsLambdaLayer }
+
   # generic batch updates worker
   batchUpdatesWorker:
     handler: src/handlers/transunion/batchUpdatesWorker.main
