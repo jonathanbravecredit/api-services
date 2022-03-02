@@ -9,8 +9,6 @@ import { DB } from 'lib/utils/db/db';
 import { Handler } from 'aws-lambda';
 import { GetDisputeStatusByID } from 'lib/proxy';
 import { GetInvestigationResults } from 'lib/proxy';
-import { TransunionUtil as tuUtil } from 'lib/utils/transunion/transunion';
-import { CreditScoreMaker } from 'lib/utils/db/credit-scores/model/credit-scores.model';
 import { FulfillV2 } from 'lib/transunion/fulfill/Fulfillv2';
 
 // request.debug = true; import * as request from 'request';
