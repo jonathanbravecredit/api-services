@@ -119,11 +119,11 @@ export class FulfillV2 extends LoggerTransactionals {
     await sync.getCleanData({ id });
     responder.xml = soap.response;
     responder.parseResponse(this.parserOptions);
-    responder.enrichData(sync.clean); // this will remove the reports because now saving in separate DB
+    responder.enrichData(sync.clean);
     this.setResponses(responder.response);
     this.setMergeReportItems(responder);
     if (this.responseType.toLowerCase() === 'success') {
-      const synched = await sync.syncData(responder.enriched); // this will go away with publishing to credit report system
+      const synched = await sync.syncData(responder.enriched);
       await this.publishReport(this.mergeReportSPO, id);
       this.setSuccessResults(synched);
     } else {

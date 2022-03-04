@@ -3,6 +3,7 @@ import { SNS } from 'aws-sdk';
 import { Handler } from 'aws-lambda';
 import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
+import { listDisputesById } from 'lib/utils/db/disputes/queries/disputes.queries';
 // import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
 // import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
 
@@ -25,12 +26,18 @@ export const main: Handler = async (event: any): Promise<any> => {
   const { list } = event;
   if (!list && !list.length) {
     console.log('no list provided');
+    return;
   }
 
   try {
     let counter = 0;
     await Promise.all(
       list.map(async (id) => {
+        const disputes = await listDisputesById(id);
+        if (disputes.length) {
+          console.log('manually review id for open dispute: ', id);
+          return;
+        }
         const enrollee: { id: string } = { id };
         const payload = pubsub.createSNSPayload<{ id: string }>('cancelenrollment', enrollee, 'cancelenrollment');
         const res = await sns.publish(payload).promise();

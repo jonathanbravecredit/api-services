@@ -17,7 +17,43 @@ provider:
   region: ${opt:region, 'us-east-2'}
   environment:
     OUR_ENV: ${self:provider.stage}
+    INITIATIVE_TOPIC_ARN: !ImportValue initiative-program-resources-sns-arn
+    API_AUTHORIZER_ID: !ImportValue web-api-resources-apigw-authorizer
+  apiGateway:
+    restApiId: !ImportValue web-api-resources-apigw-id
+    restApiRootResourceId: !ImportValue web-api-resources-apigw-rootresource
+    restApiResources:
+      initiatives: !ImportValue web-api-resources-apigw-initiativeresource
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action: 'sns:Publish'
+      Resource: '*'
+    - Effect: 'Allow'
+      Action:
+        - 'lambda:InvokeFunction'
+      Resource: '*'
 
 functions:
-  hello:
-    handler: handler.hello
+  # for future user
+  createInitiative:
+    handler: src/initiatives/post.main
+    onError: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:lambdadeadletterqueue'
+  #   events:
+  #     - http:
+  #         path: /initiatives
+  #         method: post
+  #         cors: true
+  #         authorizer:
+  #           type: COGNITO_USER_POOLS
+  #           authorizerId: !ImportValue web-api-resources-apigw-authorizer
+  updateInitiative:
+    handler: src/initiatives/put.main
+    onError: !Sub 'arn:aws:sns:${AWS::Region}:${AWS::AccountId}:lambdadeadletterqueue'
+  #   events:
+  #     - http:
+  #         path: /initiatives
+  #         method: put
+  #         cors: true
+  #         authorizer:
+  #           type: COGNITO_USER_POOLS
+  #           authorizerId: !ImportValue web-api-resources-apigw-authorizer

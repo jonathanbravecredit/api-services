@@ -38,6 +38,13 @@ resources:
         ProviderARNs:
           - !Sub 'arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/${self:custom.settings.POOL_IDS.${opt:stage}}'
 
+    InitiativeResource:
+      Type: AWS::ApiGateway::Resource
+      Properties:
+        RestApiId: !Ref ApiGatewayRestApi
+        ParentId: !GetAtt ApiGatewayRestApi.RootResourceId
+        PathPart: 'initiatives'
+
   Outputs:
     ApiGatewayRestApiId:
       Description: 'Web App API id'
@@ -49,6 +56,11 @@ resources:
       Value: !GetAtt ApiGatewayRestApi.RootResourceId
       Export:
         Name: !Sub '${self:service}-apigw-rootresource'
+    ApiGatewayRestApiInitiativeResourceId:
+      Description: 'Web App API root resource id'
+      Value: !Ref InitiativeResource
+      Export:
+        Name: !Sub '${self:service}-apigw-initiativeresource'
     ApiGatewauAuthorizerId:
       Description: 'Web App API authorizer id'
       Value: !Ref ApiGatewayAuthorizer

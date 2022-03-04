@@ -1,0 +1,5 @@
+{
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Credentials": "true",
+  "X-Amzn-Trace-Id": "Root=1-62196e42-0314a607a5808021905054dc;Sampled=0"
+}
