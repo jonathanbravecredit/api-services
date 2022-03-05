@@ -111,7 +111,7 @@ export class EnrollV2 extends LoggerTransactionals {
     await sync.getCleanData({ id });
     responder.xml = soap.response;
     responder.parseResponse(this.parserOptions);
-    responder.enrichData(sync.clean); // this will remove the reports because now saving in separate DB
+    responder.enrichData(sync.clean);
     this.setResponses(responder.response);
     this.setMergeReportItems(responder);
     if (this.responseType.toLowerCase() === 'success') {
