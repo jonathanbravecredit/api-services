@@ -9,10 +9,10 @@ export class AcknowledgeDisputeTerms extends LoggerTransactionals {
     super('AcknowledgeDisputeTerms');
   }
 
-  async ackTerms(): Promise<IProxyHandlerResponse<null>> {
+  async ackTerms(): Promise<IProxyHandlerResponse<any>> {
     try {
-      await updateDisputeAcknowledgements(this.payload.identityId);
-      this.results = { success: true, error: null, data: null };
+      const res = await updateDisputeAcknowledgements(this.payload.identityId);
+      this.results = { success: true, error: null, data: res };
       await this.log(this.payload.identityId, this.results, 'GENERIC');
       return this.results;
     } catch (err) {

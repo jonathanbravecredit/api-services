@@ -115,7 +115,7 @@ export const updateDisputeAcknowledgements = (id: string) => {
       id: id,
     },
     // ConditionExpression: 'attribute_exists(queryParam.tableId)',
-    UpdateExpression: 'SET #a.#t.#at = :at, #a.#t.#ao = :ao updatedAt = :m',
+    UpdateExpression: 'SET #a.#t.#at = :at, #a.#t.#ao = :ao, updatedAt = :m',
     ExpressionAttributeNames: {
       '#a': 'agencies',
       '#t': 'transunion',
