@@ -107,6 +107,36 @@ export const updateFulfillReport = (
     .catch((err) => err);
 };
 
+export const updateDisputeAcknowledgements = (id: string) => {
+  let timeStamp = new Date().toISOString(); //always have last updated date
+  const params = {
+    TableName: tableName,
+    Key: {
+      id: id,
+    },
+    // ConditionExpression: 'attribute_exists(queryParam.tableId)',
+    UpdateExpression: 'SET #a.#t.#at = :at, #a.#t.#ao = :ao updatedAt = :m',
+    ExpressionAttributeNames: {
+      '#a': 'agencies',
+      '#t': 'transunion',
+      '#at': 'acknowledgedDisputeTerms',
+      '#ao': 'acknowledgedDisputeTermsOn',
+    },
+    ExpressionAttributeValues: {
+      ':at': true,
+      ':ao': timeStamp,
+      ':m': timeStamp,
+    },
+    ReturnValues: 'UPDATED_NEW',
+  };
+
+  return db
+    .update(params)
+    .promise()
+    .then((res) => res)
+    .catch((err) => err);
+};
+
 export const updateDynamoDB = (params: DynamoDB.DocumentClient.UpdateItemInput) => {
   console.log('params: ==> ', params);
   return db

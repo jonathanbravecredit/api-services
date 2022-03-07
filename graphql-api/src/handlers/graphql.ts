@@ -10,6 +10,7 @@ import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
 import { EnrollV2 } from 'lib/transunion/enroll/Enrollv2';
 import { FulfillV2 } from 'lib/transunion/fulfill/Fulfillv2';
 import { FulfillDisputesV2 } from 'lib/transunion/fulfill-disputes/FulfillDisputesV2';
+import { AcknowledgeDisputeTerms } from 'lib/transunion/acknowledgements/AcknowledgeDispute';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -123,6 +124,10 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         return JSON.stringify(results);
       case 'EnrollDisputes':
         results = await queries.EnrollDisputes(payload);
+        return JSON.stringify(results);
+      case 'AcknowledgeDisputeTerms':
+        const ackTerms = new AcknowledgeDisputeTerms(payload);
+        results = await ackTerms.ackTerms();
         return JSON.stringify(results);
       case 'Fulfill':
         const fulfill = new FulfillV2(payload);
