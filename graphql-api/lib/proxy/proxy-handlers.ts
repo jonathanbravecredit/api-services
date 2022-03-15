@@ -199,12 +199,6 @@ export const IndicativeEnrichment = async ({
     );
     await transactionLogger.logger.create(l4);
 
-    // log error response if any
-    if (!response.success) {
-      const error = errorLogger.createError(identityId, 'IndicativeEnrichment', JSON.stringify(response));
-      await errorLogger.logger.create(error);
-    }
-
     return response;
   } catch (err) {
     const error = errorLogger.createError(identityId, 'IndicativeEnrichment', JSON.stringify(err));
@@ -293,12 +287,6 @@ export const GetAuthenticationQuestions = async ({
       JSON.stringify(response),
     );
     await transactionLogger.logger.create(l4);
-
-    // log error response if any
-    if (!response.success) {
-      const error = errorLogger.createError(identityId, 'IndicativeEnrichment', JSON.stringify(response));
-      await errorLogger.logger.create(error);
-    }
 
     return response;
   } catch (err) {
@@ -399,12 +387,6 @@ export const VerifyAuthenticationQuestions = async ({
     );
     await transactionLogger.logger.create(l4);
 
-    // log error response if any
-    if (!response.success) {
-      const error = errorLogger.createError(identityId, 'IndicativeEnrichment', JSON.stringify(response));
-      await errorLogger.logger.create(error);
-    }
-
     return response;
   } catch (err) {
     // log error response
@@ -498,12 +480,6 @@ export const Enroll = async (
     // log success response
     const l4 = transactionLogger.createTransaction(identityId, 'Enroll:response', JSON.stringify(response));
     await transactionLogger.logger.create(l4);
-
-    // log error response if any
-    if (!response.success) {
-      const error = errorLogger.createError(identityId, 'IndicativeEnrichment', JSON.stringify(response));
-      await errorLogger.logger.create(error);
-    }
 
     return response;
   } catch (err) {
@@ -1511,7 +1487,7 @@ export const DisputePreflightCheck = async ({
   agent: https.Agent;
   auth: string;
   identityId: string;
-}): Promise<{ success: boolean; error?: any; data: { report: MergeReport | null } }> => {
+}): Promise<{ success: boolean; error?: any, data: { report: MergeReport | null} }> => {
   const payload: interfaces.IGenericRequest = { id: identityId };
   const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed message=${payload}`;
@@ -1546,7 +1522,7 @@ export const DisputePreflightCheck = async ({
     } catch (err) {
       const error = errorLogger.createError(identityId, 'DisputePreflightCheck:EnrollDisputes', JSON.stringify(err));
       await errorLogger.logger.create(error);
-      return { success: false, error: err, data: { report: null } };
+      return { success: false, error: err, data: { report: null }};
     }
   }
 
@@ -1561,7 +1537,7 @@ export const DisputePreflightCheck = async ({
     } else {
       const now = dayjs(new Date());
       const last = dayjs(fulfilledOn);
-      refresh = now.diff(last, 'hour') >= 24 ? true : false;
+      refresh = now.diff(last, 'hour') >= 24 ? true : false
     }
     console.log('DisputePreflightCheck:refresh ===> ', refresh);
   } catch (err) {
@@ -1606,9 +1582,7 @@ export const DisputePreflightCheck = async ({
       identityId,
     };
     const { success, error } = await GetDisputeStatus(payload);
-    const response = success
-      ? { success: true, error: null, data: report }
-      : { success: false, error: error, data: { report: null } };
+    const response = success ? { success: true, error: null, data: report } : { success: false, error: error, data: { report: null } };
     console.log('response ===> ', response);
     return response;
   } catch (err) {
