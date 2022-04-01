@@ -1184,6 +1184,7 @@ export const StartDispute = async ({
     if (responseType.toLowerCase() === 'success') {
       // need to add to the app database, and to the disputes database
       let status = data?.DisputeStatus?.DisputeStatusDetail?.Status;
+      let disputeId = data?.DisputeStatus?.DisputeStatusDetail?.DisputeId;
       let openedOn = new Date().toISOString();
       let closedOn =
         status.toLowerCase() === 'cancelleddispute' || status.toLowerCase() === 'completedispute' ? openedOn : null;
@@ -1201,11 +1202,14 @@ export const StartDispute = async ({
         const payload = {
           accountCode,
           username,
-          message: JSON.stringify({ disputeId: dbDispute.disputeId }),
+          message: JSON.stringify({ disputeId: disputeId }),
           agent,
           auth,
           identityId,
         };
+        console.log('CALLING FULFILL');
+        const fulfilled = await new FulfillV2(payload).run();
+        if (!fulfilled.success) throw `fulfilled failed; error: ${fulfilled.error}; data: ${fulfilled.data}`;
         await GetInvestigationResults(payload);
       }
       response = { success: true, error: null, data: newDispute };
@@ -1487,7 +1491,7 @@ export const DisputePreflightCheck = async ({
   agent: https.Agent;
   auth: string;
   identityId: string;
-}): Promise<{ success: boolean; error?: any, data: { report: MergeReport | null} }> => {
+}): Promise<{ success: boolean; error?: any; data: { report: MergeReport | null } }> => {
   const payload: interfaces.IGenericRequest = { id: identityId };
   const validate = ajv.getSchema<interfaces.IGenericRequest>('getRequest');
   if (!validate(payload)) throw `Malformed message=${payload}`;
@@ -1522,7 +1526,7 @@ export const DisputePreflightCheck = async ({
     } catch (err) {
       const error = errorLogger.createError(identityId, 'DisputePreflightCheck:EnrollDisputes', JSON.stringify(err));
       await errorLogger.logger.create(error);
-      return { success: false, error: err, data: { report: null }};
+      return { success: false, error: err, data: { report: null } };
     }
   }
 
@@ -1537,7 +1541,7 @@ export const DisputePreflightCheck = async ({
     } else {
       const now = dayjs(new Date());
       const last = dayjs(fulfilledOn);
-      refresh = now.diff(last, 'hour') >= 24 ? true : false
+      refresh = now.diff(last, 'hour') >= 24 ? true : false;
     }
     console.log('DisputePreflightCheck:refresh ===> ', refresh);
   } catch (err) {
@@ -1582,7 +1586,9 @@ export const DisputePreflightCheck = async ({
       identityId,
     };
     const { success, error } = await GetDisputeStatus(payload);
-    const response = success ? { success: true, error: null, data: report } : { success: false, error: error, data: { report: null } };
+    const response = success
+      ? { success: true, error: null, data: report }
+      : { success: false, error: error, data: { report: null } };
     console.log('response ===> ', response);
     return response;
   } catch (err) {
@@ -1836,6 +1842,13 @@ export const DisputeInflightCheck = async ({
               auth,
               identityId: id,
             };
+            //need to check if IR exists for this dispute
+            console.log('CHECKING FOR EXISTING RESULTS');
+            const dispute = await DB.disputes.get(id, disputeId);
+            if (dispute.disputeInvestigationResults) {
+              return { success: true, error: null, data: 'IR already received' };
+            }
+
             console.log('CALLING FULFILL');
             const fulfilled = await new FulfillV2(payload).run();
             if (!fulfilled.success) throw `fulfilled failed; error: ${fulfilled.error}; data: ${fulfilled.data}`;
