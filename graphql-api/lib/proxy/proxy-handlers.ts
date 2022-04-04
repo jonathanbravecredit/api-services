@@ -1118,7 +1118,7 @@ export const StartDispute = async ({
   const publicitem = ajv.getSchema<interfaces.IProcessDisputePublicResult>('disputePublicitem');
   const personalitem = ajv.getSchema<interfaces.IProcessDisputePersonalResult>('disputePersonalitem');
 
-  if (!validate(payload)) throw `Malformed message=${message}`;
+  if (!validate(payload)) throw `Malformed message=${JSON.stringify(payload)}`;
   let payloadMethod: (data: any, params?: any) => any;
   let startDisputeMethod: (msg: interfaces.IStartDispute) => string;
   if (tradeline(payload.disputes[0])) {
