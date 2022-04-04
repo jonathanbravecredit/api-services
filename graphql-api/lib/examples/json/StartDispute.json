@@ -1,0 +1,1124 @@
+{
+  "disputes": [
+    {
+      "result": {
+        "isFinished": true,
+        "data": {
+          "hasCustomInput": false,
+          "customInput": "",
+          "reasonsId": [
+            "pi-0"
+          ],
+          "reasons": [
+            {
+              "id": "pi-0",
+              "claimCode": "delete",
+              "text": "To be removed"
+            }
+          ]
+        }
+      },
+      "personalItem": {
+        "key": "prevaddress",
+        "value": {
+          "CreditAddress": {
+            "streetName": "OAKLAND",
+            "streetType": "RD",
+            "unit": 202,
+            "city": "CEDAR RAPIDS",
+            "postalCode": 52402,
+            "houseNumber": 1500,
+            "stateCode": "IA",
+            "direction": "NE",
+            "country": null,
+            "county": null,
+            "postDirection": null,
+            "unparsedStreet": null
+          },
+          "Origin": {
+            "description": "",
+            "symbol": "",
+            "rank": 100000,
+            "abbreviation": ""
+          },
+          "Ownership": {
+            "description": "",
+            "symbol": "",
+            "rank": 100000,
+            "abbreviation": ""
+          },
+          "Dwelling": {
+            "description": "",
+            "symbol": "",
+            "rank": 100000,
+            "abbreviation": ""
+          },
+          "addressOrder": 1,
+          "partitionSet": 1,
+          "Source": {
+            "InquiryDate": "2021-07-08",
+            "BorrowerKey": "",
+            "Reference": "2a934560-c396-4adf-b5a",
+            "Bureau": {
+              "description": "TransUnion",
+              "symbol": "TUC",
+              "rank": 1,
+              "abbreviation": "TransUnion"
+            }
+          },
+          "dateReported": null
+        },
+        "parsedValue": "1500 OAKLAND RD NE 202 \\nCEDAR RAPIDS, IA, 52402",
+        "dateUpdated": "",
+        "borrower": {
+          "BorrowerAddress": [
+            {
+              "CreditAddress": {
+                "postDirection": "",
+                "streetName": "2ND",
+                "streetType": "AV",
+                "unit": "3H",
+                "city": "NEWTON",
+                "postalCode": 50208,
+                "houseNumber": 105,
+                "stateCode": "IA",
+                "direction": "N",
+                "country": null,
+                "county": null,
+                "unparsedStreet": null
+              },
+              "Origin": {
+                "description": "",
+                "symbol": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "Ownership": {
+                "description": "",
+                "symbol": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "Dwelling": {
+                "description": "",
+                "symbol": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "addressOrder": 0,
+              "dateReported": "2019-09-30",
+              "partitionSet": 0,
+              "Source": {
+                "InquiryDate": "2021-07-08",
+                "BorrowerKey": "",
+                "Reference": "2a934560-c396-4adf-b5a",
+                "Bureau": {
+                  "description": "TransUnion",
+                  "symbol": "TUC",
+                  "rank": 1,
+                  "abbreviation": "TransUnion"
+                }
+              }
+            }
+          ],
+          "PreviousAddress": [
+            {
+              "CreditAddress": {
+                "streetName": "6TH",
+                "streetType": "ST",
+                "unit": 3,
+                "city": "CEDAR RAPIDS",
+                "postalCode": 52404,
+                "houseNumber": 3111,
+                "stateCode": "IA",
+                "direction": "SW",
+                "country": null,
+                "county": null,
+                "postDirection": null,
+                "unparsedStreet": null
+              },
+              "Origin": {
+                "description": "",
+                "symbol": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "Ownership": {
+                "description": "",
+                "symbol": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "Dwelling": {
+                "description": "",
+                "symbol": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "addressOrder": 0,
+              "dateReported": "2018-11-21",
+              "partitionSet": 0,
+              "Source": {
+                "InquiryDate": "2021-07-08",
+                "BorrowerKey": "",
+                "Reference": "2a934560-c396-4adf-b5a",
+                "Bureau": {
+                  "description": "TransUnion",
+                  "symbol": "TUC",
+                  "rank": 1,
+                  "abbreviation": "TransUnion"
+                }
+              }
+            },
+            {
+              "CreditAddress": {
+                "streetName": "OAKLAND",
+                "streetType": "RD",
+                "unit": 202,
+                "city": "CEDAR RAPIDS",
+                "postalCode": 52402,
+                "houseNumber": 1500,
+                "stateCode": "IA",
+                "direction": "NE",
+                "country": null,
+                "county": null,
+                "postDirection": null,
+                "unparsedStreet": null
+              },
+              "Origin": {
+                "description": "",
+                "symbol": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "Ownership": {
+                "description": "",
+                "symbol": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "Dwelling": {
+                "description": "",
+                "symbol": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "addressOrder": 1,
+              "partitionSet": 1,
+              "Source": {
+                "InquiryDate": "2021-07-08",
+                "BorrowerKey": "",
+                "Reference": "2a934560-c396-4adf-b5a",
+                "Bureau": {
+                  "description": "TransUnion",
+                  "symbol": "TUC",
+                  "rank": 1,
+                  "abbreviation": "TransUnion"
+                }
+              },
+              "dateReported": null
+            }
+          ],
+          "CreditStatement": [],
+          "SocialSecurityNumber": 666130041,
+          "BorrowerTelephone": [],
+          "Employer": [
+            {
+              "name": "EMPLOYER X",
+              "CreditAddress": {
+                "unparsedStreet": "",
+                "stateCode": "",
+                "city": "",
+                "postalCode": ""
+              },
+              "partitionSet": 0,
+              "Source": {
+                "InquiryDate": "2021-07-08",
+                "BorrowerKey": "",
+                "Reference": "2a934560-c396-4adf-b5a",
+                "Bureau": {
+                  "description": "TransUnion",
+                  "symbol": "TUC",
+                  "rank": 1,
+                  "abbreviation": "TransUnion"
+                }
+              },
+              "dateUpdated": "2018-10-26",
+              "dateReported": null
+            }
+          ],
+          "BorrowerBureauIdentifier": [],
+          "SocialPartition": [
+            {
+              "Social": [
+                {
+                  "Source": {
+                    "InquiryDate": "2021-07-08",
+                    "BorrowerKey": "",
+                    "Reference": "2a934560-c396-4adf-b5a",
+                    "Bureau": {
+                      "description": "TransUnion",
+                      "symbol": "TUC",
+                      "rank": 1,
+                      "abbreviation": "TransUnion"
+                    }
+                  },
+                  "SocialSecurityNumber": 666130041
+                }
+              ]
+            }
+          ],
+          "Birth": [
+            {
+              "date": "1971-02-01",
+              "partitionSet": 0,
+              "age": 0,
+              "Source": {
+                "InquiryDate": "2021-07-08",
+                "BorrowerKey": "",
+                "Reference": "2a934560-c396-4adf-b5a",
+                "Bureau": {
+                  "description": "TransUnion",
+                  "symbol": "TUC",
+                  "rank": 1,
+                  "abbreviation": "TransUnion"
+                }
+              },
+              "BirthDate": {
+                "month": 2,
+                "year": 1971,
+                "day": 1
+              }
+            }
+          ],
+          "CreditScore": [
+            {
+              "CreditScoreMode": {
+                "abbreviation": null,
+                "description": null,
+                "symbol": null,
+                "rank": null
+              },
+              "NoScoreReason": {
+                "description": "",
+                "symbol": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "inquiriesAffectedScore": true,
+              "CreditScoreModel": {
+                "description": "VantageScore 3.0 with Positive Score Factors",
+                "symbol": "00W40",
+                "rank": 10000,
+                "abbreviation": "VantageScore 3.0 with Positive Score Factors"
+              },
+              "riskScore": 502,
+              "populationRank": 6,
+              "Source": {
+                "InquiryDate": "2021-07-08",
+                "BorrowerKey": "",
+                "Reference": "2a934560-c396-4adf-b5a",
+                "Bureau": {
+                  "description": "TransUnion",
+                  "symbol": "TUC",
+                  "rank": 1,
+                  "abbreviation": "TransUnion"
+                }
+              },
+              "scoreName": "VantageScore3",
+              "CreditScoreFactor": [
+                {
+                  "bureauCode": 98,
+                  "FactorType": "Negative",
+                  "FactorText": [
+                    "explain: Bankruptcy is a proven indicator of risk with future payments and causes a significant drop to your credit score over an extended period of time.",
+                    "factor: There is a bankruptcy on your credit report",
+                    "cando: Make all future payments on time. The impact on your credit score from the bankruptcy will diminish over time."
+                  ],
+                  "Factor": {
+                    "description": "",
+                    "symbol": 98,
+                    "rank": 100000,
+                    "abbreviation": ""
+                  }
+                },
+                {
+                  "bureauCode": 15,
+                  "FactorType": "Negative",
+                  "FactorText": [
+                    "explain: You have an account that had a late payment or on which a lender has reported a derogatory status. Your credit file shows that this event occurred too recently. Late payments are a proven indicator of increased risk. People with late payments are at risk of being overextended, putting existing credit with lenders at risk.",
+                    "factor: Newest delinquent or derogatory payment status on your accounts is too recent",
+                    "cando: Paying bills on time every month is important to maintaining a good credit score. If you remain behind with any payments, bring them current as soon as possible, and then make future payments on time."
+                  ],
+                  "Factor": {
+                    "description": "",
+                    "symbol": 15,
+                    "rank": 100000,
+                    "abbreviation": ""
+                  }
+                },
+                {
+                  "bureauCode": 21,
+                  "FactorType": "Negative",
+                  "FactorText": [
+                    "explain: The VantageScore credit score model relies on information in your credit files at the three national credit reporting companies (Equifax, Experian and TransUnion) to generate your score. Because you have no open accounts, your credit file does not contain enough information about your use of credit. A mix of different types of open and active credit accounts can have a positive impact on your credit score.",
+                    "factor: No open accounts in your credit file",
+                    "cando: Maintaining open and active credit accounts in good standing can help improve your credit score."
+                  ],
+                  "Factor": {
+                    "description": "",
+                    "symbol": 21,
+                    "rank": 100000,
+                    "abbreviation": ""
+                  }
+                },
+                {
+                  "bureauCode": 95,
+                  "FactorType": "Negative",
+                  "FactorText": [
+                    "explain: Some collection agencies report account information to credit bureaus just like lenders do. Your credit file has too many accounts that have been sent to a collection agency and remain unpaid. Unpaid collection accounts in your file can have a significant negative impact on your credit score.",
+                    "factor: You have too many collection agency accounts that are unpaid",
+                    "cando: Satisfy all collection accounts and pay all other accounts on time each month. The impact that negative items such as collections accounts have on your credit score will diminish over time."
+                  ],
+                  "Factor": {
+                    "description": "",
+                    "symbol": 95,
+                    "rank": 100000,
+                    "abbreviation": ""
+                  }
+                },
+                {
+                  "bureauCode": "P47",
+                  "FactorType": "Positive",
+                  "FactorText": [
+                    "explain: Bankcard accounts include credit cards and charge cards from a bank and are frequently revolving accounts. Revolving accounts allow you to carry a balance and your monthly payment will vary, based on the amount of your balance. The VantageScore credit score model relies on information in your credit files at the three national credit reporting companies (Equifax, Experian and TransUnion) to generate your score. Because you have no open bankcard or revolving accounts, your credit file does not contain enough information about your use of credit. A mix of different types of open and active credit accounts can have a positive impact on your score.",
+                    "factor: No open bankcard or revolving accounts in your credit file",
+                    "cando: Maintaining open and active credit accounts in good standing can help improve your credit score."
+                  ],
+                  "Factor": {
+                    "description": "",
+                    "symbol": "P47",
+                    "rank": 100000,
+                    "abbreviation": ""
+                  }
+                },
+                {
+                  "bureauCode": "P14",
+                  "FactorType": "Positive",
+                  "FactorText": [
+                    "explain: A credit file with sufficient accounts and credit history reflects more experience in handling credit. More experience can have a positive impact on your score.",
+                    "factor: Your credit file contains enough information about your use of credit",
+                    "cando: Maintaining open and active credit accounts in good standing can help improve your credit score."
+                  ],
+                  "Factor": {
+                    "description": "",
+                    "symbol": "P14",
+                    "rank": 100000,
+                    "abbreviation": ""
+                  }
+                },
+                {
+                  "bureauCode": "P07",
+                  "FactorType": "Positive",
+                  "FactorText": [
+                    "explain: Paying your bills on time improves your score. You have paid all or nearly all of your bills on time.",
+                    "factor: You have either no or few delinquent or derogatory accounts",
+                    "cando: Keep paying bills on time every month since it is important to maintaining a good credit score. If you remain behind with any payments, bring them current as soon as possible, and then make future payments on time."
+                  ],
+                  "Factor": {
+                    "description": "",
+                    "symbol": "P07",
+                    "rank": 100000,
+                    "abbreviation": ""
+                  }
+                },
+                {
+                  "bureauCode": "P08",
+                  "FactorType": "Positive",
+                  "FactorText": [
+                    "explain: Paying your bills on time improves your score. Recently at least one of your accounts was paid on time.",
+                    "factor: One or more of your accounts were paid on time in recent months",
+                    "cando: Keep paying bills on time every month since it is important to maintaining a good credit score. If you remain behind with any payments, bring them current as soon as possible, and then make future payments on time."
+                  ],
+                  "Factor": {
+                    "description": "",
+                    "symbol": "P08",
+                    "rank": 100000,
+                    "abbreviation": ""
+                  }
+                }
+              ],
+              "qualitativeRank": null,
+              "new": null
+            }
+          ],
+          "BorrowerName": [
+            {
+              "partitionSet": 0,
+              "NameType": {
+                "description": "Primary",
+                "symbol": 1,
+                "rank": 199,
+                "abbreviation": "Primary"
+              },
+              "Source": {
+                "InquiryDate": "2021-07-08",
+                "BorrowerKey": "",
+                "Reference": "2a934560-c396-4adf-b5a",
+                "Bureau": {
+                  "description": "TransUnion",
+                  "symbol": "TUC",
+                  "rank": 1,
+                  "abbreviation": "TransUnion"
+                }
+              },
+              "Name": {
+                "last": "ILES",
+                "first": "DANIEL",
+                "middle": "J",
+                "prefix": null,
+                "suffix": null
+              },
+              "dateReported": null,
+              "dateUpdated": null
+            }
+          ],
+          "borrowerKey": null
+        },
+        "transformed": {
+          "personalItem": {
+            "BorrowerAddress": [
+              {
+                "CreditAddress": {
+                  "postDirection": "",
+                  "streetName": "2ND",
+                  "streetType": "AV",
+                  "unit": "3H",
+                  "city": "NEWTON",
+                  "postalCode": 50208,
+                  "houseNumber": 105,
+                  "stateCode": "IA",
+                  "direction": "N",
+                  "country": null,
+                  "county": null,
+                  "unparsedStreet": null
+                },
+                "Origin": {
+                  "description": "",
+                  "symbol": "",
+                  "rank": 100000,
+                  "abbreviation": ""
+                },
+                "Ownership": {
+                  "description": "",
+                  "symbol": "",
+                  "rank": 100000,
+                  "abbreviation": ""
+                },
+                "Dwelling": {
+                  "description": "",
+                  "symbol": "",
+                  "rank": 100000,
+                  "abbreviation": ""
+                },
+                "addressOrder": 0,
+                "dateReported": "2019-09-30",
+                "partitionSet": 0,
+                "Source": {
+                  "InquiryDate": "2021-07-08",
+                  "BorrowerKey": "",
+                  "Reference": "2a934560-c396-4adf-b5a",
+                  "Bureau": {
+                    "description": "TransUnion",
+                    "symbol": "TUC",
+                    "rank": 1,
+                    "abbreviation": "TransUnion"
+                  }
+                }
+              }
+            ],
+            "PreviousAddress": [
+              {
+                "CreditAddress": {
+                  "streetName": "6TH",
+                  "streetType": "ST",
+                  "unit": 3,
+                  "city": "CEDAR RAPIDS",
+                  "postalCode": 52404,
+                  "houseNumber": 3111,
+                  "stateCode": "IA",
+                  "direction": "SW",
+                  "country": null,
+                  "county": null,
+                  "postDirection": null,
+                  "unparsedStreet": null
+                },
+                "Origin": {
+                  "description": "",
+                  "symbol": "",
+                  "rank": 100000,
+                  "abbreviation": ""
+                },
+                "Ownership": {
+                  "description": "",
+                  "symbol": "",
+                  "rank": 100000,
+                  "abbreviation": ""
+                },
+                "Dwelling": {
+                  "description": "",
+                  "symbol": "",
+                  "rank": 100000,
+                  "abbreviation": ""
+                },
+                "addressOrder": 0,
+                "dateReported": "2018-11-21",
+                "partitionSet": 0,
+                "Source": {
+                  "InquiryDate": "2021-07-08",
+                  "BorrowerKey": "",
+                  "Reference": "2a934560-c396-4adf-b5a",
+                  "Bureau": {
+                    "description": "TransUnion",
+                    "symbol": "TUC",
+                    "rank": 1,
+                    "abbreviation": "TransUnion"
+                  }
+                }
+              },
+              {
+                "CreditAddress": {
+                  "streetName": "OAKLAND",
+                  "streetType": "RD",
+                  "unit": 202,
+                  "city": "CEDAR RAPIDS",
+                  "postalCode": 52402,
+                  "houseNumber": 1500,
+                  "stateCode": "IA",
+                  "direction": "NE",
+                  "country": null,
+                  "county": null,
+                  "postDirection": null,
+                  "unparsedStreet": null
+                },
+                "Origin": {
+                  "description": "",
+                  "symbol": "",
+                  "rank": 100000,
+                  "abbreviation": ""
+                },
+                "Ownership": {
+                  "description": "",
+                  "symbol": "",
+                  "rank": 100000,
+                  "abbreviation": ""
+                },
+                "Dwelling": {
+                  "description": "",
+                  "symbol": "",
+                  "rank": 100000,
+                  "abbreviation": ""
+                },
+                "addressOrder": 1,
+                "partitionSet": 1,
+                "Source": {
+                  "InquiryDate": "2021-07-08",
+                  "BorrowerKey": "",
+                  "Reference": "2a934560-c396-4adf-b5a",
+                  "Bureau": {
+                    "description": "TransUnion",
+                    "symbol": "TUC",
+                    "rank": 1,
+                    "abbreviation": "TransUnion"
+                  }
+                },
+                "dateReported": null
+              }
+            ],
+            "CreditStatement": [],
+            "SocialSecurityNumber": 666130041,
+            "BorrowerTelephone": [],
+            "Employer": [
+              {
+                "name": "EMPLOYER X",
+                "CreditAddress": {
+                  "unparsedStreet": "",
+                  "stateCode": "",
+                  "city": "",
+                  "postalCode": ""
+                },
+                "partitionSet": 0,
+                "Source": {
+                  "InquiryDate": "2021-07-08",
+                  "BorrowerKey": "",
+                  "Reference": "2a934560-c396-4adf-b5a",
+                  "Bureau": {
+                    "description": "TransUnion",
+                    "symbol": "TUC",
+                    "rank": 1,
+                    "abbreviation": "TransUnion"
+                  }
+                },
+                "dateUpdated": "2018-10-26",
+                "dateReported": null
+              }
+            ],
+            "BorrowerBureauIdentifier": [],
+            "SocialPartition": [
+              {
+                "Social": [
+                  {
+                    "Source": {
+                      "InquiryDate": "2021-07-08",
+                      "BorrowerKey": "",
+                      "Reference": "2a934560-c396-4adf-b5a",
+                      "Bureau": {
+                        "description": "TransUnion",
+                        "symbol": "TUC",
+                        "rank": 1,
+                        "abbreviation": "TransUnion"
+                      }
+                    },
+                    "SocialSecurityNumber": 666130041
+                  }
+                ]
+              }
+            ],
+            "Birth": [
+              {
+                "date": "1971-02-01",
+                "partitionSet": 0,
+                "age": 0,
+                "Source": {
+                  "InquiryDate": "2021-07-08",
+                  "BorrowerKey": "",
+                  "Reference": "2a934560-c396-4adf-b5a",
+                  "Bureau": {
+                    "description": "TransUnion",
+                    "symbol": "TUC",
+                    "rank": 1,
+                    "abbreviation": "TransUnion"
+                  }
+                },
+                "BirthDate": {
+                  "month": 2,
+                  "year": 1971,
+                  "day": 1
+                }
+              }
+            ],
+            "CreditScore": [
+              {
+                "CreditScoreMode": {
+                  "abbreviation": null,
+                  "description": null,
+                  "symbol": null,
+                  "rank": null
+                },
+                "NoScoreReason": {
+                  "description": "",
+                  "symbol": "",
+                  "rank": 100000,
+                  "abbreviation": ""
+                },
+                "inquiriesAffectedScore": true,
+                "CreditScoreModel": {
+                  "description": "VantageScore 3.0 with Positive Score Factors",
+                  "symbol": "00W40",
+                  "rank": 10000,
+                  "abbreviation": "VantageScore 3.0 with Positive Score Factors"
+                },
+                "riskScore": 502,
+                "populationRank": 6,
+                "Source": {
+                  "InquiryDate": "2021-07-08",
+                  "BorrowerKey": "",
+                  "Reference": "2a934560-c396-4adf-b5a",
+                  "Bureau": {
+                    "description": "TransUnion",
+                    "symbol": "TUC",
+                    "rank": 1,
+                    "abbreviation": "TransUnion"
+                  }
+                },
+                "scoreName": "VantageScore3",
+                "CreditScoreFactor": [
+                  {
+                    "bureauCode": 98,
+                    "FactorType": "Negative",
+                    "FactorText": [
+                      "explain: Bankruptcy is a proven indicator of risk with future payments and causes a significant drop to your credit score over an extended period of time.",
+                      "factor: There is a bankruptcy on your credit report",
+                      "cando: Make all future payments on time. The impact on your credit score from the bankruptcy will diminish over time."
+                    ],
+                    "Factor": {
+                      "description": "",
+                      "symbol": 98,
+                      "rank": 100000,
+                      "abbreviation": ""
+                    }
+                  },
+                  {
+                    "bureauCode": 15,
+                    "FactorType": "Negative",
+                    "FactorText": [
+                      "explain: You have an account that had a late payment or on which a lender has reported a derogatory status. Your credit file shows that this event occurred too recently. Late payments are a proven indicator of increased risk. People with late payments are at risk of being overextended, putting existing credit with lenders at risk.",
+                      "factor: Newest delinquent or derogatory payment status on your accounts is too recent",
+                      "cando: Paying bills on time every month is important to maintaining a good credit score. If you remain behind with any payments, bring them current as soon as possible, and then make future payments on time."
+                    ],
+                    "Factor": {
+                      "description": "",
+                      "symbol": 15,
+                      "rank": 100000,
+                      "abbreviation": ""
+                    }
+                  },
+                  {
+                    "bureauCode": 21,
+                    "FactorType": "Negative",
+                    "FactorText": [
+                      "explain: The VantageScore credit score model relies on information in your credit files at the three national credit reporting companies (Equifax, Experian and TransUnion) to generate your score. Because you have no open accounts, your credit file does not contain enough information about your use of credit. A mix of different types of open and active credit accounts can have a positive impact on your credit score.",
+                      "factor: No open accounts in your credit file",
+                      "cando: Maintaining open and active credit accounts in good standing can help improve your credit score."
+                    ],
+                    "Factor": {
+                      "description": "",
+                      "symbol": 21,
+                      "rank": 100000,
+                      "abbreviation": ""
+                    }
+                  },
+                  {
+                    "bureauCode": 95,
+                    "FactorType": "Negative",
+                    "FactorText": [
+                      "explain: Some collection agencies report account information to credit bureaus just like lenders do. Your credit file has too many accounts that have been sent to a collection agency and remain unpaid. Unpaid collection accounts in your file can have a significant negative impact on your credit score.",
+                      "factor: You have too many collection agency accounts that are unpaid",
+                      "cando: Satisfy all collection accounts and pay all other accounts on time each month. The impact that negative items such as collections accounts have on your credit score will diminish over time."
+                    ],
+                    "Factor": {
+                      "description": "",
+                      "symbol": 95,
+                      "rank": 100000,
+                      "abbreviation": ""
+                    }
+                  },
+                  {
+                    "bureauCode": "P47",
+                    "FactorType": "Positive",
+                    "FactorText": [
+                      "explain: Bankcard accounts include credit cards and charge cards from a bank and are frequently revolving accounts. Revolving accounts allow you to carry a balance and your monthly payment will vary, based on the amount of your balance. The VantageScore credit score model relies on information in your credit files at the three national credit reporting companies (Equifax, Experian and TransUnion) to generate your score. Because you have no open bankcard or revolving accounts, your credit file does not contain enough information about your use of credit. A mix of different types of open and active credit accounts can have a positive impact on your score.",
+                      "factor: No open bankcard or revolving accounts in your credit file",
+                      "cando: Maintaining open and active credit accounts in good standing can help improve your credit score."
+                    ],
+                    "Factor": {
+                      "description": "",
+                      "symbol": "P47",
+                      "rank": 100000,
+                      "abbreviation": ""
+                    }
+                  },
+                  {
+                    "bureauCode": "P14",
+                    "FactorType": "Positive",
+                    "FactorText": [
+                      "explain: A credit file with sufficient accounts and credit history reflects more experience in handling credit. More experience can have a positive impact on your score.",
+                      "factor: Your credit file contains enough information about your use of credit",
+                      "cando: Maintaining open and active credit accounts in good standing can help improve your credit score."
+                    ],
+                    "Factor": {
+                      "description": "",
+                      "symbol": "P14",
+                      "rank": 100000,
+                      "abbreviation": ""
+                    }
+                  },
+                  {
+                    "bureauCode": "P07",
+                    "FactorType": "Positive",
+                    "FactorText": [
+                      "explain: Paying your bills on time improves your score. You have paid all or nearly all of your bills on time.",
+                      "factor: You have either no or few delinquent or derogatory accounts",
+                      "cando: Keep paying bills on time every month since it is important to maintaining a good credit score. If you remain behind with any payments, bring them current as soon as possible, and then make future payments on time."
+                    ],
+                    "Factor": {
+                      "description": "",
+                      "symbol": "P07",
+                      "rank": 100000,
+                      "abbreviation": ""
+                    }
+                  },
+                  {
+                    "bureauCode": "P08",
+                    "FactorType": "Positive",
+                    "FactorText": [
+                      "explain: Paying your bills on time improves your score. Recently at least one of your accounts was paid on time.",
+                      "factor: One or more of your accounts were paid on time in recent months",
+                      "cando: Keep paying bills on time every month since it is important to maintaining a good credit score. If you remain behind with any payments, bring them current as soon as possible, and then make future payments on time."
+                    ],
+                    "Factor": {
+                      "description": "",
+                      "symbol": "P08",
+                      "rank": 100000,
+                      "abbreviation": ""
+                    }
+                  }
+                ],
+                "qualitativeRank": null,
+                "new": null
+              }
+            ],
+            "BorrowerName": [
+              {
+                "partitionSet": 0,
+                "NameType": {
+                  "description": "Primary",
+                  "symbol": 1,
+                  "rank": 199,
+                  "abbreviation": "Primary"
+                },
+                "Source": {
+                  "InquiryDate": "2021-07-08",
+                  "BorrowerKey": "",
+                  "Reference": "2a934560-c396-4adf-b5a",
+                  "Bureau": {
+                    "description": "TransUnion",
+                    "symbol": "TUC",
+                    "rank": 1,
+                    "abbreviation": "TransUnion"
+                  }
+                },
+                "Name": {
+                  "last": "ILES",
+                  "first": "DANIEL",
+                  "middle": "J",
+                  "prefix": null,
+                  "suffix": null
+                },
+                "dateReported": null,
+                "dateUpdated": null
+              }
+            ],
+            "borrowerKey": null
+          },
+          "ssn": "666130041",
+          "currentAddress": "105 2ND AV N 3H \\nNEWTON, IA, 50208",
+          "borrowerNamesArray": [
+            "DANIEL J ILES "
+          ],
+          "previousAddressesArray": [
+            "3111 6TH ST SW 3 \\nCEDAR RAPIDS, IA, 52404",
+            "1500 OAKLAND RD NE 202 \\nCEDAR RAPIDS, IA, 52402"
+          ],
+          "telephonesArray": [],
+          "employersArray": [
+            "EMPLOYER X\\n \\n"
+          ],
+          "borrowersNamesRaw": [
+            {
+              "partitionSet": 0,
+              "NameType": {
+                "description": "Primary",
+                "symbol": 1,
+                "rank": 199,
+                "abbreviation": "Primary"
+              },
+              "Source": {
+                "InquiryDate": "2021-07-08",
+                "BorrowerKey": "",
+                "Reference": "2a934560-c396-4adf-b5a",
+                "Bureau": {
+                  "description": "TransUnion",
+                  "symbol": "TUC",
+                  "rank": 1,
+                  "abbreviation": "TransUnion"
+                }
+              },
+              "Name": {
+                "last": "ILES",
+                "first": "DANIEL",
+                "middle": "J",
+                "prefix": null,
+                "suffix": null
+              },
+              "dateReported": null,
+              "dateUpdated": null
+            }
+          ],
+          "currentAddressRaw": {
+            "CreditAddress": {
+              "postDirection": "",
+              "streetName": "2ND",
+              "streetType": "AV",
+              "unit": "3H",
+              "city": "NEWTON",
+              "postalCode": 50208,
+              "houseNumber": 105,
+              "stateCode": "IA",
+              "direction": "N",
+              "country": null,
+              "county": null,
+              "unparsedStreet": null
+            },
+            "Origin": {
+              "description": "",
+              "symbol": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "Ownership": {
+              "description": "",
+              "symbol": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "Dwelling": {
+              "description": "",
+              "symbol": "",
+              "rank": 100000,
+              "abbreviation": ""
+            },
+            "addressOrder": 0,
+            "dateReported": "2019-09-30",
+            "partitionSet": 0,
+            "Source": {
+              "InquiryDate": "2021-07-08",
+              "BorrowerKey": "",
+              "Reference": "2a934560-c396-4adf-b5a",
+              "Bureau": {
+                "description": "TransUnion",
+                "symbol": "TUC",
+                "rank": 1,
+                "abbreviation": "TransUnion"
+              }
+            }
+          },
+          "previousAddressesRaw": [
+            {
+              "CreditAddress": {
+                "streetName": "6TH",
+                "streetType": "ST",
+                "unit": 3,
+                "city": "CEDAR RAPIDS",
+                "postalCode": 52404,
+                "houseNumber": 3111,
+                "stateCode": "IA",
+                "direction": "SW",
+                "country": null,
+                "county": null,
+                "postDirection": null,
+                "unparsedStreet": null
+              },
+              "Origin": {
+                "description": "",
+                "symbol": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "Ownership": {
+                "description": "",
+                "symbol": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "Dwelling": {
+                "description": "",
+                "symbol": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "addressOrder": 0,
+              "dateReported": "2018-11-21",
+              "partitionSet": 0,
+              "Source": {
+                "InquiryDate": "2021-07-08",
+                "BorrowerKey": "",
+                "Reference": "2a934560-c396-4adf-b5a",
+                "Bureau": {
+                  "description": "TransUnion",
+                  "symbol": "TUC",
+                  "rank": 1,
+                  "abbreviation": "TransUnion"
+                }
+              }
+            },
+            {
+              "CreditAddress": {
+                "streetName": "OAKLAND",
+                "streetType": "RD",
+                "unit": 202,
+                "city": "CEDAR RAPIDS",
+                "postalCode": 52402,
+                "houseNumber": 1500,
+                "stateCode": "IA",
+                "direction": "NE",
+                "country": null,
+                "county": null,
+                "postDirection": null,
+                "unparsedStreet": null
+              },
+              "Origin": {
+                "description": "",
+                "symbol": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "Ownership": {
+                "description": "",
+                "symbol": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "Dwelling": {
+                "description": "",
+                "symbol": "",
+                "rank": 100000,
+                "abbreviation": ""
+              },
+              "addressOrder": 1,
+              "partitionSet": 1,
+              "Source": {
+                "InquiryDate": "2021-07-08",
+                "BorrowerKey": "",
+                "Reference": "2a934560-c396-4adf-b5a",
+                "Bureau": {
+                  "description": "TransUnion",
+                  "symbol": "TUC",
+                  "rank": 1,
+                  "abbreviation": "TransUnion"
+                }
+              },
+              "dateReported": null
+            }
+          ],
+          "employersRaw": [
+            {
+              "name": "EMPLOYER X",
+              "CreditAddress": {
+                "unparsedStreet": "",
+                "stateCode": "",
+                "city": "",
+                "postalCode": ""
+              },
+              "partitionSet": 0,
+              "Source": {
+                "InquiryDate": "2021-07-08",
+                "BorrowerKey": "",
+                "Reference": "2a934560-c396-4adf-b5a",
+                "Bureau": {
+                  "description": "TransUnion",
+                  "symbol": "TUC",
+                  "rank": 1,
+                  "abbreviation": "TransUnion"
+                }
+              },
+              "dateUpdated": "2018-10-26",
+              "dateReported": null
+            }
+          ],
+          "telephonesRaw": []
+        }
+      }
+    }
+  ]
+}
