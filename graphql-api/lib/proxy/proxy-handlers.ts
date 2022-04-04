@@ -1202,7 +1202,7 @@ export const StartDispute = async ({
         const payload = {
           accountCode,
           username,
-          message: JSON.stringify({ disputeId: disputeId }),
+          message: JSON.stringify({ disputeId: disputeId.toString() }),
           agent,
           auth,
           identityId,
@@ -1837,14 +1837,14 @@ export const DisputeInflightCheck = async ({
             const payload = {
               accountCode,
               username,
-              message: JSON.stringify({ disputeId: `${disputeId}` }),
+              message: JSON.stringify({ disputeId: disputeId.toString() }),
               agent,
               auth,
               identityId: id,
             };
             //need to check if IR exists for this dispute
             console.log('CHECKING FOR EXISTING RESULTS');
-            const dispute = await DB.disputes.get(id, disputeId);
+            const dispute = await DB.disputes.get(id, disputeId.toString());
             if (dispute.disputeInvestigationResults) {
               return { success: true, error: null, data: 'IR already received' };
             }

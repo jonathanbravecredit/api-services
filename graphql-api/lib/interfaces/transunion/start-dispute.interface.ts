@@ -147,7 +147,7 @@ export interface IDisputeStatus {
 }
 
 export interface IDisputeStatusDetail {
-  DisputeId: string;
+  DisputeId: string | number;
   LetterStatus?: ILetterStatus;
   OpenDisputes?: IDisputesStatus;
   ClosedDisputes?: IDisputesStatus;
