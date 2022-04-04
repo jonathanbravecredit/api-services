@@ -1333,7 +1333,7 @@ export const GetInvestigationResults = async ({
     ...JSON.parse(message),
   };
   const validate = ajv.getSchema<interfaces.IGetInvestigationResultsRequest>('getInvestigationResultsRequest');
-  if (!validate(payload)) throw `Malformed message=${payload}`;
+  if (!validate(payload)) throw `Malformed message in getInvestigationResults=${payload}`;
 
   //create helper classes
   const sync = new Sync(tu.enrichGetInvestigationResult);
