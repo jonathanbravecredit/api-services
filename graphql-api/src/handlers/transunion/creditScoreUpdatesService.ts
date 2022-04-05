@@ -20,9 +20,6 @@ const tableName = process.env.APPTABLE;
  * @returns Lambda proxy response
  */
 export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResolverEvent<any>): Promise<any> => {
-  // can be kicked off through AppSync if needed
-  // const scores = await DB.creditScoreTrackings.list();
-  // create the payload with out the auth and agent
   try {
     let params = {
       TableName: tableName,

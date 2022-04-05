@@ -205,7 +205,7 @@ functions:
   # generic batch updates worker
   batchUpdatesWorker:
     handler: src/handlers/transunion/batchUpdatesWorker.main
-    timeout: 720
+    timeout: 60
     reservedConcurrency: 5
     layers:
       - { Ref: TuCertsLambdaLayer }
