@@ -37,14 +37,14 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
           segment: s,
           totalSegments: segments.length,
         };
-        let items;
+        let items: IBatchMsg<DynamoDB.DocumentClient.Key> | undefined;
         let counter: number = 0;
         do {
           items = await parallelScanTransactionsLog(params.exclusiveStartKey, params.segment, params.totalSegments);
           // items = await parallelScanAppData(params.exclusiveStartKey, params.segment, params.totalSegments);
           console.log(`segment: ${s} of total segments: ${segments.length}...counter: ${counter}`);
           await Promise.all(
-            items.Items.map(async (item) => {
+            items.items.map(async (item) => {
               await new Promise((res, rej) => {
                 setTimeout(() => {
                   res(null);
@@ -74,8 +74,8 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
               // }
             }),
           );
-          params['ExclusiveStartKey'] = items.LastEvaluatedKey;
-        } while (typeof items.LastEvaluatedKey != 'undefined');
+          params['ExclusiveStartKey'] = items.lastEvaluatedKey;
+        } while (typeof items.lastEvaluatedKey != 'undefined');
       }),
     );
     const results = { success: true, error: null, data: `Ops:batch queued ${counter} records.` };
