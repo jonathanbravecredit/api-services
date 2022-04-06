@@ -29,7 +29,7 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
       segments.push(i);
     }
     await Promise.all(
-      segments.map(async (s) => {
+      segments.map(async (s, i) => {
         let params = {
           exclusiveStartKey: undefined,
           segment: s,
@@ -39,6 +39,9 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
         let counter: number = 0;
         do {
           items = await parallelScanAppData(params.exclusiveStartKey, params.segment, params.totalSegments);
+          if (s === 0 && i === 0) {
+            console.log('sample of items', items);
+          }
           console.log(`segment: ${s} of total segments: ${segments.length}...counter: ${counter}`);
           await Promise.all(
             items.items.map(async (item) => {

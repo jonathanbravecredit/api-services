@@ -59,7 +59,7 @@ export const parallelScanAppDataEnrollKeys = async (
     Segment: segment,
     TotalSegments: totalSegments,
     ProjectionExpression:
-      'id, user, agencies.transunion.enrollmentKey, agencies.transunion.serviceBundleFulfillmentKey',
+      'id, user, agencies.transunion.enrolled, agencies.transunion.enrollmentKey, agencies.transunion.serviceBundleFulfillmentKey',
   };
   try {
     const items: DynamoDB.DocumentClient.ScanOutput = await db.scan(params).promise();
