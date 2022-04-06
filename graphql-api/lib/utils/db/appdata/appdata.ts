@@ -58,8 +58,16 @@ export const parallelScanAppDataEnrollKeys = async (
     ExclusiveStartKey: esk,
     Segment: segment,
     TotalSegments: totalSegments,
-    ProjectionExpression:
-      'id, user, agencies.transunion.enrolled, agencies.transunion.enrollmentKey, agencies.transunion.serviceBundleFulfillmentKey',
+    ProjectionExpression: '#id, #us, #ag.#tu.#en, #ag.#tu.#ek, #ag.#tu.#fk',
+    ExpressionAttributeNames: {
+      '#id': 'id',
+      '#us': 'user',
+      '#ag': 'agencies',
+      '#tu': 'transunion',
+      '#en': 'enrolled',
+      '#ek': 'enrollmentKey',
+      '#fk': 'serviceBundleFulfillmentKey',
+    },
   };
   try {
     const items: DynamoDB.DocumentClient.ScanOutput = await db.scan(params).promise();
