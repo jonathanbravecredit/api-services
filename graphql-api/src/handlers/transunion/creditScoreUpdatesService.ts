@@ -24,7 +24,6 @@ const tableName = process.env.APPTABLE;
  */
 export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResolverEvent<any>): Promise<any> => {
   try {
-    let counter = 0;
     const segments = [];
     for (let i = 0; i < 128; i++) {
       segments.push(i);
@@ -74,11 +73,11 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
               // }
             }),
           );
-          params['ExclusiveStartKey'] = items.lastEvaluatedKey;
+          params.exclusiveStartKey = items.lastEvaluatedKey;
         } while (typeof items.lastEvaluatedKey != 'undefined');
       }),
     );
-    const results = { success: true, error: null, data: `Ops:batch queued ${counter} records.` };
+    const results = { success: true, error: null, data: `Ops:batch queued records.` };
     return JSON.stringify(results);
   } catch (err) {
     console.log('err ===> ', err);
