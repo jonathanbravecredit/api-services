@@ -31,7 +31,6 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
     await Promise.all(
       segments.map(async (s) => {
         let params = {
-          TableName: 'APITransactionLog', //tableName, // using trans log as test case
           exclusiveStartKey: undefined,
           segment: s,
           totalSegments: segments.length,
