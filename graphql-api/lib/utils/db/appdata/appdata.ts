@@ -2,7 +2,7 @@ import { AttributeValue } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 import { IBatchMsg } from 'lib/interfaces/batch.interfaces';
 const db = new DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
-const tableName = process.env.APPDATA || '';
+const tableName = process.env.APPTABLE || '';
 
 export const getAllItemsInDB = async () => {
   let params: { TableName: string; ExclusiveStartKey?: any } = {
