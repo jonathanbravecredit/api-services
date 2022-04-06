@@ -39,10 +39,6 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
         let counter: number = 0;
         do {
           items = await parallelScanAppDataEnrollKeys(params.exclusiveStartKey, params.segment, params.totalSegments);
-          if (s === 0 && i === 0) {
-            console.log('sample of items', items);
-          }
-          console.log(`segment: ${s} of total segments: ${segments.length}...counter: ${counter}`);
           await Promise.all(
             items.items.map(async (item) => {
               await parseAndPublish(item);
@@ -51,6 +47,7 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
           );
           params.exclusiveStartKey = items.lastEvaluatedKey;
         } while (typeof items.lastEvaluatedKey != 'undefined');
+        console.log(`segment: ${s} of total segments: ${segments.length}...processed: ${counter}`);
       }),
     );
     const results = { success: true, error: null, data: `Ops:batch queued records.` };
@@ -74,7 +71,7 @@ const parseAndPublish = async (item) => {
       },
     };
 
-    // const payload = pubsub.createSNSPayload<{ id: string }>('creditscoreupdates', enrollee, 'creditscoreupdates');
-    // await sns.publish(payload).promise();
+    const payload = pubsub.createSNSPayload<{ id: string }>('creditscoreupdates', enrollee, 'creditscoreupdates');
+    await sns.publish(payload).promise();
   }
 };
