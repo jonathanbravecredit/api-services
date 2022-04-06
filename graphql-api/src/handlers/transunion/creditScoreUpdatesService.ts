@@ -45,15 +45,17 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
             items.items.map(async (item) => {
               //check is processed
               try {
-                const processed = await wasProcessed(item.id, 'credit_service_trx')
+                const processed = await wasProcessed(item.id, 'credit_service_trx');
                 if (processed) return;
                 const ttl = dayjs(new Date()).add(24, 'hours').valueOf() / 1000; // set ttl for 24hours and in seconds
-                const trx = new TransactionDataMaker(item.id, 'credit_service_trx', ttl)
+                const trx = new TransactionDataMaker(item.id, 'credit_service_trx', ttl);
                 await trans.createTransaction(trx);
                 await parseAndPublish(item);
                 counter++;
               } catch (err) {
                 console.error(err);
+                const e = errorLogger.createError('credit_service_trx', 'parse_and_publish', err);
+                await errorLogger.logger.create(e);
               }
             }),
           );
@@ -96,4 +98,4 @@ const wasProcessed = async (id: string, sortKey: CreditServiceTransaction): Prom
   } catch (err) {
     console.error(err);
   }
-}
+};
