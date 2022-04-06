@@ -4,7 +4,7 @@ import { SNS, DynamoDB } from 'aws-sdk';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
 import { IBatchMsg, IAttributeValue } from 'lib/interfaces/batch.interfaces';
-import { parallelScanAppData } from 'lib/utils/db/appdata/appdata';
+import { parallelScanAppData, parallelScanAppDataEnrollKeys } from 'lib/utils/db/appdata/appdata';
 import { parallelScanTransactionsLog } from 'lib/utils/db/apitransactions/apitransactions';
 // import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
 // import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
@@ -38,7 +38,7 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
         let items: IBatchMsg<DynamoDB.DocumentClient.Key> | undefined;
         let counter: number = 0;
         do {
-          items = await parallelScanAppData(params.exclusiveStartKey, params.segment, params.totalSegments);
+          items = await parallelScanAppDataEnrollKeys(params.exclusiveStartKey, params.segment, params.totalSegments);
           if (s === 0 && i === 0) {
             console.log('sample of items', items);
           }
