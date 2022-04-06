@@ -1118,7 +1118,7 @@ export const StartDispute = async ({
   const publicitem = ajv.getSchema<interfaces.IProcessDisputePublicResult>('disputePublicitem');
   const personalitem = ajv.getSchema<interfaces.IProcessDisputePersonalResult>('disputePersonalitem');
 
-  if (!validate(payload)) throw `Malformed message=${message}`;
+  if (!validate(payload)) throw `Malformed message=${JSON.stringify(payload)}`;
   let payloadMethod: (data: any, params?: any) => any;
   let startDisputeMethod: (msg: interfaces.IStartDispute) => string;
   if (tradeline(payload.disputes[0])) {
@@ -1202,7 +1202,7 @@ export const StartDispute = async ({
         const payload = {
           accountCode,
           username,
-          message: JSON.stringify({ disputeId: disputeId }),
+          message: JSON.stringify({ disputeId: disputeId.toString() }),
           agent,
           auth,
           identityId,
@@ -1333,7 +1333,7 @@ export const GetInvestigationResults = async ({
     ...JSON.parse(message),
   };
   const validate = ajv.getSchema<interfaces.IGetInvestigationResultsRequest>('getInvestigationResultsRequest');
-  if (!validate(payload)) throw `Malformed message=${payload}`;
+  if (!validate(payload)) throw `Malformed message in getInvestigationResults=${JSON.stringify(payload)}`;
 
   //create helper classes
   const sync = new Sync(tu.enrichGetInvestigationResult);
@@ -1837,14 +1837,14 @@ export const DisputeInflightCheck = async ({
             const payload = {
               accountCode,
               username,
-              message: JSON.stringify({ disputeId: `${disputeId}` }),
+              message: JSON.stringify({ disputeId: disputeId.toString() }),
               agent,
               auth,
               identityId: id,
             };
             //need to check if IR exists for this dispute
             console.log('CHECKING FOR EXISTING RESULTS');
-            const dispute = await DB.disputes.get(id, disputeId);
+            const dispute = await DB.disputes.get(id, disputeId.toString());
             if (dispute.disputeInvestigationResults) {
               return { success: true, error: null, data: 'IR already received' };
             }

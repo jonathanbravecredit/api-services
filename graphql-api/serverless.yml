@@ -156,14 +156,14 @@ functions:
   # Update credit scores and reports flow
   creditScoreUpdatesService:
     handler: src/handlers/transunion/creditScoreUpdatesService.main
-    timeout: 720
+    timeout: 900
     layers:
       - { Ref: TuCertsLambdaLayer }
     events:
       - schedule: cron(0 16 5 * ? *)
   creditScoreUpdatesManual:
     handler: src/handlers/transunion/creditScoreUpdatesManual.main
-    timeout: 720
+    timeout: 900
     layers:
       - { Ref: TuCertsLambdaLayer }
 
@@ -205,7 +205,7 @@ functions:
   # generic batch updates worker
   batchUpdatesWorker:
     handler: src/handlers/transunion/batchUpdatesWorker.main
-    timeout: 720
+    timeout: 60
     reservedConcurrency: 5
     layers:
       - { Ref: TuCertsLambdaLayer }
