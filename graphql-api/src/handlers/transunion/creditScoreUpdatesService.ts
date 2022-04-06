@@ -3,9 +3,10 @@ import { AppSyncResolverEvent, AppSyncResolverHandler } from 'aws-lambda';
 import { SNS, DynamoDB } from 'aws-sdk';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
-import { IBatchMsg, IAttributeValue } from 'lib/interfaces/batch.interfaces';
-import { parallelScanAppData, parallelScanAppDataEnrollKeys } from 'lib/utils/db/appdata/appdata';
-import { parallelScanTransactionsLog } from 'lib/utils/db/apitransactions/apitransactions';
+import { IBatchMsg } from 'lib/interfaces/batch.interfaces';
+import { parallelScanAppDataEnrollKeys } from 'lib/utils/db/appdata/appdata';
+import { TransactionData, TransactionDataMaker, TransactionDataQueries } from '@bravecredit/brave-sdk';
+import * as dayjs from 'dayjs';
 // import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
 // import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
 
@@ -13,6 +14,7 @@ import { parallelScanTransactionsLog } from 'lib/utils/db/apitransactions/apitra
 const errorLogger = new ErrorLogger();
 const sns = new SNS({ region: 'us-east-2' });
 const pubsub = new PubSubUtil();
+const trans = TransactionDataQueries;
 const db = new DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: 'us-east-2' });
 const tableName = process.env.APPTABLE;
 /**
@@ -41,8 +43,18 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
           items = await parallelScanAppDataEnrollKeys(params.exclusiveStartKey, params.segment, params.totalSegments);
           await Promise.all(
             items.items.map(async (item) => {
-              await parseAndPublish(item);
-              counter++;
+              //check is processed
+              try {
+                const processed = await wasProcessed(item.id, 'credit_service_trx')
+                if (processed) return;
+                const ttl = dayjs(new Date()).add(24, 'hours').valueOf() / 1000; // set ttl for 24hours and in seconds
+                const trx = new TransactionDataMaker(item.id, 'credit_service_trx', ttl)
+                await trans.createTransaction(trx);
+                await parseAndPublish(item);
+                counter++;
+              } catch (err) {
+                console.error(err);
+              }
             }),
           );
           params.exclusiveStartKey = items.lastEvaluatedKey;
@@ -58,6 +70,8 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
   }
 };
 
+type CreditServiceTransaction = 'credit_service_trx';
+
 const parseAndPublish = async (item) => {
   if (item.agencies?.transunion?.enrolled) {
     const enrollee = {
@@ -70,8 +84,16 @@ const parseAndPublish = async (item) => {
         },
       },
     };
-
     const payload = pubsub.createSNSPayload<{ id: string }>('creditscoreupdates', enrollee, 'creditscoreupdates');
     await sns.publish(payload).promise();
   }
 };
+
+const wasProcessed = async (id: string, sortKey: CreditServiceTransaction): Promise<boolean> => {
+  try {
+    const trx: TransactionData | null = await trans.getTransaction(id, sortKey);
+    return !!trx;
+  } catch (err) {
+    console.error(err);
+  }
+}
