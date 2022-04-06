@@ -4,7 +4,7 @@ import { SNS, DynamoDB } from 'aws-sdk';
 import ErrorLogger from 'lib/utils/db/logger/logger-errors';
 import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
 import { IBatchMsg, IAttributeValue } from 'lib/interfaces/batch.interfaces';
-import { parallelScanAppData } from 'lib/utils/db/appdata/appdata';
+import { parallelScanAppData, parallelScanAppDataEnrollKeys } from 'lib/utils/db/appdata/appdata';
 import { parallelScanTransactionsLog } from 'lib/utils/db/apitransactions/apitransactions';
 // import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
 // import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
@@ -29,9 +29,8 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
       segments.push(i);
     }
     await Promise.all(
-      segments.map(async (s) => {
+      segments.map(async (s, i) => {
         let params = {
-          TableName: 'APITransactionLog', //tableName, // using trans log as test case
           exclusiveStartKey: undefined,
           segment: s,
           totalSegments: segments.length,
@@ -39,8 +38,7 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
         let items: IBatchMsg<DynamoDB.DocumentClient.Key> | undefined;
         let counter: number = 0;
         do {
-          items = await parallelScanAppData(params.exclusiveStartKey, params.segment, params.totalSegments);
-          console.log(`segment: ${s} of total segments: ${segments.length}...counter: ${counter}`);
+          items = await parallelScanAppDataEnrollKeys(params.exclusiveStartKey, params.segment, params.totalSegments);
           await Promise.all(
             items.items.map(async (item) => {
               await parseAndPublish(item);
@@ -49,6 +47,7 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
           );
           params.exclusiveStartKey = items.lastEvaluatedKey;
         } while (typeof items.lastEvaluatedKey != 'undefined');
+        console.log(`segment: ${s} of total segments: ${segments.length}...processed: ${counter}`);
       }),
     );
     const results = { success: true, error: null, data: `Ops:batch queued records.` };
@@ -72,7 +71,7 @@ const parseAndPublish = async (item) => {
       },
     };
 
-    // const payload = pubsub.createSNSPayload<{ id: string }>('creditscoreupdates', enrollee, 'creditscoreupdates');
-    // await sns.publish(payload).promise();
+    const payload = pubsub.createSNSPayload<{ id: string }>('creditscoreupdates', enrollee, 'creditscoreupdates');
+    await sns.publish(payload).promise();
   }
 };

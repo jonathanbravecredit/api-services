@@ -2,7 +2,7 @@ import { AttributeValue } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
 import { IBatchMsg } from 'lib/interfaces/batch.interfaces';
 const db = new DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
-const tableName = process.env.APPDATA || '';
+const tableName = process.env.APPTABLE || '';
 
 export const getAllItemsInDB = async () => {
   let params: { TableName: string; ExclusiveStartKey?: any } = {
@@ -48,6 +48,42 @@ export const parallelScanAppData = async (
   }
 };
 
+export const parallelScanAppDataEnrollKeys = async (
+  esk: { [key: string]: AttributeValue } | undefined,
+  segment: number,
+  totalSegments: number,
+): Promise<IBatchMsg<DynamoDB.DocumentClient.Key> | undefined> => {
+  let params: DynamoDB.DocumentClient.ScanInput = {
+    TableName: tableName, // I need a big table for testing
+    ExclusiveStartKey: esk,
+    Segment: segment,
+    TotalSegments: totalSegments,
+    ProjectionExpression: '#id, #us, #ag.#tu.#en, #ag.#tu.#ek, #ag.#tu.#fk',
+    ExpressionAttributeNames: {
+      '#id': 'id',
+      '#us': 'user',
+      '#ag': 'agencies',
+      '#tu': 'transunion',
+      '#en': 'enrolled',
+      '#ek': 'enrollmentKey',
+      '#fk': 'serviceBundleFulfillmentKey',
+    },
+  };
+  try {
+    const items: DynamoDB.DocumentClient.ScanOutput = await db.scan(params).promise();
+    const { LastEvaluatedKey, Items } = items;
+    // write the records to the reports table
+    // then write the key back
+    return {
+      lastEvaluatedKey: LastEvaluatedKey,
+      items: Items,
+      segment: segment,
+      totalSegments: totalSegments,
+    };
+  } catch (err) {
+    console.log('err ==> ', err);
+  }
+};
 export const getItemInDB = (id: any): Promise<DynamoDB.DocumentClient.GetItemOutput> => {
   const params = {
     Key: {
