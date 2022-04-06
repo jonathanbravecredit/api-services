@@ -39,38 +39,12 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
         let items: IBatchMsg<DynamoDB.DocumentClient.Key> | undefined;
         let counter: number = 0;
         do {
-          items = await parallelScanTransactionsLog(params.exclusiveStartKey, params.segment, params.totalSegments);
-          // items = await parallelScanAppData(params.exclusiveStartKey, params.segment, params.totalSegments);
+          items = await parallelScanAppData(params.exclusiveStartKey, params.segment, params.totalSegments);
           console.log(`segment: ${s} of total segments: ${segments.length}...counter: ${counter}`);
           await Promise.all(
             items.items.map(async (item) => {
-              await new Promise((res, rej) => {
-                setTimeout(() => {
-                  res(null);
-                }, 20);
-              });
+              await parseAndPublish(item);
               counter++;
-              // if (item.agencies?.transunion?.enrolled) {
-              // const enrollee = {
-              //   id: item.id,
-              //   user: item.user,
-              //   agencies: {
-              //     transunion: {
-              //       enrollmentKey: item.agencies?.transunion?.enrollmentKey,
-              //       serviceBundleFulfillmentKey: item.agencies?.transunion?.serviceBundleFulfillmentKey,
-              //     },
-              //   },
-              // };
-
-              // COMMENTED OUT FOR TESTING
-              // const payload = pubsub.createSNSPayload<{ id: string }>(
-              //   'creditscoreupdates',
-              //   enrollee,
-              //   'creditscoreupdates',
-              // );
-              // await sns.publish(payload).promise();
-              // counter++;
-              // }
             }),
           );
           params.exclusiveStartKey = items.lastEvaluatedKey;
@@ -82,5 +56,23 @@ export const main: AppSyncResolverHandler<any, any> = async (event: AppSyncResol
   } catch (err) {
     console.log('err ===> ', err);
     return JSON.stringify({ success: false, error: { error: `Unknown server error=${err}` } });
+  }
+};
+
+const parseAndPublish = async (item) => {
+  if (item.agencies?.transunion?.enrolled) {
+    const enrollee = {
+      id: item.id,
+      user: item.user,
+      agencies: {
+        transunion: {
+          enrollmentKey: item.agencies?.transunion?.enrollmentKey,
+          serviceBundleFulfillmentKey: item.agencies?.transunion?.serviceBundleFulfillmentKey,
+        },
+      },
+    };
+
+    // const payload = pubsub.createSNSPayload<{ id: string }>('creditscoreupdates', enrollee, 'creditscoreupdates');
+    // await sns.publish(payload).promise();
   }
 };
