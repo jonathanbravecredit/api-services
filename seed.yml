@@ -1,0 +1,19 @@
+before_compile:
+  - echo //registry.npmjs.org/:_authToken=$NPM_TOKEN >> ~/.npmrc
+#compile:
+#  - echo "Override compile"
+
+before_build:
+  - echo "Before build"
+
+before_deploy:
+  - echo "Before deploy"
+
+after_deploy:
+  - echo "After deploy"
+
+before_remove:
+  - echo "Before deploy"
+
+after_remove:
+  - echo "After deploy"
