@@ -20,6 +20,7 @@
     "serverless-offline": "^6.9.0"
   },
   "dependencies": {
+    "@bravecredit/brave-sdk": "^1.0.20",
     "@shiftcoders/dynamo-easy": "^7.1.0",
     "ajv": "^7.0.2",
     "aws-appsync": "^4.1.4",
