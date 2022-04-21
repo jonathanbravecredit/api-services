@@ -228,7 +228,7 @@ functions:
           batchSize: 1
           maximumBatchingWindow: 5
   triggerCreditScoreTracking:
-    handler: src/triggers/triggerCreditScoreTracking.main
+    handler: src/triggers/triggerCreateCreditScoreTracking.main
     timeout: 900
     events:
       - stream:
