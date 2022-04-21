@@ -40,12 +40,12 @@ custom:
     APPDATA_STREAMS:
       dev: 'rr5wtr4ev5exlbutrkih3r5lhq:GetAtt:AppDataTable:StreamArn'
       qa: 'rr5wtr4ev5exlbutrkih3r5lhq:GetAtt:AppDataTable:StreamArn'
-      staging: 'AppData'
+      staging: 'mwxdv374n5gtxfao5ylbhdnce4:AppDataTable:StreamArn'
       prod: '4tpaga7rzjayhk75opsmpeurme:GetAtt:AppDataTable:StreamArn'
     APPTABLES:
       dev: 'AppData-rr5wtr4ev5exlbutrkih3r5lhq-dev'
       qa: 'AppData-rr5wtr4ev5exlbutrkih3r5lhq-dev'
-      staging: 'AppData'
+      staging: 'AppData-mwxdv374n5gtxfao5ylbhdnce4-qa'
       prod: 'AppData-4tpaga7rzjayhk75opsmpeurme-prod'
 
 provider:
