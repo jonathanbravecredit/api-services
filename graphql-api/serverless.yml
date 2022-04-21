@@ -227,8 +227,8 @@ functions:
             - Arn
           batchSize: 1
           maximumBatchingWindow: 5
-  triggerCreateCreditScoreTracking:
-    handler: src/triggers/triggerCreateCreditScoreTracking.main
+  triggerCreditScoreTracking:
+    handler: src/triggers/triggerCreditScoreTracking.main
     timeout: 900
     events:
       - stream:
