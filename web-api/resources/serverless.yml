@@ -78,4 +78,4 @@ resources:
       Description: 'SNS Proxy Topic'
       Value: !Ref SnsProxyTopic
       Export:
-        Name: !Sub '${self:provider.stage}-api-endpoint-sns-proxy'
+        Name: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
