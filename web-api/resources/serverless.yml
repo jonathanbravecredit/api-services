@@ -47,6 +47,11 @@ resources:
         ParentId: !GetAtt ApiGatewayRestApi.RootResourceId
         PathPart: 'initiatives'
 
+    SnsProxyTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: SnsProxyTopic
+
   Outputs:
     ApiGatewayRestApiId:
       Description: 'Web App API id'
@@ -68,3 +73,9 @@ resources:
       Value: !Ref ApiGatewayAuthorizer
       Export:
         Name: !Sub '${self:service}-apigw-authorizer'
+
+    SnsProxyTopic:
+      Description: 'SNS Proxy Topic'
+      Value: !Ref SnsProxyTopic
+      Export:
+        Name: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
