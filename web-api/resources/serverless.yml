@@ -52,6 +52,11 @@ resources:
       Properties:
         TopicName: SnsProxyTopic
 
+    DeadLetterQueue:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: lambdadeadletterqueue
+
   Outputs:
     ApiGatewayRestApiId:
       Description: 'Web App API id'
