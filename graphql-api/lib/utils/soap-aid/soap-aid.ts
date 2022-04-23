@@ -8,12 +8,9 @@ const transactionLogger = new TransactionLogger();
 const tuEnv = process.env.TU_ENV;
 const tuUrl =
   tuEnv === 'dev'
-    ? 'https://cc2ws-test.sd.demo.truelink.com/wcf/CC2.svc' //'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc'
+    ? 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc'
     : 'https://consumerconnectws.tui.transunion.com/wcf/CC2.svc';
-const tuHost =
-  tuEnv === 'dev'
-    ? 'cc2ws-test.sd.demo.truelink.com' //'cc2ws-live.sd.demo.truelink.com'
-    : 'consumerconnectws.tui.transunion.com';
+const tuHost = tuEnv === 'dev' ? 'cc2ws-live.sd.demo.truelink.com' : 'consumerconnectws.tui.transunion.com';
 /**
  * Class to help create and parse payloads for requests to Transunion SOAP service
  * 1. Takes in unique parsers, formatters(messages, and xml), and payload generators (optional)
