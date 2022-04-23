@@ -6,7 +6,7 @@ import axios from 'axios';
 const tuEnv = process.env.TU_ENV;
 const tuUrl =
   tuEnv === 'dev'
-    ? 'https://cc2ws-test.sd.demo.truelink.com' //'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc'
+    ? 'https://cc2ws-test.sd.demo.truelink.com/wcf/CC2.svc' //'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc'
     : 'https://consumerconnectws.tui.transunion.com/wcf/CC2.svc';
 const tuHost =
   tuEnv === 'dev'
