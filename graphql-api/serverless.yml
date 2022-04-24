@@ -20,25 +20,32 @@ custom:
     IDENTITY_IDS:
       dev: 'us-east-2:69169c15-c0c4-4e0b-886c-4afab307e612'
       qa: 'us-east-2:69169c15-c0c4-4e0b-886c-4afab307e612'
+      staging: 'us-east-2:aca920e3-dd7b-4e2f-91f0-865d978c6f76'
       prod: 'us-east-2:ea31caf7-0945-4607-a3c4-0c9942967a32'
     POOL_IDS:
       dev: 'us-east-2_beTcykTM9'
       qa: 'us-east-2_beTcykTM9'
+      staging: 'us-east-2_6RQqasoH3'
       prod: 'us-east-2_R22DawoAR'
     GRAPHQL_API:
       dev: 'rr5wtr4ev5exlbutrkih3r5lhq'
       qa: 'rr5wtr4ev5exlbutrkih3r5lhq'
+      staging: 'mza6aevpsvef5btykbyjp5ffdm'
       prod: '4tpaga7rzjayhk75opsmpeurme'
     GRAPHQL_ENDPOINT:
       dev: '24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com'
       qa: '24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com'
+      staging: 'xte3obhdpfbhfbxekxpfa2tcwq.appsync-api.us-east-2.amazonaws.com'
       prod: 'krybm5pc3nbgdk4zwgcva2i4va.appsync-api.us-east-2.amazonaws.com'
     APPDATA_STREAMS:
       dev: 'rr5wtr4ev5exlbutrkih3r5lhq:GetAtt:AppDataTable:StreamArn'
       qa: 'rr5wtr4ev5exlbutrkih3r5lhq:GetAtt:AppDataTable:StreamArn'
+      staging: 'mza6aevpsvef5btykbyjp5ffdm:GetAtt:AppDataTable:StreamArn'
       prod: '4tpaga7rzjayhk75opsmpeurme:GetAtt:AppDataTable:StreamArn'
     APPTABLES:
       dev: 'AppData-rr5wtr4ev5exlbutrkih3r5lhq-dev'
+      qa: 'AppData-rr5wtr4ev5exlbutrkih3r5lhq-dev'
+      staging: 'AppData-mza6aevpsvef5btykbyjp5ffdm-staging'
       prod: 'AppData-4tpaga7rzjayhk75opsmpeurme-prod'
 
 provider:
@@ -220,7 +227,7 @@ functions:
             - Arn
           batchSize: 1
           maximumBatchingWindow: 5
-  triggerCreateCreditScoreTracking:
+  triggerCreditScoreTracking:
     handler: src/triggers/triggerCreateCreditScoreTracking.main
     timeout: 900
     events:
