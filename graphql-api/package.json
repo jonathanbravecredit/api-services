@@ -23,6 +23,7 @@
     "@bravecredit/brave-sdk": "^1.0.20",
     "@shiftcoders/dynamo-easy": "^7.1.0",
     "ajv": "^7.0.2",
+    "async": "^3.2.3",
     "aws-appsync": "^4.1.4",
     "aws4": "^1.11.0",
     "axios": "^0.21.4",
