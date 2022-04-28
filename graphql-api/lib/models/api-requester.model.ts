@@ -1,4 +1,7 @@
 export interface APIRequester {
   generateRequest: () => void;
-  generateXML: () => void;
+  addRequestDefaults: () => void;
+  generateXMLObject: () => void;
+  addXMLDefaults: () => void;
+  convertXML: () => void;
 }
