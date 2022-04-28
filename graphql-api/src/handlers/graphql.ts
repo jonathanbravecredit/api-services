@@ -11,6 +11,7 @@ import { EnrollV2 } from 'lib/transunion/enroll/Enrollv2';
 import { FulfillV2 } from 'lib/transunion/fulfill/Fulfillv2';
 import { FulfillDisputesV2 } from 'lib/transunion/fulfill-disputes/FulfillDisputesV2';
 import { AcknowledgeDisputeTerms } from 'lib/transunion/acknowledgements/AcknowledgeDispute';
+import { IndicativeEnrichmentV2 } from 'lib/transunion/indicative-enrichment/indicative-enrichment-v2';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -110,7 +111,8 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await queries.UpdateNavBar(payload);
         return JSON.stringify(results);
       case 'IndicativeEnrichment':
-        results = await queries.IndicativeEnrichment(payload);
+        const indicativeEnrichment = new IndicativeEnrichmentV2(payload);
+        results = await indicativeEnrichment.run();
         return JSON.stringify(results);
       case 'GetAuthenticationQuestions':
         results = await queries.GetAuthenticationQuestions(payload);
