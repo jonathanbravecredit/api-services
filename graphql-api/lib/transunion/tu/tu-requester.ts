@@ -10,7 +10,6 @@ export class TURequester<T> {
   protected accountName: string = ACCOUNT_NAME;
   protected clientKey: string;
 
-  private root: any = null;
   private request: any = null;
   private requestMap: { [key: string]: string };
   private requestXML: { [key: string]: string };
@@ -18,7 +17,6 @@ export class TURequester<T> {
   public xml: string = '';
 
   constructor(private requestKey: APIRequestKeys, private payload: T) {
-    this.root = { root: this.payload } as { root: T };
     this.requestMap = APIRequestLibrary[this.requestKey];
     this.requestXML = APIRequestXMLLibrary[this.requestKey];
     this.generateRequest();
@@ -30,7 +28,7 @@ export class TURequester<T> {
     const result = Object.assign({}, this.requestMap);
     Object.entries(this.requestMap).forEach(([key, value]) => {
       const path = (value as string).split('.');
-      const val = _.get(this.root, path);
+      const val = _.get({ root: this.payload }, path);
       result[key] = val;
     });
     const unflat = _nest.unflatten(result);
