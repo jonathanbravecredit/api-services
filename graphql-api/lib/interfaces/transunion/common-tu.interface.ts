@@ -31,14 +31,14 @@ export interface IPartitionElements extends IPartitionSet {
   dateUpdated?: string;
 }
 export interface IAttributes {
-  name?: IName;
+  name?: ITUName;
   address?: IAddress;
   phone?: IPhone;
   dob?: IDob;
   ssn?: ISsn;
 }
 
-export interface IName {
+export interface ITUName {
   first?: string;
   middle?: string;
   last?: string;

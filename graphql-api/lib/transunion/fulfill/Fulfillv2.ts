@@ -19,18 +19,19 @@ import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 import { LoggerTransactionals } from 'lib/utils/logger/LoggerTransactionals';
 import { MergeReport } from 'lib/models/MergeReport/MergeReport';
 import { CreditReportPublisher } from 'lib/transunion/credit-report-service/CreditReportPublisher';
+import { APIRequest } from 'lib/models/api-request.model';
 
-export class FulfillV2 extends LoggerTransactionals {
-  protected reqXML: string;
-  protected resXML: string;
-  protected data: IFulfillGraphQLResponse;
-  protected action = 'Fulfill';
-  protected parserOptions = DEFAULT_PARSER_OPTIONS;
+export class FulfillV2 extends LoggerTransactionals implements APIRequest {
+  public reqXML: string;
+  public resXML: string;
+  public data: IFulfillGraphQLResponse;
+  public action = 'Fulfill';
+  public parserOptions = DEFAULT_PARSER_OPTIONS;
   public response: IFulfillResponse;
-  protected responseType: string;
-  protected responseError: any;
-  protected results: IProxyHandlerResponse<IFulfillResult>;
-  protected serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
+  public responseType: string;
+  public responseError: any;
+  public results: IProxyHandlerResponse<IFulfillResult>;
+  public serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
   public mergeReport: MergeReport;
   public mergeReportSPO: string;
 

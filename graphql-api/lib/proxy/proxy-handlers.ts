@@ -25,6 +25,10 @@ import { ICancelEnrollGraphQLResponse } from 'lib/interfaces';
 import { FulfillV2 } from 'lib/transunion/fulfill/Fulfillv2';
 import { FulfillDisputesV2 } from 'lib/transunion/fulfill-disputes/FulfillDisputesV2';
 import { MergeReport } from 'lib/models/MergeReport/MergeReport';
+import {
+  IIndicativeEnrichmentPayload,
+  IIndicativeEnrichmentResponse,
+} from 'lib/transunion/indicative-enrichment/indicative-enrichment.interface';
 
 const GO_LIVE = true;
 const errorLogger = new ErrorLogger();
@@ -151,16 +155,16 @@ export const IndicativeEnrichment = async ({
   data: any;
 }> => {
   // validate incoming message
-  const payload: interfaces.IIndicativeEnrichmentPayload = {
+  const payload: IIndicativeEnrichmentPayload = {
     id: identityId,
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<interfaces.IIndicativeEnrichmentPayload>('indicativeEnrichment');
+  const validate = ajv.getSchema<IIndicativeEnrichmentPayload>('indicativeEnrichment');
   if (!validate(payload)) throw `Malformed message=${message}`;
   //create helper
   const soap = new SoapAid(fastXml.parse, tu.formatIndicativeEnrichment, tu.createIndicativeEnrichment);
   try {
-    const resp = await soap.parseAndSendPayload<interfaces.IIndicativeEnrichmentResponse>(
+    const resp = await soap.parseAndSendPayload<IIndicativeEnrichmentResponse>(
       accountCode,
       username,
       agent,
