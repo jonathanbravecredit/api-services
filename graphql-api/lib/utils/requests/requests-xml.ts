@@ -1,3 +1,14 @@
+export const DefaultRequestXML = {
+  'soapenv:Envelope': {
+    _attributes: {
+      'xmlns:soapenv': 'http://schemas.xmlsoap.org/soap/envelope/',
+      'xmlns:con': 'https://consumerconnectws.tui.transunion.com/',
+      'xmlns:data': 'https://consumerconnectws.tui.transunion.com/data',
+    },
+    'soapenv:Header': {},
+  },
+};
+
 export const IndicativeEnrichmentRequestXML = {
   'soapenv:Envelope._attributes.xmlns:soapenv': 'root._attributes.xmlns:soapenv',
   'soapenv:Envelope._attributes.xmlns:con': 'root._attributes.xmlns:con',

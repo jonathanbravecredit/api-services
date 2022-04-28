@@ -1,3 +1,18 @@
+import { ACCOUNT_CODE } from 'lib/data/constants';
+import { v4 } from 'uuid';
+
+export const DefaultRequestMap = {
+  AccountCode: ACCOUNT_CODE,
+  AccountName: ACCOUNT_CODE,
+  AdditionalInputs: {
+    Data: {
+      Name: 'CreditReportVersion',
+      Value: '7.1',
+    },
+  },
+  RequestKey: `BC-${v4()}`,
+};
+
 export const IndicativeEnrichmentRequestMap = {
   ClientKey: 'root.id',
   'Customer.CurrentAddress.AddressLine1': 'root.address.addressOne',

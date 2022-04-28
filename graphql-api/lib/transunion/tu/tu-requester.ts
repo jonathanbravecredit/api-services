@@ -1,9 +1,10 @@
 import { ACCOUNT_CODE, ACCOUNT_NAME } from 'lib/data/constants';
 import { APIRequestKeys, APIRequestLibrary, APIRequestXMLLibrary } from 'lib/utils/requests/requests';
 import { Nested as _nest } from 'lib/utils/helpers/Nested';
-import { v4 } from 'uuid';
+
 import * as _ from 'lodash';
 import * as convert from 'xml-js';
+import { XMLUtil } from 'lib/utils/xml/XMLUtil';
 
 export class TURequester<T> {
   protected accountCode: string = ACCOUNT_CODE;
@@ -11,17 +12,20 @@ export class TURequester<T> {
   protected clientKey: string;
 
   private request: any = null;
-  private requestMap: { [key: string]: string };
-  private requestXML: { [key: string]: string };
+  private requestMap: { [key: string]: any };
+  private requestXML: { [key: string]: any };
 
   public xml: string = '';
+  private xmlObject: any = null;
 
   constructor(private requestKey: APIRequestKeys, private payload: T) {
     this.requestMap = APIRequestLibrary[this.requestKey];
     this.requestXML = APIRequestXMLLibrary[this.requestKey];
     this.generateRequest();
-    this.addDefaults();
-    this.generateXML();
+    this.addRequestDefaults();
+    this.generateXMLObject();
+    this.addXMLDefaults();
+    this.convertXML();
   }
 
   generateRequest(): void {
@@ -35,36 +39,27 @@ export class TURequester<T> {
     this.request = unflat;
   }
 
-  addDefaults(): void {
-    this.request = {
-      ...this.request,
-      AccountCode: this.accountCode,
-      AccountName: this.accountName,
-      AdditionalInputs: {
-        Data: {
-          Name: 'CreditReportVersion',
-          Value: '7.1',
-        },
-      },
-      RequestKey: `BC-${v4()}`,
-      _attributes: {
-        'xmlns:soapenv': 'http://schemas.xmlsoap.org/soap/envelope/',
-        'xmlns:con': 'https://consumerconnectws.tui.transunion.com/',
-        'xmlns:data': 'https://consumerconnectws.tui.transunion.com/data',
-      },
-      'soapenv:Header': {},
-    };
+  addRequestDefaults(): void {
+    this.request = _.merge(this.request, APIRequestLibrary[APIRequestKeys.DEFAULTS]);
   }
 
-  generateXML(): void {
+  generateXMLObject(): void {
     const result = Object.assign({}, this.requestXML);
     Object.entries(this.requestXML).forEach(([key, value]) => {
       const path = (value as string).split('.');
       const val = _.get({ root: this.request }, path);
-      result[key] = val;
+      result[key] = XMLUtil.textConstructor(val, true);
     });
     const unflat = _nest.unflatten(result);
-    const xml = convert.json2xml(JSON.stringify(unflat), { compact: true, spaces: 4 });
+    this.xmlObject = unflat;
+  }
+
+  addXMLDefaults(): void {
+    this.xmlObject = _.merge(this.xmlObject, APIRequestXMLLibrary[APIRequestKeys.DEFAULTS]);
+  }
+
+  convertXML(): void {
+    const xml = convert.json2xml(JSON.stringify(this.xmlObject), { compact: true, spaces: 4 });
     this.xml = xml;
   }
 }
