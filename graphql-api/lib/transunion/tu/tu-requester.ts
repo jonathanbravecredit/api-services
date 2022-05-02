@@ -18,9 +18,12 @@ export class TURequester<T> {
   public xml: string = '';
   public xmlObject: any = null;
 
-  constructor(private requestKey: APIRequestKeys, private payload: T) {
+  constructor(private requestKey: APIRequestKeys, private payload: T, private serviceBundleCode = '') {
     this.requestMap = APIRequestLibrary[this.requestKey];
     this.requestXML = APIRequestXMLLibrary[this.requestKey];
+  }
+
+  run(): void {
     this.generateRequest();
     this.addRequestDefaults();
     this.generateXMLObject();
@@ -40,7 +43,9 @@ export class TURequester<T> {
   }
 
   addRequestDefaults(): void {
-    this.request = _.merge(this.request, APIRequestLibrary[APIRequestKeys.DEFAULTS]);
+    this.request = _.merge(this.request, APIRequestLibrary[APIRequestKeys.DEFAULTS], {
+      serviceBundleCode: this.serviceBundleCode,
+    });
   }
 
   generateXMLObject(): void {

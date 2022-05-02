@@ -69,9 +69,11 @@ export class IndicativeEnrichmentV2 extends LoggerTransactionals implements APIR
     };
     const payloader = new Payloader<IIndicativeEnrichmentPayload>();
     payloader.validate<IIndicativeEnrichmentPayload>(payload, 'indicativeEnrichment');
-    this.prepped = payload;
     this.gqldata = payloader.data;
-    console.log('data: ', this.gqldata);
+    this.prepped = payload;
+    console.log('gqldata: ', this.gqldata);
+    console.log('prepped: ', this.payload);
+
     return this.gqldata;
   }
 
@@ -83,7 +85,11 @@ export class IndicativeEnrichmentV2 extends LoggerTransactionals implements APIR
    *    - generates the request xml
    */
   runRequester(): void {
-    const requester = new IndicativeEnrichmentRequester(APIRequestKeys.INDICATIVE_ENRICHMENT, this.prepped); //new FulfillRequester(this.data, this.serviceBundleCode);
+    const requester = new IndicativeEnrichmentRequester(
+      APIRequestKeys.INDICATIVE_ENRICHMENT,
+      this.prepped,
+      this.serviceBundleCode,
+    );
     this.reqXML = requester.xml;
   }
 
