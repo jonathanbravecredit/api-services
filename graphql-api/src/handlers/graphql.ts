@@ -12,6 +12,7 @@ import { FulfillV2 } from 'lib/transunion/fulfill/Fulfillv2';
 import { FulfillDisputesV2 } from 'lib/transunion/fulfill-disputes/FulfillDisputesV2';
 import { AcknowledgeDisputeTerms } from 'lib/transunion/acknowledgements/AcknowledgeDispute';
 import { IndicativeEnrichmentV2 } from 'lib/transunion/indicative-enrichment/indicative-enrichment-v2';
+import { GetAuthenticationQuestionsV2 } from 'lib/transunion/authentication-questions/get-authentication-questions-v2';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -115,7 +116,8 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await indicativeEnrichment.run();
         return JSON.stringify(results);
       case 'GetAuthenticationQuestions':
-        results = await queries.GetAuthenticationQuestions(payload);
+        const getAuthenticationQuestions = new GetAuthenticationQuestionsV2(payload);
+        results = await getAuthenticationQuestions.run();
         return JSON.stringify(results);
       case 'VerifyAuthenticationQuestions':
         results = await queries.VerifyAuthenticationQuestions(payload);

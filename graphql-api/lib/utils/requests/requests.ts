@@ -1,11 +1,20 @@
-import { DefaultRequestMap, IndicativeEnrichmentRequestMap } from 'lib/utils/requests/requests-map';
-import { DefaultRequestXML, IndicativeEnrichmentRequestXML } from 'lib/utils/requests/requests-xml';
+import {
+  DefaultRequestMap,
+  GetAuthenticationQuestionsRequestMap,
+  IndicativeEnrichmentRequestMap,
+} from 'lib/utils/requests/requests-map';
+import {
+  DefaultRequestXML,
+  GetAuthenticationQuestionsRequestXML,
+  IndicativeEnrichmentRequestXML,
+} from 'lib/utils/requests/requests-xml';
 
 export enum APIRequestKeys {
   DEFAULTS = 'defaults',
   FULFILL = 'fulfill',
   ENROLL = 'enroll',
   INDICATIVE_ENRICHMENT = 'indicative-enrichment',
+  GET_AUTHENTICATION_QUESTIONS = 'get-authentication-questions',
 }
 
 export const APIRequestLibrary = {
@@ -13,6 +22,7 @@ export const APIRequestLibrary = {
   [APIRequestKeys.FULFILL]: {},
   [APIRequestKeys.ENROLL]: {},
   [APIRequestKeys.INDICATIVE_ENRICHMENT]: IndicativeEnrichmentRequestMap,
+  [APIRequestKeys.GET_AUTHENTICATION_QUESTIONS]: GetAuthenticationQuestionsRequestMap,
 };
 
 export const APIRequestXMLLibrary = {
@@ -20,4 +30,5 @@ export const APIRequestXMLLibrary = {
   [APIRequestKeys.FULFILL]: {},
   [APIRequestKeys.ENROLL]: {},
   [APIRequestKeys.INDICATIVE_ENRICHMENT]: IndicativeEnrichmentRequestXML,
+  [APIRequestKeys.GET_AUTHENTICATION_QUESTIONS]: GetAuthenticationQuestionsRequestXML,
 };
