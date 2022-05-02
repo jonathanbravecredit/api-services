@@ -41,7 +41,7 @@ export class TURequester<T> {
 
   addRequestDefaults(): void {
     this.request = _.merge(this.request, APIRequestLibrary[APIRequestKeys.DEFAULTS], {
-      serviceBundleCode: this.serviceBundleCode,
+      ServiceBundleCode: this.serviceBundleCode,
     });
   }
 

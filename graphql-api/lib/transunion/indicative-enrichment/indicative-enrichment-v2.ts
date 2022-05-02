@@ -1,4 +1,5 @@
 import * as https from 'https';
+import * as dayjs from 'dayjs';
 import { Nested as _nest } from 'lib/utils/helpers/Nested';
 import { SoapV2 } from 'lib/utils/soap-aid/SoapV2';
 import { Payloader } from 'lib/utils/payloader/Payloader';
@@ -46,6 +47,7 @@ export class IndicativeEnrichmentV2 extends LoggerTransactionals implements APIR
     const { agent, auth, identityId } = this.payload;
     try {
       await this.runPayloader();
+      this.formatDob();
       this.runRequester();
       await this.runSendAndSync(agent, auth);
       await this.logResults();
@@ -72,8 +74,7 @@ export class IndicativeEnrichmentV2 extends LoggerTransactionals implements APIR
     this.gqldata = payloader.data;
     this.prepped = payload;
     console.log('gqldata: ', this.gqldata);
-    console.log('prepped: ', this.payload);
-
+    console.log('prepped: ', this.prepped);
     return this.gqldata;
   }
 
@@ -140,6 +141,12 @@ export class IndicativeEnrichmentV2 extends LoggerTransactionals implements APIR
    */
   setFailedResults(): void {
     this.results = { success: false, error: this.responseError };
+  }
+
+  formatDob(): void {
+    const { year, month, day } = this.prepped.dob;
+    const iso = dayjs(`${year}-${month}-${day}`, 'YYYY-MMM-D');
+    this.prepped.dobformatted = iso.format('YYYY-MM-DD');
   }
 
   /**

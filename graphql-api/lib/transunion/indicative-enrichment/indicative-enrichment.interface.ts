@@ -1,5 +1,4 @@
 import { IStandardResponse } from 'lib/interfaces';
-import { IErrorResponse } from 'lib/interfaces/transunion/errors.interface';
 import { DobInput, SsnInput, NameInput, AddressInput } from 'src/api/api.service';
 
 export interface IIndicativeEnrichmentRequest {
@@ -7,6 +6,7 @@ export interface IIndicativeEnrichmentRequest {
   ssn: SsnInput;
   name: NameInput;
   address: AddressInput;
+  dobformatted: string;
 }
 
 export interface IIndicativeEnrichmentPayload extends IIndicativeEnrichmentRequest {
