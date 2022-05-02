@@ -21,9 +21,6 @@ export class TURequester<T> {
   constructor(private requestKey: APIRequestKeys, private payload: T, private serviceBundleCode = '') {
     this.requestMap = APIRequestLibrary[this.requestKey];
     this.requestXML = APIRequestXMLLibrary[this.requestKey];
-  }
-
-  run(): void {
     this.generateRequest();
     this.addRequestDefaults();
     this.generateXMLObject();
