@@ -7,7 +7,7 @@ import { TURequestBase } from 'lib/transunion/tu/TURequestBase';
 import { XMLUtil as XML } from 'lib/utils/xml/XMLUtil';
 import { APIRequester } from 'lib/models/api-requester.model';
 
-export class FulfillRequester extends TURequestBase<IFulfillGraphQLResponse> implements APIRequester {
+export class FulfillRequester extends TURequestBase<IFulfillGraphQLResponse> {
   request: IFulfillRequest;
   xml: string;
 
