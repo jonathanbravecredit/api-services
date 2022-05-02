@@ -45,3 +45,9 @@ export const GetAuthenticationQuestionsRequestMap = {
   'Customer.Ssn': 'root.ssn.lastfour',
   ServiceBundleCode: 'root.serviceBundleCode',
 };
+
+export const VerifyAuthenticationQuestionsRequestMap = {
+  ClientKey: 'root.id',
+  Answers: 'root.answers',
+  ServiceBundleFulfillmentKey: 'root.key',
+};

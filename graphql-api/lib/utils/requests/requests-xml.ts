@@ -113,3 +113,23 @@ export const GetAuthenticationQuestionsRequestXML = {
     'root.ServiceBundleCode',
   'soapenv:Envelope.soapenv:Body.con:GetAuthenticationQuestions.con:request.data:TrustSessionId': 'root.TrustSessionId',
 };
+
+export const VerifyAuthenticationQuestionsRequestXML = {
+  'soapenv:Envelope._attributes.xmlns:soapenv': 'root._attributes.xmlns:soapenv',
+  'soapenv:Envelope._attributes.xmlns:con': 'root._attributes.xmlns:con',
+  'soapenv:Envelope._attributes.xmlns:data': 'root._attributes.xmlns:data',
+  'soapenv:Envelope.soapenv:Header': 'root.soapenv:Header',
+  'soapenv:Envelope.soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:AccountCode': 'root.AccountCode',
+  'soapenv:Envelope.soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:AccountName': 'root.AccountName',
+  'soapenv:Envelope.soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:AdditionalInputs.data:Data.data:Name':
+    'root.AdditionalInputs.Data.Name',
+  'soapenv:Envelope.soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:AdditionalInputs.data:Data.data:Value':
+    'root.AdditionalInputs.Data.Value',
+  'soapenv:Envelope.soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:RequestKey': 'root.RequestKey',
+  'soapenv:Envelope.soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:ClientKey': 'root.ClientKey',
+  'soapenv:Envelope.soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:Answers': 'root.Answers',
+  'soapenv:Envelope.soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:ServiceBundleFulfillmentKey':
+    'root.ServiceBundleFulfillmentKey',
+  'soapenv:Envelope.soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:TrustSessionId':
+    'root.TrustSessionId',
+};
