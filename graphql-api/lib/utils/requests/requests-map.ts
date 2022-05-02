@@ -21,7 +21,7 @@ export const IndicativeEnrichmentRequestMap = {
   'Customer.CurrentAddress.State': 'root.address.state',
   'Customer.CurrentAddress.Zipcode': 'root.address.zip',
   'Customer.PreviousAddress': 'root.previousAddress',
-  'Customer.DateOfBirth': 'root.dob',
+  'Customer.DateOfBirth': 'root.dobformatted',
   'Customer.FullName.FirstName': 'root.name.first',
   'Customer.FullName.LastName': 'root.name.last',
   'Customer.FullName.MiddleName': 'root.name.middle',
