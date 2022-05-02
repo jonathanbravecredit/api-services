@@ -11,12 +11,12 @@ export class TURequester<T> {
   protected accountName: string = ACCOUNT_NAME;
   protected clientKey: string;
 
-  private request: any = null;
-  private requestMap: { [key: string]: any };
-  private requestXML: { [key: string]: any };
+  protected request: any = null;
+  protected requestMap: { [key: string]: any };
+  protected requestXML: { [key: string]: any };
 
   public xml: string = '';
-  private xmlObject: any = null;
+  public xmlObject: any = null;
 
   constructor(private requestKey: APIRequestKeys, private payload: T) {
     this.requestMap = APIRequestLibrary[this.requestKey];

@@ -3,7 +3,8 @@ import { IProxyHandlerResponse } from 'lib/interfaces/api/proxy-handler.interfac
 export interface APIRequest {
   reqXML: string;
   resXML: string;
-  data?: any;
+  gqldata: any;
+  prepped: any;
   action: string;
   parserOptions: any;
   response: any;

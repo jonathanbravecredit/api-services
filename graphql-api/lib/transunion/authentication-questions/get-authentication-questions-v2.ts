@@ -19,7 +19,8 @@ import { GetAuthenticationQuestionsResponder } from 'lib/transunion/authenticati
 export class GetAuthenticationQuestionsV2 extends LoggerTransactionals implements APIRequest {
   public reqXML: string;
   public resXML: string;
-  public data: IGetAuthenticationQuestionsPayload;
+  public gqldata: any;
+  public prepped: IGetAuthenticationQuestionsPayload;
   public action = 'GetAuthenticationQuestions';
   public parserOptions = DEFAULT_PARSER_OPTIONS;
   public response: IGetAuthenticationQuestionsResponse; //IFulfillResponse;
@@ -68,9 +69,10 @@ export class GetAuthenticationQuestionsV2 extends LoggerTransactionals implement
     };
     const payloader = new Payloader<IGetAuthenticationQuestionsPayload>();
     payloader.validate<IGetAuthenticationQuestionsPayload>(payload, 'getAuthenticationQuestionsRequest');
-    this.data = payloader.data;
-    console.log('data: ', this.data);
-    return this.data;
+    this.prepped = payload;
+    this.gqldata = payloader.data;
+    console.log('data: ', this.gqldata);
+    return this.gqldata;
   }
 
   /**
@@ -81,7 +83,10 @@ export class GetAuthenticationQuestionsV2 extends LoggerTransactionals implement
    *    - generates the request xml
    */
   runRequester(): void {
-    const requester = new GetAuthenticationQuestionsRequester(APIRequestKeys.GET_AUTHENTICATION_QUESTIONS, this.data); //new FulfillRequester(this.data, this.serviceBundleCode);
+    const requester = new GetAuthenticationQuestionsRequester(
+      APIRequestKeys.GET_AUTHENTICATION_QUESTIONS,
+      this.prepped,
+    ); //new FulfillRequester(this.data, this.serviceBundleCode);
     this.reqXML = requester.xml;
   }
 
