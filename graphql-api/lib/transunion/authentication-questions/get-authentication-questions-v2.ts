@@ -86,7 +86,8 @@ export class GetAuthenticationQuestionsV2 extends LoggerTransactionals implement
     const requester = new GetAuthenticationQuestionsRequester(
       APIRequestKeys.GET_AUTHENTICATION_QUESTIONS,
       this.prepped,
-    ); //new FulfillRequester(this.data, this.serviceBundleCode);
+      this.serviceBundleCode,
+    );
     this.reqXML = requester.xml;
   }
 
