@@ -14,7 +14,7 @@ export * from './get-service-product.interface';
 export * from './merge-report.interface';
 export * from './start-dispute.interface';
 export * from './verify-authentication-answers.interface';
-export * from './verify-authentication-questions.interface';
+export * from '../../transunion/authentication-questions-verify/verify-authentication-questions.interface';
 export * from './get-trending-data.interface';
 export * from './get-alerts-notifications.interface';
 export * from './get-investigation-results-by-id.interface';

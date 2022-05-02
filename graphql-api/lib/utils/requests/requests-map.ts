@@ -1,9 +1,9 @@
-import { ACCOUNT_CODE } from 'lib/data/constants';
+import { ACCOUNT_CODE, ACCOUNT_NAME } from 'lib/data/constants';
 import { v4 } from 'uuid';
 
 export const DefaultRequestMap = {
   AccountCode: ACCOUNT_CODE,
-  AccountName: ACCOUNT_CODE,
+  AccountName: ACCOUNT_NAME,
   AdditionalInputs: {
     Data: {
       Name: 'CreditReportVersion',
@@ -44,4 +44,10 @@ export const GetAuthenticationQuestionsRequestMap = {
   'Customer.PhoneNumber': 'root.phone.primary',
   'Customer.Ssn': 'root.ssn.lastfour',
   ServiceBundleCode: 'root.serviceBundleCode',
+};
+
+export const VerifyAuthenticationQuestionsRequestMap = {
+  ClientKey: 'root.id',
+  Answers: 'root.answers',
+  ServiceBundleFulfillmentKey: 'root.key',
 };

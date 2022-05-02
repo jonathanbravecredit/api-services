@@ -19,7 +19,8 @@ import { IndicativeEnrichmentResponder } from 'lib/transunion/indicative-enrichm
 export class IndicativeEnrichmentV2 extends LoggerTransactionals implements APIRequest {
   public reqXML: string;
   public resXML: string;
-  public data: IIndicativeEnrichmentPayload;
+  public gqldata: any;
+  public prepped: IIndicativeEnrichmentPayload;
   public action = 'IndicativeEnrichment';
   public parserOptions = DEFAULT_PARSER_OPTIONS;
   public response: IIndicativeEnrichmentResponse; //IFulfillResponse;
@@ -68,9 +69,10 @@ export class IndicativeEnrichmentV2 extends LoggerTransactionals implements APIR
     };
     const payloader = new Payloader<IIndicativeEnrichmentPayload>();
     payloader.validate<IIndicativeEnrichmentPayload>(payload, 'indicativeEnrichment');
-    this.data = payloader.data;
-    console.log('data: ', this.data);
-    return this.data;
+    this.prepped = payload;
+    this.gqldata = payloader.data;
+    console.log('data: ', this.gqldata);
+    return this.gqldata;
   }
 
   /**
@@ -81,7 +83,7 @@ export class IndicativeEnrichmentV2 extends LoggerTransactionals implements APIR
    *    - generates the request xml
    */
   runRequester(): void {
-    const requester = new IndicativeEnrichmentRequester(APIRequestKeys.INDICATIVE_ENRICHMENT, this.data); //new FulfillRequester(this.data, this.serviceBundleCode);
+    const requester = new IndicativeEnrichmentRequester(APIRequestKeys.INDICATIVE_ENRICHMENT, this.prepped); //new FulfillRequester(this.data, this.serviceBundleCode);
     this.reqXML = requester.xml;
   }
 
