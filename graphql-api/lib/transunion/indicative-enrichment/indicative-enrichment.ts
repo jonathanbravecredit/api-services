@@ -1,5 +1,8 @@
 import { MONTH_MAP } from 'lib/data/constants';
-import { IEnrichedIndicativeEnrichment, IIndicativeEnrichmentPayload } from 'lib/interfaces';
+import {
+  IEnrichedIndicativeEnrichment,
+  IIndicativeEnrichmentPayload,
+} from 'lib/transunion/indicative-enrichment/indicative-enrichment.interface';
 import { textConstructor } from 'lib/utils/helpers/helpers';
 import * as uuid from 'uuid';
 import * as convert from 'xml-js';

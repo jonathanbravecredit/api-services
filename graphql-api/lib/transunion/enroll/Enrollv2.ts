@@ -12,18 +12,19 @@ import { EnrollResponder } from 'lib/transunion/enroll/subclasses/EnrollResponde
 import { LoggerTransactionals } from 'lib/utils/logger/LoggerTransactionals';
 import { MergeReport } from 'lib/models/MergeReport/MergeReport';
 import { CreditReportPublisher } from 'lib/transunion/credit-report-service/CreditReportPublisher';
+import { APIRequest } from 'lib/models/api-request.model';
 
-export class EnrollV2 extends LoggerTransactionals {
-  protected reqXML: string;
-  protected resXML: string;
-  protected data: IEnrollGraphQLResponse;
-  protected action = 'Enroll';
-  protected parserOptions = DEFAULT_PARSER_OPTIONS;
-  protected response: IEnrollResponse;
-  protected responseType: string;
-  protected responseError: any;
-  protected results: IProxyHandlerResponse<{ report: MergeReport }>;
-  protected serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
+export class EnrollV2 extends LoggerTransactionals implements APIRequest {
+  public reqXML: string;
+  public resXML: string;
+  public data: IEnrollGraphQLResponse;
+  public action = 'Enroll';
+  public parserOptions = DEFAULT_PARSER_OPTIONS;
+  public response: IEnrollResponse;
+  public responseType: string;
+  public responseError: any;
+  public results: IProxyHandlerResponse<{ report: MergeReport }>;
+  public serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
   public mergeReport: MergeReport;
   public mergeReportSPO: string;
 

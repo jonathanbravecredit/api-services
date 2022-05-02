@@ -10,4 +10,11 @@ export class TUResponseBase<RES, U> {
   public enriched: U;
 
   constructor() {}
+
+  parseResponse(arg: any): RES {
+    return this.response;
+  }
+  enrichData(arg: U | undefined): U | undefined {
+    return this.enriched;
+  }
 }

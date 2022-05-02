@@ -25,6 +25,10 @@ import { ICancelEnrollGraphQLResponse } from 'lib/interfaces';
 import { FulfillV2 } from 'lib/transunion/fulfill/Fulfillv2';
 import { FulfillDisputesV2 } from 'lib/transunion/fulfill-disputes/FulfillDisputesV2';
 import { MergeReport } from 'lib/models/MergeReport/MergeReport';
+import {
+  IIndicativeEnrichmentPayload,
+  IIndicativeEnrichmentResponse,
+} from 'lib/transunion/indicative-enrichment/indicative-enrichment.interface';
 
 const GO_LIVE = true;
 const errorLogger = new ErrorLogger();
@@ -119,91 +123,6 @@ export const UpdateNavBar = async ({
     const error = errorLogger.createError(identityId, 'UpdateNavBar', JSON.stringify(err));
     await errorLogger.logger.create(error);
     return { success: false, error: err };
-  }
-};
-
-/**
- * This enriches the users profile with attributes like name, address, dob
- * @param {string} accountCode Brave account code
- * @param {string} username Brave user ID (Identity ID)
- * @param {string} message JSON object in IE message format...TODO add type definitions for
- * @param {https.Agent} agent
- * @param {string} auth
- * @returns full ssn for verification
- */
-export const IndicativeEnrichment = async ({
-  accountCode,
-  username,
-  message,
-  agent,
-  auth,
-  identityId,
-}: {
-  accountCode: string;
-  username: string;
-  message: string;
-  agent: https.Agent;
-  auth: string;
-  identityId: string;
-}): Promise<{
-  success: boolean;
-  error: interfaces.IErrorResponse | interfaces.INil;
-  data: any;
-}> => {
-  // validate incoming message
-  const payload: interfaces.IIndicativeEnrichmentPayload = {
-    id: identityId,
-    ...JSON.parse(message),
-  };
-  const validate = ajv.getSchema<interfaces.IIndicativeEnrichmentPayload>('indicativeEnrichment');
-  if (!validate(payload)) throw `Malformed message=${message}`;
-  //create helper
-  const soap = new SoapAid(fastXml.parse, tu.formatIndicativeEnrichment, tu.createIndicativeEnrichment);
-  try {
-    const resp = await soap.parseAndSendPayload<interfaces.IIndicativeEnrichmentResponse>(
-      accountCode,
-      username,
-      agent,
-      auth,
-      payload,
-      'IndicativeEnrichment',
-      parserOptions,
-    );
-
-    const data = resp.Envelope?.Body?.IndicativeEnrichmentResponse?.IndicativeEnrichmentResult;
-    const responseType = data?.ResponseType;
-    const error = data?.ErrorResponse;
-
-    // log tu responses
-    const l1 = transactionLogger.createTransaction(identityId, 'IndicativeEnrichment:data', JSON.stringify(data));
-    const l2 = transactionLogger.createTransaction(
-      identityId,
-      'IndicativeEnrichment:type',
-      JSON.stringify(responseType),
-    );
-    const l3 = transactionLogger.createTransaction(identityId, 'IndicativeEnrichment:error', JSON.stringify(error));
-    await transactionLogger.logger.create(l1);
-    await transactionLogger.logger.create(l2);
-    await transactionLogger.logger.create(l3);
-
-    const response =
-      responseType.toLowerCase() === 'success'
-        ? { success: true, error: error, data: data }
-        : { success: false, error: error, data: null };
-
-    // log success response
-    const l4 = transactionLogger.createTransaction(
-      identityId,
-      'IndicativeEnrichment:response',
-      JSON.stringify(response),
-    );
-    await transactionLogger.logger.create(l4);
-
-    return response;
-  } catch (err) {
-    const error = errorLogger.createError(identityId, 'IndicativeEnrichment', JSON.stringify(err));
-    await errorLogger.logger.create(error);
-    return { success: false, error: err, data: null };
   }
 };
 

@@ -1,4 +1,4 @@
-import { IErrorResponse, INil, IStandardResponse } from 'lib/interfaces/transunion';
+import { IDob, IErrorResponse, INil, IStandardResponse } from 'lib/interfaces/transunion';
 
 export interface IFulfillGraphQLResponse {
   data: {
@@ -158,35 +158,6 @@ export interface IFulfillUserAttributes {
     lastfour?: string;
     full?: string;
   };
-}
-
-export interface IName {
-  first?: string;
-  middle?: string;
-  last?: string;
-}
-
-export interface IAddress {
-  addressOne?: string;
-  addressTwo?: string;
-  city?: string;
-  state?: string;
-  zip?: string;
-}
-
-export interface IPhone {
-  primary: string;
-}
-
-export interface IDob {
-  year?: string;
-  month?: string;
-  day?: string;
-}
-
-export interface ISsn {
-  lastfour?: string;
-  full?: string;
 }
 
 export interface IFulfillProxyResult {

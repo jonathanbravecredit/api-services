@@ -5,8 +5,9 @@ import * as _ from 'lodash';
 import { IFulfillGraphQLResponse, IFulfillRequest } from 'lib/interfaces';
 import { TURequestBase } from 'lib/transunion/tu/TURequestBase';
 import { XMLUtil as XML } from 'lib/utils/xml/XMLUtil';
+import { APIRequester } from 'lib/models/api-requester.model';
 
-export class FulfillRequester extends TURequestBase<IFulfillGraphQLResponse> {
+export class FulfillRequester extends TURequestBase<IFulfillGraphQLResponse> implements APIRequester {
   request: IFulfillRequest;
   xml: string;
 
