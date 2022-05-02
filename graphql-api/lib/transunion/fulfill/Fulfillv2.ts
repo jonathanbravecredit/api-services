@@ -24,7 +24,8 @@ import { APIRequest } from 'lib/models/api-request.model';
 export class FulfillV2 extends LoggerTransactionals implements APIRequest {
   public reqXML: string;
   public resXML: string;
-  public data: IFulfillGraphQLResponse;
+  public gqldata: IFulfillGraphQLResponse;
+  public prepped = null;
   public action = 'Fulfill';
   public parserOptions = DEFAULT_PARSER_OPTIONS;
   public response: IFulfillResponse;
@@ -51,7 +52,7 @@ export class FulfillV2 extends LoggerTransactionals implements APIRequest {
     const { accountCode, username, message, agent, auth, identityId } = this.payload;
     try {
       await this.runPayloader();
-      const requester = new FulfillRequester(this.data, this.serviceBundleCode);
+      const requester = new FulfillRequester(this.gqldata, this.serviceBundleCode);
       this.runRequester<FulfillRequester>(requester);
       const responder = new FulfillResponder();
       await this.runSendAndSync<FulfillResponder>(agent, auth, identityId, responder);
@@ -76,9 +77,9 @@ export class FulfillV2 extends LoggerTransactionals implements APIRequest {
     payloader.validate<IGenericRequest>(payload, 'getRequest');
     const qry = qryGetDataForFulfill;
     await payloader.prep<IGenericRequest>(qry, payload);
-    this.data = payloader.data;
-    console.log('data: ', this.data);
-    return this.data;
+    this.gqldata = payloader.data;
+    console.log('data: ', this.gqldata);
+    return this.gqldata;
   }
 
   /**

@@ -17,7 +17,8 @@ import { APIRequest } from 'lib/models/api-request.model';
 export class EnrollV2 extends LoggerTransactionals implements APIRequest {
   public reqXML: string;
   public resXML: string;
-  public data: IEnrollGraphQLResponse;
+  public gqldata: IEnrollGraphQLResponse;
+  public prepped = null;
   public action = 'Enroll';
   public parserOptions = DEFAULT_PARSER_OPTIONS;
   public response: IEnrollResponse;
@@ -44,7 +45,7 @@ export class EnrollV2 extends LoggerTransactionals implements APIRequest {
     const { accountCode, username, message, agent, auth, identityId } = this.payload;
     try {
       await this.runPayloader(identityId);
-      const requester = new EnrollRequester(this.data, this.serviceBundleCode);
+      const requester = new EnrollRequester(this.gqldata, this.serviceBundleCode);
       this.runRequester<EnrollRequester>(requester);
       const responder = new EnrollResponder();
       await this.runSendAndSync<EnrollResponder>(agent, auth, identityId, responder);
@@ -69,8 +70,8 @@ export class EnrollV2 extends LoggerTransactionals implements APIRequest {
     payloader.validate<IGenericRequest>(payload, 'getRequest');
     const qry = qryGetDataForEnrollment;
     await payloader.prep<IGenericRequest>(qry, payload);
-    this.data = payloader.data;
-    return this.data;
+    this.gqldata = payloader.data;
+    return this.gqldata;
   }
 
   /**
