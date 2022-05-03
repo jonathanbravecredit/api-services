@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { SNS } from 'aws-sdk';
 import { Handler } from 'aws-lambda';
-import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
-import ErrorLogger from 'lib/utils/db/logger/logger-errors';
-import { listDisputesById } from 'lib/utils/db/disputes/queries/disputes.queries';
+import { PubSubUtil } from 'libs/utils/pubsub/pubsub';
+import ErrorLogger from 'libs/utils/db/logger/logger-errors';
+import { listDisputesById } from 'libs/utils/db/disputes/queries/disputes.queries';
 // import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
 // import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
 

@@ -2,10 +2,10 @@ import 'reflect-metadata';
 import { AppSyncResolverEvent } from 'aws-lambda';
 import * as https from 'https';
 import * as fs from 'fs';
-import * as queries from 'lib/proxy';
-import * as secrets from 'lib/utils/secrets/secrets';
-import ErrorLogger from 'lib/utils/db/logger/logger-errors';
-import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
+import * as queries from 'libs/proxy';
+import * as secrets from 'libs/utils/secrets/secrets';
+import ErrorLogger from 'libs/utils/db/logger/logger-errors';
+import TransactionLogger from 'libs/utils/db/logger/logger-transactions';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
