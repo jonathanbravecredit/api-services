@@ -1,5 +1,4 @@
 import { IStandardResponse } from 'libs/interfaces/transunion/common-tu.interface';
-import { IErrorResponse } from 'libs/interfaces/transunion/errors.interface';
 import { AddressInput, DobInput, NameInput, PhoneInput, SsnInput } from 'src/api/api.service';
 
 export interface IGetAuthenticationQuestionsRequest {
@@ -8,10 +7,12 @@ export interface IGetAuthenticationQuestionsRequest {
   dob: DobInput;
   phone: PhoneInput;
   ssn: SsnInput;
+  dobformatted?: string;
 }
 
 export interface IGetAuthenticationQuestionsPayload extends IGetAuthenticationQuestionsRequest {
   id: string;
+  serviceBundleCode: string;
 }
 export interface IGetAuthenticationQuestions {
   request: {

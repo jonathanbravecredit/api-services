@@ -6,7 +6,7 @@ export interface IIndicativeEnrichmentRequest {
   ssn: SsnInput;
   name: NameInput;
   address: AddressInput;
-  dobformatted: string;
+  dobformatted?: string;
 }
 
 export interface IIndicativeEnrichmentPayload extends IIndicativeEnrichmentRequest {

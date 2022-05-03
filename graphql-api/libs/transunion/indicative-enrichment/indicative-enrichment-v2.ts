@@ -47,7 +47,7 @@ export class IndicativeEnrichmentV2 extends LoggerTransactionals implements APIR
     const { agent, auth, identityId } = this.payload;
     try {
       await this.runPayloader();
-      this.formatDob();
+      this.formatDob(); // added step
       this.runRequester();
       await this.runSendAndSync(agent, auth);
       await this.logResults();
