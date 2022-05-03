@@ -73,7 +73,7 @@ export class IndicativeEnrichmentV2 extends LoggerTransactionals implements APIR
     const payloader = new Payloader<IIndicativeEnrichmentPayload>();
     payloader.validate<IIndicativeEnrichmentPayload>(payload, 'indicativeEnrichment');
     this.gqldata = payloader.data;
-    this.prepped = payload;
+    this.prepped = _nest.update(payload, 'lastfour', `000000000${payload.ssn.lastfour}`.slice(-9));
     console.log('gqldata: ', this.gqldata);
     console.log('prepped: ', this.prepped);
     return this.gqldata;
