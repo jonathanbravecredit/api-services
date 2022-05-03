@@ -1,19 +1,4 @@
-import { ACCOUNT_CODE, ACCOUNT_NAME } from 'libs/data/constants';
-import { v4 } from 'uuid';
-
-export const DefaultRequestMap = {
-  AccountCode: ACCOUNT_CODE,
-  AccountName: ACCOUNT_NAME,
-  AdditionalInputs: {
-    Data: {
-      Name: 'CreditReportVersion',
-      Value: '7.1',
-    },
-  },
-  RequestKey: `BC-${v4()}`,
-};
-
-export const MockMap = {
+export const MockRequestMap = {
   ClientKey: 'root.id',
   'Customer.CurrentAddress.AddressLine1': 'root.address.addressOne',
   'Customer.CurrentAddress.AddressLine2': 'root.address.addressTwo',

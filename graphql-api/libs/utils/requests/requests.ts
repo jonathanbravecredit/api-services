@@ -1,12 +1,10 @@
 import {
-  DefaultRequestMap,
+  MockRequestMap,
   GetAuthenticationQuestionsRequestMap,
   IndicativeEnrichmentRequestMap,
-  MockMap,
   VerifyAuthenticationQuestionsRequestMap,
 } from 'libs/utils/requests/requests-map';
 import {
-  DefaultRequestXML,
   GetAuthenticationQuestionsRequestXML,
   IndicativeEnrichmentRequestXML,
   MockRequestXML,
@@ -14,7 +12,6 @@ import {
 } from 'libs/utils/requests/requests-xml';
 
 export enum APIRequestKeys {
-  DEFAULTS = 'defaults',
   MOCK = 'mock',
   FULFILL = 'fulfill',
   ENROLL = 'enroll',
@@ -24,8 +21,7 @@ export enum APIRequestKeys {
 }
 
 export const APIRequestLibrary = {
-  [APIRequestKeys.DEFAULTS]: DefaultRequestMap,
-  [APIRequestKeys.MOCK]: MockMap,
+  [APIRequestKeys.MOCK]: MockRequestMap,
   [APIRequestKeys.FULFILL]: {},
   [APIRequestKeys.ENROLL]: {},
   [APIRequestKeys.INDICATIVE_ENRICHMENT]: IndicativeEnrichmentRequestMap,
@@ -34,7 +30,6 @@ export const APIRequestLibrary = {
 };
 
 export const APIRequestXMLLibrary = {
-  [APIRequestKeys.DEFAULTS]: DefaultRequestXML,
   [APIRequestKeys.MOCK]: MockRequestXML,
   [APIRequestKeys.FULFILL]: {},
   [APIRequestKeys.ENROLL]: {},

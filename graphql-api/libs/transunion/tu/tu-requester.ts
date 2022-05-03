@@ -1,7 +1,7 @@
 import { ACCOUNT_CODE, ACCOUNT_NAME } from 'libs/data/constants';
 import { APIRequestKeys, APIRequestLibrary, APIRequestXMLLibrary } from 'libs/utils/requests/requests';
 import { Nested as _nest } from 'libs/utils/helpers/Nested';
-
+import { v4 } from 'uuid';
 import * as _ from 'lodash';
 import * as convert from 'xml-js';
 import { XMLUtil } from 'libs/utils/xml/XMLUtil';
@@ -11,47 +11,65 @@ export class TURequester<T> {
   public accountName: string = ACCOUNT_NAME;
   public clientKey: string;
 
-  public request: any = null;
+  public requestObject: any = {};
+  public requestXMLObject: any = {};
   public requestMap: { [key: string]: any };
-  public requestXML: { [key: string]: any };
+  public requestXMLMap: { [key: string]: any };
 
   public xml: string = '';
-  public xmlObject: any = null;
 
-  constructor(public requestKey: APIRequestKeys, public payload: T, public serviceBundleCode = '') {
+  constructor(public requestKey: APIRequestKeys, public payload: T) {
     this.requestMap = APIRequestLibrary[this.requestKey];
-    this.requestXML = APIRequestXMLLibrary[this.requestKey];
+    this.requestXMLMap = APIRequestXMLLibrary[this.requestKey];
   }
 
-  run(): void {
-    if (!this.requestMap || !this.requestXML)
-      throw new Error(`map: ${this.requestMap} or xml: ${this.requestXML} request is not set`);
-    this.generateRequest();
-    this.addRequestDefaults();
+  createRequest(): void {
+    if (!this.requestMap || !this.requestXMLMap)
+      throw new Error(`map: ${this.requestMap} or xml map: ${this.requestXMLMap} request is not set`);
+    this.generateRequestObject();
     this.generateXMLObject();
-    this.addXMLDefaults();
     this.convertXML();
   }
 
-  generateRequest(): void {
-    this.request = _nest.unflatten(this.parseRequest({ ...this.requestMap }));
+  generateRequestObject(): void {
+    this.requestObject = this.getReqWrapper(_nest.unflatten(this.parseRequest({ ...this.requestMap })));
   }
 
   generateXMLObject(): void {
-    this.xmlObject = _nest.unflatten(this.parseXML({ ...this.requestXML }));
+    this.requestXMLObject = this.getXMLWrapper(_nest.unflatten(this.parseXML({ ...this.requestXMLMap })));
   }
 
-  addRequestDefaults(): void {
-    this.request = _.merge(this.request, APIRequestLibrary[APIRequestKeys.DEFAULTS], {
-      ServiceBundleCode: this.serviceBundleCode,
-    });
+  getReqWrapper(body: any): any {
+    return {
+      AccountCode: ACCOUNT_CODE,
+      AccountName: ACCOUNT_NAME,
+      AdditionalInputs: {
+        Data: {
+          Name: 'CreditReportVersion',
+          Value: '7.1',
+        },
+      },
+      RequestKey: `BC-${v4()}`,
+      ...body,
+    };
   }
 
-  addXMLDefaults(): void {
-    this.xmlObject = _.merge(this.xmlObject, APIRequestXMLLibrary[APIRequestKeys.DEFAULTS]);
+  getXMLWrapper(body: any): any {
+    return {
+      'soapenv:Envelope': {
+        _attributes: {
+          'xmlns:soapenv': 'http://schemas.xmlsoap.org/soap/envelope/',
+          'xmlns:con': 'https://consumerconnectws.tui.transunion.com/',
+          'xmlns:data': 'https://consumerconnectws.tui.transunion.com/data',
+        },
+        'soapenv:Header': {},
+        ...body,
+      },
+    };
   }
 
   parseRequest(obj: any): any {
+    if (!this.payload || !Object.keys(this.payload).length) return {};
     _.entries(this.requestMap).forEach(([key, value]) => {
       const path = String(value).split('.');
       const val = _.get({ root: this.payload }, path);
@@ -61,16 +79,18 @@ export class TURequester<T> {
   }
 
   parseXML(obj: any): any {
-    _.entries(this.requestXML).forEach(([key, value]) => {
+    if (!this.requestObject || !Object.keys(this.requestObject).length) return {};
+    _.entries(this.requestXMLMap).forEach(([key, value]) => {
       const path = String(value).split('.');
-      const val = _.get({ root: this.request }, path);
+      const val = _.get({ root: this.requestObject }, path);
       obj[key] = XMLUtil.textConstructor(val, true);
     });
     return obj;
   }
 
   convertXML(): void {
-    const xml = convert.json2xml(JSON.stringify(this.xmlObject), { compact: true, spaces: 4 });
+    if (!this.requestXMLObject || !Object.keys(this.requestXMLObject)) return;
+    const xml = convert.json2xml(JSON.stringify(this.requestXMLObject), { compact: true, spaces: 4 });
     this.xml = xml;
   }
 }
