@@ -1,4 +1,5 @@
 import * as https from 'https';
+import * as dayjs from 'dayjs';
 import { Nested as _nest } from 'libs/utils/helpers/Nested';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 import { Payloader } from 'libs/utils/payloader/Payloader';
@@ -46,6 +47,7 @@ export class GetAuthenticationQuestionsV2 extends LoggerTransactionals implement
     const { agent, auth, identityId } = this.payload;
     try {
       await this.runPayloader();
+      this.formatDob(); // added step
       this.runRequester();
       await this.runSendAndSync(agent, auth);
       await this.logResults();
@@ -72,6 +74,7 @@ export class GetAuthenticationQuestionsV2 extends LoggerTransactionals implement
     payloader.validate<IGetAuthenticationQuestionsPayload>(payload, 'getAuthenticationQuestionsRequest');
     this.gqldata = payloader.data;
     this.prepped = payload;
+    console.log('prepped: ', this.prepped);
     return this.gqldata;
   }
 
@@ -138,6 +141,12 @@ export class GetAuthenticationQuestionsV2 extends LoggerTransactionals implement
    */
   setFailedResults(): void {
     this.results = { success: false, error: this.responseError };
+  }
+
+  formatDob(): void {
+    const { year, month, day } = this.prepped.dob;
+    const iso = dayjs(`${year}-${month}-${day}`, 'YYYY-MMM-D');
+    this.prepped.dobformatted = iso.format('YYYY-MM-DD');
   }
 
   /**
