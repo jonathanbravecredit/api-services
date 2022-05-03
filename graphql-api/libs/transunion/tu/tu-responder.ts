@@ -17,6 +17,7 @@ export class TUResponder<RES, U> {
     if (!this.xml) throw 'No XML set';
     const obj: RES = fastXml.parse(this.xml, options);
     this.response = obj;
+    console.log('response: ', this.response);
     return this.response;
   }
 
