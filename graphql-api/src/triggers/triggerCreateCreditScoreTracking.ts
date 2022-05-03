@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 import { DynamoDBRecord, DynamoDBStreamEvent, DynamoDBStreamHandler, StreamRecord } from 'aws-lambda';
 import * as AWS from 'aws-sdk';
-import { DB } from 'lib/utils/db/db';
-import { IVantageScore } from 'lib/interfaces/transunion/vantage-score.interface';
-import { CreditScoreTracking } from 'lib/utils/db/credit-score-tracking/model/credit-score-tracking';
+import { DB } from 'libs/utils/db/db';
+import { IVantageScore } from 'libs/interfaces/transunion/vantage-score.interface';
+import { CreditScoreTracking } from 'libs/utils/db/credit-score-tracking/model/credit-score-tracking';
 import { UpdateAppDataInput } from 'src/api/api.service';
-import ErrorLogger from 'lib/utils/db/logger/logger-errors';
+import ErrorLogger from 'libs/utils/db/logger/logger-errors';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();

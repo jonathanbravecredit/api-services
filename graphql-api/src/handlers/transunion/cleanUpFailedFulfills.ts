@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { Handler } from 'aws-lambda';
-import { listTransactionLog } from 'lib/utils/db/logger/queries/api-transaction.queries';
-import { Sync } from 'lib/utils/sync/sync';
-import * as tu from 'lib/transunion';
-import { IFulfillResult } from 'lib/interfaces';
+import { listTransactionLog } from 'libs/utils/db/logger/queries/api-transaction.queries';
+import { Sync } from 'libs/utils/sync/sync';
+import * as tu from 'libs/transunion';
+import { IFulfillResult } from 'libs/interfaces';
 
 export const main: Handler = async (event: any): Promise<void> => {
   const { list } = event as { list: string[] }; // list of failed fulfill IDs

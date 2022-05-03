@@ -4,7 +4,17 @@
   "description": "A TypeScript starter for Serverless Framework",
   "main": "handler.js",
   "scripts": {
-    "test": "serverless-bundle test"
+    "test": "serverless-bundle test",
+    "testWatch": "serverless-bundle test --watchAll",
+    "testCoverage": "serverless-bundle test --coverage",
+    "testOpenHandles": "serverless-bundle test --detectOpenHandles"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "libs(.*)$": "<rootDir>/libs/$1",
+      "src(.*)$": "<rootDir>/src/$1",
+      "tests(.*)$": "<rootDir>/tests/$1"
+    }
   },
   "author": "",
   "license": "MIT",
@@ -22,6 +32,7 @@
   "dependencies": {
     "@bravecredit/brave-sdk": "^1.0.20",
     "@shiftcoders/dynamo-easy": "^7.1.0",
+    "@types/lodash": "^4.14.182",
     "ajv": "^7.0.2",
     "async": "^3.2.3",
     "aws-appsync": "^4.1.4",

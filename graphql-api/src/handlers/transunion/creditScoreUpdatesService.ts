@@ -1,10 +1,10 @@
 import 'reflect-metadata';
 import { AppSyncResolverEvent, AppSyncResolverHandler } from 'aws-lambda';
 import { SNS, DynamoDB } from 'aws-sdk';
-import ErrorLogger from 'lib/utils/db/logger/logger-errors';
-import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
-import { IBatchMsg } from 'lib/interfaces/batch.interfaces';
-import { parallelScanAppDataEnrollKeys } from 'lib/utils/db/appdata/appdata';
+import ErrorLogger from 'libs/utils/db/logger/logger-errors';
+import { PubSubUtil } from 'libs/utils/pubsub/pubsub';
+import { IBatchMsg } from 'libs/interfaces/batch.interfaces';
+import { parallelScanAppDataEnrollKeys } from 'libs/utils/db/appdata/appdata';
 import { TransactionData, TransactionDataMaker, TransactionDataQueries } from '@bravecredit/brave-sdk';
 import * as dayjs from 'dayjs';
 // import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
