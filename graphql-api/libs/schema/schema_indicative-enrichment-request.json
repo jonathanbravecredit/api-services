@@ -5,6 +5,10 @@
       "type": "string",
       "nullable": false
     },
+    "serviceBundleCode": {
+      "type": "string",
+      "nullable": false
+    },
     "name": {
       "type": "object",
       "properties": {
@@ -105,7 +109,8 @@
     "name",
     "dob",
     "address",
-    "ssn"
+    "ssn",
+    "serviceBundleCode"
   ],
   "additionalProperties": false
 }

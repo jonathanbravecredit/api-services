@@ -11,6 +11,7 @@ export interface IIndicativeEnrichmentRequest {
 
 export interface IIndicativeEnrichmentPayload extends IIndicativeEnrichmentRequest {
   id: string;
+  serviceBundleCode: string;
 }
 
 export interface IEnrichedIndicativeEnrichment {

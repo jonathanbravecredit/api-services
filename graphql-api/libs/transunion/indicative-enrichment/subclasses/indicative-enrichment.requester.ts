@@ -4,7 +4,7 @@ import { TURequester } from 'libs/transunion/tu/tu-requester';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 
 export class IndicativeEnrichmentRequester extends TURequester<IIndicativeEnrichmentPayload> implements APIRequester {
-  constructor(requestKey: APIRequestKeys, payload: IIndicativeEnrichmentPayload, serviceBundleCode: string) {
-    super(requestKey, payload, serviceBundleCode);
+  constructor(requestKey: APIRequestKeys, payload: IIndicativeEnrichmentPayload) {
+    super(requestKey, payload);
   }
 }

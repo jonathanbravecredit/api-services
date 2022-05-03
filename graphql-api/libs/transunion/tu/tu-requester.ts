@@ -23,12 +23,13 @@ export class TURequester<T> {
     this.requestXMLMap = APIRequestXMLLibrary[this.requestKey];
   }
 
-  createRequest(): void {
+  createRequest(): string {
     if (!this.requestMap || !this.requestXMLMap)
       throw new Error(`map: ${this.requestMap} or xml map: ${this.requestXMLMap} request is not set`);
     this.generateRequestObject();
     this.generateXMLObject();
     this.convertXML();
+    return this.xml;
   }
 
   generateRequestObject(): void {
