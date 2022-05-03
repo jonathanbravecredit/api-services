@@ -13,8 +13,6 @@ import {
   IVerifyAuthenticationQuestionsResult,
 } from 'libs/transunion/authentication-questions-verify/verify-authentication-questions.interface';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
-import { GetAuthenticationQuestionsRequester } from 'libs/transunion/authentication-questions/subclasses/get-authentication-questions.requester';
-import { GetAuthenticationQuestionsResponder } from 'libs/transunion/authentication-questions/subclasses/get-authentication-questions.responder';
 import { VerifyAuthenticationQuestionsRequester } from 'libs/transunion/authentication-questions-verify/subclasses/verify-authentication-questions.requester';
 import { VerifyAuthenticationQuestionsResponder } from 'libs/transunion/authentication-questions-verify/subclasses/verify-authentication-questions.responder';
 
@@ -71,8 +69,8 @@ export class VerifyAuthenticationQuestionsV2 extends LoggerTransactionals implem
     };
     const payloader = new Payloader<IVerifyAuthenticationQuestionsPayload>();
     payloader.validate<IVerifyAuthenticationQuestionsPayload>(payload, 'verifyAuthenticationQuestionsRequest');
-    this.prepped = payload;
     this.gqldata = payloader.data;
+    this.prepped = payload;
     console.log('prepped: ', this.prepped);
     console.log('gqldata: ', this.gqldata);
     return this.gqldata;
@@ -90,7 +88,8 @@ export class VerifyAuthenticationQuestionsV2 extends LoggerTransactionals implem
       APIRequestKeys.VERIFY_AUTHENTICATION_QUESTIONS,
       this.prepped,
     );
-    this.reqXML = requester.xml;
+    this.reqXML = requester.createRequest();
+    console.log('reqXML: ', this.reqXML);
   }
 
   /**

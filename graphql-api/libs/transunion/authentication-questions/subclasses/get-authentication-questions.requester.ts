@@ -7,7 +7,7 @@ export class GetAuthenticationQuestionsRequester
   extends TURequester<IGetAuthenticationQuestionsPayload>
   implements APIRequester
 {
-  constructor(requestKey: APIRequestKeys, payload: IGetAuthenticationQuestionsPayload, serviceBundleCode: string) {
-    super(requestKey, payload, serviceBundleCode);
+  constructor(requestKey: APIRequestKeys, payload: IGetAuthenticationQuestionsPayload) {
+    super(requestKey, payload);
   }
 }

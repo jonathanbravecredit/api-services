@@ -66,12 +66,12 @@ export class GetAuthenticationQuestionsV2 extends LoggerTransactionals implement
     const payload: IGetAuthenticationQuestionsPayload = {
       id: this.payload.identityId,
       ...JSON.parse(this.payload.message),
+      serviceBundleCode: this.serviceBundleCode,
     };
     const payloader = new Payloader<IGetAuthenticationQuestionsPayload>();
     payloader.validate<IGetAuthenticationQuestionsPayload>(payload, 'getAuthenticationQuestionsRequest');
-    this.prepped = payload;
     this.gqldata = payloader.data;
-    console.log('data: ', this.gqldata);
+    this.prepped = payload;
     return this.gqldata;
   }
 
@@ -86,9 +86,9 @@ export class GetAuthenticationQuestionsV2 extends LoggerTransactionals implement
     const requester = new GetAuthenticationQuestionsRequester(
       APIRequestKeys.GET_AUTHENTICATION_QUESTIONS,
       this.prepped,
-      this.serviceBundleCode,
     );
-    this.reqXML = requester.xml;
+    this.reqXML = requester.createRequest();
+    console.log('reqXML: ', this.reqXML);
   }
 
   /**

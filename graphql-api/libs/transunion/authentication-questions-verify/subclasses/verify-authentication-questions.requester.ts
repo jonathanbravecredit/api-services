@@ -15,19 +15,16 @@ export class VerifyAuthenticationQuestionsRequester
     super(requestKey, payload);
   }
 
-  generateXMLObject(): void {
-    const result = Object.assign({}, this.requestXML);
-    Object.entries(this.requestXML).forEach(([key, value]) => {
-      const path = (value as string).split('.');
-      const val = _.get({ root: this.request }, path);
-      if (path.includes('data:Answers')) {
-        result[key] = XMLUtil.textConstructor(this.createVerifyAuthenticationAnswerString(val), true);
-      } else {
-        result[key] = XMLUtil.textConstructor(val, true);
-      }
+  parseXML(obj: any): any {
+    if (!this.requestObject || !Object.keys(this.requestObject).length) return {};
+    _.entries(this.requestXMLMap).forEach(([key, value]) => {
+      const path = String(value).split('.');
+      const val = _.get({ root: this.requestObject }, path);
+      obj[key] = path.includes('data:Answers')
+        ? XMLUtil.textConstructor(this.createVerifyAuthenticationAnswerString(val), true)
+        : XMLUtil.textConstructor(val, true);
     });
-    const unflat = _nest.unflatten(result);
-    this.xmlObject = unflat;
+    return obj;
   }
 
   createVerifyAuthenticationAnswerString = (answers: IVerifyAuthenticationAnswer[]): string => {
