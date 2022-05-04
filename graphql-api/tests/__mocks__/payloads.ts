@@ -21,6 +21,16 @@ export const MOCK_PAYLOAD = {
   serviceBundleCode: 'mockCode',
 };
 
+export const MOCK_GET_AUTH_PAYLOAD = {
+  id: 'abc',
+  name: { first: 'Thomas', middle: null, last: 'Testt' },
+  address: { addressOne: '1071 101st', addressTwo: '', city: 'Hollywood', state: 'FL', zip: '33025' },
+  dob: { year: '1957', month: 'Sep', day: '1' },
+  phone: { primary: '4045049006' },
+  ssn: { lastfour: '0020', full: '899010020' },
+  serviceBundleCode: 'mockCode',
+};
+
 export const MOCK_MAPPED = {
   ClientKey: 'abc',
   'Customer.CurrentAddress.AddressLine1': '123 Main Street',

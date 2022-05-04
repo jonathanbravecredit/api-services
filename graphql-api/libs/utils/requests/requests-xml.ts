@@ -81,10 +81,6 @@ export const IndicativeEnrichmentRequestXML = {
 export const GetAuthenticationQuestionsRequestXML = {
   'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:AccountCode': 'root.AccountCode',
   'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:AccountName': 'root.AccountName',
-  'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:AdditionalInputs.data:Data.data:Name':
-    'root.AdditionalInputs.Data.Name',
-  'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:AdditionalInputs.data:Data.data:Value':
-    'root.AdditionalInputs.Data.Value',
   'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:RequestKey': 'root.RequestKey',
   'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:ClientKey': 'root.ClientKey',
   'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:Customer.data:CurrentAddress.data:AddressLine1':
@@ -108,16 +104,6 @@ export const GetAuthenticationQuestionsRequestXML = {
     'root.Customer.FullName.Prefix',
   'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:Customer.data:FullName.data:Suffix':
     'root.Customer.FullName.Suffix',
-  'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:Customer.data:PreviousAddress.data:AddressLine1':
-    'root.Customer.PreviousAddress.AddressLine1',
-  'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:Customer.data:PreviousAddress.data:AddressLine2':
-    'root.Customer.PreviousAddress.AddressLine2',
-  'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:Customer.data:PreviousAddress.data:City':
-    'root.Customer.PreviousAddress.City',
-  'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:Customer.data:PreviousAddress.data:State':
-    'root.Customer.PreviousAddress.State',
-  'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:Customer.data:PreviousAddress.data:Zipcode':
-    'root.Customer.PreviousAddress.Zipcode',
   'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:Customer.data:PhoneNumber': 'root.Customer.PhoneNumber',
   'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:Customer.data:Ssn': 'root.Customer.Ssn',
   'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:Email': 'root.Email',
