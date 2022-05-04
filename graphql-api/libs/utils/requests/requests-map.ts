@@ -36,7 +36,6 @@ export const GetAuthenticationQuestionsRequestMap = {
   'Customer.CurrentAddress.City': 'root.address.city',
   'Customer.CurrentAddress.State': 'root.address.state',
   'Customer.CurrentAddress.Zipcode': 'root.address.zip',
-  'Customer.PreviousAddress': 'root.previousAddress',
   'Customer.DateOfBirth': 'root.dobformatted',
   'Customer.FullName.FirstName': 'root.name.first',
   'Customer.FullName.LastName': 'root.name.last',
