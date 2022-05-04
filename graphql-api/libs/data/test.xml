@@ -7,8 +7,9 @@
       <con:request>
         <data:AccountCode>M2RVc0ZZM0Rwd2FmZA</data:AccountCode>
         <data:AccountName>CC2BraveCredit</data:AccountName>
-        <data:RequestKey>BC-d5b412d9-bcab-4798-8974-b6d1977cc5a2</data:RequestKey>
-        <data:ClientKey>680126d9-b9b1-45a2-b6e0-1de2c9c133cb</data:ClientKey>
+        <data:RequestKey>BC-7a07e327-2680-4bb1-8d7b-fc18830eacfb</data:RequestKey>
+        <data:ClientKey xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
         <data:Customer>
           <data:CurrentAddress>
             <data:AddressLine1>1071 101st</data:AddressLine1>
@@ -18,7 +19,8 @@
             <data:State>FL</data:State>
             <data:Zipcode>33025</data:Zipcode>
           </data:CurrentAddress>
-          <data:DateOfBirth>1957-09-01</data:DateOfBirth>
+          <data:DateOfBirth xsi:nil="true"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
           <data:FullName>
             <data:FirstName>Thomas</data:FirstName>
             <data:LastName>Testt</data:LastName>
@@ -36,7 +38,8 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
         <data:Language xsi:nil="true"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
-        <data:ServiceBundleCode>CC2BraveCreditAuthentication</data:ServiceBundleCode>
+        <data:ServiceBundleCode xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
         <data:TrustSessionId xsi:nil="true"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
       </con:request>
