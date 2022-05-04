@@ -6,8 +6,6 @@ import * as fastXml from 'fast-xml-parser';
  */
 export class TUResponder<RES, U> {
   public response: RES;
-  public responseType: string;
-  public responseError: any;
   public xml: string;
   public enriched: U = null;
 
