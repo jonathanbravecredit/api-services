@@ -17,12 +17,14 @@ export interface APIRequest {
   runPayloader: Function;
   runRequester: Function;
   runSendAndSync: Function;
-  prepPayload: Function;
   setResponses: Function;
   setSuccessResults: Function;
   setFailedResults: Function;
   log: Function;
   logResults: Function;
-  payloader: Payloader<any>;
-  schema: string;
+  // TODO flip these back to required
+  resultKey?: string;
+  schema?: string;
+  payloader?: Payloader<any>;
+  prepPayload?: Function;
 }
