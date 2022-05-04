@@ -25,7 +25,7 @@ export class TUAPIProcessor<P, RESP, RESU> extends LoggerTransactionals implemen
   public results: IProxyHandlerResponse<any>;
   public parserOptions = DEFAULT_PARSER_OPTIONS;
 
-  public payloader = new Payloader<P>();
+  // public payloader = new Payloader<P>();
   public schema: string = '';
   public resultKey: string = '';
   public serviceBundleCode: string = '';
@@ -55,6 +55,7 @@ export class TUAPIProcessor<P, RESP, RESU> extends LoggerTransactionals implemen
       await this.logResults();
       return this.results;
     } catch (err) {
+      console.log('error called', err);
       this.logGenericError(identityId, err);
       return { success: false, data: null, error: err };
     }
@@ -68,8 +69,9 @@ export class TUAPIProcessor<P, RESP, RESU> extends LoggerTransactionals implemen
    */
   async runPayloader(): Promise<void> {
     const payload = this.prepPayload();
-    this.payloader.validate<P>(payload, this.schema);
-    this.gqldata = this.payloader.data;
+    const payloader = new Payloader<P>();
+    payloader.validate<P>(payload, this.schema);
+    this.gqldata = payloader.data;
     this.prepped = payload;
     console.log('prepped: ', this.prepped);
   }
@@ -83,9 +85,10 @@ export class TUAPIProcessor<P, RESP, RESU> extends LoggerTransactionals implemen
    * @returns
    */
   prepPayload(): P {
+    const msg = this.payload.message || '{}';
     return {
       id: this.payload.identityId,
-      ...JSON.parse(this.payload.message),
+      ...JSON.parse(msg),
       serviceBundleCode: this.serviceBundleCode,
     };
   }
