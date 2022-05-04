@@ -5,8 +5,8 @@ import * as fastXml from 'fast-xml-parser';
  * R = Request form
  */
 export class TUResponder<RES, U> {
-  public response: RES;
   public xml: string;
+  public response: RES;
   public enriched: U = null;
 
   constructor() {}
