@@ -34,12 +34,12 @@ export class TURequester<T> {
 
   generateRequestObject(): void {
     this.requestObject = this.getReqWrapper(_nest.unflatten(this.parseRequest({ ...this.requestMap })));
-    console.log('requestObject: ', JSON.stringify(this.requestObject));
+    // console.log('requestObject: ', JSON.stringify(this.requestObject));
   }
 
   generateXMLObject(): void {
     this.requestXMLObject = this.getXMLWrapper(_nest.unflatten(this.parseXML({ ...this.requestXMLMap })));
-    console.log('requestXMLObject: ', JSON.stringify(this.requestXMLObject));
+    // console.log('requestXMLObject: ', JSON.stringify(this.requestXMLObject));
   }
 
   getReqWrapper(body: any): any {

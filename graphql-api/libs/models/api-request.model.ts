@@ -1,4 +1,5 @@
 import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';
+import { Payloader } from 'libs/utils/payloader/Payloader';
 
 export interface APIRequest {
   reqXML: string;
@@ -16,9 +17,12 @@ export interface APIRequest {
   runPayloader: Function;
   runRequester: Function;
   runSendAndSync: Function;
+  prepPayload: Function;
   setResponses: Function;
   setSuccessResults: Function;
   setFailedResults: Function;
   log: Function;
   logResults: Function;
+  payloader: Payloader<any>;
+  schema: string;
 }
