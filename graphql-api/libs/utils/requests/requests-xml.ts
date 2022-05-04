@@ -118,8 +118,8 @@ export const GetAuthenticationQuestionsRequestXML = {
     'root.Customer.PreviousAddress.State',
   'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:Customer.data:PreviousAddress.data:Zipcode':
     'root.Customer.PreviousAddress.Zipcode',
-  'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:Customer.data:Ssn': 'root.Customer.Ssn',
   'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:Customer.data:PhoneNumber': 'root.Customer.PhoneNumber',
+  'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:Customer.data:Ssn': 'root.Customer.Ssn',
   'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:Email': 'root.Email',
   'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:Language': 'root.Language',
   'soapenv:Body.con:GetAuthenticationQuestions.con:request.data:ServiceBundleCode': 'root.ServiceBundleCode',
