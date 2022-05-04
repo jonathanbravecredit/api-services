@@ -14,6 +14,9 @@ export interface IGetAuthenticationQuestionsPayload extends IGetAuthenticationQu
   id: string;
   serviceBundleCode: string;
 }
+
+export interface IGetAuthenticationQuestionsSchema extends IGetAuthenticationQuestionsPayload {}
+
 export interface IGetAuthenticationQuestions {
   request: {
     AccountCode: string;

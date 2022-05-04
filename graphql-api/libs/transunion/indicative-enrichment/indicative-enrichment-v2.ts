@@ -4,9 +4,9 @@ import { Payloader } from 'libs/utils/payloader/Payloader';
 import { IProxyRequest } from 'libs/interfaces';
 import { APIRequest } from 'libs/models/api-request.model';
 import {
-  IIndicativeEnrichmentPayload,
   IIndicativeEnrichmentResponse,
   IIndicativeEnrichmentResult,
+  IIndicativeEnrichmentSchema,
 } from 'libs/transunion/indicative-enrichment/indicative-enrichment.interface';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { IndicativeEnrichmentRequester } from 'libs/transunion/indicative-enrichment/subclasses/indicative-enrichment.requester';
@@ -15,23 +15,16 @@ import { TUAPIProcessor } from 'libs/transunion/tu/tu-api';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 
 export class IndicativeEnrichmentV2
-  extends TUAPIProcessor<IIndicativeEnrichmentPayload, IIndicativeEnrichmentResponse, IIndicativeEnrichmentResult>
+  extends TUAPIProcessor<IIndicativeEnrichmentSchema, any, IIndicativeEnrichmentResponse, IIndicativeEnrichmentResult>
   implements APIRequest
 {
-  public payloader = new Payloader<IIndicativeEnrichmentPayload>();
   public action = 'IndicativeEnrichment';
   public schema = 'indicativeEnrichment';
   public resultKey = 'IndicativeEnrichmentResult';
   public serviceBundleCode = 'CC2BraveCreditIndicativeEnrichment';
 
   constructor(protected payload: IProxyRequest) {
-    super(
-      'IndicativeEnrichment',
-      payload,
-      new IndicativeEnrichmentResponder(),
-      new Payloader<IIndicativeEnrichmentPayload>(),
-      new SoapV2(),
-    );
+    super('IndicativeEnrichment', payload, new IndicativeEnrichmentResponder(), new Payloader<any>(), new SoapV2());
   }
 
   /**

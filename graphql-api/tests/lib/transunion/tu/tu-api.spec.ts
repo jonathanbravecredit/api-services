@@ -1,5 +1,4 @@
 import 'reflect-metadata';
-import { IProxyRequest } from 'libs/interfaces/api/proxy-query.interfaces';
 import { TUAPIProcessor } from 'libs/transunion/tu/tu-api';
 import { TUResponder } from 'libs/transunion/tu/tu-responder';
 import { createTransactionLog } from 'libs/utils/db/logger/queries/api-transaction.queries';
@@ -21,14 +20,14 @@ describe('TUAPIProcessor', () => {
 
   const mockedQuery = mocked(createTransactionLog);
 
-  let processor = new TUAPIProcessor<any, any, any>(
+  let processor = new TUAPIProcessor<any, any, any, any>(
     action,
     payload,
     new TUResponder<any, any>(),
     new Payloader<any>(),
     new SoapV2(),
   );
-  let h = new Helper<TUAPIProcessor<any, any, any>>(processor);
+  let h = new Helper<TUAPIProcessor<any, any, any, any>>(processor);
   // let logSpy = jest.spyOn(processor, 'log').mockImplementation().mockReturnValue(Promise.resolve(null));
 
   // beforeAll(() => {

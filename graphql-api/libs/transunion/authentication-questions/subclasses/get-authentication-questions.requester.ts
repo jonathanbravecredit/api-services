@@ -1,15 +1,15 @@
 import { ACCOUNT_CODE, ACCOUNT_NAME } from 'libs/data/constants';
 import { APIRequester } from 'libs/models/api-requester.model';
-import { IGetAuthenticationQuestionsPayload } from 'libs/transunion/authentication-questions/get-authentication-questions.interface';
+import { IGetAuthenticationQuestionsSchema } from 'libs/transunion/authentication-questions/get-authentication-questions.interface';
 import { TURequester } from 'libs/transunion/tu/tu-requester';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { v4 } from 'uuid';
 
 export class GetAuthenticationQuestionsRequester
-  extends TURequester<IGetAuthenticationQuestionsPayload>
+  extends TURequester<IGetAuthenticationQuestionsSchema>
   implements APIRequester
 {
-  constructor(requestKey: APIRequestKeys, payload: IGetAuthenticationQuestionsPayload) {
+  constructor(requestKey: APIRequestKeys, payload: IGetAuthenticationQuestionsSchema) {
     super(requestKey, payload);
   }
 

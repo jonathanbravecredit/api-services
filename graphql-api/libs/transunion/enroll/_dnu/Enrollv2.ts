@@ -7,12 +7,12 @@ import { qryGetDataForEnrollment } from 'libs/queries';
 import { IEnrollGraphQLResponse, IEnrollResponse, IGenericRequest, IProxyRequest } from 'libs/interfaces';
 import { DEFAULT_PARSER_OPTIONS } from 'libs/utils/parser/options';
 import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';
-import { EnrollRequester } from 'libs/transunion/enroll/subclasses/EnrollRequester';
-import { EnrollResponder } from 'libs/transunion/enroll/subclasses/EnrollResponder';
+import { EnrollRequester } from 'libs/transunion/enroll/_dnu/EnrollRequester';
 import { LoggerTransactionals } from 'libs/utils/logger/LoggerTransactionals';
 import { MergeReport } from 'libs/models/MergeReport/MergeReport';
 import { CreditReportPublisher } from 'libs/transunion/credit-report-service/CreditReportPublisher';
 import { APIRequest } from 'libs/models/api-request.model';
+import { EnrollResponder } from 'libs/transunion/enroll/_dnu/EnrollResponder';
 
 export class EnrollV2 extends LoggerTransactionals implements APIRequest {
   public reqXML: string;

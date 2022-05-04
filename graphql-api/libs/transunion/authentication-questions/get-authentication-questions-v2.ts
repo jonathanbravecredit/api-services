@@ -4,9 +4,9 @@ import { Payloader } from 'libs/utils/payloader/Payloader';
 import { IProxyRequest } from 'libs/interfaces';
 import { APIRequest } from 'libs/models/api-request.model';
 import {
-  IGetAuthenticationQuestionsPayload,
   IGetAuthenticationQuestionsResponse,
   IGetAuthenticationQuestionsResult,
+  IGetAuthenticationQuestionsSchema,
 } from 'libs/transunion/authentication-questions/get-authentication-questions.interface';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { GetAuthenticationQuestionsRequester } from 'libs/transunion/authentication-questions/subclasses/get-authentication-questions.requester';
@@ -16,13 +16,13 @@ import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 
 export class GetAuthenticationQuestionsV2
   extends TUAPIProcessor<
-    IGetAuthenticationQuestionsPayload,
+    IGetAuthenticationQuestionsSchema,
+    any,
     IGetAuthenticationQuestionsResponse,
     IGetAuthenticationQuestionsResult
   >
   implements APIRequest
 {
-  public payloader = new Payloader<IGetAuthenticationQuestionsPayload>();
   public action = 'GetAuthenticationQuestions';
   public schema = 'getAuthenticationQuestionsRequest';
   public resultKey = 'GetAuthenticationQuestionsResult';
@@ -33,7 +33,7 @@ export class GetAuthenticationQuestionsV2
       'GetAuthenticationQuestions',
       payload,
       new GetAuthenticationQuestionsResponder(),
-      new Payloader<IGetAuthenticationQuestionsPayload>(),
+      new Payloader<any>(),
       new SoapV2(),
     );
   }

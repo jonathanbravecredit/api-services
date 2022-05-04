@@ -37,6 +37,22 @@ export interface IEnrollGraphQLResponse {
 }
 
 export interface IEnrollPayload {
+  id: string;
+}
+
+export interface IEnrollSchema extends IEnrollPayload {}
+
+export interface IEnroll {
+  request: IEnrollMsg;
+}
+
+export interface IEnrollRequest extends IEnrollMsg {}
+export interface IEnrollMsg extends IEnrollPayload {
+  AccountCode: string;
+  AccountName: string;
+  Email?: string;
+  Language?: string;
+  TrustSessionId?: string;
   RequestKey: string;
   AdditionalInputs?: {
     Data: {
@@ -64,19 +80,6 @@ export interface IEnrollPayload {
     Ssn: string;
   };
   ServiceBundleCode: string;
-}
-
-export interface IEnroll {
-  request: IEnrollMsg;
-}
-
-export interface IEnrollRequest extends IEnrollMsg {}
-export interface IEnrollMsg extends IEnrollPayload {
-  AccountCode: string;
-  AccountName: string;
-  Email?: string;
-  Language?: string;
-  TrustSessionId?: string;
 }
 
 export interface IEnrollResponse {

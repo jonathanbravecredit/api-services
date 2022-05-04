@@ -6,6 +6,7 @@ import {
   IVerifyAuthenticationQuestionsPayload,
   IVerifyAuthenticationQuestionsResponse,
   IVerifyAuthenticationQuestionsResult,
+  IVerifyAuthenticationQuestionsSchema,
 } from 'libs/transunion/authentication-questions-verify/verify-authentication-questions.interface';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { VerifyAuthenticationQuestionsRequester } from 'libs/transunion/authentication-questions-verify/subclasses/verify-authentication-questions.requester';
@@ -15,7 +16,8 @@ import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 
 export class VerifyAuthenticationQuestionsV2
   extends TUAPIProcessor<
-    IVerifyAuthenticationQuestionsPayload,
+    IVerifyAuthenticationQuestionsSchema,
+    any,
     IVerifyAuthenticationQuestionsResponse,
     IVerifyAuthenticationQuestionsResult
   >
@@ -32,7 +34,7 @@ export class VerifyAuthenticationQuestionsV2
       'VerifyAuthenticationQuestions',
       payload,
       new VerifyAuthenticationQuestionsResponder(),
-      new Payloader<IVerifyAuthenticationQuestionsPayload>(),
+      new Payloader<any>(),
       new SoapV2(),
     );
   }
