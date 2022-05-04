@@ -71,7 +71,7 @@ export class TUAPIProcessor<P, RESP, RESU> extends LoggerTransactionals implemen
     this.payloader.validate<P>(payload, this.schema);
     this.gqldata = this.payloader.data;
     this.prepped = payload;
-    // console.log('prepped: ', this.prepped);
+    console.log('prepped: ', this.prepped);
   }
 
   /**
