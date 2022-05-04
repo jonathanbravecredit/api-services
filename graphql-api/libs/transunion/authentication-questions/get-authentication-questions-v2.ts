@@ -12,6 +12,7 @@ import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { GetAuthenticationQuestionsRequester } from 'libs/transunion/authentication-questions/subclasses/get-authentication-questions.requester';
 import { GetAuthenticationQuestionsResponder } from 'libs/transunion/authentication-questions/subclasses/get-authentication-questions.responder';
 import { TUAPIProcessor } from 'libs/transunion/tu/tu-api';
+import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 
 export class GetAuthenticationQuestionsV2
   extends TUAPIProcessor<
@@ -28,7 +29,13 @@ export class GetAuthenticationQuestionsV2
   public serviceBundleCode = 'CC2BraveCreditAuthentication';
 
   constructor(protected payload: IProxyRequest) {
-    super('GetAuthenticationQuestions', payload, GetAuthenticationQuestionsResponder);
+    super(
+      'GetAuthenticationQuestions',
+      payload,
+      new GetAuthenticationQuestionsResponder(),
+      new Payloader<IGetAuthenticationQuestionsPayload>(),
+      new SoapV2(),
+    );
   }
 
   /**

@@ -7,11 +7,7 @@ import { APIRequest } from 'libs/models/api-request.model';
 import { LoggerTransactionals } from 'libs/utils/logger/LoggerTransactionals';
 import { DEFAULT_PARSER_OPTIONS } from 'libs/utils/parser/options';
 import { Payloader } from 'libs/utils/payloader/Payloader';
-
-interface InstanceInterface<T> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  new (_data?: any): T;
-}
+import { TUResponder } from 'libs/transunion/tu/tu-responder';
 
 export class TUAPIProcessor<P, RESP, RESU> extends LoggerTransactionals implements APIRequest {
   public reqXML: string;
@@ -25,7 +21,6 @@ export class TUAPIProcessor<P, RESP, RESU> extends LoggerTransactionals implemen
   public results: IProxyHandlerResponse<any>;
   public parserOptions = DEFAULT_PARSER_OPTIONS;
 
-  // public payloader = new Payloader<P>();
   public schema: string = '';
   public resultKey: string = '';
   public serviceBundleCode: string = '';
@@ -33,7 +28,9 @@ export class TUAPIProcessor<P, RESP, RESU> extends LoggerTransactionals implemen
   constructor(
     public action: string,
     protected payload: IProxyRequest,
-    protected responder: InstanceInterface<{ xml: string; response: any; parseResponse: Function }>,
+    protected responder: TUResponder<RESP, any>,
+    public payloader: Payloader<P>,
+    public soap: SoapV2,
   ) {
     super(action);
   }
@@ -67,11 +64,10 @@ export class TUAPIProcessor<P, RESP, RESU> extends LoggerTransactionals implemen
    *  - prep the payload (can be async if need to get DB data)
    * @returns
    */
-  async runPayloader(): Promise<void> {
+  runPayloader(): void {
     const payload = this.prepPayload();
-    const payloader = new Payloader<P>();
-    payloader.validate<P>(payload, this.schema);
-    this.gqldata = payloader.data;
+    this.payloader.validate<P>(payload, this.schema);
+    this.gqldata = this.payloader.data;
     this.prepped = payload;
     console.log('prepped: ', this.prepped);
   }
@@ -115,12 +111,10 @@ export class TUAPIProcessor<P, RESP, RESU> extends LoggerTransactionals implemen
    * @param auth
    */
   async runSendAndSync(agent: https.Agent, auth: string): Promise<void> {
-    const soap = new SoapV2();
-    await soap.sendRequest(agent, auth, this.action, this.parserOptions, this.reqXML);
-    const responder = new this.responder();
-    responder.xml = soap.response;
-    responder.parseResponse(this.parserOptions);
-    this.setResponses(responder.response);
+    await this.soap.sendRequest(agent, auth, this.action, this.parserOptions, this.reqXML);
+    this.responder.xml = this.soap.response;
+    this.responder.parseResponse(this.parserOptions);
+    this.setResponses(this.responder.response);
     this.responseType.toLowerCase() === 'success' ? this.setSuccessResults() : this.setFailedResults();
   }
 

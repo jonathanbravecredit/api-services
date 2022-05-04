@@ -8,55 +8,40 @@ import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 import { Payloader } from 'libs/utils/payloader/Payloader';
 import { mocked } from 'ts-jest/utils';
 
-jest.mock('libs/utils/soap-aid/SoapV2', () => {
-  return {
-    sendRequest: jest.fn().mockImplementation((arg0, arg1, arg2, arg3, arg4) => {
-      return Promise.resolve(null);
-    }),
-  };
-});
-
-jest.mock('libs/transunion/tu/tu-responder', () => {
-  return {
-    xml: '',
-    parseResponse: jest.fn().mockImplementation((arg0) => {
-      return null;
-    }),
-  };
-});
-
 jest.mock('libs/utils/db/logger/queries/api-transaction.queries', () => {
   return Promise.resolve(null);
 });
 
-jest.mock('libs/utils/payloader/Payloader', () => {
-  return {
-    validate: jest.fn().mockImplementation((arg0, arg1) => {
-      return true;
-    }),
-  };
-});
 describe('TUAPIProcessor', () => {
   const action = 'MockAction';
   const payload = {
     agent: 'agent',
     auth: 'auth',
   } as any;
-  const responder = TUResponder;
-  let processor = new TUAPIProcessor<any, any, any>('MockAction', payload, responder);
-  let h = new Helper<TUAPIProcessor<any, any, any>>(processor);
-  let logSpy = jest.spyOn(processor, 'log').mockImplementation().mockReturnValue(Promise.resolve(null));
 
-  const mockedSoap = mocked(SoapV2);
-  const mockedResponder = mocked(TUResponder);
-  const mockedPayloader = mocked(Payloader);
   const mockedQuery = mocked(createTransactionLog);
 
-  beforeAll(() => {
-    processor = new TUAPIProcessor<any, any, any>('MockAction', payload, responder);
-    h = new Helper<TUAPIProcessor<any, any, any>>(processor);
-    logSpy = jest.spyOn(processor, 'log').mockImplementation().mockReturnValue(Promise.resolve(null));
-  });
+  let processor = new TUAPIProcessor<any, any, any>(
+    action,
+    payload,
+    new TUResponder<any, any>(),
+    new Payloader<any>(),
+    new SoapV2(),
+  );
+  let h = new Helper<TUAPIProcessor<any, any, any>>(processor);
+  // let logSpy = jest.spyOn(processor, 'log').mockImplementation().mockReturnValue(Promise.resolve(null));
+
+  // beforeAll(() => {
+  //   processor = new TUAPIProcessor<any, any, any>(
+  //     action,
+  //     payload,
+  //     new TUResponder<any, any>(),
+  //     new Payloader<any>(),
+  //     new SoapV2(),
+  //   );
+  //   h = new Helper<TUAPIProcessor<any, any, any>>(processor);
+  //   logSpy = jest.spyOn(processor, 'log').mockImplementation().mockReturnValue(Promise.resolve(null));
+  // });
 
   describe('Properties and methods', () => {
     it('should have a property named reqXML', () => {
@@ -98,9 +83,6 @@ describe('TUAPIProcessor', () => {
     it('should have a property named parserOptions', () => {
       expect(h.hasProperty(processor, 'parserOptions')).toEqual(true);
     });
-    xit('should have a property named payloader', () => {
-      expect(h.hasProperty(processor, 'payloader')).toEqual(true);
-    });
     it('should have a property named schema', () => {
       expect(h.hasProperty(processor, 'schema')).toEqual(true);
     });
@@ -140,25 +122,59 @@ describe('TUAPIProcessor', () => {
   });
 
   describe('run method', () => {
+    let payloaderSpy = jest.spyOn(processor, 'runPayloader').mockReturnValue(null);
+    let requesterSpy = jest.spyOn(processor, 'runRequester').mockReturnValue(null);
+    let runSendAndSyncSpy = jest.spyOn(processor, 'runSendAndSync').mockReturnValue(Promise.resolve(null));
+    let logResultsSpy = jest.spyOn(processor, 'logResults').mockReturnValue(Promise.resolve(null));
+    beforeEach(() => {
+      payloaderSpy.mockClear();
+      requesterSpy.mockClear();
+      runSendAndSyncSpy.mockClear();
+      logResultsSpy.mockClear();
+    });
     it('should call runPayloader', async () => {
-      const spy = jest.spyOn(processor, 'runPayloader').mockReturnValue(Promise.resolve(null));
       await processor.run();
-      expect(spy).toHaveBeenCalled();
+      expect(payloaderSpy).toHaveBeenCalled();
     });
     it('should call runRequester', async () => {
-      const spy = jest.spyOn(processor, 'runRequester').mockReturnValue(null);
       await processor.run();
-      expect(spy).toHaveBeenCalled();
+      expect(requesterSpy).toHaveBeenCalled();
     });
     it('should call runSendAndSync', async () => {
-      const spy = jest.spyOn(processor, 'runSendAndSync').mockReturnValue(Promise.resolve(null));
       await processor.run();
-      expect(spy).toHaveBeenCalledWith('agent', 'auth');
+      expect(runSendAndSyncSpy).toHaveBeenCalledWith('agent', 'auth');
     });
     it('should call logResults', async () => {
-      const spy = jest.spyOn(processor, 'logResults').mockReturnValue(Promise.resolve(null));
+      await processor.run();
+      expect(logResultsSpy).toHaveBeenCalled();
+    });
+    it('should call logGenericError if error thrown', async () => {
+      logResultsSpy.mockRejectedValue('Async error');
+      const spy = jest.spyOn(processor, 'logGenericError'); //.mockReturnValue(Promise.resolve(null));
       await processor.run();
       expect(spy).toHaveBeenCalled();
+      spy.mockReset();
+    });
+  });
+
+  describe('runPayloader', () => {
+    let validateSpy = jest.spyOn(processor.payloader, 'validate').mockReturnValue();
+    beforeEach(() => {
+      validateSpy.mockClear();
+    });
+    it('should call prepPayload', () => {
+      const spy = jest.spyOn(processor, 'prepPayload');
+      processor.runPayloader();
+      expect(spy).toHaveBeenCalled();
+    });
+    it('should call payloader.validate', () => {
+      processor.runPayloader();
+      expect(validateSpy).toHaveBeenCalled();
+    });
+    it('should call set gqldata to payloader.data', () => {
+      processor.payloader.data = 'payloader.data';
+      processor.runPayloader();
+      expect(processor.gqldata).toEqual('payloader.data');
     });
   });
 });
