@@ -36,8 +36,8 @@ export class FulfillV3
   public mergeReport: MergeReport;
   public mergeReportSPO: string;
 
-  constructor(protected payload: IProxyRequest) {
-    super('Fulfill', payload, new FulfillResponder(), new Payloader<IFulfillGraphQLResponse>(), new SoapV2());
+  constructor(protected payload: IProxyRequest, action: string = 'Fulfill') {
+    super(action, payload, new FulfillResponder(), new Payloader<IFulfillGraphQLResponse>(), new SoapV2());
   }
 
   /**

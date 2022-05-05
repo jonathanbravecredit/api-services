@@ -6,6 +6,7 @@ import { SyncV2 } from 'libs/utils/sync/SyncV2';
 
 export class EnrollDisputesV2 extends EnrollV3 {
   public results: IProxyHandlerResponse<IEnrollResult>;
+  public action = 'EnrollDisputes';
   public serviceBundleCode = 'CC2BraveCreditTUDispute';
 
   constructor(protected payload: IProxyRequest) {
@@ -32,7 +33,6 @@ export class EnrollDisputesV2 extends EnrollV3 {
     this.setResponses(this.responder.response);
     if (this.responseType.toLowerCase() === 'success') {
       const synched = await sync.syncData(this.responder.enriched);
-      await this.publishReport(this.mergeReportSPO, this.payload.identityId);
       this.setSuccessResultsSync(synched, this.mergeReport);
     } else {
       this.results =
