@@ -75,6 +75,7 @@ export class SyncV2 {
 
   cleanBackendData(data: GetAppDataQuery): UpdateAppDataInput {
     let clean = deleteKeyNestedObject(data, '__typename');
+    clean = deleteKeyNestedObject(data, 'isFresh');
     delete clean.createdAt; // this is a graphql managed field
     delete clean.updatedAt; // this is a graphql managed field
     delete clean.owner; // this is a graphql managed field

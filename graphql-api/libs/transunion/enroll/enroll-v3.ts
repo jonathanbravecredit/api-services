@@ -28,6 +28,7 @@ export class EnrollV3
   implements APIRequest
 {
   public responder: EnrollResponder;
+  public results: IProxyHandlerResponse<unknown>;
   public action = 'Enroll';
   public schema = 'getRequest';
   public resultKey = 'EnrollResult';
@@ -36,31 +37,8 @@ export class EnrollV3
   public mergeReport: MergeReport;
   public mergeReportSPO: string;
 
-  constructor(protected payload: IProxyRequest) {
-    super('Enroll', payload, new EnrollResponder(), new Payloader<IEnrollGraphQLResponse>(), new SoapV2());
-  }
-
-  /**
-   * API runner to:
-   *  - prep the payload (via the Payloader)
-   *  - map to the request data structure and generate the request XML (with the Requester)
-   *  - send request, parse response, and sync response to database (with the Responder)
-   *  - log the results and send back results to API
-   * @returns
-   */
-  async run(): Promise<IProxyHandlerResponse<IEnrollResult>> {
-    const { agent, auth, identityId } = this.payload;
-    try {
-      await this.runPayloader();
-      this.runRequester();
-      await this.runSendAndSync(agent, auth);
-      await this.logResults();
-      return this.results;
-    } catch (err) {
-      console.log('error ===> ', err);
-      await this.logGenericError(identityId, err);
-      return { success: false, data: null, error: err };
-    }
+  constructor(protected payload: IProxyRequest, action: string = 'Enroll') {
+    super(action, payload, new EnrollResponder(), new Payloader<IEnrollGraphQLResponse>(), new SoapV2());
   }
 
   /**
@@ -70,27 +48,11 @@ export class EnrollV3
    * @returns
    */
   async runPayloader(): Promise<void> {
-    const payload = this.prepPayload();
-    this.payloader.validate<IGenericRequest>(payload, this.schema);
-    await this.payloader.prep<IGenericRequest>(qryGetDataForEnrollment, payload);
+    super.runPayloader();
+    await this.payloader.prep<IGenericRequest>(qryGetDataForEnrollment, this.prepped);
     this.gqldata = this.payloader.data;
-    this.prepped = payload;
+    console.log('gqldata: ', this.gqldata);
     console.log('prepped: ', this.prepped);
-  }
-
-  /**
-   * Layer in the:
-   *  - identity ID
-   *  - parsed message
-   *  - service bundle code (if needed)
-   * These are the most common payload values
-   * @returns
-   */
-  prepPayload(): IEnrollSchema {
-    return {
-      id: this.payload.identityId,
-      serviceBundleCode: this.serviceBundleCode,
-    };
   }
 
   /**

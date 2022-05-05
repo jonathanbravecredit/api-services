@@ -163,10 +163,8 @@ export const enrichEnrollDisputesData = (
   let enrolledOn = new Date().toISOString();
   const enrollmentKey = enroll.EnrollmentKey;
   const serviceBundleFulfillmentKey = enroll.ServiceBundleFulfillmentKey;
-  const prodResponse = enroll.ServiceProductFulfillments.ServiceProductResponse;
   console.log('enroll enrollmentkey ===> ', JSON.stringify(enrollmentKey));
   console.log('enroll serviceBundleFulfillmentKey ===> ', JSON.stringify(serviceBundleFulfillmentKey));
-  console.log('enroll prodResponse ===> ', JSON.stringify(prodResponse));
   return {
     ...data,
     agencies: {
