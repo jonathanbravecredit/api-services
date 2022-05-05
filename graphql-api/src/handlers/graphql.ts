@@ -18,6 +18,8 @@ import { FulfillDisputesV3 } from 'libs/transunion/fulfill-disputes/fulfill-disp
 import { GetServiceProductV2 } from 'libs/transunion/service-product/get-service-product-v2';
 import { GetDisputeStatusV2 } from 'libs/transunion/get-dispute-status/get-dispute-status-v2';
 import { GetDisputeHistoryV2 } from 'libs/transunion/get-dispute-history /get-dispute-history-v2';
+import { GetDisputeByUserV2 } from 'libs/transunion/get-dispute-by-user/get-dispute-by-user';
+import { GetDisputeByUserAllV2 } from 'libs/transunion/get-dispute-by-user-all/get-dispute-by-user-all';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -160,14 +162,16 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await queries.StartDispute(payload);
         return JSON.stringify(results);
       case 'GetAllDisputesByUser':
-        results = await queries.GetAllDisputesByUser(payload);
+        const getDisputeByUserAll = new GetDisputeByUserAllV2(payload);
+        results = await getDisputeByUserAll.run();
         return JSON.stringify(results);
       case 'GetDisputeStatusByID':
         const getDisputeStatusById = new GetDisputeStatusV2(payload);
         results = await getDisputeStatusById.run();
         return JSON.stringify(results);
       case 'GetCurrentDisputeByUser':
-        results = await queries.GetCurrentDisputeByUser(payload);
+        const getDisputeByUser = new GetDisputeByUserV2(payload);
+        results = await getDisputeByUser.run();
         return JSON.stringify(results);
       case 'GetDisputeHistory':
         const getDisputeHistory = new GetDisputeHistoryV2(payload);
