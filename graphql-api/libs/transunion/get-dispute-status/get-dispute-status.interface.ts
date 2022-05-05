@@ -9,6 +9,7 @@ export interface IGetDisputeStatusGraphQLResponse {
     getAppData: IGetDataForGetDisputeStatus;
   };
   dobformatted?: string;
+  disputeId?: string;
   serviceBundleCode?: string;
 }
 

@@ -15,6 +15,8 @@ import { GetAuthenticationQuestionsV2 } from 'libs/transunion/authentication-que
 import { VerifyAuthenticationQuestionsV2 } from 'libs/transunion/authentication-questions-verify/verify-authentication-questions-v2';
 import { EnrollDisputesV2 } from 'libs/transunion/enroll-disputes/enroll-disputes-v2';
 import { FulfillDisputesV3 } from 'libs/transunion/fulfill-disputes/fulfill-disputes-v3';
+import { GetServiceProductV2 } from 'libs/transunion/service-product/get-service-product-v2';
+import { GetDisputeStatusV2 } from 'libs/transunion/get-dispute-status/get-dispute-status-v2';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -146,10 +148,12 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await fulfillDispute.run();
         return JSON.stringify(results);
       case 'GetServiceProduct':
-        results = await queries.GetServiceProduct(payload);
+        const getServiceProduct = new GetServiceProductV2(payload);
+        results = await getServiceProduct.run();
         return JSON.stringify(results);
       case 'GetDisputeStatus':
-        results = await queries.GetDisputeStatus(payload);
+        const getDisputeStatus = new GetDisputeStatusV2(payload);
+        results = await getDisputeStatus.run();
         return JSON.stringify(results);
       case 'StartDispute':
         results = await queries.StartDispute(payload);
@@ -158,7 +162,8 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await queries.GetAllDisputesByUser(payload);
         return JSON.stringify(results);
       case 'GetDisputeStatusByID':
-        results = await queries.GetDisputeStatusByID(payload);
+        const getDisputeStatusById = new GetDisputeStatusV2(payload);
+        results = await getDisputeStatusById.run();
         return JSON.stringify(results);
       case 'GetCurrentDisputeByUser':
         results = await queries.GetCurrentDisputeByUser(payload);
