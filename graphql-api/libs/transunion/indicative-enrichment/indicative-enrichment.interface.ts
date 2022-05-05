@@ -14,6 +14,7 @@ export interface IIndicativeEnrichmentPayload extends IIndicativeEnrichmentReque
   serviceBundleCode: string;
 }
 
+export interface IIndicativeEnrichmentSchema extends IIndicativeEnrichmentPayload {}
 export interface IEnrichedIndicativeEnrichment {
   request: {
     AccountCode: string;

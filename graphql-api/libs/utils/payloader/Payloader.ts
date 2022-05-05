@@ -17,4 +17,7 @@ export function MixPayload() {
   };
 }
 
+/**
+ * T = GraphQL returning data structure
+ */
 export class Payloader<T> extends MixPayload()<T> {}

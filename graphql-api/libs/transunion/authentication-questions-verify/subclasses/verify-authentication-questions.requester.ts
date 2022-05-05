@@ -1,6 +1,6 @@
 import { IVerifyAuthenticationAnswer } from 'libs/interfaces/transunion/verify-authentication-answers.interface';
 import { APIRequester } from 'libs/models/api-requester.model';
-import { IVerifyAuthenticationQuestionsPayload } from 'libs/transunion/authentication-questions-verify/verify-authentication-questions.interface';
+import { IVerifyAuthenticationQuestionsSchema } from 'libs/transunion/authentication-questions-verify/verify-authentication-questions.interface';
 import { TURequester } from 'libs/transunion/tu/tu-requester';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { Nested as _nest } from 'libs/utils/helpers/Nested';
@@ -8,10 +8,10 @@ import { XMLUtil } from 'libs/utils/xml/XMLUtil';
 import * as _ from 'lodash';
 
 export class VerifyAuthenticationQuestionsRequester
-  extends TURequester<IVerifyAuthenticationQuestionsPayload>
+  extends TURequester<IVerifyAuthenticationQuestionsSchema>
   implements APIRequester
 {
-  constructor(requestKey: APIRequestKeys, payload: IVerifyAuthenticationQuestionsPayload) {
+  constructor(requestKey: APIRequestKeys, payload: IVerifyAuthenticationQuestionsSchema) {
     super(requestKey, payload);
   }
 

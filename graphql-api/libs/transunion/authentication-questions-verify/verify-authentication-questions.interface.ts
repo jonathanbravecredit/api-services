@@ -1,5 +1,4 @@
 import { IStandardResponse, IVerifyAuthenticationAnswer } from 'libs/interfaces';
-import { IErrorResponse } from 'libs/interfaces/transunion/errors.interface';
 
 export interface IVerifyAuthenticationQuestionsRequest {
   answers: IVerifyAuthenticationAnswer[];
@@ -8,6 +7,8 @@ export interface IVerifyAuthenticationQuestionsRequest {
 export interface IVerifyAuthenticationQuestionsPayload extends IVerifyAuthenticationQuestionsRequest {
   id: string;
 }
+export interface IVerifyAuthenticationQuestionsSchema extends IVerifyAuthenticationQuestionsPayload {}
+
 export interface IVerifyAuthenticationQuestions {
   request: {
     AccountCode: string;

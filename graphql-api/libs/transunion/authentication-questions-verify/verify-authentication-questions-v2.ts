@@ -6,15 +6,18 @@ import {
   IVerifyAuthenticationQuestionsPayload,
   IVerifyAuthenticationQuestionsResponse,
   IVerifyAuthenticationQuestionsResult,
+  IVerifyAuthenticationQuestionsSchema,
 } from 'libs/transunion/authentication-questions-verify/verify-authentication-questions.interface';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { VerifyAuthenticationQuestionsRequester } from 'libs/transunion/authentication-questions-verify/subclasses/verify-authentication-questions.requester';
 import { VerifyAuthenticationQuestionsResponder } from 'libs/transunion/authentication-questions-verify/subclasses/verify-authentication-questions.responder';
 import { TUAPIProcessor } from 'libs/transunion/tu/tu-api';
+import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 
 export class VerifyAuthenticationQuestionsV2
   extends TUAPIProcessor<
-    IVerifyAuthenticationQuestionsPayload,
+    IVerifyAuthenticationQuestionsSchema,
+    any,
     IVerifyAuthenticationQuestionsResponse,
     IVerifyAuthenticationQuestionsResult
   >
@@ -27,7 +30,13 @@ export class VerifyAuthenticationQuestionsV2
   public serviceBundleCode = '';
 
   constructor(protected payload: IProxyRequest) {
-    super('VerifyAuthenticationQuestions', payload, VerifyAuthenticationQuestionsResponder);
+    super(
+      'VerifyAuthenticationQuestions',
+      payload,
+      new VerifyAuthenticationQuestionsResponder(),
+      new Payloader<any>(),
+      new SoapV2(),
+    );
   }
 
   /**

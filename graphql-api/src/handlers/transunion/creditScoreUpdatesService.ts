@@ -7,8 +7,6 @@ import { IBatchMsg } from 'libs/interfaces/batch.interfaces';
 import { parallelScanAppDataEnrollKeys } from 'libs/utils/db/appdata/appdata';
 import { TransactionData, TransactionDataMaker, TransactionDataQueries } from '@bravecredit/brave-sdk';
 import * as dayjs from 'dayjs';
-// import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
-// import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();

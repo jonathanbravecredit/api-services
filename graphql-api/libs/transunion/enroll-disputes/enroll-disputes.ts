@@ -19,7 +19,7 @@ import { UpdateAppDataInput } from 'src/api/api.service';
  * @param data
  * @returns IEnrollPayload
  */
-export const createEnrollDisputesPayload = (data: IEnrollGraphQLResponse): IEnrollPayload => {
+export const createEnrollDisputesPayload = (data: IEnrollGraphQLResponse): any => {
   const id = data.data.getAppData.id?.split(':')?.pop();
   const attrs = data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;
@@ -67,7 +67,7 @@ export const createEnrollDisputesPayload = (data: IEnrollGraphQLResponse): IEnro
  * @returns
  */
 export const formatEnrollDisputes = (accountCode: string, accountName: string, msg: string): IEnroll | undefined => {
-  let message: IEnrollPayload = JSON.parse(msg);
+  let message: any = JSON.parse(msg);
   // consider adding validation here
   return message
     ? {

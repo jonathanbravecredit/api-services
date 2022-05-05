@@ -10,7 +10,7 @@ import TransactionLogger from 'libs/utils/db/logger/logger-transactions';
 import { IFulfillResult, IProxyRequest, ITransunionBatchPayload } from 'libs/interfaces';
 import { IGetEnrollmentData } from 'libs/utils/db/dynamo-db/dynamo.interfaces';
 import { TransunionUtil as TU } from 'libs/utils/transunion/transunion';
-import { FulfillV2 } from 'libs/transunion/fulfill/Fulfillv2';
+import { FulfillV3 } from 'libs/transunion/fulfill/fulfill-v3';
 import { Nested as _nest } from 'libs/utils/helpers/Nested';
 
 // request.debug = true; import * as request from 'request';
@@ -98,7 +98,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
             identityId,
           }; // don't pass the agent in the queue;
           // a special version of fulfill that calls TU API but updates the DB more directly for better performance
-          const fulfill = new FulfillV2(payload);
+          const fulfill = new FulfillV3(payload);
           const { success } = await fulfill.run();
           const resp = fulfill.response;
           const result = _nest.find<IFulfillResult>(resp, 'FulfillResult');

@@ -1,12 +1,11 @@
 import 'reflect-metadata';
-import { AppSyncResolverEvent, Handler, ScheduledEvent, ScheduledHandler } from 'aws-lambda';
+import { Handler, ScheduledEvent } from 'aws-lambda';
 import * as https from 'https';
 import * as fs from 'fs';
-import * as queries from 'libs/proxy';
 import * as secrets from 'libs/utils/secrets/secrets';
 import ErrorLogger from 'libs/utils/db/logger/logger-errors';
 import TransactionLogger from 'libs/utils/db/logger/logger-transactions';
-import { EnrollV2 } from 'libs/transunion/enroll/Enrollv2';
+import { EnrollV3 } from 'libs/transunion/enroll/enroll-v3';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -72,7 +71,7 @@ export const main: Handler = async (event: ScheduledEvent<any>): Promise<any> =>
       auth,
       identityId: id,
     };
-    const enroll = new EnrollV2(payload);
+    const enroll = new EnrollV3(payload);
     const results = await enroll.run();
     console.log('results', results);
     return JSON.stringify(results);

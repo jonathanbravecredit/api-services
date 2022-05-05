@@ -9,7 +9,7 @@ import { DB } from 'libs/utils/db/db';
 import { Handler } from 'aws-lambda';
 import { GetDisputeStatusByID } from 'libs/proxy';
 import { GetInvestigationResults } from 'libs/proxy';
-import { FulfillV2 } from 'libs/transunion/fulfill/Fulfillv2';
+import { FulfillV3 } from 'libs/transunion/fulfill/fulfill-v3';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -172,7 +172,7 @@ export const main: Handler<{ list: { id: string; disputeId: string }[] }> = asyn
                 identityId: id,
               };
               console.log('CALLING FULFILL');
-              const fulfilled = await new FulfillV2(payload).run();
+              const fulfilled = await new FulfillV3(payload).run();
               if (!fulfilled.success) throw `fulfilled failed; error: ${fulfilled.error}; data: ${fulfilled.data}`;
               console.log('CALLING GET INVESTIGATION RESULTS');
               const synced = await GetInvestigationResults(payload);

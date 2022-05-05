@@ -20,7 +20,7 @@ import { UpdateAppDataInput } from 'src/api/api.service';
  * @param data
  * @returns IEnrollPayload
  */
-export const createFulfillDisputesPayload = (data: IFulfillGraphQLResponse): IFulfillPayload => {
+export const createFulfillDisputesPayload = (data: IFulfillGraphQLResponse): any => {
   const id = data.data.getAppData.id?.split(':')?.pop();
   const attrs = data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;

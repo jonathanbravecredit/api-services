@@ -7,25 +7,20 @@ import { APIRequest } from 'libs/models/api-request.model';
 import { LoggerTransactionals } from 'libs/utils/logger/LoggerTransactionals';
 import { DEFAULT_PARSER_OPTIONS } from 'libs/utils/parser/options';
 import { Payloader } from 'libs/utils/payloader/Payloader';
+import { TUResponder } from 'libs/transunion/tu/tu-responder';
 
-interface InstanceInterface<T> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  new (_data?: any): T;
-}
-
-export class TUAPIProcessor<P, RESP, RESU> extends LoggerTransactionals implements APIRequest {
+export class TUAPIProcessor<Schema, GQL, Response, Results> extends LoggerTransactionals implements APIRequest {
   public reqXML: string;
   public resXML: string;
-  public gqldata: any;
-  public prepped: P;
-  public response: RESP;
+  public gqldata: GQL;
+  public prepped: Schema;
+  public response: Response;
   public responseType: string;
   public responseError: any;
-  public responseResult: RESU;
+  public responseResult: Results;
   public results: IProxyHandlerResponse<any>;
   public parserOptions = DEFAULT_PARSER_OPTIONS;
 
-  public payloader = new Payloader<P>();
   public schema: string = '';
   public resultKey: string = '';
   public serviceBundleCode: string = '';
@@ -33,7 +28,9 @@ export class TUAPIProcessor<P, RESP, RESU> extends LoggerTransactionals implemen
   constructor(
     public action: string,
     protected payload: IProxyRequest,
-    protected responder: InstanceInterface<{ xml: string; response: any; parseResponse: Function }>,
+    protected responder: TUResponder<Response, any>,
+    public payloader: Payloader<GQL>,
+    public soap: SoapV2,
   ) {
     super(action);
   }
@@ -46,7 +43,7 @@ export class TUAPIProcessor<P, RESP, RESU> extends LoggerTransactionals implemen
    *  - log the results and send back results to API
    * @returns
    */
-  async run(): Promise<IProxyHandlerResponse<RESU>> {
+  async run(): Promise<IProxyHandlerResponse<Results>> {
     const { agent, auth, identityId } = this.payload;
     try {
       await this.runPayloader();
@@ -55,37 +52,35 @@ export class TUAPIProcessor<P, RESP, RESU> extends LoggerTransactionals implemen
       await this.logResults();
       return this.results;
     } catch (err) {
+      console.log('error called', err);
       this.logGenericError(identityId, err);
       return { success: false, data: null, error: err };
     }
   }
 
   /**
-   * Payloader runner to:
-   *  - validate the payload
-   *  - prep the payload (can be async if need to get DB data)
+   * Payloader runner for data prep
+   *  - validate the payload against the schema
+   *  - gather GQL data if needed (must implement independently)
    * @returns
    */
-  async runPayloader(): Promise<void> {
+  runPayloader(): void {
     const payload = this.prepPayload();
-    this.payloader.validate<P>(payload, this.schema);
+    this.payloader.validate<Schema>(payload, this.schema);
     this.gqldata = this.payloader.data;
     this.prepped = payload;
     console.log('prepped: ', this.prepped);
   }
 
   /**
-   * Layer in the:
-   *  - identity ID
-   *  - parsed message
-   *  - service bundle code
-   * These are the most common payload values
+   * Prep the payload to match the schema
    * @returns
    */
-  prepPayload(): P {
+  prepPayload(): Schema {
+    const msg = this.payload.message || '{}';
     return {
       id: this.payload.identityId,
-      ...JSON.parse(this.payload.message),
+      ...JSON.parse(msg),
       serviceBundleCode: this.serviceBundleCode,
     };
   }
@@ -112,12 +107,10 @@ export class TUAPIProcessor<P, RESP, RESU> extends LoggerTransactionals implemen
    * @param auth
    */
   async runSendAndSync(agent: https.Agent, auth: string): Promise<void> {
-    const soap = new SoapV2();
-    await soap.sendRequest(agent, auth, this.action, this.parserOptions, this.reqXML);
-    const responder = new this.responder();
-    responder.xml = soap.response;
-    responder.parseResponse(this.parserOptions);
-    this.setResponses(responder.response);
+    await this.soap.sendRequest(agent, auth, this.action, this.parserOptions, this.reqXML);
+    this.responder.xml = this.soap.response;
+    this.responder.parseResponse(this.parserOptions);
+    this.setResponses(this.responder.response);
     this.responseType.toLowerCase() === 'success' ? this.setSuccessResults() : this.setFailedResults();
   }
 
@@ -129,7 +122,7 @@ export class TUAPIProcessor<P, RESP, RESU> extends LoggerTransactionals implemen
    * - responseResult
    * @param response
    */
-  setResponses(response: RESP): void {
+  setResponses(response: Response): void {
     this.response = response;
     this.responseType = _nest.find(this.response, 'ResponseType');
     this.responseError = _nest.find(this.response, 'ErrorResponse');

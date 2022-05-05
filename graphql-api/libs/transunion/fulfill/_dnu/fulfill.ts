@@ -32,7 +32,7 @@ import { ICreditReportPayload } from 'libs/interfaces/transunion/batch.interface
  * @param data
  * @returns IEnrollPayload
  */
-export const createFulfillPayload = (data: IFulfillGraphQLResponse): IFulfillPayload => {
+export const createFulfillPayload = (data: IFulfillGraphQLResponse): any => {
   const id = data.data.getAppData.id?.split(':')?.pop();
   const attrs = data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;

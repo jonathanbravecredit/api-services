@@ -126,3 +126,63 @@ export const VerifyAuthenticationQuestionsRequestXML = {
     'root.ServiceBundleFulfillmentKey',
   'soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:TrustSessionId': 'root.TrustSessionId',
 };
+
+export const EnrollRequestXML = {
+  'soapenv:Body.con:Enroll.con:request.data:AccountCode': 'root.AccountCode',
+  'soapenv:Body.con:Enroll.con:request.data:AccountName': 'root.AccountName',
+  'soapenv:Body.con:Enroll.con:request.data:AdditionalInputs.data:Data.data:Name': 'root.AdditionalInputs.Data.Name',
+  'soapenv:Body.con:Enroll.con:request.data:AdditionalInputs.data:Data.data:Value': 'root.AdditionalInputs.Data.Value',
+  'soapenv:Body.con:Enroll.con:request.data:RequestKey': 'root.RequestKey',
+  'soapenv:Body.con:Enroll.con:request.data:ClientKey': 'root.ClientKey',
+  'soapenv:Body.con:Enroll.con:request.data:Customer.data:CurrentAddress.data:AddressLine1':
+    'root.Customer.CurrentAddress.AddressLine1',
+  'soapenv:Body.con:Enroll.con:request.data:Customer.data:CurrentAddress.data:AddressLine2':
+    'root.Customer.CurrentAddress.AddressLine2',
+  'soapenv:Body.con:Enroll.con:request.data:Customer.data:CurrentAddress.data:City':
+    'root.Customer.CurrentAddress.City',
+  'soapenv:Body.con:Enroll.con:request.data:Customer.data:CurrentAddress.data:State':
+    'root.Customer.CurrentAddress.State',
+  'soapenv:Body.con:Enroll.con:request.data:Customer.data:CurrentAddress.data:Zipcode':
+    'root.Customer.CurrentAddress.Zipcode',
+  'soapenv:Body.con:Enroll.con:request.data:Customer.data:DateOfBirth': 'root.Customer.DateOfBirth',
+  'soapenv:Body.con:Enroll.con:request.data:Customer.data:FullName.data:FirstName': 'root.Customer.FullName.FirstName',
+  'soapenv:Body.con:Enroll.con:request.data:Customer.data:FullName.data:LastName': 'root.Customer.FullName.LastName',
+  'soapenv:Body.con:Enroll.con:request.data:Customer.data:FullName.data:MiddleName':
+    'root.Customer.FullName.MiddleName',
+  'soapenv:Body.con:Enroll.con:request.data:Customer.data:FullName.data:Prefix': 'root.Customer.FullName.Prefix',
+  'soapenv:Body.con:Enroll.con:request.data:Customer.data:FullName.data:Suffix': 'root.Customer.FullName.Suffix',
+  'soapenv:Body.con:Enroll.con:request.data:Customer.data:Ssn': 'root.Customer.Ssn',
+  'soapenv:Body.con:Enroll.con:request.data:Email': 'root.Email',
+  'soapenv:Body.con:Enroll.con:request.data:Language': 'root.Language',
+  'soapenv:Body.con:Enroll.con:request.data:ServiceBundleCode': 'root.ServiceBundleCode',
+};
+
+export const FulfillRequestXML = {
+  'soapenv:Body.con:Fulfill.con:request.data:AccountCode': 'root.AccountCode',
+  'soapenv:Body.con:Fulfill.con:request.data:AccountName': 'root.AccountName',
+  'soapenv:Body.con:Fulfill.con:request.data:AdditionalInputs.data:Data.data:Name': 'root.AdditionalInputs.Data.Name',
+  'soapenv:Body.con:Fulfill.con:request.data:AdditionalInputs.data:Data.data:Value': 'root.AdditionalInputs.Data.Value',
+  'soapenv:Body.con:Fulfill.con:request.data:RequestKey': 'root.RequestKey',
+  'soapenv:Body.con:Fulfill.con:request.data:ClientKey': 'root.ClientKey',
+  'soapenv:Body.con:Fulfill.con:request.data:Customer.data:CurrentAddress.data:AddressLine1':
+    'root.Customer.CurrentAddress.AddressLine1',
+  'soapenv:Body.con:Fulfill.con:request.data:Customer.data:CurrentAddress.data:AddressLine2':
+    'root.Customer.CurrentAddress.AddressLine2',
+  'soapenv:Body.con:Fulfill.con:request.data:Customer.data:CurrentAddress.data:City':
+    'root.Customer.CurrentAddress.City',
+  'soapenv:Body.con:Fulfill.con:request.data:Customer.data:CurrentAddress.data:State':
+    'root.Customer.CurrentAddress.State',
+  'soapenv:Body.con:Fulfill.con:request.data:Customer.data:CurrentAddress.data:Zipcode':
+    'root.Customer.CurrentAddress.Zipcode',
+  'soapenv:Body.con:Fulfill.con:request.data:Customer.data:DateOfBirth': 'root.Customer.DateOfBirth',
+  'soapenv:Body.con:Fulfill.con:request.data:Customer.data:FullName.data:FirstName': 'root.Customer.FullName.FirstName',
+  'soapenv:Body.con:Fulfill.con:request.data:Customer.data:FullName.data:LastName': 'root.Customer.FullName.LastName',
+  'soapenv:Body.con:Fulfill.con:request.data:Customer.data:FullName.data:MiddleName':
+    'root.Customer.FullName.MiddleName',
+  'soapenv:Body.con:Fulfill.con:request.data:Customer.data:FullName.data:Prefix': 'root.Customer.FullName.Prefix',
+  'soapenv:Body.con:Fulfill.con:request.data:Customer.data:FullName.data:Suffix': 'root.Customer.FullName.Suffix',
+  'soapenv:Body.con:Fulfill.con:request.data:Customer.data:Ssn': 'root.Customer.Ssn',
+  'soapenv:Body.con:Fulfill.con:request.data:EnrollmentKey': 'root.EnrollmentKey',
+  'soapenv:Body.con:Fulfill.con:request.data:Language': 'root.Language',
+  'soapenv:Body.con:Fulfill.con:request.data:ServiceBundleCode': 'root.ServiceBundleCode',
+};
