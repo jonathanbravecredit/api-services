@@ -58,3 +58,12 @@ export const FulfillRequestMap = {
   ...EnrollRequestMap,
   EnrollmentKey: 'root.data.getAppData.enrollmentKey',
 };
+
+export const GetServiceProductMap = {
+  ClientKey: 'root.id',
+  CSRFToken: 'root.csrfToken',
+  ClientBrowserType: 'root.clientBrowserType',
+  IpAddress: 'root.ipAddress',
+  ProductDisplay: 'root.productDisplay',
+  SeviceBundleFulfillmentKey: 'root.serviceBundleFulfillmentKey',
+};

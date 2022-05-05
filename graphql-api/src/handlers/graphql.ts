@@ -9,13 +9,12 @@ import ErrorLogger from 'libs/utils/db/logger/logger-errors';
 import TransactionLogger from 'libs/utils/db/logger/logger-transactions';
 import { EnrollV3 } from 'libs/transunion/enroll/enroll-v3';
 import { FulfillV3 } from 'libs/transunion/fulfill/fulfill-v3';
-import { FulfillDisputesV2 } from 'libs/transunion/fulfill-disputes/FulfillDisputesV2';
 import { AcknowledgeDisputeTerms } from 'libs/transunion/acknowledgements/AcknowledgeDispute';
 import { IndicativeEnrichmentV2 } from 'libs/transunion/indicative-enrichment/indicative-enrichment-v2';
 import { GetAuthenticationQuestionsV2 } from 'libs/transunion/authentication-questions/get-authentication-questions-v2';
-import { VerifyAuthenticationQuestions } from 'libs/proxy';
 import { VerifyAuthenticationQuestionsV2 } from 'libs/transunion/authentication-questions-verify/verify-authentication-questions-v2';
 import { EnrollDisputesV2 } from 'libs/transunion/enroll-disputes/enroll-disputes-v2';
+import { FulfillDisputesV3 } from 'libs/transunion/fulfill-disputes/fulfill-disputes-v3';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -143,7 +142,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await fulfill.run();
         return JSON.stringify(results);
       case 'FulfillDisputes':
-        const fulfillDispute = new FulfillDisputesV2(payload);
+        const fulfillDispute = new FulfillDisputesV3(payload);
         results = await fulfillDispute.run();
         return JSON.stringify(results);
       case 'GetServiceProduct':

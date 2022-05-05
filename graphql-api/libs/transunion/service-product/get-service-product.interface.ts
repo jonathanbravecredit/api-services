@@ -5,6 +5,10 @@ export interface IGetServiceProduct {
   request: IGetServiceProductMsg;
 }
 
+export interface IGetServiceProductSchema {
+  id: string;
+}
+
 export interface IGetServiceProductMsg {
   AccountCode: string;
   AccountName: string;

@@ -10,7 +10,7 @@ export * from './get-dispute-data.interface';
 export * from './get-dispute-history.interface';
 export * from './get-dispute-status.interface';
 export * from './get-investigation-results.interface';
-export * from './get-service-product.interface';
+export * from '../../transunion/service-product/get-service-product.interface';
 export * from './merge-report.interface';
 export * from './start-dispute.interface';
 export * from './verify-authentication-answers.interface';

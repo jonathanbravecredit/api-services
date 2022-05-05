@@ -186,3 +186,15 @@ export const FulfillRequestXML = {
   'soapenv:Body.con:Fulfill.con:request.data:Language': 'root.Language',
   'soapenv:Body.con:Fulfill.con:request.data:ServiceBundleCode': 'root.ServiceBundleCode',
 };
+
+export const GetServiceProductXML = {
+  'soapenv:Body.con:GetServiceProduct.con:request.data:AccountCode': 'root.AccountCode',
+  'soapenv:Body.con:GetServiceProduct.con:request.data:AccountName': 'root.AccountName',
+  'soapenv:Body.con:GetServiceProduct.con:request.data:RequestKey': 'root.RequestKey',
+  'soapenv:Body.con:GetServiceProduct.con:request.data:ClientKey': 'root.ClientKey',
+  'soapenv:Body.con:GetServiceProduct.con:request.data:CSRFToken': 'root.CSRFToken',
+  'soapenv:Body.con:GetServiceProduct.con:request.data:ClientBrowserType': 'root.ClientBrowserType',
+  'soapenv:Body.con:GetServiceProduct.con:request.data:IpAddress': 'root.IpAddress',
+  'soapenv:Body.con:GetServiceProduct.con:request.data:ProductDisplay': 'root.ProductDisplay',
+  'soapenv:Body.con:GetServiceProduct.con:request.data:ServiceBundleFulfillmentKey': 'root.ServiceBundleFulfillmentKey',
+};
