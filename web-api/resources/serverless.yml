@@ -47,10 +47,10 @@ resources:
         ParentId: !GetAtt ApiGatewayRestApi.RootResourceId
         PathPart: 'initiatives'
 
-    SnsProxyTopic:
+    APITopic:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: SnsProxyTopic
+        TopicName: APITopic
 
     DeadLetterQueue:
       Type: AWS::SNS::Topic
@@ -79,8 +79,8 @@ resources:
       Export:
         Name: !Sub '${self:service}-apigw-authorizer'
 
-    SnsProxyTopic:
-      Description: 'SNS Proxy Topic'
-      Value: !Ref SnsProxyTopic
+    APITopic:
+      Description: 'API Topic for general use'
+      Value: !Ref APITopic
       Export:
-        Name: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
+        Name: !Sub '${self:provider.stage}-api-endpoints-api-topic'
