@@ -230,3 +230,11 @@ export const GetDisputeStatusXML = {
   'soapenv:Body.con:GetDisputeStatus.con:request.data:DisputeId': 'root.DisputeId',
   'soapenv:Body.con:GetDisputeStatus.con:request.data:EnrollmentKey': 'root.EnrollmentKey',
 };
+
+export const GetDisputeHistoryXML = {
+  'soapenv:Body.con:GetDisputeHistory.con:request.data:AccountCode': 'root.AccountCode',
+  'soapenv:Body.con:GetDisputeHistory.con:request.data:AccountName': 'root.AccountName',
+  'soapenv:Body.con:GetDisputeHistory.con:request.data:RequestKey': 'root.RequestKey',
+  'soapenv:Body.con:GetDisputeHistory.con:request.data:ClientKey': 'root.ClientKey',
+  'soapenv:Body.con:GetDisputeHistory.con:request.data:EnrollmentKey': 'root.EnrollmentKey',
+};

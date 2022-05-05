@@ -2116,3 +2116,10 @@ export const GetCurrentDisputeByUser = async ({
     return { success: false, error: err, data: null };
   }
 };
+
+// async queryDispute(): Promise<Dispute[]> {
+//   return await this.db.disputes.list(this.prepped.id);
+//   return disputes.sort((a, b) => {
+//     return new Date(b.createdOn).valueOf() - new Date(a.createdOn).valueOf();
+//   });
+// }

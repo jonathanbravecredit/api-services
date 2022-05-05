@@ -28,6 +28,7 @@ export enum APIRequestKeys {
   ENROLL = 'enroll',
   GET_SERVICE_PRODUCT = 'get-service-product',
   GET_DISPUTE_STATUS = 'get-dispute-status',
+  GET_DISPUTE_HISTORY = 'get-dispute-history',
 }
 
 export const APIRequestLibrary = {
@@ -39,6 +40,7 @@ export const APIRequestLibrary = {
   [APIRequestKeys.FULFILL]: FulfillRequestMap,
   [APIRequestKeys.GET_SERVICE_PRODUCT]: GetServiceProductMap,
   [APIRequestKeys.GET_DISPUTE_STATUS]: GetDisputeStatusMap,
+  [APIRequestKeys.GET_DISPUTE_HISTORY]: {},
 };
 
 export const APIRequestXMLLibrary = {
@@ -50,4 +52,5 @@ export const APIRequestXMLLibrary = {
   [APIRequestKeys.FULFILL]: FulfillRequestXML,
   [APIRequestKeys.GET_SERVICE_PRODUCT]: GetServiceProductXML,
   [APIRequestKeys.GET_DISPUTE_STATUS]: GetDisputeStatusXML,
+  [APIRequestKeys.GET_DISPUTE_HISTORY]: {},
 };

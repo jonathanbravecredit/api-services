@@ -1,5 +1,8 @@
 import { IStandardResponse } from 'libs/interfaces/transunion/common-tu.interface';
 
+export interface IGetDisputeHistorySchema {
+  id: string;
+}
 export interface IGetDisputeHistoryGraphQLResponse {
   data: {
     getAppData: {

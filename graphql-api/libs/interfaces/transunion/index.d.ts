@@ -7,7 +7,7 @@ export * from './fulfill-worker.interface';
 export * from './get-app-data.interface';
 export * from '../../transunion/authentication-questions/get-authentication-questions.interface';
 export * from './get-dispute-data.interface';
-export * from './get-dispute-history.interface';
+export * from '../../transunion/get-dispute-history /get-dispute-history.interface';
 export * from '../../transunion/get-dispute-status/get-dispute-status.interface';
 export * from './get-investigation-results.interface';
 export * from '../../transunion/service-product/get-service-product.interface';

@@ -76,3 +76,7 @@ export const GetDisputeStatusMap = {
   EnrollmentKey: 'root.data.getAppData.agencies.transunion.disputeEnrollmentKey',
   DisputeId: 'root.disputeId',
 };
+
+export const GetDisputeHistoryMap = {
+  EnrollmentKey: 'root.data.getAppData.agencies.transunion.disputeEnrollmentKey',
+};
