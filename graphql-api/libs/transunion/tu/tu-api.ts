@@ -61,7 +61,7 @@ export class TUAPIProcessor<Schema, GQL, Response, Results> extends LoggerTransa
   /**
    * Payloader runner for data prep
    *  - validate the payload against the schema
-   *  - gather GQL data if needed (must implement independently)
+   *  - Does NOT gather GQL data if needed (must implement independently)
    * @returns
    */
   runPayloader(): void {

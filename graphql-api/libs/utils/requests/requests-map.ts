@@ -67,3 +67,12 @@ export const GetServiceProductMap = {
   ProductDisplay: 'root.productDisplay',
   SeviceBundleFulfillmentKey: 'root.serviceBundleFulfillmentKey',
 };
+
+export const GetDisputeStatusMap = {
+  ...BaseGQLRequestMap,
+  'Customer.DateOfBirth': 'root.dobformatted',
+  'Customer.PhoneNumber': 'root.data.getAppData.user.userAttributes.phone.primary',
+  'Customer.Ssn': 'root.data.getAppData.user.userAttributes.ssn.full',
+  EnrollmentKey: 'root.data.getAppData.agencies.transunion.disputeEnrollmentKey',
+  DisputeId: 'root.disputeId',
+};

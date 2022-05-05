@@ -198,3 +198,35 @@ export const GetServiceProductXML = {
   'soapenv:Body.con:GetServiceProduct.con:request.data:ProductDisplay': 'root.ProductDisplay',
   'soapenv:Body.con:GetServiceProduct.con:request.data:ServiceBundleFulfillmentKey': 'root.ServiceBundleFulfillmentKey',
 };
+
+export const GetDisputeStatusXML = {
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:AccountCode': 'root.AccountCode',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:AccountName': 'root.AccountName',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:RequestKey': 'root.RequestKey',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:ClientKey': 'root.ClientKey',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:Customer.data:CurrentAddress.data:AddressLine1':
+    'root.Customer.CurrentAddress.AddressLine1',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:Customer.data:CurrentAddress.data:AddressLine2':
+    'root.Customer.CurrentAddress.AddressLine2',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:Customer.data:CurrentAddress.data:City':
+    'root.Customer.CurrentAddress.City',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:Customer.data:CurrentAddress.data:State':
+    'root.Customer.CurrentAddress.State',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:Customer.data:CurrentAddress.data:Zipcode':
+    'root.Customer.CurrentAddress.Zipcode',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:Customer.data:DateOfBirth': 'root.Customer.DateOfBirth',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:Customer.data:FullName.data:FirstName':
+    'root.Customer.FullName.FirstName',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:Customer.data:FullName.data:LastName':
+    'root.Customer.FullName.LastName',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:Customer.data:FullName.data:MiddleName':
+    'root.Customer.FullName.MiddleName',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:Customer.data:FullName.data:Prefix':
+    'root.Customer.FullName.Prefix',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:Customer.data:FullName.data:Suffix':
+    'root.Customer.FullName.Suffix',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:Customer.data:PhoneNumber': 'root.Customer.PhoneNumber',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:Customer.data:Ssn': 'root.Customer.Ssn',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:DisputeId': 'root.DisputeId',
+  'soapenv:Body.con:GetDisputeStatus.con:request.data:EnrollmentKey': 'root.EnrollmentKey',
+};

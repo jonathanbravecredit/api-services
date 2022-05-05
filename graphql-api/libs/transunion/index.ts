@@ -1,7 +1,7 @@
 export * from './authentication-questions/get-authentication-questions';
 export * from './authentication-questions-verify/verify-authentication-questions';
-export * from './dispute-history/get-dispute-history';
-export * from './dispute-status/get-dispute-status';
+export * from './get-dispute-history /get-dispute-history';
+export * from './get-dispute-status/get-dispute-status';
 export * from './enroll/_dnu/enroll';
 export * from './enroll-disputes/enroll-disputes';
 export * from './fulfill/_dnu/fulfill';

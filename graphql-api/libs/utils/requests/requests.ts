@@ -6,11 +6,13 @@ import {
   EnrollRequestMap,
   FulfillRequestMap,
   GetServiceProductMap,
+  GetDisputeStatusMap,
 } from 'libs/utils/requests/requests-map';
 import {
   EnrollRequestXML,
   FulfillRequestXML,
   GetAuthenticationQuestionsRequestXML,
+  GetDisputeStatusXML,
   GetServiceProductXML,
   IndicativeEnrichmentRequestXML,
   MockRequestXML,
@@ -25,6 +27,7 @@ export enum APIRequestKeys {
   FULFILL = 'fulfill',
   ENROLL = 'enroll',
   GET_SERVICE_PRODUCT = 'get-service-product',
+  GET_DISPUTE_STATUS = 'get-dispute-status',
 }
 
 export const APIRequestLibrary = {
@@ -35,6 +38,7 @@ export const APIRequestLibrary = {
   [APIRequestKeys.ENROLL]: EnrollRequestMap,
   [APIRequestKeys.FULFILL]: FulfillRequestMap,
   [APIRequestKeys.GET_SERVICE_PRODUCT]: GetServiceProductMap,
+  [APIRequestKeys.GET_DISPUTE_STATUS]: GetDisputeStatusMap,
 };
 
 export const APIRequestXMLLibrary = {
@@ -45,4 +49,5 @@ export const APIRequestXMLLibrary = {
   [APIRequestKeys.ENROLL]: EnrollRequestXML,
   [APIRequestKeys.FULFILL]: FulfillRequestXML,
   [APIRequestKeys.GET_SERVICE_PRODUCT]: GetServiceProductXML,
+  [APIRequestKeys.GET_DISPUTE_STATUS]: GetDisputeStatusXML,
 };

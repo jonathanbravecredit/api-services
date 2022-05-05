@@ -1,4 +1,16 @@
-import { IDisputeStatus, IProcessDisputeTradelineResult, IStandardResponse } from 'libs/interfaces';
+import { IDisputeStatus, IStandardResponse } from 'libs/interfaces';
+
+export interface IGetDisputeStatusSchema {
+  id: string;
+}
+
+export interface IGetDisputeStatusGraphQLResponse {
+  data: {
+    getAppData: IGetDataForGetDisputeStatus;
+  };
+  dobformatted?: string;
+  serviceBundleCode?: string;
+}
 
 export interface IGetDataForGetDisputeStatus {
   id?: string;
