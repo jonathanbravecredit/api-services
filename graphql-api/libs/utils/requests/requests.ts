@@ -3,8 +3,12 @@ import {
   GetAuthenticationQuestionsRequestMap,
   IndicativeEnrichmentRequestMap,
   VerifyAuthenticationQuestionsRequestMap,
+  EnrollRequestMap,
+  FulfillRequestMap,
 } from 'libs/utils/requests/requests-map';
 import {
+  EnrollRequestXML,
+  FulfillRequestXML,
   GetAuthenticationQuestionsRequestXML,
   IndicativeEnrichmentRequestXML,
   MockRequestXML,
@@ -22,8 +26,8 @@ export enum APIRequestKeys {
 
 export const APIRequestLibrary = {
   [APIRequestKeys.MOCK]: MockRequestMap,
-  [APIRequestKeys.FULFILL]: {},
-  [APIRequestKeys.ENROLL]: {},
+  [APIRequestKeys.ENROLL]: EnrollRequestMap,
+  [APIRequestKeys.FULFILL]: FulfillRequestMap,
   [APIRequestKeys.INDICATIVE_ENRICHMENT]: IndicativeEnrichmentRequestMap,
   [APIRequestKeys.GET_AUTHENTICATION_QUESTIONS]: GetAuthenticationQuestionsRequestMap,
   [APIRequestKeys.VERIFY_AUTHENTICATION_QUESTIONS]: VerifyAuthenticationQuestionsRequestMap,
@@ -31,8 +35,8 @@ export const APIRequestLibrary = {
 
 export const APIRequestXMLLibrary = {
   [APIRequestKeys.MOCK]: MockRequestXML,
-  [APIRequestKeys.FULFILL]: {},
-  [APIRequestKeys.ENROLL]: {},
+  [APIRequestKeys.ENROLL]: EnrollRequestXML,
+  [APIRequestKeys.FULFILL]: FulfillRequestXML,
   [APIRequestKeys.INDICATIVE_ENRICHMENT]: IndicativeEnrichmentRequestXML,
   [APIRequestKeys.GET_AUTHENTICATION_QUESTIONS]: GetAuthenticationQuestionsRequestXML,
   [APIRequestKeys.VERIFY_AUTHENTICATION_QUESTIONS]: VerifyAuthenticationQuestionsRequestXML,

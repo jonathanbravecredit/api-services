@@ -4,6 +4,8 @@ export interface IFulfillGraphQLResponse {
   data: {
     getAppData: IGetDataForFulfill;
   };
+  dobformatted?: string;
+  serviceBundleCode?: string;
 }
 
 export interface IGetDataForFulfill {
@@ -47,6 +49,21 @@ export interface IGetDataForFulfill {
 }
 
 export interface IFulfillPayload {
+  id: string;
+}
+export interface IFulfillSchema extends IFulfillPayload {
+  serviceBundleCode: string;
+}
+
+export interface IFulfill {
+  request: IFulfillMsg;
+}
+export interface IFulfillRequest extends IFulfillMsg {}
+export interface IFulfillMsg {
+  AccountCode: string;
+  AccountName: string;
+  EnrollmentKey: string;
+  Language?: string;
   RequestKey: string;
   AdditionalInputs?: {
     Data: {
@@ -81,20 +98,7 @@ export interface IFulfillPayload {
     PhoneNumber?: string;
     Ssn: string;
   };
-  EnrollmentKey: string;
   ServiceBundleCode: string;
-}
-
-export interface IFulfill {
-  request: IFulfillMsg;
-}
-
-export interface IFulfillRequest extends IFulfillMsg {}
-export interface IFulfillMsg extends IFulfillPayload {
-  AccountCode: string;
-  AccountName: string;
-  EnrollmentKey: string;
-  Language?: string;
 }
 
 export interface IFulfillResponse {

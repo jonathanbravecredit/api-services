@@ -34,25 +34,26 @@ export interface IEnrollGraphQLResponse {
       };
     };
   };
+  dobformatted?: string;
+  serviceBundleCode?: string;
 }
 
 export interface IEnrollPayload {
   id: string;
 }
 
-export interface IEnrollSchema extends IEnrollPayload {}
+export interface IEnrollSchema extends IEnrollPayload {
+  serviceBundleCode: string;
+}
 
 export interface IEnroll {
   request: IEnrollMsg;
 }
 
 export interface IEnrollRequest extends IEnrollMsg {}
-export interface IEnrollMsg extends IEnrollPayload {
+export interface IEnrollMsg {
   AccountCode: string;
   AccountName: string;
-  Email?: string;
-  Language?: string;
-  TrustSessionId?: string;
   RequestKey: string;
   AdditionalInputs?: {
     Data: {
@@ -79,6 +80,9 @@ export interface IEnrollMsg extends IEnrollPayload {
     };
     Ssn: string;
   };
+  Email?: string;
+  Language?: string;
+  TrustSessionId?: string;
   ServiceBundleCode: string;
 }
 

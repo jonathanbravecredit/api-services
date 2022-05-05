@@ -22,7 +22,7 @@ import TransactionLogger from 'libs/utils/db/logger/logger-transactions';
 import { CreditScoreTracking } from 'libs/utils/db/credit-score-tracking/model/credit-score-tracking';
 import { updateEnrollmentStatus, updateNavBarBadges } from 'libs/utils/db/dynamo-db/dynamo';
 import { ICancelEnrollGraphQLResponse } from 'libs/interfaces';
-import { FulfillV2 } from 'libs/transunion/fulfill/Fulfillv2';
+import { FulfillV2 } from 'libs/transunion/fulfill/_dnu/Fulfillv2';
 import { FulfillDisputesV2 } from 'libs/transunion/fulfill-disputes/FulfillDisputesV2';
 import { MergeReport } from 'libs/models/MergeReport/MergeReport';
 import {

@@ -13,6 +13,7 @@ import { SNS } from 'aws-sdk';
 import {
   IEnroll,
   IEnrollGraphQLResponse,
+  IEnrollMsg,
   IEnrollPayload,
   IEnrollResponse,
   IEnrollResult,
@@ -30,7 +31,7 @@ import { ICreditReportPayload } from 'libs/interfaces/transunion/batch.interface
  * @param data
  * @returns IEnrollPayload
  */
-export const createEnrollPayload = (data: IEnrollGraphQLResponse): IEnrollPayload => {
+export const createEnrollPayload = (data: IEnrollGraphQLResponse): any => {
   const id = data.data.getAppData?.id?.split(':')?.pop();
   const attrs = data.data.getAppData?.user?.userAttributes;
   const dob = attrs?.dob;
@@ -78,7 +79,7 @@ export const createEnrollPayload = (data: IEnrollGraphQLResponse): IEnrollPayloa
  * @returns
  */
 export const formatEnroll = (accountCode: string, accountName: string, msg: string): IEnroll | undefined => {
-  let message: IEnrollPayload = JSON.parse(msg);
+  let message: any = JSON.parse(msg);
   // consider adding validation here
   return message
     ? {

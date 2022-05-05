@@ -1,6 +1,6 @@
 import { IProxyRequest } from 'libs/interfaces/api/proxy-query.interfaces';
-import { FulfillV2 } from 'libs/transunion/fulfill/Fulfillv2';
-import { FulfillRequester } from 'libs/transunion/fulfill/subclasses/FulfillRequester';
+import { FulfillV2 } from 'libs/transunion/fulfill/_dnu/Fulfillv2';
+import { FulfillRequester } from 'libs/transunion/fulfill/_dnu/FulfillRequester';
 
 export class FulfillDisputesV2 extends FulfillV2 {
   constructor(protected payload: IProxyRequest) {

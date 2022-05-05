@@ -3,8 +3,8 @@ import { Nested as _nest } from 'libs/utils/helpers/Nested';
 import { SyncV2 } from 'libs/utils/sync/SyncV2';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 import { Payloader } from 'libs/utils/payloader/Payloader';
-import { FulfillRequester } from 'libs/transunion/fulfill/subclasses/FulfillRequester';
-import { FulfillResponder } from 'libs/transunion/fulfill/subclasses/FulfillResponder';
+import { FulfillRequester } from 'libs/transunion/fulfill/_dnu/FulfillRequester';
+import { FulfillResponder } from 'libs/transunion/fulfill/_dnu/FulfillResponder';
 import { qryGetDataForFulfill } from 'libs/queries';
 import {
   IFulfillGraphQLResponse,

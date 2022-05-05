@@ -4,7 +4,7 @@ export * from './dispute-history/get-dispute-history';
 export * from './dispute-status/get-dispute-status';
 export * from './enroll/_dnu/enroll';
 export * from './enroll-disputes/enroll-disputes';
-export * from './fulfill/fulfill';
+export * from './fulfill/_dnu/fulfill';
 export * from './fulfill-disputes/fulfill-disputes';
 export * from './indicative-enrichment/indicative-enrichment';
 export * from './investigation-results/investigation-results';

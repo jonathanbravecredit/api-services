@@ -7,12 +7,14 @@ import * as secrets from 'libs/utils/secrets/secrets';
 import * as tokens from 'libs/utils/tokens/tokens';
 import ErrorLogger from 'libs/utils/db/logger/logger-errors';
 import TransactionLogger from 'libs/utils/db/logger/logger-transactions';
-import { EnrollV2 } from 'libs/transunion/enroll/Enrollv2';
-import { FulfillV2 } from 'libs/transunion/fulfill/Fulfillv2';
+import { EnrollV3 } from 'libs/transunion/enroll/enroll-v3';
+import { FulfillV3 } from 'libs/transunion/fulfill/fulfill-v3';
 import { FulfillDisputesV2 } from 'libs/transunion/fulfill-disputes/FulfillDisputesV2';
 import { AcknowledgeDisputeTerms } from 'libs/transunion/acknowledgements/AcknowledgeDispute';
 import { IndicativeEnrichmentV2 } from 'libs/transunion/indicative-enrichment/indicative-enrichment-v2';
 import { GetAuthenticationQuestionsV2 } from 'libs/transunion/authentication-questions/get-authentication-questions-v2';
+import { VerifyAuthenticationQuestions } from 'libs/proxy';
+import { VerifyAuthenticationQuestionsV2 } from 'libs/transunion/authentication-questions-verify/verify-authentication-questions-v2';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -120,10 +122,11 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await getAuthenticationQuestions.run();
         return JSON.stringify(results);
       case 'VerifyAuthenticationQuestions':
-        results = await queries.VerifyAuthenticationQuestions(payload);
+        const VerifyAuthenticationQuestions = new VerifyAuthenticationQuestionsV2(payload);
+        results = await VerifyAuthenticationQuestions.run();
         return JSON.stringify(results);
       case 'Enroll':
-        const enroll = new EnrollV2(payload);
+        const enroll = new EnrollV3(payload);
         results = await enroll.run();
         return JSON.stringify(results);
       case 'EnrollDisputes':
@@ -134,7 +137,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await ackTerms.ackTerms();
         return JSON.stringify(results);
       case 'Fulfill':
-        const fulfill = new FulfillV2(payload);
+        const fulfill = new FulfillV3(payload);
         results = await fulfill.run();
         return JSON.stringify(results);
       case 'FulfillDisputes':

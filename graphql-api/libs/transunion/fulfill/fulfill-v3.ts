@@ -1,15 +1,15 @@
 import * as dayjs from 'dayjs';
 import * as https from 'https';
+import { Nested as _nest } from 'libs/utils/helpers/Nested';
 import { SyncV2 } from 'libs/utils/sync/SyncV2';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
 import { Payloader } from 'libs/utils/payloader/Payloader';
-import { qryGetDataForEnrollment } from 'libs/queries';
+import { qryGetDataForFulfill } from 'libs/queries';
 import {
-  IEnrollGraphQLResponse,
-  IEnrollResponse,
-  IEnrollResult,
-  IEnrollSchema,
+  IFulfillGraphQLResponse,
+  IFulfillResponse,
+  IFulfillResult,
+  IFulfillSchema,
   IGenericRequest,
   IProxyRequest,
 } from 'libs/interfaces';
@@ -18,26 +18,26 @@ import { MergeReport } from 'libs/models/MergeReport/MergeReport';
 import { CreditReportPublisher } from 'libs/transunion/credit-report-service/CreditReportPublisher';
 import { APIRequest } from 'libs/models/api-request.model';
 import { TUAPIProcessor } from 'libs/transunion/tu/tu-api';
-import { EnrollResponder } from 'libs/transunion/enroll/subclasses/enroll.responder';
-import { EnrollRequester } from 'libs/transunion/enroll/subclasses/enroll.requester';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
+import { FulfillResponder } from 'libs/transunion/fulfill/subclasses/fulfill.responder';
+import { FulfillRequester } from 'libs/transunion/fulfill/subclasses/fulfill.requester';
 import { DobInput } from '@bravecredit/brave-sdk/dist/types/graphql-api';
 
-export class EnrollV3
-  extends TUAPIProcessor<IEnrollSchema, IEnrollGraphQLResponse, IEnrollResponse, IEnrollResult>
+export class FulfillV3
+  extends TUAPIProcessor<IFulfillSchema, IFulfillGraphQLResponse, IFulfillResponse, IFulfillResult>
   implements APIRequest
 {
-  public responder: EnrollResponder;
-  public action = 'Enroll';
+  public responder: FulfillResponder;
+  public action = 'Fulfill';
   public schema = 'getRequest';
-  public resultKey = 'EnrollResult';
+  public resultKey = 'FulfillResult';
   public serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
 
   public mergeReport: MergeReport;
   public mergeReportSPO: string;
 
   constructor(protected payload: IProxyRequest) {
-    super('Enroll', payload, new EnrollResponder(), new Payloader<IEnrollGraphQLResponse>(), new SoapV2());
+    super('Fulfill', payload, new FulfillResponder(), new Payloader<IFulfillGraphQLResponse>(), new SoapV2());
   }
 
   /**
@@ -48,8 +48,8 @@ export class EnrollV3
    *  - log the results and send back results to API
    * @returns
    */
-  async run(): Promise<IProxyHandlerResponse<IEnrollResult>> {
-    const { agent, auth, identityId } = this.payload;
+  async run(): Promise<IProxyHandlerResponse<IFulfillResult>> {
+    const { accountCode, username, message, agent, auth, identityId } = this.payload;
     try {
       await this.runPayloader();
       this.runRequester();
@@ -58,23 +58,24 @@ export class EnrollV3
       return this.results;
     } catch (err) {
       console.log('error ===> ', err);
-      await this.logGenericError(identityId, err);
+      this.logGenericError(identityId, err);
       return { success: false, data: null, error: err };
     }
   }
 
   /**
-   * Payloader runner for data prep
-   *  - validate the payload against the schema
-   *  - gather GQL data if needed (must implement independently)
+   * Payloader runner to:
+   *  - validate the payload
+   *  - prep the payload
    * @returns
    */
   async runPayloader(): Promise<void> {
     const payload = this.prepPayload();
     this.payloader.validate<IGenericRequest>(payload, this.schema);
-    await this.payloader.prep<IGenericRequest>(qryGetDataForEnrollment, payload);
+    await this.payloader.prep<IGenericRequest>(qryGetDataForFulfill, payload);
     this.gqldata = this.payloader.data;
     this.prepped = payload;
+    console.log('data: ', this.gqldata);
     console.log('prepped: ', this.prepped);
   }
 
@@ -86,7 +87,7 @@ export class EnrollV3
    * These are the most common payload values
    * @returns
    */
-  prepPayload(): IEnrollSchema {
+  prepPayload(): IFulfillSchema {
     return {
       id: this.payload.identityId,
       serviceBundleCode: this.serviceBundleCode,
@@ -101,7 +102,7 @@ export class EnrollV3
    */
   runRequester(): void {
     this.formatDob();
-    const requester = new EnrollRequester(APIRequestKeys.ENROLL, {
+    const requester = new FulfillRequester(APIRequestKeys.FULFILL, {
       ...this.gqldata,
       serviceBundleCode: this.serviceBundleCode,
     });
@@ -131,20 +132,21 @@ export class EnrollV3
     if (this.responseType.toLowerCase() === 'success') {
       const synched = await sync.syncData(this.responder.enriched);
       await this.publishReport(this.mergeReportSPO, this.payload.identityId);
-      this.setSuccessResultsSync(synched, this.mergeReport);
+      this.setSuccessResultsSync(synched);
     } else {
       this.setFailedResults();
     }
   }
 
-  setMergeReportItems(responder: EnrollResponder): void {
+  setMergeReportItems(responder: FulfillResponder): void {
     this.mergeReport = responder.mergeReport;
     this.mergeReportSPO = responder.mergeReportSPO;
   }
 
-  setSuccessResultsSync(synched: boolean, data: MergeReport): void {
+  setSuccessResultsSync(synched: boolean): void {
+    const data = _nest.find<IFulfillResult>(this.response, 'FulfillResult');
     this.results = synched
-      ? { success: true, error: null, data: { report: data } }
+      ? { success: true, error: null, data: data }
       : { success: false, error: 'failed to sync data to db' };
   }
 
@@ -152,6 +154,7 @@ export class EnrollV3
     const publisher = new CreditReportPublisher(spo);
     await publisher.publish(id);
   }
+
   /**
    * TU requires date format in YYYY-MMM-D
    *  ex: 1980-Nov-1
