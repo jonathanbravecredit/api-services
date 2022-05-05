@@ -1826,11 +1826,11 @@ export const GetTrendingData = async ({
   data: any;
 }> => {
   // validate incoming message
-  const payload: interfaces.IGetTrendingDataRequest = {
+  const payload: interfaces.IGetTrendingDataPayload = {
     id: identityId,
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<interfaces.IGetTrendingDataRequest>('getTrendingDataRequest');
+  const validate = ajv.getSchema<interfaces.IGetTrendingDataPayload>('getTrendingDataRequest');
 
   if (!validate(payload)) throw `Malformed message=${payload}`;
 

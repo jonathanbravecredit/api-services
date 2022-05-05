@@ -20,6 +20,9 @@ import { GetDisputeStatusV2 } from 'libs/transunion/get-dispute-status/get-dispu
 import { GetDisputeHistoryV2 } from 'libs/transunion/get-dispute-history /get-dispute-history-v2';
 import { GetDisputeByUserV2 } from 'libs/transunion/get-dispute-by-user/get-dispute-by-user';
 import { GetDisputeByUserAllV2 } from 'libs/transunion/get-dispute-by-user-all/get-dispute-by-user-all';
+import { CompleteOnboardingEnrollments } from 'libs/transunion/complete-onboarding-enrollment/complete-onboarding-enrollment';
+import { GetTrendingDataV2 } from 'libs/transunion/get-trending-data/get-trending-data-v2';
+import { GetCreditScoreTrackingV2 } from 'libs/transunion/get-credit-score-tracking/get-credit-score-tracking';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -178,7 +181,8 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await getDisputeHistory.run();
         return JSON.stringify(results);
       case 'CompleteOnboardingEnrollments':
-        results = await queries.CompleteOnboardingEnrollments(payload);
+        const completeOnboardingEnrollments = new CompleteOnboardingEnrollments(payload);
+        results = await completeOnboardingEnrollments.run();
         return JSON.stringify(results);
       case 'DisputePreflightCheck':
         results = await queries.DisputePreflightCheck(payload);
@@ -187,7 +191,8 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await queries.GetInvestigationResults(payload);
         return JSON.stringify(results);
       case 'GetTrendingData':
-        results = await queries.GetTrendingData(payload);
+        const getTrendingData = new GetTrendingDataV2(payload);
+        results = await getTrendingData.run();
         return JSON.stringify(results);
       case 'GetInvestigationResultsByID':
         results = await queries.GetInvestigationResultsByID(payload);
@@ -196,7 +201,8 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await queries.GetCreditBureauResultsByID(payload);
         return JSON.stringify(results);
       case 'GetCreditScoreTracking':
-        results = await queries.GetCreditScoreTracking(payload);
+        const getCreditScoreTracking = new GetCreditScoreTrackingV2(payload);
+        results = await getCreditScoreTracking.run();
         return JSON.stringify(results);
       case 'ListDisputesByUser':
         results = await queries.ListDisputesByUser(payload);

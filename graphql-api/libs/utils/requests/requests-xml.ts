@@ -238,3 +238,18 @@ export const GetDisputeHistoryXML = {
   'soapenv:Body.con:GetDisputeHistory.con:request.data:ClientKey': 'root.ClientKey',
   'soapenv:Body.con:GetDisputeHistory.con:request.data:EnrollmentKey': 'root.EnrollmentKey',
 };
+
+export const GetTrendingDataXML = {
+  'soapenv:Body.con:GetTrendingData.con:request.data:AccountCode': 'root.AccountCode',
+  'soapenv:Body.con:GetTrendingData.con:request.data:AccountName': 'root.AccountName',
+  'soapenv:Body.con:GetTrendingData.con:request.data:AdditionalInputs.data:Data.data:Name':
+    'root.AdditionalInputs.Data.Name',
+  'soapenv:Body.con:GetTrendingData.con:request.data:AdditionalInputs.data:Data.data:Value':
+    'root.AdditionalInputs.Data.Value',
+  'soapenv:Body.con:GetTrendingData.con:request.data:RequestKey': 'root.RequestKey',
+  'soapenv:Body.con:GetTrendingData.con:request.data:ClientKey': 'root.ClientKey',
+  'soapenv:Body.con:GetTrendingData.con:request.data:FromDate': 'root.FromDate',
+  'soapenv:Body.con:GetTrendingData.con:request.data:GetPartnerTrendingData': 'root.GetPartnerTrendingData',
+  'soapenv:Body.con:GetTrendingData.con:request.data:GetProductTrendingData': 'root.GetProductTrendingData',
+  'soapenv:Body.con:GetTrendingData.con:request.data:ProductDisplay': 'root.ProductDisplay',
+};

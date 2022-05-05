@@ -1,10 +1,12 @@
 import { IStandardResponse } from 'libs/interfaces';
 
-export interface IGetTrendingDataRequest {
+export interface IGetTrendingDataPayload {
   id: string;
   fromDate: string;
   toDate?: string;
 }
+
+export interface IGetTrendingDataSchema extends IGetTrendingDataPayload {}
 
 export interface IGetTrendingDataGraphQLResponse {
   data: {
@@ -50,7 +52,7 @@ export interface IGetTrendingDataGraphQLResponse {
   };
 }
 
-export interface IGetTrendingDataPayload {
+export interface IGetTrendingDataRequest {
   RequestKey: string;
   AdditionalInputs?: {
     Data: {
@@ -63,11 +65,11 @@ export interface IGetTrendingDataPayload {
   CSRFToken?: string; // product display only
   ClientBrowserType?: string; // product display only
   FromDate?: string;
-  GetPartnerTrendingData?: string;
-  GetProductTrendingData?: string;
+  GetPartnerTrendingData: string;
+  GetProductTrendingData: string;
   IpAddress?: string; // product display only
   PartnerTrendingAttributes?: string[];
-  ProductDisplay?: string;
+  ProductDisplay: string;
   ProductTrendingAttributes?: string[];
   ToDate?: string;
 }
@@ -81,7 +83,7 @@ export interface IGetTrendingData {
   request: IGetTrendingDataMsg;
 }
 
-export interface IGetTrendingDataMsg extends IGetTrendingDataPayload {
+export interface IGetTrendingDataMsg extends IGetTrendingDataRequest {
   AccountCode: string;
   AccountName: string;
   EnrollmentKey: string;

@@ -5,7 +5,7 @@ import {
   IGetTrendingDataMsg,
   IGetTrendingDataPayload,
   IGetTrendingDataRequest,
-} from 'libs/interfaces/transunion/get-trending-data.interface';
+} from 'libs/transunion/get-trending-data/get-trending-data.interface';
 import { textConstructor } from 'libs/utils';
 
 /**
@@ -14,7 +14,7 @@ import { textConstructor } from 'libs/utils';
  * @param params
  * @returns
  */
-export const createGetTrendingDataPayload = (data: IGetTrendingDataRequest): IGetTrendingDataPayload => {
+export const createGetTrendingDataPayload = (data: IGetTrendingDataPayload): IGetTrendingDataRequest => {
   const id = data.id?.split(':')?.pop();
   const fromDate = data.fromDate;
   const toDate = data.toDate;

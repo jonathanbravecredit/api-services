@@ -7,13 +7,16 @@ import {
   FulfillRequestMap,
   GetServiceProductMap,
   GetDisputeStatusMap,
+  GetDisputeHistoryMap,
 } from 'libs/utils/requests/requests-map';
 import {
   EnrollRequestXML,
   FulfillRequestXML,
   GetAuthenticationQuestionsRequestXML,
+  GetDisputeHistoryXML,
   GetDisputeStatusXML,
   GetServiceProductXML,
+  GetTrendingDataXML,
   IndicativeEnrichmentRequestXML,
   MockRequestXML,
   VerifyAuthenticationQuestionsRequestXML,
@@ -29,6 +32,7 @@ export enum APIRequestKeys {
   GET_SERVICE_PRODUCT = 'get-service-product',
   GET_DISPUTE_STATUS = 'get-dispute-status',
   GET_DISPUTE_HISTORY = 'get-dispute-history',
+  GET_TRENDING_DATA = 'get-trending-data',
 }
 
 export const APIRequestLibrary = {
@@ -40,7 +44,8 @@ export const APIRequestLibrary = {
   [APIRequestKeys.FULFILL]: FulfillRequestMap,
   [APIRequestKeys.GET_SERVICE_PRODUCT]: GetServiceProductMap,
   [APIRequestKeys.GET_DISPUTE_STATUS]: GetDisputeStatusMap,
-  [APIRequestKeys.GET_DISPUTE_HISTORY]: {},
+  [APIRequestKeys.GET_DISPUTE_HISTORY]: GetDisputeHistoryMap,
+  [APIRequestKeys.GET_TRENDING_DATA]: {},
 };
 
 export const APIRequestXMLLibrary = {
@@ -52,5 +57,6 @@ export const APIRequestXMLLibrary = {
   [APIRequestKeys.FULFILL]: FulfillRequestXML,
   [APIRequestKeys.GET_SERVICE_PRODUCT]: GetServiceProductXML,
   [APIRequestKeys.GET_DISPUTE_STATUS]: GetDisputeStatusXML,
-  [APIRequestKeys.GET_DISPUTE_HISTORY]: {},
+  [APIRequestKeys.GET_DISPUTE_HISTORY]: GetDisputeHistoryXML,
+  [APIRequestKeys.GET_TRENDING_DATA]: GetTrendingDataXML,
 };
