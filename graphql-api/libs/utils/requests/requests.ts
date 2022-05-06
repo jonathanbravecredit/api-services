@@ -11,11 +11,13 @@ import {
   GetTrendingDataMap,
   CancelEnrollmentMap,
   GetInvestigationResultsMap,
+  GetAlertsNotifications,
 } from 'libs/utils/requests/requests-map';
 import {
   CancelEnrollmentXML,
   EnrollRequestXML,
   FulfillRequestXML,
+  GetAlertsNotificationsXML,
   GetAuthenticationQuestionsRequestXML,
   GetDisputeHistoryXML,
   GetDisputeStatusXML,
@@ -40,6 +42,7 @@ export enum APIRequestKeys {
   GET_TRENDING_DATA = 'get-trending-data',
   CANCEL_ENROLLMENT = 'cancel-enrollment',
   GET_INVESTIGATION_RESULTS = 'get-investigation-results',
+  GET_ALERTS_NOTIFICATIONS = 'get-alerts-notifications',
 }
 
 export const APIRequestLibrary = {
@@ -55,6 +58,7 @@ export const APIRequestLibrary = {
   [APIRequestKeys.GET_TRENDING_DATA]: GetTrendingDataMap,
   [APIRequestKeys.CANCEL_ENROLLMENT]: CancelEnrollmentMap,
   [APIRequestKeys.GET_INVESTIGATION_RESULTS]: GetInvestigationResultsMap,
+  [APIRequestKeys.GET_ALERTS_NOTIFICATIONS]: GetAlertsNotifications,
 };
 
 export const APIRequestXMLLibrary = {
@@ -70,4 +74,5 @@ export const APIRequestXMLLibrary = {
   [APIRequestKeys.GET_TRENDING_DATA]: GetTrendingDataXML,
   [APIRequestKeys.CANCEL_ENROLLMENT]: CancelEnrollmentXML,
   [APIRequestKeys.GET_INVESTIGATION_RESULTS]: GetInvestigationResultsXML,
+  [APIRequestKeys.GET_ALERTS_NOTIFICATIONS]: GetAlertsNotificationsXML,
 };

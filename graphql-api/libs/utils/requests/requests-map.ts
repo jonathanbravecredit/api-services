@@ -97,3 +97,5 @@ export const GetInvestigationResultsMap = {
   EnrollmentKey: 'root.data.getAppData.agencies.transunion.disputeEnrollmentKey',
   DisputeId: 'root.disputeId',
 };
+
+export const GetAlertsNotifications = {};

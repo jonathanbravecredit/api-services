@@ -573,7 +573,6 @@ export const createStartDispute = (msg: IStartDispute): string => {
             },
             'data:RequestKey': textConstructor(`BC-${uuid.v4()}`),
             'data:ClientKey': textConstructor(msg.request.ClientKey),
-            // 'data:Attachment': mappedAttachments,
             'data:Customer': {
               'data:CurrentAddress': {
                 'data:AddressLine1': textConstructor(msg.request.Customer.CurrentAddress.AddressLine1),
@@ -592,12 +591,6 @@ export const createStartDispute = (msg: IStartDispute): string => {
               },
               'data:PhoneNumber': textConstructor(msg.request.Customer.PhoneNumber, true),
               'data:Ssn': textConstructor(msg.request.Customer.Ssn),
-              // 'data:DisputePhoneNumber': {
-              //   'data:Extension': textConstructor(null, true),
-              //   'data:Number': textConstructor(msg.request.Customer.PhoneNumber.slice(-7), true),
-              //   'data:AreaCode': textConstructor(msg.request.Customer.PhoneNumber.substring(0, 3), true),
-              //   'data:CountryCode': textConstructor('1', true),
-              // },
               'data:Identifier': {
                 'data:CustomerIdentifier': {
                   'data:Id': textConstructor(msg.request.Customer.Ssn, true),
@@ -610,7 +603,6 @@ export const createStartDispute = (msg: IStartDispute): string => {
             'data:IndicativeDisputes': mappedIndicativeDisputes,
             'data:LineItems': mappedLineItems,
             'data:ServiceBundleFulfillmentKey': textConstructor(msg.request.ServiceBundleFulfillmentKey),
-            // 'data:ServiceProductFulfillmentKey': textConstructor(msg.request.ServiceProductFulfillmentKey, true),
           },
         },
       },
@@ -667,7 +659,6 @@ export const createStartDisputePersonal = (msg: IStartDispute): string => {
             },
             'data:RequestKey': textConstructor(`BC-${uuid.v4()}`),
             'data:ClientKey': textConstructor(msg.request.ClientKey),
-            // 'data:Attachment': mappedAttachments,
             'data:Customer': {
               'data:CurrentAddress': {
                 'data:AddressLine1': textConstructor(msg.request.Customer.CurrentAddress.AddressLine1),
@@ -686,12 +677,6 @@ export const createStartDisputePersonal = (msg: IStartDispute): string => {
               },
               'data:PhoneNumber': textConstructor(msg.request.Customer.PhoneNumber, true),
               'data:Ssn': textConstructor(msg.request.Customer.Ssn),
-              // 'data:DisputePhoneNumber': {
-              //   'data:Extension': textConstructor(null, true),
-              //   'data:Number': textConstructor(msg.request.Customer.PhoneNumber.slice(-7), true),
-              //   'data:AreaCode': textConstructor(msg.request.Customer.PhoneNumber.substring(0, 3), true),
-              //   'data:CountryCode': textConstructor('1', true),
-              // },
               'data:Identifier': {
                 'data:CustomerIdentifier': {
                   'data:Id': textConstructor(msg.request.Customer.Ssn, true),
@@ -702,11 +687,7 @@ export const createStartDisputePersonal = (msg: IStartDispute): string => {
             'data:Employers': mappedEmployers,
             'data:EnrollmentKey': textConstructor(msg.request.EnrollmentKey),
             'data:IndicativeDisputes': mappedIndicativeDisputes,
-            // 'data:LineItems': {
-            //   'data:LineItem': textConstructor(null, true),
-            // },
             'data:ServiceBundleFulfillmentKey': textConstructor(msg.request.ServiceBundleFulfillmentKey),
-            // 'data:ServiceProductFulfillmentKey': textConstructor(msg.request.ServiceProductFulfillmentKey, true),
           },
         },
       },
@@ -737,36 +718,6 @@ export const enrichDisputeData = (
   state: UpdateAppDataInput,
   data: IStartDisputeBundle | undefined,
 ): UpdateAppDataInput | undefined => {
-  // if (!state) return;
-  // const { startDisputeResult, disputes } = data;
-  // let status = startDisputeResult?.DisputeStatus?.DisputeStatusDetail?.Status;
-  // let openedOn = new Date().toISOString();
-  // let closedOn =
-  //   status.toLowerCase() === 'cancelleddispute' || status.toLowerCase() === 'completedispute' ? openedOn : null;
-
-  // const dispute: IDispute = db.disputes.generators.createDisputeInputRecord(
-  //   state.id,
-  //   startDisputeResult,
-  //   JSON.stringify(disputes),
-  //   openedOn,
-  //   closedOn,
-  // );
-
-  // const oldDisputes = state.agencies?.transunion?.disputes || [];
-  // const mapped = {
-  //   ...state,
-  //   agencies: {
-  //     ...state.agencies,
-  //     transunion: {
-  //       ...state.agencies?.transunion,
-  //       disputeStatus: dispute.disputeStatus,
-  //       disputeCurrent: dispute,
-  //       disputes: [...oldDisputes, dispute].filter(Boolean),
-  //     },
-  //   },
-  // };
-  // console.log('mapped', mapped);
-  // return mapped;
   return;
 };
 

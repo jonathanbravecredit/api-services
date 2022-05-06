@@ -274,3 +274,13 @@ export const GetInvestigationResultsXML = {
   'soapenv:Body.con:GetInvestigationResults.con:request.data:DisputeId': 'root.DisputeId',
   'soapenv:Body.con:GetInvestigationResults.con:request.data:EnrollmentKey': 'root.EnrollmentKey',
 };
+
+export const GetAlertsNotificationsXML = {
+  'soapenv:Body.con:GetAlertNotificationsForAllUsers.con:request.data:AccountCode': 'root.AccountCode',
+  'soapenv:Body.con:GetAlertNotificationsForAllUsers.con:request.data:AccountName': 'root.AccountName',
+  'soapenv:Body.con:GetAlertNotificationsForAllUsers.con:request.data:RequestKey': 'root.RequestKey',
+  'soapenv:Body.con:GetAlertNotificationsForAllUsers.con:request.data:AdditionalInputs.data:Data.data:Name':
+    'root.AdditionalInputs.Data.Name',
+  'soapenv:Body.con:GetAlertNotificationsForAllUsers.con:request.data:AdditionalInputs.data:Data.data:Value':
+    'root.AdditionalInputs.Data.Value',
+};

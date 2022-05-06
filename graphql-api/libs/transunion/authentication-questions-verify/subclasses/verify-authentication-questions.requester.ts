@@ -1,4 +1,4 @@
-import { IVerifyAuthenticationAnswer } from 'libs/interfaces/transunion/verify-authentication-answers.interface';
+import { IVerifyAuthenticationAnswer } from 'libs/transunion/authentication-questions-verify/verify-authentication-answers.interface';
 import { APIRequester } from 'libs/models/api-requester.model';
 import { IVerifyAuthenticationQuestionsSchema } from 'libs/transunion/authentication-questions-verify/verify-authentication-questions.interface';
 import { TURequester } from 'libs/transunion/tu/tu-requester';

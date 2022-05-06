@@ -4,6 +4,8 @@ export interface IGetAlertsNotificationPayload {
   RequestKey: string;
 }
 
+export interface IGetAlertsNotificationSchema {}
+
 export interface IGetAlertsNotificationMsg {
   AccountCode: string;
   AccountName: string;
