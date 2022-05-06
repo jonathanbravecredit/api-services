@@ -9,7 +9,7 @@ export * from '../../transunion/authentication-questions/get-authentication-ques
 export * from './get-dispute-data.interface';
 export * from '../../transunion/get-dispute-history /get-dispute-history.interface';
 export * from '../../transunion/get-dispute-status/get-dispute-status.interface';
-export * from './get-investigation-results.interface';
+export * from '../../transunion/get-investigation-results/get-investigation-results.interface';
 export * from '../../transunion/service-product/get-service-product.interface';
 export * from './merge-report.interface';
 export * from './start-dispute.interface';
@@ -17,6 +17,6 @@ export * from './verify-authentication-answers.interface';
 export * from '../../transunion/authentication-questions-verify/verify-authentication-questions.interface';
 export * from '../../transunion/get-trending-data/get-trending-data.interface';
 export * from './get-alerts-notifications.interface';
-export * from './get-investigation-results-by-id.interface';
-export * from './cancel-enrollment.interface';
+export * from '../../transunion/get-investigation-results-by-id/get-investigation-results-by-id.interface';
+export * from '../../transunion/cancel-enrollment/cancel-enrollment.interface';
 export * from './nav-bar-request.interface';

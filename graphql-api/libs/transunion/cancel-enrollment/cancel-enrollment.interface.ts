@@ -1,4 +1,10 @@
-import { IStandardResponse, IFulfillServiceProductResponse } from 'libs/interfaces';
+import { IStandardResponse } from 'libs/interfaces';
+
+export interface ICancelEnrollmentPayload {
+  id: string;
+}
+
+export interface ICancelEnrollmentSchema extends ICancelEnrollmentPayload {}
 
 export interface ICancelEnrollGraphQLResponse {
   data: {
@@ -14,7 +20,7 @@ export interface ICancelEnrollGraphQLResponse {
   };
 }
 
-export interface ICancelEnrollPayload {
+export interface ICancelEnrollRequest {
   RequestKey: string;
   AdditionalInputs?: {
     Data: {
@@ -30,7 +36,7 @@ export interface ICancelEnroll {
   request: ICancelEnrollMsg;
 }
 
-export interface ICancelEnrollMsg extends ICancelEnrollPayload {
+export interface ICancelEnrollMsg extends ICancelEnrollRequest {
   AccountCode: string;
   AccountName: string;
   EnrollmentKey: string;

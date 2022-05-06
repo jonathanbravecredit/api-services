@@ -86,3 +86,14 @@ export const GetTrendingDataMap = {
   FromDate: 'root.fromDate',
   ToDate: 'root.toDate',
 };
+
+export const CancelEnrollmentMap = {
+  ClientKey: 'root.data.getAppData.id',
+  EnrollmentKey: 'root.data.getAppData.agencies.transunion.enrollmentKey',
+};
+
+export const GetInvestigationResultsMap = {
+  ClientKey: 'root.data.getAppData.id',
+  EnrollmentKey: 'root.data.getAppData.agencies.transunion.disputeEnrollmentKey',
+  DisputeId: 'root.disputeId',
+};

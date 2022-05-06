@@ -47,7 +47,7 @@ export class TUAPIProcessor<Schema, GQL, Response, Results> extends LoggerTransa
     const { agent, auth, identityId } = this.payload;
     try {
       await this.runPayloader();
-      this.runRequester();
+      await this.runRequester();
       await this.runSendAndSync(agent, auth);
       await this.logResults();
       return this.results;

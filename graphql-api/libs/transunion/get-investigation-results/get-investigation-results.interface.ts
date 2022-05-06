@@ -5,6 +5,8 @@ export interface IGetInvestigationResultsRequest {
   disputeId: string;
 }
 
+export interface IGetInvestigationResultsSchema extends IGetInvestigationResultsRequest {}
+
 export interface IGetInvestigationResultsGraphQLResponse {
   data: {
     getAppData: {
@@ -16,6 +18,7 @@ export interface IGetInvestigationResultsGraphQLResponse {
       };
     };
   };
+  disputeId?: string;
 }
 
 export interface IGetInvestigationResultsPayload {

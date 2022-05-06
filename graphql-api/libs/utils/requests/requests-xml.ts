@@ -253,3 +253,24 @@ export const GetTrendingDataXML = {
   'soapenv:Body.con:GetTrendingData.con:request.data:GetProductTrendingData': 'root.GetProductTrendingData',
   'soapenv:Body.con:GetTrendingData.con:request.data:ProductDisplay': 'root.ProductDisplay',
 };
+
+export const CancelEnrollmentXML = {
+  'soapenv:Body.con:CancelEnrollment.con:request.data:AccountCode': 'root.AccountCode',
+  'soapenv:Body.con:CancelEnrollment.con:request.data:AccountName': 'root.AccountName',
+  'soapenv:Body.con:CancelEnrollment.con:request.data:AdditionalInputs.data:Data.data:Name':
+    'root.AdditionalInputs.Data.Name',
+  'soapenv:Body.con:CancelEnrollment.con:request.data:AdditionalInputs.data:Data.data:Value':
+    'root.AdditionalInputs.Data.Value',
+  'soapenv:Body.con:CancelEnrollment.con:request.data:RequestKey': 'root.RequestKey',
+  'soapenv:Body.con:CancelEnrollment.con:request.data:ClientKey': 'root.ClientKey',
+  'soapenv:Body.con:CancelEnrollment.con:request.data:EnrollmentKey': 'root.EnrollmentKey',
+};
+
+export const GetInvestigationResultsXML = {
+  'soapenv:Body.con:GetInvestigationResults.con:request.data:AccountCode': 'root.AccountCode',
+  'soapenv:Body.con:GetInvestigationResults.con:request.data:AccountName': 'root.AccountName',
+  'soapenv:Body.con:GetInvestigationResults.con:request.data:RequestKey': 'root.RequestKey',
+  'soapenv:Body.con:GetInvestigationResults.con:request.data:ClientKey': 'root.ClientKey',
+  'soapenv:Body.con:GetInvestigationResults.con:request.data:DisputeId': 'root.DisputeId',
+  'soapenv:Body.con:GetInvestigationResults.con:request.data:EnrollmentKey': 'root.EnrollmentKey',
+};

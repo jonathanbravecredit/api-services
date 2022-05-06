@@ -7,7 +7,7 @@ export * from './enroll-disputes/enroll-disputes';
 export * from './fulfill/_dnu/fulfill';
 export * from './fulfill-disputes/fulfill-disputes';
 export * from './indicative-enrichment/indicative-enrichment';
-export * from './investigation-results/investigation-results';
+export * from './get-investigation-results/get-investigation-results';
 export * from './last-active/get-last-active';
 export * from './ping/ping';
 export * from './service-product/get-service-product';

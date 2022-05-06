@@ -23,6 +23,10 @@ import { GetDisputeByUserAllV2 } from 'libs/transunion/get-dispute-by-user-all/g
 import { CompleteOnboardingEnrollments } from 'libs/transunion/complete-onboarding-enrollment/complete-onboarding-enrollment';
 import { GetTrendingDataV2 } from 'libs/transunion/get-trending-data/get-trending-data-v2';
 import { GetCreditScoreTrackingV2 } from 'libs/transunion/get-credit-score-tracking/get-credit-score-tracking';
+import { CancelEnrollmentV2 } from 'libs/transunion/cancel-enrollment/cancel-enrollment-v2';
+import { GetInvestigationResultsByIdV2 } from 'libs/transunion/get-investigation-results-by-id/get-investigation-results-by-id';
+import { GetCreditBureauResultsByIdV2 } from 'libs/transunion/get-credit-bureau-results-by-id/get-credit-bureau-results-by-id';
+import { GetInvestigationResultsV2 } from 'libs/transunion/get-investigation-results/get-investigation-results-v2';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -188,27 +192,32 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await queries.DisputePreflightCheck(payload);
         return JSON.stringify(results);
       case 'GetInvestigationResults':
-        results = await queries.GetInvestigationResults(payload);
+        const getInvestigationResults = new GetInvestigationResultsV2(payload);
+        results = await getInvestigationResults.run();
         return JSON.stringify(results);
       case 'GetTrendingData':
         const getTrendingData = new GetTrendingDataV2(payload);
         results = await getTrendingData.run();
         return JSON.stringify(results);
       case 'GetInvestigationResultsByID':
-        results = await queries.GetInvestigationResultsByID(payload);
+        const getInvestigationResultsByIdV2 = new GetInvestigationResultsByIdV2(payload);
+        results = await getInvestigationResultsByIdV2.run();
         return JSON.stringify(results);
       case 'GetCreditBureauResultsByID':
-        results = await queries.GetCreditBureauResultsByID(payload);
+        const getCreditBureauResultsByIdV2 = new GetCreditBureauResultsByIdV2(payload);
+        results = await getCreditBureauResultsByIdV2.run();
         return JSON.stringify(results);
       case 'GetCreditScoreTracking':
         const getCreditScoreTracking = new GetCreditScoreTrackingV2(payload);
         results = await getCreditScoreTracking.run();
         return JSON.stringify(results);
       case 'ListDisputesByUser':
-        results = await queries.ListDisputesByUser(payload);
+        const listDisputesByUser = new GetDisputeByUserAllV2(payload);
+        results = await listDisputesByUser.run();
         return JSON.stringify(results);
       case 'CancelEnrollment':
-        results = await queries.CancelEnroll(payload);
+        const cancelEnrollment = new CancelEnrollmentV2(payload);
+        results = await cancelEnrollment.run();
         return JSON.stringify(results);
       default:
         const error = errorLogger.createError(tokenUser, 'action_not_found', JSON.stringify(action));

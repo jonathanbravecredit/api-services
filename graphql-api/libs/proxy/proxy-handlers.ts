@@ -8,7 +8,6 @@ import * as dayjs from 'dayjs';
 import { ajv } from 'libs/schema/validation';
 import { Sync } from 'libs/utils/sync/sync';
 import { SoapAid } from 'libs/utils/soap-aid/soap-aid';
-import { dateDiffInHours } from 'libs/utils/dates/dates';
 import { returnNestedObject } from 'libs/utils/helpers/helpers';
 import { START_DISPUTE_RESPONSE } from 'libs/examples/mocks/StartDisputeResponse';
 import { GET_ALERT_NOTIFICATIONS_RESPONSE } from 'libs/examples/mocks/GetAlertNotificationsResponse';
@@ -21,14 +20,10 @@ import ErrorLogger from 'libs/utils/db/logger/logger-errors';
 import TransactionLogger from 'libs/utils/db/logger/logger-transactions';
 import { CreditScoreTracking } from 'libs/utils/db/credit-score-tracking/model/credit-score-tracking';
 import { updateEnrollmentStatus, updateNavBarBadges } from 'libs/utils/db/dynamo-db/dynamo';
-import { ICancelEnrollGraphQLResponse } from 'libs/interfaces';
+import { ICancelEnrollGraphQLResponse, IGetInvestigationResultsByIdSchema } from 'libs/interfaces';
 import { FulfillV2 } from 'libs/transunion/fulfill/_dnu/Fulfillv2';
 import { FulfillDisputesV2 } from 'libs/transunion/fulfill-disputes/FulfillDisputesV2';
 import { MergeReport } from 'libs/models/MergeReport/MergeReport';
-import {
-  IIndicativeEnrichmentPayload,
-  IIndicativeEnrichmentResponse,
-} from 'libs/transunion/indicative-enrichment/indicative-enrichment.interface';
 
 const GO_LIVE = true;
 const errorLogger = new ErrorLogger();
@@ -1255,7 +1250,7 @@ export const GetInvestigationResults = async ({
   if (!validate(payload)) throw `Malformed message in getInvestigationResults=${JSON.stringify(payload)}`;
 
   //create helper classes
-  const sync = new Sync(tu.enrichGetInvestigationResult);
+  // const sync = new Sync(tu.enrichGetInvestigationResult);
   const soap = new SoapAid(
     tu.parseInvestigationResults,
     tu.formatGetInvestigationResults,
@@ -1959,11 +1954,11 @@ export const GetInvestigationResultsByID = async ({
   data: any;
 }> => {
   // validate incoming message
-  const payload: interfaces.IGetInvestigationResultsByIdRequest = {
+  const payload: interfaces.IGetInvestigationResultsByIdSchema = {
     userId: identityId,
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<interfaces.IGetInvestigationResultsByIdRequest>('getInvestigationResultsRequestById');
+  const validate = ajv.getSchema<interfaces.IGetInvestigationResultsByIdSchema>('getInvestigationResultsRequestById');
   if (!validate(payload)) throw `Malformed message=${message}`;
 
   const db = DB;
@@ -2007,11 +2002,11 @@ export const GetCreditBureauResultsByID = async ({
   data: any;
 }> => {
   // validate incoming message
-  const payload: interfaces.IGetInvestigationResultsByIdRequest = {
+  const payload: IGetInvestigationResultsByIdSchema = {
     userId: identityId,
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<interfaces.IGetInvestigationResultsByIdRequest>('getInvestigationResultsRequestById');
+  const validate = ajv.getSchema<IGetInvestigationResultsByIdSchema>('getInvestigationResultsRequestById');
   if (!validate(payload)) throw `Malformed message=${message}`;
 
   const db = DB;
