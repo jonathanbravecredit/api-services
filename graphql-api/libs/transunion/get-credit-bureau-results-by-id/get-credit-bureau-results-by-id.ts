@@ -20,7 +20,9 @@ export class GetCreditBureauResultsByIdV2 extends LoggerTransactionals {
   async run(): Promise<any> {
     try {
       this.runPayloader();
+      await this.log(this.payload.identityId, { ...this }, 'GENERIC');
       const resp = await this.query();
+      await this.log(this.payload.identityId, resp, 'GENERIC');
       this.results = { success: true, error: null, data: resp };
       await this.logResults();
       return this.results;

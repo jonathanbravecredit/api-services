@@ -40,6 +40,18 @@ export class VerifyAuthenticationQuestionsV2
   }
 
   /**
+   * Prep the payload to match the schema
+   * @returns
+   */
+  prepPayload(): IVerifyAuthenticationQuestionsSchema {
+    const msg = this.payload.message || '{}';
+    return {
+      id: this.payload.identityId,
+      ...JSON.parse(msg),
+    };
+  }
+
+  /**
    * Requester runner to:
    * run the indicative enrichment request which:
    *    - accepts the payload
