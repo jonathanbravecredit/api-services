@@ -47,7 +47,7 @@ export class LoggerTransactionals extends LoggerErrors {
   }
 
   async logGenericTransaction(id: string, data: any): Promise<void> {
-    const l1 = this.createTransaction(id, `${this.action}:data`, JSON.stringify(data));
+    const l1 = this.createTransaction(id, `${this.action}:status`, JSON.stringify(data));
     await this.writeTransaction(l1);
   }
 
