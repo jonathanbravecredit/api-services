@@ -2,10 +2,10 @@ import * as aws4 from 'aws4';
 import axios, { AxiosResponse } from 'axios';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
-import { IGetAppDataRequest, IGetAppDataResponse } from 'libs/interfaces';
-import { getAppData, updateAppData } from 'libs/proxy';
 import { deleteKeyNestedObject } from 'libs/utils';
 import { GetAppDataQuery, UpdateAppDataInput } from 'src/api/api.service';
+import { getAppData, updateAppData } from 'libs/queries/graphql-query-methods';
+import { IGetAppDataRequest, IGetAppDataResponse } from 'libs/interfaces/transunion/get-app-data.interface';
 
 const appsyncUrl = process.env.APPSYNC_ENDPOINT;
 const region = process.env.AWS_REGION;
@@ -75,6 +75,7 @@ export class SyncV2 {
 
   cleanBackendData(data: GetAppDataQuery): UpdateAppDataInput {
     let clean = deleteKeyNestedObject(data, '__typename');
+    clean = deleteKeyNestedObject(data, 'isFresh');
     delete clean.createdAt; // this is a graphql managed field
     delete clean.updatedAt; // this is a graphql managed field
     delete clean.owner; // this is a graphql managed field

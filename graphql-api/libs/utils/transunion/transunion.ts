@@ -1,13 +1,13 @@
+import { IRemark } from '@bravecredit/brave-sdk';
 import {
   IBorrowerName,
   ICreditAddress,
   IEmployer,
   IPhoneNumber,
   ITradeLinePartition,
-  IRemark,
-  IFulfillServiceProductResponse,
-} from 'libs/interfaces';
+} from '@bravecredit/brave-sdk/dist/types/merge-report';
 import { IVantageScore } from 'libs/interfaces/transunion/vantage-score.interface';
+import { IFulfillServiceProductResponse } from 'libs/transunion/fulfill/fulfill.interface';
 import { CreditScoreTracking } from 'libs/utils/db/credit-score-tracking/model/credit-score-tracking';
 
 // start building this out to handle all the data from TU

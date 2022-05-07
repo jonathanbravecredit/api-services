@@ -1,4 +1,3 @@
-import { returnNestedObject, updateNestedObject } from 'libs/utils/helpers/helpers';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import * as fastXml from 'fast-xml-parser';
@@ -9,7 +8,7 @@ import {
   IGetAlertsNotification,
   IGetAlertsNotificationMsg,
   IGetAlertsNotificationPayload,
-} from 'libs/interfaces/transunion/get-alerts-notifications.interface';
+} from 'libs/transunion/get-alerts-notifications/get-alerts-notifications.interface';
 
 /**
  * Genarates the message payload for TU get alerts notification

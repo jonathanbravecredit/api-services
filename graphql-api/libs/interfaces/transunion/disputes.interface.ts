@@ -1,11 +1,11 @@
 import {
-  IBorrower,
-  IBorrowerAddress,
-  IBorrowerName,
-  IEmployer,
-  IPublicPartition,
   ITradeLinePartition,
-} from 'libs/interfaces';
+  IPublicPartition,
+  IBorrowerName,
+  IBorrowerAddress,
+  IEmployer,
+  IBorrower,
+} from '@bravecredit/brave-sdk/dist/types/merge-report';
 import { Dispute, DisputeSummary, PVDisputedItems } from 'libs/utils/db/disputes/model/dispute.model';
 
 export type PersonalDisputeTypes = 'name' | 'aka' | 'prevaddress' | 'curraddress' | 'employer' | 'unknown';

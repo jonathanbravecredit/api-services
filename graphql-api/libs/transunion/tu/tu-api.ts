@@ -1,5 +1,5 @@
 import * as https from 'https';
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 import { IProxyRequest } from 'libs/interfaces';
 import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';
@@ -47,7 +47,7 @@ export class TUAPIProcessor<Schema, GQL, Response, Results> extends LoggerTransa
     const { agent, auth, identityId } = this.payload;
     try {
       await this.runPayloader();
-      this.runRequester();
+      await this.runRequester();
       await this.runSendAndSync(agent, auth);
       await this.logResults();
       return this.results;
@@ -61,7 +61,7 @@ export class TUAPIProcessor<Schema, GQL, Response, Results> extends LoggerTransa
   /**
    * Payloader runner for data prep
    *  - validate the payload against the schema
-   *  - gather GQL data if needed (must implement independently)
+   *  - Does NOT gather GQL data if needed (must implement independently)
    * @returns
    */
   runPayloader(): void {

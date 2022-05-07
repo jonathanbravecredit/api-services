@@ -1,5 +1,5 @@
 import * as dayjs from 'dayjs';
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { Payloader } from 'libs/utils/payloader/Payloader';
 import { IProxyRequest } from 'libs/interfaces';
 import { APIRequest } from 'libs/models/api-request.model';

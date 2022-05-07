@@ -1,15 +1,13 @@
 import 'reflect-metadata';
-import { AppSyncResolverEvent } from 'aws-lambda';
 import * as https from 'https';
 import * as fs from 'fs';
-import * as queries from 'libs/proxy';
 import * as secrets from 'libs/utils/secrets/secrets';
 import ErrorLogger from 'libs/utils/db/logger/logger-errors';
-import TransactionLogger from 'libs/utils/db/logger/logger-transactions';
+import { AppSyncResolverEvent } from 'aws-lambda';
+import { DisputeInflightCheckV2 } from 'libs/transunion/dispute-inflight-check/dispute-inflight-check';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
-const transactionLogger = new TransactionLogger();
 
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
 const tuEnv = process.env.TU_ENV;
@@ -76,7 +74,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
       auth,
       identityId: '',
     };
-    const results: any = await queries.DisputeInflightCheck(payload);
+    const results: any = await new DisputeInflightCheckV2(payload).run();
 
     return JSON.stringify(results);
   } catch (err) {

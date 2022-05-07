@@ -1,18 +1,19 @@
 import * as https from 'https';
 import { SyncV2 } from 'libs/utils/sync/SyncV2';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { Payloader } from 'libs/utils/payloader/Payloader';
 import { qryGetDataForEnrollment } from 'libs/queries';
-import { IEnrollGraphQLResponse, IEnrollResponse, IGenericRequest, IProxyRequest } from 'libs/interfaces';
 import { DEFAULT_PARSER_OPTIONS } from 'libs/utils/parser/options';
 import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';
 import { EnrollRequester } from 'libs/transunion/enroll/_dnu/EnrollRequester';
 import { LoggerTransactionals } from 'libs/utils/logger/LoggerTransactionals';
-import { MergeReport } from 'libs/models/MergeReport/MergeReport';
 import { CreditReportPublisher } from 'libs/transunion/credit-report-service/CreditReportPublisher';
 import { APIRequest } from 'libs/models/api-request.model';
 import { EnrollResponder } from 'libs/transunion/enroll/_dnu/EnrollResponder';
+import { IProxyRequest, IGenericRequest } from 'libs/interfaces';
+import { IEnrollGraphQLResponse, IEnrollResponse } from 'libs/transunion/enroll/enroll.interface';
+import { MergeReport } from '@bravecredit/brave-sdk';
 
 export class EnrollV2 extends LoggerTransactionals implements APIRequest {
   public reqXML: string;

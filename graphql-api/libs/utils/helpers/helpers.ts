@@ -1,10 +1,10 @@
 import * as aws4 from 'aws4';
-import { DynamoDB } from 'aws-sdk';
-import axios, { AxiosResponse } from 'axios';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
+import axios, { AxiosResponse } from 'axios';
 import { TUReportResponseInput } from 'src/api/api.service';
-import { IEnrollServiceProductResponse, IFulfillServiceProductResponse } from 'libs/interfaces';
+import { IEnrollServiceProductResponse } from 'libs/transunion/enroll/enroll.interface';
+import { IFulfillServiceProductResponse } from 'libs/transunion/fulfill/fulfill.interface';
 // 2021-11-17T20:58:12.439Z
 const appsyncUrl = process.env.APPSYNC_ENDPOINT;
 const region = process.env.AWS_REGION;

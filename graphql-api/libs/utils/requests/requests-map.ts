@@ -58,3 +58,44 @@ export const FulfillRequestMap = {
   ...EnrollRequestMap,
   EnrollmentKey: 'root.data.getAppData.enrollmentKey',
 };
+
+export const GetServiceProductMap = {
+  ClientKey: 'root.id',
+  CSRFToken: 'root.csrfToken',
+  ClientBrowserType: 'root.clientBrowserType',
+  IpAddress: 'root.ipAddress',
+  ProductDisplay: 'root.productDisplay',
+  SeviceBundleFulfillmentKey: 'root.serviceBundleFulfillmentKey',
+};
+
+export const GetDisputeStatusMap = {
+  ...BaseGQLRequestMap,
+  'Customer.DateOfBirth': 'root.dobformatted',
+  'Customer.PhoneNumber': 'root.data.getAppData.user.userAttributes.phone.primary',
+  'Customer.Ssn': 'root.data.getAppData.user.userAttributes.ssn.full',
+  EnrollmentKey: 'root.data.getAppData.agencies.transunion.disputeEnrollmentKey',
+  DisputeId: 'root.disputeId',
+};
+
+export const GetDisputeHistoryMap = {
+  EnrollmentKey: 'root.data.getAppData.agencies.transunion.disputeEnrollmentKey',
+};
+
+export const GetTrendingDataMap = {
+  ClientKey: 'root.id',
+  FromDate: 'root.fromDate',
+  ToDate: 'root.toDate',
+};
+
+export const CancelEnrollmentMap = {
+  ClientKey: 'root.data.getAppData.id',
+  EnrollmentKey: 'root.data.getAppData.agencies.transunion.enrollmentKey',
+};
+
+export const GetInvestigationResultsMap = {
+  ClientKey: 'root.data.getAppData.id',
+  EnrollmentKey: 'root.data.getAppData.agencies.transunion.disputeEnrollmentKey',
+  DisputeId: 'root.disputeId',
+};
+
+export const GetAlertsNotifications = {};

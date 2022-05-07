@@ -1,21 +1,20 @@
 import 'reflect-metadata';
-import { SQSEvent, SQSHandler } from 'aws-lambda';
-import { Agent } from 'https';
-import { readFileSync } from 'fs';
-import { CancelEnroll } from 'libs/proxy';
-import { getSecretKey } from 'libs/utils/secrets/secrets';
-import { DB } from 'libs/utils/db/db';
 import ErrorLogger from 'libs/utils/db/logger/logger-errors';
-import TransactionLogger from 'libs/utils/db/logger/logger-transactions';
-import { IFulfillResult, IProxyRequest, ITransunionBatchPayload } from 'libs/interfaces';
-import { IGetEnrollmentData } from 'libs/utils/db/dynamo-db/dynamo.interfaces';
+import { DB } from 'libs/utils/db/db';
+import { Agent } from 'https';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
+import { readFileSync } from 'fs';
+import { getSecretKey } from 'libs/utils/secrets/secrets';
+import { SQSEvent, SQSHandler } from 'aws-lambda';
 import { TransunionUtil as TU } from 'libs/utils/transunion/transunion';
+import { IProxyRequest, ITransunionBatchPayload } from 'libs/interfaces';
+import { IGetEnrollmentData } from 'libs/utils/db/dynamo-db/dynamo.interfaces';
 import { FulfillV3 } from 'libs/transunion/fulfill/fulfill-v3';
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { IFulfillResult } from 'libs/transunion/fulfill/fulfill.interface';
+import { CancelEnrollmentV2 } from 'libs/transunion/cancel-enrollment/cancel-enrollment-v2';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
-const transactionLogger = new TransactionLogger();
 
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
 const tuEnv = process.env.TU_ENV;
@@ -161,7 +160,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
             auth,
             identityId,
           }; // don't pass the agent in the queue;
-          const cancel = await CancelEnroll(payload);
+          const cancel = await new CancelEnrollmentV2(payload).run();
           const { success } = cancel;
           if (success) {
             counter++;

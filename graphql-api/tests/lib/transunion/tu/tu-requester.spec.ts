@@ -1,8 +1,8 @@
 import { ACCOUNT_CODE, ACCOUNT_NAME } from 'libs/data/constants';
 import { TURequester } from 'libs/transunion/tu/tu-requester';
-import { Nested } from 'libs/utils/helpers/Nested';
 import { APIRequestKeys, APIRequestLibrary, APIRequestXMLLibrary } from 'libs/utils/requests/requests';
 import { Helper } from 'tests/helpers/test-helper';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import {
   MOCK_MAPPED,
   MOCK_MAPPED_XML,
@@ -16,6 +16,7 @@ import {
 } from 'tests/__mocks__/payloads';
 import * as _ from 'lodash';
 import * as convert from 'xml-js';
+import * as flat from 'flat';
 import { mocked } from 'ts-jest/utils';
 
 jest.mock('lodash', () => {
@@ -102,26 +103,26 @@ describe('TU Requester', () => {
 
   describe('generateRequestObject', () => {
     let parseSpy = jest.spyOn(requester, 'parseRequest');
-    let unflattenSpy = jest.spyOn(Nested, 'unflatten');
+    // let unflattenSpy = jest.spyOn(Nested, 'unflatten');
     beforeEach(() => {
       parseSpy.mockImplementation().mockReturnValue(MOCK_MAPPED);
-      unflattenSpy.mockImplementation().mockReturnValue(MOCK_UNFLATTENED_OBJ_BODY);
+      // unflattenSpy.mockImplementation().mockReturnValue(MOCK_UNFLATTENED_OBJ_BODY);
     });
     afterEach(() => {
       parseSpy.mockReset();
-      unflattenSpy.mockReset();
+      // unflattenSpy.mockReset();
     });
     it('should call getReqWrapper', () => {
       const spy = jest.spyOn(requester, 'getReqWrapper');
       requester.generateRequestObject();
       expect(spy).toHaveBeenCalled();
     });
-    it('should call Nested.unflatten ', () => {
-      const spy = jest.spyOn(Nested, 'unflatten');
-      requester.generateRequestObject();
-      expect(spy).toHaveBeenCalled();
-      spy.mockClear();
-    });
+    // it('should call Nested.unflatten ', () => {
+    //   const spy = jest.spyOn(Nested, 'unflatten');
+    //   requester.generateRequestObject();
+    //   expect(spy).toHaveBeenCalled();
+    //   spy.mockClear();
+    // });
     it('should call parseRequest with requestMap', () => {
       const spy = jest.spyOn(requester, 'parseRequest').mockImplementation().mockReturnValue(MOCK_MAPPED);
       requester.generateRequestObject();
@@ -137,26 +138,26 @@ describe('TU Requester', () => {
 
   describe('generareXMLObject', () => {
     let parseSpy = jest.spyOn(requester, 'parseXML');
-    let unflattenSpy = jest.spyOn(Nested, 'unflatten');
+    // let unflattenSpy = jest.spyOn(Nested, 'unflatten');
     beforeEach(() => {
       parseSpy.mockImplementation().mockReturnValue(MOCK_MAPPED_XML);
-      unflattenSpy.mockImplementation().mockReturnValue(MOCK_UNFLATTENED_XML_BODY);
+      // unflattenSpy.mockImplementation().mockReturnValue(MOCK_UNFLATTENED_XML_BODY);
     });
     afterEach(() => {
       parseSpy.mockReset();
-      unflattenSpy.mockReset();
+      // unflattenSpy.mockReset();
     });
     it('should call getXMLWrapper', () => {
       const spy = jest.spyOn(requester, 'getXMLWrapper');
       requester.generateXMLObject();
       expect(spy).toHaveBeenCalled();
     });
-    it('should call Nested.unflatten ', () => {
-      const spy = jest.spyOn(Nested, 'unflatten');
-      requester.generateXMLObject();
-      expect(spy).toHaveBeenCalled();
-      spy.mockClear();
-    });
+    // it('should call Nested.unflatten ', () => {
+    //   const spy = jest.spyOn(Nested, 'unflatten');
+    //   requester.generateXMLObject();
+    //   expect(spy).toHaveBeenCalled();
+    //   spy.mockClear();
+    // });
     it('should call parseXML with requestXMLMap', () => {
       const spy = jest.spyOn(requester, 'parseXML').mockImplementation().mockReturnValue(MOCK_MAPPED_XML);
       requester.generateXMLObject();
@@ -214,19 +215,19 @@ describe('TU Requester', () => {
     let requester2 = new TURequester<any>(requestKey, payload);
     let parseSpy = jest.spyOn(requester, 'parseRequest');
     let parseXMLSpy = jest.spyOn(requester, 'parseXML');
-    let unflattenSpy = jest.spyOn(Nested, 'unflatten');
-    let unflattenXMLSpy = jest.spyOn(Nested, 'unflatten');
+    // let unflattenSpy = jest.spyOn(Nested, 'unflatten');
+    // let unflattenXMLSpy = jest.spyOn(Nested, 'unflatten');
     beforeEach(() => {
       parseSpy.mockImplementation().mockReturnValue(MOCK_MAPPED);
-      unflattenSpy.mockImplementation().mockReturnValue(MOCK_UNFLATTENED_OBJ_BODY);
+      // unflattenSpy.mockImplementation().mockReturnValue(MOCK_UNFLATTENED_OBJ_BODY);
       parseXMLSpy.mockImplementation().mockReturnValue(MOCK_MAPPED_XML);
-      unflattenXMLSpy.mockImplementation().mockReturnValue(MOCK_UNFLATTENED_XML_BODY);
+      // unflattenXMLSpy.mockImplementation().mockReturnValue(MOCK_UNFLATTENED_XML_BODY);
     });
     afterEach(() => {
       parseSpy.mockReset();
-      unflattenSpy.mockReset();
+      // unflattenSpy.mockReset();
       parseXMLSpy.mockReset();
-      unflattenXMLSpy.mockReset();
+      // unflattenXMLSpy.mockReset();
     });
 
     it('should NOT call convert.json2xml it requestXMLObject', () => {

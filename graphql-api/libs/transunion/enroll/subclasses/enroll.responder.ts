@@ -1,12 +1,12 @@
 import * as fastXml from 'fast-xml-parser';
 import * as _ from 'lodash';
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { TUResponder } from 'libs/transunion/tu/tu-responder';
 import { mapReportResponse } from 'libs/utils/helpers/helpers';
-import { IEnrollResponse, IEnrollServiceProductResponse } from 'libs/interfaces';
 import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 import { ServiceProductParser as spp } from 'libs/transunion/parsers/ServiceProductParser';
-import { MergeReport } from 'libs/models/MergeReport/MergeReport';
+import { IEnrollResponse, IEnrollServiceProductResponse } from 'libs/transunion/enroll/enroll.interface';
+import { MergeReport } from '@bravecredit/brave-sdk';
 
 export class EnrollResponder extends TUResponder<IEnrollResponse, any> {
   public mergeReport: MergeReport;

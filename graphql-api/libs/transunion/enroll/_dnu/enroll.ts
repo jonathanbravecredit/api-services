@@ -10,21 +10,18 @@ import * as fastXml from 'fast-xml-parser';
 import * as he from 'he';
 import * as uuid from 'uuid';
 import { SNS } from 'aws-sdk';
-import {
-  IEnroll,
-  IEnrollGraphQLResponse,
-  IEnrollMsg,
-  IEnrollPayload,
-  IEnrollResponse,
-  IEnrollResult,
-  IEnrollServiceProductResponse,
-  IMergeReport,
-} from 'libs/interfaces';
 import { MONTH_MAP } from 'libs/data/constants';
 import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 import { BraveParsers } from 'libs/utils/brave/parser/BraveParser';
 import { PubSubUtil } from 'libs/utils/pubsub/pubsub';
-import { ICreditReportPayload } from 'libs/interfaces/transunion/batch.interfaces';
+import {
+  IEnrollGraphQLResponse,
+  IEnroll,
+  IEnrollResponse,
+  IEnrollResult,
+  IEnrollServiceProductResponse,
+} from 'libs/transunion/enroll/enroll.interface';
+import { ICreditReportPayload } from 'libs/interfaces/batch.interfaces';
 
 /**
  * Genarates the message payload for TU Enroll service

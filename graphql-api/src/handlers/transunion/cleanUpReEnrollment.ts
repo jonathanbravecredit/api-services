@@ -1,15 +1,13 @@
 import 'reflect-metadata';
-import { Handler, ScheduledEvent } from 'aws-lambda';
 import * as https from 'https';
 import * as fs from 'fs';
 import * as secrets from 'libs/utils/secrets/secrets';
 import ErrorLogger from 'libs/utils/db/logger/logger-errors';
-import TransactionLogger from 'libs/utils/db/logger/logger-transactions';
 import { EnrollV3 } from 'libs/transunion/enroll/enroll-v3';
+import { Handler, ScheduledEvent } from 'aws-lambda';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
-const transactionLogger = new TransactionLogger();
 
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
 const tuEnv = process.env.TU_ENV;

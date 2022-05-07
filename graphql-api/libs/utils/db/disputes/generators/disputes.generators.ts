@@ -1,7 +1,5 @@
 import { IDispute } from 'libs/interfaces';
-import { IStartDisputeResult } from 'libs/interfaces/transunion/start-dispute.interface';
-import { Dispute } from 'libs/utils/db/disputes/model/dispute.model';
-import * as uuid from 'uuid';
+import { IStartDisputeResult } from 'libs/transunion/start-dispute/start-dispute.interface';
 
 export const createDisputeDBRecord = (
   id: string,

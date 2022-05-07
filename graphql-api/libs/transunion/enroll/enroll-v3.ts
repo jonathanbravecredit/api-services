@@ -2,19 +2,11 @@ import * as dayjs from 'dayjs';
 import * as https from 'https';
 import { SyncV2 } from 'libs/utils/sync/SyncV2';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { Payloader } from 'libs/utils/payloader/Payloader';
 import { qryGetDataForEnrollment } from 'libs/queries';
-import {
-  IEnrollGraphQLResponse,
-  IEnrollResponse,
-  IEnrollResult,
-  IEnrollSchema,
-  IGenericRequest,
-  IProxyRequest,
-} from 'libs/interfaces';
+import { IGenericRequest, IProxyRequest } from 'libs/interfaces';
 import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';
-import { MergeReport } from 'libs/models/MergeReport/MergeReport';
 import { CreditReportPublisher } from 'libs/transunion/credit-report-service/CreditReportPublisher';
 import { APIRequest } from 'libs/models/api-request.model';
 import { TUAPIProcessor } from 'libs/transunion/tu/tu-api';
@@ -22,12 +14,20 @@ import { EnrollResponder } from 'libs/transunion/enroll/subclasses/enroll.respon
 import { EnrollRequester } from 'libs/transunion/enroll/subclasses/enroll.requester';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { DobInput } from '@bravecredit/brave-sdk/dist/types/graphql-api';
+import {
+  IEnrollSchema,
+  IEnrollGraphQLResponse,
+  IEnrollResponse,
+  IEnrollResult,
+} from 'libs/transunion/enroll/enroll.interface';
+import { MergeReport } from '@bravecredit/brave-sdk';
 
 export class EnrollV3
   extends TUAPIProcessor<IEnrollSchema, IEnrollGraphQLResponse, IEnrollResponse, IEnrollResult>
   implements APIRequest
 {
   public responder: EnrollResponder;
+  public results: IProxyHandlerResponse<unknown>;
   public action = 'Enroll';
   public schema = 'getRequest';
   public resultKey = 'EnrollResult';
@@ -36,31 +36,8 @@ export class EnrollV3
   public mergeReport: MergeReport;
   public mergeReportSPO: string;
 
-  constructor(protected payload: IProxyRequest) {
-    super('Enroll', payload, new EnrollResponder(), new Payloader<IEnrollGraphQLResponse>(), new SoapV2());
-  }
-
-  /**
-   * API runner to:
-   *  - prep the payload (via the Payloader)
-   *  - map to the request data structure and generate the request XML (with the Requester)
-   *  - send request, parse response, and sync response to database (with the Responder)
-   *  - log the results and send back results to API
-   * @returns
-   */
-  async run(): Promise<IProxyHandlerResponse<IEnrollResult>> {
-    const { agent, auth, identityId } = this.payload;
-    try {
-      await this.runPayloader();
-      this.runRequester();
-      await this.runSendAndSync(agent, auth);
-      await this.logResults();
-      return this.results;
-    } catch (err) {
-      console.log('error ===> ', err);
-      await this.logGenericError(identityId, err);
-      return { success: false, data: null, error: err };
-    }
+  constructor(protected payload: IProxyRequest, action: string = 'Enroll') {
+    super(action, payload, new EnrollResponder(), new Payloader<IEnrollGraphQLResponse>(), new SoapV2());
   }
 
   /**
@@ -70,27 +47,11 @@ export class EnrollV3
    * @returns
    */
   async runPayloader(): Promise<void> {
-    const payload = this.prepPayload();
-    this.payloader.validate<IGenericRequest>(payload, this.schema);
-    await this.payloader.prep<IGenericRequest>(qryGetDataForEnrollment, payload);
+    super.runPayloader();
+    await this.payloader.prep<IGenericRequest>(qryGetDataForEnrollment, this.prepped);
     this.gqldata = this.payloader.data;
-    this.prepped = payload;
+    console.log('gqldata: ', this.gqldata);
     console.log('prepped: ', this.prepped);
-  }
-
-  /**
-   * Layer in the:
-   *  - identity ID
-   *  - parsed message
-   *  - service bundle code (if needed)
-   * These are the most common payload values
-   * @returns
-   */
-  prepPayload(): IEnrollSchema {
-    return {
-      id: this.payload.identityId,
-      serviceBundleCode: this.serviceBundleCode,
-    };
   }
 
   /**

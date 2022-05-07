@@ -1,5 +1,5 @@
+import { IMergeReport } from '@bravecredit/brave-sdk';
 import { AttributeValue } from 'aws-lambda';
-import { IMergeReport } from 'libs/interfaces/merge-report.interface';
 
 export interface IBatchPayload<T> {
   service: string;

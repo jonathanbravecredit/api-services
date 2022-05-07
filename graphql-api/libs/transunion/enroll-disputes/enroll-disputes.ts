@@ -1,18 +1,15 @@
-import { mapReportResponse, returnNestedObject, textConstructor, updateNestedObject } from 'libs/utils/helpers/helpers';
+import { textConstructor } from 'libs/utils/helpers/helpers';
 import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
-import * as he from 'he';
 import * as uuid from 'uuid';
-import {
-  IEnroll,
-  IEnrollGraphQLResponse,
-  IEnrollPayload,
-  IEnrollResponse,
-  IEnrollResult,
-  IEnrollServiceProductResponse,
-} from 'libs/interfaces';
 import { MONTH_MAP } from 'libs/data/constants';
 import { UpdateAppDataInput } from 'src/api/api.service';
+import {
+  IEnrollGraphQLResponse,
+  IEnroll,
+  IEnrollResponse,
+  IEnrollResult,
+} from 'libs/transunion/enroll/enroll.interface';
 
 /**
  * Genarates the message payload for TU Enroll service
@@ -163,10 +160,8 @@ export const enrichEnrollDisputesData = (
   let enrolledOn = new Date().toISOString();
   const enrollmentKey = enroll.EnrollmentKey;
   const serviceBundleFulfillmentKey = enroll.ServiceBundleFulfillmentKey;
-  const prodResponse = enroll.ServiceProductFulfillments.ServiceProductResponse;
   console.log('enroll enrollmentkey ===> ', JSON.stringify(enrollmentKey));
   console.log('enroll serviceBundleFulfillmentKey ===> ', JSON.stringify(serviceBundleFulfillmentKey));
-  console.log('enroll prodResponse ===> ', JSON.stringify(prodResponse));
   return {
     ...data,
     agencies: {

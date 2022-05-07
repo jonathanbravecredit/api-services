@@ -2,10 +2,10 @@ import 'reflect-metadata';
 import { Handler, ScheduledEvent } from 'aws-lambda';
 import * as https from 'https';
 import * as fs from 'fs';
-import * as queries from 'libs/proxy';
 import * as secrets from 'libs/utils/secrets/secrets';
 import ErrorLogger from 'libs/utils/db/logger/logger-errors';
 import TransactionLogger from 'libs/utils/db/logger/logger-transactions';
+import { EnrollDisputesV2 } from 'libs/transunion/enroll-disputes/enroll-disputes-v2';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -71,7 +71,7 @@ export const main: Handler = async (event: ScheduledEvent<any>): Promise<any> =>
       auth,
       identityId: id,
     };
-    const results = await queries.EnrollDisputes(payload);
+    const results = await new EnrollDisputesV2(payload).run();
     console.log('results', results);
     return JSON.stringify(results);
   } catch (err) {

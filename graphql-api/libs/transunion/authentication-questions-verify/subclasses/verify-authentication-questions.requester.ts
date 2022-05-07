@@ -1,9 +1,9 @@
-import { IVerifyAuthenticationAnswer } from 'libs/interfaces/transunion/verify-authentication-answers.interface';
+import { IVerifyAuthenticationAnswer } from 'libs/transunion/authentication-questions-verify/verify-authentication-answers.interface';
 import { APIRequester } from 'libs/models/api-requester.model';
 import { IVerifyAuthenticationQuestionsSchema } from 'libs/transunion/authentication-questions-verify/verify-authentication-questions.interface';
 import { TURequester } from 'libs/transunion/tu/tu-requester';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { XMLUtil } from 'libs/utils/xml/XMLUtil';
 import * as _ from 'lodash';
 

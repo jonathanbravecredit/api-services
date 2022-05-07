@@ -2,9 +2,9 @@ import * as convert from 'xml-js';
 import * as dayjs from 'dayjs';
 import * as uuid from 'uuid';
 import * as _ from 'lodash';
-import { IEnrollGraphQLResponse, IEnrollRequest } from 'libs/interfaces';
 import { TURequestBase } from 'libs/transunion/tu/TURequestBase';
 import { XMLUtil as XML } from 'libs/utils/xml/XMLUtil';
+import { IEnrollGraphQLResponse, IEnrollRequest } from 'libs/transunion/enroll/enroll.interface';
 
 export class EnrollRequester extends TURequestBase<IEnrollGraphQLResponse> {
   request: IEnrollRequest;

@@ -1,4 +1,4 @@
-import { getLastActiveOnboardingQuery } from 'libs/queries/custom-graphql';
+import { getLastActiveOnboardingQuery } from 'libs/queries/graphql-queries';
 import { postGraphQLRequest } from 'libs/utils/helpers/helpers';
 
 /**

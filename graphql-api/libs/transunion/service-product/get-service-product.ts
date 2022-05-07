@@ -1,8 +1,10 @@
-import { returnNestedObject, textConstructor, updateNestedObject } from 'libs/utils/helpers/helpers';
+import { textConstructor } from 'libs/utils/helpers/helpers';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
-import * as fastXml from 'fast-xml-parser';
-import { IGetServiceProduct, IGetServiceProductMsg } from 'libs/interfaces';
+import {
+  IGetServiceProduct,
+  IGetServiceProductMsg,
+} from 'libs/transunion/service-product/get-service-product.interface';
 
 /**
  * This method packages the message in a request body and adds account information
@@ -63,19 +65,3 @@ export const createGetServiceProduct = (msg: IGetServiceProduct): string => {
   const xml = convert.json2xml(JSON.stringify(xmlObj), { compact: true, spaces: 4 });
   return xml;
 };
-
-// /**
-//  * Parse the Fulfill response including the embedded Service Product Objects
-//  * @param xml
-//  * @returns
-//  */
-// export const parseCreditBureau = (xml: string, options: any): any => {
-//   const obj: any = returnNestedObject(fastXml.parse(xml, options), 'GetInvestigationResultsResponse');
-//   const creditBureau = returnNestedObject(obj, 'CreditBureau');
-//   if (typeof creditBureau === 'string') {
-//     let clean = creditBureau.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#xD;/g, '');
-//     return updateNestedObject(obj, 'CreditBureau', clean);
-//   } else {
-//     return obj;
-//   }
-// };

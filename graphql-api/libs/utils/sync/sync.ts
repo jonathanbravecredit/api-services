@@ -2,16 +2,11 @@ import axios, { AxiosResponse } from 'axios';
 import * as aws4 from 'aws4';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
-import {
-  IEnrollServiceProductResponse,
-  IGetAppDataRequest,
-  IGetAppDataResponse,
-  IJwks,
-  IRequestOptions,
-} from 'libs/interfaces';
-import { getAppData, updateAppData } from 'libs/proxy';
 import { deleteKeyNestedObject } from 'libs/utils';
 import { GetAppDataQuery, TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
+import { IGetAppDataRequest, IGetAppDataResponse } from 'libs/interfaces/transunion/get-app-data.interface';
+import { getAppData, updateAppData } from 'libs/queries/graphql-query-methods';
+import { IEnrollServiceProductResponse } from 'libs/transunion/enroll/enroll.interface';
 
 const appsyncUrl = process.env.APPSYNC_ENDPOINT;
 const region = process.env.AWS_REGION;

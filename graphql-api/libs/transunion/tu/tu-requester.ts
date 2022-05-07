@@ -1,9 +1,10 @@
 import { ACCOUNT_CODE, ACCOUNT_NAME } from 'libs/data/constants';
 import { APIRequestKeys, APIRequestLibrary, APIRequestXMLLibrary } from 'libs/utils/requests/requests';
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { v4 } from 'uuid';
 import * as _ from 'lodash';
 import * as convert from 'xml-js';
+import * as flat from 'flat';
 import { XMLUtil } from 'libs/utils/xml/XMLUtil';
 
 export class TURequester<T> {
@@ -33,12 +34,12 @@ export class TURequester<T> {
   }
 
   generateRequestObject(): void {
-    this.requestObject = this.getReqWrapper(_nest.unflatten(this.parseRequest({ ...this.requestMap })));
+    this.requestObject = this.getReqWrapper(flat.unflatten(this.parseRequest({ ...this.requestMap })));
     console.log('requestObject: ', JSON.stringify(this.requestObject));
   }
 
   generateXMLObject(): void {
-    this.requestXMLObject = this.getXMLWrapper(_nest.unflatten(this.parseXML({ ...this.requestXMLMap })));
+    this.requestXMLObject = this.getXMLWrapper(flat.unflatten(this.parseXML({ ...this.requestXMLMap })));
     console.log('requestXMLObject: ', JSON.stringify(this.requestXMLObject));
   }
 
