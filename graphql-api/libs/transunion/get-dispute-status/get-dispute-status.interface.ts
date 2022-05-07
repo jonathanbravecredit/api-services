@@ -1,4 +1,5 @@
-import { IDisputeStatus, IStandardResponse } from 'libs/interfaces';
+import { IStandardResponse } from 'libs/interfaces';
+import { IDisputeStatus } from 'libs/transunion/start-dispute/start-dispute.interface';
 
 export interface IGetDisputeStatusSchema {
   id: string;

@@ -3,17 +3,17 @@ import * as convert from 'xml-js';
 import * as he from 'he';
 import * as uuid from 'uuid';
 import * as fastXml from 'fast-xml-parser';
-import {
-  IGetInvestigationEnrichPayload,
-  IGetInvestigationResults,
-  IGetInvestigationResultsGraphQLResponse,
-  IGetInvestigationResultsMsg,
-  IGetInvestigationResultsPayload,
-  IGetInvestigationResultsResponse,
-} from 'libs/interfaces';
 import { UpdateAppDataInput } from 'src/api/api.service';
 import { XMLUtil as XML } from 'libs/utils/xml/XMLUtil';
 import { DB as db } from 'libs/utils/db/db';
+import {
+  IGetInvestigationResultsGraphQLResponse,
+  IGetInvestigationResultsPayload,
+  IGetInvestigationResults,
+  IGetInvestigationResultsMsg,
+  IGetInvestigationEnrichPayload,
+  IGetInvestigationResultsResponse,
+} from 'libs/transunion/get-investigation-results/get-investigation-results.interface';
 
 /**
  * Genarates the message payload for TU get dispute history

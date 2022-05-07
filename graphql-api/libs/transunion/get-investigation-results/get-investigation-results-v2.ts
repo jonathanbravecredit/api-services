@@ -1,23 +1,23 @@
 import * as https from 'https';
 import { v4 } from 'uuid';
 import { DB as db } from 'libs/utils/db/db';
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 import { Payloader } from 'libs/utils/payloader/Payloader';
 import { qryGetDataForGetInvestigationResults } from 'libs/queries';
-import {
-  IGetInvestigationEnrichPayload,
-  IGetInvestigationResultsGraphQLResponse,
-  IGetInvestigationResultsResponse,
-  IGetInvestigationResultsResult,
-  IGetInvestigationResultsSchema,
-  IProxyRequest,
-} from 'libs/interfaces';
 import { APIRequest } from 'libs/models/api-request.model';
 import { TUAPIProcessor } from 'libs/transunion/tu/tu-api';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { GetInvestigationResultsResponder } from 'libs/transunion/get-investigation-results/subclasses/get-investigation-results.responder';
 import { GetInvestigationResultsRequester } from 'libs/transunion/get-investigation-results/subclasses/get-investigation-results.requester';
+import { IProxyRequest } from 'libs/interfaces';
+import {
+  IGetInvestigationResultsSchema,
+  IGetInvestigationResultsGraphQLResponse,
+  IGetInvestigationResultsResponse,
+  IGetInvestigationResultsResult,
+  IGetInvestigationEnrichPayload,
+} from 'libs/transunion/get-investigation-results/get-investigation-results.interface';
 
 export class GetInvestigationResultsV2
   extends TUAPIProcessor<

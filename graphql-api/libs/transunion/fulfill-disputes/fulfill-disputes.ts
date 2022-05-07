@@ -1,19 +1,17 @@
-import { mapReportResponse, returnNestedObject, textConstructor, updateNestedObject } from 'libs/utils/helpers/helpers';
+import { returnNestedObject, textConstructor, updateNestedObject } from 'libs/utils/helpers/helpers';
 import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
 import * as uuid from 'uuid';
 import * as he from 'he';
-import {
-  IFulfill,
-  IFulfillGraphQLResponse,
-  IFulfillMsg,
-  IFulfillPayload,
-  IFulfillResponse,
-  IFulfillResult,
-  IFulfillServiceProductResponse,
-} from 'libs/interfaces';
 import { MONTH_MAP } from 'libs/data/constants';
 import { UpdateAppDataInput } from 'src/api/api.service';
+import {
+  IFulfillGraphQLResponse,
+  IFulfill,
+  IFulfillMsg,
+  IFulfillResponse,
+  IFulfillResult,
+} from 'libs/transunion/fulfill/fulfill.interface';
 
 /**
  * Genarates the message payload for TU Enroll service

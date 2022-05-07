@@ -2,7 +2,7 @@ import * as dayjs from 'dayjs';
 import { IMergeReport, Nested as _nest } from '@bravecredit/brave-sdk';
 import { IGenericRequest, IProxyRequest } from 'libs/interfaces';
 import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';
-import { getDisputeEnrollment, getFulfilledOn } from 'libs/proxy/proxy-queries';
+import { getDisputeEnrollment, getFulfilledOn } from 'libs/queries/graphql-query-methods';
 import { EnrollDisputesV2 } from 'libs/transunion/enroll-disputes/enroll-disputes-v2';
 import { DB } from 'libs/utils/db/db';
 import { LoggerTransactionals } from 'libs/utils/logger/LoggerTransactionals';

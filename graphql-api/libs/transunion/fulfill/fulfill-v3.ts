@@ -1,20 +1,12 @@
 import * as dayjs from 'dayjs';
 import * as https from 'https';
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { SyncV2 } from 'libs/utils/sync/SyncV2';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 import { Payloader } from 'libs/utils/payloader/Payloader';
 import { qryGetDataForFulfill } from 'libs/queries';
-import {
-  IFulfillGraphQLResponse,
-  IFulfillResponse,
-  IFulfillResult,
-  IFulfillSchema,
-  IGenericRequest,
-  IProxyRequest,
-} from 'libs/interfaces';
+import { IGenericRequest, IProxyRequest } from 'libs/interfaces';
 import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';
-import { MergeReport } from 'libs/models/MergeReport/MergeReport';
 import { CreditReportPublisher } from 'libs/transunion/credit-report-service/CreditReportPublisher';
 import { APIRequest } from 'libs/models/api-request.model';
 import { TUAPIProcessor } from 'libs/transunion/tu/tu-api';
@@ -22,6 +14,13 @@ import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { FulfillResponder } from 'libs/transunion/fulfill/subclasses/fulfill.responder';
 import { FulfillRequester } from 'libs/transunion/fulfill/subclasses/fulfill.requester';
 import { DobInput } from '@bravecredit/brave-sdk/dist/types/graphql-api';
+import {
+  IFulfillSchema,
+  IFulfillGraphQLResponse,
+  IFulfillResponse,
+  IFulfillResult,
+} from 'libs/transunion/fulfill/fulfill.interface';
+import { MergeReport } from '@bravecredit/brave-sdk';
 
 export class FulfillV3
   extends TUAPIProcessor<IFulfillSchema, IFulfillGraphQLResponse, IFulfillResponse, IFulfillResult>

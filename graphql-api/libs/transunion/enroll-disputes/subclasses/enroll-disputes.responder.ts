@@ -1,7 +1,7 @@
-import { UpdateAppDataInput, Nested as _nest } from '@bravecredit/brave-sdk';
-import { IEnrollResponse } from 'libs/interfaces';
-import { TUResponder } from 'libs/transunion/tu/tu-responder';
 import * as _ from 'lodash';
+import { TUResponder } from 'libs/transunion/tu/tu-responder';
+import { IEnrollResponse } from 'libs/transunion/enroll/enroll.interface';
+import { UpdateAppDataInput, Nested as _nest } from '@bravecredit/brave-sdk';
 
 export class EnrollDisputeResponder extends TUResponder<IEnrollResponse, any> {
   constructor() {

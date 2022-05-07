@@ -1,6 +1,7 @@
-import { IGenericRequest, IGetInvestigationResultsByIdSchema } from 'libs/interfaces';
+import { IGenericRequest } from 'libs/interfaces';
 import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';
 import { IProxyRequest } from 'libs/interfaces/api/proxy-query.interfaces';
+import { IGetInvestigationResultsByIdSchema } from 'libs/transunion/get-investigation-results-by-id/get-investigation-results-by-id.interface';
 import { CreditBureauReportResult } from 'libs/utils/db/credit-bureau/model/credit-bureau.model';
 import { DB } from 'libs/utils/db/db';
 import { LoggerTransactionals } from 'libs/utils/logger/LoggerTransactionals';

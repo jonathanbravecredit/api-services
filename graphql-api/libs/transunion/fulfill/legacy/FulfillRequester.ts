@@ -4,13 +4,13 @@ import * as uuid from 'uuid';
 import * as _ from 'lodash';
 import { TURequestBase } from 'libs/transunion/tu/TURequestBase';
 import { XMLUtil as XML } from 'libs/utils/xml/XMLUtil';
-import { IEnrollGraphQLResponse, IEnrollRequest } from 'libs/transunion/enroll/enroll.interface';
+import { IFulfillGraphQLResponse, IFulfillRequest } from 'libs/transunion/fulfill/fulfill.interface';
 
-export class EnrollRequester extends TURequestBase<IEnrollGraphQLResponse> {
-  request: IEnrollRequest;
+export class FulfillRequester extends TURequestBase<IFulfillGraphQLResponse> {
+  request: IFulfillRequest;
   xml: string;
 
-  constructor(protected data: IEnrollGraphQLResponse, serviceBundleCode: string) {
+  constructor(protected data: IFulfillGraphQLResponse, serviceBundleCode: string) {
     super(data, serviceBundleCode);
     super.init();
   }
@@ -21,7 +21,10 @@ export class EnrollRequester extends TURequestBase<IEnrollGraphQLResponse> {
     return dayjs(badDate, 'YYYY-MMM-D').format('YYYY-MM-DD');
   }
 
-  generateRequest(): IEnrollRequest {
+  generateRequest(disputing: boolean = false): IFulfillRequest {
+    const eKey = disputing ? this.disputeEnrollmentKey : this.enrollmentKey;
+    console.log('disputeEnrollmentKey: ', this.disputeEnrollmentKey);
+    console.log('enrollmentKey: ', this.enrollmentKey);
     this.request = {
       AccountCode: this.accountCode,
       AccountName: this.accountName,
@@ -49,8 +52,9 @@ export class EnrollRequester extends TURequestBase<IEnrollGraphQLResponse> {
         },
         Ssn: this.attributes.ssn?.full || '',
       },
+      EnrollmentKey: eKey,
       ServiceBundleCode: this.serviceBundleCode,
-    } as IEnrollRequest;
+    } as IFulfillRequest;
     return this.request;
   }
 
@@ -64,17 +68,17 @@ export class EnrollRequester extends TURequestBase<IEnrollGraphQLResponse> {
         },
         'soapenv:Header': {},
         'soapenv:Body': {
-          'con:Enroll': {
+          'con:Fulfill': {
             'con:request': {
               'data:AccountCode': XML.textConstructor(this.request.AccountCode),
               'data:AccountName': XML.textConstructor(this.request.AccountName),
               'data:AdditionalInputs': {
                 'data:Data': {
                   'data:Name': XML.textConstructor('CreditReportVersion'),
-                  'data:Value': XML.textConstructor(this.request.AdditionalInputs?.Data.Value || '7'),
+                  'data:Value': XML.textConstructor(this.request.AdditionalInputs?.Data.Value || '7.1'),
                 },
               },
-              'data:RequestKey': XML.textConstructor(`BC-${uuid.v4()}`),
+              'data:RequestKey': XML.textConstructor(this.request.RequestKey),
               'data:ClientKey': XML.textConstructor(this.request.ClientKey),
               'data:Customer': {
                 'data:CurrentAddress': {
@@ -94,7 +98,7 @@ export class EnrollRequester extends TURequestBase<IEnrollGraphQLResponse> {
                 },
                 'data:Ssn': XML.textConstructor(this.request.Customer.Ssn),
               },
-              'data:Email': XML.textConstructor(this.request.Email, true),
+              'data:EnrollmentKey': XML.textConstructor(this.request.EnrollmentKey),
               'data:Language': XML.textConstructor(this.request.Language, true),
               'data:ServiceBundleCode': XML.textConstructor(this.request.ServiceBundleCode),
             },
@@ -103,6 +107,7 @@ export class EnrollRequester extends TURequestBase<IEnrollGraphQLResponse> {
       },
     };
     this.xml = convert.json2xml(JSON.stringify(xmlObj), { compact: true, spaces: 4 });
+    console.log('fulfill request xml: ', this.xml);
     return this.xml;
   }
 }

@@ -1,17 +1,35 @@
 import * as he from 'he';
 import * as https from 'https';
-import * as qrys from 'libs/proxy/proxy-queries';
-import * as interfaces from 'libs/interfaces';
-import * as tu from 'libs/transunion';
+import * as qrys from 'libs/queries/graphql-query-methods';
 import ErrorLogger from 'libs/utils/db/logger/logger-errors';
 import TransactionLogger from 'libs/utils/db/logger/logger-transactions';
 import { DB } from 'libs/utils/db/db';
 import { ajv } from 'libs/schema/validation';
 import { SoapAid } from 'libs/utils/soap-aid/soap-aid';
-import { FulfillV2 } from 'libs/transunion/fulfill/_dnu/Fulfillv2';
 import { GetInvestigationResultsV2 } from 'libs/transunion/get-investigation-results/get-investigation-results-v2';
 import { START_DISPUTE_RESPONSE } from 'libs/examples/mocks/StartDisputeResponse';
 import { FulfillV3 } from 'libs/transunion/fulfill/fulfill-v3';
+import {
+  createStartDispute,
+  createStartDisputePersonal,
+  createStartDisputePersonalPayload,
+  createStartDisputePublicPayload,
+  createStartDisputeTradelinePayload,
+  formatStartDispute,
+  parseStartDispute,
+} from 'libs/transunion/start-dispute/start-dispute';
+import {
+  IProcessDisputeTradelineResult,
+  IProcessDisputePublicResult,
+  IProcessDisputePersonalResult,
+} from 'libs/interfaces';
+import {
+  IStartDisputeRequest,
+  IStartDispute,
+  IStartDisputePayload,
+  IStartDisputeResponse,
+  IStartDisputeBundle,
+} from 'libs/transunion/start-dispute/start-dispute.interface';
 
 const GO_LIVE = true;
 const errorLogger = new ErrorLogger();
@@ -50,39 +68,39 @@ export const StartDispute = async ({
   identityId: string;
 }): Promise<{ success: boolean; error?: any; data?: any }> => {
   const live = GO_LIVE; // !!! IMPORTANT FLAG TO DISABLE MOCKS !!!
-  const payload: interfaces.IStartDisputePayload = {
+  const payload: IStartDisputePayload = {
     id: identityId,
     ...JSON.parse(message),
   };
-  const validate = ajv.getSchema<interfaces.IStartDisputeRequest>('startDisputeRequest');
-  const tradeline = ajv.getSchema<interfaces.IProcessDisputeTradelineResult>('disputeTradeline');
-  const publicitem = ajv.getSchema<interfaces.IProcessDisputePublicResult>('disputePublicitem');
-  const personalitem = ajv.getSchema<interfaces.IProcessDisputePersonalResult>('disputePersonalitem');
+  const validate = ajv.getSchema<IStartDisputeRequest>('startDisputeRequest');
+  const tradeline = ajv.getSchema<IProcessDisputeTradelineResult>('disputeTradeline');
+  const publicitem = ajv.getSchema<IProcessDisputePublicResult>('disputePublicitem');
+  const personalitem = ajv.getSchema<IProcessDisputePersonalResult>('disputePersonalitem');
 
   if (!validate(payload)) throw `Malformed message=${JSON.stringify(payload)}`;
   let payloadMethod: (data: any, params?: any) => any;
-  let startDisputeMethod: (msg: interfaces.IStartDispute) => string;
+  let startDisputeMethod: (msg: IStartDispute) => string;
   if (tradeline(payload.disputes[0])) {
-    payloadMethod = tu.createStartDisputeTradelinePayload;
-    startDisputeMethod = tu.createStartDispute;
+    payloadMethod = createStartDisputeTradelinePayload;
+    startDisputeMethod = createStartDispute;
   }
   if (publicitem(payload.disputes[0])) {
-    payloadMethod = tu.createStartDisputePublicPayload;
-    startDisputeMethod = tu.createStartDispute;
+    payloadMethod = createStartDisputePublicPayload;
+    startDisputeMethod = createStartDispute;
   }
   if (personalitem(payload.disputes[0])) {
-    payloadMethod = tu.createStartDisputePersonalPayload;
-    startDisputeMethod = tu.createStartDisputePersonal;
+    payloadMethod = createStartDisputePersonalPayload;
+    startDisputeMethod = createStartDisputePersonal;
   }
   //create helper classes
   // const sync = new Sync(tu.enrichDisputeData);
-  const soap = new SoapAid(tu.parseStartDispute, tu.formatStartDispute, startDisputeMethod, payloadMethod);
+  const soap = new SoapAid(parseStartDispute, formatStartDispute, startDisputeMethod, payloadMethod);
   try {
     console.log('*** IN START DISPUTE ***');
     const prepped = await qrys.getDataForStartDispute(payload);
     const reprepped = { data: prepped.data, disputes: payload.disputes };
-    let resp: interfaces.IStartDisputeResponse = live
-      ? await soap.parseAndSendPayload<interfaces.IStartDisputeResponse>(
+    let resp: IStartDisputeResponse = live
+      ? await soap.parseAndSendPayload<IStartDisputeResponse>(
           accountCode,
           username,
           agent,
@@ -91,7 +109,7 @@ export const StartDispute = async ({
           'StartDispute',
           parserOptions,
         )
-      : await soap.parseAndDontSendPayload<interfaces.IStartDisputeResponse>(
+      : await soap.parseAndDontSendPayload<IStartDisputeResponse>(
           accountCode,
           username,
           agent,
@@ -103,13 +121,13 @@ export const StartDispute = async ({
 
     // get the specific response from parsed object
     if (!live) {
-      resp = tu.parseStartDispute(START_DISPUTE_RESPONSE, parserOptions);
+      resp = parseStartDispute(START_DISPUTE_RESPONSE, parserOptions);
     }
 
     const data = resp.Envelope?.Body?.StartDisputeResponse?.StartDisputeResult;
     const responseType = data?.ResponseType;
     const error = data?.ErrorResponse;
-    const bundle: interfaces.IStartDisputeBundle = {
+    const bundle: IStartDisputeBundle = {
       startDisputeResult: data,
       disputes: payload.disputes,
     };

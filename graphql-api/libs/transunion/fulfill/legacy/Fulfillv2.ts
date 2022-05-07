@@ -1,37 +1,38 @@
 import * as https from 'https';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { SyncV2 } from 'libs/utils/sync/SyncV2';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
-import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { Payloader } from 'libs/utils/payloader/Payloader';
-import { qryGetDataForEnrollment } from 'libs/queries';
+import { FulfillRequester } from 'libs/transunion/fulfill/legacy/FulfillRequester';
+import { FulfillResponder } from 'libs/transunion/fulfill/legacy/FulfillResponder';
+import { qryGetDataForFulfill } from 'libs/queries';
+import { IGenericRequest, IProxyRequest } from 'libs/interfaces';
 import { DEFAULT_PARSER_OPTIONS } from 'libs/utils/parser/options';
 import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';
-import { EnrollRequester } from 'libs/transunion/enroll/_dnu/EnrollRequester';
+import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 import { LoggerTransactionals } from 'libs/utils/logger/LoggerTransactionals';
 import { CreditReportPublisher } from 'libs/transunion/credit-report-service/CreditReportPublisher';
 import { APIRequest } from 'libs/models/api-request.model';
-import { EnrollResponder } from 'libs/transunion/enroll/_dnu/EnrollResponder';
-import { IProxyRequest, IGenericRequest } from 'libs/interfaces';
-import { IEnrollGraphQLResponse, IEnrollResponse } from 'libs/transunion/enroll/enroll.interface';
+import { IFulfillGraphQLResponse, IFulfillResponse, IFulfillResult } from 'libs/transunion/fulfill/fulfill.interface';
 import { MergeReport } from '@bravecredit/brave-sdk';
 
-export class EnrollV2 extends LoggerTransactionals implements APIRequest {
+export class FulfillV2 extends LoggerTransactionals implements APIRequest {
   public reqXML: string;
   public resXML: string;
-  public gqldata: IEnrollGraphQLResponse;
+  public gqldata: IFulfillGraphQLResponse;
   public prepped = null;
-  public action = 'Enroll';
+  public action = 'Fulfill';
   public parserOptions = DEFAULT_PARSER_OPTIONS;
-  public response: IEnrollResponse;
+  public response: IFulfillResponse;
   public responseType: string;
   public responseError: any;
-  public results: IProxyHandlerResponse<{ report: MergeReport }>;
+  public results: IProxyHandlerResponse<IFulfillResult>;
   public serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
   public mergeReport: MergeReport;
   public mergeReportSPO: string;
 
   constructor(protected payload: IProxyRequest) {
-    super('Enroll');
+    super('Fulfill');
   }
 
   /**
@@ -42,19 +43,19 @@ export class EnrollV2 extends LoggerTransactionals implements APIRequest {
    *  - log the results and send back results to API
    * @returns
    */
-  async run(): Promise<IProxyHandlerResponse<{ report: MergeReport }>> {
+  async run(): Promise<IProxyHandlerResponse<IFulfillResult>> {
     const { accountCode, username, message, agent, auth, identityId } = this.payload;
     try {
-      await this.runPayloader(identityId);
-      const requester = new EnrollRequester(this.gqldata, this.serviceBundleCode);
-      this.runRequester<EnrollRequester>(requester);
-      const responder = new EnrollResponder();
-      await this.runSendAndSync<EnrollResponder>(agent, auth, identityId, responder);
-      await this.logResults(identityId);
+      await this.runPayloader();
+      const requester = new FulfillRequester(this.gqldata, this.serviceBundleCode);
+      this.runRequester<FulfillRequester>(requester);
+      const responder = new FulfillResponder();
+      await this.runSendAndSync<FulfillResponder>(agent, auth, identityId, responder);
+      await this.logResults();
       return this.results;
     } catch (err) {
       console.log('error ===> ', err);
-      await this.logGenericError(identityId, err);
+      this.logGenericError(identityId, err);
       return { success: false, data: null, error: err };
     }
   }
@@ -65,13 +66,14 @@ export class EnrollV2 extends LoggerTransactionals implements APIRequest {
    *  - prep the payload
    * @returns
    */
-  async runPayloader(id: string): Promise<IEnrollGraphQLResponse> {
-    const payload: IGenericRequest = { id };
-    const payloader = new Payloader<IEnrollGraphQLResponse>();
+  async runPayloader(): Promise<IFulfillGraphQLResponse> {
+    const payload: IGenericRequest = { id: this.payload.identityId };
+    const payloader = new Payloader<IFulfillGraphQLResponse>();
     payloader.validate<IGenericRequest>(payload, 'getRequest');
-    const qry = qryGetDataForEnrollment;
+    const qry = qryGetDataForFulfill;
     await payloader.prep<IGenericRequest>(qry, payload);
     this.gqldata = payloader.data;
+    console.log('data: ', this.gqldata);
     return this.gqldata;
   }
 
@@ -82,7 +84,7 @@ export class EnrollV2 extends LoggerTransactionals implements APIRequest {
    * @param requester
    * @returns
    */
-  runRequester<T extends EnrollRequester>(requester: T): string {
+  runRequester<T extends FulfillRequester>(requester: T): string {
     requester.generateRequest();
     requester.generateXML();
     const { xml } = requester;
@@ -102,7 +104,7 @@ export class EnrollV2 extends LoggerTransactionals implements APIRequest {
    * @param id
    * @param responder
    */
-  async runSendAndSync<T extends EnrollResponder>(
+  async runSendAndSync<T extends FulfillResponder>(
     agent: https.Agent,
     auth: string,
     id: string,
@@ -120,26 +122,27 @@ export class EnrollV2 extends LoggerTransactionals implements APIRequest {
     if (this.responseType.toLowerCase() === 'success') {
       const synched = await sync.syncData(responder.enriched);
       await this.publishReport(this.mergeReportSPO, id);
-      this.setSuccessResults(synched, this.mergeReport);
+      this.setSuccessResults(synched);
     } else {
       this.setFailedResults();
     }
   }
 
-  setResponses(response: IEnrollResponse): void {
+  setResponses(response: IFulfillResponse): void {
     this.response = response;
     this.responseType = _nest.find(this.response, 'ResponseType');
     this.responseError = _nest.find(this.response, 'ErrorResponse');
   }
 
-  setMergeReportItems(responder: EnrollResponder): void {
+  setMergeReportItems(responder: FulfillResponder): void {
     this.mergeReport = responder.mergeReport;
     this.mergeReportSPO = responder.mergeReportSPO;
   }
 
-  setSuccessResults(synched: boolean, data: MergeReport): void {
+  setSuccessResults(synched: boolean): void {
+    const data = _nest.find<IFulfillResult>(this.response, 'FulfillResult');
     this.results = synched
-      ? { success: true, error: null, data: { report: data } }
+      ? { success: true, error: null, data: data }
       : { success: false, error: 'failed to sync data to db' };
   }
 
@@ -147,12 +150,24 @@ export class EnrollV2 extends LoggerTransactionals implements APIRequest {
     this.results = { success: false, error: this.responseError };
   }
 
+  parseReport(enriched: UpdateAppDataInput): { data: TUReportResponseInput; spo: string; report: MergeReport } {
+    const data = _nest.find<TUReportResponseInput>(enriched, 'enrollMergeReport');
+    const spo = _nest.find<string>(data, 'serviceProductObject');
+    const report = new MergeReport(JSON.parse(spo));
+    return { data, spo, report };
+  }
+
   async publishReport(spo: string, id: string): Promise<void> {
     const publisher = new CreditReportPublisher(spo);
     await publisher.publish(id);
   }
 
-  async logResults(id: string): Promise<void> {
+  /**
+   * Log the transunion results and generic results
+   */
+  async logResults(): Promise<void> {
+    const id = this.payload.identityId;
     this.log(id, { ...this }, 'TRANSUNION');
+    await this.log(id, this.results, 'GENERIC');
   }
 }

@@ -1,6 +1,6 @@
 import { ACCOUNT_CODE, ACCOUNT_NAME } from 'libs/data/constants';
-import { IGetTrendingDataSchema } from 'libs/interfaces';
 import { APIRequester } from 'libs/models/api-requester.model';
+import { IGetTrendingDataSchema } from 'libs/transunion/get-trending-data/get-trending-data.interface';
 import { TURequester } from 'libs/transunion/tu/tu-requester';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { v4 } from 'uuid';

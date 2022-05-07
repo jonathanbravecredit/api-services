@@ -2,7 +2,6 @@ import 'reflect-metadata';
 import { AppSyncResolverEvent } from 'aws-lambda';
 import * as https from 'https';
 import * as fs from 'fs';
-import * as queries from 'libs/proxy';
 import * as secrets from 'libs/utils/secrets/secrets';
 import * as tokens from 'libs/utils/tokens/tokens';
 import ErrorLogger from 'libs/utils/db/logger/logger-errors';
@@ -17,7 +16,7 @@ import { EnrollDisputesV2 } from 'libs/transunion/enroll-disputes/enroll-dispute
 import { FulfillDisputesV3 } from 'libs/transunion/fulfill-disputes/fulfill-disputes-v3';
 import { GetServiceProductV2 } from 'libs/transunion/service-product/get-service-product-v2';
 import { GetDisputeStatusV2 } from 'libs/transunion/get-dispute-status/get-dispute-status-v2';
-import { GetDisputeHistoryV2 } from 'libs/transunion/get-dispute-history /get-dispute-history-v2';
+import { GetDisputeHistoryV2 } from 'libs/transunion/get-dispute-history/get-dispute-history-v2';
 import { GetDisputeByUserV2 } from 'libs/transunion/get-dispute-by-user/get-dispute-by-user';
 import { GetDisputeByUserAllV2 } from 'libs/transunion/get-dispute-by-user-all/get-dispute-by-user-all';
 import { CompleteOnboardingEnrollments } from 'libs/transunion/complete-onboarding-enrollment/complete-onboarding-enrollment';
@@ -28,6 +27,9 @@ import { GetInvestigationResultsByIdV2 } from 'libs/transunion/get-investigation
 import { GetCreditBureauResultsByIdV2 } from 'libs/transunion/get-credit-bureau-results-by-id/get-credit-bureau-results-by-id';
 import { GetInvestigationResultsV2 } from 'libs/transunion/get-investigation-results/get-investigation-results-v2';
 import { DisputePreflightCheckV2 } from 'libs/transunion/dispute-preflight-check/dispute-preflight-check';
+import { Ping } from 'libs/transunion/ping/ping';
+import { UpdateNavBar } from 'libs/transunion/update-nav-bar/update-nav-bar';
+import { StartDispute } from 'libs/transunion/start-dispute/start-dispute-worker';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -121,10 +123,10 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     // do something
     switch (action) {
       case 'Ping':
-        results = await queries.Ping(payload);
+        results = await Ping(payload);
         return JSON.stringify(results);
       case 'UpdateNavBar':
-        results = await queries.UpdateNavBar(payload);
+        results = await UpdateNavBar(payload);
         return JSON.stringify(results);
       case 'IndicativeEnrichment':
         results = await new IndicativeEnrichmentV2(payload).run();
@@ -157,7 +159,7 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
         results = await new GetDisputeStatusV2(payload).run();
         return JSON.stringify(results);
       case 'StartDispute':
-        results = await queries.StartDispute(payload);
+        results = await StartDispute(payload);
         return JSON.stringify(results);
       case 'GetAllDisputesByUser':
         results = await new GetDisputeByUserAllV2(payload).run();

@@ -1,5 +1,5 @@
 import * as https from 'https';
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 import { IProxyRequest } from 'libs/interfaces';
 import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';

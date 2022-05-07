@@ -1,23 +1,22 @@
 import * as https from 'https';
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 import { Payloader } from 'libs/utils/payloader/Payloader';
-import {
-  ICancelEnrollGraphQLResponse,
-  ICancelEnrollmentSchema,
-  ICancelEnrollResponse,
-  ICancelEnrollResult,
-  IGenericRequest,
-  IProxyRequest,
-} from 'libs/interfaces';
+import { IGenericRequest, IProxyRequest } from 'libs/interfaces';
 import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';
 import { APIRequest } from 'libs/models/api-request.model';
 import { TUAPIProcessor } from 'libs/transunion/tu/tu-api';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { CancelEnrollmentResponder } from 'libs/transunion/cancel-enrollment/subclasses/cancel-enrollment.responder';
-import { qryGetCancelEnrollment } from 'libs/queries/custom-graphql';
+import { qryGetCancelEnrollment } from 'libs/queries/graphql-queries';
 import { CancelEnrollmentRequester } from 'libs/transunion/cancel-enrollment/subclasses/cancel-enrollment.requester';
 import { updateEnrollmentStatus } from 'libs/utils/db/dynamo-db/dynamo';
+import {
+  ICancelEnrollmentSchema,
+  ICancelEnrollGraphQLResponse,
+  ICancelEnrollResponse,
+  ICancelEnrollResult,
+} from 'libs/transunion/cancel-enrollment/cancel-enrollment.interface';
 
 export class CancelEnrollmentV2
   extends TUAPIProcessor<

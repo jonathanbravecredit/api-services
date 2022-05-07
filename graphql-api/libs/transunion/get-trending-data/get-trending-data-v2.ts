@@ -1,16 +1,16 @@
 import { Payloader } from 'libs/utils/payloader/Payloader';
-import {
-  IGetTrendingDataResponse,
-  IGetTrendingDataResult,
-  IGetTrendingDataSchema,
-  IProxyRequest,
-} from 'libs/interfaces';
+import { IProxyRequest } from 'libs/interfaces';
 import { APIRequest } from 'libs/models/api-request.model';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { TUAPIProcessor } from 'libs/transunion/tu/tu-api';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 import { GetTrendingDataResponder } from 'libs/transunion/get-trending-data/subclasses/get-trending-data.responder';
 import { GetTrendingDataRequester } from 'libs/transunion/get-trending-data/subclasses/get-trending-data.requester';
+import {
+  IGetTrendingDataResponse,
+  IGetTrendingDataResult,
+  IGetTrendingDataSchema,
+} from 'libs/transunion/get-trending-data/get-trending-data.interface';
 
 export class GetTrendingDataV2
   extends TUAPIProcessor<IGetTrendingDataSchema, any, IGetTrendingDataResponse, IGetTrendingDataResult>

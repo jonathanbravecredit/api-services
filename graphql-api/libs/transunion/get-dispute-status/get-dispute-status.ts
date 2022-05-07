@@ -1,17 +1,16 @@
-import {
-  IDispute,
-  IGetDataForGetDisputeStatus,
-  IGetDisputeStatus,
-  IGetDisputeStatusMsg,
-  IGetDisputeStatusPayload,
-  IGetDisputeStatusResponse,
-  IProxyQueryGetAppData,
-} from 'libs/interfaces';
-import { textConstructor } from 'libs/utils';
 import * as fastXml from 'fast-xml-parser';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import { MONTH_MAP } from 'libs/data/constants';
+import { textConstructor } from 'libs/utils';
+import { IProxyQueryGetAppData } from 'libs/interfaces';
+import {
+  IGetDataForGetDisputeStatus,
+  IGetDisputeStatusPayload,
+  IGetDisputeStatus,
+  IGetDisputeStatusMsg,
+  IGetDisputeStatusResponse,
+} from 'libs/transunion/get-dispute-status/get-dispute-status.interface';
 
 /**
  * Genarates the message payload for TU Enroll service

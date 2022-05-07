@@ -3,9 +3,9 @@ import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import {
   IVerifyAuthenticationQuestions,
-  IVerifyAuthenticationAnswer,
   IVerifyAuthenticationQuestionsPayload,
-} from 'libs/interfaces';
+} from 'libs/transunion/authentication-questions-verify/verify-authentication-questions.interface';
+import { IVerifyAuthenticationAnswer } from 'libs/transunion/authentication-questions-verify/verify-authentication-answers.interface';
 
 export const formatVerifyAuthenticationQuestions = (
   accountCode: string,

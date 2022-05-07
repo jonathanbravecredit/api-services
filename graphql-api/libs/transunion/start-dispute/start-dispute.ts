@@ -1,31 +1,31 @@
 import * as fastXml from 'fast-xml-parser';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
-import {
-  IAka,
-  IAttachment,
-  IClaimCode,
-  IEmployers,
-  IIndicativeDisputes,
-  ILineItem,
-  IStartDispute,
-  IStartDisputeBundle,
-  IStartDisputeGraphQLResponse,
-  IStartDisputeMsg,
-  IStartDisputeResponse,
-  IDisputeReason,
-  IProcessDisputeTradelineResult,
-  IProcessDisputePersonalResult,
-  IProcessDisputePublicResult,
-  IEmployer,
-  IBorrowerAddress,
-  IBorrowerName,
-  IIndicativeDisputesAddress,
-} from 'libs/interfaces';
 import { textConstructor } from 'libs/utils/helpers/helpers';
 import { MONTH_MAP } from 'libs/data/constants';
 import { TransunionUtil } from 'libs/utils/transunion/transunion';
 import { UpdateAppDataInput } from 'src/api/api.service';
+import { IBorrowerAddress, IBorrowerName, IEmployer } from '@bravecredit/brave-sdk/dist/types/merge-report';
+import {
+  IProcessDisputeTradelineResult,
+  IProcessDisputePublicResult,
+  IProcessDisputePersonalResult,
+  IDisputeReason,
+} from 'libs/interfaces';
+import {
+  IStartDisputeGraphQLResponse,
+  IStartDisputeMsg,
+  IEmployers,
+  IIndicativeDisputes,
+  IClaimCode,
+  IStartDispute,
+  IAttachment,
+  IAka,
+  IIndicativeDisputesAddress,
+  IStartDisputeResponse,
+  IStartDisputeBundle,
+  ILineItem,
+} from 'libs/transunion/start-dispute/start-dispute.interface';
 /**
  * Genarates the message payload for TU Fulfill request
  * TODO: need to incorporate Personal and Public items
@@ -264,6 +264,9 @@ export const parserDisputeToLineItem = (
   return null;
 };
 
+interface EmployerWithOccupation extends IEmployer {
+  Occupation: any;
+}
 /**
  * Helper function to parse the disputes to Line Items
  * @param disputes
@@ -273,15 +276,17 @@ export const parseDisputeToEmployer = (disputes: IProcessDisputePersonalResult[]
   if (!disputes.length) return null;
   return disputes
     .map((item) => {
-      const employer: IEmployer = item.personalItem.key === 'employer' ? item.personalItem.value : {};
+      const employer: EmployerWithOccupation = (
+        item.personalItem.key === 'employer' ? item.personalItem.value : {}
+      ) as EmployerWithOccupation;
       return {
         Employer: {
           City: employer?.CreditAddress?.city,
           Delete: 'true',
           Name: employer?.name,
-          Occupation: employer?.occupation,
+          Occupation: employer?.Occupation,
           State: employer?.CreditAddress?.stateCode,
-          ZipCode: employer?.CreditAddress?.postalCode,
+          ZipCode: employer?.CreditAddress?.postalCode.toString(),
         },
       };
     })
@@ -291,7 +296,9 @@ export const parseDisputeToEmployer = (disputes: IProcessDisputePersonalResult[]
 export const parseDisputeToAddress = (disputes: IProcessDisputePersonalResult[]): IIndicativeDisputes => {
   if (!disputes.length) return null;
   return disputes.map((item) => {
-    const address: IBorrowerAddress = item.personalItem.key === 'prevaddress' ? item.personalItem.value : {};
+    const address: IBorrowerAddress = (
+      item.personalItem.key === 'prevaddress' ? item.personalItem.value : {}
+    ) as IBorrowerAddress;
     return {
       Address: {
         AddressLine1: `${address.CreditAddress?.houseNumber || ''} ${address.CreditAddress?.streetName || ''}`,
@@ -308,7 +315,7 @@ export const parseDisputeToAddress = (disputes: IProcessDisputePersonalResult[])
 export const parseDisputeToAka = (disputes: IProcessDisputePersonalResult[]): any => {
   if (!disputes.length) return null;
   return disputes.map((item) => {
-    const name: IBorrowerName = item.personalItem.key === 'aka' ? item.personalItem.value : {};
+    const name: IBorrowerName = (item.personalItem.key === 'aka' ? item.personalItem.value : {}) as IBorrowerName;
     return {
       Aka: {
         ValueData: {

@@ -7,20 +7,21 @@ import {
 } from 'libs/utils/helpers/helpers';
 import * as convert from 'xml-js';
 import * as fastXml from 'fast-xml-parser';
-import * as he from 'he';
 import * as uuid from 'uuid';
+import * as he from 'he';
 import { SNS } from 'aws-sdk';
 import { MONTH_MAP } from 'libs/data/constants';
 import { TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
-import { BraveParsers } from 'libs/utils/brave/parser/BraveParser';
 import { PubSubUtil } from 'libs/utils/pubsub/pubsub';
+import { BraveParsers } from 'libs/utils/brave/parser/BraveParser';
 import {
-  IEnrollGraphQLResponse,
-  IEnroll,
-  IEnrollResponse,
-  IEnrollResult,
-  IEnrollServiceProductResponse,
-} from 'libs/transunion/enroll/enroll.interface';
+  IFulfillGraphQLResponse,
+  IFulfill,
+  IFulfillMsg,
+  IFulfillResponse,
+  IFulfillResult,
+  IFulfillServiceProductResponse,
+} from 'libs/transunion/fulfill/fulfill.interface';
 import { ICreditReportPayload } from 'libs/interfaces/batch.interfaces';
 
 /**
@@ -28,11 +29,12 @@ import { ICreditReportPayload } from 'libs/interfaces/batch.interfaces';
  * @param data
  * @returns IEnrollPayload
  */
-export const createEnrollPayload = (data: IEnrollGraphQLResponse): any => {
-  const id = data.data.getAppData?.id?.split(':')?.pop();
-  const attrs = data.data.getAppData?.user?.userAttributes;
+export const createFulfillPayload = (data: IFulfillGraphQLResponse): any => {
+  const id = data.data.getAppData.id?.split(':')?.pop();
+  const attrs = data.data.getAppData.user?.userAttributes;
   const dob = attrs?.dob;
   const serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
+  const enrollmentKey = data.data.getAppData.agencies?.transunion?.enrollmentKey;
 
   if (!id || !attrs || !dob) {
     console.log(`no id, attributes, or dob provided: id=${id},  attrs=${attrs}, dob=${dob}`);
@@ -40,7 +42,7 @@ export const createEnrollPayload = (data: IEnrollGraphQLResponse): any => {
   }
 
   return {
-    RequestKey: '', // gets added below
+    RequestKey: '',
     AdditionalInputs: {
       Data: {
         Name: 'CreditReportVersion',
@@ -64,20 +66,13 @@ export const createEnrollPayload = (data: IEnrollGraphQLResponse): any => {
       },
       Ssn: attrs.ssn?.full || '',
     },
+    EnrollmentKey: enrollmentKey,
     ServiceBundleCode: serviceBundleCode,
   };
 };
 
-/**
- * Add the header information to the formated payload
- * @param accountCode
- * @param accountName
- * @param msg
- * @returns
- */
-export const formatEnroll = (accountCode: string, accountName: string, msg: string): IEnroll | undefined => {
-  let message: any = JSON.parse(msg);
-  // consider adding validation here
+export const formatFulfill = (accountCode: string, accountName: string, msg: string): IFulfill | undefined => {
+  let message: IFulfillMsg = JSON.parse(msg);
   return message
     ? {
         request: {
@@ -96,7 +91,7 @@ export const formatEnroll = (accountCode: string, accountName: string, msg: stri
  * @param {IEnroll} msg
  * @returns
  */
-export const createEnroll = (msg: IEnroll): string => {
+export const createFulfill = (msg: IFulfill): string => {
   const xmlObj = {
     'soapenv:Envelope': {
       _attributes: {
@@ -106,7 +101,7 @@ export const createEnroll = (msg: IEnroll): string => {
       },
       'soapenv:Header': {},
       'soapenv:Body': {
-        'con:Enroll': {
+        'con:Fulfill': {
           'con:request': {
             'data:AccountCode': textConstructor(msg.request.AccountCode),
             'data:AccountName': textConstructor(msg.request.AccountName),
@@ -136,7 +131,7 @@ export const createEnroll = (msg: IEnroll): string => {
               },
               'data:Ssn': textConstructor(msg.request.Customer.Ssn),
             },
-            'data:Email': textConstructor(msg.request.Email, true),
+            'data:EnrollmentKey': textConstructor(msg.request.EnrollmentKey),
             'data:Language': textConstructor(msg.request.Language, true),
             'data:ServiceBundleCode': textConstructor(msg.request.ServiceBundleCode),
           },
@@ -149,12 +144,12 @@ export const createEnroll = (msg: IEnroll): string => {
 };
 
 /**
- * Parse the Enroll response including the embedded Service Product Objects
+ * Parse the Fulfill response including the embedded Service Product Objects
  * @param xml
- * @returns
+ * @returns IFulfillResponse
  */
-export const parseEnroll = (xml: string, options: any): IEnrollResponse => {
-  const obj: IEnrollResponse = fastXml.parse(xml, options);
+export const parseFulfill = (xml: string, options: any): IFulfillResponse => {
+  const obj: IFulfillResponse = fastXml.parse(xml, options);
   const resp = returnNestedObject<any>(obj, 'ServiceProductResponse');
   if (resp instanceof Array) {
     const mapped = resp.map((prod) => {
@@ -181,72 +176,73 @@ export const parseEnroll = (xml: string, options: any): IEnrollResponse => {
 /**
  * This method parses and enriches the state data
  * @param {UpdateAppDataInput} data
- * @param {IEnrollResponse} enroll
- * @returns
+ * @param {IFulfillResult} enroll
+ * @returns {UpdateAppDataInput | undefined }
  */
-export const enrichEnrollmentData = (
+export const enrichFulfillData = (
   data: UpdateAppDataInput | undefined,
-  enroll: IEnrollResult,
+  fulfill: IFulfillResult, // IFulfillResult
 ): UpdateAppDataInput | undefined => {
   if (!data) return;
-  let enrollReport: IEnrollServiceProductResponse | undefined;
-  let enrollMergeReport: IEnrollServiceProductResponse | undefined;
-  let enrollVantageScore: IEnrollServiceProductResponse | undefined;
-  let enrolledOn = new Date().toISOString();
-  const enrollmentKey = enroll.EnrollmentKey;
-  const serviceBundleFulfillmentKey = enroll.ServiceBundleFulfillmentKey;
-  const prodResponse = enroll.ServiceProductFulfillments.ServiceProductResponse;
-  console.log('enroll enrollmentkey ===> ', JSON.stringify(enrollmentKey));
-  console.log('enroll serviceBundleFulfillmentKey ===> ', JSON.stringify(serviceBundleFulfillmentKey));
-  console.log('enroll prodResponse ===> ', JSON.stringify(prodResponse));
+  let fulfillReport;
+  let fulfillMergeReport;
+  let fulfillVantageScore;
+  let fulfilledOn = new Date().toISOString();
+  const prodResponse = returnNestedObject<any>(fulfill, 'ServiceProductResponse');
+  const serviceBundleFulfillmentKey = fulfill.ServiceBundleFulfillmentKey;
+
   if (!prodResponse) return;
   if (prodResponse instanceof Array) {
-    enrollReport = prodResponse.find((item: IEnrollServiceProductResponse) => {
+    fulfillReport = prodResponse.find((item: IFulfillServiceProductResponse) => {
       return item['ServiceProduct'] === 'TUCReport';
     });
-    enrollMergeReport = prodResponse.find((item: IEnrollServiceProductResponse) => {
+    fulfillMergeReport = prodResponse.find((item: IFulfillServiceProductResponse) => {
       return item['ServiceProduct'] === 'MergeCreditReports';
     });
-    enrollVantageScore = prodResponse.find((item: IEnrollServiceProductResponse) => {
+    fulfillVantageScore = prodResponse.find((item: IFulfillServiceProductResponse) => {
       return item['ServiceProduct'] === 'TUCVantageScore3';
     });
   } else {
     switch (prodResponse['ServiceProduct']) {
       case 'TUCReport':
-        enrollReport = prodResponse || null;
+        fulfillReport = prodResponse || null;
         break;
       case 'MergeCreditReports':
-        enrollMergeReport = prodResponse || null;
+        fulfillMergeReport = prodResponse || null;
         break;
       case 'TUCVantageScore3':
-        enrollVantageScore = prodResponse || null;
+        fulfillVantageScore = prodResponse || null;
         break;
       default:
         break;
     }
   }
 
-  //when first enrolling, enrollment reports are the same as fulfillment reports
-  return {
+  const priorReport = data.agencies?.transunion?.fulfillReport;
+  const priorMergeReport = data.agencies?.transunion?.fulfillMergeReport;
+  const priorVantageScore = data.agencies?.transunion?.fulfillVantageScore;
+
+  const report = fulfillReport ? mapReportResponse(fulfillReport) : priorReport;
+  const mergeReport = fulfillMergeReport ? mapReportResponse(fulfillMergeReport) : priorMergeReport;
+  const vantageScore = fulfillVantageScore ? mapReportResponse(fulfillVantageScore) : priorVantageScore;
+
+  if (!mergeReport) return data; // don't overwrite report if there is an error mapping...the other two are less critical
+  const mapped = {
     ...data,
     agencies: {
       ...data.agencies,
       transunion: {
         ...data.agencies?.transunion,
-        enrolled: true,
-        enrolledOn: enrolledOn,
-        enrollmentKey: enrollmentKey,
-        enrollReport: mapReportResponse(enrollReport),
-        enrollMergeReport: mapReportResponse(enrollMergeReport),
-        enrollVantageScore: mapReportResponse(enrollVantageScore),
-        fulfilledOn: enrolledOn,
-        fulfillReport: mapReportResponse(enrollReport),
-        fulfillMergeReport: mapReportResponse(enrollMergeReport),
-        fulfillVantageScore: mapReportResponse(enrollVantageScore),
+        fulfilledOn: fulfilledOn,
+        fulfillReport: report,
+        fulfillMergeReport: mergeReport,
+        fulfillVantageScore: vantageScore,
         serviceBundleFulfillmentKey: serviceBundleFulfillmentKey, // this always has to be synced to the report in fulfill fields
       },
     },
   };
+  console.log('mapped', mapped);
+  return mapped;
 };
 
 /**
@@ -255,43 +251,69 @@ export const enrichEnrollmentData = (
  * @param {IFulfillResult} enroll
  * @returns {UpdateAppDataInput | undefined }
  */
-export const enrollMergeReport = (
-  enroll: IEnrollResult, // IFulfillResult
+export const enrichFulfillDataWorker = (
+  fulfill: IFulfillResult, // IFulfillResult
 ):
   | {
-      enrollMergeReport: TUReportResponseInput;
+      fulfilledOn: string;
+      fulfillReport: TUReportResponseInput;
+      fulfillMergeReport: TUReportResponseInput;
+      fulfillVantageScore: TUReportResponseInput;
+      serviceBundleFulfillmentKey: string;
     }
   | undefined => {
-  let enrollMergeReport;
-  const prodResponse = returnNestedObject<any>(enroll, 'ServiceProductResponse');
+  let fulfillReport;
+  let fulfillMergeReport;
+  let fulfillVantageScore;
+  let fulfilledOn = new Date().toISOString();
+  const prodResponse = returnNestedObject<any>(fulfill, 'ServiceProductResponse');
+  const serviceBundleFulfillmentKey = fulfill.ServiceBundleFulfillmentKey;
 
   if (!prodResponse) return;
   if (prodResponse instanceof Array) {
-    enrollMergeReport = prodResponse.find((item: IEnrollServiceProductResponse) => {
+    fulfillReport = prodResponse.find((item: IFulfillServiceProductResponse) => {
+      return item['ServiceProduct'] === 'TUCReport';
+    });
+    fulfillMergeReport = prodResponse.find((item: IFulfillServiceProductResponse) => {
       return item['ServiceProduct'] === 'MergeCreditReports';
+    });
+    fulfillVantageScore = prodResponse.find((item: IFulfillServiceProductResponse) => {
+      return item['ServiceProduct'] === 'TUCVantageScore3';
     });
   } else {
     switch (prodResponse['ServiceProduct']) {
+      case 'TUCReport':
+        fulfillReport = prodResponse || null;
+        break;
       case 'MergeCreditReports':
-        enrollMergeReport = prodResponse || null;
+        fulfillMergeReport = prodResponse || null;
+        break;
+      case 'TUCVantageScore3':
+        fulfillVantageScore = prodResponse || null;
         break;
       default:
         break;
     }
   }
 
-  const mergeReport = mapReportResponseWorker(enrollMergeReport);
-  if (!mergeReport) return null;
+  const report = mapReportResponseWorker(fulfillReport);
+  const mergeReport = mapReportResponseWorker(fulfillMergeReport);
+  const vantageScore = mapReportResponseWorker(fulfillVantageScore);
+  if (!mergeReport || !vantageScore) return null;
 
   const mapped = {
-    enrollMergeReport: mergeReport,
+    fulfilledOn: fulfilledOn,
+    fulfillReport: report,
+    fulfillMergeReport: mergeReport,
+    fulfillVantageScore: vantageScore,
+    serviceBundleFulfillmentKey: serviceBundleFulfillmentKey, // this always has to be synced to the report in fulfill fields
   };
   return mapped;
 };
 
-export const writeEnrollReport = async (data: IEnrollResult, id: string) => {
-  const { enrollMergeReport: mergeReport } = enrollMergeReport(data);
-  const report = BraveParsers.parseTransunionMergeReport(mergeReport.serviceProductObject);
+export const writeFulfillReport = async (data: IFulfillResult, id: string) => {
+  const { fulfillMergeReport } = enrichFulfillDataWorker(data);
+  const report = BraveParsers.parseTransunionMergeReport(fulfillMergeReport.serviceProductObject);
   const pubsub = new PubSubUtil();
   const topic = process.env.CREDITREPORTS_SNS_PROXY_ARN;
   const payload = {

@@ -1,4 +1,4 @@
-import { IEnrollGraphQLResponse } from 'libs/interfaces';
+import { IEnrollGraphQLResponse } from 'libs/transunion/enroll/enroll.interface';
 import { EnrollRequester } from 'libs/transunion/enroll/subclasses/enroll.requester';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 

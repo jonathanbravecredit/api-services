@@ -1,17 +1,17 @@
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { Payloader } from 'libs/utils/payloader/Payloader';
-import {
-  IGetAlertNotificationsForAllUsersResult,
-  IGetAlertNotificationsResponse,
-  IGetAlertsNotificationSchema,
-  IProxyRequest,
-} from 'libs/interfaces';
 import { APIRequest } from 'libs/models/api-request.model';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { TUAPIProcessor } from 'libs/transunion/tu/tu-api';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 import { GetAlertsNotificationsResponder } from 'libs/transunion/get-alerts-notifications/subclasses/get-alerts-notifications.responder';
 import { GetAlertsNotificationsRequester } from 'libs/transunion/get-alerts-notifications/subclasses/get-alerts-notifications.requester';
+import {
+  IGetAlertNotificationsForAllUsersResult,
+  IGetAlertNotificationsResponse,
+  IGetAlertsNotificationSchema,
+} from 'libs/transunion/get-alerts-notifications/get-alerts-notifications.interface';
+import { IProxyRequest } from 'libs/interfaces';
 
 export class GetAlertsNotificationsV2
   extends TUAPIProcessor<

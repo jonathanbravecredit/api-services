@@ -2,19 +2,11 @@ import * as dayjs from 'dayjs';
 import * as https from 'https';
 import { SyncV2 } from 'libs/utils/sync/SyncV2';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { Payloader } from 'libs/utils/payloader/Payloader';
 import { qryGetDataForEnrollment } from 'libs/queries';
-import {
-  IEnrollGraphQLResponse,
-  IEnrollResponse,
-  IEnrollResult,
-  IEnrollSchema,
-  IGenericRequest,
-  IProxyRequest,
-} from 'libs/interfaces';
+import { IGenericRequest, IProxyRequest } from 'libs/interfaces';
 import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';
-import { MergeReport } from 'libs/models/MergeReport/MergeReport';
 import { CreditReportPublisher } from 'libs/transunion/credit-report-service/CreditReportPublisher';
 import { APIRequest } from 'libs/models/api-request.model';
 import { TUAPIProcessor } from 'libs/transunion/tu/tu-api';
@@ -22,6 +14,13 @@ import { EnrollResponder } from 'libs/transunion/enroll/subclasses/enroll.respon
 import { EnrollRequester } from 'libs/transunion/enroll/subclasses/enroll.requester';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { DobInput } from '@bravecredit/brave-sdk/dist/types/graphql-api';
+import {
+  IEnrollSchema,
+  IEnrollGraphQLResponse,
+  IEnrollResponse,
+  IEnrollResult,
+} from 'libs/transunion/enroll/enroll.interface';
+import { MergeReport } from '@bravecredit/brave-sdk';
 
 export class EnrollV3
   extends TUAPIProcessor<IEnrollSchema, IEnrollGraphQLResponse, IEnrollResponse, IEnrollResult>

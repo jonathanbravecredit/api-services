@@ -1,8 +1,11 @@
-import { IGetAuthenticationQuestions, IGetAuthenticationQuestionsPayload } from 'libs/interfaces';
 import { textConstructor } from 'libs/utils/helpers/helpers';
 import * as convert from 'xml-js';
 import * as uuid from 'uuid';
 import { MONTH_MAP } from 'libs/data/constants';
+import {
+  IGetAuthenticationQuestions,
+  IGetAuthenticationQuestionsPayload,
+} from 'libs/transunion/authentication-questions/get-authentication-questions.interface';
 
 /**
  * This method packages the message in a request body and adds account information

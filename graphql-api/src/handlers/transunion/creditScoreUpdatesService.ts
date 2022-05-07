@@ -1,20 +1,18 @@
 import 'reflect-metadata';
-import { AppSyncResolverEvent, AppSyncResolverHandler } from 'aws-lambda';
-import { SNS, DynamoDB } from 'aws-sdk';
+import * as dayjs from 'dayjs';
 import ErrorLogger from 'libs/utils/db/logger/logger-errors';
+import { SNS, DynamoDB } from 'aws-sdk';
 import { PubSubUtil } from 'libs/utils/pubsub/pubsub';
 import { IBatchMsg } from 'libs/interfaces/batch.interfaces';
 import { parallelScanAppDataEnrollKeys } from 'libs/utils/db/appdata/appdata';
+import { AppSyncResolverEvent, AppSyncResolverHandler } from 'aws-lambda';
 import { TransactionData, TransactionDataMaker, TransactionDataQueries } from '@bravecredit/brave-sdk';
-import * as dayjs from 'dayjs';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
 const sns = new SNS({ region: 'us-east-2' });
 const pubsub = new PubSubUtil();
 const trans = TransactionDataQueries;
-const db = new DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: 'us-east-2' });
-const tableName = process.env.APPTABLE;
 /**
  * Handler that processes single requests for Transunion services
  * @param service Service invoked via the SNS Proxy 'transunion'

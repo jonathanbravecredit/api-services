@@ -1,4 +1,4 @@
-import { IMergeReport } from 'libs/interfaces';
+import { IMergeReport } from '@bravecredit/brave-sdk';
 
 export class BraveParsers {
   constructor() {}

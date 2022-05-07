@@ -1,8 +1,9 @@
 import * as https from 'https';
-import { IEnrollResult, IProxyRequest } from 'libs/interfaces';
-import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';
-import { EnrollV3 } from 'libs/transunion/enroll/enroll-v3';
 import { SyncV2 } from 'libs/utils/sync/SyncV2';
+import { EnrollV3 } from 'libs/transunion/enroll/enroll-v3';
+import { IEnrollResult } from 'libs/transunion/enroll/enroll.interface';
+import { IProxyRequest } from 'libs/interfaces';
+import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';
 
 export class EnrollDisputesV2 extends EnrollV3 {
   public results: IProxyHandlerResponse<IEnrollResult>;

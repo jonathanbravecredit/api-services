@@ -2,20 +2,20 @@ import * as _ from 'lodash';
 import * as dayjs from 'dayjs';
 import { DB } from 'libs/utils/db/db';
 import { Nested as _nest } from '@bravecredit/brave-sdk';
-import {
-  IAlertNotification,
-  IGetAlertNotificationsForAllUsersResult,
-  IGetDisputeStatusResult,
-  IProxyRequest,
-} from 'libs/interfaces';
+import { IProxyRequest } from 'libs/interfaces';
 import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';
 import { LoggerTransactionals } from 'libs/utils/logger/LoggerTransactionals';
 import { GetAlertsNotificationsV2 } from 'libs/transunion/get-alerts-notifications/get-alerts-notifications-v2';
 import { GetDisputeStatusV2 } from 'libs/transunion/get-dispute-status/get-dispute-status-v2';
 import { FulfillV3 } from 'libs/transunion/fulfill/fulfill-v3';
 import { GetInvestigationResultsV2 } from 'libs/transunion/get-investigation-results/get-investigation-results-v2';
+import {
+  IGetAlertNotificationsForAllUsersResult,
+  IAlertNotification,
+} from 'libs/transunion/get-alerts-notifications/get-alerts-notifications.interface';
+import { IGetDisputeStatusResult } from 'libs/transunion/get-dispute-status/get-dispute-status.interface';
 
-export class DisputePreflightCheckV2 extends LoggerTransactionals {
+export class DisputeInflightCheckV2 extends LoggerTransactionals {
   public db = DB;
   public results;
   public notificationResults: IProxyHandlerResponse<IGetAlertNotificationsForAllUsersResult>;

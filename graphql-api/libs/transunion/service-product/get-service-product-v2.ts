@@ -1,18 +1,18 @@
 import * as dayjs from 'dayjs';
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { Payloader } from 'libs/utils/payloader/Payloader';
-import {
-  IGetServiceProductResponse,
-  IGetServiceProductResult,
-  IGetServiceProductSchema,
-  IProxyRequest,
-} from 'libs/interfaces';
+import { IProxyRequest } from 'libs/interfaces';
 import { APIRequest } from 'libs/models/api-request.model';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { TUAPIProcessor } from 'libs/transunion/tu/tu-api';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 import { GetServiceProductResponder } from 'libs/transunion/service-product/subclasses/get-service-product.responder';
 import { GetServiceProductRequester } from 'libs/transunion/service-product/subclasses/get-service-product.requester';
+import {
+  IGetServiceProductResponse,
+  IGetServiceProductResult,
+  IGetServiceProductSchema,
+} from 'libs/transunion/service-product/get-service-product.interface';
 
 // !!!! NOT WORKING AND NOT IN USE....NEEDS SERVICE BUNDLE FULFILLMENT KEY AND PRODUCT DISPLAY
 export class GetServiceProductV2

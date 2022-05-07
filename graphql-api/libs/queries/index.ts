@@ -1,1 +1,2 @@
-export * from './custom-graphql';
+export * from './graphql-queries';
+export * from './graphql-query-methods';

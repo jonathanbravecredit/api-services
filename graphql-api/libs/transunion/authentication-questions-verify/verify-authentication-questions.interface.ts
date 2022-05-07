@@ -1,4 +1,5 @@
-import { IStandardResponse, IVerifyAuthenticationAnswer } from 'libs/interfaces';
+import { IStandardResponse } from 'libs/interfaces';
+import { IVerifyAuthenticationAnswer } from 'libs/transunion/authentication-questions-verify/verify-authentication-answers.interface';
 
 export interface IVerifyAuthenticationQuestionsRequest {
   answers: IVerifyAuthenticationAnswer[];

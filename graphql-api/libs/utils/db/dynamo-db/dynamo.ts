@@ -1,7 +1,7 @@
-import { IFulfillResult, INavBarRequest } from 'libs/interfaces';
 import { IGetEnrollmentData } from 'libs/utils/db/dynamo-db/dynamo.interfaces';
 import { TUReportResponseInput } from 'src/api/api.service';
 import { DynamoDB } from 'aws-sdk';
+import { INavBarRequest } from 'libs/transunion/update-nav-bar/nav-bar-request.interface';
 
 const db = new DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: 'us-east-2' });
 

@@ -1,22 +1,21 @@
 import * as dayjs from 'dayjs';
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { Payloader } from 'libs/utils/payloader/Payloader';
+import { IGenericRequest, IProxyRequest } from 'libs/interfaces';
 import {
-  IGenericRequest,
+  IGetDisputeStatusSchema,
   IGetDisputeStatusGraphQLResponse,
   IGetDisputeStatusResponse,
   IGetDisputeStatusResult,
-  IGetDisputeStatusSchema,
-  IProxyRequest,
-} from 'libs/interfaces';
+} from 'libs/transunion/get-dispute-status/get-dispute-status.interface';
 import { APIRequest } from 'libs/models/api-request.model';
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { TUAPIProcessor } from 'libs/transunion/tu/tu-api';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
+import { DobInput } from '@bravecredit/brave-sdk/dist/types/graphql-api';
 import { GetDisputeStatusResponder } from 'libs/transunion/get-dispute-status/subclasses/get-dispute-status.responder';
 import { GetDisputeStatusRequester } from 'libs/transunion/get-dispute-status/subclasses/get-dispute-status.requester';
-import { DobInput } from '@bravecredit/brave-sdk/dist/types/graphql-api';
-import { qryGetDataForGetDisputeStatus } from 'libs/queries/custom-graphql';
+import { qryGetDataForGetDisputeStatus } from 'libs/queries/graphql-queries';
 
 export class GetDisputeStatusV2
   extends TUAPIProcessor<

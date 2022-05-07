@@ -1,5 +1,5 @@
-import { IFulfillServiceProductResponse } from 'libs/interfaces';
 import { IStandardResponse } from 'libs/interfaces/transunion/common-tu.interface';
+import { IFulfillServiceProductResponse } from 'libs/transunion/fulfill/fulfill.interface';
 
 export interface IGetServiceProduct {
   request: IGetServiceProductMsg;

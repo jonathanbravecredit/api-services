@@ -1,4 +1,4 @@
-import { Nested as _nest } from 'libs/utils/helpers/Nested';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { IAttributes } from 'libs/interfaces';
 import { ACCOUNT_CODE, ACCOUNT_NAME } from 'libs/data/constants';
 
