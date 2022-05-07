@@ -47,8 +47,11 @@ export class TUAPIProcessor<Schema, GQL, Response, Results> extends LoggerTransa
     const { agent, auth, identityId } = this.payload;
     try {
       await this.runPayloader();
+      await this.log(this.payload.identityId, { ...this }, 'GENERIC');
       await this.runRequester();
+      await this.log(this.payload.identityId, { ...this }, 'GENERIC');
       await this.runSendAndSync(agent, auth);
+      await this.log(this.payload.identityId, { ...this }, 'GENERIC');
       await this.logResults();
       return this.results;
     } catch (err) {
