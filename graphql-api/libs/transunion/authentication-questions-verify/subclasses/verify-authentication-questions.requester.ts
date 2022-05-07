@@ -23,7 +23,7 @@ export class VerifyAuthenticationQuestionsRequester
     _.entries(this.requestXMLMap).forEach(([key, value]) => {
       const path = String(value).split('.');
       const val = _.get({ root: this.requestObject }, path);
-      obj[key] = path.includes('data:Answers')
+      obj[key] = path.includes('Answers')
         ? XMLUtil.textConstructor(this.createVerifyAuthenticationAnswerString(val), true)
         : XMLUtil.textConstructor(val, true);
     });
