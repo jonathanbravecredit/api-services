@@ -94,7 +94,9 @@ export class TURequester<T> {
 
   convertXML(): void {
     if (!this.requestXMLObject || !Object.keys(this.requestXMLObject)) return;
+    console.log('requestXMLObject: ', JSON.stringify(this.requestXMLObject));
     const xml = convert.json2xml(JSON.stringify(this.requestXMLObject), { compact: true, spaces: 4 });
+    console.log('converted XML: ', JSON.stringify(xml));
     this.xml = xml;
   }
 }

@@ -6,6 +6,8 @@ import { APIRequestKeys } from 'libs/utils/requests/requests';
 import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { XMLUtil } from 'libs/utils/xml/XMLUtil';
 import * as _ from 'lodash';
+import { v4 } from 'uuid';
+import { ACCOUNT_CODE, ACCOUNT_NAME } from 'libs/data/constants';
 
 export class VerifyAuthenticationQuestionsRequester
   extends TURequester<IVerifyAuthenticationQuestionsSchema>
@@ -13,6 +15,7 @@ export class VerifyAuthenticationQuestionsRequester
 {
   constructor(requestKey: APIRequestKeys, payload: IVerifyAuthenticationQuestionsSchema) {
     super(requestKey, payload);
+    _.bindAll(this, ['createVerifyAuthenticationAnswerString']);
   }
 
   parseXML(obj: any): any {
@@ -43,7 +46,16 @@ export class VerifyAuthenticationQuestionsRequester
             </VerifyChallengeAnswersRequestMultiChoiceQuestion>
             `;
       })
-      .join();
+      .join('');
     return `<ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion xmlns="com/truelink/ds/sch/srv/iv/ccs">${answersString}</ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion>`;
   };
+
+  getReqWrapper(body: any): any {
+    return {
+      AccountCode: ACCOUNT_CODE,
+      AccountName: ACCOUNT_NAME,
+      RequestKey: `BC-${v4()}`,
+      ...body,
+    };
+  }
 }

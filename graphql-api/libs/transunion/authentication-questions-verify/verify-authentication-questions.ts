@@ -78,6 +78,6 @@ export const createVerifyAuthenticationAnswerString = (answers: IVerifyAuthentic
           </VerifyChallengeAnswersRequestMultiChoiceQuestion>
           `;
     })
-    .join();
+    .join('');
   return `<ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion xmlns="com/truelink/ds/sch/srv/iv/ccs">${answersString}</ArrayOfVerifyChallengeAnswersRequestMultiChoiceQuestion>`;
 };

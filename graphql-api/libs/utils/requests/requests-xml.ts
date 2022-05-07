@@ -115,10 +115,6 @@ export const GetAuthenticationQuestionsRequestXML = {
 export const VerifyAuthenticationQuestionsRequestXML = {
   'soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:AccountCode': 'root.AccountCode',
   'soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:AccountName': 'root.AccountName',
-  'soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:AdditionalInputs.data:Data.data:Name':
-    'root.AdditionalInputs.Data.Name',
-  'soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:AdditionalInputs.data:Data.data:Value':
-    'root.AdditionalInputs.Data.Value',
   'soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:RequestKey': 'root.RequestKey',
   'soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:ClientKey': 'root.ClientKey',
   'soapenv:Body.con:VerifyAuthenticationQuestions.con:request.data:Answers': 'root.Answers',
