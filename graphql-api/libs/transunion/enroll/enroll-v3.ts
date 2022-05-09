@@ -29,7 +29,7 @@ export class EnrollV3
   public responder: EnrollResponder;
   public results: IProxyHandlerResponse<unknown>;
   public action = 'Enroll';
-  public schema = 'getRequest';
+  public schema = 'getBundleRequest';
   public resultKey = 'EnrollResult';
   public serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
 

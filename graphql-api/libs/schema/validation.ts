@@ -1,5 +1,6 @@
 import Ajv from 'ajv';
 import * as schemaGenericRequest from './schema_generic-request.json';
+import * as schemaGenericBundleRequest from './schema_generic_bundle-request.json';
 import * as schemaIndicativeEnrichment from './schema_indicative-enrichment-request.json';
 import * as schemaGetAuthenticationQuestionsRequest from './schema_get-authentication-questions-request.json';
 import * as schemaVerifyAuthenticationQuestionsRequest from './schema_verify-authentication-questions-request.json';
@@ -15,6 +16,7 @@ import * as schemaFulfillWorker from './schema_fulfill-worker-request.json';
 import * as schemaNavBarRequest from './schema_nav-bar-request.json';
 export const ajv = new Ajv();
 ajv.addSchema(schemaGenericRequest, 'getRequest');
+ajv.addSchema(schemaGenericBundleRequest, 'getBundleRequest');
 ajv.addSchema(schemaIndicativeEnrichment, 'indicativeEnrichment');
 ajv.addSchema(schemaGetAuthenticationQuestionsRequest, 'getAuthenticationQuestionsRequest');
 ajv.addSchema(schemaVerifyAuthenticationQuestionsRequest, 'verifyAuthenticationQuestionsRequest');

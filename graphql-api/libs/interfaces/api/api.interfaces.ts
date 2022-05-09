@@ -26,6 +26,11 @@ export interface IGenericRequest {
   id: string;
 }
 
+export interface IGenericBundleRequest {
+  id: string;
+  serviceBundleCode: string;
+}
+
 export interface IJwks {
   keys: IKey[];
 }
