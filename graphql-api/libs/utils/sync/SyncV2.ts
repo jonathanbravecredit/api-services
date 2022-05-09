@@ -79,6 +79,8 @@ export class SyncV2 {
     delete clean.createdAt; // this is a graphql managed field
     delete clean.updatedAt; // this is a graphql managed field
     delete clean.owner; // this is a graphql managed field
+    delete clean.isFresh; // this is a graphql managed field
+    delete clean.__typename; // this is a graphql managed field
     return clean;
   }
 }
