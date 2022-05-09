@@ -55,5 +55,5 @@
     "answers",
     "key"
   ],
-  "additionalProperties": false
+  "additionalProperties": true
 }
