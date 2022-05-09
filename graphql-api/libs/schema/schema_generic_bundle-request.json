@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "nullable": false
+    },
+    "serviceBundleCode": {
+      "type": "string",
+      "nullable": false
+    }
+  },
+  "required": [
+    "id",
+    "serviceBundleCode"
+  ],
+  "additionalProperties": true
+}

@@ -5,7 +5,7 @@ import { SyncV2 } from 'libs/utils/sync/SyncV2';
 import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
 import { Payloader } from 'libs/utils/payloader/Payloader';
 import { qryGetDataForFulfill } from 'libs/queries';
-import { IGenericRequest, IProxyRequest } from 'libs/interfaces';
+import { IGenericBundleRequest, IGenericRequest, IProxyRequest } from 'libs/interfaces';
 import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';
 import { CreditReportPublisher } from 'libs/transunion/credit-report-service/CreditReportPublisher';
 import { APIRequest } from 'libs/models/api-request.model';
@@ -28,7 +28,7 @@ export class FulfillV3
 {
   public responder: FulfillResponder;
   public action = 'Fulfill';
-  public schema = 'getRequest';
+  public schema = 'getBundleRequest';
   public resultKey = 'FulfillResult';
   public serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
 
@@ -70,8 +70,8 @@ export class FulfillV3
    */
   async runPayloader(): Promise<void> {
     const payload = this.prepPayload();
-    this.payloader.validate<IGenericRequest>(payload, this.schema);
-    await this.payloader.prep<IGenericRequest>(qryGetDataForFulfill, payload);
+    this.payloader.validate<IGenericBundleRequest>(payload, this.schema);
+    await this.payloader.prep<IGenericBundleRequest>(qryGetDataForFulfill, payload);
     this.gqldata = this.payloader.data;
     this.prepped = payload;
     console.log('data: ', this.gqldata);
