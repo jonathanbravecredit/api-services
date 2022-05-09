@@ -88,12 +88,10 @@ export class Sync {
 
   cleanBackendData(data: GetAppDataQuery): UpdateAppDataInput {
     let clean = _nest.delete(data, '__typename');
-    clean = _nest.delete(data, 'isFresh');
+    clean = _nest.delete(clean, 'isFresh');
     delete clean.createdAt; // this is a graphql managed field
     delete clean.updatedAt; // this is a graphql managed field
     delete clean.owner; // this is a graphql managed field
-    delete clean.isFresh; // this is a graphql managed field
-    delete clean.__typename; // this is a graphql managed field
     return clean;
   }
 }
