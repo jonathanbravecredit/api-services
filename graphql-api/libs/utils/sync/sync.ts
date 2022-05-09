@@ -2,11 +2,11 @@ import axios, { AxiosResponse } from 'axios';
 import * as aws4 from 'aws4';
 import gql from 'graphql-tag';
 import { print } from 'graphql';
-import { deleteKeyNestedObject } from 'libs/utils';
 import { GetAppDataQuery, TUReportResponseInput, UpdateAppDataInput } from 'src/api/api.service';
 import { IGetAppDataRequest, IGetAppDataResponse } from 'libs/interfaces/transunion/get-app-data.interface';
 import { getAppData, updateAppData } from 'libs/queries/graphql-query-methods';
 import { IEnrollServiceProductResponse } from 'libs/transunion/enroll/enroll.interface';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 
 const appsyncUrl = process.env.APPSYNC_ENDPOINT;
 const region = process.env.AWS_REGION;
@@ -87,7 +87,7 @@ export class Sync {
   }
 
   cleanBackendData(data: GetAppDataQuery): UpdateAppDataInput {
-    let clean = deleteKeyNestedObject(data, '__typename');
+    let clean = _nest.delete(data, '__typename');
     delete clean.createdAt; // this is a graphql managed field
     delete clean.updatedAt; // this is a graphql managed field
     delete clean.owner; // this is a graphql managed field
