@@ -14,5 +14,5 @@
     "id",
     "userId"
   ],
-  "additionalProperties": false
+  "additionalProperties": true
 }

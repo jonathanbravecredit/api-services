@@ -14,5 +14,5 @@
     "result",
     "publicItem"
   ],
-  "additionalProperties": false
+  "additionalProperties": true
 }

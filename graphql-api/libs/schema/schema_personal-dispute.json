@@ -14,5 +14,5 @@
     "result",
     "personalItem"
   ],
-  "additionalProperties": false
+  "additionalProperties": true
 }

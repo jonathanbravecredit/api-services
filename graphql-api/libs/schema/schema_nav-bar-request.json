@@ -55,5 +55,5 @@
     "id",
     "navBar"
   ],
-  "additionalProperties": false
+  "additionalProperties": true
 }

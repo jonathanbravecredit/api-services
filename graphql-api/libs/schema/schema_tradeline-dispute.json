@@ -14,5 +14,5 @@
     "result",
     "tradeline"
   ],
-  "additionalProperties": false
+  "additionalProperties": true
 }

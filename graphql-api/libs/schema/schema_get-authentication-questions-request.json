@@ -126,5 +126,5 @@
     "ssn",
     "serviceBundleCode"
   ],
-  "additionalProperties": false
+  "additionalProperties": true
 }

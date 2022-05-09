@@ -14,5 +14,5 @@
     "id",
     "disputeId"
   ],
-  "additionalProperties": false
+  "additionalProperties": true
 }

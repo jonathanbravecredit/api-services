@@ -18,5 +18,5 @@
     "id",
     "fromDate"
   ],
-  "additionalProperties": false
+  "additionalProperties": true
 }
