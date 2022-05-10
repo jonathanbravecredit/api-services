@@ -17,6 +17,7 @@ import {
 } from 'libs/utils/requests/requests-map';
 import {
   CancelEnrollmentXML,
+  EnrollDisputeRequestXML,
   EnrollRequestXML,
   FulfillDisputeRequestXML,
   FulfillRequestXML,
@@ -74,7 +75,7 @@ export const APIRequestXMLLibrary = {
   [APIRequestKeys.GET_AUTHENTICATION_QUESTIONS]: GetAuthenticationQuestionsRequestXML,
   [APIRequestKeys.VERIFY_AUTHENTICATION_QUESTIONS]: VerifyAuthenticationQuestionsRequestXML,
   [APIRequestKeys.ENROLL]: EnrollRequestXML,
-  [APIRequestKeys.ENROLL_DISPUTE]: EnrollDisputeRequestMap,
+  [APIRequestKeys.ENROLL_DISPUTE]: EnrollDisputeRequestXML,
   [APIRequestKeys.FULFILL]: FulfillRequestXML,
   [APIRequestKeys.FULFILL_DISPUTE]: FulfillDisputeRequestXML,
   [APIRequestKeys.GET_SERVICE_PRODUCT]: GetServiceProductXML,
