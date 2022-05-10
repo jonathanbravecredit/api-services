@@ -4,10 +4,10 @@ import { FulfillRequester } from 'libs/transunion/fulfill/subclasses/fulfill.req
 import { APIRequestKeys } from 'libs/utils/requests/requests';
 
 export class FulfillDisputesV3 extends FulfillV3 {
-  public action = 'FulfillDisputes';
+  public action = 'Fulfill';
   public serviceBundleCode = 'CC2BraveCreditTUReport24Hour';
   constructor(protected payload: IProxyRequest) {
-    super(payload, 'FulfillDisputes');
+    super(payload, 'Fulfill');
   }
 
   /**
