@@ -22,6 +22,8 @@ export class TURequester<T> {
   constructor(public requestKey: APIRequestKeys, public payload: T) {
     this.requestMap = APIRequestLibrary[this.requestKey];
     this.requestXMLMap = APIRequestXMLLibrary[this.requestKey];
+    console.log('requestMap', JSON.stringify(this.requestMap));
+    console.log('requestXMLMap', JSON.stringify(this.requestXMLMap));
   }
 
   createRequest(): string {
