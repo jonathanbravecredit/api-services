@@ -7,11 +7,11 @@ import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfa
 
 export class EnrollDisputesV2 extends EnrollV3 {
   public results: IProxyHandlerResponse<IEnrollResult>;
-  public action = 'EnrollDisputes';
+  public action = 'Enroll';
   public serviceBundleCode = 'CC2BraveCreditTUDispute';
 
   constructor(protected payload: IProxyRequest) {
-    super(payload, 'EnrollDisputes');
+    super(payload, 'Enroll');
   }
 
   /**
