@@ -34,39 +34,41 @@ export class FulfillResponder extends TUResponder<IFulfillResponse, any> {
   }
 
   enrichData(appdata: UpdateAppDataInput | undefined): UpdateAppDataInput | undefined {
-    console.log('appData', appdata);
     if (!appdata) return;
-    let enrollMergeReport;
-    let enrollVantageScore;
-    let enrolledOn = new Date().toISOString();
-
-    const eKey = _nest.find<string>(this.response, 'EnrollmentKey');
-    const fKey = _nest.find<string>(this.response, 'ServiceBundleFulfillmentKey');
-    const spr = _nest.find<IFulfillServiceProductResponse[] | IFulfillServiceProductResponse>(
-      this.response,
-      'ServiceProductResponse',
-    );
+    let fulfillMergeReport;
+    let fulfillVantageScore;
+    let fulfilledOn = new Date().toISOString();
+    console.log('this.response in enrich: ', JSON.stringify(this.response));
+    const spr = _nest.find(this.response, 'ServiceProductResponse') as
+      | IFulfillServiceProductResponse
+      | IFulfillServiceProductResponse[];
+    const key = _nest.find(this.response, 'ServiceBundleFulfillmentKey') as string;
+    console.log('spr in enrich: ', JSON.stringify(spr));
+    console.log('key in enrich: ', JSON.stringify(key));
 
     if (!spr) return;
     if (spr instanceof Array) {
-      enrollMergeReport = _.find(spr, ['ServiceProduct', 'MergeCreditReports']);
-      enrollVantageScore = _.find(spr, ['ServiceProduct', 'TUCVantageScore3']);
+      fulfillMergeReport = _.find(spr, ['ServiceProduct', 'MergeCreditReports']);
+      fulfillVantageScore = _.find(spr, ['ServiceProduct', 'TUCVantageScore3']);
     } else {
-      switch (spr.ServiceProduct) {
+      switch (_.get(spr, 'ServiceProduct')) {
         case 'MergeCreditReports':
-          enrollMergeReport = spr || null;
+          fulfillMergeReport = spr || null;
           break;
         case 'TUCVantageScore3':
-          enrollVantageScore = spr || null;
+          fulfillVantageScore = spr || null;
           break;
         default:
           break;
       }
     }
 
-    this.setMergeReport(mapReportResponse(enrollMergeReport));
-    this.setMergeReportSPO(mapReportResponse(enrollMergeReport));
+    if (!fulfillMergeReport) throw 'No merge report found';
+    this.setMergeReport(mapReportResponse(fulfillMergeReport));
+    this.setMergeReportSPO(mapReportResponse(fulfillMergeReport));
 
+    const priorVantageScore = _nest.find(appdata, 'fulfillVantageScore');
+    const vantageScore = fulfillVantageScore ? mapReportResponse(fulfillVantageScore) : priorVantageScore;
     // TODO eventually need to write score to either score table or report table
     const mapped = {
       ...appdata,
@@ -74,13 +76,9 @@ export class FulfillResponder extends TUResponder<IFulfillResponse, any> {
         ...appdata.agencies,
         transunion: {
           ...appdata.agencies?.transunion,
-          enrolled: true,
-          enrolledOn: enrolledOn,
-          enrollmentKey: eKey,
-          enrollVantageScore: mapReportResponse(enrollVantageScore),
-          fulfilledOn: enrolledOn,
-          fulfillVantageScore: mapReportResponse(enrollVantageScore),
-          serviceBundleFulfillmentKey: fKey, // this always has to be synced to the report in fulfill fields
+          fulfilledOn: fulfilledOn,
+          fulfillVantageScore: vantageScore,
+          serviceBundleFulfillmentKey: key, // this always has to be synced to the report in fulfill fields
         },
       },
     };
