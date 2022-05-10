@@ -13,6 +13,7 @@ import {
   GetInvestigationResultsMap,
   GetAlertsNotifications,
   FulfillDisputeRequestMap,
+  EnrollDisputeRequestMap,
 } from 'libs/utils/requests/requests-map';
 import {
   CancelEnrollmentXML,
@@ -39,6 +40,7 @@ export enum APIRequestKeys {
   FULFILL = 'fulfill',
   FULFILL_DISPUTE = 'fulfill-dispute',
   ENROLL = 'enroll',
+  ENROLL_DISPUTE = 'enroll-dispute',
   GET_SERVICE_PRODUCT = 'get-service-product',
   GET_DISPUTE_STATUS = 'get-dispute-status',
   GET_DISPUTE_HISTORY = 'get-dispute-history',
@@ -54,6 +56,7 @@ export const APIRequestLibrary = {
   [APIRequestKeys.GET_AUTHENTICATION_QUESTIONS]: GetAuthenticationQuestionsRequestMap,
   [APIRequestKeys.VERIFY_AUTHENTICATION_QUESTIONS]: VerifyAuthenticationQuestionsRequestMap,
   [APIRequestKeys.ENROLL]: EnrollRequestMap,
+  [APIRequestKeys.ENROLL_DISPUTE]: EnrollDisputeRequestMap,
   [APIRequestKeys.FULFILL]: FulfillRequestMap,
   [APIRequestKeys.FULFILL_DISPUTE]: FulfillDisputeRequestMap,
   [APIRequestKeys.GET_SERVICE_PRODUCT]: GetServiceProductMap,
@@ -71,6 +74,7 @@ export const APIRequestXMLLibrary = {
   [APIRequestKeys.GET_AUTHENTICATION_QUESTIONS]: GetAuthenticationQuestionsRequestXML,
   [APIRequestKeys.VERIFY_AUTHENTICATION_QUESTIONS]: VerifyAuthenticationQuestionsRequestXML,
   [APIRequestKeys.ENROLL]: EnrollRequestXML,
+  [APIRequestKeys.ENROLL_DISPUTE]: EnrollDisputeRequestMap,
   [APIRequestKeys.FULFILL]: FulfillRequestXML,
   [APIRequestKeys.FULFILL_DISPUTE]: FulfillDisputeRequestXML,
   [APIRequestKeys.GET_SERVICE_PRODUCT]: GetServiceProductXML,

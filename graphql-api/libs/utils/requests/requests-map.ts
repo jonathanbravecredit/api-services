@@ -54,6 +54,10 @@ export const EnrollRequestMap = {
   ServiceBundleCode: 'root.serviceBundleCode',
 };
 
+export const EnrollDisputeRequestMap = {
+  ...EnrollRequestMap,
+};
+
 export const FulfillRequestMap = {
   ...EnrollRequestMap,
   EnrollmentKey: 'root.data.getAppData.agencies.transunion.enrollmentKey',
