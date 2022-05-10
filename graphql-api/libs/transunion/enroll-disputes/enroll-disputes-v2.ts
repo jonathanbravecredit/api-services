@@ -48,8 +48,8 @@ export class EnrollDisputesV2
     super.runPayloader();
     await this.payloader.prep<IGenericRequest>(qryGetDataForEnrollment, this.prepped);
     this.gqldata = this.payloader.data;
-    console.log('gqldata: ', this.gqldata);
-    console.log('prepped: ', this.prepped);
+    console.log('gqldata: ', JSON.stringify(this.gqldata));
+    console.log('prepped: ', JSON.stringify(this.prepped));
   }
 
   /**

@@ -52,7 +52,7 @@ export class DisputePreflightCheckV2 extends LoggerTransactionals {
     const payload = this.prepPayload();
     this.payloader.validate<IGenericRequest>(payload, this.schema);
     this.prepped = payload;
-    console.log('prepped: ', this.prepped);
+    console.log('prepped: ', JSON.stringify(this.prepped));
   }
 
   /**

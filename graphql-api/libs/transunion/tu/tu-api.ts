@@ -72,7 +72,7 @@ export class TUAPIProcessor<Schema, GQL, Response, Results> extends LoggerTransa
     this.payloader.validate<Schema>(payload, this.schema);
     this.gqldata = this.payloader.data;
     this.prepped = payload;
-    console.log('prepped: ', this.prepped);
+    console.log('prepped: ', JSON.stringify(this.prepped));
   }
 
   /**

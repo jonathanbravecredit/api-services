@@ -78,7 +78,7 @@ export class CancelEnrollmentV2
     this.gqldata = this.payloader.data;
     this.setEnrollmentKeys();
     console.log('data: ', this.gqldata);
-    console.log('prepped: ', this.prepped);
+    console.log('prepped: ', JSON.stringify(this.prepped));
   }
 
   setEnrollmentKeys(): void {
