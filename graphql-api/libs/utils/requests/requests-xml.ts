@@ -153,6 +153,10 @@ export const EnrollRequestXML = {
   'soapenv:Body.con:Enroll.con:request.data:ServiceBundleCode': 'root.ServiceBundleCode',
 };
 
+export const EnrollDisputeRequestXML = {
+  ...EnrollRequestXML,
+};
+
 export const FulfillRequestXML = {
   'soapenv:Body.con:Fulfill.con:request.data:AccountCode': 'root.AccountCode',
   'soapenv:Body.con:Fulfill.con:request.data:AccountName': 'root.AccountName',
