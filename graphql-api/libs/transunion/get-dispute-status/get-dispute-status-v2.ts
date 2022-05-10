@@ -63,7 +63,7 @@ export class GetDisputeStatusV2
    */
   runRequester(): void {
     this.formatDob();
-    const requester = new GetDisputeStatusRequester(APIRequestKeys.GET_AUTHENTICATION_QUESTIONS, this.gqldata);
+    const requester = new GetDisputeStatusRequester(APIRequestKeys.GET_DISPUTE_STATUS, this.gqldata);
     this.reqXML = requester.createRequest();
     console.log('reqXML: ', this.reqXML);
   }
