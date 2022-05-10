@@ -66,6 +66,7 @@ export class SoapV2 {
   async processRequest(request: IRequestOptions): Promise<string> {
     try {
       this.response = (await axios({ ...request })).data;
+      console.log('soap response: ', JSON.stringify(this.response));
     } catch (err) {
       console.log('processRequest:err ===> ', err);
       return err;
