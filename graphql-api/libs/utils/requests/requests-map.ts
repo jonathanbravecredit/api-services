@@ -56,12 +56,12 @@ export const EnrollRequestMap = {
 
 export const FulfillRequestMap = {
   ...EnrollRequestMap,
-  EnrollmentKey: 'root.data.getAppData.enrollmentKey',
+  EnrollmentKey: 'root.data.getAppData.agencies.transunion.enrollmentKey',
 };
 
 export const FulfillDisputeRequestMap = {
   ...FulfillRequestMap,
-  EnrollmentKey: 'root.data.getAppData.disputeEnrollmentKey',
+  EnrollmentKey: 'root.data.getAppData.agencies.transunion.disputeEnrollmentKey',
 };
 
 export const GetServiceProductMap = {
