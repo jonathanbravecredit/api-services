@@ -59,6 +59,11 @@ export const FulfillRequestMap = {
   EnrollmentKey: 'root.data.getAppData.enrollmentKey',
 };
 
+export const FulfillDisputeRequestMap = {
+  ...EnrollRequestMap,
+  EnrollmentKey: 'root.data.getAppData.disputeEnrollmentKey',
+};
+
 export const GetServiceProductMap = {
   ClientKey: 'root.id',
   CSRFToken: 'root.csrfToken',

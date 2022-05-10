@@ -3,7 +3,7 @@
   xmlns:data="https://consumerconnectws.tui.transunion.com/data">
   <soapenv:Header/>
   <soapenv:Body>
-    <con:VerifyAuthenticationQuestions>
+    <con:Fulfill>
       <con:request>
         <data:AccountCode>M2RVc0ZZM0Rwd2FmZA</data:AccountCode>
         <data:AccountName>CC2BraveCredit</data:AccountName>
@@ -13,13 +13,35 @@
             <data:Value>7.1</data:Value>
           </data:Data>
         </data:AdditionalInputs>
-        <data:RequestKey>BC-6ff52847-c585-4a8f-8793-c3c4b97901dc</data:RequestKey>
-        <data:ClientKey>0c3d94a1-55a6-41ad-84aa-23f23e85fb6e</data:ClientKey>
-        <data:Answers>[object Object]</data:Answers>
-        <data:ServiceBundleFulfillmentKey>9a86fafc-4d8e-4f3d-b238-0243aa59d832</data:ServiceBundleFulfillmentKey>
-        <data:TrustSessionId xsi:nil="true"
+        <data:RequestKey>BC-1a761781-e405-4667-9ade-5460efa6a9f6</data:RequestKey>
+        <data:ClientKey>2cae70f4-b992-4be2-9b25-c5d879f93a0f</data:ClientKey>
+        <data:Customer>
+          <data:CurrentAddress>
+            <data:AddressLine1>105 2nd Ave</data:AddressLine1>
+            <data:AddressLine2 xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:City>Newton</data:City>
+            <data:State>IA</data:State>
+            <data:Zipcode>50208</data:Zipcode>
+          </data:CurrentAddress>
+          <data:DateOfBirth>1971-03-01</data:DateOfBirth>
+          <data:FullName>
+            <data:FirstName>Daniel</data:FirstName>
+            <data:LastName>Iles</data:LastName>
+            <data:MiddleName>J</data:MiddleName>
+            <data:Prefix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <data:Suffix xsi:nil="true"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+          </data:FullName>
+          <data:Ssn>666130041</data:Ssn>
+        </data:Customer>
+        <data:EnrollmentKey xsi:nil="true"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <data:Language xsi:nil="true"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+        <data:ServiceBundleCode>CC2BraveCreditTUReport24Hour</data:ServiceBundleCode>
       </con:request>
-    </con:VerifyAuthenticationQuestions>
+    </con:Fulfill>
   </soapenv:Body>
 </soapenv:Envelope>
