@@ -74,8 +74,8 @@ export class FulfillV3
     await this.payloader.prep<IGenericBundleRequest>(qryGetDataForFulfill, payload);
     this.gqldata = this.payloader.data;
     this.prepped = payload;
-    console.log('data: ', this.gqldata);
-    console.log('prepped: ', this.prepped);
+    console.log('data: ', JSON.stringify(this.gqldata));
+    console.log('prepped: ', JSON.stringify(this.prepped));
   }
 
   /**
