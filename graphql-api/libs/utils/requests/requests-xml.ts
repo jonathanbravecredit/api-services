@@ -183,6 +183,10 @@ export const FulfillRequestXML = {
   'soapenv:Body.con:Fulfill.con:request.data:ServiceBundleCode': 'root.ServiceBundleCode',
 };
 
+export const FulfillDisputeRequestXML = {
+  ...FulfillRequestXML,
+};
+
 export const GetServiceProductXML = {
   'soapenv:Body.con:GetServiceProduct.con:request.data:AccountCode': 'root.AccountCode',
   'soapenv:Body.con:GetServiceProduct.con:request.data:AccountName': 'root.AccountName',
