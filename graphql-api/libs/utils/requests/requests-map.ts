@@ -60,7 +60,7 @@ export const FulfillRequestMap = {
 };
 
 export const FulfillDisputeRequestMap = {
-  ...EnrollRequestMap,
+  ...FulfillRequestMap,
   EnrollmentKey: 'root.data.getAppData.disputeEnrollmentKey',
 };
 
