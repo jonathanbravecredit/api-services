@@ -49,8 +49,8 @@ export class GetDisputeHistoryV2
     super.runPayloader();
     await this.payloader.prep<IGenericRequest>(qryGetDataForGetDisputeHistory, this.prepped);
     this.gqldata = this.payloader.data;
-    console.log('gqldata: ', this.gqldata);
-    console.log('prepped: ', this.prepped);
+    console.log('gqldata: ', JSON.stringify(this.gqldata));
+    console.log('prepped: ', JSON.stringify(this.prepped));
   }
 
   /**
