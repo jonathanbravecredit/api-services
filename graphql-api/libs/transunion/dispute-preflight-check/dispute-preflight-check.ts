@@ -9,6 +9,7 @@ import { LoggerTransactionals } from 'libs/utils/logger/LoggerTransactionals';
 import { Payloader } from 'libs/utils/payloader/Payloader';
 import { FulfillDisputesV3 } from 'libs/transunion/fulfill-disputes/fulfill-disputes-v3';
 import { GetDisputeStatusV2 } from 'libs/transunion/get-dispute-status/get-dispute-status-v2';
+import { FulfillDisputesV2 } from 'libs/transunion/fulfill-disputes/FulfillDisputesV2';
 
 export class DisputePreflightCheckV2 extends LoggerTransactionals {
   public payloader = new Payloader<any>();
@@ -34,6 +35,7 @@ export class DisputePreflightCheckV2 extends LoggerTransactionals {
       await this.fulfill();
       await this.getDisputeStatus();
       await this.logResults();
+      console.log('results ', this.results);
       return this.results;
     } catch (err) {
       this.logGenericError(this.prepped.id, err);
@@ -89,7 +91,7 @@ export class DisputePreflightCheckV2 extends LoggerTransactionals {
 
   async fulfill(): Promise<void> {
     if (!this.refresh) return;
-    const fulfill = new FulfillDisputesV3(this.payload);
+    const fulfill = new FulfillDisputesV2(this.payload); //new FulfillDisputesV3(this.payload);
     await fulfill.run();
     this.report = { report: fulfill.mergeReport as unknown as IMergeReport };
   }
