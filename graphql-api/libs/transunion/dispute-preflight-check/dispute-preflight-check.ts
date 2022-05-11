@@ -99,7 +99,7 @@ export class DisputePreflightCheckV2 extends LoggerTransactionals {
   async getDisputeStatus(): Promise<void> {
     const getDisputeStatus = new GetDisputeStatusV2(this.payload);
     const { success, error } = await getDisputeStatus.run();
-    this.response = success
+    this.results = success
       ? { success: true, error: null, data: this.report }
       : { success: false, error: error, data: { report: null } };
   }
