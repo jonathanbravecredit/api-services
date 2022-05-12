@@ -81,12 +81,12 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
         return await new GetDisputeStatusV2(payload).run();
       }),
     );
-    console.log('UPDATES: ', this.updates);
+    console.log('UPDATES: ', JSON.stringify(this.updates));
   }
 
   assignSuccessful(): void {
     this.successful = this.updates.filter((d) => d.success);
-    console.log('SUCCESSFUL: ', this.successful);
+    console.log('SUCCESSFUL: ', JSON.stringify(this.successful));
   }
 
   async updateDisputeStatus(): Promise<void> {
@@ -97,12 +97,15 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
         const disputeId = _nest.find<string>(item, 'DisputeId');
         if (!id || !disputeId) await this.handleMissingIds(item);
         const currentDispute = await DB.disputes.get(id, `${disputeId}`);
+        console.log('CURRENT DISPUTE', currentDispute);
         const complete = _nest.find<string>(item, 'Status').toLowerCase() === 'completedispute';
+        console.log('IS COMPLETE', complete);
         const tuDate =
           _nest.find<string>(_nest.find<any>(item, 'ClosedDisputes'), 'LastUpdatedDate') ||
           _nest.find<string>(_nest.find<any>(item, 'OpenDisputes'), 'LastUpdatedDate');
         const closedOn = complete ? dayjs(tuDate, 'MM/DD/YYYY').toISOString() : currentDispute.closedOn;
         const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
+        console.log('MAPPED', mappedDispute);
         const updatedDispute = {
           ...currentDispute,
           ...mappedDispute,
@@ -115,7 +118,7 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
 
   assignCompleted(): void {
     this.completed = this.updates.filter((d) => _nest.find<string>(d, 'Status').toLowerCase() === 'completedispute');
-    console.log('COMPLETED: ', this.completed);
+    console.log('COMPLETED: ', JSON.stringify(this.completed));
   }
 
   async getInvestigationResults(): Promise<void> {
