@@ -19,7 +19,7 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
   public db = DB;
   public results;
   public notificationResults: IProxyHandlerResponse<IGetAlertNotificationsForAllUsersResult>;
-  public notifications: IAlertNotification[];
+  public notifications: IAlertNotification[] = [];
   public updates: {
     success: boolean;
     error?: any;
@@ -53,7 +53,7 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
       await this.updateDisputeStatus();
       await this.assignCompleted();
       await this.getInvestigationResults();
-      this.results = { success: true, error: null, data: null };
+      this.results = { success: true, error: null, data: this.alerted };
       await this.logResults();
       return this.results;
     } catch (err) {
@@ -69,11 +69,14 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
   }
 
   assignNotifications(): void {
-    this.notifications = _.castArray(_nest.find(this.notificationResults, 'AlertNotification'));
+    const alert = _nest.find<IAlertNotification[] | IAlertNotification>(this.notificationResults, 'AlertNotification');
+    if (!alert) return;
+    this.notifications = _.castArray(alert);
     console.log('NOTIFICATIONS: ', this.notifications);
   }
 
   async assignUpdates(): Promise<void> {
+    if (!this.notifications.length) return;
     this.updates = await Promise.all(
       this.notifications.map(async (alert) => {
         const message = JSON.stringify({ disputeId: `${alert.AlertId}` });
@@ -118,11 +121,12 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
   }
 
   assignCompleted(): void {
-    this.completed = this.updates.filter((d) => _nest.find<string>(d, 'Status').toLowerCase() === 'completedispute');
+    this.completed = this.updates.filter((d) => _nest.find<string>(d, 'Status')?.toLowerCase() === 'completedispute');
     console.log('COMPLETED: ', JSON.stringify(this.completed));
   }
 
   async getInvestigationResults(): Promise<void> {
+    if (!this.completed.length) return;
     this.alerted = await Promise.all(
       this.completed.map(async (item) => {
         try {
