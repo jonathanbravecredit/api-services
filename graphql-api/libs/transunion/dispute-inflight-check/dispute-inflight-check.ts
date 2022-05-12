@@ -56,7 +56,7 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
       await this.logResults();
       return this.results;
     } catch (err) {
-      this.logGenericError(this.payload.identityId, err);
+      this.logGenericError('alert_notification_operation', err);
       this.results = { success: false, error: err, data: null };
       return this.results;
     }
@@ -68,6 +68,7 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
 
   assignNotifications(): void {
     this.notifications = _.castArray(_nest.find(this.notificationResults, 'AlertNotification'));
+    console.log('NOTIFICATIONS: ', this.notifications);
   }
 
   async assignUpdates(): Promise<void> {
@@ -79,10 +80,12 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
         return await new GetDisputeStatusV2(payload).run();
       }),
     );
+    console.log('UPDATES: ', this.updates);
   }
 
   assignSuccessful(): void {
     this.successful = this.updates.filter((d) => d.success);
+    console.log('SUCCESSFUL: ', this.successful);
   }
 
   async updateDisputeStatus(): Promise<void> {
@@ -93,7 +96,7 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
         const disputeId = _nest.find<string>(item, 'DisputeId');
         if (!id || !disputeId) await this.handleMissingIds(item);
         const currentDispute = await DB.disputes.get(id, `${disputeId}`);
-        const complete = _nest.find<string>(item, 'Status').toLowerCase() === 'completeddispute';
+        const complete = _nest.find<string>(item, 'Status').toLowerCase() === 'completedispute';
         const tuDate =
           _nest.find<string>(_nest.find<any>(item, 'ClosedDisputes'), 'LastUpdatedDate') ||
           _nest.find<string>(_nest.find<any>(item, 'OpenDisputes'), 'LastUpdatedDate');
@@ -111,6 +114,7 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
 
   assignCompleted(): void {
     this.completed = this.updates.filter((d) => _nest.find<string>(d, 'Status').toLowerCase() === 'completedispute');
+    console.log('COMPLETED: ', this.completed);
   }
 
   async getInvestigationResults(): Promise<void> {
@@ -152,7 +156,7 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
    * logs the results of the API call
    */
   async logResults(): Promise<void> {
-    const id = this.payload.identityId;
+    const id = 'alert_notification_operation';
     await this.log(id, this.results, 'GENERIC');
   }
 }
