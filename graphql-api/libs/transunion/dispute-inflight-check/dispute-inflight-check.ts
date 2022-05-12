@@ -53,6 +53,7 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
       await this.updateDisputeStatus();
       await this.assignCompleted();
       await this.getInvestigationResults();
+      this.results = { success: true, error: null, data: null };
       await this.logResults();
       return this.results;
     } catch (err) {
