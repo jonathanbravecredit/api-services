@@ -22,13 +22,19 @@ export class GetAlertsNotificationsV2
   >
   implements APIRequest
 {
-  public action = 'GetAlertsNotifications';
+  public action = 'GetAlertNotificationsForAllUsers';
   public schema = '';
   public resultKey = 'GetAlertNotificationsForAllUsersResult';
   public serviceBundleCode = '';
 
   constructor(protected payload: IProxyRequest) {
-    super('GetAlertsNotifications', payload, new GetAlertsNotificationsResponder(), new Payloader<any>(), new SoapV2());
+    super(
+      'GetAlertNotificationsForAllUsers',
+      payload,
+      new GetAlertsNotificationsResponder(),
+      new Payloader<any>(),
+      new SoapV2(),
+    );
   }
 
   /**
