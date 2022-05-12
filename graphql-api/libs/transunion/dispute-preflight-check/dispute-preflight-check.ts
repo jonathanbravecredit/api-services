@@ -91,7 +91,7 @@ export class DisputePreflightCheckV2 extends LoggerTransactionals {
 
   async fulfill(): Promise<void> {
     if (!this.refresh) return;
-    const fulfill = new FulfillDisputesV2(this.payload); //new FulfillDisputesV3(this.payload);
+    const fulfill = new FulfillDisputesV3(this.payload);
     await fulfill.run();
     this.report = { report: fulfill.mergeReport as unknown as IMergeReport };
   }
