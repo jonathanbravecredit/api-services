@@ -1,4 +1,5 @@
 import * as dayjs from 'dayjs';
+import * as _ from 'lodash';
 import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { Payloader } from 'libs/utils/payloader/Payloader';
 import { IGenericRequest, IProxyRequest } from 'libs/interfaces';
@@ -50,6 +51,7 @@ export class GetDisputeStatusV2
     super.runPayloader();
     await this.payloader.prep<IGenericRequest>(qryGetDataForGetDisputeStatus, this.prepped);
     this.gqldata = this.payloader.data;
+    this.gqldata = _.merge(this.gqldata, this.prepped);
     console.log('gqldata: ', JSON.stringify(this.gqldata));
     console.log('prepped: ', JSON.stringify(this.prepped));
   }
