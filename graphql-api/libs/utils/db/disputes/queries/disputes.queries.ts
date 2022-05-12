@@ -38,8 +38,14 @@ export const updateDispute = (dispute: Dispute): Promise<PutItemOutput> => {
   return store
     .put(newDispute)
     .exec()
-    .then((res) => res)
-    .catch((err) => err);
+    .then((res) => {
+      console.log('updateDispute res', res);
+      return res;
+    })
+    .catch((err) => {
+      console.log('updateDispute error', err);
+      return err;
+    });
 };
 
 export const updateDisputeResults = (

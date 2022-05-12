@@ -57,6 +57,7 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
       await this.logResults();
       return this.results;
     } catch (err) {
+      console.error('INFLIGHT ERROR', err);
       this.logGenericError('alert_notification_operation', err);
       this.results = { success: false, error: err, data: null };
       return this.results;
