@@ -51,7 +51,7 @@ export class GetAlertsNotificationsV2
    *    - generates the request xml
    */
   runRequester(): void {
-    const requester = new GetAlertsNotificationsRequester(APIRequestKeys.GET_AUTHENTICATION_QUESTIONS, this.prepped);
+    const requester = new GetAlertsNotificationsRequester(APIRequestKeys.GET_ALERTS_NOTIFICATIONS, this.prepped);
     this.reqXML = requester.createRequest();
     console.log('reqXML: ', this.reqXML);
   }
