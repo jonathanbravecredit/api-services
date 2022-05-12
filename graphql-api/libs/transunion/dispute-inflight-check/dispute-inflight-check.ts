@@ -74,7 +74,7 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
     this.updates = await Promise.all(
       this.notifications.map(async (alert) => {
         const message = JSON.stringify({ disputeId: `${alert.AlertId}` });
-        const identityId = { identityId: alert.ClientKey };
+        const identityId = alert.ClientKey;
         const payload = _.merge(this.payload, { message, identityId });
         return await new GetDisputeStatusV2(payload).run();
       }),
