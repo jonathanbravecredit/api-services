@@ -105,8 +105,8 @@ export class DisputeInflightCheckV2 extends LoggerTransactionals {
         const complete = _nest.find<string>(item, 'Status').toLowerCase() === 'completedispute';
         console.log('IS COMPLETE', complete);
         const tuDate =
-          _nest.find<string>(_nest.find<any>(item, 'ClosedDisputes'), 'LastUpdatedDate') ||
-          _nest.find<string>(_nest.find<any>(item, 'OpenDisputes'), 'LastUpdatedDate');
+          _nest.find<string>(_nest.find<any>(item, 'ClosedDisputes') || {}, 'LastUpdatedDate') ||
+          _nest.find<string>(_nest.find<any>(item, 'OpenDisputes') || {}, 'LastUpdatedDate');
         const closedOn = complete ? dayjs(tuDate, 'MM/DD/YYYY').toISOString() : currentDispute.closedOn;
         const mappedDispute = DB.disputes.generators.createUpdateDisputeDBRecord(item.data, closedOn);
         console.log('MAPPED', mappedDispute);
