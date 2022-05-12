@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "result": {
+      "type": "object",
+      "nullable": false
+    },
+    "publicItem": {
+      "type": "object",
+      "nullable": false
+    }
+  },
+  "required": [
+    "result",
+    "publicItem"
+  ],
+  "additionalProperties": true
+}

@@ -2,15 +2,34 @@ import 'reflect-metadata';
 import { AppSyncResolverEvent } from 'aws-lambda';
 import * as https from 'https';
 import * as fs from 'fs';
-import * as queries from 'lib/proxy';
-import * as secrets from 'lib/utils/secrets/secrets';
-import * as tokens from 'lib/utils/tokens/tokens';
-import ErrorLogger from 'lib/utils/db/logger/logger-errors';
-import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
-import { EnrollV2 } from 'lib/transunion/enroll/Enrollv2';
-import { FulfillV2 } from 'lib/transunion/fulfill/Fulfillv2';
-import { FulfillDisputesV2 } from 'lib/transunion/fulfill-disputes/FulfillDisputesV2';
-import { AcknowledgeDisputeTerms } from 'lib/transunion/acknowledgements/AcknowledgeDispute';
+import * as secrets from 'libs/utils/secrets/secrets';
+import * as tokens from 'libs/utils/tokens/tokens';
+import ErrorLogger from 'libs/utils/db/logger/logger-errors';
+import TransactionLogger from 'libs/utils/db/logger/logger-transactions';
+import { EnrollV3 } from 'libs/transunion/enroll/enroll-v3';
+import { FulfillV3 } from 'libs/transunion/fulfill/fulfill-v3';
+import { AcknowledgeDisputeTerms } from 'libs/transunion/acknowledgements/AcknowledgeDispute';
+import { IndicativeEnrichmentV2 } from 'libs/transunion/indicative-enrichment/indicative-enrichment-v2';
+import { GetAuthenticationQuestionsV2 } from 'libs/transunion/authentication-questions/get-authentication-questions-v2';
+import { VerifyAuthenticationQuestionsV2 } from 'libs/transunion/authentication-questions-verify/verify-authentication-questions-v2';
+import { EnrollDisputesV2 } from 'libs/transunion/enroll-disputes/enroll-disputes-v2';
+import { FulfillDisputesV3 } from 'libs/transunion/fulfill-disputes/fulfill-disputes-v3';
+import { GetServiceProductV2 } from 'libs/transunion/service-product/get-service-product-v2';
+import { GetDisputeStatusV2 } from 'libs/transunion/get-dispute-status/get-dispute-status-v2';
+import { GetDisputeHistoryV2 } from 'libs/transunion/get-dispute-history/get-dispute-history-v2';
+import { GetDisputeByUserV2 } from 'libs/transunion/get-dispute-by-user/get-dispute-by-user';
+import { GetDisputeByUserAllV2 } from 'libs/transunion/get-dispute-by-user-all/get-dispute-by-user-all';
+import { CompleteOnboardingEnrollments } from 'libs/transunion/complete-onboarding-enrollment/complete-onboarding-enrollment';
+import { GetTrendingDataV2 } from 'libs/transunion/get-trending-data/get-trending-data-v2';
+import { GetCreditScoreTrackingV2 } from 'libs/transunion/get-credit-score-tracking/get-credit-score-tracking';
+import { CancelEnrollmentV2 } from 'libs/transunion/cancel-enrollment/cancel-enrollment-v2';
+import { GetInvestigationResultsByIdV2 } from 'libs/transunion/get-investigation-results-by-id/get-investigation-results-by-id';
+import { GetCreditBureauResultsByIdV2 } from 'libs/transunion/get-credit-bureau-results-by-id/get-credit-bureau-results-by-id';
+import { GetInvestigationResultsV2 } from 'libs/transunion/get-investigation-results/get-investigation-results-v2';
+import { DisputePreflightCheckV2 } from 'libs/transunion/dispute-preflight-check/dispute-preflight-check';
+import { Ping } from 'libs/transunion/ping/ping';
+import { UpdateNavBar } from 'libs/transunion/update-nav-bar/update-nav-bar';
+import { StartDispute } from 'libs/transunion/start-dispute/start-dispute-worker';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -104,86 +123,82 @@ export const main: any = async (event: AppSyncResolverEvent<any>): Promise<any> 
     // do something
     switch (action) {
       case 'Ping':
-        results = await queries.Ping(payload);
+        results = await Ping(payload);
         return JSON.stringify(results);
       case 'UpdateNavBar':
-        results = await queries.UpdateNavBar(payload);
+        results = await UpdateNavBar(payload);
         return JSON.stringify(results);
       case 'IndicativeEnrichment':
-        results = await queries.IndicativeEnrichment(payload);
+        results = await new IndicativeEnrichmentV2(payload).run();
         return JSON.stringify(results);
       case 'GetAuthenticationQuestions':
-        results = await queries.GetAuthenticationQuestions(payload);
+        results = await new GetAuthenticationQuestionsV2(payload).run();
         return JSON.stringify(results);
       case 'VerifyAuthenticationQuestions':
-        results = await queries.VerifyAuthenticationQuestions(payload);
+        results = await new VerifyAuthenticationQuestionsV2(payload).run();
         return JSON.stringify(results);
       case 'Enroll':
-        const enroll = new EnrollV2(payload);
-        results = await enroll.run();
+        results = await new EnrollV3(payload).run();
         return JSON.stringify(results);
       case 'EnrollDisputes':
-        results = await queries.EnrollDisputes(payload);
+        results = await new EnrollDisputesV2(payload).run();
         return JSON.stringify(results);
       case 'AcknowledgeDisputeTerms':
-        const ackTerms = new AcknowledgeDisputeTerms(payload);
-        results = await ackTerms.ackTerms();
+        results = await new AcknowledgeDisputeTerms(payload).ackTerms();
         return JSON.stringify(results);
       case 'Fulfill':
-        const fulfill = new FulfillV2(payload);
-        results = await fulfill.run();
+        results = await new FulfillV3(payload).run();
         return JSON.stringify(results);
       case 'FulfillDisputes':
-        const fulfillDispute = new FulfillDisputesV2(payload);
-        results = await fulfillDispute.run();
+        results = await new FulfillDisputesV3(payload).run();
         return JSON.stringify(results);
       case 'GetServiceProduct':
-        results = await queries.GetServiceProduct(payload);
+        results = await new GetServiceProductV2(payload).run();
         return JSON.stringify(results);
       case 'GetDisputeStatus':
-        results = await queries.GetDisputeStatus(payload);
+        results = await new GetDisputeStatusV2(payload).run();
         return JSON.stringify(results);
       case 'StartDispute':
-        results = await queries.StartDispute(payload);
+        results = await StartDispute(payload);
         return JSON.stringify(results);
       case 'GetAllDisputesByUser':
-        results = await queries.GetAllDisputesByUser(payload);
+        results = await new GetDisputeByUserAllV2(payload).run();
         return JSON.stringify(results);
       case 'GetDisputeStatusByID':
-        results = await queries.GetDisputeStatusByID(payload);
+        results = await new GetDisputeStatusV2(payload).run();
         return JSON.stringify(results);
       case 'GetCurrentDisputeByUser':
-        results = await queries.GetCurrentDisputeByUser(payload);
+        results = await new GetDisputeByUserV2(payload).run();
         return JSON.stringify(results);
       case 'GetDisputeHistory':
-        results = await queries.GetDisputeHistory(payload);
+        results = await new GetDisputeHistoryV2(payload).run();
         return JSON.stringify(results);
       case 'CompleteOnboardingEnrollments':
-        results = await queries.CompleteOnboardingEnrollments(payload);
+        results = await new CompleteOnboardingEnrollments(payload).run();
         return JSON.stringify(results);
       case 'DisputePreflightCheck':
-        results = await queries.DisputePreflightCheck(payload);
+        results = await new DisputePreflightCheckV2(payload).run();
         return JSON.stringify(results);
       case 'GetInvestigationResults':
-        results = await queries.GetInvestigationResults(payload);
+        results = await new GetInvestigationResultsV2(payload).run();
         return JSON.stringify(results);
       case 'GetTrendingData':
-        results = await queries.GetTrendingData(payload);
+        results = await new GetTrendingDataV2(payload).run();
         return JSON.stringify(results);
       case 'GetInvestigationResultsByID':
-        results = await queries.GetInvestigationResultsByID(payload);
+        results = await new GetInvestigationResultsByIdV2(payload).run();
         return JSON.stringify(results);
       case 'GetCreditBureauResultsByID':
-        results = await queries.GetCreditBureauResultsByID(payload);
+        results = await new GetCreditBureauResultsByIdV2(payload).run();
         return JSON.stringify(results);
       case 'GetCreditScoreTracking':
-        results = await queries.GetCreditScoreTracking(payload);
+        results = await new GetCreditScoreTrackingV2(payload).run();
         return JSON.stringify(results);
       case 'ListDisputesByUser':
-        results = await queries.ListDisputesByUser(payload);
+        results = await new GetDisputeByUserAllV2(payload).run();
         return JSON.stringify(results);
       case 'CancelEnrollment':
-        results = await queries.CancelEnroll(payload);
+        results = await new CancelEnrollmentV2(payload).run();
         return JSON.stringify(results);
       default:
         const error = errorLogger.createError(tokenUser, 'action_not_found', JSON.stringify(action));

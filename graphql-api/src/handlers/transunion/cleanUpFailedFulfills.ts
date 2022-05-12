@@ -1,9 +1,9 @@
 import 'reflect-metadata';
+import { Sync } from 'libs/utils/sync/sync';
 import { Handler } from 'aws-lambda';
-import { listTransactionLog } from 'lib/utils/db/logger/queries/api-transaction.queries';
-import { Sync } from 'lib/utils/sync/sync';
-import * as tu from 'lib/transunion';
-import { IFulfillResult } from 'lib/interfaces';
+import { listTransactionLog } from 'libs/utils/db/logger/queries/api-transaction.queries';
+import { IFulfillResult } from 'libs/transunion/fulfill/fulfill.interface';
+import { enrichFulfillData } from 'libs/transunion/fulfill/legacy/fulfill';
 
 export const main: Handler = async (event: any): Promise<void> => {
   const { list } = event as { list: string[] }; // list of failed fulfill IDs
@@ -21,7 +21,7 @@ export const main: Handler = async (event: any): Promise<void> => {
         const data = JSON.parse(actions.transaction) as IFulfillResult;
         const timestamp = '2022-01-19T08:00:00.000Z';
         // update the data base with the parsed results;
-        const sync = new Sync(tu.enrichFulfillData);
+        const sync = new Sync(enrichFulfillData);
         // get the specific response from parsed object
         const responseType = data?.ResponseType;
         const error = data?.ErrorResponse;

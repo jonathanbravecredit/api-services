@@ -1,12 +1,11 @@
 import 'reflect-metadata';
-import { DynamoDBRecord, DynamoDBStreamEvent, DynamoDBStreamHandler, StreamRecord } from 'aws-lambda';
-import { DynamoDB } from 'aws-sdk';
-import { DB } from 'lib/utils/db/db';
-import { UpdateAppDataInput } from 'src/api/api.service';
-import { CreditScoreMaker } from 'lib/utils/db/credit-scores/model/credit-scores.model';
 import * as dayjs from 'dayjs';
-import { find } from 'lodash';
-import { safeParse } from 'lib/utils';
+import { DB } from 'libs/utils/db/db';
+import { DynamoDB } from 'aws-sdk';
+import { UpdateAppDataInput } from 'src/api/api.service';
+import { DynamoDBRecord, DynamoDBStreamEvent, DynamoDBStreamHandler, StreamRecord } from 'aws-lambda';
+import { CreditScoreMaker } from 'libs/utils/db/credit-scores/model/credit-scores.model';
+import { safeParse } from 'libs/utils';
 
 export const main: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent): Promise<void> => {
   const records = event.Records;

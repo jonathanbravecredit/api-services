@@ -1,7 +1,7 @@
 import { DynamoDBRecord, DynamoDBStreamEvent, DynamoDBStreamHandler, StreamRecord } from 'aws-lambda';
 import { DynamoDB } from 'aws-sdk';
-import { updateNavbarDisputesBadge } from 'lib/utils/db/dynamo-db/dynamo';
-import { InvestigationResult } from 'lib/utils/db/investigation-results/model/investigation-results.model';
+import { updateNavbarDisputesBadge } from 'libs/utils/db/dynamo-db/dynamo';
+import { InvestigationResult } from 'libs/utils/db/investigation-results/model/investigation-results.model';
 
 export const main: DynamoDBStreamHandler = async (event: DynamoDBStreamEvent): Promise<void> => {
   const records = event.Records;
