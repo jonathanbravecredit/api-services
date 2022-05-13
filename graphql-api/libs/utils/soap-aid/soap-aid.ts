@@ -7,7 +7,7 @@ import TransactionLogger from 'libs/utils/db/logger/logger-transactions';
 const transactionLogger = new TransactionLogger();
 const tuEnv = process.env.TU_ENV;
 const tuUrl =
-  tuEnv === 'dev'
+  tuEnv === 'dev' || tuEnv === 'staging'
     ? 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc'
     : 'https://consumerconnectws.tui.transunion.com/wcf/CC2.svc';
 const tuHost = tuEnv === 'dev' ? 'cc2ws-live.sd.demo.truelink.com' : 'consumerconnectws.tui.transunion.com';

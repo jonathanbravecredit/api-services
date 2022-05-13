@@ -5,10 +5,11 @@ import axios from 'axios';
 
 const tuEnv = process.env.TU_ENV;
 const tuUrl =
-  tuEnv === 'dev'
+  tuEnv === 'dev' || tuEnv === 'staging'
     ? 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc'
     : 'https://consumerconnectws.tui.transunion.com/wcf/CC2.svc';
-const tuHost = tuEnv === 'dev' ? 'cc2ws-live.sd.demo.truelink.com' : 'consumerconnectws.tui.transunion.com';
+const tuHost =
+  tuEnv === 'dev' || tuEnv === 'staging' ? 'cc2ws-live.sd.demo.truelink.com' : 'consumerconnectws.tui.transunion.com';
 /**
  * Class to help create and parse payloads for requests to Transunion SOAP service
  * 1. Takes in unique parsers, formatters(messages, and xml), and payload generators (optional)
