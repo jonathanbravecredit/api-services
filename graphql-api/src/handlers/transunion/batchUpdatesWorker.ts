@@ -1,21 +1,20 @@
 import 'reflect-metadata';
-import { SQSEvent, SQSHandler } from 'aws-lambda';
+import ErrorLogger from 'libs/utils/db/logger/logger-errors';
+import { DB } from 'libs/utils/db/db';
 import { Agent } from 'https';
+import { Nested as _nest } from '@bravecredit/brave-sdk';
 import { readFileSync } from 'fs';
-import { CancelEnroll } from 'lib/proxy';
-import { getSecretKey } from 'lib/utils/secrets/secrets';
-import { DB } from 'lib/utils/db/db';
-import ErrorLogger from 'lib/utils/db/logger/logger-errors';
-import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
-import { IFulfillResult, IProxyRequest, ITransunionBatchPayload } from 'lib/interfaces';
-import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
-import { TransunionUtil as TU } from 'lib/utils/transunion/transunion';
-import { FulfillV2 } from 'lib/transunion/fulfill/Fulfillv2';
-import { Nested as _nest } from 'lib/utils/helpers/Nested';
+import { getSecretKey } from 'libs/utils/secrets/secrets';
+import { SQSEvent, SQSHandler } from 'aws-lambda';
+import { TransunionUtil as TU } from 'libs/utils/transunion/transunion';
+import { IProxyRequest, ITransunionBatchPayload } from 'libs/interfaces';
+import { IGetEnrollmentData } from 'libs/utils/db/dynamo-db/dynamo.interfaces';
+import { FulfillV3 } from 'libs/transunion/fulfill/fulfill-v3';
+import { IFulfillResult } from 'libs/transunion/fulfill/fulfill.interface';
+import { CancelEnrollmentV2 } from 'libs/transunion/cancel-enrollment/cancel-enrollment-v2';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
-const transactionLogger = new TransactionLogger();
 
 const transunionSKLoc = process.env.TU_SECRET_LOCATION;
 const tuEnv = process.env.TU_ENV;
@@ -98,7 +97,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
             identityId,
           }; // don't pass the agent in the queue;
           // a special version of fulfill that calls TU API but updates the DB more directly for better performance
-          const fulfill = new FulfillV2(payload);
+          const fulfill = new FulfillV3(payload);
           const { success } = await fulfill.run();
           const resp = fulfill.response;
           const result = _nest.find<IFulfillResult>(resp, 'FulfillResult');
@@ -161,7 +160,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
             auth,
             identityId,
           }; // don't pass the agent in the queue;
-          const cancel = await CancelEnroll(payload);
+          const cancel = await new CancelEnrollmentV2(payload).run();
           const { success } = cancel;
           if (success) {
             counter++;

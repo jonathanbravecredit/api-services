@@ -1,0 +1,19 @@
+import { GET_INVESTIGATION_RESULTS_DISPUTEDINFOUPDATED } from 'libs/examples/mocks/GetInvestigationResults-DisputedInfoUpdated';
+import { GET_INVESTIGATION_RESULTS_DISPUTEINFOUPDATEDANDOTHERINFO } from 'libs/examples/mocks/GetInvestigationResults-DisputeInfoUpdateAndOtherInfo';
+import { GET_INVESTIGATION_RESULTS_INFORMATION_UPDATED_RESPONSE } from 'libs/examples/mocks/GetInvestigationResults-InformationUpdated';
+import { GET_INVESTIGATION_RESULTS_VERIFIEDANDUPDATED } from 'libs/examples/mocks/GetInvestigationResults-VerifiedAndUpdated';
+import { GET_INVESTIGATION_RESULTS_VERIFIEDASACCURATE } from 'libs/examples/mocks/GetInvestigationResults-VerifiedAsAccurate';
+import { GET_INVESTIGATION_RESULTS_VERIFIEDASACCURATEANDUPATED } from 'libs/examples/mocks/GetInvestigationResults-VerifiedAsAccurateAndUpdated';
+import { GET_INVESTIGATION_RESULTS_RESPONSE } from 'libs/examples/mocks/GetInvestigationResultsResponse';
+import { GET_INVESTIGATION_RESULTS_DELETED } from 'libs/examples/mocks/GetInvestigationResultsResponse-Deleted';
+
+export const ALL_GET_INVESTIGATION_MOCKS = [
+  GET_INVESTIGATION_RESULTS_DISPUTEDINFOUPDATED,
+  GET_INVESTIGATION_RESULTS_DISPUTEINFOUPDATEDANDOTHERINFO,
+  GET_INVESTIGATION_RESULTS_INFORMATION_UPDATED_RESPONSE,
+  GET_INVESTIGATION_RESULTS_VERIFIEDANDUPDATED,
+  GET_INVESTIGATION_RESULTS_VERIFIEDASACCURATE,
+  GET_INVESTIGATION_RESULTS_VERIFIEDASACCURATEANDUPATED,
+  GET_INVESTIGATION_RESULTS_DELETED,
+  GET_INVESTIGATION_RESULTS_RESPONSE,
+];

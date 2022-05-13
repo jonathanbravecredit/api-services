@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "nullable": false
+    },
+    "user": {
+      "type": "object",
+      "nullable": false,
+      "properties": {
+        "userAttributes": {
+          "type": "object",
+          "nullable": false,
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "agencies": {
+      "type": "object",
+      "nullable": false,
+      "properties": {
+        "transunion": {
+          "type": "object",
+          "nullable": false,
+          "properties": {
+            "enrollmentKey": {
+              "type": "string",
+              "nullable": false
+            },
+            "serviceBundleFulfillmentKey": {
+              "type": "string",
+              "nullable": false
+            }
+          },
+          "required": [
+            "enrollmentKey",
+            "serviceBundleFulfillmentKey"
+          ]
+        }
+      },
+      "required": [
+        "transunion"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "agencies"
+  ],
+  "additionalProperties": true
+}

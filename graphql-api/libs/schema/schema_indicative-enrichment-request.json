@@ -1,0 +1,116 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "nullable": false
+    },
+    "serviceBundleCode": {
+      "type": "string",
+      "nullable": false
+    },
+    "name": {
+      "type": "object",
+      "properties": {
+        "first": {
+          "type": "string",
+          "nullable": false
+        },
+        "middle": {
+          "type": "string",
+          "nullable": true
+        },
+        "last": {
+          "type": "string",
+          "nullable": false
+        }
+      },
+      "required": [
+        "first",
+        "last"
+      ],
+      "nullable": false
+    },
+    "dob": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "string",
+          "nullable": false
+        },
+        "month": {
+          "type": "string",
+          "nullable": false
+        },
+        "day": {
+          "type": "string",
+          "nullable": false
+        }
+      },
+      "required": [
+        "year",
+        "month",
+        "day"
+      ],
+      "nullable": false
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+        "addressOne": {
+          "type": "string",
+          "nullable": false
+        },
+        "addressTwo": {
+          "type": "string",
+          "nullable": true
+        },
+        "city": {
+          "type": "string",
+          "nullable": false
+        },
+        "state": {
+          "type": "string",
+          "nullable": false
+        },
+        "zip": {
+          "type": "string",
+          "nullable": false
+        }
+      },
+      "required": [
+        "addressOne",
+        "city",
+        "state",
+        "zip"
+      ],
+      "nullable": false
+    },
+    "ssn": {
+      "type": "object",
+      "properties": {
+        "lastfour": {
+          "type": "string",
+          "nullable": false
+        },
+        "full": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "required": [
+        "lastfour"
+      ],
+      "nullable": false
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "dob",
+    "address",
+    "ssn",
+    "serviceBundleCode"
+  ],
+  "additionalProperties": true
+}

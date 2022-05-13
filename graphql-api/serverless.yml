@@ -14,6 +14,10 @@ custom:
   bundle:
     external: all
     linting: false
+    aliases:
+      - 'libs': libs
+      - 'src': src
+      - 'tests': tests
   snsProxy: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
   settings:
     GRAPHQL_APIENDPOINTOUTPUT: !ImportValue GraphQLAPIEndpointOutput

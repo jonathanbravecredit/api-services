@@ -2,14 +2,14 @@ import 'reflect-metadata';
 import * as fs from 'fs';
 import * as https from 'https';
 import * as moment from 'moment';
-import * as secrets from 'lib/utils/secrets/secrets';
-import ErrorLogger from 'lib/utils/db/logger/logger-errors';
-import TransactionLogger from 'lib/utils/db/logger/logger-transactions';
-import { DB } from 'lib/utils/db/db';
+import * as secrets from 'libs/utils/secrets/secrets';
+import ErrorLogger from 'libs/utils/db/logger/logger-errors';
+import TransactionLogger from 'libs/utils/db/logger/logger-transactions';
+import { DB } from 'libs/utils/db/db';
 import { Handler } from 'aws-lambda';
-import { GetDisputeStatusByID } from 'lib/proxy';
-import { GetInvestigationResults } from 'lib/proxy';
-import { FulfillV2 } from 'lib/transunion/fulfill/Fulfillv2';
+import { FulfillV3 } from 'libs/transunion/fulfill/fulfill-v3';
+import { GetDisputeStatusV2 } from 'libs/transunion/get-dispute-status/get-dispute-status-v2';
+import { GetInvestigationResultsV2 } from 'libs/transunion/get-investigation-results/get-investigation-results-v2';
 
 // request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
@@ -86,7 +86,7 @@ export const main: Handler<{ list: { id: string; disputeId: string }[] }> = asyn
           auth,
           identityId: item.id,
         };
-        return await GetDisputeStatusByID(payload);
+        return await new GetDisputeStatusV2(payload).run();
       }),
     );
 
@@ -172,10 +172,10 @@ export const main: Handler<{ list: { id: string; disputeId: string }[] }> = asyn
                 identityId: id,
               };
               console.log('CALLING FULFILL');
-              const fulfilled = await new FulfillV2(payload).run();
+              const fulfilled = await new FulfillV3(payload).run();
               if (!fulfilled.success) throw `fulfilled failed; error: ${fulfilled.error}; data: ${fulfilled.data}`;
               console.log('CALLING GET INVESTIGATION RESULTS');
-              const synced = await GetInvestigationResults(payload);
+              const synced = await new GetInvestigationResultsV2(payload).run();
               let response = synced
                 ? { success: true, error: null, data: synced.data }
                 : { success: false, error: 'failed to get investigation results' };

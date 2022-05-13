@@ -1,18 +1,13 @@
 import 'reflect-metadata';
+import ErrorLogger from 'libs/utils/db/logger/logger-errors';
+import { SNS } from 'aws-sdk';
 import { Handler } from 'aws-lambda';
-import { SNS, DynamoDB } from 'aws-sdk';
-import ErrorLogger from 'lib/utils/db/logger/logger-errors';
-import { PubSubUtil } from 'lib/utils/pubsub/pubsub';
-import { getItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
-// import { getAllEnrollmentItemsInDB } from 'lib/utils/db/dynamo-db/dynamo';
-// import { IGetEnrollmentData } from 'lib/utils/db/dynamo-db/dynamo.interfaces';
+import { PubSubUtil } from 'libs/utils/pubsub/pubsub';
+import { getItemsInDB } from 'libs/utils/db/dynamo-db/dynamo';
 
-// request.debug = true; import * as request from 'request';
 const errorLogger = new ErrorLogger();
 const sns = new SNS({ region: 'us-east-2' });
 const pubsub = new PubSubUtil();
-const db = new DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: 'us-east-2' });
-const tableName = process.env.APPTABLE;
 
 interface IEnrollee {
   id: string;
