@@ -52,7 +52,7 @@ export const main: SQSHandler = async (event: SQSEvent): Promise<any> => {
   }
   // prep work
   try {
-    const prefix = tuEnv === 'dev' ? 'dev' : 'prod';
+    const prefix = tuEnv === 'prod' ? 'prod' : 'dev';
     key = readFileSync(`/opt/${prefix}-tubravecredit.key`);
     cert = readFileSync(`/opt/${prefix}-brave.credit.crt`);
     cacert = readFileSync(`/opt/${prefix}-Root-CA-Bundle.crt`);
