@@ -1,7 +1,8 @@
 import { IGetEnrollmentData } from 'libs/utils/db/dynamo-db/dynamo.interfaces';
 import { TUReportResponseInput } from 'src/api/api.service';
 import { DynamoDB } from 'aws-sdk';
-import { INavBarRequest } from 'libs/transunion/update-nav-bar/nav-bar-request.interface';
+import * as _ from 'lodash';
+import { INavBar, INavBarRequest } from 'libs/transunion/update-nav-bar/nav-bar-request.interface';
 
 const db = new DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: 'us-east-2' });
 
@@ -154,25 +155,25 @@ export const updateDynamoDB = (params: DynamoDB.DocumentClient.UpdateItemInput) 
 
 export const updateNavBarBadges = (payload: INavBarRequest) => {
   const { navBar } = payload;
+  const base: INavBar = {
+    home: { badge: false },
+    report: { badge: false },
+    disputes: { badge: false },
+    settings: { badge: false },
+  };
+  const merged = _.merge(base, navBar);
   let timeStamp = new Date().toISOString(); //always have last updated date
   const params = {
     TableName: tableName,
     Key: {
       id: payload.id,
     },
-    UpdateExpression: 'SET #n.#h = :h, #n.#r = :r, #n.#d = :d, #n.#s = :s, updatedAt = :m',
+    UpdateExpression: 'SET #n = :n, updatedAt = :m',
     ExpressionAttributeNames: {
       '#n': 'navBar',
-      '#h': 'home',
-      '#r': 'report',
-      '#d': 'disputes',
-      '#s': 'settings',
     },
     ExpressionAttributeValues: {
-      ':h': navBar.home || { badge: false },
-      ':r': navBar.report || { badge: false },
-      ':d': navBar.disputes || { badge: false },
-      ':s': navBar.settings || { badge: false },
+      ':n': merged,
       ':m': timeStamp,
     },
     ReturnValues: 'UPDATED_NEW',
