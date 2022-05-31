@@ -28,6 +28,7 @@ resources:
       Type: AWS::ApiGateway::RestApi
       Properties:
         Name: ${self:provider.stage}-web-app-api
+        MinimumCompressionSize: 1024
 
     ApiGatewayAuthorizer:
       Type: AWS::ApiGateway::Authorizer
