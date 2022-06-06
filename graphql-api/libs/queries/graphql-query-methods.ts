@@ -16,6 +16,7 @@ export const getAppData = async (msg: IGetAppDataRequest): Promise<AxiosResponse
 };
 
 export const updateAppData = async (msg: { input: UpdateAppDataInput }): Promise<AxiosResponse<any>> => {
+  if (!msg?.input?.id) throw `Missing user id in updateAppData:${msg?.input}`;
   try {
     return await postGraphQLRequest(qry.qryUpdateAppData, msg);
   } catch (err) {

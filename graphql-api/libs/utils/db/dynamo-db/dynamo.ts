@@ -154,6 +154,8 @@ export const updateDynamoDB = (params: DynamoDB.DocumentClient.UpdateItemInput) 
 };
 
 export const updateNavBarBadges = (payload: INavBarRequest) => {
+  const { id } = payload;
+  if (!id) return;
   const { navBar } = payload;
   const base: INavBar = {
     home: { badge: false },
@@ -166,7 +168,7 @@ export const updateNavBarBadges = (payload: INavBarRequest) => {
   const params = {
     TableName: tableName,
     Key: {
-      id: payload.id,
+      id: id,
     },
     UpdateExpression: 'SET #n = :n, updatedAt = :m',
     ExpressionAttributeNames: {
@@ -180,13 +182,15 @@ export const updateNavBarBadges = (payload: INavBarRequest) => {
   };
   return updateDynamoDB(params);
 };
+
 export const updateNavbarDisputesBadge = (payload: INavBarRequest) => {
-  const { navBar } = payload;
+  const { navBar, id } = payload;
+  if (!id) return;
   let timeStamp = new Date().toISOString(); //always have last updated date
   const params = {
     TableName: tableName,
     Key: {
-      id: payload.id,
+      id: id,
     },
     UpdateExpression: 'SET #n.#d = :d, updatedAt = :m',
     ExpressionAttributeNames: {
