@@ -53,7 +53,7 @@ export const main: Handler<{ list: { id: string; disputeId: string }[] }> = asyn
   }
 
   try {
-    const prefix = tuEnv === 'dev' ? 'dev' : 'prod';
+    const prefix = tuEnv === 'prod' ? 'prod' : 'dev';
     key = fs.readFileSync(`/opt/${prefix}-tubravecredit.key`);
     cert = fs.readFileSync(`/opt/${prefix}-brave.credit.crt`);
     cacert = fs.readFileSync(`/opt/${prefix}-Root-CA-Bundle.crt`);

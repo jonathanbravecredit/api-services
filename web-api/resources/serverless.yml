@@ -6,12 +6,12 @@ custom:
     IDENTITY_IDS:
       dev: 'us-east-2:69169c15-c0c4-4e0b-886c-4afab307e612'
       qa: 'us-east-2:69169c15-c0c4-4e0b-886c-4afab307e612'
-      staging: 'us-east-2:aca920e3-dd7b-4e2f-91f0-865d978c6f76'
+      staging: 'us-east-2:211dd2a1-db37-4632-a4da-d05c08a80c47'
       prod: 'us-east-2:ea31caf7-0945-4607-a3c4-0c9942967a32'
     POOL_IDS:
       dev: 'us-east-2_beTcykTM9'
       qa: 'us-east-2_beTcykTM9'
-      staging: 'us-east-2_6RQqasoH3'
+      staging: 'us-east-2_80pbK9Kx7'
       prod: 'us-east-2_R22DawoAR'
 
 provider:
@@ -28,6 +28,7 @@ resources:
       Type: AWS::ApiGateway::RestApi
       Properties:
         Name: ${self:provider.stage}-web-app-api
+        MinimumCompressionSize: 1024
 
     ApiGatewayAuthorizer:
       Type: AWS::ApiGateway::Authorizer
@@ -47,10 +48,10 @@ resources:
         ParentId: !GetAtt ApiGatewayRestApi.RootResourceId
         PathPart: 'initiatives'
 
-    SnsProxyTopic:
+    APITopic:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: SnsProxyTopic
+        TopicName: APITopic
 
     DeadLetterQueue:
       Type: AWS::SNS::Topic
@@ -79,8 +80,8 @@ resources:
       Export:
         Name: !Sub '${self:service}-apigw-authorizer'
 
-    SnsProxyTopic:
-      Description: 'SNS Proxy Topic'
-      Value: !Ref SnsProxyTopic
+    APITopic:
+      Description: 'API Topic for general use'
+      Value: !Ref APITopic
       Export:
-        Name: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
+        Name: !Sub '${self:provider.stage}-api-endpoints-api-topic'
