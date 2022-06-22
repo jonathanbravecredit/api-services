@@ -1,8 +1,8 @@
-import { AttributeValue } from 'aws-lambda';
-import { DynamoDB } from 'aws-sdk';
-import { IBatchMsg } from 'libs/interfaces/batch.interfaces';
-const db = new DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
-const tableName = process.env.APPTABLE || '';
+import { AttributeValue } from "aws-lambda";
+import { DynamoDB } from "aws-sdk";
+import { IBatchMsg } from "libs/interfaces/batch.interfaces";
+const db = new DynamoDB.DocumentClient({ apiVersion: "2012-08-10" });
+const tableName = process.env.APPTABLE || "";
 
 export const getAllItemsInDB = async () => {
   let params: { TableName: string; ExclusiveStartKey?: any } = {
@@ -16,7 +16,7 @@ export const getAllItemsInDB = async () => {
     items = await db.scan(params).promise();
     items.Items?.forEach((item) => scanResults.push(item));
     params.ExclusiveStartKey = items.LastEvaluatedKey;
-  } while (typeof items.LastEvaluatedKey != 'undefined');
+  } while (typeof items.LastEvaluatedKey != "undefined");
 
   return scanResults;
 };
@@ -44,7 +44,7 @@ export const parallelScanAppData = async (
       totalSegments: totalSegments,
     };
   } catch (err) {
-    console.log('err ==> ', err);
+    console.log("err ==> ", err);
   }
 };
 
@@ -58,15 +58,15 @@ export const parallelScanAppDataEnrollKeys = async (
     ExclusiveStartKey: esk,
     Segment: segment,
     TotalSegments: totalSegments,
-    ProjectionExpression: '#id, #us, #ag.#tu.#en, #ag.#tu.#ek, #ag.#tu.#fk',
+    ProjectionExpression: "#id, #us, #ag.#tu.#en, #ag.#tu.#ek, #ag.#tu.#fk",
     ExpressionAttributeNames: {
-      '#id': 'id',
-      '#us': 'user',
-      '#ag': 'agencies',
-      '#tu': 'transunion',
-      '#en': 'enrolled',
-      '#ek': 'enrollmentKey',
-      '#fk': 'serviceBundleFulfillmentKey',
+      "#id": "id",
+      "#us": "user",
+      "#ag": "agencies",
+      "#tu": "transunion",
+      "#en": "enrolled",
+      "#ek": "enrollmentKey",
+      "#fk": "serviceBundleFulfillmentKey",
     },
   };
   try {
@@ -81,10 +81,11 @@ export const parallelScanAppDataEnrollKeys = async (
       totalSegments: totalSegments,
     };
   } catch (err) {
-    console.log('err ==> ', err);
+    console.log("err ==> ", err);
   }
 };
-export const getItemInDB = (id: any): Promise<DynamoDB.DocumentClient.GetItemOutput> => {
+export const getItemInDB = (id: string): Promise<DynamoDB.DocumentClient.GetItemOutput> => {
+  if (!id) return;
   const params = {
     Key: {
       id: id,

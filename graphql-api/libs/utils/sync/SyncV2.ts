@@ -1,11 +1,11 @@
-import * as aws4 from 'aws4';
-import axios, { AxiosResponse } from 'axios';
-import gql from 'graphql-tag';
-import { print } from 'graphql';
-import { GetAppDataQuery, UpdateAppDataInput } from 'src/api/api.service';
-import { getAppData, updateAppData } from 'libs/queries/graphql-query-methods';
-import { IGetAppDataRequest, IGetAppDataResponse } from 'libs/interfaces/transunion/get-app-data.interface';
-import { Nested as _nest } from '@bravecredit/brave-sdk';
+import * as aws4 from "aws4";
+import axios, { AxiosResponse } from "axios";
+import gql from "graphql-tag";
+import { print } from "graphql";
+import { GetAppDataQuery, UpdateAppDataInput } from "src/api/api.service";
+import { getAppData, updateAppData } from "libs/queries/graphql-query-methods";
+import { IGetAppDataRequest, IGetAppDataResponse } from "libs/interfaces/transunion/get-app-data.interface";
+import { Nested as _nest } from "@bravecredit/brave-sdk";
 
 const appsyncUrl = process.env.APPSYNC_ENDPOINT;
 const region = process.env.AWS_REGION;
@@ -24,15 +24,15 @@ export class SyncV2 {
   }
 
   // enrichment data must be fed in by another classes enrichment method
-  async syncData(enriched: any): Promise<boolean> {
+  async syncData(enriched: UpdateAppDataInput): Promise<boolean> {
     try {
-      if (enriched === undefined) return false; // enrichment error
+      if (enriched === undefined || !enriched.id) return false; // enrichment error
       const sync = await updateAppData({ input: enriched });
       const syncData: IGetAppDataResponse = sync.data; // gql error
       if (syncData?.errors?.length > 0) throw syncData?.errors;
       return syncData?.errors?.length > 0 ? false : true;
     } catch (err) {
-      console.log('syncData:err ===> ', err);
+      console.log("syncData:err ===> ", err);
       return false;
     }
   }
@@ -44,38 +44,38 @@ export class SyncV2 {
    * @returns axios response
    */
   async postGraphQLRequest(query: string, variables: any): Promise<AxiosResponse<any>> {
-    console.log('url ===> ', appsyncUrl);
+    console.log("url ===> ", appsyncUrl);
     let payload = {
       query: print(gql(query)),
       variables,
     };
     let opts = {
-      method: 'POST',
+      method: "POST",
       host: appsyncUrl,
       region: region,
-      path: 'graphql',
+      path: "graphql",
       body: JSON.stringify(payload),
-      service: 'appsync',
+      service: "appsync",
     };
 
     try {
       const headers = aws4.sign(opts).headers;
       const resp: AxiosResponse<any> = await axios({
         url: `https://${appsyncUrl}/graphql`,
-        method: 'post',
+        method: "post",
         headers: headers,
         data: payload,
       });
       return resp;
     } catch (err) {
-      console.log('postGraphQLRequest:error ===> ', err);
+      console.log("postGraphQLRequest:error ===> ", err);
       return err;
     }
   }
 
   cleanBackendData(data: GetAppDataQuery): UpdateAppDataInput {
-    let clean = _nest.delete(data, '__typename');
-    clean = _nest.delete(clean, 'isFresh');
+    let clean = _nest.delete(data, "__typename");
+    clean = _nest.delete(clean, "isFresh");
     delete clean.createdAt; // this is a graphql managed field
     delete clean.updatedAt; // this is a graphql managed field
     delete clean.owner; // this is a graphql managed field

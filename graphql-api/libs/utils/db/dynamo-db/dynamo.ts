@@ -1,10 +1,10 @@
-import { IGetEnrollmentData } from 'libs/utils/db/dynamo-db/dynamo.interfaces';
-import { TUReportResponseInput } from 'src/api/api.service';
-import { DynamoDB } from 'aws-sdk';
-import * as _ from 'lodash';
-import { INavBar, INavBarRequest } from 'libs/transunion/update-nav-bar/nav-bar-request.interface';
+import { IGetEnrollmentData } from "libs/utils/db/dynamo-db/dynamo.interfaces";
+import { TUReportResponseInput } from "src/api/api.service";
+import { DynamoDB } from "aws-sdk";
+import * as _ from "lodash";
+import { INavBar, INavBarRequest } from "libs/transunion/update-nav-bar/nav-bar-request.interface";
 
-const db = new DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: 'us-east-2' });
+const db = new DynamoDB.DocumentClient({ apiVersion: "2012-08-10", region: "us-east-2" });
 
 const tableName = process.env.APPTABLE;
 
@@ -19,8 +19,8 @@ export const getAllItemsInDB = async () => {
   do {
     items = await db.scan(params).promise();
     items.Items.forEach((item) => scanResults.push(item));
-    params['ExclusiveStartKey'] = items.LastEvaluatedKey;
-  } while (typeof items.LastEvaluatedKey != 'undefined');
+    params["ExclusiveStartKey"] = items.LastEvaluatedKey;
+  } while (typeof items.LastEvaluatedKey != "undefined");
 
   return scanResults;
 };
@@ -49,13 +49,14 @@ export const getAllEnrollmentItemsInDB = async (): Promise<IGetEnrollmentData[]>
         });
       }
     });
-    params['ExclusiveStartKey'] = items.LastEvaluatedKey;
-  } while (typeof items.LastEvaluatedKey != 'undefined');
+    params["ExclusiveStartKey"] = items.LastEvaluatedKey;
+  } while (typeof items.LastEvaluatedKey != "undefined");
 
   return scanResults;
 };
 
-export const getItemsInDB = (id) => {
+export const getItemsInDB = (id: string) => {
+  if (!id) return;
   const params = {
     Key: {
       id: id,
@@ -84,21 +85,21 @@ export const updateFulfillReport = (
       id: id,
     },
     // ConditionExpression: 'attribute_exists(queryParam.tableId)',
-    UpdateExpression: 'SET #a.#t.#fo = :fo, #a.#t.#fs = :fs, #a.#t.#bk = :bk, updatedAt = :m',
+    UpdateExpression: "SET #a.#t.#fo = :fo, #a.#t.#fs = :fs, #a.#t.#bk = :bk, updatedAt = :m",
     ExpressionAttributeNames: {
-      '#a': 'agencies',
-      '#t': 'transunion',
-      '#fo': 'fulfilledOn',
-      '#fs': 'fulfillVantageScore',
-      '#bk': 'serviceBundleFulfillmentKey',
+      "#a": "agencies",
+      "#t": "transunion",
+      "#fo": "fulfilledOn",
+      "#fs": "fulfillVantageScore",
+      "#bk": "serviceBundleFulfillmentKey",
     },
     ExpressionAttributeValues: {
-      ':fo': fulfillReport.fulfilledOn,
-      ':fs': fulfillReport.fulfillVantageScore,
-      ':bk': fulfillReport.serviceBundleFulfillmentKey,
-      ':m': timeStamp,
+      ":fo": fulfillReport.fulfilledOn,
+      ":fs": fulfillReport.fulfillVantageScore,
+      ":bk": fulfillReport.serviceBundleFulfillmentKey,
+      ":m": timeStamp,
     },
-    ReturnValues: 'UPDATED_NEW',
+    ReturnValues: "UPDATED_NEW",
   };
 
   return db
@@ -116,19 +117,19 @@ export const updateDisputeAcknowledgements = (id: string) => {
       id: id,
     },
     // ConditionExpression: 'attribute_exists(queryParam.tableId)',
-    UpdateExpression: 'SET #a.#t.#at = :at, #a.#t.#ao = :ao, updatedAt = :m',
+    UpdateExpression: "SET #a.#t.#at = :at, #a.#t.#ao = :ao, updatedAt = :m",
     ExpressionAttributeNames: {
-      '#a': 'agencies',
-      '#t': 'transunion',
-      '#at': 'acknowledgedDisputeTerms',
-      '#ao': 'acknowledgedDisputeTermsOn',
+      "#a": "agencies",
+      "#t": "transunion",
+      "#at": "acknowledgedDisputeTerms",
+      "#ao": "acknowledgedDisputeTermsOn",
     },
     ExpressionAttributeValues: {
-      ':at': true,
-      ':ao': timeStamp,
-      ':m': timeStamp,
+      ":at": true,
+      ":ao": timeStamp,
+      ":m": timeStamp,
     },
-    ReturnValues: 'UPDATED_NEW',
+    ReturnValues: "UPDATED_NEW",
   };
 
   return db
@@ -139,16 +140,16 @@ export const updateDisputeAcknowledgements = (id: string) => {
 };
 
 export const updateDynamoDB = (params: DynamoDB.DocumentClient.UpdateItemInput) => {
-  console.log('params: ==> ', params);
+  console.log("params: ==> ", params);
   return db
     .update(params)
     .promise()
     .then((res) => {
-      console.log('update Nav Bar ', JSON.stringify(res));
+      console.log("update Nav Bar ", JSON.stringify(res));
       return res;
     })
     .catch((err) => {
-      console.log('update Nav Bar err ', err);
+      console.log("update Nav Bar err ", err);
       return err;
     });
 };
@@ -170,15 +171,15 @@ export const updateNavBarBadges = (payload: INavBarRequest) => {
     Key: {
       id: id,
     },
-    UpdateExpression: 'SET #n = :n, updatedAt = :m',
+    UpdateExpression: "SET #n = :n, updatedAt = :m",
     ExpressionAttributeNames: {
-      '#n': 'navBar',
+      "#n": "navBar",
     },
     ExpressionAttributeValues: {
-      ':n': merged,
-      ':m': timeStamp,
+      ":n": merged,
+      ":m": timeStamp,
     },
-    ReturnValues: 'UPDATED_NEW',
+    ReturnValues: "UPDATED_NEW",
   };
   return updateDynamoDB(params);
 };
@@ -192,16 +193,16 @@ export const updateNavbarDisputesBadge = (payload: INavBarRequest) => {
     Key: {
       id: id,
     },
-    UpdateExpression: 'SET #n.#d = :d, updatedAt = :m',
+    UpdateExpression: "SET #n.#d = :d, updatedAt = :m",
     ExpressionAttributeNames: {
-      '#n': 'navBar',
-      '#d': 'disputes',
+      "#n": "navBar",
+      "#d": "disputes",
     },
     ExpressionAttributeValues: {
-      ':d': navBar.disputes || { badge: false },
-      ':m': timeStamp,
+      ":d": navBar.disputes || { badge: false },
+      ":m": timeStamp,
     },
-    ReturnValues: 'UPDATED_NEW',
+    ReturnValues: "UPDATED_NEW",
   };
   return updateDynamoDB(params);
 };
@@ -229,26 +230,26 @@ export const updateEnrollmentStatus = (
     #nsm = :nsm,
     updatedAt = :m`,
     ExpressionAttributeNames: {
-      '#s': 'status',
-      '#sr': 'statusReason',
-      '#srd': 'statusReasonDescription',
-      '#lsm': 'lastStatusModifiedOn',
-      '#nsm': 'nextStatusModifiedOn',
-      '#a': 'agencies',
-      '#t': 'transunion',
-      '#en': 'enrolled',
-      '#den': 'disputeEnrolled',
+      "#s": "status",
+      "#sr": "statusReason",
+      "#srd": "statusReasonDescription",
+      "#lsm": "lastStatusModifiedOn",
+      "#nsm": "nextStatusModifiedOn",
+      "#a": "agencies",
+      "#t": "transunion",
+      "#en": "enrolled",
+      "#den": "disputeEnrolled",
     },
     ExpressionAttributeValues: {
-      ':s': status,
-      ':sr': status,
-      ':srd': statusReasonDescription,
-      ':lsm': timeStamp,
-      ':nsm': -1,
-      ':en': enrolled,
-      ':m': timeStamp,
+      ":s": status,
+      ":sr": status,
+      ":srd": statusReasonDescription,
+      ":lsm": timeStamp,
+      ":nsm": -1,
+      ":en": enrolled,
+      ":m": timeStamp,
     },
-    ReturnValues: 'UPDATED_NEW',
+    ReturnValues: "UPDATED_NEW",
   };
 
   return db
