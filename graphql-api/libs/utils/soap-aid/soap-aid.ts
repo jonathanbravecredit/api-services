@@ -1,17 +1,17 @@
-import { IRequestOptions } from 'libs/interfaces';
-import * as https from 'https';
-import * as fastXml from 'fast-xml-parser';
-import axios from 'axios';
-import TransactionLogger from 'libs/utils/db/logger/logger-transactions';
+import { IRequestOptions } from "libs/interfaces";
+import * as https from "https";
+import * as fastXml from "fast-xml-parser";
+import axios from "axios";
+import TransactionLogger from "libs/utils/db/logger/logger-transactions";
 
 const transactionLogger = new TransactionLogger();
 const tuEnv = process.env.TU_ENV;
 const tuUrl =
-  tuEnv === 'dev' || tuEnv === 'staging'
-    ? 'https://cc2ws-live.sd.demo.truelink.com/wcf/CC2.svc'
-    : 'https://consumerconnectws.tui.transunion.com/wcf/CC2.svc';
+  tuEnv === "dev" || tuEnv === "staging"
+    ? "https://cc2ws-live.ctf.tuint.com/wcf/CC2.svc"
+    : "https://consumerconnectws.tui.transunion.com/wcf/CC2.svc";
 const tuHost =
-  tuEnv === 'dev' || tuEnv === 'staging' ? 'cc2ws-live.sd.demo.truelink.com' : 'consumerconnectws.tui.transunion.com';
+  tuEnv === "dev" || tuEnv === "staging" ? "cc2ws-live.ctf.tuint.com" : "consumerconnectws.tui.transunion.com";
 /**
  * Class to help create and parse payloads for requests to Transunion SOAP service
  * 1. Takes in unique parsers, formatters(messages, and xml), and payload generators (optional)
@@ -27,7 +27,7 @@ export class SoapAid {
   parser: (
     xmlData: string,
     options?: Partial<fastXml.X2jOptions>,
-    validationOptions?: boolean | Partial<fastXml.validationOptions>,
+    validationOptions?: boolean | Partial<fastXml.validationOptions>
   ) => any;
   cbMsg: (code: string, username: string, message: string) => string;
   cbXml: (msg: any) => string;
@@ -41,7 +41,7 @@ export class SoapAid {
     parser: (
       xmlData: string,
       options?: Partial<fastXml.X2jOptions>,
-      validationOptions?: boolean | Partial<fastXml.validationOptions>,
+      validationOptions?: boolean | Partial<fastXml.validationOptions>
     ) => any = fastXml.parse,
     cbMsg: (code: string, username: string, message: any) => any,
     cbXml: (msg: any) => string,
@@ -49,7 +49,7 @@ export class SoapAid {
       return a;
     },
     envUrl: string = tuUrl,
-    host: string = tuHost,
+    host: string = tuHost
   ) {
     this.parser = parser;
     this.cbMsg = cbMsg;
@@ -79,9 +79,9 @@ export class SoapAid {
    */
   createPackage(code: string, username: string, message: string): { msg: string; xml: string } {
     this.msg = this.cbMsg(code, username, message);
-    console.log('createPackage:msg ===> ', JSON.stringify(this.msg));
+    console.log("createPackage:msg ===> ", JSON.stringify(this.msg));
     this.xml = this.cbXml(this.msg);
-    console.log('createPackage:xml ===> ', this.xml);
+    console.log("createPackage:xml ===> ", this.xml);
     return {
       msg: this.msg,
       xml: this.xml,
@@ -99,18 +99,18 @@ export class SoapAid {
   createRequestPayload(httpsAgent: https.Agent, auth: string, data: string, SOAPAction: string): IRequestOptions {
     this.requestPayload = {
       url: this.envUrl,
-      method: 'POST',
+      method: "POST",
       data: data,
       httpsAgent,
       headers: {
-        'Accept-Encoding': 'gzip,deflate',
-        'Content-Type': 'text/xml;charset=UTF-8',
+        "Accept-Encoding": "gzip,deflate",
+        "Content-Type": "text/xml;charset=UTF-8",
         SOAPAction: `https://consumerconnectws.tui.transunion.com/ICC2/${SOAPAction}`,
         Authorization: auth,
-        'Content-Length': data.length,
+        "Content-Length": data.length,
         Host: this.host,
-        Connection: 'Keep-Alive',
-        'User-Agent': 'Apache-HttpClient/4.5.2 (Java/1.8.0_181)',
+        Connection: "Keep-Alive",
+        "User-Agent": "Apache-HttpClient/4.5.2 (Java/1.8.0_181)",
       },
     };
     return this.requestPayload;
@@ -128,11 +128,11 @@ export class SoapAid {
     try {
       const res = await axios({ ...request });
       const results = this.parser(res.data, parserOptions);
-      const l1 = transactionLogger.createTransaction('soap_aid', 'parser_results', JSON.stringify(results));
+      const l1 = transactionLogger.createTransaction("soap_aid", "parser_results", JSON.stringify(results));
       await transactionLogger.logger.create(l1);
       return results;
     } catch (err) {
-      console.log('processRequest:err ===> ', err);
+      console.log("processRequest:err ===> ", err);
       return err;
     }
   }
@@ -148,10 +148,10 @@ export class SoapAid {
   async processMockRequest<T>(mock: string, parserOptions: Partial<fastXml.X2jOptions>): Promise<T> {
     try {
       const results = this.parser(mock, parserOptions);
-      console.log('MOCK parsed response ==> ', JSON.stringify(results));
+      console.log("MOCK parsed response ==> ", JSON.stringify(results));
       return results;
     } catch (err) {
-      console.log('processRequest:err ===> ', err);
+      console.log("processRequest:err ===> ", err);
       return err;
     }
   }
@@ -174,7 +174,7 @@ export class SoapAid {
     auth: string,
     prepayload: any,
     action: string,
-    parserOptions: Partial<fastXml.X2jOptions>,
+    parserOptions: Partial<fastXml.X2jOptions>
   ): Promise<T> {
     const payload = this.createPayload(prepayload);
     const { msg, xml } = this.createPackage(accountCode, username, JSON.stringify(payload));
@@ -206,16 +206,16 @@ export class SoapAid {
     auth: string,
     prepayload: any,
     action: string,
-    parserOptions: Partial<fastXml.X2jOptions>,
+    parserOptions: Partial<fastXml.X2jOptions>
   ): Promise<any> {
     const payload = this.createPayload(prepayload);
     const { msg, xml } = this.createPackage(accountCode, username, JSON.stringify(payload));
     const request = this.createRequestPayload(agent, auth, xml, action);
     if (!msg || !xml || !request || !payload) throw new Error(`Missing msg:${msg}, xml:${xml}, or request:${request}`);
-    console.log('your MOCK payload is ===> ', payload);
-    console.log('your MOCK message is ===> ', msg);
-    console.log('your MOCK xml is ===> ', xml);
-    console.log('your MOCK request is ===> ', request);
+    console.log("your MOCK payload is ===> ", payload);
+    console.log("your MOCK message is ===> ", msg);
+    console.log("your MOCK xml is ===> ", xml);
+    console.log("your MOCK request is ===> ", request);
     try {
       return;
     } catch (err) {
