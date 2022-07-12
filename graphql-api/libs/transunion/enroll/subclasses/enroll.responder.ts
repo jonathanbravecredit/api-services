@@ -8,7 +8,7 @@ import { ServiceProductParser as spp } from 'libs/transunion/parsers/ServiceProd
 import { IEnrollResponse, IEnrollServiceProductResponse } from 'libs/transunion/enroll/enroll.interface';
 import { MergeReport } from '@bravecredit/brave-sdk';
 
-export class EnrollResponder extends TUResponder<IEnrollResponse, any> {
+export class EnrollResponder extends TUResponder<IEnrollResponse, UpdateAppDataInput> {
   public mergeReport: MergeReport;
   public mergeReportSPO: string;
 
