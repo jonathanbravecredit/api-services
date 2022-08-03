@@ -15,42 +15,42 @@ custom:
     external: all
     linting: false
     aliases:
-      - 'libs': libs
-      - 'src': src
-      - 'tests': tests
-  snsProxy: !Sub '${self:provider.stage}-api-endpoints-sns-proxy'
+      - "libs": libs
+      - "src": src
+      - "tests": tests
+  snsProxy: !Sub "${self:provider.stage}-api-endpoints-sns-proxy"
   settings:
     GRAPHQL_APIENDPOINTOUTPUT: !ImportValue GraphQLAPIEndpointOutput
     IDENTITY_IDS:
-      dev: 'us-east-2:69169c15-c0c4-4e0b-886c-4afab307e612'
-      qa: 'us-east-2:69169c15-c0c4-4e0b-886c-4afab307e612'
-      staging: 'us-east-2:211dd2a1-db37-4632-a4da-d05c08a80c47'
-      prod: 'us-east-2:ea31caf7-0945-4607-a3c4-0c9942967a32'
+      dev: "us-east-2:69169c15-c0c4-4e0b-886c-4afab307e612"
+      qa: "us-east-2:69169c15-c0c4-4e0b-886c-4afab307e612"
+      staging: "us-east-2:211dd2a1-db37-4632-a4da-d05c08a80c47"
+      prod: "us-east-2:ea31caf7-0945-4607-a3c4-0c9942967a32"
     POOL_IDS:
-      dev: 'us-east-2_beTcykTM9'
-      qa: 'us-east-2_beTcykTM9'
-      staging: 'us-east-2_80pbK9Kx7'
-      prod: 'us-east-2_R22DawoAR'
+      dev: "us-east-2_beTcykTM9"
+      qa: "us-east-2_beTcykTM9"
+      staging: "us-east-2_80pbK9Kx7"
+      prod: "us-east-2_R22DawoAR"
     GRAPHQL_API:
-      dev: 'rr5wtr4ev5exlbutrkih3r5lhq'
-      qa: 'rr5wtr4ev5exlbutrkih3r5lhq'
-      staging: 'mza6aevpsvef5btykbyjp5ffdm'
-      prod: '4tpaga7rzjayhk75opsmpeurme'
+      dev: "rr5wtr4ev5exlbutrkih3r5lhq"
+      qa: "rr5wtr4ev5exlbutrkih3r5lhq"
+      staging: "mza6aevpsvef5btykbyjp5ffdm"
+      prod: "4tpaga7rzjayhk75opsmpeurme"
     GRAPHQL_ENDPOINT:
-      dev: '24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com'
-      qa: '24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com'
-      staging: 'xte3obhdpfbhfbxekxpfa2tcwq.appsync-api.us-east-2.amazonaws.com'
-      prod: 'krybm5pc3nbgdk4zwgcva2i4va.appsync-api.us-east-2.amazonaws.com'
+      dev: "24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com"
+      qa: "24ga46y3gbgodogktqwhh7vryq.appsync-api.us-east-2.amazonaws.com"
+      staging: "xte3obhdpfbhfbxekxpfa2tcwq.appsync-api.us-east-2.amazonaws.com"
+      prod: "krybm5pc3nbgdk4zwgcva2i4va.appsync-api.us-east-2.amazonaws.com"
     APPDATA_STREAMS:
-      dev: 'rr5wtr4ev5exlbutrkih3r5lhq:GetAtt:AppDataTable:StreamArn'
-      qa: 'rr5wtr4ev5exlbutrkih3r5lhq:GetAtt:AppDataTable:StreamArn'
-      staging: 'mza6aevpsvef5btykbyjp5ffdm:GetAtt:AppDataTable:StreamArn'
-      prod: '4tpaga7rzjayhk75opsmpeurme:GetAtt:AppDataTable:StreamArn'
+      dev: "rr5wtr4ev5exlbutrkih3r5lhq:GetAtt:AppDataTable:StreamArn"
+      qa: "rr5wtr4ev5exlbutrkih3r5lhq:GetAtt:AppDataTable:StreamArn"
+      staging: "mza6aevpsvef5btykbyjp5ffdm:GetAtt:AppDataTable:StreamArn"
+      prod: "4tpaga7rzjayhk75opsmpeurme:GetAtt:AppDataTable:StreamArn"
     APPTABLES:
-      dev: 'AppData-rr5wtr4ev5exlbutrkih3r5lhq-dev'
-      qa: 'AppData-rr5wtr4ev5exlbutrkih3r5lhq-dev'
-      staging: 'AppData-mza6aevpsvef5btykbyjp5ffdm-staging'
-      prod: 'AppData-4tpaga7rzjayhk75opsmpeurme-prod'
+      dev: "AppData-rr5wtr4ev5exlbutrkih3r5lhq-dev"
+      qa: "AppData-rr5wtr4ev5exlbutrkih3r5lhq-dev"
+      staging: "AppData-mza6aevpsvef5btykbyjp5ffdm-staging"
+      prod: "AppData-4tpaga7rzjayhk75opsmpeurme-prod"
 
 provider:
   name: aws
@@ -62,20 +62,20 @@ provider:
   environment:
     NODE_ENV: ${opt:stage, 'dev'}
     TU_ENV: ${self:provider.stage}
-    TU_SECRET_LOCATION: '${self:provider.stage}/agency-services/transunion'
-    API_ERROR_LOG_TABLE: 'APIErrorLog'
-    API_TRANSACTION_LOG_TABLE: 'APITransactionLog'
-    DISPUTES_TABLE: 'Disputes'
-    CREDIT_BUREAU_TABLE: 'CreditBureauReportResults'
-    INVESTIGATION_RESULTS_TABLE: 'InvestigationResults'
-    CREDIT_SCORE_UPDATES_TABLE: 'CreditScoreTrackings'
-    CREDIT_SCORE_HISTORY_TABLE: 'CreditScores'
-    TRANSACTIONS_DATA_TABLE: 'TransactionsData'
-    ACCOUNT_ID: !Sub '${AWS::AccountId}'
-    IDENTITY_ID: '${self:custom.settings.IDENTITY_IDS.${opt:stage}}'
-    POOL_ID: '${self:custom.settings.POOL_IDS.${opt:stage}}'
-    APPSYNC_ENDPOINT: '${self:custom.settings.GRAPHQL_ENDPOINT.${opt:stage}}'
-    APPSYNC_API: '${self:custom.settings.GRAPHQL_API.${opt:stage}}'
+    TU_SECRET_LOCATION: "${self:provider.stage}/agency-services/transunion"
+    API_ERROR_LOG_TABLE: "APIErrorLog"
+    API_TRANSACTION_LOG_TABLE: "APITransactionLog"
+    DISPUTES_TABLE: "Disputes"
+    CREDIT_BUREAU_TABLE: "CreditBureauReportResults"
+    INVESTIGATION_RESULTS_TABLE: "InvestigationResults"
+    CREDIT_SCORE_UPDATES_TABLE: "CreditScoreTrackings"
+    CREDIT_SCORE_HISTORY_TABLE: "CreditScores"
+    TRANSACTIONS_DATA_TABLE: "TransactionsData"
+    ACCOUNT_ID: !Sub "${AWS::AccountId}"
+    IDENTITY_ID: "${self:custom.settings.IDENTITY_IDS.${opt:stage}}"
+    POOL_ID: "${self:custom.settings.POOL_IDS.${opt:stage}}"
+    APPSYNC_ENDPOINT: "${self:custom.settings.GRAPHQL_ENDPOINT.${opt:stage}}"
+    APPSYNC_API: "${self:custom.settings.GRAPHQL_API.${opt:stage}}"
     TU_SNS_PROXY_ARN: !Ref TransunionSNSTopic
     CREDITREPORTS_SNS_PROXY_ARN: !ImportValue credit-report-service-resources-sns-arn
     APPTABLE: ${self:custom.settings.APPTABLES.${opt:stage}}
@@ -86,27 +86,27 @@ provider:
       - !Ref SubnetAPrivate
       - !Ref SubnetBPrivate
   iamRoleStatements:
-    - Effect: 'Allow'
+    - Effect: "Allow"
       Action:
         - secretsmanager:GetSecretValue
       Resource:
-        - '*'
+        - "*"
     - Effect: Allow
       Resource:
-        - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Query/*'
-        - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Mutation/*'
-        - !Sub 'arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Subscription/*'
-      Action: 'appsync:GraphQL'
-    - Effect: 'Allow'
-      Action: 'sns:Publish'
-      Resource: '*'
-    - Effect: 'Allow'
+        - !Sub "arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Query/*"
+        - !Sub "arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Mutation/*"
+        - !Sub "arn:aws:appsync:${AWS::Region}:${AWS::AccountId}:apis/${self:custom.settings.GRAPHQL_API.${opt:stage}}/types/Subscription/*"
+      Action: "appsync:GraphQL"
+    - Effect: "Allow"
+      Action: "sns:Publish"
+      Resource: "*"
+    - Effect: "Allow"
       Action:
         - sqs:ReceiveMessage
         - sqs:DeleteMessage
         - sqs:GetQueueAttributes
-      Resource: '*'
-    - Effect: 'Allow'
+      Resource: "*"
+    - Effect: "Allow"
       Action:
         - dynamodb:ListStreams
         - dynamodb:DescribeTable
@@ -117,15 +117,15 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource:
-        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.API_ERROR_LOG_TABLE}'
-        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.API_TRANSACTION_LOG_TABLE}'
-        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.DISPUTES_TABLE}'
-        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.APPTABLE}'
-        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_BUREAU_TABLE}'
-        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.INVESTIGATION_RESULTS_TABLE}'
-        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_SCORE_UPDATES_TABLE}'
-        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_SCORE_HISTORY_TABLE}'
-        - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.TRANSACTIONS_DATA_TABLE}'
+        - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.API_ERROR_LOG_TABLE}"
+        - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.API_TRANSACTION_LOG_TABLE}"
+        - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.DISPUTES_TABLE}"
+        - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.APPTABLE}"
+        - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_BUREAU_TABLE}"
+        - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.INVESTIGATION_RESULTS_TABLE}"
+        - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_SCORE_UPDATES_TABLE}"
+        - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.CREDIT_SCORE_HISTORY_TABLE}"
+        - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${self:provider.environment.TRANSACTIONS_DATA_TABLE}"
 
 layers:
   TuCerts:
@@ -142,8 +142,8 @@ functions:
     timeout: 60
     layers:
       - { Ref: TuCertsLambdaLayer }
-    events:
-      - schedule: cron(0 16 * * ? *)
+    # events:
+    #   - schedule: cron(0 16 * * ? *)
 
   monitorInvestigationResults:
     handler: src/monitors/monitorInvestigationResults.main
@@ -153,7 +153,7 @@ functions:
           type: dynamodb
           batchSize: 100
           startingPosition: LATEST
-          arn: { 'Fn::GetAtt': ['InvestigationResults', 'StreamArn'] }
+          arn: { "Fn::GetAtt": ["InvestigationResults", "StreamArn"] }
 
   monitorFulfills:
     handler: src/monitors/monitorFulfills.main
@@ -164,7 +164,7 @@ functions:
           batchSize: 100
           startingPosition: LATEST
           arn:
-            Fn::ImportValue: '${self:custom.settings.APPDATA_STREAMS.${opt:stage}}'
+            Fn::ImportValue: "${self:custom.settings.APPDATA_STREAMS.${opt:stage}}"
 
   # Update credit scores and reports flow
   creditScoreUpdatesService:
@@ -173,8 +173,8 @@ functions:
     memorySize: 1024
     layers:
       - { Ref: TuCertsLambdaLayer }
-    events:
-      - schedule: cron(0 16 5 * ? *)
+    # events:
+    #   - schedule: cron(0 16 5 * ? *)
   creditScoreUpdatesManual:
     handler: src/handlers/transunion/creditScoreUpdatesManual.main
     timeout: 900
@@ -240,7 +240,7 @@ functions:
           batchSize: 100
           startingPosition: LATEST
           arn:
-            Fn::ImportValue: '${self:custom.settings.APPDATA_STREAMS.${opt:stage}}'
+            Fn::ImportValue: "${self:custom.settings.APPDATA_STREAMS.${opt:stage}}"
 
   # SNS_PROXY_ARN: !ImportValue ${self:custom.snsProxy}
 
@@ -250,15 +250,15 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: 'userId'
-            AttributeType: 'S'
-          - AttributeName: 'bureauId'
-            AttributeType: 'S'
+          - AttributeName: "userId"
+            AttributeType: "S"
+          - AttributeName: "bureauId"
+            AttributeType: "S"
         KeySchema:
-          - AttributeName: 'userId'
-            KeyType: 'HASH'
-          - AttributeName: 'bureauId'
-            KeyType: 'RANGE'
+          - AttributeName: "userId"
+            KeyType: "HASH"
+          - AttributeName: "bureauId"
+            KeyType: "RANGE"
         BillingMode: PAY_PER_REQUEST
         TableName: CreditScoreTrackings
         StreamSpecification:
@@ -267,15 +267,15 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: 'id'
-            AttributeType: 'S'
-          - AttributeName: 'userId'
-            AttributeType: 'S'
+          - AttributeName: "id"
+            AttributeType: "S"
+          - AttributeName: "userId"
+            AttributeType: "S"
         KeySchema:
-          - AttributeName: 'id'
-            KeyType: 'HASH'
-          - AttributeName: 'userId'
-            KeyType: 'RANGE'
+          - AttributeName: "id"
+            KeyType: "HASH"
+          - AttributeName: "userId"
+            KeyType: "RANGE"
         BillingMode: PAY_PER_REQUEST
         TableName: InvestigationResults
         StreamSpecification:
@@ -284,15 +284,15 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: 'id'
-            AttributeType: 'S'
-          - AttributeName: 'userId'
-            AttributeType: 'S'
+          - AttributeName: "id"
+            AttributeType: "S"
+          - AttributeName: "userId"
+            AttributeType: "S"
         KeySchema:
-          - AttributeName: 'id'
-            KeyType: 'HASH'
-          - AttributeName: 'userId'
-            KeyType: 'RANGE'
+          - AttributeName: "id"
+            KeyType: "HASH"
+          - AttributeName: "userId"
+            KeyType: "RANGE"
         BillingMode: PAY_PER_REQUEST
         TableName: CreditBureauReportResults
         StreamSpecification:
@@ -301,15 +301,15 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: 'id'
-            AttributeType: 'S'
-          - AttributeName: 'disputeId'
-            AttributeType: 'S'
+          - AttributeName: "id"
+            AttributeType: "S"
+          - AttributeName: "disputeId"
+            AttributeType: "S"
         KeySchema:
-          - AttributeName: 'id'
-            KeyType: 'HASH'
-          - AttributeName: 'disputeId'
-            KeyType: 'RANGE'
+          - AttributeName: "id"
+            KeyType: "HASH"
+          - AttributeName: "disputeId"
+            KeyType: "RANGE"
         BillingMode: PAY_PER_REQUEST
         TableName: Disputes
         StreamSpecification:
@@ -318,15 +318,15 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: 'userId'
-            AttributeType: 'S'
-          - AttributeName: 'errorId'
-            AttributeType: 'S'
+          - AttributeName: "userId"
+            AttributeType: "S"
+          - AttributeName: "errorId"
+            AttributeType: "S"
         KeySchema:
-          - AttributeName: 'userId'
-            KeyType: 'HASH'
-          - AttributeName: 'errorId'
-            KeyType: 'RANGE'
+          - AttributeName: "userId"
+            KeyType: "HASH"
+          - AttributeName: "errorId"
+            KeyType: "RANGE"
         BillingMode: PAY_PER_REQUEST
         TableName: APIErrorLog
         StreamSpecification:
@@ -335,167 +335,167 @@ resources:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:
-          - AttributeName: 'userId'
-            AttributeType: 'S'
-          - AttributeName: 'transactionId'
-            AttributeType: 'S'
+          - AttributeName: "userId"
+            AttributeType: "S"
+          - AttributeName: "transactionId"
+            AttributeType: "S"
         KeySchema:
-          - AttributeName: 'userId'
-            KeyType: 'HASH'
-          - AttributeName: 'transactionId'
-            KeyType: 'RANGE'
+          - AttributeName: "userId"
+            KeyType: "HASH"
+          - AttributeName: "transactionId"
+            KeyType: "RANGE"
         BillingMode: PAY_PER_REQUEST
         TableName: APITransactionLog
         StreamSpecification:
           StreamViewType: NEW_AND_OLD_IMAGES
 
     VPC:
-      Type: 'AWS::EC2::VPC'
+      Type: "AWS::EC2::VPC"
       Properties:
-        CidrBlock: !Sub '10.0.0.0/16'
+        CidrBlock: !Sub "10.0.0.0/16"
         EnableDnsSupport: true
         EnableDnsHostnames: true
         InstanceTenancy: default
     InternetGateway:
-      Type: 'AWS::EC2::InternetGateway'
+      Type: "AWS::EC2::InternetGateway"
       Properties:
         Tags:
           - Key: Name
-            Value: !Sub '10.0.0.0/16'
+            Value: !Sub "10.0.0.0/16"
     VPCGatewayAttachment:
-      Type: 'AWS::EC2::VPCGatewayAttachment'
+      Type: "AWS::EC2::VPCGatewayAttachment"
       Properties:
         VpcId: !Ref VPC
         InternetGatewayId: !Ref InternetGateway
 
     # public and private subnets
     SubnetAPublic:
-      Type: 'AWS::EC2::Subnet'
+      Type: "AWS::EC2::Subnet"
       Properties:
-        AvailabilityZone: !Select [0, !GetAZs '']
-        CidrBlock: !Sub '10.0.0.0/20'
+        AvailabilityZone: !Select [0, !GetAZs ""]
+        CidrBlock: !Sub "10.0.0.0/20"
         MapPublicIpOnLaunch: true
         VpcId: !Ref VPC
     SubnetAPrivate:
-      Type: 'AWS::EC2::Subnet'
+      Type: "AWS::EC2::Subnet"
       Properties:
-        AvailabilityZone: !Select [0, !GetAZs '']
-        CidrBlock: !Sub '10.0.128.0/20'
+        AvailabilityZone: !Select [0, !GetAZs ""]
+        CidrBlock: !Sub "10.0.128.0/20"
         VpcId: !Ref VPC
     SubnetBPublic:
-      Type: 'AWS::EC2::Subnet'
+      Type: "AWS::EC2::Subnet"
       Properties:
-        AvailabilityZone: !Select [1, !GetAZs '']
-        CidrBlock: !Sub '10.0.16.0/20'
+        AvailabilityZone: !Select [1, !GetAZs ""]
+        CidrBlock: !Sub "10.0.16.0/20"
         MapPublicIpOnLaunch: true
         VpcId: !Ref VPC
     SubnetBPrivate:
-      Type: 'AWS::EC2::Subnet'
+      Type: "AWS::EC2::Subnet"
       Properties:
-        AvailabilityZone: !Select [1, !GetAZs '']
-        CidrBlock: !Sub '10.0.144.0/20'
+        AvailabilityZone: !Select [1, !GetAZs ""]
+        CidrBlock: !Sub "10.0.144.0/20"
         VpcId: !Ref VPC
 
     # public and private route tables
     RouteTableAPublic:
-      Type: 'AWS::EC2::RouteTable'
+      Type: "AWS::EC2::RouteTable"
       Properties:
         VpcId: !Ref VPC
     RouteTableAPrivate:
-      Type: 'AWS::EC2::RouteTable'
+      Type: "AWS::EC2::RouteTable"
       Properties:
         VpcId: !Ref VPC
     RouteTableBPublic:
-      Type: 'AWS::EC2::RouteTable'
+      Type: "AWS::EC2::RouteTable"
       Properties:
         VpcId: !Ref VPC
     RouteTableBPrivate:
-      Type: 'AWS::EC2::RouteTable'
+      Type: "AWS::EC2::RouteTable"
       Properties:
         VpcId: !Ref VPC
 
     # public and private table associations
     RouteTableAssociationAPublic:
-      Type: 'AWS::EC2::SubnetRouteTableAssociation'
+      Type: "AWS::EC2::SubnetRouteTableAssociation"
       Properties:
         SubnetId: !Ref SubnetAPublic
         RouteTableId: !Ref RouteTableAPublic
     RouteTableAssociationAPrivate:
-      Type: 'AWS::EC2::SubnetRouteTableAssociation'
+      Type: "AWS::EC2::SubnetRouteTableAssociation"
       Properties:
         SubnetId: !Ref SubnetAPrivate
         RouteTableId: !Ref RouteTableAPrivate
     RouteTableAssociationBPublic:
-      Type: 'AWS::EC2::SubnetRouteTableAssociation'
+      Type: "AWS::EC2::SubnetRouteTableAssociation"
       Properties:
         SubnetId: !Ref SubnetBPublic
         RouteTableId: !Ref RouteTableBPublic
     RouteTableAssociationBPrivate:
-      Type: 'AWS::EC2::SubnetRouteTableAssociation'
+      Type: "AWS::EC2::SubnetRouteTableAssociation"
       Properties:
         SubnetId: !Ref SubnetBPrivate
         RouteTableId: !Ref RouteTableBPrivate
 
     # public internet routes
     RouteTablePublicAInternetRoute:
-      Type: 'AWS::EC2::Route'
+      Type: "AWS::EC2::Route"
       DependsOn: VPCGatewayAttachment
       Properties:
         RouteTableId: !Ref RouteTableAPublic
-        DestinationCidrBlock: '0.0.0.0/0'
+        DestinationCidrBlock: "0.0.0.0/0"
         GatewayId: !Ref InternetGateway
     RouteTablePublicBInternetRoute:
-      Type: 'AWS::EC2::Route'
+      Type: "AWS::EC2::Route"
       DependsOn: VPCGatewayAttachment
       Properties:
         RouteTableId: !Ref RouteTableBPublic
-        DestinationCidrBlock: '0.0.0.0/0'
+        DestinationCidrBlock: "0.0.0.0/0"
         GatewayId: !Ref InternetGateway
 
     # elastic IPs
     EIPA:
-      Type: 'AWS::EC2::EIP'
+      Type: "AWS::EC2::EIP"
       Properties:
         Domain: vpc
     EIPB:
-      Type: 'AWS::EC2::EIP'
+      Type: "AWS::EC2::EIP"
       Properties:
         Domain: vpc
     EIPC:
-      Type: 'AWS::EC2::EIP'
+      Type: "AWS::EC2::EIP"
       Properties:
         Domain: vpc
 
     # nat gateways and private routes
     NatGatewayA:
-      Type: 'AWS::EC2::NatGateway'
+      Type: "AWS::EC2::NatGateway"
       Properties:
-        AllocationId: !GetAtt 'EIPA.AllocationId'
+        AllocationId: !GetAtt "EIPA.AllocationId"
         SubnetId: !Ref SubnetAPublic
     RouteA:
-      Type: 'AWS::EC2::Route'
+      Type: "AWS::EC2::Route"
       Properties:
         RouteTableId: !Ref RouteTableAPrivate
-        DestinationCidrBlock: '0.0.0.0/0'
+        DestinationCidrBlock: "0.0.0.0/0"
         NatGatewayId: !Ref NatGatewayA
     NatGatewayB:
-      Type: 'AWS::EC2::NatGateway'
+      Type: "AWS::EC2::NatGateway"
       Properties:
-        AllocationId: !GetAtt 'EIPB.AllocationId'
+        AllocationId: !GetAtt "EIPB.AllocationId"
         SubnetId: !Ref SubnetBPublic
     RouteB:
-      Type: 'AWS::EC2::Route'
+      Type: "AWS::EC2::Route"
       Properties:
         RouteTableId: !Ref RouteTableBPrivate
-        DestinationCidrBlock: '0.0.0.0/0'
+        DestinationCidrBlock: "0.0.0.0/0"
         NatGatewayId: !Ref NatGatewayB
 
     # security group
     NatGatewayLambdaSecurityGroup:
-      Type: 'AWS::EC2::SecurityGroup'
+      Type: "AWS::EC2::SecurityGroup"
       Properties:
         VpcId: !Ref VPC
-        GroupDescription: 'Security group for NAT Gateway Lambda'
+        GroupDescription: "Security group for NAT Gateway Lambda"
         SecurityGroupIngress:
           - IpProtocol: tcp
             FromPort: 443
@@ -514,7 +514,7 @@ resources:
 
     # Create our 'TransunionQueue' SQS queue for batch operations
     TransunionQueue:
-      Type: 'AWS::SQS::Queue'
+      Type: "AWS::SQS::Queue"
       Properties:
         QueueName: ${self:provider.stage}-${self:service}-sqs
         DelaySeconds: 3
@@ -538,24 +538,24 @@ resources:
       Type: AWS::SQS::QueuePolicy
       Properties:
         PolicyDocument:
-          Version: '2012-10-17'
+          Version: "2012-10-17"
           Statement:
-            - Sid: 'allow-sns-messages'
+            - Sid: "allow-sns-messages"
               Effect: Allow
-              Principal: '*'
+              Principal: "*"
               Resource: !GetAtt
                 - TransunionQueue
                 - Arn
-              Action: 'SQS:SendMessage'
+              Action: "SQS:SendMessage"
               Condition:
                 ArnEquals:
-                  'aws:SourceArn': !Ref TransunionSNSTopic
+                  "aws:SourceArn": !Ref TransunionSNSTopic
         Queues:
           - Ref: TransunionQueue
 
     # Create the subscription from the transunion SQS to the SNS proxy'
     TransunionQueueSubscription:
-      Type: 'AWS::SNS::Subscription'
+      Type: "AWS::SNS::Subscription"
       Properties:
         TopicArn: !Ref TransunionSNSTopic
         Endpoint: !GetAtt
@@ -567,60 +567,60 @@ resources:
             - transunionbatch
             - creditscoreupdates
             - cancelenrollment
-        RawMessageDelivery: 'true'
+        RawMessageDelivery: "true"
 
   Outputs:
     Disputes:
-      Description: 'Disputes'
+      Description: "Disputes"
       Value: !Ref Disputes
       Export:
-        Name: !Sub '${self:service}-disputes'
+        Name: !Sub "${self:service}-disputes"
     DisputesTableStreamArn:
-      Value: { 'Fn::GetAtt': ['Disputes', 'StreamArn'] }
+      Value: { "Fn::GetAtt": ["Disputes", "StreamArn"] }
       Export:
-        Name: !Sub '${self:service}-disputes-stream'
+        Name: !Sub "${self:service}-disputes-stream"
     InvestigationResults:
-      Description: 'InvestigationResults'
+      Description: "InvestigationResults"
       Value: !Ref InvestigationResults
       Export:
-        Name: !Sub '${self:service}-investigationresults'
+        Name: !Sub "${self:service}-investigationresults"
     InvestigationResultsTableStreamArn:
-      Value: { 'Fn::GetAtt': ['InvestigationResults', 'StreamArn'] }
+      Value: { "Fn::GetAtt": ["InvestigationResults", "StreamArn"] }
       Export:
-        Name: !Sub '${self:service}-investigationresults-stream'
+        Name: !Sub "${self:service}-investigationresults-stream"
     CreditBureauReportResults:
-      Description: 'CreditBureauReportResults'
+      Description: "CreditBureauReportResults"
       Value: !Ref CreditBureauReportResults
       Export:
-        Name: !Sub '${self:service}-creditbureaureportresults'
+        Name: !Sub "${self:service}-creditbureaureportresults"
     CreditBureauReportResultsTableStreamArn:
-      Value: { 'Fn::GetAtt': ['CreditBureauReportResults', 'StreamArn'] }
+      Value: { "Fn::GetAtt": ["CreditBureauReportResults", "StreamArn"] }
       Export:
-        Name: !Sub '${self:service}-creditbureau-stream'
+        Name: !Sub "${self:service}-creditbureau-stream"
     CreditScoreTrackings:
-      Description: 'CreditScoreTrackings'
+      Description: "CreditScoreTrackings"
       Value: !Ref CreditScoreTrackings
       Export:
-        Name: !Sub '${self:service}-creditscoretrackings'
+        Name: !Sub "${self:service}-creditscoretrackings"
     CreditScoreTrackingsTableStreamArn:
-      Value: { 'Fn::GetAtt': ['CreditScoreTrackings', 'StreamArn'] }
+      Value: { "Fn::GetAtt": ["CreditScoreTrackings", "StreamArn"] }
       Export:
-        Name: !Sub '${self:service}-creditscoretrackings-stream'
+        Name: !Sub "${self:service}-creditscoretrackings-stream"
     VPC:
-      Description: 'VPC'
+      Description: "VPC"
       Value: !Ref VPC
       Export:
-        Name: !Sub '${self:service}-vpc'
+        Name: !Sub "${self:service}-vpc"
     SubnetsPublic:
-      Description: 'Subnets public'
-      Value: !Join [',', [!Ref SubnetAPublic, !Ref SubnetBPublic]]
+      Description: "Subnets public"
+      Value: !Join [",", [!Ref SubnetAPublic, !Ref SubnetBPublic]]
     SubnetsPrivate:
-      Description: 'Subnets private'
-      Value: !Join [',', [!Ref SubnetAPrivate, !Ref SubnetBPrivate]]
+      Description: "Subnets private"
+      Value: !Join [",", [!Ref SubnetAPrivate, !Ref SubnetBPrivate]]
       Export:
-        Name: !Sub '${self:service}-subnets-private'
+        Name: !Sub "${self:service}-subnets-private"
     NatSecurityGroup:
-      Description: 'Nat Gateway Security Group'
-      Value: !Join [',', [!Ref NatGatewayLambdaSecurityGroup]]
+      Description: "Nat Gateway Security Group"
+      Value: !Join [",", [!Ref NatGatewayLambdaSecurityGroup]]
       Export:
-        Name: !Sub '${self:service}-vpc-natsecuritygroup'
+        Name: !Sub "${self:service}-vpc-natsecuritygroup"
