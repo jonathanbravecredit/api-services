@@ -38,13 +38,10 @@ export class FulfillResponder extends TUResponder<IFulfillResponse, UpdateAppDat
     let fulfillMergeReport;
     let fulfillVantageScore;
     let fulfilledOn = new Date().toISOString();
-    console.log("this.response in enrich: ", JSON.stringify(this.response));
     const spr = _nest.find(this.response, "ServiceProductResponse") as
       | IFulfillServiceProductResponse
       | IFulfillServiceProductResponse[];
     const key = _nest.find(this.response, "ServiceBundleFulfillmentKey") as string;
-    console.log("spr in enrich: ", JSON.stringify(spr));
-    console.log("key in enrich: ", JSON.stringify(key));
 
     if (!spr) return;
     if (spr instanceof Array) {

@@ -1,41 +1,41 @@
-import * as dayjs from 'dayjs';
-import * as https from 'https';
-import { Nested as _nest } from '@bravecredit/brave-sdk';
-import { SyncV2 } from 'libs/utils/sync/SyncV2';
-import { SoapV2 } from 'libs/utils/soap-aid/SoapV2';
-import { Payloader } from 'libs/utils/payloader/Payloader';
-import { qryGetDataForFulfill } from 'libs/queries';
-import { IGenericBundleRequest, IGenericRequest, IProxyRequest } from 'libs/interfaces';
-import { IProxyHandlerResponse } from 'libs/interfaces/api/proxy-handler.interfaces';
-import { CreditReportPublisher } from 'libs/transunion/credit-report-service/CreditReportPublisher';
-import { APIRequest } from 'libs/models/api-request.model';
-import { TUAPIProcessor } from 'libs/transunion/tu/tu-api';
-import { APIRequestKeys } from 'libs/utils/requests/requests';
-import { FulfillResponder } from 'libs/transunion/fulfill/subclasses/fulfill.responder';
-import { FulfillRequester } from 'libs/transunion/fulfill/subclasses/fulfill.requester';
-import { DobInput } from '@bravecredit/brave-sdk/dist/types/graphql-api';
+import * as dayjs from "dayjs";
+import * as https from "https";
+import { Nested as _nest } from "@bravecredit/brave-sdk";
+import { SyncV2 } from "libs/utils/sync/SyncV2";
+import { SoapV2 } from "libs/utils/soap-aid/SoapV2";
+import { Payloader } from "libs/utils/payloader/Payloader";
+import { qryGetDataForFulfill } from "libs/queries";
+import { IGenericBundleRequest, IGenericRequest, IProxyRequest } from "libs/interfaces";
+import { IProxyHandlerResponse } from "libs/interfaces/api/proxy-handler.interfaces";
+import { CreditReportPublisher } from "libs/transunion/credit-report-service/CreditReportPublisher";
+import { APIRequest } from "libs/models/api-request.model";
+import { TUAPIProcessor } from "libs/transunion/tu/tu-api";
+import { APIRequestKeys } from "libs/utils/requests/requests";
+import { FulfillResponder } from "libs/transunion/fulfill/subclasses/fulfill.responder";
+import { FulfillRequester } from "libs/transunion/fulfill/subclasses/fulfill.requester";
+import { DobInput } from "@bravecredit/brave-sdk/dist/types/graphql-api";
 import {
   IFulfillSchema,
   IFulfillGraphQLResponse,
   IFulfillResponse,
   IFulfillResult,
-} from 'libs/transunion/fulfill/fulfill.interface';
-import { MergeReport } from '@bravecredit/brave-sdk';
+} from "libs/transunion/fulfill/fulfill.interface";
+import { MergeReport } from "@bravecredit/brave-sdk";
 
 export class FulfillV3
   extends TUAPIProcessor<IFulfillSchema, IFulfillGraphQLResponse, IFulfillResponse, IFulfillResult>
   implements APIRequest
 {
   public responder: FulfillResponder;
-  public action = 'Fulfill';
-  public schema = 'getBundleRequest';
-  public resultKey = 'FulfillResult';
-  public serviceBundleCode = 'CC2BraveCreditTUReportV3Score';
+  public action = "Fulfill";
+  public schema = "getBundleRequest";
+  public resultKey = "FulfillResult";
+  public serviceBundleCode = "CC2BraveCreditTUReportV3Score";
 
   public mergeReport: MergeReport;
   public mergeReportSPO: string;
 
-  constructor(protected payload: IProxyRequest, action: string = 'Fulfill') {
+  constructor(protected payload: IProxyRequest, action: string = "Fulfill") {
     super(action, payload, new FulfillResponder(), new Payloader<IFulfillGraphQLResponse>(), new SoapV2());
   }
 
@@ -56,7 +56,7 @@ export class FulfillV3
       await this.logResults();
       return this.results;
     } catch (err) {
-      console.log('error ===> ', err);
+      console.log("error ===> ", err);
       this.logGenericError(identityId, err);
       return { success: false, data: null, error: err };
     }
@@ -74,8 +74,6 @@ export class FulfillV3
     await this.payloader.prep<IGenericBundleRequest>(qryGetDataForFulfill, payload);
     this.gqldata = this.payloader.data;
     this.prepped = payload;
-    console.log('data: ', JSON.stringify(this.gqldata));
-    console.log('prepped: ', JSON.stringify(this.prepped));
   }
 
   /**
@@ -106,7 +104,7 @@ export class FulfillV3
       serviceBundleCode: this.serviceBundleCode,
     });
     this.reqXML = requester.createRequest();
-    console.log('reqXML: ', this.reqXML);
+    console.log("reqXML: ", this.reqXML);
   }
 
   /**
@@ -128,7 +126,7 @@ export class FulfillV3
     this.responder.enrichData(sync.clean);
     this.setResponses(this.responder.response);
     this.setMergeReportItems(this.responder);
-    if (this.responseType.toLowerCase() === 'success') {
+    if (this.responseType.toLowerCase() === "success") {
       const synched = await sync.syncData(this.responder.enriched);
       await this.publishReport(this.mergeReportSPO, this.payload.identityId);
       this.setSuccessResultsSync(synched);
@@ -143,10 +141,10 @@ export class FulfillV3
   }
 
   setSuccessResultsSync(synched: boolean): void {
-    const data = _nest.find<IFulfillResult>(this.response, 'FulfillResult');
+    const data = _nest.find<IFulfillResult>(this.response, "FulfillResult");
     this.results = synched
       ? { success: true, error: null, data: data }
-      : { success: false, error: 'failed to sync data to db' };
+      : { success: false, error: "failed to sync data to db" };
   }
 
   async publishReport(spo: string, id: string): Promise<void> {
@@ -159,8 +157,8 @@ export class FulfillV3
    *  ex: 1980-Nov-1
    */
   formatDob(): void {
-    const { year, month, day } = _nest.find<DobInput>(this.gqldata, 'dob');
-    const iso = dayjs(`${year}-${month}-${day}`, 'YYYY-MMM-D');
-    this.gqldata.dobformatted = iso.format('YYYY-MM-DD');
+    const { year, month, day } = _nest.find<DobInput>(this.gqldata, "dob");
+    const iso = dayjs(`${year}-${month}-${day}`, "YYYY-MMM-D");
+    this.gqldata.dobformatted = iso.format("YYYY-MM-DD");
   }
 }

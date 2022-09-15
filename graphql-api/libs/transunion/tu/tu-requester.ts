@@ -37,12 +37,10 @@ export class TURequester<T> {
 
   generateRequestObject(): void {
     this.requestObject = this.getReqWrapper(flat.unflatten(this.parseRequest({ ...this.requestMap })));
-    console.log('requestObject: ', JSON.stringify(this.requestObject));
   }
 
   generateXMLObject(): void {
     this.requestXMLObject = this.getXMLWrapper(flat.unflatten(this.parseXML({ ...this.requestXMLMap })));
-    console.log('requestXMLObject: ', JSON.stringify(this.requestXMLObject));
   }
 
   getReqWrapper(body: any): any {
@@ -96,9 +94,7 @@ export class TURequester<T> {
 
   convertXML(): void {
     if (!this.requestXMLObject || !Object.keys(this.requestXMLObject)) return;
-    console.log('requestXMLObject: ', JSON.stringify(this.requestXMLObject));
     const xml = convert.json2xml(JSON.stringify(this.requestXMLObject), { compact: true, spaces: 4 });
-    console.log('converted XML: ', JSON.stringify(xml));
     this.xml = xml;
   }
 }
